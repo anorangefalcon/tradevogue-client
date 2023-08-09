@@ -11,6 +11,7 @@ import { LayoutComponent } from './layout/layout.component';
 import { AuthLayoutComponent } from './auth-layout/auth-layout.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { DashboardModule } from './dashboard/dashboard.module';
+import { CarouselModule } from 'ngx-owl-carousel-o';
 
 
 @NgModule({
@@ -27,7 +28,8 @@ import { DashboardModule } from './dashboard/dashboard.module';
     AuthModule,
     HomeModule,
     ReactiveFormsModule,
-    DashboardModule
+    DashboardModule,
+    CarouselModule
   ],
   providers: [],
   bootstrap: [AppComponent]

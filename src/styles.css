@@ -206,7 +206,7 @@ mw100{
     justify-content: space-between;
 }
 
-.align-center{
+.align-center, .align-items-center{
     align-items: center;
 }
 
