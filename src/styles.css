@@ -1,1 +1,267 @@
-/* You can add global styles to this file, and also import other style files */
+/* Box sizing rules */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+/* Remove default margin */
+body,
+h1,
+h2,
+h3,
+h4,
+p,
+figure,
+blockquote,
+dl,
+dd {
+    margin: 0;
+}
+
+/* Remove list styles on ul, ol elements with a list role, which suggests default styling will be removed */
+ul[role='list'],
+ol[role='list'] {
+    list-style: none;
+}
+
+/* Set core root defaults */
+html:focus-within {
+    scroll-behavior: smooth;
+}
+
+/* Set core body defaults */
+body {
+    min-height: 100vh;
+    text-rendering: optimizeSpeed;
+    line-height: 1.5;
+    font-size: 14px;
+}
+
+/* A elements that don't have a class get default styles */
+a:not([class]) {
+    text-decoration-skip-ink: auto;
+}
+
+/* Make images easier to work with */
+img,
+picture {
+    max-width: 100%;
+    display: block;
+}
+
+/* Inherit fonts for inputs and buttons */
+input,
+button,
+textarea,
+select {
+    font: inherit;
+}
+
+/* Remove all animations, transitions and smooth scroll for people that prefer not to see them */
+@media (prefers-reduced-motion: reduce) {
+    html:focus-within {
+        scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+
+
+/* Global CSS (main) */
+:root {
+    --text-black: 0, 0, 0;
+    --text-white: 255, 255, 255;
+
+    --background: 255, 253, 253;
+
+    --primary: 136, 45, 56;
+    /* --secondary: 223, 225, 231; */
+    --secondary: 253, 225, 229;
+    --accent: 253, 225, 229;
+
+    --danger: 163, 22, 33;
+    --success: 60, 157, 53;
+}
+
+h1, h2, h3, h4, h5, h6{
+    font-family: 'Poppins', sans-serif;
+}
+body{
+    font-family: 'Lato', sans-serif !important;
+}
+
+button{
+    font-family: 'Poppins', sans-serif;
+    cursor: pointer;
+    border: none;
+    transition: 0.3s ease-in-out;
+    padding-block: 8px;
+    padding-inline: 20px;
+    border-radius: 5px;
+}
+.btn-primary{
+    background-color: rgb(var(--primary));
+    color: rgb(var(--text-white));
+}
+.btn-primary:hover{
+    background-color: rgb(var(--primary), 0.9);
+}
+.btn-secondry{
+    background-color: rgb(var(--secondary)) !important;
+    color: rgb(var(--text-black)) !important;
+}
+
+
+h3{
+    font-size: 20px !important;
+}
+h6{
+    font-size: 12px !important;
+} 
+p{
+    font-size: 16px !important;
+}
+
+.container {
+    width: 100%;
+    max-width: 1240px;
+    margin: 0 auto;
+    padding-inline: 20px;
+}
+
+.heading-1{
+    letter-spacing: 1.8px;
+    font-size: 90px;
+}
+.heading-2{
+    letter-spacing: 1.12px;
+    font-size: 56px;
+}
+.heading-3{
+    letter-spacing: 0.48px;
+    font-size: 24px;
+}
+
+a{
+    text-decoration: none;
+    color: rgb(var(--text-black));
+}
+
+
+ul{
+    list-style: none;
+}
+
+.fs-16{
+    font-size: 16px;
+}
+.fs-18{
+    font-size: 18px;
+}
+
+/* Flexbox utilities */
+.d-flex {
+    display: flex;
+}
+
+.flex-row {
+    flex-direction: row;
+}
+
+.flex-column {
+    flex-direction: column;
+}
+
+.justify-content-center {
+    justify-content: center;
+}
+.justify-content-md-between{
+    justify-content: space-between;
+}
+
+.align-items-center {
+    align-items: center;
+    
+}
+
+/* Grid utilities */
+.grid {
+    display: grid;
+}
+
+.grid-cols-2 {
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.grid-cols-3 {
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.grid-cols-4 {
+    grid-template-columns: repeat(4, 1fr);
+}
+
+.gap-10 {
+    gap: 10px;
+}
+.gap-15 {
+    gap: 15px;
+}
+
+.gap-20 {
+    gap: 20px;
+}
+.gap-25 {
+    gap: 25px;
+}
+.gap-30 {
+    gap: 30px;
+}
+
+
+/* Positioning */
+.relative {
+    position: relative;
+}
+
+.absolute {
+    position: absolute;
+}
+
+.fixed {
+    position: fixed;
+}
+
+.top-0 {
+    top: 0;
+}
+
+.right-0 {
+    right: 0;
+}
+
+.bottom-0 {
+    bottom: 0;
+}
+
+.left-0 {
+    left: 0;
+}
+
+/* Other common styles */
+
+.text-center {
+    text-align: center;
+}
+.text-upper{
+    text-transform: uppercase;
+}
+

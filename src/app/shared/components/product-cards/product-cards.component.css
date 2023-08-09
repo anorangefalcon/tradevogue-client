@@ -1,0 +1,42 @@
+.card-container{
+    width: 100%;
+    gap: 30px;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+.card-item-template{
+    cursor: pointer;
+    & img{
+        width: 100%;
+        max-height: 300px;
+        object-fit: cover;
+        margin-block-end: 10px;
+    }
+    & h6{
+        margin-block: 0 3px;
+    }
+
+    & h3{
+        margin-block: 0 3px;
+    }
+    & .type-wishlist{
+        opacity: 70%;
+        margin-block: 0 3px;
+    }
+    & p{
+        opacity: 80%;
+        margin-block: 0 3px;
+    }
+
+    transition: transform 0.3s ease-in-out;
+}
+
+.card-item-template:hover{
+    
+    transform: translateY(-2px);
+
+    & i{
+        color: rgb(var(--danger));
+    }
+}
+

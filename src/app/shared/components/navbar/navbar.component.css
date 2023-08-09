@@ -1,0 +1,73 @@
+header{
+    background-color: rgb(var(--text-white));
+    position: fixed;
+    width: 100%;
+    box-shadow: 0 0 10px rgb(var(--text-black), 0.1);
+}
+.container{
+    min-height: 80px;
+}
+
+.branding{
+    height: 50px;
+    transform: translateY(12%);
+}
+
+a{
+    text-transform: uppercase;
+    transition: color 0.2s ease-in-out;
+    &:is(:hover, :focus, :active){
+        color: rgb(var(--primary));
+    }
+}
+.nav-item{
+    & li{
+        height: 100%;
+        border: inset 2px solid rgb(var(--primary));
+    }
+}
+
+.search-bar{
+    width: 100%;
+    max-width: 300px;
+    border: 1px solid rgb(var(--text-black), 0.1);
+    border-radius: 10px;
+    background-color: rgb(var(--secondary), 0.3);
+}
+.search-bar input{
+    flex: 1;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    padding: 1px 10px;
+
+}
+.search-bar button{
+    background-color: transparent;
+    border: none;
+    outline: none;
+    transform: translateY(6%);
+    padding: 5px 10px;
+    & span{
+        font-size: 24px;
+        color: rgb(var(--text-black), 0.5);
+    }
+}
+
+.account-actions{
+    & li{
+        cursor: pointer;
+        opacity: 90%;
+        display: flex;
+        align-items: center;
+    }
+
+    & span{
+        transition: color 0.3s ease-in-out;
+    }
+    & li:hover{
+        & span{
+            color: rgb(var(--primary));
+        }
+    }
+}
