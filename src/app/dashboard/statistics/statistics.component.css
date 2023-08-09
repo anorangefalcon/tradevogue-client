@@ -1,0 +1,228 @@
+#overview-section{
+
+
+    & .card, .graph, .product-info-cards{
+        padding: 20px;
+        box-shadow: 0px 0px 10px rgba(128, 128, 128, 0.252);
+        border-radius: 5px;
+    }
+
+    & .column-1{
+        border-right: 3px solid rgb(0, 76, 255);
+
+        & .icons{
+            color: rgb(0, 76, 255);
+        }
+    }
+
+    & .column-2{
+        border-right: 3px solid rgb(255, 174, 0);
+
+        & .icons{
+            color: rgb(255, 174, 0);
+        }
+    }
+
+    & .column-3{
+        border-right: 3px solid green;
+
+        & .icons{
+            color: green;
+        }
+    }
+
+    & .column-4{
+        border-right: 3px solid red;
+
+        & .icons{
+            color: red;
+        }
+    }
+
+    & .row-1{
+        display: flex;
+        justify-content: space-between;
+        border-bottom: 1px solid rgba(128, 128, 128, 0.1);
+        margin-bottom: 10px;
+    }
+
+    & .row-2{
+        width: 100%;
+    }
+
+    & .row-2 p{
+        font-size: 12px !important;
+        color: rgb(var(--text-black), 0.8);
+    }
+
+    & .stats-cards{
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 30px;
+    }
+
+    & .graph{
+        & .row-1{
+            padding: 10px;
+        }
+
+        & p{
+            font-size: 18px !important;
+            font-weight: 500;
+        }
+    }
+
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    
+    & .info-cards{
+        width: 100%;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+        grid-template-rows: repeat(4);
+        gap: 30px;
+    }
+
+    & .title{
+        font-size: 12px !important;
+        text-transform: uppercase;   
+        font-weight: 500;
+    }
+
+
+    & .card-value{
+        font-size: 26px;
+    }
+
+    & .icons{
+        font-size: 2.5rem;
+        display: flex;
+        align-items: center;
+    }
+
+
+    & .product-section{
+        /* width: 100%; */
+
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 30px;
+
+        & .product-info-cards2{
+            grid-column: 2/span 2;
+        }
+
+        & .product-card{
+            padding: 15px;
+            display: flex;
+        }
+
+        & .product-image{
+            display: flex;
+            flex-basis: 50px;
+            align-items: center;
+            justify-content: center;
+            width: 50px !important; 
+            height: 50px !important;
+            background-color: aquamarine;
+            border-radius: 5px;
+            margin-right: 20px;
+        }
+
+        & .product-name{
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            min-width: 200px;
+        }
+    }
+
+    & .product-info-cards{
+        height: max-content;
+
+        & .row-2{
+            height: 100%;
+        }
+
+        & .product-table{
+            overflow: scroll; 
+            height: 250px;
+            /* &::-webkit-scrollbar{
+                display: none !important;
+            } */
+        }
+    }
+
+
+    & .product-list {
+        width: 100%;
+        overflow: scroll;
+
+        & thead{
+            & td{
+                padding: 10px 10px;
+                background-color: rgb(var(--primary), 0.1);
+            }
+        }
+
+        & tbody{
+            padding: 20px;
+
+            & td{
+                padding: 5px 10px;
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 992px) {
+    .product-section{
+
+        & .product-info-cards2{
+            grid-column: 1/span 3 !important;
+        }
+    }
+    .product-info-cards{
+        grid-column: 1 / span 3;
+    }
+}
+
+@media screen and (max-width: 768px) {
+ 
+    #overview-section{
+
+        & .card-value{
+            font-size: 26px;
+        }
+    
+        & .icons{
+            font-size: 2.5rem;
+            display: flex;
+            align-items: center;
+        }
+    
+    }
+}
+
+@media screen and (max-width: 768px) {
+    #overview-section{
+        & .card-value{
+            font-size: 24px;
+        }
+        & .icons{
+            font-size: 2rem;
+            display: flex;
+            align-items: center;
+        }
+    
+    }
+}
+
+/* .apexcharts-legend.apexcharts-align-center.apx-legend-position-right{
+    display: flex !important;
+    flex-direction: row;
+    position: block !important;
+    top: 0 !important;
+} */

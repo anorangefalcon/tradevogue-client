@@ -1,0 +1,100 @@
+#dashboard-section{
+    height: 100vh;
+    width: 100%;
+    background-color: rgb(var(--secondary));
+
+    & .side-panel {
+        width: 250px;
+        height: 100%;
+        background-color: rgb(var(--primary)) ;
+        box-shadow: 2px 0px 5px rgba(128, 128, 128, 0.31);
+        position: fixed;
+        /* position: sticky; */
+        inset-block: 0;
+        inset-inline-start: 0;
+        width: 64px;
+        height: 100%;
+        transition: all 0.2s ease-in-out;
+        overflow: hidden;
+        z-index: 5;
+    }
+
+    & .side-panel.active{
+        width: 250px;
+    }
+
+    & .panel-items{
+        display: flex;
+        flex-direction: column;
+        padding-block-start: 50px;
+        gap: 20px;
+        margin-block-start: 20px;
+    }
+
+    & .panel-links{
+        width: 100%;
+        display: flex;
+        align-items: center;
+        padding: 10px 20px;
+        transition: all 0.1s ease-in-out;
+        cursor: pointer;
+        
+        & a{
+            display: flex;
+            align-items: center;
+            color: rgb(var(--text-white));
+            display: flex;
+            width: 100%;
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        &:is(:hover){
+            background-color: rgba(250, 235, 215, 0.066);
+            border-radius: 5px;
+        }
+    }
+
+    & .icons{
+
+        display: flex;
+        align-items: center;
+        font-weight: 300;
+        color: rgb(var(--secondary));
+        margin-right: 10px;
+        width: 30px;
+        height: 30px;
+        margin-right: 20px;
+
+    }
+
+    /* & .link-text{
+        display: flex;
+        align-content: center;
+        justify-content: center;
+    } */
+
+    & .toggle-button{
+        width: 100%;
+        background-color: rgb(var(--primary));
+        inset-block-start: 10px;
+        /* inset-inline-start: 50%;
+        transform: translateX(-50%); */
+        justify-content: center;
+
+        & .icons{
+            margin-right: 0px;
+            font-size: 30px;
+        }
+    }
+
+    & .sub-items{
+        display: none;
+        width: 100%;
+        background-color: rgb(var(--secondary));
+        align-items: center;
+        padding: 10px 20px;
+        margin-top: 10px;
+    }
+
+ }

@@ -1,0 +1,218 @@
+<section id="overview-section" class="d-flex gap30">
+    <h2 class="heading">DashBoard</h2>
+    <div class="info-cards">
+        <div class="column-1 card">
+            <div class="row-1">
+                <span class="icons material-symbols-outlined">bar_chart_4_bars</span>
+                <div class="d-flex flex-column text-right">
+                    <p class="title">Visitors</p>
+                    <span class="card-value" id="visitor">2790</span>
+                </div>
+            </div>
+            <div class="row-2 d-flex align-center justify-content-end gap20">
+                <!-- <span class="material-symbols-outlined">info</span> -->
+                <p>81% lower growth</p>
+            </div>
+        </div>
+        <div class="column-2 card">
+            <div class="row-1">
+                <span class="icons  material-symbols-outlined">shopping_cart</span>
+                <div class="d-flex flex-column text-right">
+                    <p class="title">Orders</p>
+                    <span class="card-value" id="orders">200</span>
+                </div>
+            </div>
+            <div class="row-2 d-flex align-center justify-content-end gap20">
+                <!-- <span class="material-symbols-outlined">info</span> -->
+                <p>Total Sales</p>
+            </div>
+        </div>
+        <div class="column-3 card">
+            <div class="row-1">
+                <span class="icons material-symbols-outlined">currency_rupee</span>
+                <div class="d-flex flex-column text-right">
+                    <p class="title">Revenue</p>
+                    <span class="card-value" id="revenue">&#8377; 27990</span>
+                </div>
+            </div>
+            <div class="row-2 d-flex align-center justify-content-end gap20">
+                <!-- <span class="material-symbols-outlined">info</span> -->
+                <p>Sales per Week</p>
+            </div>
+        </div>
+
+        <div class="column-4 card">
+            <div class="row-1">
+                <span class="icons material-symbols-outlined">production_quantity_limits</span>
+                <div class="d-flex flex-column text-right">
+                    <p class="title">Inventory Alert</p>
+                    <span class="card-value"  id="inventory">10</span>
+                </div>
+            </div>
+            <div class="row-2 d-flex align-center justify-content-end gap20">
+                <!-- <span class="material-symbols-outlined">info</span> -->
+                <p>Recently Updated</p>
+            </div>
+        </div>
+    </div>
+    <div class="stats-cards">
+        <div class="column graph">
+            <div class="row-1">
+                <p>Site Visits Growth</p>
+                <span class="material-symbols-outlined">refresh</span>
+            </div>
+            <div class="row-2">
+                <div id="chart"></div>
+            </div>
+        </div>
+        <div class="column graph">
+            <div class="row-1">
+                <p>Product Earning</p>
+                <span class="material-symbols-outlined">refresh</span>
+            </div>
+            <div class="row-2">
+                <div id="chart1"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="product-section">
+
+        <div class="column product-info-cards">
+            <div class="row-1">Customer Feedback</div>
+            <div class="row-2">
+                <div id="customer-fb"></div>
+            </div>
+        </div>
+
+        <div class="column product-info-cards product-info-cards2">
+            <div class="row-1">Popular List</div>
+            <div class="row-2 product-table">
+                <table class="product-list product-row">
+                    <thead>
+                        <tr>
+                            <td>Product Name</td>
+                            <td>Views</td>
+                            <td>Likes</td>
+                            <td>Dislikes</td>
+                            <td>Price</td>
+                            <td>Inventory</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Kurta</td>
+                            <td>1200</td>
+                            <td>200</td>
+                            <td>50</td>
+                            <td>&#8377;1000</td>
+                            <td>5</td>
+                        </tr>
+                        <tr>
+                            <td>Kurta</td>
+                            <td>1200</td>
+                            <td>200</td>
+                            <td>50</td>
+                            <td>&#8377;1000</td>
+                            <td>5</td>
+                        </tr>
+                        <tr>
+                            <td>Kurta</td>
+                            <td>1200</td>
+                            <td>200</td>
+                            <td>50</td>
+                            <td>&#8377;1000</td>
+                            <td>5</td>
+                        </tr>
+                        <tr>
+                            <td>Kurta</td>
+                            <td>1200</td>
+                            <td>200</td>
+                            <td>50</td>
+                            <td>&#8377;1000</td>
+                            <td>5</td>
+                        </tr>
+                        <tr>
+                            <td>Kurta</td>
+                            <td>1200</td>
+                            <td>200</td>
+                            <td>50</td>
+                            <td>&#8377;1000</td>
+                            <td>5</td>
+                        </tr>
+                        <tr>
+                            <td>Kurta</td>
+                            <td>1200</td>
+                            <td>200</td>
+                            <td>50</td>
+                            <td>&#8377;1000</td>
+                            <td>5</td>
+                        </tr>
+                        <tr>
+                            <td>Kurta</td>
+                            <td>1200</td>
+                            <td>200</td>
+                            <td>50</td>
+                            <td>&#8377;1000</td>
+                            <td>5</td>
+                        </tr>
+                        <tr>
+                            <td>Kurta</td>
+                            <td>1200</td>
+                            <td>200</td>
+                            <td>50</td>
+                            <td>&#8377;1000</td>
+                            <td>5</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="column product-info-cards">
+            <div class="row-1">Popular Product</div>
+            <div class="row-2">
+                <table class="product-row">
+                    <!-- <thead>
+                        <tr>
+                            <td>Images</td>
+                            <td>Product Name</td>
+                        </tr>
+                    </thead> -->
+                    <tbody>
+                        <tr class="product-card">
+                            <td class="product-image">
+                                <span class="material-symbols-outlined">laundry</span>
+                            </td>
+                            <td class="product-name">
+                                <h5>Product Name</h5>
+                                <p>Category</p>
+                            </td>
+                        </tr>
+                        <tr class="product-card">
+                            <td class="product-image">
+                                <span class="material-symbols-outlined">laundry</span>
+                            </td>
+                            <td class="product-name">
+                                <h5>Product Name</h5>
+                                <p>Category</p>
+                            </td>
+                        </tr>
+                        <tr class="product-card">
+                            <td class="product-image">
+                                <span class="material-symbols-outlined">laundry</span>
+                            </td>
+                            <td class="product-name">
+                                <h5>Product Name</h5>
+                                <p>Category</p>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        
+    </div>
+
+</section>

@@ -1,0 +1,9 @@
+#dashboard-section{
+    display: flex;
+
+    & .content{
+        margin-left: 64px;
+        padding: 30px;
+        width: 100vw;
+    }
+}

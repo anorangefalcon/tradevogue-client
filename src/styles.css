@@ -2,6 +2,7 @@
 *,
 *::before,
 *::after {
+    margin: 0; padding: 0;
     box-sizing: border-box;
 }
 
@@ -96,6 +97,7 @@ h1, h2, h3, h4, h5, h6{
 }
 body{
     font-family: 'Lato', sans-serif !important;
+    font-size: 16px;
 }
 
 button{
@@ -160,12 +162,29 @@ ul{
     list-style: none;
 }
 
+.fs-12{
+    font-size: 12px !important;
+}
+
+.fs-14{
+    font-size: 14px;
+}
+
 .fs-16{
     font-size: 16px;
 }
 .fs-18{
     font-size: 18px;
 }
+
+/* Width and Hright */
+mh100{
+    min-height: 100%;
+}
+mw100{
+    width: 100%;
+}
+
 
 /* Flexbox utilities */
 .d-flex {
@@ -187,10 +206,19 @@ ul{
     justify-content: space-between;
 }
 
-.align-items-center {
+.align-center{
     align-items: center;
-    
 }
+
+.justify-content-end{
+    justify-content: flex-end;
+}
+
+.flex-wrap{
+    flex-wrap: wrap;
+}
+
+
 
 /* Grid utilities */
 .grid {
@@ -261,7 +289,24 @@ ul{
 .text-center {
     text-align: center;
 }
+
+.text-left {
+    text-align: left;
+}
+
+.text-right {
+    text-align: right;
+}
+
 .text-upper{
     text-transform: uppercase;
 }
 
+
+.sub-heading{
+    font-size: 36px;
+    font-weight: 500;
+    margin-bottom: 10px;
+    letter-spacing: 1.2px;
+    /* text-transform: uppercase; */
+}

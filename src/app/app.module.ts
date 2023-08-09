@@ -10,6 +10,7 @@ import { HomeModule } from './home/home.module';
 import { LayoutComponent } from './layout/layout.component';
 import { AuthLayoutComponent } from './auth-layout/auth-layout.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { DashboardModule } from './dashboard/dashboard.module';
 
 
 @NgModule({
@@ -26,6 +27,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     AuthModule,
     HomeModule,
     ReactiveFormsModule,
+    DashboardModule
   ],
   providers: [],
   bootstrap: [AppComponent]
