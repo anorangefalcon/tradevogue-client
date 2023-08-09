@@ -1,0 +1,60 @@
+hero-section {
+    min-height: 100vh;
+
+
+
+    /* background-image: url(../../assets/hero-bg.png); */
+    & .hero-text {
+        width: 50%;
+    }
+
+    & .hero-model-img {
+        width: 50%;
+        height: 100%;
+        background-color: blue;
+    }
+
+    & .bg1 {
+        background: url(../../../assets/hero-bg1.png);
+        background-size: cover;
+    }
+
+    & .bg2 {
+        background: url(../../../assets/hero-bg2.png);
+        background-size: cover;
+    }
+
+    & .hero-img1 {
+        min-height: 100vh;
+        
+        background: url(../../../assets/girl.png);
+        background-size: cover;
+    }
+
+    & .hero-img2 {
+        min-height: 100vh;
+        background: url(../../../assets/boy2.png);
+        background-size: cover;
+    }
+
+    .hero-text-container {
+
+        & p {
+            font-size: 12px;
+            color: rgb(var(--danger));
+            font-weight: 500;
+        }
+
+        & h2 {
+            font-size: 46px;
+            font-weight: 400;
+            letter-spacing: 1.2px;
+        }
+
+        & h3 {
+            font-size: 46px !important;
+            font-weight: 700;
+        }
+    }
+
+}

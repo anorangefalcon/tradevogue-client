@@ -1,1 +1,40 @@
-<p>hero works!</p>
+<section class="hero-section">
+    <owl-carousel-o [options]="customOptions">
+        <ng-template carouselSlide>
+            <div class="bg1">
+                <div class="hero-content d-flex">
+                    <div class="hero-text d-flex align-items-center justify-content-center flex-column">
+                        <div class="hero-text-container">
+                            <p>NEW TRENDS</p>
+                            <h2>SUMMER SALE STYLISH</h2>
+                            <h3>GIRLS</h3>
+                        </div>
+
+                    </div>
+                    <div class="hero-model-img">
+                        <div class="hero-img1"></div>
+                    </div>
+                </div>
+            </div>
+        </ng-template>
+        
+        <ng-template carouselSlide>
+            <div class="bg2">
+                <div class="hero-content d-flex">
+                    <div class="hero-text d-flex align-items-center justify-content-center flex-column">
+                        <div class="hero-text-container">
+                            <!-- <p>NEW TRENDS</p> -->
+                            <h2>TRENDING STYLES</h2>
+                            <h3>BOYS</h3>
+                        </div>
+
+                    </div>
+                    <div class="hero-model-img">
+                        <div class="hero-img2"></div>
+                    </div>
+                </div>
+            </div>
+        </ng-template>
+        <!-- <ng-template carouselSlide>Slide 3</ng-template>   -->
+    </owl-carousel-o>
+</section>

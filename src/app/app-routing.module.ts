@@ -5,13 +5,15 @@ import { LoginComponent } from './auth/login/login.component';
 import { SignUpComponent } from './auth/sign-up/sign-up.component';
 import { AuthLayoutComponent } from './auth-layout/auth-layout.component';
 import { HomeComponent } from './home/home.component';
+import { HeroComponent } from './home/hero/hero.component';
 
 const routes: Routes = [
   {
     path: '', component: LayoutComponent,
     children: [
       { path: 'home', component: HomeComponent},
-      { path: '', redirectTo: '/home', pathMatch: 'full'}
+      { path: '', redirectTo: '/home', pathMatch: 'full'},
+      { path: 'hero', component: HeroComponent}
     ]
   },
 

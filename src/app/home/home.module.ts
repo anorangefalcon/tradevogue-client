@@ -9,6 +9,7 @@ import { HomeComponent } from './home.component';
 import { HeroComponent } from './hero/hero.component';
 import { GalleryComponent } from './gallery/gallery.component';
 import { CollectionsComponent } from './collections/collections.component';
+import { CarouselModule } from 'ngx-owl-carousel-o';
 
 const routes: Routes = [
   { path: '', component: HomeComponent }
@@ -28,7 +29,8 @@ const routes: Routes = [
     CommonModule,
     HomeRoutingModule,
     SharedModule,
-    RouterModule.forChild(routes)
+    RouterModule.forChild(routes),
+    CarouselModule
   ]
 })
 export class HomeModule { }

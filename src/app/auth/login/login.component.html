@@ -1,1 +1,38 @@
-<p>login works!</p>
+<!-- <p>login works!</p> -->
+<div class="head-logo">
+    <img src="../../assets/logo.png" alt="logo" width="150px">
+</div>
+
+<section class="login d-flex">
+
+    <div class="left-part d-flex justify-content-center align-items-center ">
+
+        <div class="form-container d-flex justify-content-center flex-column">
+
+            <h2>Welcome back.</h2>
+            <!-- <h3>Login</h3> -->
+            <p></p>
+            <form [formGroup]="loginForm" (ngSubmit)="onLogin()" class="d-flex flex-column ">
+
+                <input type="text" placeholder="Enter Your Username" formControlName="username">
+                <p *ngIf="loginForm?.get('username')?.hasError('required') && loginForm?.get('username')?.touched"
+                    class="invalid">*Please enter username.</p>
+                <p *ngIf="loginForm?.get('username')?.hasError('invalidUsername') && !loginForm?.get('username')?.hasError('required') && loginForm?.get('username')?.touched"
+                    class="invalid">*Please enter valid username.</p>
+
+
+                <input type="password" placeholder="Enter Your Password" formControlName="password">
+                <p *ngIf="loginForm?.get('password')?.hasError('required') && loginForm?.get('password')?.touched "
+                    class="invalid">*Please enter password.</p>
+                <p *ngIf="loginForm?.get('password')?.hasError('password-fail') && !loginForm?.get('password')?.hasError('required') && loginForm?.get('password')?.touched"
+                    class="invalid">*Please enter valid password.</p>
+
+
+                <button class="btn-primary">Login</button>
+                <p class="text-center">Don't have an account? <a class="sign-up-text" href="#">Sign up</a></p>
+            </form>
+
+        </div>
+    </div>
+    <div class="right-part"></div>
+</section>
