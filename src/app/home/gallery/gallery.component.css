@@ -1,0 +1,36 @@
+.gallery{
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* background-color: red; */
+  & .container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap:25px;
+    align-items: center;
+
+
+    & h2{
+        color:rgba(var(--text-black));
+        font-size: 26px;
+        font-weight: 400;
+    }
+  }
+}
+
+.card-div{
+    display: grid;
+    grid-template-columns:repeat(6, 1fr);
+    grid-column-gap: 7px;
+    grid-row-gap: 7px;
+}
+
+
+
+.gallery_img{
+    width: 300px;
+    height: 200px;
+}

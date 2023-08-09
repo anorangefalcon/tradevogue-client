@@ -1,1 +1,78 @@
-<p>sign-up works!</p>
+<div class="head-logo">
+  <img src="../../assets/logo.png" alt = "logo" width="150px">
+</div>
+
+<section class="signup-section">
+
+    <div class="form-div d-flex justify-content-center align-items-center">
+
+   
+
+<div class="form-container flex justify-content-center flex-column">
+  <h2 class="text-center">Hi there!</h2>
+<form [formGroup]="signupForm" (ngSubmit)="onSubmit()"  class="d-flex flex-column">
+    <!-- <label for="username">Username:</label> -->
+
+    <!-- <div class="input-div"> -->
+    <input type="text" id="username" formControlName="username" placeholder="Enter Your Username">
+        <!-- VALIDATOR FOR USERNAME -->
+    
+      <p *ngIf="signupForm.get('username')?.hasError('required') && signupForm.get('username').touched" class="invalid">*Please enter username. </p>
+  
+      <p *ngIf="signupForm.get('username')?.hasError('invalidUser') && !signupForm.get('username')?.hasError('required') && signupForm.get('username').touched" class="invalid">*Please enter valid username. </p>
+  
+  <!-- </div> -->
+    <input type="email" id="email" formControlName="email" placeholder="Enter Your Email" >
+ 
+    <!-- VALIDATOR FOR EMAIL -->
+    <p *ngIf="signupForm?.get('email')?.hasError('required') && signupForm.get('email')?.touched" class="invalid">
+        *Please enter email.
+      </p>
+
+      <p *ngIf="signupForm?.get('email')?.hasError('email')    && signupForm.get('email')?.touched" class="invalid">
+        *Please enter valid email.
+      </p>
+
+   
+    <input type="password" id="password" formControlName="password" placeholder="Enter Your Password">
+    <p class="invalid" *ngIf="signupForm?.get('password')?.hasError('required') && signupForm.get('password')?.touched">
+    
+      *Please enter password.
+     
+      </p>
+
+   <p class="invalid" *ngIf="signupForm?.get('password')?.hasError('password-fail') && !signupForm?.get('password')?.hasError('required') && signupForm.get('password')?.touched">
+    
+    *Please enter valid password. 
+   
+    </p>
+  
+    <input type="password" id="confirmPassword" formControlName="confirmPassword" placeholder="Enter Your Password" >
+    <div *ngIf="signupForm?.get('confirmPassword')?.invalid && signupForm.get('confirmPassword')?.touched" class="invalid">
+      *Your passwords and confirm password do not match.
+    </div>
+    <button class="btn-primary">Sign Up</button>
+    <p class="text-center">Already have an account? 
+      <a class="login-text" href="#">Login</a>
+    </p>
+  </form>
+</div>
+</div>
+
+<!-- img -->
+
+  <div class="img-div">
+    
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+</section>

@@ -1,0 +1,85 @@
+.head-logo{
+    position: fixed;
+    margin-block-start: 40px;
+    margin-inline-start: 50px;
+
+}
+.signup-section{
+    height: 100vh;
+    display: flex;
+    flex-direction: row-reverse;
+        
+    /* RIGHT SIDE */
+        & .form-div{
+            width: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center; 
+
+            & h2{
+                font-size:50px;
+                text-align: center;
+                font-weight: 500;
+                letter-spacing: 0.4px;
+                line-height: 0.9;
+                margin-block-end: 50px;
+            }
+
+            .form-container{
+                max-width: 420px;
+                 min-width: 50%;
+            
+                & input{
+                    padding: 14px 20px;
+                    font-size: 14px;
+                    border-radius: 10px;
+                    border:none;
+                    margin-bottom: 35px;
+                    outline: none;
+
+                    background-color:rgba(var(--primary),0.05) ;
+                }
+
+                & .invalid{
+                    margin-top: -30px;
+                    text-align: left;
+                    padding-inline-start: 10px;
+                    font-size: 14px !important;
+                    margin-bottom:9px;
+                    color:rgba(var(--danger));
+                }
+                
+
+
+                & button{
+                    margin-bottom: 15px;
+                    padding:10px 5px;
+                    border-radius: 10px;
+                }
+
+                & .login-text {
+                    color: rgb(var(--primary));
+
+                    &:is(:hover, :active, :focus){
+                        text-decoration: underline;
+                    }
+                }
+            }
+
+        }
+
+
+        /* LEFT SIDE */
+        & .img-div{
+            background-image: url("https://images.unsplash.com/photo-1615222443417-6d76586644a9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fGZhc2hpb24lMjBtb2RlbHN8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=800&q=60");
+            background-size: cover;
+            
+            width: 50%;
+        }
+
+
+       
+
+    }
+
+

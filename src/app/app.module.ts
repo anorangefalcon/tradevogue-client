@@ -20,7 +20,9 @@ import { AuthLayoutComponent } from './auth-layout/auth-layout.component';
     AppRoutingModule,
     SharedModule,
     AuthModule,
-    HomeModule
+    HomeModule,
+    
+    
   ],
   providers: [],
   bootstrap: [AppComponent]
