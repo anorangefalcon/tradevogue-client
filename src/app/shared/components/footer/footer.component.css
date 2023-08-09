@@ -1,7 +1,4 @@
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
     letter-spacing: 1px;
 }
 
@@ -19,6 +16,11 @@ footer {
     grid-template-columns: repeat(5, 1fr);
     padding: 3rem 3.5rem;
     border-bottom: 1px solid rgb(var(--primary));
+}
+
+.border_bottom {
+    border-bottom: 1px solid rgb(var(--primary));
+    width: 100%;
 }
 
 #footer_contacts h1 {
@@ -73,16 +75,16 @@ footer {
 }
 
 .footer-list .footer-link:hover {
-    color: #7f37c9;
+    color: rgb(var(--primary));
 }
 
 #footer_subscribe {
     gap: 1.5rem;
 }
 
-#footer_subscribe p {
+/* #footer_subscribe p {
     color: var(--color-neutral-30);
-}
+} */
 
 .fs-16 {
     font-size: 16px !important;
