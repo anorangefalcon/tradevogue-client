@@ -1,0 +1,131 @@
+.item {
+  background-size: cover;
+  background-repeat: no-repeat;
+  height: auto;
+  width: auto;
+  overflow: hidden;
+  background-position: center;
+}
+
+.item1 {
+  grid-area: women;
+  /* background-image: url('https://plus.unsplash.com/premium_photo-1664438942574-e56510dc5ce5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8Y29sb3J8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=500&q=60'); */
+}
+
+.item2 {
+  grid-area: men;
+  /* background-image: url('https://plus.unsplash.com/premium_photo-1664438942574-e56510dc5ce5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8Y29sb3J8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=500&q=60'); */
+}
+
+.item3 {
+  grid-area: kids;
+  /* background-image: url('https://plus.unsplash.com/premium_photo-1664438942574-e56510dc5ce5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8Y29sb3J8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=500&q=60'); */
+}
+
+.item4 {
+  grid-area: gift;
+  /* background-image: url('https://plus.unsplash.com/premium_photo-1664438942574-e56510dc5ce5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8Y29sb3J8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=500&q=60'); */
+}
+
+.grid-container {
+  position: relative;
+  height: 100vh;
+  grid-template-areas: 'women women men men'
+    'women women men men'
+    'women women kids gift'
+    'women women kids gift';
+  grid-gap: 25px;
+  padding: 10px;
+  padding-inline: 200px;
+  padding-block: 100px;
+}
+
+.grid-container>div {
+    position: relative;
+  background-color: rgba(var(--secondary)); /* Light background color */
+  transition: background-color 0.3s;
+  text-align: center;
+  padding: 20px 0;
+  font-size: 10px;
+  transition: background-color 0.3s; 
+}
+
+.grid-container>div::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -120%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to right,
+      rgba(255, 255, 255, 0.6) 0%,
+      rgba(255, 255, 255, 0.1) 100%);
+  transform: skewX(-25deg);
+  transition: left 0.3s;
+}
+
+.overlay {
+  text-transform: uppercase;
+  bottom: 0;
+  left: 10px;
+  position: absolute;
+  margin-bottom: 25px;
+}
+
+.overlay a {
+  left: 0;
+  position: absolute;
+}
+
+.grid-container>div:hover::before {
+  left: 125%;
+}
+
+.grid-container .item1:hover::before {
+  -webkit-animation: shine .75s;
+  animation: shine .75s;
+}
+
+@-webkit-keyframes shine {
+  100% {
+    left: 125%;
+  }
+}
+
+@keyframes shine {
+  100% {
+    left: 125%;
+  }
+}
+
+.grid-container>div {
+
+  text-align: center;
+  padding: 20px 0;
+  font-size: 10px;
+}
+
+@media (max-width: 768px) {
+  .grid-container {
+    grid-template-areas:
+      'women women women women'
+      'men men men men'
+      'kids kids kids kids'
+      'gift gift gift gift';
+    padding-inline: 20px;
+    padding-block: 50px;
+  }
+}
+
+
+@media (max-width: 480px) {
+  .grid-container {
+    grid-template-areas:
+      'women'
+      'men'
+      'kids'
+      'gift';
+    padding-inline: 10px;
+    padding-block: 30px;
+  }
+}
