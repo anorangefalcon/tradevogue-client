@@ -6,25 +6,38 @@ import { FormControl,FormGroup } from '@angular/forms';
 // PASSWORD VALIDATORS
 export function passwordStrengthValidator(control: FormControl): { [key: string]: boolean } | null {
     const value: string = control.value || '';
-
-    if (value.length < 8) {
-      return { 'password-fail': true };
-    }
+    if(value=='') return null;
+    let obj={uppercaseLetter:false,lowercaseLetter:false,digit:false,specialCharacter:false};
+    
+    // if (value.length < 8) {
+      // obj.minLength=true;
+      // return { 'password-fail': true,'min-length':true };
+    // }
 
     if (!/[a-z]/.test(value)) {
-      return { 'password-fail': true };
+      obj.lowercaseLetter=true;
+      // return { 'password-fail': true ,'lowercase-letter':true};
     }
 
     if (!/[A-Z]/.test(value)) {
-      return { 'password-fail': true };
+      obj.uppercaseLetter=true;
+      // return { 'password-fail': true , 'capital-letter':true};
     }
 
     if (!/\d/.test(value)) {
-      return { 'password-fail': true };
+      obj.digit=true;
+      // return { 'password-fail': true,'dight-not-include':true };
     }
 
-    return null; // Validation passed
+    if (!/[!@#$%^&*(),.?":{}|<>]/.test(value)) {
+      obj.specialCharacter=true;
+      // return { 'password-fail': true ,'special-letter':true};
+    }
+
+    return obj; // Validation failed
   }
+
+
 
 
 //   CONFIRM PASSSWORD VALIDATORS
@@ -33,9 +46,7 @@ export function matchPasswordValidator(control:any,signupForm:FormGroup) {
     // console.log("hello");
     const password = signupForm?.get('password')?.value;
     const confirmPassword = control.value;
-    // console.log("form is ",signupForm);
-    // console.log("password is ",password);
-    console.log("confirm password is ",confirmPassword);
+  
     if (password === confirmPassword) {
       return null;
     } else {

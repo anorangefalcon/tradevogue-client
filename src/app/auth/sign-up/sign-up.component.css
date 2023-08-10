@@ -43,6 +43,7 @@
                 & .invalid{
                     margin-top: -30px;
                     text-align: left;
+                    /* margin-bottom: 10px; */
                     padding-inline-start: 10px;
                     font-size: 14px !important;
                     margin-bottom:9px;
@@ -83,3 +84,16 @@
     }
 
 
+
+
+
+
+    /* RED AND GREEN */
+    .red-text {
+        color: red;
+      }
+      
+      .green-text {
+        color: green;
+      }
+      

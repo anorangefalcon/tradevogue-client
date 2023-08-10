@@ -42,11 +42,57 @@
      
       </p>
 
-   <p class="invalid" *ngIf="signupForm?.get('password')?.hasError('password-fail') && !signupForm?.get('password')?.hasError('required') && signupForm.get('password')?.touched">
-    
-    *Please enter valid password. 
-   
-    </p>
+
+
+      <div class="d-flex gap-25 flex-column">
+
+
+
+      <p [ngClass]=
+      "{'red-text': signupForm?.get('password')?.hasError('minlength') && !signupForm?.get('password')?.hasError('required') && signupForm.get('password')?.dirty,
+       'green-text': !signupForm?.get('password')?.hasError('minlength') && !signupForm?.get('password')?.hasError('required') && signupForm.get('password')?.dirty}"
+        *ngIf="!signupForm?.get('password')?.hasError('required') && signupForm.get('password')?.dirty"
+       >
+  min length is 8 required
+</p>
+
+      <p [ngClass]=
+      "{'red-text': signupForm?.get('password')?.hasError('uppercaseLetter') && !signupForm?.get('password')?.hasError('required') && signupForm.get('password')?.dirty,
+       'green-text': !signupForm?.get('password')?.hasError('uppercaseLetter') && !signupForm?.get('password')?.hasError('required') && signupForm.get('password')?.dirty}"
+        *ngIf="!signupForm?.get('password')?.hasError('required') && signupForm.get('password')?.dirty"
+       >
+  uppercase letter required
+</p>
+
+
+<p [ngClass]=
+"{'red-text': signupForm?.get('password')?.hasError('lowercaseLetter') && !signupForm?.get('password')?.hasError('required') && signupForm.get('password')?.dirty,
+ 'green-text': !signupForm?.get('password')?.hasError('lowercaseLetter') && !signupForm?.get('password')?.hasError('required') && signupForm.get('password')?.dirty}"
+  *ngIf="!signupForm?.get('password')?.hasError('required') && signupForm.get('password')?.dirty"
+ >
+lowercase letter required
+</p>
+      
+
+<p [ngClass]=
+"{'red-text': signupForm?.get('password')?.hasError('digit') && !signupForm?.get('password')?.hasError('required') && signupForm.get('password')?.dirty,
+ 'green-text': !signupForm?.get('password')?.hasError('digit') && !signupForm?.get('password')?.hasError('required') && signupForm.get('password')?.dirty}"
+  *ngIf="!signupForm?.get('password')?.hasError('required') && signupForm.get('password')?.dirty"
+ >
+digit is required
+</p>
+
+
+<p [ngClass]=
+"{'red-text': signupForm?.get('password')?.hasError('specialCharacter') && !signupForm?.get('password')?.hasError('required') && signupForm.get('password')?.dirty,
+ 'green-text': !signupForm?.get('password')?.hasError('specialCharacter') && !signupForm?.get('password')?.hasError('required') && signupForm.get('password')?.dirty}"
+  *ngIf="!signupForm?.get('password')?.hasError('required') && signupForm.get('password')?.dirty"
+ >
+speacialcase letter is required
+</p>
+  
+
+  </div>
   
     <input type="password" id="confirmPassword" formControlName="confirmPassword" placeholder="Enter Your Password" >
     <div *ngIf="signupForm?.get('confirmPassword')?.invalid && signupForm.get('confirmPassword')?.touched" class="invalid">

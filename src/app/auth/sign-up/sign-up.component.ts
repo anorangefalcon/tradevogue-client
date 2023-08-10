@@ -27,7 +27,7 @@ constructor(private fb:FormBuilder){
     {
       username:fb.control('',[Validators.required,usernameValidator]),
       email:fb.control('',[Validators.email,Validators.required]),
-      password:fb.control('',[Validators.required, passwordStrengthValidator]),
+      password:fb.control('',[Validators.required,Validators.minLength(8), passwordStrengthValidator]),
       confirmPassword: fb.control('',[Validators.required,(control: any) => matchPasswordValidator(control, this.signupForm)])
       
     });   
