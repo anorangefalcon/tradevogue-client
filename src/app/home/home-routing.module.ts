@@ -4,6 +4,7 @@ import { HomeComponent } from './home.component';
 import { GalleryComponent } from './gallery/gallery.component';
 import { CollectionsComponent } from './collections/collections.component';
 import { HeroComponent } from './hero/hero.component';
+import { DealOfWeekComponent } from './deal-of-week/deal-of-week.component';
 
 const routes: Routes = [
   // { path: 'home', component: HomeComponent},
@@ -11,7 +12,7 @@ const routes: Routes = [
 
   // { path: 'hero', component: HeroComponent},
   // { path: 'collections', component: CollectionsComponent},
-  // { path: 'gallery', component: GalleryComponent},
+  { path: 'deal', component: DealOfWeekComponent},
 ];
 
 @NgModule({
