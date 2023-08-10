@@ -13,6 +13,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { DashboardModule } from './dashboard/dashboard.module';
 import { CarouselModule } from 'ngx-owl-carousel-o';
 import { DataTablesModule } from 'angular-datatables';
+import { ProductPageModule } from './product-page/product-page.module';
 
 
 @NgModule({
@@ -31,7 +32,8 @@ import { DataTablesModule } from 'angular-datatables';
     ReactiveFormsModule,
     DashboardModule,
     CarouselModule,
-    DataTablesModule
+    DataTablesModule,
+    ProductPageModule
   ],
   providers: [],
   bootstrap: [AppComponent]
