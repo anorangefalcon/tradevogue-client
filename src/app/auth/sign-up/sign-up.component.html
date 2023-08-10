@@ -4,26 +4,24 @@
 
 
 <section class="signup-section">
-
     <div class="form-div d-flex justify-content-center align-items-center">
-
-   
-
-<div class="form-container flex justify-content-center flex-column">
-  <h2 class="text-center">Hi there!</h2>
-<form [formGroup]="signupForm" (ngSubmit)="onSubmit()"  class="d-flex flex-column">
-    <!-- <label for="username">Username:</label> -->
-
-    <!-- <div class="input-div"> -->
-    <input type="text" id="username" formControlName="username" placeholder="Enter Your Username">
+      <div class="form-container flex justify-content-center flex-column">
+        <h2 class="text-center">Hi there!</h2>
+          <form [formGroup]="signupForm" (ngSubmit)="onSubmit()"  class="d-flex flex-column">
+            <div class="wrapper d-flex align-items-center">
+              <span class="material-symbols-outlined">person</span>
+              <input type="text" id="username" formControlName="username" placeholder="Enter Your Username">
+            </div>
         <!-- VALIDATOR FOR USERNAME -->
     
       <p *ngIf="signupForm.get('username')?.hasError('required') && signupForm.get('username').touched" class="invalid">*Please enter username. </p>
-  
       <p *ngIf="signupForm.get('username')?.hasError('invalidUser') && !signupForm.get('username')?.hasError('required') && signupForm.get('username').touched" class="invalid">*Please enter valid username. </p>
   
   <!-- </div> -->
-    <input type="email" id="email" formControlName="email" placeholder="Enter Your Email" >
+    <div class="wrapper d-flex align-items-center">
+      <span class="material-symbols-outlined">mail</span>
+      <input type="email" id="email" formControlName="email" placeholder="Enter Your Email" >
+    </div>
  
     <!-- VALIDATOR FOR EMAIL -->
     <p *ngIf="signupForm?.get('email')?.hasError('required') && signupForm.get('email')?.touched" class="invalid">
@@ -34,8 +32,10 @@
         *Please enter valid email.
       </p>
 
-   
-    <input type="password" id="password" formControlName="password" placeholder="Enter Your Password">
+   <div class="wrapper d-flex align-items-center">
+    <span class="material-symbols-outlined key">key</span>
+     <input type="password" id="password" formControlName="password" placeholder="Enter Your Password">
+   </div>
     <p class="invalid" *ngIf="signupForm?.get('password')?.hasError('required') && signupForm.get('password')?.touched">
     
       *Please enter password.
@@ -93,8 +93,10 @@ speacialcase letter is required
   
 
   </div>
-  
-    <input type="password" id="confirmPassword" formControlName="confirmPassword" placeholder="Enter Your Password" >
+   <div class="wrapper d-flex align-items-center">
+    <span class="material-symbols-outlined key">key</span>
+     <input type="password" id="confirmPassword" formControlName="confirmPassword" placeholder="Re-enter Your Password" >
+   </div>
     <div *ngIf="signupForm?.get('confirmPassword')?.invalid && signupForm.get('confirmPassword')?.touched" class="invalid">
       *Your passwords and confirm password do not match.
     </div>

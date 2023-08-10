@@ -1,19 +1,34 @@
-.head-logo {
-    position: fixed;
+.header {
     margin-block-start: 40px;
     margin-inline-start: 50px;
+    gap: 380px;
 }
+
+.header button {
+    transform: translateY(-5px);
+    /* background-color: transparent;
+    border: 1px solid rgb(var(--primary));
+    color: rgb(var(--primary));
+
+    &:is(:hover, :active, :focus) {
+        color: rgb(var(--text-white));
+        background-color: rgb(var(--primary));
+    } */
+}
+
 .login {
     min-height: 100vh;
 
-    & .left-part, .right-part {
+    & .left-part,
+    .right-part {
         padding: 0;
         width: 50%;
+        background-color: rgb(var(--background));
     }
 
     & .form-container {
-        max-width: 420px;
-    
+        min-width: 370px;
+
         & h2 {
             font-size: 50px;
             font-weight: 500;
@@ -21,37 +36,111 @@
             line-height: 0.9;
             margin-block-end: 50px;
         }
+
+        & .wrapper {
+            background-color: rgb(var(--primary), 0.05);
+            width: 100%;
+            margin-block-end: 30px;
+            padding: 15px 22px;
+            border-radius: 10px;
+            padding-inline-start: 12px;
+            gap: 10px;
+            border: 1px solid transparent;
+            transition: border-color 0.3s;
+            
+        }
+        & .wrapper-invalid{
+            border: 1px solid rgb(var(--danger));
+        }
+        & .wrapper-valid{
+            border: 1px solid rgb(var(--success));
+        }
+        
+        & .wrapper:focus-within{
+            border-color: rgb(var(--text-black), 0.4);
+        }
+        
+
+        & .wrapper input {
+            flex: 1;
+            font-size: 14px;
+            border: none;
+            background-color: transparent;
+            outline: none;
+        }
+
+        & ::placeholder{
+            color: rgb(var(--text-black), 0.3);
+        }
+
+        & .wrapper .person,
+        .wrapper .key {
+            font-size: 24px;
+            color: rgb(var(--text-black), 0.5);
+        }
+
+        & .key {
+            transform: rotate(90deg);
+        }
+
+        & .eye {
+            font-size: 15px;
+            color: rgb(var(--text-black), 0.3);
+            font-weight: 900;
+
+
+        }
+
+        
+        & .eye-btn:is(:active) {
+            & .eye {
+
+                color: rgb(var(--primary), 0.7);
+            }
+        }
+
+        & .wrapper button {
+            background-color: transparent;
+            border: none;
+            outline: none;
+            transform: translateY(6%);
+            padding: 0;
+            margin: 0;
+        }
+
+        & button {
+            margin-bottom: 15px;
+            padding: 12px 5px;
+            border-radius: 10px;
+            border: none;
+            margin-block-start: 5px;
+        }
+
         & .invalid {
             color: rgb(var(--danger));
             text-align: left;
             margin-bottom: 9px;
             margin-top: -30px;
             padding-inline-start: 10px;
-            font-size: 14px !important;
-    
+            font-size: 12px !important;
+
         }
-        & input {
-            padding: 14px 20px;
-            font-size: 14px;
-            border-radius: 10px;
-            border: none;
-            background-color: rgb(var(--primary), 0.05);
-            margin-bottom: 35px;
-            outline: none;
-    
-        }
-        & button {
-            margin-bottom: 15px;
-            padding: 10px 5px;
-            border-radius: 10px;
-            border: none;
-        }
-        & .sign-up-text{
+
+        & .sign-up-text {
             color: rgb(var(--primary));
-        
-            &:is(:hover, :active, :focus){
+
+            &:is(:hover, :active, :focus) {
                 text-decoration: underline;
             }
+        }
+        & .acc-text {
+            font-size: 14px !important;
+        }
+        & .forgot-pass {
+            font-size: 14px;
+            text-align: right;
+            color: rgb(var(--primary));
+            padding-inline-end: 10px;
         }
     }
 
@@ -62,9 +151,8 @@
         /* background-image: url(https://images.unsplash.com/photo-1590330297626-d7aff25a0431?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=987&q=80); */
         /* background-position: center 20%; */
         background-image: url(https://images.unsplash.com/photo-1529903056346-94341d9428e3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1065&q=80);
-        
+
         background-size: cover;
     }
 
 }
-
