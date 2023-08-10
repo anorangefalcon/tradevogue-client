@@ -36,7 +36,11 @@ const routes: Routes = [
       { path: 'products', component: ProductsComponent},
       { path: 'orders', component: OrdersComponent}
     ]
-  }
+  },
+
+
+
+ 
 ];
 
 @NgModule({
