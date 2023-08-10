@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { Component, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { HomeRoutingModule } from './home-routing.module';
@@ -23,7 +23,7 @@ const routes: Routes = [
     HomeComponent,
     HeroComponent,
     CollectionsComponent,
-    GalleryComponent
+    GalleryComponent,
   ],
   imports: [
     CommonModule,

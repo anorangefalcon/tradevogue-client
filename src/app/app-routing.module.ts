@@ -11,6 +11,7 @@ import { ProductsComponent } from './dashboard/products/products.component';
 import { OrdersComponent } from './dashboard/orders/orders.component';
 import { DashboardComponent } from './dashboard/home.component';
 import { StatisticsComponent } from './dashboard/statistics/statistics.component';
+import { CardTemplateComponent } from './shared/components/card-template/card-template.component';
 
 const routes: Routes = [
   {
@@ -18,7 +19,8 @@ const routes: Routes = [
     children: [
       { path: 'home', component: HomeComponent},
       { path: '', redirectTo: '/home', pathMatch: 'full'},
-      { path: 'hero', component: HeroComponent}
+      { path: 'hero', component: HeroComponent},
+      { path : 'card', component: CardTemplateComponent}
     ]
   },
 
