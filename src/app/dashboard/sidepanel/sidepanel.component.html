@@ -3,34 +3,33 @@
     
     <div #sidePanel class="side-panel relative">
         <a href="javascript:void(0);" #toggleBtn 
-            class="toggle-button d-flex absolute">
-            <span class="d-flex justify-content-center icons material-symbols-outlined mw100">menu</span>
+            class="toggle-button d-flex relative">
+            <span class="d-flex justify-content-center icons material-symbols-outlined mw100 absolute">menu</span>
         </a>
         <ul class="panel-items d-flex flex-column">
-            <li class="panel-links d-flex flex-column relative" routerLink="/dashboard">
-
+            <li class="panel-links" routerLink="/dashboard">
                 <a href=" javascript:void(0);" class="dropdown d-flex justify-content-md-between">
                     <div class="d-flex align-center">
                         <span class="icons material-symbols-outlined">bar_chart_4_bars</span>
                         <span class="link-text">Overview</span>
                     </div>
-                    <span class="material-symbols-outlined">arrow_drop_down</span>
                 </a>
-
-                <!-- <ul class="sub-items d-flex flex-column">
-                    <li class="sub-links"><a href="javascript:void(0);">Link1</a></li>
-                    <li class="sub-links"><a href="javascript:void(0);">Link1</a></li>
-                    <li class="sub-links"><a href="javascript:void(0);">Link1</a></li>
-                </ul> -->
             </li>
-            <li class="panel-links"> 
+            <li class="panel-links "> 
                 <a href="javascript:void(0);" routerLink="/dashboard/products">
                     <span class="icons material-symbols-outlined">inventory</span>
                     <span class="link-text">Products</span>
+
+                    <span class="material-symbols-outlined">arrow_drop_down</span>
                 </a>
+                <ul class="sub-items d-flex flex-column">
+                    <li class="sub-links"><a href="javascript:void(0);">Add Products</a></li>
+                    <li class="sub-links"><a href="javascript:void(0);">Delete Products</a></li>
+                    <li class="sub-links"><a href="javascript:void(0);">Update Products</a></li>
+                </ul>
             </li>
             <li class="panel-links">
-                <a href="javascript:void(0);">
+                <a href="javascript:void(0);" routerLink="/dashboard/orders">
                     <span class="icons material-symbols-outlined">shopping_cart</span>
                     <span class="link-text">Orders</span>
                 </a>

@@ -1,9 +1,12 @@
+
 #dashboard-section{
     display: flex;
+    font-size: 14px !important;
 
     & .content{
-        margin-left: 64px;
-        padding: 30px;
+        margin-left: 240px;
+        padding: 28px;
         width: 100vw;
+        background-color: var(--dash-background-clr);
     }
 }
