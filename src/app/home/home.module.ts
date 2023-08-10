@@ -10,6 +10,7 @@ import { HeroComponent } from './hero/hero.component';
 import { GalleryComponent } from './gallery/gallery.component';
 import { CollectionsComponent } from './collections/collections.component';
 import { CarouselModule } from 'ngx-owl-carousel-o';
+import { OffersComponent } from './offers/offers.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent }
@@ -24,6 +25,7 @@ const routes: Routes = [
     HeroComponent,
     CollectionsComponent,
     GalleryComponent,
+    OffersComponent,
   ],
   imports: [
     CommonModule,

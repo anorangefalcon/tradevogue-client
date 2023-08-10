@@ -14,11 +14,11 @@ footer {
 #footer_content {
     background-color: rgb(var(--background));
     grid-template-columns: repeat(5, 1fr);
-    padding: 3rem 3.5rem;
-    border-bottom: 1px solid rgb(var(--primary));
+    padding-block: 3rem;
+    /* border-bottom: 1px solid rgb(var(--primary)); */
 }
 
-.border_bottom {
+#border-bottom {
     border-bottom: 1px solid rgb(var(--primary));
     width: 100%;
 }
