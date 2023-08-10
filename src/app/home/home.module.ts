@@ -12,6 +12,7 @@ import { CollectionsComponent } from './collections/collections.component';
 import { CarouselModule } from 'ngx-owl-carousel-o';
 import { OffersComponent } from './offers/offers.component';
 import { DealOfWeekComponent } from './deal-of-week/deal-of-week.component';
+import { FaqComponent } from './faq/faq.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent }
@@ -27,7 +28,8 @@ const routes: Routes = [
     CollectionsComponent,
     GalleryComponent,
     OffersComponent,
-    DealOfWeekComponent
+    DealOfWeekComponent,
+    FaqComponent
   ],
   imports: [
     CommonModule,
