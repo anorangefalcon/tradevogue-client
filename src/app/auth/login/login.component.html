@@ -17,9 +17,8 @@
                  
 
                 <div class="wrapper d-flex align-items-center" 
-                [ngClass]="{'wrapper-invalid': (loginForm?.get('username')?.hasError('invalidUsername') || loginForm?.get('username')?.hasError('required')) && loginForm?.get('username')?.touched}"
-                [ngClass]="{'wrapper-valid': (!loginForm?.get('username')?.hasError('invalidUsername') && !loginForm?.get('username')?.hasError('required')) && loginForm?.get('username')?.touched}"
-                >
+                [ngClass]="{'wrapper-invalid': (loginForm.get('username')?.invalid && loginForm.get('username').touched)}"
+          [ngClass]="{'wrapper-valid': loginForm.get('username')?.valid && loginForm.get('username').touched}">
                     <span class="material-symbols-outlined person">person</span>
                     <input type="text" placeholder="Enter Your Username" formControlName="username">
                 </div>

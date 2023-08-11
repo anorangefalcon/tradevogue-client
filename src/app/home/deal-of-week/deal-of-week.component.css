@@ -29,6 +29,43 @@
 .deal-weak-img{
     width: 40%;
     & img{
-        height: 400px;   
+        max-height: 400px;   
+    }
+}
+
+
+
+@media screen and (max-width: 768px) {
+    .container{
+        flex-direction: column;
+        padding-block: 40px;
+        gap: 20px;
+    }
+
+    .deal-weak-text{
+        width: 100%;
+        text-align: center;
+        margin-block: 20px 0;
+        & p {
+            font-size: 16px !important;
+            color: rgb(var(--primary));
+            font-weight: 500;
+        }
+        & h3{
+            font-size: 30px !important;
+            font-weight: 400;
+            letter-spacing: 1.2px;
+        }
+        & h5 {
+            font-size:  14px !important;
+            text-transform: uppercase;
+            font-weight: 700;
+        }
+    }
+    .deal-weak-img{
+        width: 100%;
+        & img{
+            max-height: 300px;   
+        }
     }
 }

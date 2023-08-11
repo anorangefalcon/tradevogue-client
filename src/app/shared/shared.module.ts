@@ -6,6 +6,7 @@ import { ProductCardsComponent } from './components/product-cards/product-cards.
 import { ProductCardCarouselComponent } from './components/product-card-carousel/product-card-carousel.component';
 import { CarouselModule } from 'ngx-owl-carousel-o';
 import { CardTemplateComponent } from './components/card-template/card-template.component';
+import { SearchBarComponent } from './components/search-bar/search-bar.component';
 
 
 
@@ -17,6 +18,7 @@ import { CardTemplateComponent } from './components/card-template/card-template.
     ProductCardsComponent,
     ProductCardCarouselComponent,
     CardTemplateComponent,
+    SearchBarComponent,
   ],
   imports: [
     CommonModule,
@@ -27,7 +29,8 @@ import { CardTemplateComponent } from './components/card-template/card-template.
     FooterComponent,
     ProductCardsComponent,
     ProductCardCarouselComponent,
-    CardTemplateComponent
+    CardTemplateComponent,
+    SearchBarComponent
   ]
 })
 export class SharedModule { }

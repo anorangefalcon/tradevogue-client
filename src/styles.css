@@ -103,9 +103,12 @@ select {
     --dash-sub-title-clr: #98a6ad;
 }
 
-input:focus{
-    outline: none;
+input:focus,button:focus,a:focus{
+
+  outline: 0.5px solid rgb(var(--primary), 1);
+
 }
+
 
 h1, h2, h3, h4, h5, h6{
     font-family: 'Poppins', sans-serif;
