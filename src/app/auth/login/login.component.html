@@ -16,16 +16,16 @@
             <form [formGroup]="loginForm" (ngSubmit)="onLogin()" class="d-flex flex-column ">
                  
 
-                <div class="wrapper d-flex align-items-center" 
-                [ngClass]="{'wrapper-invalid': (loginForm.get('username')?.invalid && loginForm.get('username').touched)}"
-          [ngClass]="{'wrapper-valid': loginForm.get('username')?.valid && loginForm.get('username').touched}">
+                <div class="form__group relative">
+                    <label for="" class="form__label">Username</label>
                     <span class="material-symbols-outlined person">person</span>
-                    <input type="text" placeholder="Enter Your Username" formControlName="username">
+                    <input type="text" placeholder="Enter Your Username" formControlName="username" class="form__input/">
+                    <small *ngIf="loginForm?.get('username')?.hasError('invalidUsername') && !loginForm?.get('username')?.hasError('required') && loginForm?.get('username')?.touched"
+                    class="invalid errmsg">*Please enter valid username.</small>
                 </div>
                 <!-- <p *ngIf="loginForm?.get('username')?.hasError('required') && loginForm?.get('username')?.touched"
                     class="invalid">*Please enter username.</p> -->
-                <p *ngIf="loginForm?.get('username')?.hasError('invalidUsername') && !loginForm?.get('username')?.hasError('required') && loginForm?.get('username')?.touched"
-                    class="invalid">*Please enter valid username.</p>
+ 
 
 
                 <div class="wrapper d-flex align-items-center"

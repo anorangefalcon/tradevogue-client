@@ -1,4 +1,3 @@
-
 import { FormControl,FormGroup } from '@angular/forms';
 
 
@@ -7,34 +6,39 @@ import { FormControl,FormGroup } from '@angular/forms';
 export function passwordStrengthValidator(control: FormControl): { [key: string]: boolean } | null {
     const value: string = control.value || '';
     if(value=='') return null;
-    let obj={uppercaseLetter:false,lowercaseLetter:false,digit:false,specialCharacter:false};
-    
+    // let obj={uppercaseLetter:false,lowercaseLetter:false,digit:false,specialCharacter:false,test:true};
+    let errors :any={}; 
+    // obj.test="test";
     // if (value.length < 8) {
       // obj.minLength=true;
       // return { 'password-fail': true,'min-length':true };
     // }
 
     if (!/[a-z]/.test(value)) {
-      obj.lowercaseLetter=true;
+      errors['lowercase'] = true;
+      // obj.lowercaseLetter=true;
       // return { 'password-fail': true ,'lowercase-letter':true};
     }
 
     if (!/[A-Z]/.test(value)) {
-      obj.uppercaseLetter=true;
+      errors['uppercase'] = true;
+      // obj.uppercaseLetter=true;
       // return { 'password-fail': true , 'capital-letter':true};
     }
 
     if (!/\d/.test(value)) {
-      obj.digit=true;
+      errors['digit'] = true;
+      // obj.digit=true;
       // return { 'password-fail': true,'dight-not-include':true };
     }
 
     if (!/[!@#$%^&*(),.?":{}|<>]/.test(value)) {
-      obj.specialCharacter=true;
+      errors['specialCharacter'] = true;
+      // obj.specialCharacter=true;
       // return { 'password-fail': true ,'special-letter':true};
     }
 
-    return obj; // Validation failed
+    return Object.keys(errors).length > 0 ? errors : null; // Validation failed
   }
 
 
@@ -71,4 +75,3 @@ export function usernameValidator(control: FormControl): { [key: string]: boolea
   
   return {'invalidUser':true};
 }
-   

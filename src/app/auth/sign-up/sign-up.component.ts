@@ -15,6 +15,9 @@ signupForm:any;
 
 constructor(private fb:FormBuilder){
 
+
+
+
   this.signupForm= fb.group(
 
     
@@ -28,6 +31,12 @@ constructor(private fb:FormBuilder){
     
   
   }
+
+
+
+
+
+
 
 
   // ON SUBMIT METHOD
