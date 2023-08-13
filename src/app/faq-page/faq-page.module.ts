@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FaqPageComponent } from './faq-page.component';
-import { Routes } from '@angular/router';
 import { SharedModule } from '../shared/shared.module';
+import { RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
   { path: 'faq', component: FaqPageComponent }
@@ -14,7 +14,9 @@ const routes: Routes = [
   ],
   imports: [
     CommonModule,
-    SharedModule
+    SharedModule,
+    RouterModule.forChild(routes),
+
   ]
 })
 export class FaqPageModule { }

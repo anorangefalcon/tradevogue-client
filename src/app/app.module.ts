@@ -14,6 +14,7 @@ import { DashboardModule } from './dashboard/dashboard.module';
 import { CarouselModule } from 'ngx-owl-carousel-o';
 import { DataTablesModule } from 'angular-datatables';
 import { ProductPageModule } from './product-page/product-page.module';
+import { FaqPageModule } from './faq-page/faq-page.module';
 
 
 @NgModule({
@@ -33,7 +34,8 @@ import { ProductPageModule } from './product-page/product-page.module';
     DashboardModule,
     CarouselModule,
     DataTablesModule,
-    ProductPageModule
+    ProductPageModule,
+    FaqPageModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,12 +1,31 @@
 <footer>
-    <div id="footer_content" class="grid relative container">
-
-        
-        <div id="footer_contacts">
+     <div id="footer_content_title" class="grid relative container">
+         <div>
             <img class="logo" src="./assets/logo.png" alt="Logo">
-            <address class="mb-15">Lorem ipsum dolor sit</address>
-            <p>sale@tradevogue.com</p>
-            <p>+91 62834-15102</p>
+        </div>
+
+        <div>
+             <li>
+                <h3 class="fs-16 text-upper">Contact</h3>
+            </li>
+        </div>
+
+        <div>
+                        <li>
+                <h3 class="fs-16 text-upper">Shop</h3>
+            </li>
+        </div>
+
+        <div>
+            <h3 class="text-upper">Subscribe</h3>
+        </div>
+        </div>
+    <div id="footer_content" class="grid relative container">        
+        <div id="footer_contacts">
+            <!-- <img class="logo" src="./assets/logo.png" alt="Logo"> -->
+            <address style="margin-bottom: 0.75rem">Lorem ipsum dolor sit</address>
+            <p style="margin-bottom: 0.75rem">sale@tradevogue.com</p>
+            <p style="margin-bottom: 0.75rem">+91 62834-15102</p>
             <div id="footer_social_media" class="d-flex">
                 <a href="#" class="footer-link d-flex align-items-center justify-content-center" id="instagram">
                     <i class="fa-brands fa-instagram"></i>
@@ -23,9 +42,9 @@
         </div>
 
         <ul class="footer-list d-flex flex-column">
-            <li>
+            <!-- <li>
                 <h3 class="fs-16 text-upper">Contact</h3>
-            </li>
+            </li> -->
             <li>
                 <a href="#" class="footer-link">About</a>
             </li>
@@ -44,9 +63,9 @@
         </ul>
 
         <ul class="footer-list d-flex flex-column">
-            <li>
+            <!-- <li>
                 <h3 class="fs-16 text-upper">Shop</h3>
-            </li>
+            </li> -->
             <li>
                 <a href="#" class="footer-link">New Arrivals</a>
             </li>
@@ -65,41 +84,26 @@
         </ul>
 
 
-        <ul class="footer-list d-flex flex-column">
-            <li>
-                <h3 class="fs-16 text-upper">Help</h3>
-            </li>
-            <li>
-                <a href="#" class="footer-link">Customer Service</a>
-            </li>
-            <li>
-                <a href="#" class="footer-link">My Account</a>
-            </li>
-            <li>
-                <a href="#" class="footer-link">Men</a>
-            </li>
-            <li>
-                <a href="#" class="footer-link">Women</a>
-            </li>
-            <li>
-                <a href="#" class="footer-link">Shop All</a>
-            </li>
-        </ul>
+
 
         <div id="footer_subscribe" class="d-flex flex-column">
-            <h3 class="text-upper">Subscribe</h3>
+            <!-- <h3 class="text-upper">Subscribe</h3> -->
 
             <p>
                 Enter your e-mail to get notified about
                 our news solutions
             </p>
 
-            <div id="input_group" class="d-flex align-items-center">
+            <div>
+                <app-mail-bar></app-mail-bar>
+            </div>
+
+            <!-- <div id="input_group" class="d-flex align-items-center">
                 <input type="email" id="email" placeholder="Your email address">
                 <button>
                     <i class="fa-regular fa-envelope"></i>
                 </button>
-            </div>
+            </div> -->
         </div>
     </div>
 

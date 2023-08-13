@@ -87,7 +87,16 @@
   transition: opacity 200ms linear, max-height 200ms linear;
   will-change: opacity, max-height;
    background-color: rgb(var(--secondary), 0.3);;
+   padding-inline:36px ;
 }
+
+.accordion h2 {
+      color: rgba(var(--text-black));
+    font-size: 26px;
+    font-weight: 400;
+    margin-bottom: 20px;
+}
+
 .accordion .accordion-content p {
   font-size: 1rem;
   font-weight: 300;
