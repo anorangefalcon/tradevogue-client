@@ -63,6 +63,8 @@
         & .about-content-div{
             display: flex;
             flex-direction: column;
+            /* align-items: center; */
+            justify-content: center;
             gap:10px;
              & h3{
                 font-size: 40px !important;
@@ -151,7 +153,7 @@
                     & .content{
                         display: flex;
                         flex-direction: column;
-                        gap:10px;
+                        /* gap:10px; */
                         & h4{
                             color:rgba(var(--text-black),0.8);
                         }
@@ -265,7 +267,7 @@
                     position: relative;
                     border-radius: 10px;
                     display: flex;
-                    background-color: rgba(var(--text-black),0.5);
+                    background-color: rgba(var(--text-black),0.2);
                     /* background-color: red; */
                     &::before{
                         content: "";
@@ -290,7 +292,7 @@
                     position: relative;
                     display: flex;
                     border-radius: 10px;
-                    background-color: rgba(var(--text-black),0.5);
+                    background-color: rgba(var(--text-black),0.2);
                     /* background-color: red; */
                     &::before{
                         content: "";
@@ -315,7 +317,7 @@
                     position: relative;
                     border-radius: 10px;
                     display: flex;
-                    background-color: rgba(var(--text-black),0.5);
+                    background-color: rgba(var(--text-black),0.2);
                     /* background-color: red; */
                     &::before{
                         content: "";
@@ -347,7 +349,7 @@
 .center_section{
     /* padding-block: ; */
     padding-block: 50px;
-    background: rgba(var(--accent));
+    background: rgba(var(--accent),0.5);
     & .container{
         
         display: flex;

@@ -8,32 +8,46 @@
     <div class="form-container flex justify-content-center flex-column">
       <h2 class="text-center">Hi there!</h2>
 
-      <form [formGroup]="signupForm" (ngSubmit)="onSubmit()" class="d-flex flex-column">
+      <form [formGroup]="signupForm" (ngSubmit)="onSubmit()" class="d-flex flex-column gap-10">
 
-        <div class="wrapper d-flex align-items-center"
-        [ngClass]="{'wrapper-invalid': (signupForm.get('username')?.invalid && signupForm.get('username').touched)}"
-        [ngClass]="{'wrapper-valid': signupForm.get('username')?.valid && signupForm.get('username').touched}"
->
-          <span class="material-symbols-outlined">person</span>
-          <input type="text" id="username" formControlName="username" placeholder="Enter Your Username">
+        <div class="form__group d-flex relative flex-column">
+          <label>Username</label>
+
+          <span class="material-symbols-outlined absolute form__icon">person</span>
+          <input type="text" id="username" formControlName="username" placeholder="Enter Your Username" >
+          <!-- <small
+            [ngClass]="{'wrapper-invalid': (signupForm.get('username')?.invalid && signupForm.get('username').touched)}"
+        [ngClass]="{'wrapper-valid': signupForm.get('username')?.valid && signupForm.get('username').touched}"></small>
+      
+         
+        
+          -->
+
+          <small *ngIf="signupForm.get('username')?.hasError('invalidUser') && !signupForm.get('username')?.hasError('required') && signupForm.get('username').touched"
+          class="invalid">Username not available.</small>
 
         </div>
         <!-- VALIDATOR FOR USERNAME -->
 
         <!-- <p *ngIf="signupForm.get('username')?.hasError('required') && signupForm.get('username').touched"
           class="invalid">*Please enter username. </p> -->
-        <p *ngIf="signupForm.get('username')?.hasError('invalidUser') && !signupForm.get('username')?.hasError('required') && signupForm.get('username').touched"
-          class="invalid">username not available</p>
-
+      
         <!-- </div> -->
-        <div class="wrapper d-flex align-items-center"
-          
-          [ngClass]="{'wrapper-invalid': (signupForm.get('email')?.invalid && signupForm.get('email').touched)}"
-          [ngClass]="{'wrapper-valid': signupForm.get('email')?.valid && signupForm.get('email').touched}"
-          >
-
-          <span class="material-symbols-outlined">mail</span>
+        <div class="form__group d-flex flex-column relative">
+          <label>Email</label>
+          <span class="material-symbols-outlined form__icon absolute">mail</span>
           <input type="email" id="email" formControlName="email" placeholder="Enter Your Email">
+
+          <!-- <span [ngClass]="{'wrapper-invalid': (signupForm.get('email')?.invalid && signupForm.get('email').touched)}"
+          [ngClass]="{'wrapper-valid': signupForm.get('email')?.valid && signupForm.get('email').touched}"
+          ></span>
+          -->
+          
+          <small *ngIf="signupForm?.get('email')?.hasError('email') && signupForm.get('email')?.touched" class="invalid">
+            Please enter valid Email.
+          </small>
+          
+         
         </div>
 
         <!-- VALIDATOR FOR EMAIL -->
@@ -41,24 +55,33 @@
           Please enter email.
         </p> -->
 
-        <p *ngIf="signupForm?.get('email')?.hasError('email') && signupForm.get('email')?.touched" class="invalid">
-          Please enter valid Email.
-        </p>
+      
 
-        <div class="wrapper d-flex align-items-center"
+        <div class="form__group d-flex relative flex-column"
+        >
+
+
+        <label>Password</label>
+
+        <span class="material-symbols-outlined key form__icon absolute">key</span>
+          <input type="password" id="password" formControlName="password" placeholder="Enter Your Password">
+          <button class="eye-btn flex justify-content-center align-items-center"><span class="material-symbols-outlined eye">visibility</span></button>
+          <!-- <span
         [ngClass]="{'wrapper-invalid': (signupForm.get('password')?.invalid) && signupForm.get('password').touched}"
         [ngClass]="{'wrapper-valid': (signupForm.get('password')?.valid && signupForm.get('password').touched)}"
-        >
-          <span class="material-symbols-outlined key">key</span>
-          <input type="password" id="password" formControlName="password" placeholder="Enter Your Password">
-        </div>
-        <!-- <p class="invalid"
+        ></span>
+           -->
+
+
+           <!-- <small class="invalid"
           *ngIf="signupForm?.get('password')?.hasError('required') && signupForm.get('password')?.touched">
 
           Please enter password.
 
-        </p> -->
+        </small> -->
 
+
+        
         <div class="password-helper d-flex justify-content-md-between">
 
 
@@ -112,21 +135,36 @@
         </div>
 
 
+        </div>
+        <!-- <p class="invalid"
+          *ngIf="signupForm?.get('password')?.hasError('required') && signupForm.get('password')?.touched">
 
-        <div class="wrapper d-flex align-items-center"
-        [ngClass]="{'wrapper-invalid': (signupForm.get('confirmPassword')?.invalid && signupForm.get('confirmPassword').touched)}"
-          [ngClass]="{'wrapper-valid': signupForm.get('confirmPassword')?.valid && signupForm.get('confirmPassword').touched}"
-          >
-          <span class="material-symbols-outlined key">key</span>
+          Please enter password.
+
+        </p> -->
+
+
+
+        <div class="form__group d-flex flex-column relative">
+          <label>Confirm Password</label>
+          <span class="material-symbols-outlined key form__icon absolute">key</span>
           <input type="password" id="confirmPassword" formControlName="confirmPassword"
             placeholder="Re-enter Your Password">
 
-            <small *ngIf="signupForm?.get('confirmPassword')?.invalid && signupForm.get('confirmPassword')?.touched"
-              class="invalid">
-              Your passwords and confirm password do not match.
-            </small>
+
+            <button class="eye-btn flex justify-content-center align-items-center"><span class="material-symbols-outlined eye">visibility</span></button>
+       <span [ngClass]="{'wrapper-invalid': (signupForm.get('confirmPassword')?.invalid && signupForm.get('confirmPassword').touched)}"
+          [ngClass]="{'wrapper-valid': signupForm.get('confirmPassword')?.valid && signupForm.get('confirmPassword').touched}"
+          >
+         </span>
+         
+         <small *ngIf="signupForm?.get('confirmPassword')?.invalid && signupForm.get('confirmPassword')?.touched"
+         class="invalid">
+         Your passwords and confirm password do not match.
+       </small>
 
         </div>
+       
         <button class="btn-primary">Register</button>
         <p class="text-center">Already have an account?
           <a class="login-text" routerLink="../login">Login</a>
