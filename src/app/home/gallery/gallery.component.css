@@ -73,19 +73,28 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      gap: 15px;
+      /* gap: 15px; */
       flex-direction: column;
       & .icon{
         font-size: 40px;
         color: rgb(var(--primary));
       }
 
+      & .icon {
+        margin-bottom: 12px;
+      }
+
       & h4{
         color:rgba(var(--text-black));
        
         font-weight: 600;
+        margin-bottom: 2px;
         
         text-transform: uppercase;
+    }
+
+    & p {
+      font-size: 12px !important;
     }
 
 
