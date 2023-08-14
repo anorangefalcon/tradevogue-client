@@ -11,7 +11,7 @@ import { OrdersComponent } from './dashboard/orders/orders.component';
 import { DashboardComponent } from './dashboard/home.component';
 import { StatisticsComponent } from './dashboard/statistics/statistics.component';
 import { CardTemplateComponent } from './shared/components/card-template/card-template.component';
-
+import { AboutPageComponent } from './about-page/about-page.component';
 const routes: Routes = [
   {
     path: '', component: LayoutComponent,
@@ -40,6 +40,9 @@ const routes: Routes = [
   },
 
 
+
+  //ABOUT PAGE PATH
+  {path:'about',component:AboutPageComponent}
 
  
 ];
