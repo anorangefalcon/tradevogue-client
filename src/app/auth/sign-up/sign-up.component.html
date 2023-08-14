@@ -120,20 +120,33 @@
           <span class="material-symbols-outlined key">key</span>
           <input type="password" id="confirmPassword" formControlName="confirmPassword"
             placeholder="Re-enter Your Password">
-        </div>
-        <div *ngIf="signupForm?.get('confirmPassword')?.invalid && signupForm.get('confirmPassword')?.touched"
-          class="invalid">
-          Your passwords and confirm password do not match.
+
+            <small *ngIf="signupForm?.get('confirmPassword')?.invalid && signupForm.get('confirmPassword')?.touched"
+              class="invalid">
+              Your passwords and confirm password do not match.
+            </small>
+
         </div>
         <button class="btn-primary">Register</button>
         <p class="text-center">Already have an account?
           <a class="login-text" routerLink="../login">Login</a>
         </p>
+
+  <div class="form__group relative">
+    <label for="" class="form__label">Password</label>
+    <span class="material-symbols-outlined form__icon absolute">key</span>
+    <input type="text" class="form__input" />
+    <small class="invalid">
+       Your passwords and confirm password do not match.
+    </small>
+  </div>
       </form>
     </div>
   </div>
 
   <!-- img -->
   <div class="img-div"></div>
+
+
 
 </section>

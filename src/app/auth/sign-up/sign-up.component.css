@@ -169,3 +169,29 @@
         color: rgb(var(--success));
     }
 }
+
+.form__group{
+    height: 60px;
+    width: 100%;
+    background-color: transparent;
+    & input{
+        width: 100%;
+        height: 100%;
+        padding-inline-start: 40px;
+    }
+
+    & .form__icon{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 100%;
+        inset-block-start: 24px;
+        inset-inline-start: 0;
+        background-color: transparent;
+    }
+    & label{
+        padding-bottom: 10px;
+    }
+
+}

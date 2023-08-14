@@ -1,0 +1,126 @@
+<section class="product">
+    
+    <div class="container d-flex">
+        <div class="product-carousel" >
+            <owl-carousel-o [options]="customOptions">
+                <ng-template carouselSlide>
+                    <div class="img-div d-flex justify-content-center align-items-center img1">
+                    </div>
+                </ng-template>
+                <ng-template carouselSlide>
+                    <div class="img-div d-flex justify-content-center align-items-center img2"></div>
+                </ng-template>
+                <ng-template carouselSlide>
+                    <div class="img-div d-flex justify-content-center align-items-center img3"></div>
+                </ng-template>
+            </owl-carousel-o>  
+
+            <!-- <div class="prod-details-carousel">
+                <owl-carousel-o [options]="customOptions1">
+                    <ng-template carouselSlide>
+                        <div class="img-details d-flex justify-content-center align-items-center">image 1</div>
+                    </ng-template>  
+                    <ng-template carouselSlide>
+                        <div class="img-details d-flex justify-content-center align-items-center">image 2</div>
+                    </ng-template>  
+                    <ng-template carouselSlide>
+                        <div class="img-details d-flex justify-content-center align-items-center">image 3</div>
+                    </ng-template>  
+                    <ng-template carouselSlide>
+                        <div class="img-details d-flex justify-content-center align-items-center">image 4</div>
+                    </ng-template>  
+                    <ng-template carouselSlide>
+                        <div class="img-details d-flex justify-content-center align-items-center">image 5</div>
+                    </ng-template>    
+                  </owl-carousel-o>
+            </div> -->
+        </div>
+        <div class="product-desc">
+            <h2 class="prod-name">Product Name</h2>
+            <p>Lorem ipsum dolor sit amet consectetur.</p>
+            <div class="line"></div>
+            <h5 class="price">$100</h5>
+            <div class="reviews-avail d-flex justify-content-md-between">
+                <div class="rating">
+                    <span class="material-symbols-outlined">star</span>
+                    <span class="material-symbols-outlined">star</span>
+                    <span class="material-symbols-outlined">star</span>
+                    <span class="material-symbols-outlined">star</span>
+                    <span class="material-symbols-outlined">star_half</span>
+                </div>
+                <div class="avail">
+                    <p><strong>Available</strong> : 1000</p>
+                </div>
+            </div>
+            <div class="sizes d-flex align-items-center gap-20">
+                <p>Size</p>
+                <div class="sizes-opt d-flex gap-10">
+                        <div class="sizes-radios">
+                            <input label="S" type="radio" name="size" value="S" >
+                            <input label="M" type="radio" name="size" value="M">
+                            <input label="L" type="radio" name="size" value="L">
+                            <input label="XL" type="radio" name="size" value="XL">
+                            <input label="XXL" type="radio" name="size" value="XXL">
+                        </div>
+                </div>
+            </div>
+            <div class="colors d-flex align-items-center gap-15">
+                <p>Color</p>
+                <div class="colors-opt d-flex gap-10">
+                    <div class="colors-radios">
+                        <input type="radio" name="size" value="S" class="pink">
+                            <input type="radio" name="size" value="M" class="blue">
+                            <input type="radio" name="size" value="L" class="red">
+                            <input type="radio" name="size" value="XL" class="teal">
+                            <input type="radio" name="size" value="XXL" class="yellow">
+                    </div>
+                </div>
+            </div>
+            <div class="cart-div d-flex gap-30">
+                <select placeholder-text="Select Quantity">
+                    <option value="100">100</option>
+                    <option value="100">200</option>
+                    <option value="100">300</option>
+                    <option value="100">400</option>
+                    <option value="100">500</option>
+                    <option value="100">600</option>
+                </select>
+                <button class="btn-primary d-flex gap-10">
+                    <span class="material-symbols-outlined">
+                        shopping_cart
+                        </span>
+                    <p>ADD TO CART</p></button>
+            </div>
+            <div class="sku d-flex gap-15">
+                <h4>Sku</h4>
+                <p class="sku_id"><a>3489 JE0765</a></p>
+            </div>
+            <div class="tags d-flex gap-15">
+                <h4>Tags</h4>
+                <p class="sku_id"><a>Fashion</a>,<a>Bags</a>,<a>Girls</a></p>
+            </div>
+            <div class="prod-details">
+                <h2>Product Details</h2>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ducimus accusantium quibusdam eos ipsum. Explicabo amet aperiam saepe voluptatibus, adipisci asperiores!</p>
+                <h2 class="feat">Features</h2>
+                <ul>
+                    <li class="d-flex align-items-center"><span class="material-symbols-outlined">done</span>
+                        <p>Lorem, ipsum dolor sit amet consectetur adipisicing.</p></li>
+                    <li class="d-flex align-items-center"><span class="material-symbols-outlined">done</span>
+                            <p>Lorem, ipsum dolor sit amet consectetur adipisicing.</p></li>
+                    <li class="d-flex align-items-center"><span class="material-symbols-outlined">done</span>
+                                <p>Lorem, ipsum dolor sit amet consectetur adipisicing.</p></li>
+                    <li class="d-flex align-items-center"><span class="material-symbols-outlined">done</span>
+                                    <p>Lorem, ipsum dolor sit amet consectetur adipisicing.</p></li>
+                    <li class="d-flex align-items-center"><span class="material-symbols-outlined">done</span>
+                                        <p>Lorem, ipsum dolor sit amet consectetur adipisicing.</p></li>
+                    
+            
+                </ul>
+            </div>
+
+
+        </div>
+    </div>
+</section>
+

@@ -1,0 +1,11 @@
+.products {
+    height: 400px;
+    & .product-carousel {
+        width: 60%;
+        background-color: rgb(198, 144, 249);
+    }
+    & .product-desc{
+        width: 40%;
+        background-color: rgb(238, 139, 139);
+    }
+}
