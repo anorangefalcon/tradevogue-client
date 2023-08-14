@@ -14,7 +14,7 @@ export class HeroComponent {
     touchDrag: true,
     pullDrag: true,
     dots: false,
-    autoplay: true,
+    // autoplay: true,
     navSpeed: 700,
     navText: ['', ''],
     responsive: {

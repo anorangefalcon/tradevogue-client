@@ -6,5 +6,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent {
-
+  inventory_count: number = 0;
 }

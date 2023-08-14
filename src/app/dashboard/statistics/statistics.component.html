@@ -1,17 +1,26 @@
-<section id="overview-section" class="d-flex gap30">
-    <h1 class="sub-heading">DashBoard</h1>
+<section id="overview-section" class="d-flex">
+    <h2>DashBoard</h2>
     <div class="info-cards">
         <div class="column-1 card">
             <div class="row-1">
                 <span class="icons material-symbols-outlined">bar_chart_4_bars</span>
                 <div class="d-flex flex-column text-right">
-                    <p class="title">Visitors</p>
+                    <p class="title">Customers</p>
                     <span class="card-value" id="visitor">2790</span>
                 </div>
             </div>
-            <div class="row-2 d-flex align-center justify-content-end gap20">
+            <div class="row-2 d-flex align-center justify-content-end gap-5">
                 <!-- <span class="material-symbols-outlined">info</span> -->
-                <p>81% lower growth</p>
+                <p *ngIf="isCustomerChange; else customer_increase" class="spike d-flex align-center gap-10">
+                    <i class="fa-solid fa-arrow-trend-up"></i>
+                    <span class="value">+ 10% Higher growth</span>
+                </p>
+                <ng-template #customer_increase class="drop d-flex align-center gap-10">
+                    <span class="drop d-flex align-center gap-10">
+                        <span class="value"> - 20% Lower growth</span>
+                        <i class="fa-solid fa-arrow-trend-down"></i>
+                    </span>
+                </ng-template>
             </div>
         </div>
         <div class="column-2 card">
@@ -22,9 +31,18 @@
                     <span class="card-value" id="orders">200</span>
                 </div>
             </div>
-            <div class="row-2 d-flex align-center justify-content-end gap20">
+            <div class="row-2 d-flex align-center justify-content-end gap-5">
                 <!-- <span class="material-symbols-outlined">info</span> -->
-                <p>Total Sales</p>
+                <p *ngIf="isOrderChange; else order_decrease" class="spike d-flex align-center gap-10">
+                    <i class="fa-solid fa-arrow-trend-up"></i>
+                    <span class="value">+ 10% Higher Orders</span>
+                </p>
+                <ng-template #order_decrease>
+                    <span class="drop d-flex align-center gap-10">
+                        <span class="value"> - 20% Lower Orders</span>
+                        <i class="fa-solid fa-arrow-trend-down"></i>
+                    </span>
+                </ng-template>
             </div>
         </div>
         <div class="column-3 card">
@@ -32,12 +50,21 @@
                 <span class="icons material-symbols-outlined">currency_rupee</span>
                 <div class="d-flex flex-column text-right">
                     <p class="title">Revenue</p>
-                    <span class="card-value" id="revenue">&#8377; 27990</span>
+                    <span class="card-value" id="revenue"> 27990</span>
                 </div>
             </div>
-            <div class="row-2 d-flex align-center justify-content-end gap20">
+            <div class="row-2 d-flex align-center justify-content-end gap-5">
                 <!-- <span class="material-symbols-outlined">info</span> -->
-                <p>Sales per Week</p>
+                <p *ngIf="isRevenueChange; else order_decrease" class="spike d-flex align-center gap-10">
+                    <i class="fa-solid fa-arrow-trend-up"></i>
+                    <span class="value">+ 10% Higher Sales</span>
+                </p>
+                <ng-template #order_decrease>
+                    <span class="drop d-flex align-center gap-10">
+                        <span class="value"> - 20% Lower Sales</span>
+                        <i class="fa-solid fa-arrow-trend-down"></i>
+                    </span>
+                </ng-template>
             </div>
         </div>
 
@@ -49,25 +76,25 @@
                     <span class="card-value"  id="inventory">10</span>
                 </div>
             </div>
-            <div class="row-2 d-flex align-center justify-content-end gap20">
-                <!-- <span class="material-symbols-outlined">info</span> -->
+            <div class="row-2 d-flex align-center justify-content-end gap-5">
                 <p>Recently Updated</p>
+                 <span class="material-symbols-outlined">refresh</span>
             </div>
         </div>
     </div>
     <div class="stats-cards">
-        <div class="column graph">
+        <div class="column graph d-flex flex-column gap-15">
             <div class="row-1">
-                <h3 class="sub-heading-1">Sales</h3>
+                <h3>Sales & Profits</h3>
                 <span class="material-symbols-outlined">refresh</span>
             </div>
-            <div class="row-2">
+            <div class="row-2 ">
                 <canvas id="barChart">{{barChart}}</canvas>
             </div>
         </div>
-        <div class="column graph">
-            <div class="row-1">
-                <h3 class="sub-heading-1">Customer Feedback</h3>
+        <div class="column graph d-flex flex-column gap-15">
+            <div class="row-1 ">
+                <h3>Customer Reviews</h3>
                 <span class="material-symbols-outlined">refresh</span>
             </div>
             <div class="row-2">
@@ -87,134 +114,158 @@
     </div>
 
     <div class="product-section">
-        <div class="column product-info-cards product-info-cards2">
-            <div class="row-1">Popular List</div>
-            <div class="row-2 product-table">
-                <table id="datatable" class="product-list product-row" >
-                    <thead>
-                        <tr>
-                            <th>Product Name</th>
-                            <th>Views</th>
-                            <th>Likes</th>
-                            <th>Dislikes</th>
-                            <th>Price</th>
-                            <th>Inventory</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Kurta</td>
-                            <td>1200</td>
-                            <td>200</td>
-                            <td>50</td>
-                            <td>&#8377;1000</td>
-                            <td>5</td>
-                        </tr>
-                        <tr>
-                            <td>Kurta</td>
-                            <td>1200</td>
-                            <td>200</td>
-                            <td>50</td>
-                            <td>&#8377;1000</td>
-                            <td>5</td>
-                        </tr>
-                        <tr>
-                            <td>Kurta</td>
-                            <td>1200</td>
-                            <td>200</td>
-                            <td>50</td>
-                            <td>&#8377;1000</td>
-                            <td>5</td>
-                        </tr>
-                        <tr>
-                            <td>Kurta</td>
-                            <td>1200</td>
-                            <td>200</td>
-                            <td>50</td>
-                            <td>&#8377;1000</td>
-                            <td>5</td>
-                        </tr>
-                        <tr>
-                            <td>Kurta</td>
-                            <td>1200</td>
-                            <td>200</td>
-                            <td>50</td>
-                            <td>&#8377;1000</td>
-                            <td>5</td>
-                        </tr>
-                        <tr>
-                            <td>Kurta</td>
-                            <td>1200</td>
-                            <td>200</td>
-                            <td>50</td>
-                            <td>&#8377;1000</td>
-                            <td>5</td>
-                        </tr>
-                        <tr>
-                            <td>Kurta</td>
-                            <td>1200</td>
-                            <td>200</td>
-                            <td>50</td>
-                            <td>&#8377;1000</td>
-                            <td>5</td>
-                        </tr>
-                        <tr>
-                            <td>Pajama</td>
-                            <td>1200</td>
-                            <td>200</td>
-                            <td>50</td>
-                            <td>&#8377;1000</td>
-                            <td>5</td>
-                        </tr>
-                    </tbody>
-                </table>
+        <div class="column product-info-cards d-flex flex-column gap-15">
+            <div class="row-1">
+                <h3>Popular Product</h3>
+                <form action="" class="d-flex">
+                    <div class="radio_button">
+                        <input type="radio" name="popular_product_sort" class="form__input" id="Monthly" checked />
+                        <label for="Monthly" class="form__label">Monthly</label>
+                    </div>
+                    <div class="radio_button">
+                        <input type="radio" name="popular_product_sort" class="form__input" id="Yearly"/>
+                        <label for="Yearly" class="form__label">Yearly</label>
+                    </div>
+                </form>
             </div>
-        </div>
-
-        <div class="column product-info-cards">
-            <div class="row-1">Popular Product</div>
             <div class="row-2">
                 <table class="product-row">
-                    <!-- <thead>
-                        <tr>
-                            <td>Images</td>
-                            <td>Product Name</td>
-                        </tr>
-                    </thead> -->
-                    <tbody>
-                        <tr class="product-card">
-                            <td class="product-image">
-                                <span class="material-symbols-outlined">laundry</span>
+                    <tbody class="d-flex flex-column gap-10">
+                        <tr class="product-card d-flex justify-content-md-between gap-10">
+                            <td class="d-flex gap-20">
+                                <div class="product-image">
+                                    <span class="material-symbols-outlined icons">laundry</span>
+                                </div>
+                                
+                                <div class="product-name">
+                                    <h4>Product Name</h4>
+                                    <p>Category</p>
+                                </div>
                             </td>
-                            <td class="product-name">
-                                <h5>Product Name</h5>
-                                <p>Category</p>
-                            </td>
-                        </tr>
-                        <tr class="product-card">
-                            <td class="product-image">
-                                <span class="material-symbols-outlined">laundry</span>
-                            </td>
-                            <td class="product-name">
-                                <h5>Product Name</h5>
-                                <p>Category</p>
+                            <td class="d-flex gap-20">
+                                <div class="revenue">
+                                    <h4>&#8377; 20000</h4>
+                                    <p>Revenue</p>
+                                </div>
+                                <div class="profit">
+                                    <h4>&#8377; 6000</h4>
+                                    <p>Profit</p>
+                                </div>
                             </td>
                         </tr>
-                        <tr class="product-card">
-                            <td class="product-image">
-                                <span class="material-symbols-outlined">laundry</span>
+                        <tr class="product-card d-flex justify-content-md-between gap-10">
+                            <td class="d-flex gap-20">
+                                <div class="product-image">
+                                    <span class="material-symbols-outlined icons">laundry</span>
+                                </div>
+                                
+                                <div class="product-name">
+                                    <h4>Product Name</h4>
+                                    <p>Category</p>
+                                </div>
                             </td>
-                            <td class="product-name">
-                                <h5>Product Name</h5>
-                                <p>Category</p>
+                            <td class="d-flex gap-20">
+                                <div class="revenue">
+                                    <h4>&#8377; 15000</h4>
+                                    <p>Revenue</p>
+                                </div>
+                                <div class="profit">
+                                    <h4>&#8377; 8000</h4>
+                                    <p>Profit</p>
+                                </div>
                             </td>
+                        </tr>
+                        <tr class="product-card d-flex justify-content-md-between gap-10">
+                            <td class="d-flex gap-20">
+                                <div class="product-image">
+                                    <span class="material-symbols-outlined icons">laundry</span>
+                                </div>
+                                
+                                <div class="product-name">
+                                    <h4>Product Name</h4>
+                                    <p>Category</p>
+                                </div>
+                            </td>
+                            <td class="d-flex gap-20">
+                                <div class="revenue">
+                                    <h4>&#8377; 12000</h4>
+                                    <p>Revenue</p>
+                                </div>
+                                <div class="profit">
+                                    <h4>&#8377; 3000</h4>
+                                    <p>Profit</p>
+                                </div>
+                            </td>
+                            
+                        </tr>
+                        <tr class="product-card d-flex justify-content-md-between gap-10">
+                            <td class="d-flex gap-20">
+                                <div class="product-image">
+                                    <span class="material-symbols-outlined icons">laundry</span>
+                                </div>
+                                
+                                <div class="product-name">
+                                    <h4>Product Name</h4>
+                                    <p>Category</p>
+                                </div>
+                            </td>
+                            <td class="d-flex gap-20">
+                                <div class="revenue">
+                                    <h4>&#8377; 10000</h4>
+                                    <p>Revenue</p>
+                                </div>
+                                <div class="profit">
+                                    <h4>&#8377; 2500</h4>
+                                    <p>Profit</p>
+                                </div>
+                            </td>
+                            
                         </tr>
                     </tbody>
                 </table>
             </div>
         </div>
 
-        
+        <div class="column product-info-cards d-flex flex-column gap-15">
+            <div class="row-1">
+                <h3>Sales Profit by Catogory</h3>
+            </div>
+            <div class="row-2 category-table">
+                <table class="category-row d-flex flex-column gap-10">
+                    <tr>
+                        <span class="d-flex justify-content-md-between align-items-center">
+                            <h4>Jeans</h4>
+                            <span class="Category-price">&#8377;15K</span>
+                        </span>
+                        <progress value="15000" max="100000"></progress>    
+                    </tr>
+                    <tr>
+                        <span class="d-flex justify-content-md-between align-items-center">
+                            <h4>Shirts</h4>
+                            <span class="Category-price">&#8377;20K</span>
+                        </span>
+                        <progress value="20000" max="100000"></progress>    
+                    </tr>
+                    <tr>
+                        <span class="d-flex justify-content-md-between align-items-center">
+                            <h4>T-shirts</h4>
+                            <span class="Category-price">&#8377;11.2K</span>
+                        </span>
+                        <progress value="11200" max="100000"></progress>
+                    </tr>
+                    <tr>
+                        <span class="d-flex justify-content-md-between align-items-center">
+                            <h4>Trousers</h4>
+                            <span class="Category-price">&#8377;32K</span>
+                        </span>
+                        <progress value="32000" max="100000"></progress>    
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+
+     
     </div>
 
 </section>

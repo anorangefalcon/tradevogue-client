@@ -14,18 +14,19 @@
                         <span class="link-text">Overview</span>
                     </div>
                 </a>
-            </li>
+            </li> 
             <li class="panel-links "> 
-                <a href="javascript:void(0);" routerLink="/dashboard/products">
-                    <span class="icons material-symbols-outlined">inventory</span>
-                    <span class="link-text">Products</span>
-
+                <a href="javascript:void(0);" (click)="toggle()"  class="dropdown d-flex justify-content-md-between">
+                    <div class="d-flex align-center">
+                        <span class="icons material-symbols-outlined">inventory</span>
+                        <span class="link-text">Products</span>
+                    </div>
                     <span class="material-symbols-outlined">arrow_drop_down</span>
                 </a>
-                <ul class="sub-items d-flex flex-column">
-                    <li class="sub-links"><a href="javascript:void(0);">Add Products</a></li>
-                    <li class="sub-links"><a href="javascript:void(0);">Delete Products</a></li>
-                    <li class="sub-links"><a href="javascript:void(0);">Update Products</a></li>
+                <ul class="sub-items d-flex flex-column" [ngClass]="{'collapse': isCollapse}">
+                    <li class="sub-links" routerLink="/dashboard/products" ><a href="javascript:void(0);">Product Managment</a></li>
+                    <li class="sub-links"><a href="javascript:void(0);">Product Category</a></li>
+                    <li class="sub-links"><a href="javascript:void(0);">Add New Product</a></li>
                 </ul>
             </li>
             <li class="panel-links">

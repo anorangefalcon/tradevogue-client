@@ -7,6 +7,7 @@ import { SidepanelComponent } from './sidepanel/sidepanel.component';
 import { StatisticsComponent } from './statistics/statistics.component';
 import { ProductsComponent } from './products/products.component';
 import { OrdersComponent } from './orders/orders.component';
+import { SharedModule } from '../shared/shared.module';
 
 
 @NgModule({
@@ -20,7 +21,8 @@ import { OrdersComponent } from './orders/orders.component';
   
   imports: [
     CommonModule,
-    DashboardRoutingModule
+    DashboardRoutingModule,
+    SharedModule
   ]
 })
 export class DashboardModule { }

@@ -6,6 +6,17 @@
     box-sizing: border-box;
 }
 
+/* @font-face {
+    font-family: 'eyesome';
+    src: url('../src/assets/EyesomeFont/eyesome-regular.otf');
+} */
+
+@font-face {
+    font-family: 'Apercu Movistar';
+    src: url('../src/assets/Fonts/apercu-movistar-cdnfonts/apercumovistarbold.ttf');
+}
+
+
 /* Remove default margin */
 body,
 h1,
@@ -77,49 +88,47 @@ select {
 
 
 /* Global CSS (main) */
-:root {
+/* :root {
     --text-black: 0, 0, 0;
     --text-white: 255, 255, 255;
 
     --background: 255, 253, 253;
 
     --primary: 136, 45, 56;
-    /* --secondary: 223, 225, 231; */
     --secondary: 253, 225, 229;
     --accent: 253, 225, 229;
 
     --danger: 163, 22, 33;
     --success: 60, 157, 53;
-
-
-    /* DashBoard Colors */
-    --dash-background-clr: #ebeff2;
-    --dash-card-clr: #fff;
-    --dash-yellow-clr: #f9c851;
-    --dash-green-clr: #10c469;
-    --dash-blue-clr: rgb(24, 138, 226);
-    --dash-red-clr: #ff5b5b;
-    --dash-title-clr: #343a40;
-    --dash-sub-title-clr: #98a6ad;
-}
-
-/* input:focus,button:focus,a:focus{
-
-  outline: 0.5px solid rgb(var(--primary), 0.5);
-
 } */
+
+:root {
+    --text-black: 0, 0, 0;
+    --text-white: 255, 255, 255;
+    --background: 238, 238, 238;
+    --primary: 34, 40, 49;
+    --secondary: 57, 62, 70;
+    --accent: 0, 173, 181;
+
+    --danger: 163, 22, 33;
+    --success: 60, 157, 53;
+}
 
 
 h1, h2, h3, h4, h5, h6{
-    font-family: 'Poppins', sans-serif;
+    /* font-family: 'Poppins', sans-serif; */
+    /* font-family: 'Playfair Display', serif; */
+    font-family: 'Apercu Movistar', sans-serif;    
 }
 body{
-    font-family: 'Lato', sans-serif !important;
+    /* font-family: 'Lato__', sans-serif !important; */
+    font-family: 'Montserrat', sans-serif;
     font-size: 16px;
+    color: rgb(var(--primary));
 }
 
 button{
-    font-family: 'Poppins', sans-serif;
+    /* font-family: 'Poppins', sans-serif; */
     cursor: pointer;
     border: none;
     transition: 0.3s ease-in-out;
@@ -143,6 +152,10 @@ button{
 h3{
     font-size: 20px !important;
 }
+h4{
+    font-size: 16px !important;
+}
+
 h6{
     font-size: 12px !important;
 } 
@@ -185,14 +198,14 @@ ul{
 }
 
 .fs-14{
-    font-size: 14px;
+    font-size: 14px !important;
 }
 
 .fs-16{
-    font-size: 16px;
+    font-size: 16px !important; 
 }
 .fs-18{
-    font-size: 18px;
+    font-size: 18px !important;
 }
 
 /* Width and Hright */
@@ -253,6 +266,10 @@ mw100{
 
 .grid-cols-4 {
     grid-template-columns: repeat(4, 1fr);
+}
+
+.gap-5 {
+    gap: 5px;
 }
 
 .gap-10 {
@@ -322,23 +339,29 @@ mw100{
 
 
 .sub-heading{
-    font-size: 36px;
-    font-weight: 500;
+    font-size: 20px;
+    font-weight: 600;
+    color: rgb(var(--dash-title-clr));
     /* margin-bottom: 10px; */
-    letter-spacing: 1.2px;
+    letter-spacing: 0.8px;
     /* text-transform: uppercase; */
 }
 
 .sub-heading-1{
     font-size: 24px !important;
+    color: rgb(var(--dash-title-clr));
     font-weight: 500;
     letter-spacing: 0.48px;
     /* text-transform: uppercase; */
 }
 
 .title{
-    font-size: 12px !important;
-    text-transform: uppercase;   
+    font-size: 16px !important;
     font-weight: 500;
-    letter-spacing: 0.24px;
+    letter-spacing: 0.32px; 
+    line-height: 17.6px;
+    color: rgb(var(--dash-title-clr));
+    margin-bottom: 10px;
 }
+
+

@@ -10,12 +10,13 @@ header {
 }
 
 .container {
-    min-height: 80px;
+    height: 80px;
 }
 
 .branding {
-    height: 50px;
-    transform: translateY(12%);
+    height: 60px;
+    /* width: 20%; */
+    transform: translateY(10%);
 }
 
 a {
@@ -29,9 +30,28 @@ a {
 }
 
 .nav-item {
+    height: 100%;
+
     & li {
         height: 100%;
-        border: inset 2px solid rgb(var(--primary));
+        min-width: 6ch ;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        /* border: inset 5px solid pink; */
+        /* border-top-style: inset; */
+        transition: all 0.2s ease-in-out;
+        position: relative;
+    }
+
+    & li:hover::after{
+        content: "";
+        width: 100%;
+        height: 2px;
+        background-color: rgb(var(--accent));
+        display: flex;
+        position: absolute;
+        inset-block-start: 100%;
     }
 }
 
@@ -41,18 +61,93 @@ a {
 }
 
 .account-actions {
-    & li a {
+    height: 100%;
+
+    & li{
+        height: 100%;
         display: flex;
         align-items: center;
     }
-
-    & span {
-        transition: color 0.3s ease-in-out;
+    & li a{
+        position: relative;
     }
 
-    & li:hover {
+    & span {
+        transition: color 0.1s ease-in-out;
+    }
+
+    & li a:hover {
         & span {
-            color: rgb(var(--primary));
+            color: rgb(var(--accent));
         }
+    }
+
+    & li.cart{
+        & #inventory_count{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            width: 15px;
+            height: 15px;
+            background-color: rgb(var(--accent), 1);
+            color: rgb(var(--text-white), 1);
+            inset-inline-end: -5px;
+            inset-block-start: -5px;
+            border-radius: 50%;
+        }
+    }
+
+
+    & .sub-items{
+        display: none;
+        position: absolute;
+        top: 100%;
+        right: -20px;
+        padding: 20px;
+        min-width: 250px;
+        background-color: rgba(255, 255, 255, 0.9);
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        border-radius: 5px;
+        backdrop-filter: blur(10px);
+        z-index: 10;
+
+        & li{
+            padding-block: 10px;
+        }
+
+        & li:not(:last-child){
+            border-bottom: 1px solid rgb(var(--primary), 0.1);
+        }
+
+        & .sub-links{
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            align-items: flex-start;
+        }
+    }
+
+    #login,
+    #register {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    background-color: rgb(var(--accent), 0.1);
+    border-radius: 5px;
+    color: rgb(var(--primary), 1);
+    text-decoration: none;
+    transition: background-color 0.3s, color 0.3s;
+    }
+
+    #login:hover,
+    #register:hover {
+     background-color: rgb(var(--accent), 0.3); 
+    }
+
+    #login .material-symbols-outlined,
+    #register .material-symbols-outlined {
+        font-size: 18px; /* Adjust icon size */
     }
 }

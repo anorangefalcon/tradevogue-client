@@ -1,16 +1,24 @@
-<section id="product-section">
+
+    <section id="product-section">
     <div class="product-table">
         <div class="row-1">
-            <h2 class="sub-heading">Inventory</h2>
+            <h3>Products Inventory</h3>
         </div>
         <div class="operation-buttons d-flex justify-content-md-between gap-20 flex-wrap">
             <span class="d-flex gap-20 flex-wrap">
-                <button>Add New Product</button>
-                <button>Delete Selected Products</button>
+                <button routerLink="" class="d-flex align-items-center">
+                    Add New Product
+                    <span class="material-symbols-outlined">add</span>
+                </button>
+                <button class="d-flex align-items-center">
+                    Delete Selected Products
+                    <span class="material-symbols-outlined">delete</span>
+                </button>
             </span>
-            <span class="search-menu d-flex align-center">
-                <input type="search" placeholder="Search Products">
-                <span class="material-symbols-outlined d-flex align-center justify-content-center">search</span>
+            <span class="search-menu">
+                <app-search-bar></app-search-bar>
+                <!-- <input type="search" placeholder="Search Products">
+                <span class="material-symbols-outlined d-flex align-center justify-content-center">search</span> -->
             </span>
         </div>
         <div class="product-display">
@@ -20,14 +28,14 @@
         </div>
         <div class="filters">
             <!-- Product Inventory -->
-            <select name="" id="">
+            <select name="" id="inventory_status">
                 <option value="" selected disabled>Filter by Stock Status</option>
                 <option value="">Out of Stock</option>
                 <option value="">Low Inventory</option>
                 <option value="">In Stock</option>
             </select>
             <!-- Product Category -->
-            <select name="" id="">
+            <select name="" id="" class="form-select">
                 <option value="" selected disabled>Product Catgory</option>
                 <option value="">Category 1</option>
                 <option value="">Category 2</option>
@@ -49,14 +57,19 @@
                 <option value=""></option>
             </select> -->
 
-            <a class="button" href="javascript: void(0);"> Apply</a>
-            <a class="button" href="javascript: void(0);">Clear</a>
+            <a id="apply-fliter" class="button d-flex gap-5 align-items-center" href="javascript: void(0);">
+                 Apply
+                 <span class="material-symbols-outlined">arrow_forward_ios</span>
+            </a>
+            <a id="clear-filter" class="button" href="javascript: void(0);">Clear</a>
         </div>
-        <div>
-            
+        <div class="product-display">
+            <p class="fs-12">
+                Selected Items: <span> 0/100</span>
+            </p>
         </div>
         <div class="product-list">
-            <table>
+            <table id="datatable1">
                 <thead>
                     <tr>
                         <th class="product-items heading"></th>
@@ -64,9 +77,10 @@
                         <th class="product-items heading">Product Name</th>
                         <th class="product-items heading">Category</th>
                         <th class="product-items heading">Price</th>
-                        <th class="product-items heading">Unit Solid</th>
+                        <th class="product-items heading">Unit Sold</th>
                         <th class="product-items heading">In Stock</th>
                         <th class="product-items heading">Rating</th>
+                        <th class="product-items heading">Last Modified</th>
                         <th class="product-items heading">Actions</th>
                     </tr>
                 </thead>
@@ -81,33 +95,15 @@
                         <td class="product-items">&#8377; 2000</td>
                         <td class="product-items">250</td>
                         <td class="product-items">20</td>
-                        <td class="product-items">20</td>
+                        <td class="product-items d-flex gap-5 align-items-center">
+                            <i class="fa-regular fa-star" style="color: rgb(var(--dash-blue-clr));" ></i>4</td>
+                        <td class="product-items" style="font-weight: 600;">03/11/2023</td>
                         <td class="product-items">
-                            <a href="javascript:void(0);">
-                                <span class="material-symbols-outlined">edit</span>
+                            <a href="javascript:void(0);" style="color: rgb(var(--dash-blue-clr));">
+                                <i class="fa-icon fa-regular fa-pen-to-square"></i>
                             </a>
-                            <a href="javascript:void(0);">
-                                <span class="material-symbols-outlined">delete</span>
-                            </a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="product-items">
-                            <input type="checkbox">
-                        </td>
-                        <td class="product-items">#123</td>
-                        <td class="product-items">Product 1</td>
-                        <td class="product-items">Category 1</td>
-                        <td class="product-items">&#8377; 2000</td>
-                        <td class="product-items">250</td>
-                        <td class="product-items">20</td>
-                        <td class="product-items">20</td>
-                        <td class="product-items">
-                            <a href="javascript:void(0);">
-                                <span class="material-symbols-outlined">edit</span>
-                            </a>
-                            <a href="javascript:void(0);">
-                                <span class="material-symbols-outlined">delete</span>
+                            <a href="javascript:void(0);" style="color: rgb(var(--dash-red-clr));">
+                                <i class="fa-icon fa-regular fa-trash-can"></i>
                             </a>
                         </td>
                     </tr>
@@ -121,33 +117,15 @@
                         <td class="product-items">&#8377; 2000</td>
                         <td class="product-items">250</td>
                         <td class="product-items">20</td>
-                        <td class="product-items">20</td>
+                        <td class="product-items d-flex gap-5 align-items-center">
+                            <i class="fa-regular fa-star" style="color: rgb(var(--dash-blue-clr));" ></i>4</td>
+                        <td class="product-items" style="font-weight: 600;">03/11/2023</td>
                         <td class="product-items">
-                            <a href="javascript:void(0);">
-                                <span class="material-symbols-outlined">edit</span>
+                            <a href="javascript:void(0);" style="color: rgb(var(--dash-blue-clr));">
+                                <i class="fa-icon fa-regular fa-pen-to-square"></i>
                             </a>
-                            <a href="javascript:void(0);">
-                                <span class="material-symbols-outlined">delete</span>
-                            </a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="product-items">
-                            <input type="checkbox">
-                        </td>
-                        <td class="product-items">#123</td>
-                        <td class="product-items">Product 1</td>
-                        <td class="product-items">Category 1</td>
-                        <td class="product-items">&#8377; 2000</td>
-                        <td class="product-items">250</td>
-                        <td class="product-items">20</td>
-                        <td class="product-items">20</td>
-                        <td class="product-items">
-                            <a href="javascript:void(0);">
-                                <span class="material-symbols-outlined">edit</span>
-                            </a>
-                            <a href="javascript:void(0);">
-                                <span class="material-symbols-outlined">delete</span>
+                            <a href="javascript:void(0);" style="color: rgb(var(--dash-red-clr));">
+                                <i class="fa-icon fa-regular fa-trash-can"></i>
                             </a>
                         </td>
                     </tr>
@@ -161,33 +139,15 @@
                         <td class="product-items">&#8377; 2000</td>
                         <td class="product-items">250</td>
                         <td class="product-items">20</td>
-                        <td class="product-items">20</td>
+                        <td class="product-items d-flex gap-5 align-items-center">
+                            <i class="fa-regular fa-star" style="color: rgb(var(--dash-blue-clr));" ></i>4</td>
+                        <td class="product-items" style="font-weight: 600;">03/11/2023</td>
                         <td class="product-items">
-                            <a href="javascript:void(0);">
-                                <span class="material-symbols-outlined">edit</span>
+                            <a href="javascript:void(0);" style="color: rgb(var(--dash-blue-clr));">
+                                <i class="fa-icon fa-regular fa-pen-to-square"></i>
                             </a>
-                            <a href="javascript:void(0);">
-                                <span class="material-symbols-outlined">delete</span>
-                            </a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="product-items">
-                            <input type="checkbox">
-                        </td>
-                        <td class="product-items">#123</td>
-                        <td class="product-items">Product 1</td>
-                        <td class="product-items">Category 1</td>
-                        <td class="product-items">&#8377; 2000</td>
-                        <td class="product-items">250</td>
-                        <td class="product-items">20</td>
-                        <td class="product-items">20</td>
-                        <td class="product-items">
-                            <a href="javascript:void(0);">
-                                <span class="material-symbols-outlined">edit</span>
-                            </a>
-                            <a href="javascript:void(0);">
-                                <span class="material-symbols-outlined">delete</span>
+                            <a href="javascript:void(0);" style="color: rgb(var(--dash-red-clr));">
+                                <i class="fa-icon fa-regular fa-trash-can"></i>
                             </a>
                         </td>
                     </tr>
@@ -201,33 +161,15 @@
                         <td class="product-items">&#8377; 2000</td>
                         <td class="product-items">250</td>
                         <td class="product-items">20</td>
-                        <td class="product-items">20</td>
+                        <td class="product-items d-flex gap-5 align-items-center">
+                            <i class="fa-regular fa-star" style="color: rgb(var(--dash-blue-clr));" ></i>4</td>
+                        <td class="product-items" style="font-weight: 600;">03/11/2023</td>
                         <td class="product-items">
-                            <a href="javascript:void(0);">
-                                <span class="material-symbols-outlined">edit</span>
+                            <a href="javascript:void(0);" style="color: rgb(var(--dash-blue-clr));">
+                                <i class="fa-icon fa-regular fa-pen-to-square"></i>
                             </a>
-                            <a href="javascript:void(0);">
-                                <span class="material-symbols-outlined">delete</span>
-                            </a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="product-items">
-                            <input type="checkbox">
-                        </td>
-                        <td class="product-items">#123</td>
-                        <td class="product-items">Product 1</td>
-                        <td class="product-items">Category 1</td>
-                        <td class="product-items">&#8377; 2000</td>
-                        <td class="product-items">250</td>
-                        <td class="product-items">20</td>
-                        <td class="product-items">20</td>
-                        <td class="product-items">
-                            <a href="javascript:void(0);">
-                                <span class="material-symbols-outlined">edit</span>
-                            </a>
-                            <a href="javascript:void(0);">
-                                <span class="material-symbols-outlined">delete</span>
+                            <a href="javascript:void(0);" style="color: rgb(var(--dash-red-clr));">
+                                <i class="fa-icon fa-regular fa-trash-can"></i>
                             </a>
                         </td>
                     </tr>
@@ -241,13 +183,15 @@
                         <td class="product-items">&#8377; 2000</td>
                         <td class="product-items">250</td>
                         <td class="product-items">20</td>
-                        <td class="product-items">20</td>
+                        <td class="product-items d-flex gap-5 align-items-center">
+                            <i class="fa-regular fa-star" style="color: rgb(var(--dash-blue-clr));" ></i>4</td>
+                        <td class="product-items" style="font-weight: 600;">03/11/2023</td>
                         <td class="product-items">
-                            <a href="javascript:void(0);">
-                                <span class="material-symbols-outlined">edit</span>
+                            <a href="javascript:void(0);" style="color: rgb(var(--dash-blue-clr));">
+                                <i class="fa-icon fa-regular fa-pen-to-square"></i>
                             </a>
-                            <a href="javascript:void(0);">
-                                <span class="material-symbols-outlined">delete</span>
+                            <a href="javascript:void(0);" style="color: rgb(var(--dash-red-clr));">
+                                <i class="fa-icon fa-regular fa-trash-can"></i>
                             </a>
                         </td>
                     </tr>
@@ -261,13 +205,103 @@
                         <td class="product-items">&#8377; 2000</td>
                         <td class="product-items">250</td>
                         <td class="product-items">20</td>
-                        <td class="product-items">20</td>
+                        <td class="product-items d-flex gap-5 align-items-center">
+                            <i class="fa-regular fa-star" style="color: rgb(var(--dash-blue-clr));" ></i>4</td>
+                        <td class="product-items" style="font-weight: 600;">03/11/2023</td>
                         <td class="product-items">
-                            <a href="javascript:void(0);">
-                                <span class="material-symbols-outlined">edit</span>
+                            <a href="javascript:void(0);" style="color: rgb(var(--dash-blue-clr));">
+                                <i class="fa-icon fa-regular fa-pen-to-square"></i>
                             </a>
-                            <a href="javascript:void(0);">
-                                <span class="material-symbols-outlined">delete</span>
+                            <a href="javascript:void(0);" style="color: rgb(var(--dash-red-clr));">
+                                <i class="fa-icon fa-regular fa-trash-can"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="product-items">
+                            <input type="checkbox">
+                        </td>
+                        <td class="product-items">#123</td>
+                        <td class="product-items">Product 1</td>
+                        <td class="product-items">Category 1</td>
+                        <td class="product-items">&#8377; 2000</td>
+                        <td class="product-items">250</td>
+                        <td class="product-items">20</td>
+                        <td class="product-items d-flex gap-5 align-items-center">
+                            <i class="fa-regular fa-star" style="color: rgb(var(--dash-blue-clr));" ></i>4</td>
+                        <td class="product-items" style="font-weight: 600;">03/11/2023</td>
+                        <td class="product-items">
+                            <a href="javascript:void(0);" style="color: rgb(var(--dash-blue-clr));">
+                                <i class="fa-icon fa-regular fa-pen-to-square"></i>
+                            </a>
+                            <a href="javascript:void(0);" style="color: rgb(var(--dash-red-clr));">
+                                <i class="fa-icon fa-regular fa-trash-can"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="product-items">
+                            <input type="checkbox">
+                        </td>
+                        <td class="product-items">#123</td>
+                        <td class="product-items">Product 1</td>
+                        <td class="product-items">Category 1</td>
+                        <td class="product-items">&#8377; 2000</td>
+                        <td class="product-items">250</td>
+                        <td class="product-items">20</td>
+                        <td class="product-items d-flex gap-5 align-items-center">
+                            <i class="fa-regular fa-star" style="color: rgb(var(--dash-blue-clr));" ></i>4</td>
+                        <td class="product-items" style="font-weight: 600;">03/11/2023</td>
+                        <td class="product-items">
+                            <a href="javascript:void(0);" style="color: rgb(var(--dash-blue-clr));">
+                                <i class="fa-icon fa-regular fa-pen-to-square"></i>
+                            </a>
+                            <a href="javascript:void(0);" style="color: rgb(var(--dash-red-clr));">
+                                <i class="fa-icon fa-regular fa-trash-can"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="product-items">
+                            <input type="checkbox">
+                        </td>
+                        <td class="product-items">#123</td>
+                        <td class="product-items">Product 1</td>
+                        <td class="product-items">Category 1</td>
+                        <td class="product-items">&#8377; 2000</td>
+                        <td class="product-items">250</td>
+                        <td class="product-items">20</td>
+                        <td class="product-items d-flex gap-5 align-items-center">
+                            <i class="fa-regular fa-star" style="color: rgb(var(--dash-blue-clr));" ></i>4</td>
+                        <td class="product-items" style="font-weight: 600;">03/11/2023</td>
+                        <td class="product-items">
+                            <a href="javascript:void(0);" style="color: rgb(var(--dash-blue-clr));">
+                                <i class="fa-icon fa-regular fa-pen-to-square"></i>
+                            </a>
+                            <a href="javascript:void(0);" style="color: rgb(var(--dash-red-clr));">
+                                <i class="fa-icon fa-regular fa-trash-can"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="product-items">
+                            <input type="checkbox">
+                        </td>
+                        <td class="product-items">#123</td>
+                        <td class="product-items">Product 1</td>
+                        <td class="product-items">Category 1</td>
+                        <td class="product-items">&#8377; 2000</td>
+                        <td class="product-items">250</td>
+                        <td class="product-items">20</td>
+                        <td class="product-items d-flex gap-5 align-items-center">
+                            <i class="fa-regular fa-star" style="color: rgb(var(--dash-blue-clr));" ></i>4</td>
+                        <td class="product-items" style="font-weight: 600;">03/11/2023</td>
+                        <td class="product-items">
+                            <a href="javascript:void(0);" style="color: rgb(var(--dash-blue-clr));">
+                                <i class="fa-icon fa-regular fa-pen-to-square"></i>
+                            </a>
+                            <a href="javascript:void(0);" style="color: rgb(var(--dash-red-clr));">
+                                <i class="fa-icon fa-regular fa-trash-can"></i>
                             </a>
                         </td>
                     </tr>

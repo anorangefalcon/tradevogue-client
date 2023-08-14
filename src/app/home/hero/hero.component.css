@@ -1,6 +1,6 @@
 .hero-section {
     margin-block-start: 80px;
-
+ 
     /* background-image: url(../../assets/hero-bg.png); */
     & .hero-text {
         width: 50%;
@@ -15,6 +15,7 @@
         background-color: rgba(0, 234, 255, 0.1);
         background-image: url(../../../assets/deal-of-week-component/dealOfWeek-homeBg.png);
         background-size: cover;
+        
     }
 
     .bg2 {
@@ -28,12 +29,17 @@
         min-height: 100%;
         background: url(../../../assets/girl.png);
         background-size: cover;
+        background-repeat: no-repeat;
+        filter: grayscale(20%);
     }
 
     & .hero-img2 {
         min-height: 100%;
+        width: 100%;
         background: url(../../../assets/boy2.png);
         background-size: cover;
+        background-repeat: no-repeat;
+        filter: grayscale(20%) brightness(90%);
     }
 
     & .hero-text-container {

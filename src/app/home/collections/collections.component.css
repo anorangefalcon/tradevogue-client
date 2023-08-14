@@ -1,33 +1,4 @@
-.item {
-  background-size: cover;
-  background-repeat: no-repeat;
-  height: auto;
-  width: auto;
-  overflow: hidden;
-  background-position: center;
-}
-
-.item1 {
-  grid-area: women;
-  /* background-image: url('https://plus.unsplash.com/premium_photo-1664438942574-e56510dc5ce5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8Y29sb3J8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=500&q=60'); */
-}
-
-.item2 {
-  grid-area: men;
-  /* background-image: url('https://plus.unsplash.com/premium_photo-1664438942574-e56510dc5ce5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8Y29sb3J8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=500&q=60'); */
-}
-
-.item3 {
-  grid-area: kids;
-  /* background-image: url('https://plus.unsplash.com/premium_photo-1664438942574-e56510dc5ce5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8Y29sb3J8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=500&q=60'); */
-}
-
-.item4 {
-  grid-area: gift;
-  /* background-image: url('https://plus.unsplash.com/premium_photo-1664438942574-e56510dc5ce5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8Y29sb3J8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=500&q=60'); */
-}
-
-.grid-container {
+.grid-container{
   position: relative;
   height: 500px;
   grid-template-areas: 
@@ -37,6 +8,28 @@
     'women women kids gift';
   grid-gap: 30px;
 }
+
+
+.item {
+  background-size: cover;
+  background-repeat: no-repeat;
+  height: auto;
+  width: auto;
+  overflow: hidden;
+  background-position: center;
+}
+
+.item1 {grid-area: women;}
+.item2 {grid-area: men;}
+.item3 {grid-area: kids;}
+.item4 {grid-area: gift;}
+
+p{
+    font-size: 20px !important;
+    letter-spacing: 0.4px;
+    color: rgb(var(--primary), 0.9);
+}
+
 
 .grid-container>div {
   position: relative;
