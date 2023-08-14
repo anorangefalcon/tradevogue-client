@@ -3,10 +3,12 @@
     /* DashBoard Colors */
     --background-clr: 238, 238, 238;
     --dash-card-clr: 255, 255, 255;
-    --dash-yellow-clr: 249, 200, 81;
-    --dash-green-clr: 16, 196, 105;
+    --dash-yellow-clr: 249, 165, 80;
+    /* --dash-green-clr: 16, 196, 105; */
+    --dash-green-clr: var(--success);
     --dash-blue-clr: 24, 138, 226;
-    --dash-red-clr: 255, 91, 91;
+    /* --dash-red-clr: 255, 91, 91; */
+    --dash-red-clr: var(--danger);
     --dash-title-clr: 34, 40, 49;
     --dash-title-clr: 0, 28, 48;
     --dash-sub-title-clr: 57, 62, 70;
@@ -74,4 +76,11 @@
         }
     }
     
+}
+
+/* Apply rounded corners to the legend container */
+.rounded-legend .chartjs-render-monitor .chartjs-size-monitor-expand,
+.rounded-legend .chartjs-render-monitor .chartjs-size-monitor-shrink,
+.rounded-legend .chartjs-render-monitor {
+    border-radius: 10px; /* Adjust the border radius as needed */
 }

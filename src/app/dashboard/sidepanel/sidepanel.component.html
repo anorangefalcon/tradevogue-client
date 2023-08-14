@@ -2,10 +2,19 @@
 <section id="dashboard-section">
     
     <div #sidePanel class="side-panel relative">
-        <a href="javascript:void(0);" #toggleBtn 
-            class="toggle-button d-flex relative">
-            <span class="d-flex justify-content-center icons material-symbols-outlined mw100 absolute">menu</span>
-        </a>
+        <div class="nav-header d-flex justify-content-md-between align-items-center">
+            <a routerLink="/home">
+                <img src="../../../assets/logo.png" alt="Logo" style="height: 40px; transform: translateY(5px);">
+            </a>
+
+            <a href="javascript:void(0);" #toggleBtn 
+                class="toggle-button d-flex relative">
+                <span class="d-flex justify-content-center icons material-symbols-outlined mw100">menu</span>
+            </a>
+
+        </div>
+
+        
         <ul class="panel-items d-flex flex-column">
             <li class="panel-links" routerLink="/dashboard">
                 <a href=" javascript:void(0);" class="dropdown d-flex justify-content-md-between">

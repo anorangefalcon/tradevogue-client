@@ -110,8 +110,8 @@ select {
     --secondary: 57, 62, 70;
     --accent: 0, 173, 181;
 
-    --danger: 163, 22, 33;
-    --success: 60, 157, 53;
+    --danger: 223, 22, 33;
+    --success: 60, 167, 23;
 }
 
 
@@ -119,6 +119,10 @@ h1, h2, h3, h4, h5, h6{
     /* font-family: 'Poppins', sans-serif; */
     /* font-family: 'Playfair Display', serif; */
     font-family: 'Apercu Movistar', sans-serif;    
+}
+h1{
+    font-size: 36px;
+    font-weight: 500;
 }
 body{
     /* font-family: 'Lato__', sans-serif !important; */

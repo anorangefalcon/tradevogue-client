@@ -4,15 +4,43 @@
     flex-direction: column;
     gap: 24px;
 
+    
 
     & .card,
     .graph,
     .product-info-cards {
-        padding: 24px;
-        /* box-shadow: 0px 0px 1px rgba(128, 128, 128, 0.527); */
+        /* padding: 24px;
+        box-shadow: 2px 1px 0px rgb(0, 0, 0, 0.2);
         border-radius: 5px;
         border: 1px solid rgba(0, 0, 0, 0.1);
-        background-color: rgb(var(--dash-card-clr));
+        background-color: rgb(var(--dash-card-clr)); */
+
+        padding: 20px;
+        box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+        border-radius: 10px;
+        border: none;
+        background-color: #ffffff;
+
+        transition: box-shadow 0.3s ease-in-out;
+    }
+    .card:hover, .graph:hover, .product-info-cards:hover {
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.15);
+      }
+
+    & .card {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+
+        & .row-1 {
+            text-align: left !important;
+            display: flex;
+            flex-direction: row-reverse;
+            justify-content: space-between;
+            align-items: center;
+            border-block-end: none !important;
+            padding-block-end: 0px !important;
+        }
     }
 
 
@@ -33,6 +61,14 @@
         font-size: 2.5rem;
         display: flex;
         align-items: center;
+
+        /* border: 1px solid; */
+        /* background: linear-gradient(327deg, rgb(var(--background-clr), 0.6), rgba(255, 255, 255, 0)); */
+        border-radius: 50%;
+        height: 70px;
+        width: 70px;
+        justify-content: CENTER;
+        ALIGN-ITEMS: CENTER;
     }
 
     & .column-1 {
@@ -40,6 +76,7 @@
 
         & .icons {
             color: rgb(var(--dash-blue-clr));
+            background: linear-gradient(327deg, rgb(var(--dash-blue-clr), 0.2), rgba(255, 255, 255, 0));
         }
     }
 
@@ -48,6 +85,8 @@
 
         & .icons {
             color: rgb(var(--dash-yellow-clr));
+            background: linear-gradient(327deg, rgb(var(--dash-yellow-clr), 0.2), rgba(255, 255, 255, 0));
+
         }
     }
 
@@ -56,6 +95,8 @@
 
         & .icons {
             color: rgb(var(--dash-green-clr));
+            background: linear-gradient(327deg, rgb(var(--dash-green-clr), 0.2), rgba(255, 255, 255, 0));
+
         }
     }
 
@@ -64,6 +105,7 @@
 
         & .icons {
             color: rgb(var(--dash-red-clr));
+            background: linear-gradient(327deg, rgb(var(--dash-red-clr), 0.2), rgba(255, 255, 255, 0));
         }
     }
 
@@ -71,6 +113,9 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
+
+        padding-block-end: 10px;
+        border-block-end: 1px solid rgb(var(--text-black), 0.1);
     }
 
     & .row-2 {
@@ -82,6 +127,11 @@
             color: rgb(var(--dash-sub-title-clr));
             font-size: 14px !important;
         }
+
+        & .value {
+            font-size: 12px !important;
+        }
+
 
         & p {
             font-size: 14px !important;
@@ -96,6 +146,8 @@
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
         gap: 24px;
+
+
 
         & .graph {
 
@@ -148,6 +200,11 @@
 
             & .product-row {
                 width: 100%;
+
+                & .icons {
+                    background: none;
+
+                }
             }
 
             & .product-image {
@@ -157,7 +214,7 @@
                 width: 50px;
                 height: 50px;
                 border-radius: 5px;
-                background-color: rgba(var(--dash-sub-title-clr), 0.2);
+                background-color: rgba(var(--dash-blue-clr), 0.05);
 
                 & .icons {
                     font-size: 25px !important;
@@ -181,22 +238,24 @@
             }
         }
 
-        & .category-table{
+        & .category-table {
 
-            & .category-row{
+            & .category-row {
                 width: 100%;
             }
-            & progress{
+
+            & progress {
                 width: 100%;
                 border-radius: 20px;
-                height: 12px;
-        
-                &::-webkit-progress-bar{
+                height: 9px;
+
+                &::-webkit-progress-bar {
                     border: none;
                     border-radius: 20px;
                     background-color: rgb(var(--dash-sub-title-clr), 0.1);
                 }
-                &::-webkit-progress-value{
+
+                &::-webkit-progress-value {
                     border-radius: 20px;
                     background-color: rgb(var(--accent));
                 }
@@ -206,7 +265,6 @@
 
     }
 }
-
 
 @media screen and (max-width: 768px) {
 
