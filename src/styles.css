@@ -131,6 +131,10 @@ body{
     color: rgb(var(--primary));
 }
 
+.pointer{
+    cursor: pointer;
+}
+
 button{
     /* font-family: 'Poppins', sans-serif; */
     cursor: pointer;
