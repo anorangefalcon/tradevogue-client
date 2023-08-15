@@ -1,26 +1,13 @@
 .header {
-    margin-block-start: 40px;
+    margin-block-start: 50px;
     margin-inline-start: 50px;
     gap: 380px;
-}
-
-.header button {
-    transform: translateY(-5px);
-    /* background-color: transparent;
-    border: 1px solid rgb(var(--primary));
-    color: rgb(var(--primary));
-
-    &:is(:hover, :active, :focus) {
-        color: rgb(var(--text-white));
-        background-color: rgb(var(--primary));
-    } */
 }
 
 .login {
     min-height: 100vh;
 
-    & .left-part,
-    .right-part {
+    & .left-part, .right-part {
         padding: 0;
         width: 50%;
         background-color: rgb(var(--background));
@@ -28,7 +15,7 @@
 
     & .form-container {
         min-width: 370px;
-
+       
         & h2 {
             font-size: 50px;
             font-weight: 500;
@@ -36,48 +23,13 @@
             line-height: 0.9;
             margin-block-end: 50px;
         }
-
-        & .wrapper {
-            background-color: rgb(var(--primary), 0.05);
-            width: 100%;
-            margin-block-end: 30px;
-            padding: 15px 22px;
-            border-radius: 10px;
-            padding-inline-start: 12px;
-            gap: 10px;
-            border: 1px solid transparent;
-            transition: border-color 0.3s;
-            
-        }
-        & .wrapper-invalid{
+        /* & .wrapper-invalid{
             border: 1px solid rgb(var(--danger));
         }
         & .wrapper-valid{
             border: 1px solid rgb(var(--success));
-        }
+        } */
         
-        & .wrapper:focus-within{
-            border-color: rgb(var(--text-black), 0.4);
-        }
-        
-
-        & .wrapper input {
-            flex: 1;
-            font-size: 14px;
-            border: none;
-            background-color: transparent;
-            outline: none;
-        }
-
-        & ::placeholder{
-            color: rgb(var(--text-black), 0.3);
-        }
-
-        & .wrapper .person,
-        .wrapper .key {
-            font-size: 24px;
-            color: rgb(var(--text-black), 0.5);
-        }
 
         & .key {
             transform: rotate(90deg);
@@ -87,41 +39,31 @@
             font-size: 15px;
             color: rgb(var(--text-black), 0.3);
             font-weight: 900;
-
-
         }
 
         
-        & .eye-btn:is(:active) {
+        & .eye-btn:is(:active, :hover) {
             & .eye {
 
                 color: rgb(var(--primary), 0.7);
             }
         }
 
-        & .wrapper button {
-            background-color: transparent;
-            border: none;
-            outline: none;
-            transform: translateY(6%);
-            padding: 0;
-            margin: 0;
-        }
 
-        & button {
-            margin-bottom: 15px;
-            padding: 12px 5px;
+        & .eye-btn {
+           
+            padding: 13px 5px;
             border-radius: 10px;
             border: none;
-            margin-block-start: 5px;
+           
+            position: absolute;
+            inset-block-start: 30px;
+            inset-inline-end: 7px;
+            background-color: transparent;
         }
 
         & .invalid {
             color: rgb(var(--danger));
-            text-align: left;
-            margin-bottom: 9px;
-            margin-top: -30px;
-            padding-inline-start: 10px;
             font-size: 12px !important;
 
         }
@@ -155,4 +97,57 @@
         background-size: cover;
     }
 
+}
+.form__group{
+    
+    width: 100%;
+   
+    & input{
+        width: 100%;
+        height: 52px;
+        padding-inline-start: 40px;
+        border-radius: 8px;
+        border: 1px solid transparent;
+        background-color: rgb(var(--primary), 0.05);
+        font-size: 14px;
+        outline: none;
+
+    }
+    & input:focus{
+        border-color: rgb(var(--text-black), 0.4);
+    }
+    
+    & label {
+        font-size: 14px;
+        color: rgb(var(--text-black), 0.9);
+        padding-bottom: 5px;
+    }
+    & label span{
+        color: rgb(var(--danger));
+    }
+
+    & .form__icon{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        inset-block-start: 40px;
+        inset-inline-start: 0;
+        background-color: transparent;
+        color: rgb(var(--text-black), 0.5);
+    }
+
+    & ::placeholder{
+        color: rgb(var(--text-black), 0.3);
+    }
+
+    & small {
+        margin-block-start: 8px;
+    }
+
+    
+}
+.loginbtn {
+    height: 52px;
+    border-radius: 8px;
 }

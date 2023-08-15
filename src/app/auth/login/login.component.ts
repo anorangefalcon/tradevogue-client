@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { passwordStrengthValidator, usernameValidator} from './validators';
 
 @Component({
@@ -9,7 +9,12 @@ import { passwordStrengthValidator, usernameValidator} from './validators';
 })
 export class LoginComponent {
 
-  loginForm : any;
+  loginForm : FormGroup;
+
+  passwordFieldType: string = 'password';
+  showPassword: boolean = false;
+  isFormSubmitted: boolean = false;
+
   constructor(private fb:FormBuilder){
     this.loginForm = fb.group(
       {
@@ -20,10 +25,15 @@ export class LoginComponent {
   }
 
   onLogin(){
+    this.isFormSubmitted = !this.isFormSubmitted;
     console.log("hello");
     const data = this.loginForm;
-    console.log(data);
-    
+    console.log(data);  
   }
+
+  togglePasswordVisibility() {
+    this.showPassword = !this.showPassword;
+    this.passwordFieldType = this.showPassword ? 'text' : 'password';
+}
 
 }

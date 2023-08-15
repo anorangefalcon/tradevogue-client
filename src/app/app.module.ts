@@ -15,6 +15,7 @@ import { CarouselModule } from 'ngx-owl-carousel-o';
 import { DataTablesModule } from 'angular-datatables';
 import { ProductPageModule } from './product-page/product-page.module';
 import { FaqPageModule } from './faq-page/faq-page.module';
+import { TcComponent } from './tc/tc.component';
 
 
 @NgModule({
@@ -22,6 +23,7 @@ import { FaqPageModule } from './faq-page/faq-page.module';
     AppComponent,
     LayoutComponent,
     AuthLayoutComponent,
+    TcComponent,
   ],
   imports: [
     BrowserModule,
@@ -35,7 +37,7 @@ import { FaqPageModule } from './faq-page/faq-page.module';
     CarouselModule,
     DataTablesModule,
     ProductPageModule,
-    FaqPageModule
+    FaqPageModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
