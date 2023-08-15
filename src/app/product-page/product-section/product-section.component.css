@@ -5,6 +5,7 @@
         width: 50%;
         /* background-color: rgb(198, 144, 249); */
         /* padding-inline-start: 55px; */
+        
     }
 
     & .product-desc {
@@ -40,6 +41,44 @@
         background-color: rgba(var(--text-black), 0.2);
 
     }
+    & .products-imgs-container{
+        margin-block-start: 20px;
+        /* width: 100%; */
+        gap: 10px;
+        
+        & .row1{
+            gap: 10px;
+        }
+
+    }
+    & .gal-img{
+        width: 50%;
+        height: 350px;
+        /* margin-inline: 5px; */
+    }
+    .gal1{
+        background: url(https://images.bewakoof.com/t1080/men-s-black-explorer-nasa-graphic-printed-oversized-t-shirt-591083-1683033465-1.jpg);
+        background-size: cover;
+        background-position: center;
+    }
+    .gal2{
+        background: url(https://images.bewakoof.com/t1080/men-s-black-explorer-nasa-graphic-printed-oversized-t-shirt-591083-1683033476-3.jpg);
+        background-size: cover;
+        background-position: 90%;
+        background-position: center;
+
+
+    }
+    .gal3{
+        background: url(https://images.bewakoof.com/t1080/men-s-black-explorer-nasa-graphic-printed-oversized-t-shirt-591083-1683033471-2.jpg);
+        background-size: cover;
+
+    }
+    .gal4{
+        background: url(https://images.bewakoof.com/t1080/men-s-black-explorer-nasa-graphic-printed-oversized-t-shirt-591083-1682596293-5.jpg);
+        background-size: cover;
+    }
+    .gal
 
     & .prod-details-carousel {
         /* background-color: pink; */
@@ -183,8 +222,68 @@
         color: rgba(var(--text-black), 0.8);
     }
     .feat{
-        font-size: 26px !important;
+        font-size: 32px !important;
     }
+    .feat_list {
+        list-style-type: disc !important;
+    }
+    .feat_list li {
+        margin-block: 5px;
+        margin-inline-start: 10px;
+    }
+    & th {
+        text-align: left;
+        width: 180px;
+
+    }
+    & form textarea, form input {
+        margin-block-end: 15px;
+        border-radius: 8px;
+        border: 1px solid transparent;
+        background-color: rgb(var(--primary), 0.05);
+        padding: 7px;
+        font-size: 13px;
+        
+
+    }
+    & input {
+        padding-block: 5px;
+    }
+    & input:focus, textarea:focus{
+        outline: none;
+    }
+    & input:focus, textarea:focus {
+        border: 1px solid rgba(var(--text-black), 0.8);
+    }
+    & button {
+        border-radius: 8px;
+    }
+    & .review-card {
+
+        background-color: rgba(var(--text-black), 0.09);
+        border-radius: 8px;
+
+        
+
+        & .review {
+            
+          
+            padding-block: 8px;
+            padding-inline: 10px;
+            margin-block: 8px;
+
+            & .rev{
+                font-size: 13px !important;
+                font-weight: 600;
+                margin-block-end: 5px;
+            }
+            & .person-info p{
+                font-size: 14px !important;
+            }
+        }
+
+    }
+    
 
     
     
@@ -192,26 +291,4 @@
 
 }
 
-.owl-carousel .owl-dot, .owl-carousel .owl-nav .owl-next, .owl-carousel .owl-nav .owl-prev{
-width: 15px;
-    height: 100px;
-    position: absolute !important;
-    top: 50%;
-    transform: translateY(-50%);
-    display: block !important;
-    border: 2px solid rgb(218, 27, 27);
-}
 
-.owl-prev {
-    left: -20px;
-}
-
-.owl-next {
-    right: -20px;
-}
-
-.owl-prev i,
-.owl-next i {
-    transform: scale(2, 5);
-    color: #ccc;
-}

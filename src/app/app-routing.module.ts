@@ -12,14 +12,17 @@ import { DashboardComponent } from './dashboard/home.component';
 import { StatisticsComponent } from './dashboard/statistics/statistics.component';
 import { CardTemplateComponent } from './shared/components/card-template/card-template.component';
 import { AboutPageComponent } from './about-page/about-page.component';
+import { TcComponent } from './tc/tc.component';
+
 const routes: Routes = [
+  { path : 'terms&conditions' , component: TcComponent},
   {
     path: '', component: LayoutComponent,
     children: [
       { path: 'home', component: HomeComponent},
       { path: '', redirectTo: '/home', pathMatch: 'full'},
       { path: 'hero', component: HeroComponent},
-      { path : 'card', component: CardTemplateComponent}
+      { path : 'card', component: CardTemplateComponent},
     ]
   },
 

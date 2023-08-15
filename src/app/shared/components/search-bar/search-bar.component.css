@@ -26,3 +26,6 @@
         color: rgb(var(--text-black), 0.5);
     }
 }
+.loginbtn{
+    display: block;
+}

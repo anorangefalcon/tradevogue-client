@@ -17,6 +17,7 @@ import { DataTablesModule } from 'angular-datatables';
 import { ProductPageModule } from './product-page/product-page.module';
 import { FaqPageModule } from './faq-page/faq-page.module';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { TcComponent } from './tc/tc.component';
 
 
 @NgModule({
@@ -24,6 +25,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
     AppComponent,
     LayoutComponent,
     AuthLayoutComponent,
+    TcComponent,
   ],
   imports: [
     BrowserModule,
