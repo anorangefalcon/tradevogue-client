@@ -10,13 +10,36 @@ import { Component, OnInit} from '@angular/core';
 })
 export class ProductsComponent implements OnInit{
 
-  ngOnInit(): void {
-    $('#datatable1').DataTable({
-      pagingType: 'numbers',
-      pageLength: 8,
-    }); 
+  // product_inventory: number = 0;
+  // product_rating: number = 3;
+  rating: number[] = [1,2,3,4,5];
 
-    // $('.inventory_status').select2();
+  items: any[] = [
+    {"product_name": 'Hoddies for Men', 'category': 'Hoddies', 'price': 2000, 'unit_sold': 300, 'product_inventory': 20, 'rating': 4, 'last_updated': '03/11/2023 - 4.23PM'},
+    {"product_name": 'Hoddies for Men', 'category': 'Hoddies', 'price': 5000, 'unit_sold': 250, 'product_inventory': 10, 'rating': 3, 'last_updated': '03/11/2023 - 4.23PM'},
+    {"product_name": 'Hoddies for Men', 'category': 'Hoddies', 'price': 3000, 'unit_sold': 300, 'product_inventory': 20, 'rating': 2, 'last_updated': '03/11/2023 - 4.23PM'},
+    {"product_name": 'Hoddies for Men', 'category': 'Hoddies', 'price': 200, 'unit_sold': 250, 'product_inventory': 50, 'rating': 1, 'last_updated': '03/11/2023 - 4.23PM'},
+    {"product_name": 'Hoddies for Men', 'category': 'Hoddies', 'price': 5000, 'unit_sold': 900, 'product_inventory': 20, 'rating': 2, 'last_updated': '03/11/2023 - 4.23PM'},
+    {"product_name": 'Hoddies for Men', 'category': 'Hoddies', 'price': 3000, 'unit_sold': 300, 'product_inventory': 20, 'rating': 4, 'last_updated': '03/11/2023 - 4.23PM'},
+    {"product_name": 'Hoddies for Men', 'category': 'Hoddies', 'price': 200, 'unit_sold': 250, 'product_inventory': 0, 'rating': 4, 'last_updated': '03/11/2023 - 4.23PM'},	
+    {"product_name": 'Hoddies for Men', 'category': 'Hoddies', 'price': 2000, 'unit_sold': 300, 'product_inventory': 10, 'rating': 5, 'last_updated': '03/11/2023 - 4.23PM'},
+    {"product_name": 'Hoddies for Men', 'category': 'Hoddies', 'price': 5000, 'unit_sold': 300, 'product_inventory': 10, 'rating': 4, 'last_updated': '03/11/2023 - 4.23PM'},
+    {"product_name": 'Hoddies for Men', 'category': 'Hoddies', 'price': 3000, 'unit_sold': 250, 'product_inventory': 20, 'rating': 4, 'last_updated': '03/11/2023 - 4.23PM'},
+    {"product_name": 'Hoddies for Men', 'category': 'Hoddies', 'price': 200, 'unit_sold': 300, 'product_inventory': 0, 'rating': 1, 'last_updated': '03/11/2023 - 4.23PM'},
+    {"product_name": 'Hoddies for Men', 'category': 'Hoddies', 'price': 2000, 'unit_sold': 300, 'product_inventory': 20, 'rating': 4, 'last_updated': '03/11/2023 - 4.23PM'},
+    {"product_name": 'Hoddies for Men', 'category': 'Hoddies', 'price': 2000, 'unit_sold': 500, 'product_inventory': 10, 'rating': 1, 'last_updated': '03/11/2023 - 4.23PM'}
+  ];
+
+
+  pageSize:number = 8;
+  currentPage: number=1;
+
+  ngOnInit(): void {
+    console.log(this.items);
+  }
+
+  pageChanged(event:any){
+    this.currentPage = event; 
   }
 
 }

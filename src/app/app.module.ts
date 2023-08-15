@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CommonModule } from '@angular/common';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -15,6 +16,7 @@ import { CarouselModule } from 'ngx-owl-carousel-o';
 import { DataTablesModule } from 'angular-datatables';
 import { ProductPageModule } from './product-page/product-page.module';
 import { FaqPageModule } from './faq-page/faq-page.module';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 
 @NgModule({
@@ -25,6 +27,8 @@ import { FaqPageModule } from './faq-page/faq-page.module';
   ],
   imports: [
     BrowserModule,
+    CommonModule,
+    NgxPaginationModule,
     BrowserAnimationsModule,
     AppRoutingModule,
     SharedModule,
@@ -35,7 +39,7 @@ import { FaqPageModule } from './faq-page/faq-page.module';
     CarouselModule,
     DataTablesModule,
     ProductPageModule,
-    FaqPageModule
+    FaqPageModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

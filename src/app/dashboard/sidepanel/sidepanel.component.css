@@ -91,7 +91,7 @@
 
     & .sub-items{
         width: 100%;
-        background-color: rgb(var(--secondary), 0.3);
+        background-color: rgb(var(--secondary), 0.05);
         transition: all 1s ease-in-out;
         height: 0;
         overflow: hidden;
