@@ -12,7 +12,11 @@ import { passwordStrengthValidator, matchPasswordValidator,usernameValidator } f
 export class SignUpComponent {
 
 signupForm:any;
-
+isFormSubmitted: boolean = false;
+password:string='password';
+password2:string='password';
+showPassword:boolean=false;
+showPassword2:boolean=false;
 constructor(private fb:FormBuilder){
 
 
@@ -41,7 +45,22 @@ constructor(private fb:FormBuilder){
 
   // ON SUBMIT METHOD
   onSubmit(){
+    this.isFormSubmitted = true;
+
     console.log(this.signupForm);
+  }
+
+
+  toggle_password(el:any){
+    if(el==1){
+      this.showPassword=!this.showPassword;
+      this.password=this.showPassword ? 'text':'password';
+    }
+   else{
+    this.showPassword2=!this.showPassword2;
+    this.password2=this.showPassword2 ? 'text':'password';
+   }
+
   }
 
 }

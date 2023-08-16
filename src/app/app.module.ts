@@ -42,9 +42,7 @@ import { TcComponent } from './tc/tc.component';
     CarouselModule,
     DataTablesModule,
     ProductPageModule,
-    FaqPageModule,
-    
-    
+    FaqPageModule,    
   ],
   providers: [],
   bootstrap: [AppComponent]

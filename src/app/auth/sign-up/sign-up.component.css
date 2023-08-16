@@ -6,143 +6,125 @@
 }
 
 .signup-section {
-    height: 100vh;
-    display: flex;
+    min-height: 100vh;
+   
+    /* display: flex; */
     flex-direction: row-reverse;
 
     /* RIGHT SIDE */
-    & .form-div {
+
+
+
+    & .left-part, .right-part {
+        padding: 0;
         width: 50%;
-        gap:15px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
+        padding-block: 30px;
+        background-color: rgb(var(--background));
+    }
 
-        & h2 {
-            font-size: 50px;
-            text-align: center;
-            font-weight: 500;
-            letter-spacing: 0.4px;
-            line-height: 0.9;
-            margin-block-end: 50px;
-        }
+   
 
-        .form-container {
-            /* max-width: 370px; */
+
+        & .form-container {
             min-width: 370px;
-            /* background-color: blue; */
-            /* min-width: 50%; */
-
-            /* & input{
-                    padding: 14px 20px;
-                    font-size: 14px;
-                    border-radius: 10px;
-                    border:none;
-                    margin-bottom: 35px;
-                    outline: none;
-
-                    background-color:rgba(var(--primary),0.05) ;
-                } */
-
-            /* & .wrapper {
-                background-color: rgb(var(--primary), 0.05);
-                width: 100%;
-                margin-block-end: 30px;
-                padding: 15px 22px;
-                border-radius: 10px;
-                padding-inline-start: 12px;
-                gap: 10px;
-                border: 1px solid transparent;
-                transition: border-color 0.3s;
-            }   */
-            
-            /* & .wrapper-invalid{
-                border: 1px solid rgb(var(--danger));
+           
+            & h2{
+                font-size: 50px;
+                font-weight: 500;
+                letter-spacing: 0.4px;
+                line-height: 0.9;
+                margin-block-end: 50px;
             }
-            & .wrapper-valid{
-                border: 1px solid rgb(var(--success));
-            } */
-            
-            & .wrapper:focus-within{
-                border-color: rgb(var(--text-black), 0.4);
-            }
-
-            & .wrapper:focus-within {
-                border-color: rgb(var(--text-black), 0.4);
-            }
-
-            & .wrapper input {
-                flex: 1;
-                font-size: 14px;
-                border: none;
-                background-color: transparent;
-                outline: none;
-            }
-
-            & ::placeholder {
-                color: rgb(var(--text-black), 0.3);
-            }
-
-            & .wrapper .person, .wrapper .key {
-                font-size: 24px;
-                color: rgb(var(--text-black), 0.5);
-            }
-
-
-            & .invalid {
-                
-                font-size: 12px !important;
-               
-                color: rgba(var(--danger));
-            }
-
+           
+    
             & .key {
                 transform: rotate(90deg);
             }
 
-
-
-            & button {
-                margin-bottom: 15px;
-                padding: 10px 5px;
-                border-radius: 10px;
+            & .invalid {
+                color: rgb(var(--danger));
+                font-size: 12px !important;
+    
             }
-
+    
+            & .eye {
+                font-size: 15px;
+                color: rgb(var(--text-black), 0.3);
+                font-weight: 900;
+            }
+    
+            
+            & .eye-btn:is(:active, :hover) {
+                & .eye {
+    
+                    color: rgb(var(--primary), 0.7);
+                }
+            }
+    
+    
+            & .eye-btn {
+               
+                padding: 13px 5px;
+                border-radius: 10px;
+                border: none;
+               
+                position: absolute;
+                inset-block-start: 30px;
+                inset-inline-end: 7px;
+                background-color: transparent;
+            }
+    
+           
+    
             & .login-text {
                 color: rgb(var(--primary));
-
+    
                 &:is(:hover, :active, :focus) {
                     text-decoration: underline;
                 }
             }
+            & .acc-text {
+                font-size: 14px !important;
+            }
+            & .forgot-pass {
+                font-size: 14px;
+                text-align: right;
+                color: rgb(var(--primary));
+                padding-inline-end: 10px;
+            }
         }
+    
+    
 
-    }
 
-
-    /* LEFT SIDE */
-    & .img-div {
+    /* IMAGE APRT  */
+    & .right-part {
         background-image: url("https://images.unsplash.com/photo-1615222443417-6d76586644a9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fGZhc2hpb24lMjBtb2RlbHN8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=800&q=60");
         background-size: cover;
 
-        width: 50%;
+       
     }
+
 }
 
-
 .password-helper {
-     padding-inline: 10px;
-
-    /* 
-    margin-top: -24px;
-    margin-bottom: 24px; */
+    padding-inline: 10px;
+    /* margin-top: -24px; */
+    
+    /* margin-bottom: 24px; */
+    margin-block-start: 8px;
     & .helper-inside {
         width: 50%;
         display: flex;
         flex-direction: column;
         gap: 5px;
-        & p, span{
-            font-size: 14px !important;
+        & p, small{
+            font-size: 12px !important;
+            
+        }
+
+        & small{
+            margin: 0;
         }
         & p {
             color: rgb(var(--text-black), 0.6);
@@ -156,118 +138,79 @@
 
 
 
-/* RED AND GREEN */
+
 .red-text {
-    & span {
+    & small {
         color: rgb(var(--danger));
 
     }
 }
 
 .green-text {
-    & span {
+    & small {
 
         color: rgb(var(--success));
     }
 }
 
-/* .form__group{
-    height: 60px;
-    width: 100%;
-    background-color: transparent;
-    & input{
-        width: 100%;
-        height: 100%;
-        padding-inline-start: 40px;
-    }
 
-    & .form__icon{
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 40px;
-        height: 100%;
-        inset-block-start: 24px;
-        inset-inline-start: 0;
-        background-color: transparent;
-    }
-    & label{
-        padding-bottom: 10px;
-    }
 
-}
 
-/* new css */
 
 
 .form__group{
+    
     width: 100%;
-    /* border:2px solid black; */
-    /* background-color: tr     */
-
+   
     & input{
         width: 100%;
-        /* background-color: red; */
-        /* inset-inline-start: 40px; */
         height: 52px;
         padding-inline-start: 40px;
         border-radius: 8px;
-        border:1px solid transparent;
-        background-color: rgb(var(--primary),0.05);
+        border: 1px solid transparent;
+        background-color: rgb(var(--primary), 0.05);
         font-size: 14px;
-        /* border:1px so */
+        outline: none;
+
     }
-
-
-    & label{
+    & input:focus{
+        border-color: rgb(var(--text-black), 0.4);
+    }
+    
+    & label {
         font-size: 14px;
-        /* padding-bottom: 5px; */
-        color:rgb(var(--text-black), 0.9);
+        color: rgb(var(--text-black), 0.9);
+        padding-bottom: 5px;
     }
-
-
-
-    & small{
-        margin-block-start: 8px;
+    & label span{
+        color: rgb(var(--danger));
     }
 
     & .form__icon{
-        position: absolute;
         display: flex;
-        justify-content: center;
         align-items: center;
-        color:rgb(var(--text-black),0.5);;
+        justify-content: center;
         width: 40px;
-        inset-block-start: 36px;
-        font-size: 24px;
-
-    }
-
-
-
-
-    & .eye{
-        font-size: 15px;
-        color:rgb(var(--text-black), 0.3);
-        font-weight: 900;
-    }
-
-
-    & .eye-btn {
-        margin-bottom: 15px;
-        padding: 12px 5px;
-        border-radius: 10px;
-        border: none;
-        margin-block-start: 2px;
-        position: absolute;
-        inset-block-start: 30px;
-        inset-inline-end: 7px;
+        inset-block-start: 40px;
+        inset-inline-start: 0;
         background-color: transparent;
+        color: rgb(var(--text-black), 0.5);
     }
 
+    & ::placeholder{
+        color: rgb(var(--text-black), 0.3);
+    }
 
+    & small {
+        margin-block-start: 8px;
+    }
+
+    
+}
+.registerbtn {
+    height: 52px;
+    border-radius: 8px;
 }
 
-.password-helper{
-    margin-block-start: 8px;
-}
+
+

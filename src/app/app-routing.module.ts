@@ -23,6 +23,7 @@ const routes: Routes = [
       { path : 't&c' , component: TcComponent},
       { path : 'faq' , component: FaqPageComponent},
       { path : 'product' , component: ProductPageComponent},
+      { path : 'about', component: AboutPageComponent}
     ]
   },
 
@@ -41,11 +42,6 @@ const routes: Routes = [
       { path: 'orders', component: OrdersComponent}
     ]
   },
-
-
-
-  //ABOUT PAGE PATH
-  {path:'about',component:AboutPageComponent}
 
  
 ];
