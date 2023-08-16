@@ -165,14 +165,14 @@
         }
 
         & .order-items {
-            font-size: 13px;
+            font-size: 14px;
             text-align: left;
             border: 1px solid rgba(128, 128, 128, 0.152);
             letter-spacing: 0.26px;
         }
   
         & td,th{
-            padding: 12px;
+            padding: 10px;
             vertical-align: middle;
         }
     
