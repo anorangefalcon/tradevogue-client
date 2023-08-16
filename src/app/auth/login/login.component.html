@@ -20,8 +20,8 @@
                     
                     <!-- PASSWORD INPUT  -->
                     <div class="form__group d-flex  flex-column relative"
-                        [ngClass]="{'wrapper-invalid': (loginForm?.get('password')?.hasError('required') || loginForm?.get('password')?.hasError('password-fail')) && loginForm?.get('password')?.touched}"
-                        [ngClass]="{'wrapper-valid': (!loginForm?.get('password')?.hasError('required') && !loginForm?.get('password')?.hasError('password-fail')) && loginForm?.get('password')?.touched}">
+                        [ngClass]="{'wrapper-invalid': (loginForm.get('password')?.hasError('required') || loginForm.get('password')?.hasError('password-fail')) && loginForm.get('password')?.touched}"
+                        [ngClass]="{'wrapper-valid': (!loginForm.get('password')?.hasError('required') && !loginForm.get('password')?.hasError('password-fail')) && loginForm.get('password')?.touched}">
                         <label>Password<span>*</span></label>
                         <span class="material-symbols-outlined key  form__icon absolute">key</span>
                         <input [type]="passwordFieldType" placeholder="Enter Your Password" formControlName="password">
@@ -37,7 +37,7 @@
                 
                     <a class="forgot-pass" href="#">Forgot password?</a>
                     <button class="btn-primary loginbtn">Login</button>
-                    <p class="text-center acc-text">Don't have an account? <a class="sign-up-text" routerLink="../sign-up">Sign up</a></p>
+                    <p class="text-center acc-text">Don't have an account? <a class="sign-up-text" routerLink="../signup">Sign up</a></p>
                 </form>
         </div>
     </div>

@@ -34,7 +34,7 @@ p{
 .grid-container>div {
   position: relative;
   /* background-color: rgba(var(--secondary)); */
-  background-color: rgb(var(--accent), 0.4);
+  background-color: rgb(var(--accent), 0.2);
   transition: background-color 0.3s;
   text-align: center;
   padding: 20px 0;

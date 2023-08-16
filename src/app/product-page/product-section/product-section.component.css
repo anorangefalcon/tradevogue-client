@@ -1,5 +1,5 @@
 .product {
-    margin-block: 50px;
+    padding-block-start: 100px;
 
     & .product-carousel {
         width: 50%;

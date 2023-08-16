@@ -13,6 +13,24 @@
     --dash-title-clr: 0, 28, 48;
     --dash-sub-title-clr: 57, 62, 70;
 
+    /* --background-clr: 0, 0, 0;
+    --dash-card-clr: 44, 44, 49;
+    --dash-yellow-clr: 249, 165, 80;
+    --dash-green-clr: var(--success);
+    --dash-blue-clr: 24, 138, 226;
+    --dash-red-clr: var(--danger);
+    --dash-title-clr: 255, 255, 255;
+    --dash-sub-title-clr: 200, 200, 200;
+    
+    --text-black: 255, 255, 255;
+    --text-white: 0, 0, 0;
+    --background: 34, 34, 34;
+    --primary: 255, 255, 255;
+    --secondary: 200, 200, 200;
+    --accent: 0, 173, 181;
+    --danger: 223, 22, 33;
+    --success: 60, 167, 23; */
+
     display: flex;
     font-size: 14px !important;
     background-color: rgb(var(--background-clr), 0.4);
@@ -69,7 +87,7 @@
 
     & .inventory{
         font-weight: 600;
-        font-size: 1px;
+        font-size: 13px;
     }
     & .inventory.good{
         color: rgb(var(--success));

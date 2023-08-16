@@ -8,8 +8,7 @@ import { ProductSectionComponent } from './product-section/product-section.compo
 
 
 const routes: Routes = [
-  { path: 'product', component: ProductPageComponent },
-  { path: 'product-section', component: ProductSectionComponent }
+  { path: '', component: ProductPageComponent },
 ];
 
 @NgModule({
@@ -22,7 +21,6 @@ const routes: Routes = [
     SharedModule,
     RouterModule.forChild(routes),
     CarouselModule,
-  
   ]
 })
 export class ProductPageModule { }

@@ -1,4 +1,5 @@
 .tc {
+    padding-block-start: 80px;
     & .bg-img{
         width: 100%;
         min-height: 400px;

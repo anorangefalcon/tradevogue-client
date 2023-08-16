@@ -1,10 +1,21 @@
-<div class="d-flex flex-column" style="gap: 100px;">
-<app-hero></app-hero>
-<app-collections></app-collections>
-<app-product-cards></app-product-cards>
-<app-offers></app-offers>
-<app-deal-of-week></app-deal-of-week>
-<app-gallery></app-gallery>
-<app-product-card-carousel></app-product-card-carousel>
-<app-faq></app-faq>
-</div> 
+<div class="home d-flex flex-column" style="gap: 100px;">
+    <app-hero></app-hero>
+    <app-collections></app-collections>
+    <app-deal-of-week></app-deal-of-week>
+    <app-product-cards></app-product-cards>
+    <app-offers></app-offers>
+
+    <div class="home-carousel d-flex flex-column gap-30">
+        <div class="container section-header">
+            <h3 class="section-heading">
+                Popular Products
+            </h3>
+            <p class="section-sub-heading">
+                Products on high demand!
+            </p>
+        </div>
+        <app-product-card-carousel></app-product-card-carousel>
+    </div>
+
+    <app-gallery></app-gallery>
+</div>

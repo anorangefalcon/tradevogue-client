@@ -4,7 +4,13 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    /* background-color: red; */
+
+    background-color: rgb(var(--accent), 0.1);
+    background-image: url(../../../assets/deal-of-week-component/dealOfWeek-homeBg.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+    padding-block: 50px;
+  
   & .container{
     display: flex;
     flex-direction: column;
@@ -13,7 +19,7 @@
     gap:25px;
     align-items: center;
 
-
+    
     & h2{
         color:rgba(var(--text-black));
         font-size: 26px;
