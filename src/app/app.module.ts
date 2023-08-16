@@ -20,6 +20,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { TcComponent } from './tc/tc.component';
 
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -42,6 +43,8 @@ import { TcComponent } from './tc/tc.component';
     DataTablesModule,
     ProductPageModule,
     FaqPageModule,
+    
+    
   ],
   providers: [],
   bootstrap: [AppComponent]

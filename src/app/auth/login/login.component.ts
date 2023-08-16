@@ -34,6 +34,8 @@ export class LoginComponent {
   togglePasswordVisibility() {
     this.showPassword = !this.showPassword;
     this.passwordFieldType = this.showPassword ? 'text' : 'password';
+    console.log("pass");
+    
 }
 
 }
