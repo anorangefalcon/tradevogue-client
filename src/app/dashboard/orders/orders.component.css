@@ -21,81 +21,6 @@
         }
     }
 
-    & .filters {
-        & label {
-            font-size: 12px;
-            font-weight: 600;
-        }
-
-        & input[type="date"] {
-            border: none;
-            border: 1px solid rgb(var(--primary), 0.3);
-            padding-inline: 10px;
-            border-radius: 5px;
-            font-weight: bold;
-
-            &::-webkit-datetime-edit {
-                font-size: 12px;
-                padding: 8px 20px;
-                font-family: 'Lato', sans-serif !important;
-            }
-
-            &::-webkit-calendar-picker-indicator#picker {
-                background-color: transparent;
-                padding: 5px;
-                color: rgba(var(--primary), 0.8) !important;
-            }
-
-            &:is(:focus) {
-                border: 1px solid rgb(var(--primary), 0.3);
-            }
-        }
-
-        & select {
-            /* display: none; */
-            padding: 10px 20px;
-            border-radius: 5px;
-            border: none;
-            border: 1px solid rgb(var(--primary), 0.3);
-            font-size: 12px;
-            font-weight: bold;
-
-            & option:focus {
-                background-color: brown;
-                color: beige;
-            }
-        }
-    }
-
-    & .column .card {
-        display: flex;
-        flex-direction: row-reverse;
-        justify-content: space-between;
-        align-items: center;
-        padding: 20px;
-        box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
-        border-radius: 10px;
-        border: none;
-        background-color: #ffffff;
-
-
-        border-inline-start: 3px solid transparent;
-
-        transition: box-shadow 0.3s ease-in-out;
-
-        & .material-symbols-outlined {
-            font-size: 2.5rem;
-            display: flex;
-            align-items: center;
-            border-radius: 50%;
-            height: 70px;
-            width: 70px;
-            justify-content: CENTER;
-            ALIGN-ITEMS: CENTER;
-        }
-
-
-    }
     .card:hover {
         box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.15);
     }
@@ -144,76 +69,155 @@
         }
     }
 
-    & .order-table {
-        width: 100%;
+    & .filters {
+        padding-block-end: 20px;
+        border-block-end: 1px solid rgb(var(--text-black), 0.1);
+
+        & label {
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        & input[type="date"] {
+            border: none;
+            border: 1px solid rgb(var(--primary), 0.3);
+            padding-inline: 10px;
+            border-radius: 5px;
+            /* font-weight: bold; */
+
+            &::-webkit-datetime-edit {
+                font-size: 13px;
+                padding: 8px 20px;
+                /* font-family: 'Lato', sans-serif !important; */
+                color: rgba(var(--primary)) !important;
+            }
+
+            &::-webkit-calendar-picker-indicator#picker {
+                background-color: transparent;
+                padding: 5px;
+                
+            }
+
+            &:is(:focus) {
+                border: 1px solid rgb(var(--primary), 0.3);
+            }
+        }
+
+        & select {
+            /* display: none; */
+            padding: 10px 20px;
+            border-radius: 5px;
+            border: none;
+            border: 1px solid rgb(var(--primary), 0.3);
+            font-size: 13px;
+            /* font-weight: bold; */
+
+            & option:focus {
+                background-color: brown;
+                color: beige;
+            }
+        }
+    }
+
+    & .column .card {
         display: flex;
-        flex-direction: column;
-        gap: 20px;
-        font-size: 12px !important;
-        box-shadow: 0px 0px 10px rgba(35, 35, 35, 0.252);
-        border-radius: 5px;
-        text-align: left;
-        height: 400px;
-        overflow: scroll;
+        flex-direction: row-reverse;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px;
+        box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+        border-radius: 10px;
+        border: none;
+        background-color: #ffffff;
 
-        &::-webkit-scrollbar {
-            width: 6px;
-            height: 6px;
-            /* border-radius: 10px; */
+
+        border-inline-start: 3px solid transparent;
+
+        transition: box-shadow 0.3s ease-in-out;
+
+        & .material-symbols-outlined {
+            font-size: 2.5rem;
+            display: flex;
+            align-items: center;
+            border-radius: 50%;
+            height: 70px;
+            width: 70px;
+            justify-content: CENTER;
+            ALIGN-ITEMS: CENTER;
         }
 
-        &::-webkit-scrollbar-thumb {
-            background-color: rgba(var(--primary), 0.8);
-        }
 
-        &::-webkit-scrollbar-track {
-            background-color: rgba(var(--secondary), 0.3);
-        }
+    }
 
+    & .order-list{
+        padding: 20px;
+        background-color: rgb(var(--text-white));
+        box-shadow: 0px 0px 5px rgba(var(--secondary), 0.1);
+        border-radius: 10px;
+    }
+
+    & .order-table {
         & table {
             width: 100%;
-            /* border-collapse: collapse; */
-            height: 100%;
+            border-collapse: collapse;
             border-spacing: 0;
         }
 
-        & .head {
-            text-transform: uppercase;
-            background-color: rgba(var(--primary), 0.8);
-            color: rgb(var(--text-white));
-            letter-spacing: 0.26px;
-            padding: 10px 20px !important;
-        }
-
         & .order-items {
-            font-size: 12px;
-            padding: 10px 20px;
+            font-size: 13px;
             text-align: left;
-            border-block-end: 1px solid rgb(var(--primary), 0.3);
-            font-weight: bold;
+            border: 1px solid rgba(128, 128, 128, 0.152);
             letter-spacing: 0.26px;
+        }
+  
+        & td,th{
+            padding: 12px;
+            vertical-align: middle;
+        }
+    
+        & tbody tr{
+            transition: all 0.3s ease-in-out;
 
+            &:hover{
+                background-color: rgb(var(--secondary), 0.02);
+            }
         }
 
-        & tbody tr {
-            background-color: rgba(var(--secondary), 0.3);
-            transition: all 0.2s ease-in-out;
+        & tbody td:first-child{
+            font-weight: 600;
         }
-
-        & tbody tr:hover {
-            background-color: rgb(var(--secondary), 0.6);
-            border: none;
-        }
+        
 
         & td:last-child {
             display: flex;
             transition: all 0.3s ease-in-out;
             cursor: pointer;
 
+            & .material-symbols-outlined{
+                font-size: 18px;
+                padding: 10px;
+            }
+        }
+    
+            & a:first-child{
+                display: flex;
+                justify-content: center;
+                align-self: center;
+                border-radius: 5px;
+                background-color: rgb(var(--secondary), 0.04);
+                transition: all 0.3s ease-in-out;
+
+                &:hover{
+                    background-color: rgb(var(--secondary), 0.5);
+                    color: white;
+                }
+            }
+/* 
             & a:hover span {
                 color: rgba(var(--primary), 0.8);
 
-            }
-        }
+            } */
     }
+
+
 }

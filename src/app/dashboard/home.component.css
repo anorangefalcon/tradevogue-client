@@ -22,20 +22,7 @@
         padding: 24px;
         width: 100dvw;
     }
-
-
-    & table.dataTable thead > tr{
-        text-transform: uppercase;
-        color: rgb(var(--text-black));
-        letter-spacing: 0.26px;
-        font-size: 12px !important;
-    }
-
-    & table.dataTable tbody > tr{
-        transition: all 0.2s ease-in-out;
-        cursor: pointer;
-    }
-
+    
 
     & .spike{
 
@@ -46,6 +33,23 @@
         & .value{
             color: rgb(var(--dash-green-clr)) !important;
             font-size: 12px !important;
+        }
+    }
+
+    & .table-controls{
+        & pagination-controls{
+            display: flex;
+            align-items: center;
+            
+            & .ngx-pagination {
+                margin-bottom: 0 !important;
+            }
+
+            & .ngx-pagination .current{
+                padding: 7px 12px;
+                background-color: rgb(var(--accent), 0.9) !important;
+                border-radius: 5px;
+            }
         }
     }
 
@@ -64,9 +68,6 @@
     }
 
     & .inventory{
-        /* padding: 5px;
-        font-size: 12px;
-        border-radius: 5px; */
         font-weight: 600;
         font-size: 1px;
     }

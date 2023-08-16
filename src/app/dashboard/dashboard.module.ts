@@ -9,6 +9,7 @@ import { StatisticsComponent } from './statistics/statistics.component';
 import { ProductsComponent } from './products/products.component';
 import { OrdersComponent } from './orders/orders.component';
 import { SharedModule } from '../shared/shared.module';
+import { AddproductComponent } from './addproduct/addproduct.component';
 
 
 @NgModule({
@@ -17,7 +18,8 @@ import { SharedModule } from '../shared/shared.module';
     SidepanelComponent,
     StatisticsComponent,
     ProductsComponent,
-    OrdersComponent
+    OrdersComponent,
+    AddproductComponent
   ],
   
   imports: [

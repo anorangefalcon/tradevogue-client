@@ -1,10 +1,8 @@
 <section id="order-section" class="d-flex flex-column gap-20">
     <div class="header d-flex justify-content-md-between align-center">
         <div class="update d-flex align-center">
-        <h1>Orders</h1>
-        
-            <span class="material-symbols-outlined rotate pointer">refresh</span>
-            
+            <h1>Orders</h1>
+            <!-- <span class="material-symbols-outlined rotate pointer">refresh</span> -->
         </div>
         <div class="search-option">
             <app-search-bar></app-search-bar>
@@ -50,11 +48,9 @@
         </div>
     </div>
 
-    
-    
-    <div class="filters d-flex flex-column gap-10">
-        <h4>Sales Period</h4>
-        <div class="d-flex justify-content-md-between">
+    <div class="order-list d-flex flex-column gap-25">
+        <div class="filters d-flex justify-content-md-between align-items-center">
+            <h3>Order List</h3>
             <div class="d-flex align-center gap-20">
                 <span class="d-flex align-center gap-10">
                     <label for="todate">To: </label>
@@ -82,133 +78,76 @@
                 </select>
             </div>
         </div>
+        <div class="order-table">
+            <table datatable class="row-border hover">
+                <thead>
+                    <tr>
+                        <th class="order-items heading">#OrderID</th>
+                        <th class="order-items heading">Product</th>
+                        <th class="order-items heading">Category</th>
+                        <th class="order-items heading">Sizes</th>
+                        <th class="order-items heading">Quantity</th>
+                        <th class="order-items heading">Order Status</th>
+                        <th class="order-items heading">Payment</th>
+                        <th class="order-items heading">Track </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of orders | paginate: {
+                        itemsPerPage: pageSize,
+                        currentPage: currentPage
+                    }">
+                        <td class="order-items">#{{item.orderId}}</td>
+                        <td class="order-items">{{item.product}}</td>
+                        <td class="order-items">{{item.category}}</td>
+                        <td class="order-items">{{item.size}}</td>
+                        <td class="order-items">{{item.quantity}}</td>
+                        <td class="order-items">
+                            <span *ngIf="item.order_status == 'Confirmed'" style="color: rgb(var(--success));">Confirmed</span>
+                            <span *ngIf="item.order_status == 'Shipping'" style="color: rgba(255, 85, 0, 0.992);">Shipping</span>
+                            <span *ngIf="item.order_status == 'Canceled'" style="color: rgb(var(--danger));">Canceled</span>
+                            <span *ngIf="item.order_status !== 'Confirmed' && item.order_status !== 'Shipping' && item.order_status !== 'Canceled'" style="color: rgb(var(--dash-blue-clr));">{{item.order_status}}</span>                            
+                        </td>
 
+                        <td class="order-items">
+                            <span *ngIf="item.payment_status == 'Confirmed'" style="color: rgb(var(--success));">Completed</span>
+                            <span *ngIf="item.payment_status == 'Failed'" style="color: rgb(var(--danger));">Failed</span>
+                            <span *ngIf="item.payment_status == 'Refunded'" style="color: rgb(var(--dash-blue-clr));">Refunded</span>
+                            <span *ngIf="item.payment_status !== 'Confirmed' && item.payment_status !== 'Failed' && item.payment_status !== 'Refunded'" style="color: rgb(var(--dash-blue-clr));">{{item.payment_status}}</span>                          
+                        </td>
+                        <!-- <td class="order-items">
+                            {{item.payment_status}}
+                            {{item.payment_status == 'Confirmed'}}
+                            <span *ngIf="item.payment_status == 'Confirmed'; then notConfirmed" style="color: rgb(var(--success));">
+                                Completed
+                            </span>
+                            <ng-template #notConfirmed>
+                                {{item.payment_status == 'Failed'}}
+                                <span style="color: rgb(var(--danger));" *ngIf="item.payment_status == 'Failed'; then notFailed">
+                                    Failed</span>
+                                <ng-template #notFailed>
+                                    {{item.payment_status == 'Refunded'}}
+                                    <span *ngIf="item.payment_status == 'Refunded'; then notRefund" style="color: rgb(var(--dash-blue-clr));">Refunded</span>
+                                    <ng-template #notRefund>
+                                        <span style="color: rgb(var(--dash-blue-clr));">{{item.payment_status}}</span>
+                                    </ng-template>
+                                </ng-template>
+                            </ng-template>
+                        </td> -->
+                        <td class="order-items">
+                            <a href="">
+                                <span class="material-symbols-outlined">open_in_new</span>
+                            </a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="table-controls d-flex justify-content-md-between">
+            <pagination-controls (pageChange)="pageChanged($event)" previousLabel="Previous"
+                nextLabel="Next"></pagination-controls>
+        </div>
     </div>
     
-    <div class="order-table">
-        <table datatable class="row-border hover">
-            <thead>
-                <tr>
-                    <th class="order-items head"># Order</th>
-                    <th class="order-items head">Product</th>
-                    <th class="order-items head">Quantity</th>
-                    <th class="order-items head">Sizes</th>
-                    <th class="order-items head">Category</th>
-                    <th class="order-items head">Order Status</th>
-                    <th class="order-items head">Payment</th>
-                    <th class="order-items head">Track Status</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td class="order-items">#12334</td>
-                    <td class="order-items">Product 1</td>
-                    <td class="order-items">200</td>
-                    <td class="order-items">L,XL,XXL</td>
-                    <td class="order-items">Category 1</td>
-                    <td class="order-items">Confirmed</td>
-                    <td class="order-items">Pending</td>
-                    <td class="order-items">
-                        <a href=""><span class="material-symbols-outlined">logout</span></a>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="order-items">#12334</td>
-                    <td class="order-items">Product 1</td>
-                    <td class="order-items">200</td>
-                    <td class="order-items">L,XL,XXL</td>
-                    <td class="order-items">Category 1</td>
-                    <td class="order-items">Confirmed</td>
-                    <td class="order-items">Pending</td>
-                    <td class="order-items">
-                        <a href=""><span class="material-symbols-outlined">logout</span></a>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="order-items">#12334</td>
-                    <td class="order-items">Product 1</td>
-                    <td class="order-items">200</td>
-                    <td class="order-items">L,XL,XXL</td>
-                    <td class="order-items">Category 1</td>
-                    <td class="order-items">Confirmed</td>
-                    <td class="order-items">On Delivery</td>
-                    <td class="order-items">
-                        <a href=""><span class="material-symbols-outlined">logout</span></a>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="order-items">#12334</td>
-                    <td class="order-items">Product 1</td>
-                    <td class="order-items">200</td>
-                    <td class="order-items">L,XL,XXL</td>
-                    <td class="order-items">Category 1</td>
-                    <td class="order-items">In Route</td>
-                    <td class="order-items">Confirmed</td>
-                    <td class="order-items">
-                        <a href=""><span class="material-symbols-outlined">logout</span></a>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="order-items">#12334</td>
-                    <td class="order-items">Product 1</td>
-                    <td class="order-items">200</td>
-                    <td class="order-items">L,XL,XXL</td>
-                    <td class="order-items">Category 1</td>
-                    <td class="order-items">In Route</td>
-                    <td class="order-items">Confirmed</td>
-                    <td class="order-items">
-                        <a href=""><span class="material-symbols-outlined">logout</span></a>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="order-items">#12334</td>
-                    <td class="order-items">Product 1</td>
-                    <td class="order-items">200</td>
-                    <td class="order-items">L,XL,XXL</td>
-                    <td class="order-items">Category 1</td>
-                    <td class="order-items">In Route</td>
-                    <td class="order-items">Confirmed</td>
-                    <td class="order-items">
-                        <a href=""><span class="material-symbols-outlined">logout</span></a>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="order-items">#12334</td>
-                    <td class="order-items">Product 1</td>
-                    <td class="order-items">200</td>
-                    <td class="order-items">L,XL,XXL</td>
-                    <td class="order-items">Category 1</td>
-                    <td class="order-items">In Route</td>
-                    <td class="order-items">Confirmed</td>
-                    <td class="order-items">
-                        <a href=""><span class="material-symbols-outlined">logout</span></a>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="order-items">#12334</td>
-                    <td class="order-items">Product 1</td>
-                    <td class="order-items">200</td>
-                    <td class="order-items">L,XL,XXL</td>
-                    <td class="order-items">Category 1</td>
-                    <td class="order-items">In Route</td>
-                    <td class="order-items">Confirmed</td>
-                    <td class="order-items">
-                        <a href=""><span class="material-symbols-outlined">logout</span></a>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="order-items">#12334</td>
-                    <td class="order-items">Product 1</td>
-                    <td class="order-items">200</td>
-                    <td class="order-items">L,XL,XXL</td>
-                    <td class="order-items">Category 1</td>
-                    <td class="order-items">In Route</td>
-                    <td class="order-items">Confirmed</td>
-                    <td class="order-items">
-                        <a href=""><span class="material-symbols-outlined">logout</span></a>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
+
 </section>

@@ -184,8 +184,12 @@
             font-weight: 500;
         }
     
-        & tbody tr:hover{
-            background-color: rgb(var(--secondary), 0.02);
+        & tbody tr{
+            transition: all 0.3s ease-in-out;
+
+            &:hover{
+                background-color: rgb(var(--secondary), 0.02);
+            }
         }
     
         & td:last-child > div{
@@ -220,23 +224,6 @@
     
             & a:hover i{
                 color: white;
-            }
-        }
-    
-        & .table-controls{
-            & pagination-controls{
-                display: flex;
-                align-items: center;
-                
-                & .ngx-pagination {
-                    margin-bottom: 0 !important;
-                }
-
-                & .ngx-pagination .current{
-                    padding: 7px 12px;
-                    background-color: rgb(var(--accent), 0.9) !important;
-                    border-radius: 5px;
-                }
             }
         }
     }
