@@ -18,6 +18,7 @@ import { ProductPageModule } from './product-page/product-page.module';
 import { FaqPageModule } from './faq-page/faq-page.module';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { TcComponent } from './tc/tc.component';
+import { CheckoutModule } from './checkout/checkout.module';
 
 
 
@@ -42,7 +43,8 @@ import { TcComponent } from './tc/tc.component';
     CarouselModule,
     DataTablesModule,
     ProductPageModule,
-    FaqPageModule,    
+    FaqPageModule,
+    CheckoutModule
   ],
   providers: [],
   bootstrap: [AppComponent]

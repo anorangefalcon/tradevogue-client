@@ -13,6 +13,7 @@ import { AboutPageComponent } from './about-page/about-page.component';
 import { TcComponent } from './tc/tc.component';
 import { FaqPageComponent } from './faq-page/faq-page.component';
 import { ProductPageComponent } from './product-page/product-page.component';
+import { CheckoutComponent } from './checkout/checkout.component';
 
 const routes: Routes = [
   
@@ -23,7 +24,8 @@ const routes: Routes = [
       { path : 't&c' , component: TcComponent},
       { path : 'faq' , component: FaqPageComponent},
       { path : 'product' , component: ProductPageComponent},
-      { path : 'about', component: AboutPageComponent}
+      { path : 'about', component: AboutPageComponent},
+      { path: 'checkout', component: CheckoutComponent}
     ]
   },
 

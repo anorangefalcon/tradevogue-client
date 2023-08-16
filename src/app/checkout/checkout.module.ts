@@ -7,7 +7,8 @@ import { BillingComponent } from './billing/billing.component';
 import { OrderSummaryComponent } from './order-summary/order-summary.component';
 
 const routers: Routes = [
-  { path: '', component: CheckoutComponent }
+  { path: '', component: CheckoutComponent },
+
 ];
 
 @NgModule({
