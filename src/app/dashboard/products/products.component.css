@@ -186,8 +186,11 @@
 
         & .item-check {
             & input[type="checkbox"] {
+                /* background-color: red; */
                 display: none;
             }
+
+           
 
             & .material-symbols-outlined {
                 display: flex;

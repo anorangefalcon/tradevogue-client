@@ -1,1 +1,161 @@
-<p>billing works!</p>
+<section>
+    <div class="container  d-flex flex-column">
+        <h2 class="text-center">How would you like to order</h2>
+        <form>
+            <div class="form__group d-flex flex-column width-50">
+                <label class="form__label">First Name<span>*</span></label>
+             
+                <input type="text" placeholder="Enter Your First Name" class="form__input/">
+             
+            </div>
+
+
+            <div class="form__group d-flex flex-column width-50">
+                <label class="form__label">Last Name<span>*</span></label>
+             
+                <input type="text" placeholder="Enter Your Last Name" class="form__input/">
+             
+            </div>
+            
+            <div class="form__group d-flex flex-column width-100">
+                <label class="form__label">Street Name<span>*</span></label>
+             
+                <input type="text" placeholder="Enter Your Street Address" class="form__input/">
+             
+            </div>
+
+            <div class="form__group d-flex flex-column width-60">
+                <label class="form__label">Town / City<span>*</span></label>
+             
+                <input type="text" placeholder="" class="form__input/">
+             
+            </div>
+
+            <div class="form__group d-flex flex-column width-20">
+                <label class="form__label">State <span>*</span></label>
+             
+                <input type="text" placeholder="" class="form__input/">
+             
+            </div>
+
+
+            <div class="form__group d-flex flex-column width-20">
+                <label class="form__label">PostCode <span>*</span></label>
+             
+                <input type="text" placeholder="" class="form__input/">
+             
+            </div>
+
+            <div class="form__group d-flex flex-column width-100">
+                <label class="form__label">Country <span>*</span></label>
+             
+                <select id="country" name="country" class="form__input/">
+                    <option value="us">United States</option>
+                    <option value="ca">Canada</option>
+                    <option value="uk">United Kingdom</option>
+                    <option value="au">Australia</option>
+                    <!-- Add more options for different countries here -->
+                </select>
+             
+            </div>
+
+            <div class="form__group d-flex flex-column width-100">
+                <label class="form__label">Email <span>*</span></label>
+             
+                <input type="email" placeholder="" class="form__input/">
+             
+            </div>
+
+            <h3 style=" padding-inline: 10px;">Payments</h3>
+
+            <div class="payment__div">
+                <div>
+                    <span class="material-symbols-outlined payment__icon">
+                        credit_card
+                        </span>
+
+                        <p class="payment__p">Card</p>
+                </div>
+                <div>
+                    <span class="material-symbols-outlined payment__icon">
+                        payments
+                        </span>
+                        <p class="payment__p">Cash</p>
+                </div>
+                <div>
+                    <span class="material-symbols-outlined payment__icon">
+                        account_balance
+                        </span>
+                        <p class="payment__p">Bank</p>
+                </div>
+            </div>
+
+            <div class="form__group d-flex flex-column width-100">
+                <label class="form__label">Card number <span>*</span></label>
+             
+                <input type="number" placeholder="" class="form__input/">
+             
+            </div>
+
+            <div class="form__group d-flex flex-column width-50">
+                <label class="form__label"> Expiry <span>*</span></label>
+             
+                <input type="number" placeholder="" class="form__input/">
+             
+            </div>
+
+
+            <div class="form__group d-flex flex-column width-50">
+                <label class="form__label"> CVC <span>*</span></label>
+             
+                <input type="number" placeholder="" class="form__input/" style="appearance: none;">
+             
+            </div>
+
+            <div class="check__div d-flex width-100">
+                <!-- <label class="form__label"> CVC <span>*</span></label> -->
+                <input type="checkbox" id="terms">
+                <label for="terms">
+                    <span class="material-symbols-outlined accept__icon">done</span>
+                </label>
+                <p>Billing is same as shipping address</p>
+             
+            </div>
+
+            <p class="text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime aspernatur unde odit aliquam repellat molestias aut libero, sed nobis iste?</p>
+
+            <button class="btn-primary paymentbtn">Continue to Payment</button>
+
+
+        </form>
+    </div>
+</section>
+
+
+
+
+
+
+<div>
+    <h2>Products tags</h2>
+  
+    <div style="display:flex; border:2px solid black; position: relative; height:40px;">
+        <div *ngFor="let data of visible_data">
+            <button>{{data}}
+                <span (click)="remove_data(data)">X</span>
+            </button>
+        </div>
+        <div>
+      <button (click)="clicked()" style="position: absolute; inset-inline-end:0px;">Click</button>
+    </div>
+
+
+    <div #mydiv>
+        <input type="text" style="width: 100%;" [(ngModel)]="search_text">
+    <div *ngFor="let data of not_visible_data | pipes: search_text">
+        <button (click)="add_data(data)">{{data}}</button>
+    </div>
+</div>
+
+   
+</div>
