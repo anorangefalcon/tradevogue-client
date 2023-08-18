@@ -2,7 +2,8 @@
 *,
 *::before,
 *::after {
-    margin: 0; padding: 0;
+    margin: 0;
+    padding: 0;
     box-sizing: border-box;
 }
 
@@ -103,6 +104,7 @@ select {
 } */
 
 :root {
+    /* 
     --text-black: 0, 0, 0;
     --text-white: 255, 255, 255;
     --background: 238, 238, 238;
@@ -111,43 +113,66 @@ select {
     --accent: 0, 173, 181;
 
     --danger: 223, 22, 33;
-    --success: 60, 167, 23;
+    --success: 60, 167, 23; 
+    */
+
+
+
+    /* new purple */
+    --text-black: 29, 7, 7;
+    --text-white: 255, 255, 255;
+    --background: 255, 255, 255;
+    --primary: 89, 25, 79;
+    --secondary: 241, 241, 241;
+    --accent: 88, 30, 129;
+
+    --danger: 223, 22, 33;
+    --success: 60, 167, 23; 
 }
 
 
-h1, h2, h3, h4, h5, h6{
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
     /* font-family: 'Poppins', sans-serif; */
     /* font-family: 'Playfair Display', serif; */
-    font-family: 'Apercu Movistar', sans-serif;    
+    font-family: 'Apercu Movistar', sans-serif;
 }
-h1{
+
+h1 {
     font-size: 36px;
     font-weight: 500;
 }
-body{
+
+body {
     /* font-family: 'Lato__', sans-serif !important; */
     font-family: 'Montserrat', sans-serif;
     font-size: 16px;
-    color: rgb(var(--primary));
+    color: rgb(var(--text-black));
 }
 
-.section-header{
+.section-header {
     text-align: center;
     margin-bottom: 30px;
 }
-.section-heading{
+
+.section-heading {
     font-size: 42px !important;
 }
-.section-sub-heading{
+
+.section-sub-heading {
     font-size: 18px !important;
     font-weight: 300 !important;
 }
 
-.pointer{
+.pointer {
     cursor: pointer;
 }
 
-button{
+button {
     /* font-family: 'Poppins', sans-serif; */
     cursor: pointer;
     border: none;
@@ -156,30 +181,35 @@ button{
     padding-inline: 20px;
     border-radius: 5px;
 }
-.btn-primary{
+
+.btn-primary {
     background-color: rgb(var(--primary));
     color: rgb(var(--text-white));
 }
-.btn-primary:hover{
+
+.btn-primary:hover {
     background-color: rgb(var(--primary), 0.9);
 }
-.btn-secondry{
+
+.btn-secondry {
     background-color: rgb(var(--secondary)) !important;
     color: rgb(var(--text-black)) !important;
 }
 
 
-h3{
+h3 {
     font-size: 20px !important;
 }
-h4{
+
+h4 {
     font-size: 16px !important;
 }
 
-h6{
+h6 {
     font-size: 12px !important;
-} 
-p{
+}
+
+p {
     font-size: 16px !important;
 }
 
@@ -190,53 +220,57 @@ p{
     padding-inline: 20px;
 }
 
-.heading-1{
+.heading-1 {
     letter-spacing: 1.8px;
     font-size: 90px;
 }
-.heading-2{
+
+.heading-2 {
     letter-spacing: 1.12px;
     font-size: 56px;
 }
-.heading-3{
+
+.heading-3 {
     letter-spacing: 0.48px;
     font-size: 24px;
 }
 
-a{
+a {
     text-decoration: none;
     color: rgb(var(--text-black));
 }
 
 
-ul{
+ul {
     list-style: none;
 }
 
-.fs-12{
+.fs-12 {
     font-size: 12px !important;
 }
 
-.fs-14{
+.fs-14 {
     font-size: 14px !important;
 }
 
-.fs-16{
-    font-size: 16px !important; 
+.fs-16 {
+    font-size: 16px !important;
 }
-.fs-18{
+
+.fs-18 {
     font-size: 18px !important;
 }
 
-.text-warp{
+.text-warp {
     white-space: nowrap !important;
 }
 
 /* Width and Hright */
-mh100{
+mh100 {
     height: 100%;
 }
-mw100{
+
+mw100 {
     width: 100%;
 }
 
@@ -257,19 +291,21 @@ mw100{
 .justify-content-center {
     justify-content: center;
 }
-.justify-content-md-between{
+
+.justify-content-md-between {
     justify-content: space-between;
 }
 
-.align-center, .align-items-center{
+.align-center,
+.align-items-center {
     align-items: center;
 }
 
-.justify-content-end{
+.justify-content-end {
     justify-content: flex-end;
 }
 
-.flex-wrap{
+.flex-wrap {
     flex-wrap: wrap;
 }
 
@@ -299,6 +335,7 @@ mw100{
 .gap-10 {
     gap: 10px;
 }
+
 .gap-15 {
     gap: 15px;
 }
@@ -306,9 +343,11 @@ mw100{
 .gap-20 {
     gap: 20px;
 }
+
 .gap-25 {
     gap: 25px;
 }
+
 .gap-30 {
     gap: 30px;
 }
@@ -357,12 +396,12 @@ mw100{
     text-align: right;
 }
 
-.text-upper{
+.text-upper {
     text-transform: uppercase;
 }
 
 
-.sub-heading{
+.sub-heading {
     font-size: 20px;
     font-weight: 600;
     color: rgb(var(--dash-title-clr));
@@ -371,7 +410,7 @@ mw100{
     /* text-transform: uppercase; */
 }
 
-.sub-heading-1{
+.sub-heading-1 {
     font-size: 24px !important;
     color: rgb(var(--dash-title-clr));
     font-weight: 500;
@@ -379,13 +418,11 @@ mw100{
     /* text-transform: uppercase; */
 }
 
-.title{
+.title {
     font-size: 16px !important;
     font-weight: 500;
-    letter-spacing: 0.32px; 
+    letter-spacing: 0.32px;
     line-height: 17.6px;
     color: rgb(var(--dash-title-clr));
     margin-bottom: 10px;
 }
-
-
