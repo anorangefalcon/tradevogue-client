@@ -15,9 +15,11 @@ import { FaqPageComponent } from './faq-page/faq-page.component';
 import { ProductPageComponent } from './product-page/product-page.component';
 import { CheckoutComponent } from './checkout/checkout.component';
 import { SupportComponent } from './shared/components/support/support.component';
+import { CartComponent } from './checkout/cart/cart.component';
 
 const routes: Routes = [
   
+  { path: 'cart', component: CartComponent},
   {
     path: '', component: LayoutComponent,
     children: [

@@ -1,1 +1,61 @@
-<p>cart works!</p>
+<div class="cart-container d-flex flex-column">
+    <a routerLink="/product" class="cart-item ">
+        <img src="../../../assets/deal-of-week-component/shirt.png" alt="Product Image">
+
+        <div class="item-details d-flex flex-column">
+            <h2>Mr. Bean Sweater</h2>
+            <p>Price: $99.99</p>
+            <div class="options d-flex flex-column gap-20">
+
+                <div class="sizes d-flex gap-5 align-items-center">
+                    <p class="labels">Size:</p>
+                    <div class="sizes-opt d-flex">
+                        <div class="sizes-radios ">
+                            <input label="S" type="radio" name="size" value="S">
+                            <input label="M" type="radio" name="size" value="M">
+                            <input label="L" type="radio" name="size" value="L">
+                            <input label="XL" type="radio" name="size" value="XL">
+                            <input label="XXL" type="radio" name="size" value="XXL">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="colors d-flex gap-5 align-items-center">
+                    <p class="labels">Color:</p>
+                    <div class="colors-opt d-flex">
+                        <div class="colors-radios d-flex align-items-center">
+                            <input type="radio" name="color" value="pink" class="pink">
+                            <input type="radio" name="color" value="blue" class="blue">
+                            <input type="radio" name="color" value="red" class="red">
+                            <input type="radio" name="color" value="teal" class="teal">
+                            <input type="radio" name="color" value="yellow" class="yellow">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="operation d-flex gap-20">
+                <div class="quantity-btn-outer">
+                    <div class="quantity">
+                        <button class="quantity-btn">
+                            <span class="material-symbols-outlined">
+                                remove
+                            </span>
+                        </button>
+                        <span class="quantity-value d-flex align-items-center">1</span>
+                        <button class="quantity-btn">
+                            <span class="material-symbols-outlined">
+                                add
+                            </span>
+                        </button>
+                    </div>
+                </div>
+                <button class="remove-btn d-flex align-items-center">
+                    <span class="material-symbols-outlined">
+                        close
+                    </span>
+                </button>
+            </div>
+        </div>
+
+    </a>
+</div>

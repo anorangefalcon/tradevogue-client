@@ -1,10 +1,7 @@
-* {
-  margin: 0;
-
-}
-.faq-header{
+.faq-header {
   padding-block-start: 80px;
 }
+
 .faq_title {
   min-height: 400px;
   background-color: rgb(var(--accent), 0.1);
@@ -13,38 +10,28 @@
   background-size: cover;
   background-position: center;
 
-  & h2 {
-    font-size: 84px;
-    letter-spacing: 2.2px;
+  & h1 {
+    font-size: 84px !important;
+    letter-spacing: 2.2px !important;
   }
 }
 
-h1 {
-  font-size: 50px;
-  text-align: center;
-  margin: 30px 0;
-}
 
 .panel p {
-    margin: 0 !important;
-    padding: 0px 28px !important;
-    color: rgb(var(--text-black),0.6);
+  color: rgb(var(--text-black), 0.7);
+  padding: 10px 44px;
+  border: 1px solid rgb(var(--text-black), 0.05);
 }
 
 .accordion-wrapper {
-  /* margin: 0 auto;
-  padding: 0 20px; 
-    position: relative;
-  z-index: 1;
-  margin: 0 auto;
-  padding: 0 20px; */
   padding-block: 100px;
   max-height: 100% !important;
+  & button{
+    outline: none !important;
+    background-color: transparent;
+  }
 }
 
-/* .main-acc {
-        background-color: white;
-} */
 
 .accordion {
   cursor: pointer;
@@ -52,72 +39,45 @@ h1 {
   border: none;
   text-align: left;
   outline: none;
-  font-size: 15px;
+  font-weight: 500;
   transition: 0.4s;
-  margin: 10px 0 0;
   font-size: 20px;
 }
 
 .main-acc {
-  /* border: 1px solid black; */
-      /* box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); */
-    /* border: none; */
-    border-radius: 0 !important;
-    background-color: #ffffff;
-    /* transition: box-shadow 0.3s ease-in-out; */
-  /* box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.4); */
-  /* border-radius: 6px 6px 6px 6px; */
-      padding: 10px 28px;
-      border-block-end: 1px solid rgb(var(--text-black), 0.2);
+  border-radius: 0 !important;
+  padding-inline: 28px;
+  padding-block: 14px;
+  border: 1px solid transparent;
+  border-bottom: 1px solid rgb(var(--text-black), 0.05);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: 0.3s ease-in-out;
 }
-
-/* .main-acc.one {
-  background: #fe9687;
-}
-
-.main-acc.two {
-  background: #ffe587;
-}
-
-.main-acc.three {
-  background: #82b4fe;
-}
-
-.main-acc.four {
-  background: #a1db73;
-}
-
-.main-acc.five {
-  background: #f0afe9;
-}
-
-.main-acc.six {
-  background: #a0acea;
-} */
 
 .main-acc.active {
-  /* border-top: 3px solid #000000;
-  border-right: 3px solid #000000;
-  border-left: 3px solid #000000; */
-  border-bottom: none;
-  border-block-end: 1px solid rgb(var(--text-black), 0.05);
-  /* border-radius: 6px 6px 0px 0px; */
+  border: 1px solid rgb(var(--text-black), 0.05);
 }
 
-.sub_acc {
-  background-color: white;
-  /* text-decoration: underline; */
+.sub-acc {
   margin: 0;
-    /* padding: 0px 28px; */
-border-block-end: 1px solid rgb(var(--text-black), 0.2);
-    border-radius: 0;
-    font-size: 16px;
+  padding: 5px 44px;
+  border: 1px solid rgb(var(--text-black), 0.05);
+  border-radius: 0;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+
+}
+.sub-acc:last-child {
+  margin-block-end: 10px 1;
 }
 
-.sub_acc.active {
-  border-bottom: none;
-  border-block-end: 1px solid rgb(var(--text-black), 0.05);
-
+.sub-acc.active {
+  border: 1px solid rgb(var(--text-black), 0.05);
 }
 
 .accordion:after {
@@ -135,37 +95,21 @@ border-block-end: 1px solid rgb(var(--text-black), 0.2);
 
 .panel {
   position: relative;
-  /* z-index: 2; */
-  background-color: white;
-  border: none;
+
+  border: 1px solid rgb(var(--text-black), 0.05);
   max-height: 0;
   overflow: hidden;
-  transition: max-height 0.2s ease-out;
+  transition: max-height 0.2s ease-out;;
 }
 
 .sub-panel {
   border: none;
-  /*   margin: 20px; */
-  display: inline-block;
-  justify-content: center;
-  align-items: center;
 }
 
 
-.accordion.active + .main-panel {
-  /* border: 1px solid #000000; */
-  /* border-radius: 0px 0px 6px 6px; */
-  /* box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.4); */
-  /* border-radius: 6px 6px 6px 6px; */
-
-    /* box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); */
-    border: none;
-    background-color: #ffffff;
-    transition: box-shadow 0.3s ease-in-out;
-padding: 0px 28px;
+.accordion.active+.main-panel {
+  border: none;
+  /* background-color: #ffffff; */
+  transition: box-shadow 0.3s ease-in-out;
+  /* padding: 10px 28px; */
 }
-
-
-
-
-

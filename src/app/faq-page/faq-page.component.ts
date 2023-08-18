@@ -8,9 +8,8 @@ import { ElementRef, Renderer2 } from '@angular/core';
 })
 export class FaqPageComponent implements OnInit {
   faqData!: any[];
-  
 
-     constructor(private renderer: Renderer2, private el: ElementRef) {}
+  constructor(private renderer: Renderer2, private el: ElementRef) { }
 
   ngOnInit(): void {
     const acc = this.el.nativeElement.querySelectorAll('.accordion');
@@ -20,15 +19,11 @@ export class FaqPageComponent implements OnInit {
         item.classList.toggle('active');
         const parent = item.parentElement;
         const panel = item.nextElementSibling as HTMLElement | null;
-        const sub_acc = item.nextElementSibling as HTMLElement | null;
-        
         if (panel) {
           if (panel.style.maxHeight) {
             panel.style.maxHeight = "";
-            panel.style.paddingBlock = "";
           } else {
             panel.style.maxHeight = panel.scrollHeight + 200 + 'px';
-            panel.style.paddingBlock = 20 + 'px';
             if (parent) {
               parent.style.maxHeight =
                 (parseInt(parent.style.maxHeight) || 0) + panel.scrollHeight + 'px';
