@@ -16,6 +16,7 @@ import { ProductPageComponent } from './product-page/product-page.component';
 import { CheckoutComponent } from './checkout/checkout.component';
 import { SupportComponent } from './shared/components/support/support.component';
 import { CartComponent } from './checkout/cart/cart.component';
+import { AddproductComponent } from './dashboard/addproduct/addproduct.component';
 
 const routes: Routes = [
   
@@ -46,7 +47,8 @@ const routes: Routes = [
     children: [
       { path: '', component: StatisticsComponent},
       { path: 'products', component: ProductsComponent},
-      { path: 'orders', component: OrdersComponent}
+      { path: 'orders', component: OrdersComponent},
+      { path: 'addproduct', component: AddproductComponent}
     ]
   },
 

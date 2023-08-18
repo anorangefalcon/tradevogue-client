@@ -116,18 +116,19 @@
                             <span *ngIf="item.payment_status !== 'Confirmed' && item.payment_status !== 'Failed' && item.payment_status !== 'Refunded'" style="color: rgb(var(--dash-blue-clr));">{{item.payment_status}}</span>                          
                         </td>
                         <!-- <td class="order-items">
-                            {{item.payment_status}}
+                            {{item.payment_status}} sadjhasjkdhasjkh
                             {{item.payment_status == 'Confirmed'}}
-                            <span *ngIf="item.payment_status == 'Confirmed'; then notConfirmed" style="color: rgb(var(--success));">
+                            <span *ngIf="item.payment_status == 'Confirmed'; else notConfirmed" style="color: rgb(var(--success));">
                                 Completed
                             </span>
                             <ng-template #notConfirmed>
+                                fkjfkjsdklfjskldj
                                 {{item.payment_status == 'Failed'}}
-                                <span style="color: rgb(var(--danger));" *ngIf="item.payment_status == 'Failed'; then notFailed">
+                                <span style="color: rgb(var(--danger));" *ngIf="item.payment_status == 'Failed'; else notFailed">
                                     Failed</span>
                                 <ng-template #notFailed>
                                     {{item.payment_status == 'Refunded'}}
-                                    <span *ngIf="item.payment_status == 'Refunded'; then notRefund" style="color: rgb(var(--dash-blue-clr));">Refunded</span>
+                                    <span *ngIf="item.payment_status == 'Refunded'; else notRefund" style="color: rgb(var(--dash-blue-clr));">Refunded</span>
                                     <ng-template #notRefund>
                                         <span style="color: rgb(var(--dash-blue-clr));">{{item.payment_status}}</span>
                                     </ng-template>
