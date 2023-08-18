@@ -8,6 +8,7 @@ import { CarouselModule } from 'ngx-owl-carousel-o';
 import { CardTemplateComponent } from './components/card-template/card-template.component';
 import { SearchBarComponent } from './components/search-bar/search-bar.component';
 import { MailBarComponent } from './mail-bar/mail-bar.component';
+import { SupportComponent } from './components/support/support.component';
 
 
 
@@ -21,6 +22,7 @@ import { MailBarComponent } from './mail-bar/mail-bar.component';
     CardTemplateComponent,
     SearchBarComponent,
     MailBarComponent,
+    SupportComponent,
   ],
   imports: [
     CommonModule,
@@ -32,7 +34,8 @@ import { MailBarComponent } from './mail-bar/mail-bar.component';
     ProductCardsComponent,
     ProductCardCarouselComponent,
     CardTemplateComponent,
-    SearchBarComponent
+    SearchBarComponent,
+    SupportComponent
   ]
 })
 export class SharedModule { }

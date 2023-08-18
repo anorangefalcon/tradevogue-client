@@ -20,7 +20,7 @@ export class FaqPageComponent implements OnInit {
         item.classList.toggle('active');
         const parent = item.parentElement;
         const panel = item.nextElementSibling as HTMLElement | null;
-        // const mainPanel = document.querySelector('.main-panel');
+        const mainPanel = document.querySelector('.main-panel');
         
         if (panel) {
           if (panel.style.maxHeight) {

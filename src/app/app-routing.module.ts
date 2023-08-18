@@ -14,6 +14,7 @@ import { TcComponent } from './tc/tc.component';
 import { FaqPageComponent } from './faq-page/faq-page.component';
 import { ProductPageComponent } from './product-page/product-page.component';
 import { CheckoutComponent } from './checkout/checkout.component';
+import { SupportComponent } from './shared/components/support/support.component';
 
 const routes: Routes = [
   
@@ -25,7 +26,7 @@ const routes: Routes = [
       { path : 'faq' , component: FaqPageComponent},
       { path : 'product' , component: ProductPageComponent},
       { path : 'about', component: AboutPageComponent},
-      { path: 'checkout', component: CheckoutComponent}
+      { path: 'checkout', component: CheckoutComponent},
     ]
   },
 
@@ -36,7 +37,9 @@ const routes: Routes = [
       { path: 'signup', component: SignUpComponent },
     ]
   },
-
+{
+  path: 'support', component: SupportComponent,
+},
   { path: 'dashboard' , component: DashboardComponent,
     children: [
       { path: '', component: StatisticsComponent},
