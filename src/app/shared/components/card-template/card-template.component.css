@@ -30,7 +30,7 @@
 
 .cart{
     position: absolute;
-    display: flex;
+    display: none;
     justify-content: center;
     align-items: center;
     top: 10px;
@@ -69,6 +69,7 @@
     transform: translateY(-5px);
 
     & .cart{
+        display: flex;
         opacity: 1;
         transform: translateY(0px);
     }
