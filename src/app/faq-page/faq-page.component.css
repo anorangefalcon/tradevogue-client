@@ -1,5 +1,22 @@
 * {
   margin: 0;
+
+}
+.faq-header{
+  padding-block-start: 80px;
+}
+.faq_title {
+  min-height: 400px;
+  background-color: rgb(var(--accent), 0.1);
+  background-image: url(../../assets/deal-of-week-component/dealOfWeek-homeBg.png);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+
+  & h2 {
+    font-size: 84px;
+    letter-spacing: 2.2px;
+  }
 }
 
 h1 {
@@ -10,7 +27,8 @@ h1 {
 
 .panel p {
     margin: 0 !important;
-        padding: 0px 28px !important;
+    padding: 0px 28px !important;
+    color: rgb(var(--text-black),0.6);
 }
 
 .accordion-wrapper {
@@ -24,9 +42,9 @@ h1 {
   max-height: 100% !important;
 }
 
-.main-acc {
+/* .main-acc {
         background-color: white;
-}
+} */
 
 .accordion {
   cursor: pointer;
@@ -42,13 +60,15 @@ h1 {
 
 .main-acc {
   /* border: 1px solid black; */
-      box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
-    border: none;
+      /* box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); */
+    /* border: none; */
+    border-radius: 0 !important;
     background-color: #ffffff;
-    transition: box-shadow 0.3s ease-in-out;
+    /* transition: box-shadow 0.3s ease-in-out; */
   /* box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.4); */
-  border-radius: 6px 6px 6px 6px;
+  /* border-radius: 6px 6px 6px 6px; */
       padding: 10px 28px;
+      border-block-end: 1px solid rgb(var(--text-black), 0.2);
 }
 
 /* .main-acc.one {
@@ -80,7 +100,8 @@ h1 {
   border-right: 3px solid #000000;
   border-left: 3px solid #000000; */
   border-bottom: none;
-  border-radius: 6px 6px 0px 0px;
+  border-block-end: 1px solid rgb(var(--text-black), 0.05);
+  /* border-radius: 6px 6px 0px 0px; */
 }
 
 .sub-acc {
@@ -88,12 +109,21 @@ h1 {
   /* text-decoration: underline; */
   margin: 0;
 padding: 3px 28px;
+border-block-end: 1px solid rgb(var(--text-black), 0.2);
+    border-radius: 0;
+    font-size: 16px;
+}
+
+.sub-acc.active {
+  border-bottom: none;
+  border-block-end: 1px solid rgb(var(--text-black), 0.05);
+
 }
 
 .accordion:after {
   content: "\002B";
   color: black;
-  font-weight: bold;
+  font-weight: 200;
   float: right;
   margin-left: 5px;
   font-size: 28px;
@@ -117,19 +147,17 @@ padding: 3px 28px;
   border: none;
   /*   margin: 20px; */
 }
-
-.sub-panel p {
-  padding: 0 18px;
-  margin: 10px 20px;
+.panel{
+  /* padding-block: 10px; */
 }
 
 .accordion.active + .main-panel {
   /* border: 1px solid #000000; */
-  border-radius: 0px 0px 6px 6px;
+  /* border-radius: 0px 0px 6px 6px; */
   /* box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.4); */
   /* border-radius: 6px 6px 6px 6px; */
 
-    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    /* box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); */
     border: none;
     background-color: #ffffff;
     transition: box-shadow 0.3s ease-in-out;

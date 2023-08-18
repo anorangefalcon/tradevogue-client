@@ -25,8 +25,10 @@ export class FaqPageComponent implements OnInit {
         if (panel) {
           if (panel.style.maxHeight) {
             panel.style.maxHeight = "";
+            panel.style.paddingBlock = "";
           } else {
-            panel.style.maxHeight = panel.scrollHeight + 'px';
+            panel.style.maxHeight = panel.scrollHeight + 200 + 'px';
+            panel.style.paddingBlock = 20 + 'px';
             if (parent) {
               parent.style.maxHeight =
                 (parseInt(parent.style.maxHeight) || 0) + panel.scrollHeight + 'px';
