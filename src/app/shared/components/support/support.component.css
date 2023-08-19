@@ -1,17 +1,11 @@
 /* chat-bot	 */
 @import "~bootstrap-icons/font/bootstrap-icons.css";
 
-html,
-body {
-  min-width: 275px;
-}
 #chat-bot {
   position: fixed;
   bottom: 20px;
   right: 20px;
-  z-index: 99999999999999999;
-  height: auto;
-  float: right;
+  z-index: 99;
 }
 #chat-bot .icon-support {
   display: flex;

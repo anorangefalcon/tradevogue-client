@@ -206,7 +206,13 @@
 
     .cart-div {
         margin-block: 20px;
+        width: 100%;
+
+        & .customSelect {
+            width: 100px;
+        }
     }
+    
 
     .cart-div select {
         padding-block: 5px;

@@ -73,7 +73,7 @@
 
 .another{
   & .container{
-    padding-block-start: 100px;
+    padding-block: 50px;
     justify-content: space-around;
      & .common{
       display: flex;

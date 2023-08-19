@@ -1,19 +1,16 @@
-* {
-  letter-spacing: 1px;
-}
-
-
 footer {
-  width: 100%;
+  color: rgb(var(--text-black)) !important;
 }
 
 .footer-link {
   text-decoration: none;
-  color: #fff;
+  color: rgb(var(--text-black)) !important;
+  letter-spacing: 0.5px;
+  
 }
 
 footer {
-  background-color: #222;
+  background-color: rgb(var(--secondary), 0.5);
   color: #fff;
 }
 
@@ -50,6 +47,10 @@ li {
   margin-bottom: 1rem;
 }
 
+#footer_contacts p{
+  letter-spacing: 0.5px;
+}
+
 .text-upper,
 .logo {
   height: 35px;
@@ -75,13 +76,24 @@ li {
   width: 34px;
   border-radius: 50%;
   transition: all 0.4s;
-  color: #000;
-  background: #fff;
   font-size: 14px;
+  border: 1px solid rgb(var(--text-black),0.5);
+}
+
+.footer-link i{
+  color: rgb(var(--text-black));
 }
 
 #footer_social_media .footer-link i {
   font-size: 1.25rem;
+}
+
+#media{
+  font-size: 12px !important;
+}
+
+#footer_contacts p {
+  margin-block-end: 12px;
 }
 
 /* #instagram {
@@ -112,10 +124,54 @@ li {
 #footer_subscribe {
   gap: 0.75rem;
 }
+#footer_subscribe h3 {
+  font-weight: 900;
+}
 
-/* #footer_subscribe p {
-    color: var(--color-neutral-30);
-} */
+#footer_subscribe p {
+   letter-spacing: 0.5px;
+   transform: translateY(-1.6px);
+}
+.mail {
+  height: 100%;
+  position: relative;
+}
+.mail-bar {
+  position: relative;
+  background: transparent;
+  width: 100%;
+  height: 100%;
+  border: 1px solid rgb(var(--text-black),0.3);
+  color: rgb(var(--text-black), 0.8);
+  border-radius: 50px;
+  padding: 9px;
+  padding-inline-start: 15px;
+  padding-inline-end: 0px;
+  outline: none;
+}
+
+.mail-bar::placeholder {
+  color: rgb(var(--text-black), 0.5);
+}
+
+.mail button {
+  position: absolute;
+  background: transparent;
+  inset-inline-end: 0;
+  height: 100%;
+  border-radius: 50px;
+  padding: 0;
+  padding-inline: 15px;
+  display: flex;
+  align-items: center;
+
+  & span {
+      color: rgb(var(--text-black), 0.5);
+  }
+}
+li h3{
+  font-weight: 900;
+}
 
 .fs-16 {
   font-size: 16px !important;
@@ -137,8 +193,11 @@ input {
 }
 
 .logo {
-  fill: white;
+  
   height: 50px;
+  /* transform: translateY(-5px);
+  transform: translateX(-5px); */
+  transform: translate(-7px, -7px);
 }
 
 #input_group button {
@@ -163,8 +222,8 @@ input {
 #footer_copyright {
   font-size: 0.9rem;
   padding: 1.5rem;
-  font-weight: 100;
-  border-top: 1.5px solid #fff;
+  font-weight: 400;
+  border-top: 0.8px solid rgb(var(--text-black));
 }
 
 @media screen and (max-width: 768px) {
@@ -259,7 +318,7 @@ input {
   left: 5px;
   width: 10px;
   height: 2px;
-  background: currentColor;
+  
 }
 
 .accordion button .icon::after {
@@ -272,6 +331,7 @@ input {
   height: 10px;
   background: currentColor;
 }
+
 
 .faq {
   /* background-color: transparent; */
@@ -375,4 +435,8 @@ input {
     content: '\25B6';
     transform: rotate(0deg);
   }
+}
+
+.fa-instagram , .fa-facebook-f , .fa-whatsapp{
+  font-size: 17px !important;
 }

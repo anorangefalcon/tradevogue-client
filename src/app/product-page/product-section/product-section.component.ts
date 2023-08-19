@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef } from '@angular/core';
 import { OwlOptions } from 'ngx-owl-carousel-o';
+import { CustomSelect } from 'src/app/shared/customSelect/custom-select';
 
 
 @Component({
@@ -8,6 +9,14 @@ import { OwlOptions } from 'ngx-owl-carousel-o';
   styleUrls: ['./product-section.component.css']
 })
 export class ProductSectionComponent {
+
+  constructor(private elem_ref: ElementRef){}
+
+  ngOnInit(){
+    const element = this.elem_ref.nativeElement.querySelectorAll('.customSelect');
+    let select = new CustomSelect(element);
+ 
+  }
 
   customOptions: OwlOptions = {
     loop: true,

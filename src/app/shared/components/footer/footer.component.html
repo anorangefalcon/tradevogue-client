@@ -28,7 +28,6 @@
                         <p>{{ question.content }}</p>
                     </div>
                 </div>
-
             </div>
         </div>
     </div>
@@ -37,21 +36,20 @@
 <footer>
     <div id="footer_content" class="grid relative container">
         <div id="footer_contacts">
-            <img class="logo" src="./assets/logo-light.svg" alt="Logo">
-            <!-- <address style="margin-bottom: 0.75rem">Lorem ipsum dolor sit</address> -->
-            <p style="margin-bottom: 0.75rem">sale@tradevogue.com</p>
-            <p style="margin-bottom: 0.75rem">+91 62834-15102</p>
+            <img class="logo" src="./assets/logo.svg" alt="Logo">
+            <p>sale@tradevogue.com</p>
+            <p>+91 62834-15102</p>
             <div id="footer_social_media" class="d-flex">
                 <a href="#" class="footer-link d-flex align-items-center justify-content-center" id="instagram">
-                    <i class="fa-brands fa-instagram"></i>
+                    <i class="fa-brands fa-instagram fa-2xs"></i>
                 </a>
 
                 <a href="#" class="footer-link d-flex align-items-center justify-content-center" id="facebook">
-                    <i class="fa-brands fa-facebook-f"></i>
+                    <i class="fa-brands fa-facebook-f fa-2xs media"></i>
                 </a>
 
                 <a href="#" class="footer-link d-flex align-items-center justify-content-center" id="whatsapp">
-                    <i class="fa-brands fa-whatsapp"></i>
+                    <i class="fa-brands fa-whatsapp media"></i>
                 </a>
             </div>
         </div>
@@ -107,7 +105,14 @@
             </p>
 
             <div>
-                <app-mail-bar class="mail-bar"></app-mail-bar>
+                <!-- <app-mail-bar class="mail-bar"></app-mail-bar> -->
+                <form action="" class="mail d-flex align-items-center gap-0">
+                    <input type="text" class="mail-bar d-flex align-items-center" placeholder="E-Mail">
+                    <button><span class="material-symbols-outlined">
+                            mail
+                        </span>
+                    </button>
+                </form>
             </div>
 
             <!-- <div id="input_group" class="d-flex align-items-center">
