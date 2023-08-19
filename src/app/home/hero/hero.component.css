@@ -12,15 +12,14 @@
 
     .bg1 {
         /* background:  url(../../../assets/hero-bg1.png); */
-        background-color: rgba(0, 234, 255, 0.1);
+        background-color: rgba(255, 208, 0, 0.145);
         background-image: url(../../../assets/deal-of-week-component/dealOfWeek-homeBg.png);
         background-size: cover;
-        
     }
 
     .bg2 {
         /* background: url(../../../assets/hero-bg2.png); */
-        background-color: rgba(0, 255, 30, 0.1);
+        background-color: rgba(var(--accent), 0.1);
         background-image: url(../../../assets/deal-of-week-component/dealOfWeek-homeBg.png);
         background-size: cover;
     }
@@ -30,7 +29,9 @@
         background: url(../../../assets/girl.png);
         background-size: cover;
         background-repeat: no-repeat;
-        filter: grayscale(20%);
+        background-position: center;
+        filter: grayscale(25%);
+        scale: 1.1;
     }
 
     & .hero-img2 {
@@ -39,7 +40,9 @@
         background: url(../../../assets/boy2.png);
         background-size: cover;
         background-repeat: no-repeat;
-        filter: grayscale(20%) brightness(90%);
+        background-position: center;
+        filter: brightness(90%);
+        scale: 1.1;
     }
 
 }

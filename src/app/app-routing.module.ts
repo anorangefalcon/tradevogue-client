@@ -16,6 +16,7 @@ import { ProductPageComponent } from './product-page/product-page.component';
 import { CheckoutComponent } from './checkout/checkout.component';
 import { CartComponent } from './checkout/cart/cart.component';
 import { AddproductComponent } from './dashboard/addproduct/addproduct.component';
+import { BillingComponent } from './checkout/billing/billing.component';
 
 const routes: Routes = [
 
@@ -24,10 +25,16 @@ const routes: Routes = [
     children: [
       { path: '', component: HomeComponent},
       { path : 't&c' , component: TcComponent},
-      { path : 'faq' , component: FaqPageComponent},
+      { path : 'faq' , component: FaqPageComponent, data: { hideFooterFAQ: true } },
       { path : 'product' , component: ProductPageComponent},
       { path : 'about', component: AboutPageComponent},
-      { path: 'checkout', component: CheckoutComponent},
+      { path: 'cart', component: CheckoutComponent,
+      children:[
+       { path: '', component: CartComponent},
+       { path: 'billing', component: BillingComponent}
+
+      ]
+    },
     ]
   },
 
@@ -52,7 +59,10 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [
+    RouterModule.forRoot(routes),
+    RouterModule.forRoot(routes, {scrollPositionRestoration: 'enabled'})
+  ],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

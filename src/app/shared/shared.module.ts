@@ -11,7 +11,7 @@ import { MailBarComponent } from './mail-bar/mail-bar.component';
 import { SupportComponent } from './components/support/support.component';
 import { MatTabsModule } from '@angular/material/tabs';
 
-
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [
@@ -27,7 +27,8 @@ import { MatTabsModule } from '@angular/material/tabs';
   imports: [
     CommonModule,
     CarouselModule,
-    MatTabsModule
+    MatTabsModule,
+    RouterModule
   ],
   exports: [
     NavbarComponent,

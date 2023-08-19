@@ -1,0 +1,7 @@
+.home{
+    display: flex;
+    flex-direction: column;
+    gap: 90px;
+}
+
+/* @media screen and (max-width: ) */

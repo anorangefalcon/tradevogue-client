@@ -137,6 +137,7 @@ input {
 }
 
 .logo {
+  fill: white;
   height: 50px;
 }
 

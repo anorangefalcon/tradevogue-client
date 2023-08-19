@@ -3,7 +3,7 @@ header {
     backdrop-filter: blur(10px);
     position: fixed;
     letter-spacing: 1px;
-    font-weight: 300;
+    font-weight: 500;
     width: 100%;
     box-shadow: 0 0 10px rgb(var(--text-black), 0.1);
     z-index: 99;
@@ -16,13 +16,13 @@ header {
 .branding {
     height: 60px;
     /* width: 20%; */
-    transform: translateY(10%);
 }
 
 a {
     text-transform: uppercase;
     transition: color 0.3s ease-in-out;
     font-size: 14px !important;
+
 
     &:is(:hover, :focus, :active) {
         color: rgb(var(--primary));

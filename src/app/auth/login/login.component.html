@@ -39,7 +39,7 @@
                 
                     <a class="forgot-pass" href="#">Forgot password?</a>
                     <button class="btn-primary loginbtn" (click)="onLogin()">Login</button>
-                    <p class="text-center acc-text">Don't have an account? <a class="sign-up-text" routerLink="../signup">Sign up</a></p>
+                    <p class="text-center acc-text">Don't have an account? <a class="sign-up-text" [routerLink]="['/signup']">Sign up</a></p>
                 </form>
         </div>
     </div>
