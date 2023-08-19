@@ -117,6 +117,13 @@ select {
 
     --danger: 223, 22, 33;
     --success: 60, 167, 23;
+
+    /* dark-purple */
+    /* --text: #FFFFFF;
+    --background: #0a0c10;
+    --primary: #59194F;
+    --secondary: #252525;
+    --accent: #a65eda; */
 }
 
 h1,
@@ -134,11 +141,13 @@ h1 {
     font-size: 36px;
     font-weight: 500;
 }
-h2{
+
+h2 {
     font-size: 24px;
     font-weight: 500;
 }
-h3{
+
+h3 {
     font-size: 18px;
     font-weight: 500;
 }
@@ -283,9 +292,11 @@ mw100 {
 .flex-column {
     flex-direction: column;
 }
+
 .justify-content-start {
     justify-content: flex-start;
 }
+
 .justify-content-center {
     justify-content: center;
 }

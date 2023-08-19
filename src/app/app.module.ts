@@ -20,6 +20,8 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { TcComponent } from './tc/tc.component';
 import { CheckoutModule } from './checkout/checkout.module';
 import { MatTabsModule } from '@angular/material/tabs';
+import { ExploreComponent } from './explore/explore.component';
+import { HttpClientModule } from '@angular/common/http';
 
 
 @NgModule({
@@ -28,6 +30,7 @@ import { MatTabsModule } from '@angular/material/tabs';
     LayoutComponent,
     AuthLayoutComponent,
     TcComponent,
+    ExploreComponent,
   ],
   imports: [
     BrowserModule,
@@ -45,7 +48,8 @@ import { MatTabsModule } from '@angular/material/tabs';
     ProductPageModule,
     FaqPageModule,
     CheckoutModule,
-    MatTabsModule
+    MatTabsModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

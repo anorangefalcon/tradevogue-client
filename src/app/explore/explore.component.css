@@ -1,0 +1,24 @@
+.explore-container{
+    padding-block-start: 100px;
+}
+
+.explore-cards{
+    width: 100%;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 30px;
+    /* margin-inline: -15px; */
+    flex-wrap: wrap;
+    justify-content: center;
+}
+@media screen and (max-width: 768px) {
+    .explore-cards{
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+    
+
+@media screen and (max-width: 420px) {
+    .explore-cards{
+        grid-template-columns: repeat(1, 1fr);
+    }
+}

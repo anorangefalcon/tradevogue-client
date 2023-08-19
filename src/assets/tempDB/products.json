@@ -1,0 +1,135 @@
+[
+    {
+        "name": "Elegant Blue Shirt",
+        "price": 3999,
+        "oldPrice": 5499,
+        "image": "../../../../assets/deal-of-week-component/shirt.png",
+        "sizes": ["S", "M", "L", "XL", "XXL"]
+    },
+    {
+        "name": "Classic Denim Jacket",
+        "price": 2599,
+        "image": "../../../../assets/deal-of-week-component/jacket.png",
+        "sizes": ["S", "M", "XXL"]
+    },
+    {
+        "name": "Vintage Striped Sweater",
+        "price": 1899,
+        "oldPrice": 2499,
+        "image": "../../../../assets/deal-of-week-component/shirt.png",
+        "sizes": ["S", "L", "XL"]
+    },
+    {
+        "name": "Casual Linen Shorts",
+        "price": 1499,
+        "image": "../../../../assets/deal-of-week-component/jacket.png",
+        "sizes": ["M", "L"]
+    },
+    {
+        "name": "Floral Print Dress",
+        "price": 3299,
+        "oldPrice": 4199,
+        "image": "../../../../assets/deal-of-week-component/shirt.png",
+        "sizes": ["S", "M", "L"]
+    },
+    {
+        "name": "Striped Cotton T-shirt",
+        "price": 1299,
+        "image": "../../../../assets/deal-of-week-component/shirt.png",
+        "sizes": ["M", "L", "XL"]
+    },
+    {
+        "name": "Leather Biker Jacket",
+        "price": 4899,
+        "image": "../../../../assets/deal-of-week-component/jacket.png",
+        "sizes": ["S", "L"]
+    },
+    {
+        "name": "Cozy Knit Sweater",
+        "price": 2799,
+        "oldPrice": 3299,
+        "image": "../../../../assets/deal-of-week-component/shirt.png",
+        "sizes": ["S", "M", "L"]
+    },
+    {
+        "name": "Cargo Utility Pants",
+        "price": 2199,
+        "image": "../../../../assets/deal-of-week-component/jacket.png",
+        "sizes": ["M", "L", "XL"]
+    },
+    {
+        "name": "Ruffled Summer Dress",
+        "price": 3499,
+        "image": "../../../../assets/deal-of-week-component/shirt.png",
+        "sizes": ["S", "M", "L"]
+    },
+    {
+        "name": "Printed Button-up Shirt",
+        "price": 1899,
+        "oldPrice": 2499,
+        "image": "../../../../assets/deal-of-week-component/jacket.png",
+        "sizes": ["M", "XL"]
+    },
+    {
+        "name": "Fleece-lined Hoodie",
+        "price": 2399,
+        "image": "../../../../assets/deal-of-week-component/shirt.png",
+        "sizes": ["S", "L", "XXL"]
+    },
+    {
+        "name": "Slim Fit Chinos",
+        "price": 1699,
+        "oldPrice": 1999,
+        "image": "../../../../assets/deal-of-week-component/jacket.png",
+        "sizes": ["S", "M", "L", "XL"]
+    },
+    {
+        "name": "Bohemian Maxi Dress",
+        "price": 3899,
+        "image": "../../../../assets/deal-of-week-component/shirt.png",
+        "sizes": ["S", "M", "L"]
+    },
+    {
+        "name": "Quilted Puffer Jacket",
+        "price": 3099,
+        "image": "../../../../assets/deal-of-week-component/jacket.png",
+        "sizes": ["M", "L", "XL"]
+    },
+    {
+        "name": "Printed Graphic T-shirt",
+        "price": 1499,
+        "image": "../../../../assets/deal-of-week-component/shirt.png",
+        "sizes": ["S", "M", "L", "XXL"]
+    },
+    {
+        "name": "Cropped High-waist Jeans",
+        "price": 2499,
+        "image": "../../../../assets/deal-of-week-component/jacket.png",
+        "sizes": ["S", "M", "L"]
+    },
+    {
+        "name": "Boho Lace Blouse",
+        "price": 1799,
+        "image": "../../../../assets/deal-of-week-component/shirt.png",
+        "sizes": ["S", "M", "L"]
+    },
+    {
+        "name": "Sleek Leather Pants",
+        "price": 3999,
+        "image": "../../../../assets/deal-of-week-component/jacket.png",
+        "sizes": ["M", "XL", "XXL"]
+    },
+    {
+        "name": "Sporty Track Jacket",
+        "price": 2199,
+        "image": "../../../../assets/deal-of-week-component/shirt.png",
+        "sizes": ["S", "L"]
+    },
+    {
+        "name": "Floral Print Midi Skirt",
+        "price": 2999,
+        "oldPrice": 3499,
+        "image": "../../../../assets/deal-of-week-component/jacket.png",
+        "sizes": ["S", "M", "L"]
+    }
+]

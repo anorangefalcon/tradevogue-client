@@ -1,22 +1,28 @@
 <div class="card-item-template">
     <div class="card-item-header">
-        <!-- <img src="https://via.placeholder.com/400x500" alt="Product Image"> -->
-        <img src="../../../../assets/deal-of-week-component/shirt.png" alt="Product Image">
+        <img [src]= product.image alt="Product Image">
         
-        <a href="" class="cart"><span class="material-symbols-outlined">
+        <a routerLink="/cart" class="cart"><span class="material-symbols-outlined">
             add_shopping_cart
-            </span></a>
+            </span>
+        </a>
     </div>
 
-    <a href="">
+    <a routerLink="/product" class="pointer">
     <div class="card-item-content d-flex flex-column">
-        <div class="type-wishlist d-flex justify-content-md-between">
-            <h6>S M XL</h6>
+        <div class="type-wishlist d-flex gap-5">
+            <h6 *ngFor="let size of product.sizes">
+                {{ size }}
+            </h6>
         </div>
-        <h3>Product Name</h3>
+        <h3>{{ product.name }}</h3>
         <div class="price d-flex gap-10 align-items-center">
-            <p class="current-price">$300</p>
-            <p class="old-price">$340</p>
+            <p class="current-price">
+                ₹{{ product.price }}
+            </p>
+            <p class="old-price" *ngIf="product.oldPrice !== 0 ">
+                ₹{{ product.oldPrice }}
+            </p>
         </div>
     </div>
 </a>
