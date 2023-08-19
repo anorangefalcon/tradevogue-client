@@ -5,36 +5,40 @@
     'women women men men'
     'women women men men'
     'women women men men'
-    'women women kids gift';
+    'women women gift gift';
   grid-gap: 20px;
 }
 
 
 .item {
-  background-repeat: no-repeat;
-  height: auto;
-  width: auto;
   overflow: hidden;
-  background-position: center;
+  /* box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.062); */
 }
 
 .item1 {
   grid-area: women;
-  background: url(../../../assets/collections-component/women.png);
-  background-size: contain;
-  background-position: center;
-  background-repeat: no-repeat;
+  background: url(../../../assets/collections-component/women.png), linear-gradient(to top, rgb(var(--secondary)) 10%, transparent);
+  background-size: cover;
+  background-position: top;
+  background-repeat: no-repeat; 
   /* scale: 0.8; */
 }
 .item2 {
   grid-area: men;
-  background: url(../../../assets/collections-component/men.png);
+  background: url(../../../assets/collections-component/men.png), linear-gradient(to top, rgb(var(--secondary)) 10%, transparent);
   background-size: cover;
+  background-position: top;
   background-repeat: no-repeat;
 
 }
-.item3 {grid-area: kids;}
-.item4 {grid-area: gift;}
+/* .item3 {grid-area: kids;} */
+.item4 {
+  grid-area: gift;
+  background: url(../../../assets/collections-component/men.png), linear-gradient(to top, rgb(var(--secondary)) 10%, transparent);
+  background-size: cover;
+  background-position: top;
+  background-repeat: no-repeat;
+}
 
 p{
     font-size: 20px !important;
@@ -47,7 +51,6 @@ p{
   height: 100%;
   width: 100%;
   position: relative;
-  background-color: rgb(var(--primary), 0.1);
   transition: background-color 0.3s;
   font-size: 10px;
   transition: background-color 0.3s;
@@ -73,6 +76,28 @@ p{
   flex-direction: column;
   justify-content: end;
   padding: 20px;
+
+  & h3{
+    background: linear-gradient(90deg, rgb(var(--primary)) , rgb(var(--secondary)));
+    /* color: rgb(var(--accent)); */
+    color: transparent;
+    background-clip: text;
+    -webkit-background-clip: text;
+    font-weight: 700;
+  }
+
+  & a{
+    color: rgb(var(--text-black));
+  }
+
+  & .icons{
+    font-weight: 200;
+    transition: all 0.3s ease-in-out;
+  }
+
+  & a:hover + .icons{
+    transform: translateX(5px);
+  }
 }
 
 
@@ -97,13 +122,20 @@ p{
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 767px) {
   .grid-container {
     grid-template-areas:
-      'women women women women'
-      'women women women women'
-      'men men gift gift'
-      'men men kids kids';
+      'men women gift'
+      'men women gift'
+      'men women gift';
+  }
+  .item1 {
+    background-size: 160%;
+    background-position: bottom;
+  }
+  .item2 {
+    background-size: 180%;
+    background-position: bottom;
   }
 }
 
@@ -111,9 +143,21 @@ p{
 @media (max-width: 480px) {
   .grid-container {
     grid-template-areas:
-      'women women'
-      'men men'
-      'kids gift';
+      'women'
+      'men'
+      'gift';
+  }
+  
+  .item1 {
+    background-size: contain;
+    background-position: right;   
+    background-repeat: no-repeat; 
+  }
+  .item2 {
+    background-size: contain;
+    background-position: right;
+    background-repeat: no-repeat;
+  
   }
 }
 
