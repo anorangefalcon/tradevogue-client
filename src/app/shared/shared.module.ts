@@ -9,6 +9,7 @@ import { CardTemplateComponent } from './components/card-template/card-template.
 import { SearchBarComponent } from './components/search-bar/search-bar.component';
 import { MailBarComponent } from './mail-bar/mail-bar.component';
 import { SupportComponent } from './components/support/support.component';
+import { MatTabsModule } from '@angular/material/tabs';
 
 
 
@@ -25,7 +26,8 @@ import { SupportComponent } from './components/support/support.component';
   ],
   imports: [
     CommonModule,
-    CarouselModule
+    CarouselModule,
+    MatTabsModule
   ],
   exports: [
     NavbarComponent,

@@ -19,7 +19,7 @@ import { FaqPageModule } from './faq-page/faq-page.module';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { TcComponent } from './tc/tc.component';
 import { CheckoutModule } from './checkout/checkout.module';
-
+import { MatTabsModule } from '@angular/material/tabs';
 
 
 @NgModule({
@@ -44,7 +44,8 @@ import { CheckoutModule } from './checkout/checkout.module';
     DataTablesModule,
     ProductPageModule,
     FaqPageModule,
-    CheckoutModule
+    CheckoutModule,
+    MatTabsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

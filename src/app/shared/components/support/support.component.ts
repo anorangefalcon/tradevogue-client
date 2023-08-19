@@ -6,6 +6,8 @@ import { Component } from '@angular/core';
 })
 
 export class SupportComponent {
+    selectedTabIndex = 0;
+    
    toggleChat() {
     const chatBtn = document.querySelector('.icon-support');
     const chatBox = document.querySelector('.messenger');
@@ -17,5 +19,17 @@ export class SupportComponent {
         chatBox.classList.toggle('expanded');
       }, 100);
     }
+   }
+
+   navigateTo(tab: string) {
+    if (tab === 'home') {
+      this.selectedTabIndex = 0;
+    } else if (tab === 'chat') {
+      this.selectedTabIndex = 1;
+    } else if (tab === 'help') {
+      this.selectedTabIndex = 2;
+    }
   }
+  
+  
 }
