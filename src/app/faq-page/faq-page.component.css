@@ -25,7 +25,7 @@
 
 .accordion-wrapper {
   padding-block: 100px;
-  max-height: 100% !important;
+  max-height: 2000px !important;
   & button{
     outline: none !important;
     background-color: transparent;
