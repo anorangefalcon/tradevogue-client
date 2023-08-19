@@ -17,19 +17,26 @@ import { CheckoutComponent } from './checkout/checkout.component';
 import { SupportComponent } from './shared/components/support/support.component';
 import { CartComponent } from './checkout/cart/cart.component';
 import { AddproductComponent } from './dashboard/addproduct/addproduct.component';
+import { BillingComponent } from './checkout/billing/billing.component';
 
 const routes: Routes = [
-  
-  { path: 'cart', component: CartComponent},
+
   {
     path: '', component: LayoutComponent,
     children: [
-      { path: '', component: HomeComponent},
-      { path : 't&c' , component: TcComponent},
-      { path : 'faq' , component: FaqPageComponent},
-      { path : 'product' , component: ProductPageComponent},
-      { path : 'about', component: AboutPageComponent},
-      { path: 'checkout', component: CheckoutComponent},
+      { path: '', component: HomeComponent },
+      { path: 't&c', component: TcComponent },
+      { path: 'faq', component: FaqPageComponent },
+      { path: 'product', component: ProductPageComponent },
+      { path: 'about', component: AboutPageComponent },
+      {
+        path: 'cart', component: CheckoutComponent,
+        children :[
+          { path: '', component: CartComponent},
+          { path: 'billing', component: BillingComponent},
+        ]
+
+      },
     ]
   },
 
@@ -40,19 +47,20 @@ const routes: Routes = [
       { path: 'signup', component: SignUpComponent },
     ]
   },
-{
-  path: 'support', component: SupportComponent,
-},
-  { path: 'dashboard' , component: DashboardComponent,
+  {
+    path: 'support', component: SupportComponent,
+  },
+  {
+    path: 'dashboard', component: DashboardComponent,
     children: [
-      { path: '', component: StatisticsComponent},
-      { path: 'products', component: ProductsComponent},
-      { path: 'orders', component: OrdersComponent},
-      { path: 'addproduct', component: AddproductComponent}
+      { path: '', component: StatisticsComponent },
+      { path: 'products', component: ProductsComponent },
+      { path: 'orders', component: OrdersComponent },
+      { path: 'addproduct', component: AddproductComponent }
     ]
   },
 
- 
+
 ];
 
 @NgModule({
