@@ -16,24 +16,88 @@
   }
 }
 
+/* .faq-section {
+  padding-block: 100px;
+} */
 
-.panel p {
-  color: rgb(var(--text-black), 0.7);
-  padding: 10px 44px;
-  border: 1px solid rgb(var(--text-black), 0.05);
+button.accordion {
+    font-size: 18px;
+    font-weight: 500;
+    cursor: pointer;
+    padding: 0 !important;
+    background: transparent;
+}
+
+.faq-section {
+ padding: 100px;
 }
 
 .accordion-wrapper {
-  padding-block: 100px;
-  max-height: 2000px !important;
-  & button{
-    outline: none !important;
-    background-color: transparent;
-  }
+  background-color: transparent;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
+  padding: 11px;
+}
+
+.accordion {
+  width: 100%;
+  text-align: left;
+  background-color: #f5f5f5;
+  padding: 15px;
+  cursor: pointer;
+  border: none;
+  outline: none;
+}
+
+.panel {
+  padding: 15px;
+  display: none;
+  background-color: white;
+  border-top: 1px solid #ccc;
+}
+
+.panel2 {
+  /* padding: 15px; */
+  display: none;
+  background-color: white;
+  border-top: 1px solid #ccc;
+}
+
+button.accordion2 {
+    font-size: 18px;
+    font-weight: 500;
+    cursor: pointer;
+    padding: 0 !important;
+    background: transparent;
+}
+
+.expanded2 {
+  display: block;
+  /* border-top: 1px solid #ccc; */
+      padding-top: 13px;
+    padding-bottom: 13px;
 }
 
 
-.accordion {
+/* .expanded2:last-child {
+  border-bottom: none;
+} */
+
+/* .panel {
+    max-height: 0;
+    overflow: hidden;
+    padding-inline: inherit;
+    opacity: 0;
+    transition: all 0.5s ease;
+  } */
+  
+  /* .expanded2 {
+    max-height: 1000px;
+    opacity: 1;
+  } */
+
+  /* .accordion {
   cursor: pointer;
   width: 100%;
   border: none;
@@ -42,46 +106,62 @@
   font-weight: 500;
   transition: 0.4s;
   font-size: 20px;
+} */
+
+/* .main-acc {
+  transition: box-shadow 0.3s ease-in-out;
+} */
+
+/* .accordion-wrapper {
+  max-height: 100% !important;
+  & button{
+    outline: none !important;
+    background-color: transparent;
+    font-weight: 500;
+    transition: 0.4s;
+    font-size: 20px;
+  }
+} */
+
+.panel p {
+  color: rgb(var(--text-black), 0.7);
+  /* padding: 10px 44px; */
 }
 
-.main-acc {
-  border-radius: 0 !important;
-  padding-inline: 28px;
-  padding-block: 14px;
-  border: 1px solid transparent;
-  border-bottom: 1px solid rgb(var(--text-black), 0.05);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  transition: 0.3s ease-in-out;
-}
-
-.main-acc.active {
-  border: 1px solid rgb(var(--text-black), 0.05);
-}
-
-.sub-acc {
-  margin: 0;
-  padding: 5px 44px;
-  border: 1px solid rgb(var(--text-black), 0.05);
-  border-radius: 0;
-  font-size: 18px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-
-
+.main-acc{
+    display: flex;
+    background: transparent;
+    align-items: center;
+    justify-content: space-between;
+    border-radius: 8px;
 }
 .sub-acc:last-child {
   margin-block-end: 10px 1;
 }
 
-.sub-acc.active {
-  border: 1px solid rgb(var(--text-black), 0.05);
+/* button.accordion::after {
+  content: "\002B";
+  color: black;
+  font-weight: 200;
+  float: right;
+  margin-left: 5px;
+  font-size: 28px;
+} */
+
+
+/* Minus sign for expanded parent accordion */
+/* .expanded2 .accordion2::after {
+  content: "\002B";
 }
 
-.accordion:after {
-  content: "\002B";
+.main-acc.active:after {
+  content: "\2212";
+} */
+
+
+/* Plus sign for collapsed parent accordion */
+.accordion:not(.expanded2)::after , .custom {
+  content: "+";
   color: black;
   font-weight: 200;
   float: right;
@@ -91,30 +171,25 @@
   font-size: 28px;
 }
 
-.active:after {
-  content: "\2212";
-  transition: content 1s ease-out;
-
+.custom-title {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    font-size: 18px;
+    font-weight: 500;
+    padding: 0px;
 }
+/* .child {
+  
+} */
 
-.panel {
-  position: relative;
-
-  border: 1px solid rgb(var(--text-black), 0.05);
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 1s ease-out;
+/* Minus sign for expanded parent accordion */
+.expanded2.accordion::after , .custom{
+  content: "-";
+  color: black;
+  font-weight: 200;
+  float: right;
+  margin-left: 5px;
+  font-size: 28px;
 }
-
-.sub-panel {
-  border: none;
-}
-
-
-.accordion.active+.main-panel {
-  border: none;
-  /* background-color: #ffffff; */
-  transition: box-shadow 0.3s ease-in-out;
-  /* padding: 10px 28px; */
-}
-
+/* ... (other styles) ... */

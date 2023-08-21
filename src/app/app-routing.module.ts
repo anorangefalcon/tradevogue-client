@@ -15,10 +15,6 @@ import { FaqPageComponent } from './faq-page/faq-page.component';
 import { ProductPageComponent } from './product-page/product-page.component';
 import { CheckoutComponent } from './checkout/checkout.component';
 import { AddproductComponent } from './dashboard/addproduct/addproduct.component';
-import { BillingComponent } from './checkout/billing/billing.component';
-import { CartComponent } from './checkout/cart/cart.component';
-import { ExploreComponent } from './explore/explore.component';
-
 const routes: Routes = [
 
   {
@@ -29,13 +25,7 @@ const routes: Routes = [
       { path : 'faq' , component: FaqPageComponent, data: { hideFooterFAQ: true } },
       { path : 'product' , component: ProductPageComponent},
       { path : 'about', component: AboutPageComponent},
-      { path : 'explore', component: ExploreComponent},
-      { path: 'cart', component: CheckoutComponent,
-      children:[
-       { path: '', component: CartComponent},
-       { path: 'billing', component: BillingComponent}
-      ]
-    },
+      { path: 'checkout', component: CheckoutComponent},
     ]
   },
 

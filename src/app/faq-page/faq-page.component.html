@@ -1,12 +1,59 @@
+<!-- <div class="faq-header">
+  <div class="faq_title d-flex justify-content-center align-items-center">
+    <h1>FAQs</h1>
+  </div>
+</div> 
+<section class="faq-section">
+  <div *ngFor="let item of data" class="container accordion-wrapper main-panel">
+  
+    <button class="accordion main-acc" (click)="toogle_outer(item)"
+    [ngClass]="{expanded2:item.expanded}"
+    >{{item.title}}</button>
+    <div  class="panel" [ngClass]="{expanded2:item.expanded}">
+      <div *ngFor="let data of item.childrens">
+       <button class="accordion main-acc" (click)="toggle_inner(data)">{{data.title}}</button> 
+        <div [ngClass]="{expanded2:data.expanded}" class="panel2">
+          {{data.content}}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+ -->
+
+
+
+
 <div class="faq-header">
   <div class="faq_title d-flex justify-content-center align-items-center">
     <h1>FAQs</h1>
   </div>
 </div>
 
-<div class="container accordion-wrapper">
-  
-  <!-- <h1>FAQs</h1> -->
+<section class="faq-section">
+  <div *ngFor="let section of data" class="container accordion-wrapper main-panel">
+    <button class="accordion main-acc" (click)="toggleSection(section)" [ngClass]="{ expanded2: section.expanded }">
+      {{ section.title }}
+    </button>
+    <div class="panel" [ngClass]="{ expanded2: section.expanded }">
+      <div *ngFor="let child of section.childrens">
+        <button class=" main-acc child custom-title" (click)="toggleChild(child)">
+            <div>{{ child.title }}</div>
+            <div class="custom">{{ child.expanded ? '-' : '+' }}</div>
+        </button>
+        <div class="panel2" [ngClass]="{ expanded2: child.expanded }">
+          <!-- <div [ngClass]="{ expanded2: child.expanded }" class="panel"> -->
+          {{ child.content }}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+
+<!-- <div class="container accordion-wrapper">
 
   <button class="accordion main-acc one">General</button>
   <div class="panel main-panel">
@@ -110,6 +157,4 @@
     <div class="panel sub-panel">
       <p>To reset your password, click the "Forgot Password" link on the log in page. Then, enter the email address associated with your account, and follow the prompts to reset your password.</p>
     </div>
-  </div>
-
-
+  </div> -->

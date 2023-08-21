@@ -15,8 +15,39 @@
                 </a>
             </div>
 
+            <ul class="accordion">
+                <li>
+                  <input type="radio" name="accordion" id="first">
+                    <label for="first">Do I need to create account for buy products ?</label>
+                    <div class="content">
+                        <p>The moon is visible during the day due to its orbit around the Earth. Sometimes, the moon\'s position aligns with the sun and Earth in a way that part of the moon is illuminated and facing us. This makes it visible even in daylight.</p>
+                    </div>
+                </li>
+                <li>
+                  <input type="radio" name="accordion" id="second">
+                    <label for="second">How I Return back my product ?</label>
+                    <div class="content">
+                        <p>The moon is visible during the day due to its orbit around the Earth. Sometimes, the moon\'s position aligns with the sun and Earth in a way that part of the moon is illuminated and facing us. This makes it visible even in daylight.</p>
+                    </div>
+                </li>
+                <li>
+                  <input type="radio" name="accordion" id="third">
+                    <label for="third">What Payment Methods are Available ?</label>
+                    <div class="content">
+                        <p>The moon is visible during the day due to its orbit around the Earth. Sometimes, the moon\'s position aligns with the sun and Earth in a way that part of the moon is illuminated and facing us. This makes it visible even in daylight.</p>
+                    </div>
+                </li>
+                <li>
+                  <input type="radio" name="accordion" id="fourth">
+                    <label for="fourth">How can I track my order ?</label>
+                    <div class="content">
+                        <p>The moon is visible during the day due to its orbit around the Earth. Sometimes, the moon\'s position aligns with the sun and Earth in a way that part of the moon is illuminated and facing us. This makes it visible even in daylight.</p>
+                    </div>
+                </li>
+            </ul>
 
-            <div class="faq-accordions">
+
+            <!-- <div class="faq-accordions">
                 <div class="accordion-item" *ngFor="let question of faqQuestions; let i = index">
                     <button id="accordion-button-{{i}}" [attr.aria-expanded]="question.isExpanded ? 'true' : 'false'"
                         (click)="toggleAccordion(i)">
@@ -28,7 +59,7 @@
                         <p>{{ question.content }}</p>
                     </div>
                 </div>
-            </div>
+            </div> -->
         </div>
     </div>
 </section>

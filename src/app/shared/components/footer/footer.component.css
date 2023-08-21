@@ -6,7 +6,6 @@ footer {
   text-decoration: none;
   color: rgb(var(--text-black)) !important;
   letter-spacing: 0.5px;
-  
 }
 
 footer {
@@ -36,8 +35,6 @@ li {
   list-style: none;
 }
 
-
-
 /* #border-bottom {
     border-bottom: 1px solid rgb(var(--primary));
     width: 100%;
@@ -59,8 +56,6 @@ li {
 .text-upper {
   font-size: 20px;
 }
-
-
 
 .mb-15 {
   margin-bottom: 15px;
@@ -124,6 +119,7 @@ li {
 #footer_subscribe {
   gap: 0.75rem;
 }
+
 #footer_subscribe h3 {
   font-weight: 900;
 }
@@ -132,10 +128,12 @@ li {
    letter-spacing: 0.5px;
    transform: translateY(-1.6px);
 }
+
 .mail {
   height: 100%;
   position: relative;
 }
+
 .mail-bar {
   position: relative;
   background: transparent;
@@ -169,6 +167,7 @@ li {
       color: rgb(var(--text-black), 0.5);
   }
 }
+
 li h3{
   font-weight: 900;
 }
@@ -193,7 +192,6 @@ input {
 }
 
 .logo {
-  
   height: 50px;
   /* transform: translateY(-5px);
   transform: translateX(-5px); */
@@ -205,7 +203,6 @@ input {
   border-top: 2px solid black;
   border-right: 2px solid black;
   border-bottom: 2px solid black;
-
   color: var(--color-neutral-40);
   padding: 0px 1.25rem;
   font-size: 1.125rem;
@@ -242,7 +239,6 @@ input {
 }
 
 @media screen and (max-width: 426px) {
-
   #footer_content,
   #footer_content_title {
     grid-template-columns: repeat(1, 1fr);
@@ -250,28 +246,22 @@ input {
   }
 }
 
-
-
 /* for faq-accordian */
 
-/* for faq-accordian */
-
-
-.accordion .accordion-item button[aria-expanded='true'] {
+/* .accordion .accordion-item button[aria-expanded='true'] {
   border-bottom: 1px solid rgb(var(--text-black), 0.05);
 }
-
 
 .section-header {
   width: 30%;
 }
+
 .section-sub-heading{
   flex-direction: row-reverse;
   & span{
     font-size: 16px;
     transition: color 0.3s ease-in-out;
   }
-
   &:is(:hover){
     & span{
       color: rgb(var(--accent));
@@ -320,7 +310,6 @@ input {
   left: 5px;
   width: 10px;
   height: 2px;
-  
 }
 
 .accordion button .icon::after {
@@ -334,13 +323,8 @@ input {
   background: currentColor;
 }
 
-
 .faq {
-  /* background-color: transparent; */
   padding-block: 50px;
-
-  /* background-color: rgb(var(--accent), 0.05); */
-  /* background-image: url(../../../../assets/deal-of-week-component/dealOfWeek-homeBg.png); */
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
@@ -354,10 +338,7 @@ input {
   & button {
     border-block-end: none;
   }
-
-
 }
-
 
 .accordion button[aria-expanded='true'] .icon::after {
   width: 0;
@@ -378,14 +359,11 @@ input {
   opacity: 0;
   max-height: 0;
   overflow: hidden;
-  /* transition: opacity 200ms linear, max-height 200ms linear; */
   will-change: opacity, max-height;
   background-color: transparent;
-  /* padding-inline:36px ; */
 }
 
 .accordion h2 {
-  /* color: rgba(var(--text-black)); */
   color: rgb(var(--text-black));
   font-size: 26px;
   font-weight: 400;
@@ -394,17 +372,14 @@ input {
 .accordion .accordion-content p {
   font-size: 1rem;
   font-weight: 300;
-  /* margin: 2em 0; */
   padding-block-start: 10px;
   padding-block-end: 10px;
 }
 
 .icon.expanded::before {
   content: '\25BC';
-  /* Unicode for down arrow */
   transform: rotate(180deg);
 }
-
 
 @media (max-width: 768px) {
   .container {
@@ -422,11 +397,82 @@ input {
     width: 1px;
     height: 8px;
   }
+} */
+
+/* Accordion for faq */
+
+.accordion {
+    width: 70%;
+    margin: 0 auto;
 }
+
+.accordion li {
+  list-style: none;
+  width: 100%;
+  margin: 20px;
+border-block-end: 1px solid rgb(var(--text-black), 0.2);
+}
+
+.accordion li label {
+  display: flex;
+  align-items: center;
+  font-size: 18px;
+  transition: all 0.5s ease;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+label::after {
+  content: '+';
+  margin-right: 10px;
+  font-size: 24px;
+  font-weight: 100;
+}
+
+input[type="radio"] {
+  display: none;
+}
+
+.accordion .content {
+  line-height: 26px;
+  max-height: 0;
+  overflow: hidden;
+  transition: all 0.3s ease-in-out;
+  opacity: 0;
+}
+
+.accordion input[type="radio"]:checked + label  + .content {
+    max-height: 400px;
+    padding: 10px 0px;
+  /* transition: all 0.5s ease; */
+  opacity: 1;
+}
+
+.accordion input[type="radio"]:checked + label {
+  border-bottom: 1px solid rgb(var(--text-black), 0.2);
+}
+
+.accordion input[type="radio"]:checked + label::after {
+  content: '-';
+}
+
+.accordion label{
+  display: flex;
+    align-items: center;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+
 
 @media (max-width: 480px) {
   .accordion button .icon::before {
     display: none;
+  }
+
+  .accordion {
+    flex-wrap: wrap;
+        width: 100%;
   }
 
   .accordion button .icon::after {

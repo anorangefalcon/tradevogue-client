@@ -19,8 +19,9 @@ import { FaqPageModule } from './faq-page/faq-page.module';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { TcComponent } from './tc/tc.component';
 import { CheckoutModule } from './checkout/checkout.module';
-import { MatTabsModule } from '@angular/material/tabs';
 import { ExploreComponent } from './explore/explore.component';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatExpansionModule } from '@angular/material/expansion';
 import { HttpClientModule } from '@angular/common/http';
 
 
@@ -50,6 +51,7 @@ import { HttpClientModule } from '@angular/common/http';
     CheckoutModule,
     MatTabsModule,
     HttpClientModule,
+    MatExpansionModule
   ],
   providers: [],
   bootstrap: [AppComponent]

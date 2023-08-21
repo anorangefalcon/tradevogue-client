@@ -631,36 +631,5 @@ mw100 {
         background-color: rgba(0, 0, 0, 0.153);
     }
 }
-
-
-
-
-@media screen and (max-width: 1024px) {
-    /* Hero Section Heading */
-
-    & .heading {
-
-        font-size: 40px;
-        letter-spacing: 1.2px;
-        margin-bottom: 50px;
-        font-weight: 500;
-
-        & p {
-            font-size: 16px !important;
-            font-weight: 800;
-        }
-
-        & h3 {
-            font-size: 65px !important;
-            font-weight: 700;
-            color: transparent;
-            background: linear-gradient(to top right, rgb(var(--accent)), rgb(var(--primary)), rgb(var(--accent)));
-            -webkit-background-clip: text;
-            background-clip: text;
-        }
-    }
-
-    .heading-button {
-        font-size: 16px;
-    }
-}
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

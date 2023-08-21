@@ -29,8 +29,7 @@ import { PopCloseDirective } from './Directives/pop-close.directive';
   imports: [
     CommonModule,
     CarouselModule,
-    MatTabsModule,
-    RouterModule
+    MatTabsModule
   ],
   exports: [
     NavbarComponent,
