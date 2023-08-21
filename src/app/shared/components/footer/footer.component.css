@@ -1,15 +1,15 @@
-footer {
-  color: rgb(var(--text-black)) !important;
+/* footer {
+  color: rgb(var(--text-white)) !important;
 }
 
 .footer-link {
   text-decoration: none;
-  color: rgb(var(--text-black)) !important;
+  color: rgb(var(--text-white)) !important;
   letter-spacing: 0.5px;
 }
 
 footer {
-  background-color: rgb(var(--secondary), 0.5);
+  background-color: rgb(var(--text-black));
   color: #fff;
 }
 
@@ -18,9 +18,9 @@ footer {
   padding-bottom: 1.2rem;
   padding-block: 30px;
   /* border-bottom: 1px solid rgb(var(--primary)); */
-}
+/* } */
 
-.visibility {
+/* .visibility {
   display: none;
 }
 
@@ -29,18 +29,18 @@ footer {
   grid-template-columns: repeat(4, 1fr);
   padding: 1.2rem;
   /* border-bottom: 1px solid rgb(var(--primary)); */
-}
+/* } */
 
-li {
+/* li {
   list-style: none;
-}
+} */
 
 /* #border-bottom {
     border-bottom: 1px solid rgb(var(--primary));
     width: 100%;
 } */
 
-#footer_contacts h1 {
+/* #footer_contacts h1 {
   margin-bottom: 1rem;
 }
 
@@ -72,7 +72,7 @@ li {
   border-radius: 50%;
   transition: all 0.4s;
   font-size: 14px;
-  border: 1px solid rgb(var(--text-black),0.5);
+  border: 1px solid rgb(var(--text-white),0.5);
 }
 
 .footer-link i{
@@ -103,20 +103,20 @@ li {
     background-color: #25d366;
 } */
 
-.footer-list {
+/* .footer-list {
   gap: 0.75rem;
   list-style: none;
 }
 
 .footer-list .footer-link {
   transition: all 0.4s;
-}
+} */
 
 /* .footer-list .footer-link:hover {
     color: rgb(var(--primary));
 } */
 
-#footer_subscribe {
+/* #footer_subscribe {
   gap: 0.75rem;
 }
 
@@ -192,10 +192,12 @@ input {
 }
 
 .logo {
-  height: 50px;
-  /* transform: translateY(-5px);
+  
+  height: 50px; */
+*/
+/* transform: translateY(-5px);
   transform: translateX(-5px); */
-  transform: translate(-7px, -7px);
+/* transform: translate(-7px, -7px);
 }
 
 #input_group button {
@@ -210,13 +212,13 @@ input {
   border-radius: 0px 4px 4px 0px;
   cursor: pointer;
   transition: all 0.4s;
-}
+} */
 
 /* #input_group button:hover {
     opacity: 0.8;
 } */
 
-#footer_copyright {
+/* #footer_copyright {
   font-size: 0.9rem;
   padding: 1.5rem;
   font-weight: 400;
@@ -244,8 +246,8 @@ input {
     grid-template-columns: repeat(1, 1fr);
     padding: 3rem 2rem;
   }
-}
-
+} */
+*/
 /* for faq-accordian */
 
 /* .accordion .accordion-item button[aria-expanded='true'] {
@@ -256,14 +258,16 @@ input {
   width: 30%;
 }
 
-.section-sub-heading{
+.section-sub-heading {
   flex-direction: row-reverse;
-  & span{
+
+  & span {
     font-size: 16px;
     transition: color 0.3s ease-in-out;
   }
-  &:is(:hover){
-    & span{
+
+  &:is(:hover) {
+    & span {
       color: rgb(var(--accent));
     }
   }
@@ -485,6 +489,83 @@ input[type="radio"] {
   }
 }
 
-.fa-instagram , .fa-facebook-f , .fa-whatsapp{
-  font-size: 17px !important;
+/* FOOTER CSS  */
+footer {
+  padding-block: 50px;
+  background-color: rgb(var(--container-black));
+  /* background: linear-gradient(rgb(var(--accent)), rgb(var(--secondary),0.3)); */
+
+  & .footer-content {
+    width: 100%;
+
+    & .footer-sections {
+      & .logo {
+        width: 190px;
+        transform: translate(-9px, -16px);
+      }
+      width: 25%;
+      color: rgb(var(--text-white));
+
+      & ul li a {
+        color: rgb(var(--text-white)) !important;
+      }
+    }
+    & .social-medias {
+
+
+      & .logo-circle{
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        border: 1px solid rgb(var(--text-white));
+      }
+
+      & i {
+        color: rgb(var(--text-white));
+        font-size: 14px;
+      }
+    }
+
+    & .mail {
+      height: 100%;
+      position: relative;
+    }
+    
+    .mail-bar {
+      position: relative;
+      background: transparent;
+      width: 100%;
+      height: 100%;
+      border: 1px solid rgb(var(--text-white),0.3);
+      color: rgb(var(--text-white), 0.8);
+      border-radius: 50px;
+      padding: 9px;
+      padding-inline-start: 15px;
+      padding-inline-end: 0px;
+      outline: none;
+    }
+    
+    .mail-bar::placeholder {
+      color: rgb(var(--text-white), 0.5);
+    }
+    
+    .mail button {
+      position: absolute;
+      background: transparent;
+      inset-inline-end: 0;
+      height: 100%;
+      border-radius: 50px;
+      padding: 0;
+      padding-inline: 15px;
+      display: flex;
+      align-items: center;
+    
+      & span {
+          color: rgb(var(--text-white), 0.5);
+      }
+    }
+    
+
+  }
+
 }

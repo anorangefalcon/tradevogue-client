@@ -108,7 +108,8 @@ select {
 
     /* new purple */
     --container-color: 255, 255, 255;
-    --text-black: 29, 7, 7;
+    --container-black: 0,0,0;
+    --text-black: 7, 7, 7;
     --text-white: 255, 255, 255;
     --background: 255, 255, 255;
     --primary: 89, 25, 79;

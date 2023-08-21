@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LayoutComponent } from './layout/layout.component';
-import { LoginComponent } from './auth/login/login.component';
-import { SignUpComponent } from './auth/sign-up/sign-up.component';
+// import { LoginComponent } from './auth/login/login.component';
+// import { SignUpComponent } from './auth/sign-up/sign-up.component';
 import { AuthLayoutComponent } from './auth-layout/auth-layout.component';
 import { HomeComponent } from './home/home.component';
 import { ProductsComponent } from './dashboard/products/products.component';
@@ -38,13 +38,17 @@ const routes: Routes = [
     ]
   },
 
-  {
-    path: '', component: AuthLayoutComponent,
-    children: [
-      { path: 'login', component: LoginComponent },
-      { path: 'signup', component: SignUpComponent },
-    ]
-  },
+  // {
+  //   path: '', component: AuthLayoutComponent,
+  //   children: [
+  //     { path: 'login', component: LoginComponent },
+  //     { path: 'signup', component: SignUpComponent },
+  //   ]
+  // },
+
+ {
+    path: 'auth', loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule)
+ },
   {
     path: 'dashboard', component: DashboardComponent,
     children: [

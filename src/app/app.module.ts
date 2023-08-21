@@ -40,7 +40,7 @@ import { HttpClientModule } from '@angular/common/http';
     BrowserAnimationsModule,
     AppRoutingModule,
     SharedModule,
-    AuthModule,
+    // AuthModule,
     HomeModule,
     ReactiveFormsModule,
     DashboardModule,
