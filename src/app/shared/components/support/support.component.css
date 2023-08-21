@@ -14,7 +14,7 @@
   text-align: center;
   cursor: pointer;
   color: #ffffff;
-  background: linear-gradient(135deg, rgb(15 81 50) 0%, rgb(9 73 44) 100%);
+  background: rgb(var(--primary));
   width: 50px;
   height: 50px;
   float: right;
@@ -140,11 +140,11 @@ visibility: hidden;
 #chat-bot .msg .bubble {
   padding: 10px;
   border-radius: 5px;
-  background-color: #e0f2ff;
+  background-color: rgb(var(--accent), 0.1);
 }
 #chat-bot .msg.msg-right .bubble {
   color: rgb(15 81 50);
-  background-color: rgb(209 231 221);
+  background-color: rgb(var(--secondary));
 }
 #chat-bot .msg .bubble .name {
   color: #393d4a;

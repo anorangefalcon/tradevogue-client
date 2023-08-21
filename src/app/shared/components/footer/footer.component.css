@@ -254,6 +254,8 @@ input {
 
 /* for faq-accordian */
 
+/* for faq-accordian */
+
 
 .accordion .accordion-item button[aria-expanded='true'] {
   border-bottom: 1px solid rgb(var(--text-black), 0.05);
