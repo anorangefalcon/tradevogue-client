@@ -11,6 +11,8 @@ import { SupportComponent } from './components/support/support.component';
 import { MatTabsModule } from '@angular/material/tabs';
 
 import { RouterModule } from '@angular/router';
+import { PopOpenDirective } from './Directives/pop-open.directive';
+import { PopCloseDirective } from './Directives/pop-close.directive';
 
 @NgModule({
   declarations: [
@@ -20,7 +22,9 @@ import { RouterModule } from '@angular/router';
     ProductCardCarouselComponent,
     CardTemplateComponent,
     SearchBarComponent,
-    SupportComponent
+    SupportComponent,
+    PopOpenDirective,
+    PopCloseDirective
   ],
   imports: [
     CommonModule,
@@ -35,7 +39,9 @@ import { RouterModule } from '@angular/router';
     ProductCardCarouselComponent,
     CardTemplateComponent,
     SearchBarComponent,
-    SupportComponent
+    SupportComponent,
+    PopOpenDirective,
+    PopCloseDirective
   ]
 })
 export class SharedModule { }

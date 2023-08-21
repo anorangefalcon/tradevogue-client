@@ -1,95 +1,260 @@
-#product-adding-section{
+#product-adding-section {
 
-    & .product-form{
+    & .heading{
+        margin-bottom: 20px !important;
+    }
+
+    & .product-form {
         padding: 20px;
         box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
         border-radius: 10px;
         background-color: #ffffff;
     }
 
-    & form{
+    & .add__product {
         display: flex;
-        margin-inline: -20px;   
+        margin-inline: -20px;
         flex-wrap: wrap;
+        padding-block-end: 20px;
+        margin-block-end: 20px;
     }
 
-    & .col{
+    & .col {
         width: 50%;
         display: flex;
         flex-direction: column;
         gap: 16px;
         padding-inline: 20px;
+
+
+        & .quantity-block {
+            gap: 20px;
+            flex-wrap: wrap;
+            .form__group {
+                width: 48%;
+            }
+        }
     }
 
-    & .form__group{
+    & .form__group {
         display: flex;
         flex-direction: column;
         gap: 8px;
 
-        & .input__label{
+        & .input__label {
             font-weight: 600;
             font-size: 14px;
             letter-spacing: 1.1px;
         }
     }
 
-    & .form__group:has( > select){
+    & .form__group:has(> select) {
         width: 50%;
     }
 
-    & input, select, textarea{
+    & input,
+    select,
+    textarea {
         width: 100%;
         padding: 8px 14px;
+
+        &::-webkit-resizer {
+            display: none;
+          }
     }
 
-    & input, textarea{
+    & input,
+    textarea {
         border-radius: 8px;
-        border: 1px solid transparent;
-        background-color: rgb(var(--primary), 0.05);
+        border: 1px solid rgb(var(--primary), 0.3);
+        /* border: 1px solid transparent; */
+        /* background-color: rgb(var(--primary), 0.05); */
         font-size: 14px;
         outline: none;
     }
 
-    & ::placeholder{
+    & ::placeholder {
         color: rgb(var(--text-black), 0.3);
     }
-    & input:focus, textarea:focus{
+
+    & input:focus,
+    textarea:focus {
         border-color: rgb(var(--text-black), 0.4);
     }
 
-    & .select-options{
+    & .select-options {
 
-        & .form__group{
+        & .form__group {
             width: 48%;
         }
     }
 
-    & .product-images{
-        min-height: 200px;
+    & .product-images {
+        position: relative;
+        min-height: 100px;
         border-radius: 10px;
         border: 1px dashed rgb(var(--text-black), 0.5);
 
-        & input[type="file"]{
+        & input[type="file"] {
+            display: none;
             height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            &::-webkit-file-upload-button{
-             display: none;
+            width: 100%;
+
+            &::-webkit-file-upload-button {
+                display: none;
             }
         }
-        
+
+        & label {
+            /* background-color: rgb(var(--primary), 0.05); */
+            color: rgb(var(--text-black), 0.3);
+            inset-block-start: 0;
+            inset-inline-start: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
     }
 
-    & .price__block{
+    & .price__block {
         width: 100%;
         overflow: hidden;
         margin-inline: -10px;
 
-        & .form__group{
+        & .form__group {
             width: 33.3%;
             padding-inline: 10px;
         }
     }
-}
 
+    & .row-1 {
+        border-block-end: 1px solid rgb(var(--text-black), 0.1);
+    }
+
+    /* POP UP */
+    & .card {
+        position: fixed;
+        padding: 20px;
+        min-width: 400px;
+        inset-block-start: 50%;
+        inset-inline-start: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 1;
+        background-color: #ffffff;
+        box-shadow: 0px 0px 10px rgb(var(--text-black), 0.3);
+        border-radius: 10px;
+        /* backdrop-filter: blur(30px); */
+
+        & .column {
+
+            & .category {
+                width: 100%;
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+                height: 150px;
+                overflow-y: scroll;
+                padding: 10px;
+                background-color: rgb(var(--accent), 0.05);
+                border-radius: 10px;
+
+                &::-webkit-scrollbar {
+                    width: 6px;
+                    border-radius: 0px 10px 10px 0;
+                    background-color: rgba(128, 128, 128, 0.177);
+                }
+
+                &::-webkit-scrollbar-thumb {
+                    border-radius: 0px 10px 10px 0;
+                    background-color: rgb(var(--accent), 0.8);
+                }
+
+                & div {
+                    cursor: pointer;
+                    padding: 5px 10px;
+                    display: flex;
+                    justify-content: space-between;
+                    background-color: rgba(128, 128, 128, 0.119);
+                    border-radius: 5px;
+
+                    & span:last-child {
+                        font-size: 20px;
+                        color: rgb(var(--danger));
+                    }
+
+                    &:hover {
+                        background-color: rgb(var(--accent), 0.1);
+                        transition: all 0.3s ease-in-out;
+                    }
+                }
+            }
+
+            & form {
+                align-items: flex-end;
+            }
+        }
+
+        & .add__form {
+            width: 50%;
+        }
+    }
+
+    & .buttons{
+        
+        & .add{
+            color: rgb(var(--primary));
+            background-color: rgb(var(--primary), 0.1);
+            transition: all 0.3 ease-in-out;
+            & a{
+                color: rgb(var(--primary));
+                font-weight: 600; 
+            }
+
+            & span{
+                font-size: 21px;
+            }
+
+            &:hover{
+                color: rgb(var(--text-white));
+                background-color: rgb(var(--primary));
+                & a{
+                    color: rgb(var(--text-white));
+                    font-weight: 600; 
+                }
+            }
+        }
+        & .draft{
+            color: rgb(var(--success));
+            background-color: rgb(var(--success), 0.1);
+            & a{
+                color: rgb(var(--success));
+                font-weight: 600; 
+            }
+
+            & span{
+                font-size: 21px;
+            }
+
+            &:hover{
+                color: rgb(var(--text-white));
+                background-color: rgb(var(--success));
+                & a{
+                    color: rgb(var(--text-white));
+                    font-weight: 600; 
+                }
+            }
+        }
+    }
+
+    & small{
+        font-weight: 600;
+        color: rgb(var(--text-black), 0.3);
+    }
+
+    /* Customize Select  */
+    & .select-selected {
+        color: rgb(var(--text-black), 0.3) !important;
+    }
+}

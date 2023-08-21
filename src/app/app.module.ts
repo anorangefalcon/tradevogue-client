@@ -49,7 +49,7 @@ import { HttpClientModule } from '@angular/common/http';
     FaqPageModule,
     CheckoutModule,
     MatTabsModule,
-    HttpClientModule
+    HttpClientModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -5,7 +5,6 @@ export class CustomSelect {
     }
 
     custom_Selection(){
-        console.log(this.element.length);
 
         let selectElement: any;
         let  a: any;
@@ -31,19 +30,20 @@ export class CustomSelect {
                     option.classList.add('selected');
                 }
                 option.innerHTML = selectElement.options[i].innerHTML;
-                option.addEventListener('click', function(ele: any){
-                        
+                option.addEventListener('click', function(this: any){
+                    
                     // ele here refers to object when called upon
-                    let select = ele.parentNode.parentNode.parentNode.getElementsByTagName('select')[0]; //Original
-                    let sibling = ele.parentNode.nextSibling; 
+                    let select = this.parentNode.parentNode.parentNode.getElementsByTagName('select')[0]; //Original
+                    let sibling = this.parentNode.nextSibling; 
 
                     for(let y =0; y<select.length; y++){
-                        if(select.options[y].innerHTML == ele.innerHTML){
+                        if(select.options[y].innerHTML == this.innerHTML){
+
                             select.selectedIndex = y; // Updating Original Select 
-                            sibling.innerHTML = ele.innerHTML; //Updating Entry in Custom Select
-                            ele.parentNode.getElementsByClassName('selected')[0].classList.remove("selected");
-                            ele.classList.add("selected"); // Updating Selected Element
-                            ele.parentNode.classList.remove('active');
+                            sibling.innerHTML = this.innerHTML; //Updating Entry in Custom Select
+                            this.parentNode.getElementsByClassName('selected')[0].classList.remove("selected");
+                            this.classList.add("selected"); // Updating Selected Element
+                            this.parentNode.classList.remove('active');
                             break;
                         }
                     }
@@ -57,12 +57,11 @@ export class CustomSelect {
             a.setAttribute('class', 'select-selected');
             a.setAttribute('tabindex','0'); //Add Focus to the custom-select
 
-            let check: boolean = false;
-            a.addEventListener('focus', function(this: any){
-                console.log(this.previousSibling);
-                this.previousSibling.classList.toggle('active');
-                // check = true;
-            })
+            // let check: boolean = false;
+            // a.addEventListener('focus', function(this: any){
+            //     console.log(this.previousSibling);
+            //     this.previousSibling.classList.toggle('active');
+            // })
 
             a.addEventListener('blur', function(this: any){
                 this.previousSibling.classList.remove('active');

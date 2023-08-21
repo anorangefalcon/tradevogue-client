@@ -1,29 +1,29 @@
-<div class="card-item-template">
-    <div class="card-item-header">
-        <img [src]= product.image alt="Product Image">
-        
-        <a routerLink="/cart" class="cart"><span class="material-symbols-outlined">
-            add_shopping_cart
-            </span>
-        </a>
-    </div>
-
-    <a routerLink="/product" class="pointer">
-    <div class="card-item-content d-flex flex-column">
-        <div class="type-wishlist d-flex gap-5">
-            <h6 *ngFor="let size of product.sizes">
-                {{ size }}
-            </h6>
+<a routerLink="/product" class="">
+    <div class="card-item-template">
+        <div class="card-item-header relative">
+            <img [src]=product.image alt="Product Image">
+    
+            <a routerLink="/cart" class="cart"><span class="material-symbols-outlined">
+                    add_shopping_cart
+                </span>
+            </a>
         </div>
-        <h3>{{ product.name }}</h3>
-        <div class="price d-flex gap-10 align-items-center">
-            <p class="current-price">
-                ₹{{ product.price }}
-            </p>
-            <p class="old-price" *ngIf="product.oldPrice !== 0 ">
-                ₹{{ product.oldPrice }}
-            </p>
+    
+        <div class="card-item-content d-flex flex-column ">
+            <div class="type-wishlist d-flex gap-5">
+                <h6 *ngFor="let size of product_info.sizes">
+                    {{ size }}
+                </h6>
+            </div>
+            <h3>{{ product_info.name }}</h3>
+            <div class="price d-flex gap-10 align-items-center">
+                <p class="current-price">
+                    ₹{{ product_info.price }}
+                </p>
+                <p class="old-price" *ngIf="product_info.oldPrice != undefined">
+                    ₹{{ product_info.oldPrice }}
+                </p>
+            </div>
         </div>
     </div>
 </a>
-</div>

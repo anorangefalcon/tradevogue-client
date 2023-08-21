@@ -197,8 +197,20 @@ button {
 }
 
 .btn-secondry {
-    background-color: rgb(var(--secondary)) !important;
+    background-color: rgb(204, 204, 204) !important;
     color: rgb(var(--text-black)) !important;
+    font-weight: 600;
+    transition: all 0.3s ease-in-out;
+}
+
+.btn-secondry:hover {
+    opacity: 0.8;
+}
+
+.btn-accent {
+    background-color: rgb(var(--accent), 0.7) !important;
+    color: rgb(var(--text-white));
+    font-weight: 600;
 }
 
 

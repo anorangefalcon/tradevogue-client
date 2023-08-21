@@ -7,17 +7,19 @@ import { Component, Input } from '@angular/core';
 })
 export class CardTemplateComponent {
 
-  // product: any = {
-  //   name: 'Product Name',
-  //   price: 0,
-  //   oldPrice: '',
-  //   image: '',
-  //   sizes: [],
-  // }
+  product_info: any = {
+    name: 'Product Name',
+    price: 0,
+    oldPrice: 0,
+    image: '',
+    sizes: [],
+  }
 
   @Input() product: any = {};
 
-  // ngOnInit(){
-  //   this.product = this.productInput;
-  // }
+
+  ngOnInit(){
+    this.product_info = this.product;
+    // console.log(this.product.oldPrice);
+  }
 }

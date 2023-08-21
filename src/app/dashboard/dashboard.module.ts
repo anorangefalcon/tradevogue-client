@@ -11,7 +11,6 @@ import { OrdersComponent } from './orders/orders.component';
 import { SharedModule } from '../shared/shared.module';
 import { AddproductComponent } from './addproduct/addproduct.component';
 
-
 @NgModule({
   declarations: [
     DashboardComponent,
@@ -26,7 +25,7 @@ import { AddproductComponent } from './addproduct/addproduct.component';
     CommonModule,
     DashboardRoutingModule,
     SharedModule,
-    NgxPaginationModule
+    NgxPaginationModule,
   ]
 })
 export class DashboardModule { }

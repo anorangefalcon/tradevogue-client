@@ -18,8 +18,5 @@ export class AddproductComponent {
     // const element1 = this.elem_ref.nativeElement.querySelector('.customSection1');
     // let select1 = new AddClassActive(element1);
   }
-
-  ngOnChange(){
-    
-  }  
+ 
 }
