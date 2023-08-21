@@ -1,4 +1,11 @@
 <div class="container checkout-container d-flex ">
-    <router-outlet class="cartAndBilling"></router-outlet>
+
+    <div class="cart d-flex flex-column gap-20">
+        <div>
+            <h4>My Cart:</h4>
+            <span>1 item</span>
+        </div>
+        <router-outlet class="cartAndBilling"></router-outlet>
+    </div>
     <app-order-summary class="orderSummary"></app-order-summary>
 </div>

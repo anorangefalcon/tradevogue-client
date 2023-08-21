@@ -1,6 +1,5 @@
 .card-item-template {
     grid-column: span 1;
-
     border: 1px solid rgb(var(--text-black), 0.08);
 
     & h6 {
@@ -10,6 +9,10 @@
 
     & h3 {
         margin-block: 0 3px;
+        white-space: nowrap;
+        max-width: 20ch;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
 
     transition: transform 0.3s ease-in-out;
@@ -20,8 +23,9 @@
 
     & img {
         width: 100%;
-        max-height: 300px;
+        max-height: 320px;
         object-fit: cover;
+        object-position: center;
         margin-block-end: 10px;
     }
 }

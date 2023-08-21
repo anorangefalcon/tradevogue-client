@@ -1,10 +1,10 @@
 .checkout-container{
-    padding-block-start: 100px;
+    padding-block-start: 200px;
 }
-cartAndBilling{
-    width: 50%;
+.cartAndBilling{
+    width: 70%;
     
 }
-orderSummary{
-    width: 50%;
+.orderSummary{
+    width: 30%;
 }
