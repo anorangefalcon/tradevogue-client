@@ -321,6 +321,9 @@ mw100 {
 .align-items-center {
     align-items: center;
 }
+.align-items-end{
+    align-items: flex-end;
+}
 
 .justify-content-end {
     justify-content: flex-end;

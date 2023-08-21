@@ -1,67 +1,37 @@
-<section class="product">
-    
+<section *ngIf="productDetails !== {} " class="product">
+
     <div class="container d-flex">
-        <div class="product-carousel" >
+        <div class="product-carousel">
             <owl-carousel-o [options]="customOptions">
-                <ng-template carouselSlide>
-                    <div class="img-div d-flex justify-content-center align-items-center img1">
-                    </div>
+                <ng-template carouselSlide *ngFor="let image of productDetails.image">
+                    <div class="img-div d-flex justify-content-center align-items-center"
+                        [ngStyle]="{ 'background': 'url(' + image + ')', 'background-size': 'cover' }"></div>
                 </ng-template>
-                <ng-template carouselSlide>
-                    <div class="img-div d-flex justify-content-center align-items-center img2"></div>
-                </ng-template>
-                <ng-template carouselSlide>
-                    <div class="img-div d-flex justify-content-center align-items-center img3"></div>
-                </ng-template>
-            </owl-carousel-o>  
+            </owl-carousel-o>
 
-            <!-- <div class="prod-details-carousel">
-                <owl-carousel-o [options]="customOptions1">
-                    <ng-template carouselSlide>
-                        <div class="img-details d-flex justify-content-center align-items-center">image 1</div>
-                    </ng-template>  
-                    <ng-template carouselSlide>
-                        <div class="img-details d-flex justify-content-center align-items-center">image 2</div>
-                    </ng-template>  
-                    <ng-template carouselSlide>
-                        <div class="img-details d-flex justify-content-center align-items-center">image 3</div>
-                    </ng-template>  
-                    <ng-template carouselSlide>
-                        <div class="img-details d-flex justify-content-center align-items-center">image 4</div>
-                    </ng-template>  
-                    <ng-template carouselSlide>
-                        <div class="img-details d-flex justify-content-center align-items-center">image 5</div>
-                    </ng-template>    
-                  </owl-carousel-o>
-            </div> -->
-
-            <div class="products-imgs-container d-flex flex-column">
-                <div class="row1 d-flex">
-                <div class="gal1 gal-img"></div>
-                <div class="gal2 gal-img"></div>
+            <div class="products-imgs-container row d-flex">
+                <div class="gal-img" *ngFor="let image of productDetails.image"
+                    [ngStyle]="{ 'background': 'url(' + image + ')', 'background-size': 'cover', 'background-position': 'center', 'width': '50%', 'min-height': '400px' }">
                 </div>
-                <div class="row1 d-flex">
-                <div class="gal4 gal-img"></div>
-                <div class="gal3 gal-img"></div>
-                </div>
-
-
             </div>
-
-            </div>
+        </div>
         <div class="product-desc">
-            <h2 class="prod-name">OFFICIAL NASA MERCHANDISE</h2>
-            <p>Men's Black Explorer NASA Graphic Printed Oversized T-shirt</p>
+            <h2 class="prod-name">{{ productDetails.name }}</h2>
+            <p>{{ productDetails.info['subTitle'] }}</p>
             <div class="line"></div>
-            <h5 class="price">$100</h5>
-            <div class="reviews-avail d-flex justify-content-md-between">
-                <div class="rating">
-                    <span class="material-symbols-outlined">star</span>
-                    <span class="material-symbols-outlined">star</span>
-                    <span class="material-symbols-outlined">star</span>
-                    <span class="material-symbols-outlined">star</span>
-                    <span class="material-symbols-outlined">star_half</span>
+            <div class="d-flex align-items-center gap-10">
+                <h5 class="price">₹{{ productDetails.price }}</h5>
+                <p *ngIf="productDetails.oldPrice != (undefined || 0)" class="old-price">₹{{ productDetails.oldPrice }}</p>
+            </div>
+
+
+            <div class="reviews-avail d-flex align-items-end gap-10">
+                <div *ngIf="avgRating !== 0" class="rating d-flex align-items-center"> 
+                    <span *ngFor="let i of createArrayToIterate(avgRating)" class="material-symbols-outlined filled">star</span>
+                    <span *ngIf="(avgRating % 1) !== 0" class="material-symbols-outlined">star_half</span>
+                    <span *ngFor="let i of createArrayToIterate(5 - avgRating)" class="material-symbols-outlined">star</span>
                 </div>
+                <p>({{avgRating}}/5 · {{productDetails.reviews.length}} Reviews)</p>
                 <!-- <div class="avail">
                     <p><strong>Available</strong> : 1000</p>
                 </div> -->
@@ -69,55 +39,47 @@
             <div class="sizes d-flex align-items-center gap-20">
                 <p>Size</p>
                 <div class="sizes-opt d-flex gap-10">
-                        <div class="sizes-radios">
-                            <input label="S" type="radio" name="size" value="S" >
-                            <input label="M" type="radio" name="size" value="M">
-                            <input label="L" type="radio" name="size" value="L">
-                            <input label="XL" type="radio" name="size" value="XL">
-                            <input label="XXL" type="radio" name="size" value="XXL">
-                        </div>
+                    <div *ngFor="let productSize of productDetails.sizes" class="sizes-radios">
+                        <input type="radio" name="size" [value]=productSize>
+                        <label for="size_{{ productSize }}">{{ productSize }}</label>
+                    </div>
                 </div>
             </div>
             <div class="colors d-flex align-items-center gap-15">
                 <p>Color</p>
                 <div class="colors-opt d-flex gap-10">
-                    <div class="colors-radios">
-                        <input type="radio" name="color" value="pink" class="pink">
-                            <input type="radio" name="color" value="blue" class="blue">
-                            <input type="radio" name="color" value="red" class="red">
-                            <input type="radio" name="color" value="teal" class="teal">
-                            <input type="radio" name="color" value="yellow" class="yellow">
+                    <div class="colors-radios d-flex align-items-center" *ngFor="let color of productDetails.colors">
+                        <input type="radio" name="color" [value]=color [style.background-color]="color">
                     </div>
                 </div>
             </div>
-            <div class="cart-div d-flex gap-30">
+            <div class="cart-div d-flex gap-30 align-items-center">
                 <div class="customSelect">
                     <select placeholder-text="Select Quantity">
-                        <option value="100">100</option>
-                        <option value="100">200</option>
-                        <option value="100">300</option>
-                        <option value="100">400</option>
-                        <option value="100">500</option>
-                        <option value="100">600</option>
+                        <option *ngFor="let quantity of productDetails.orderQuantity" [value]=quantity>{{ quantity }}
+                        </option>
                     </select>
                 </div>
                 <button class="btn-primary d-flex gap-10">
                     <span class="material-symbols-outlined">
                         shopping_cart
-                        </span>
-                    <p>ADD TO CART</p></button>
+                    </span>
+                    <p>ADD TO CART</p>
+                </button>
             </div>
             <div class="sku d-flex gap-10">
                 <h4>Sku :</h4>
-                <p class="sku_id"><a>3489 JE0765</a></p>
+                <p class="sku_id">{{ productDetails.sku }}</p>
             </div>
             <div class="tags d-flex gap-10">
                 <h4>Tags :</h4>
-                <p class="sku_id"><a>Fashion</a>,<a>Oversized</a>,<a>Boys</a></p>
+                <p class="sku_id"><a>Fashion</a>, <a>Oversized</a>, <a>Boys</a></p>
             </div>
             <div class="prod-details">
                 <h2>Product Description</h2>
-                <p>Join the ranks of the coolest space guardians with this Explorer NASA Men's Oversized T-Shirt. Club this Official NASA black t-shirt with joggers and sliders for a lounge-perfect look.</p>
+                <p>
+                    {{ productDetails.description }}
+                </p>
                 <!-- <h2 class="feat">Features</h2>
                 <ul class="feat_list">
                     <li>Lorem, ipsum dolor sit amet consectetur adipisicing.</li>
@@ -130,55 +92,60 @@
                 <table>
                     <tr>
                         <th>Product Code</th>
-                        <td>AB42 - 2394 - DS023</td>
+                        <td>{{ productDetails.info.productCode }}</td>
                     </tr>
                     <tr>
                         <th>Brand</th>
-                        <td>Bewakoof</td>
+                        <td>{{ productDetails.info.brand }}</td>
                     </tr>
                     <tr>
                         <th>Composition</th>
-                        <td>100% cotton</td>
+                        <td>{{ productDetails.info.composition }}</td>
                     </tr>
                     <tr>
                         <th>Weight</th>
-                        <td>240 g</td>
-                    </tr>  
+                        <td>{{ productDetails.info.weight }}</td>
+                    </tr>
                 </table>
                 <h2>Reviews</h2>
                 <div class="review-container d-flex flex-column gap-10">
-                    <div class="review-card">
+                    <div class="review-card" *ngFor="let review of productDetails.reviews">
                         <div class="review">
-                            <p class="rev">This T-shirt is a game changer! Its ultra-soft fabric offers unmatched comfort, while the timeless design effortlessly elevates any look. A must-have staple for both style and relaxation.</p>
+                            <p class="rev">
+                                {{ review.comment }}
+                            </p>
                             <div class="person-info d-flex justify-content-md-between">
-                                <p>Aditya Sharma</p>
-                                <p>August 15, 2023</p>
+                                <p>{{ review.username }}</p>
+                                <p> {{ review.rating }}/5 · 
+                                    {{ review.date }}
+                                </p>
                             </div>
                         </div>
                     </div>
-                    <div class="review-card">
-                        <div class="review">
-                            <p class="rev"> Its buttery-soft fabric feels like a dream against the skin, and its versatile design takes me from casual outings to cozy nights in. If you're seeking comfort without compromising style, this tee is an absolute winner!</p>
-                            <div class="person-info d-flex justify-content-md-between">
-                                <p>Tejas</p>
-                                <p>August 16, 2023</p>
-                            </div>
-                        </div>
+
+                    <div class="d-flex" style="padding-inline-start: 4px;">
+                        <span (click)="addReview = true" *ngIf="addReview === false" class="pointer">
+                            Write a Review
+                        </span>
                     </div>
                 </div>
-                <h2>Add A Review</h2>
-                <form class="d-flex flex-column">
-                    <label>Your Review</label>
-                    <textarea rows="5" placeholder="Write your review here..."></textarea>
-                    <label>Name</label>
-                    <input type="text">
-                    <label>Email</label>
-                    <input type="text">
 
-                    <button class="btn-primary">Submit</button>
-                </form>
+                <div *ngIf="addReview === true" class="addReview">
+                    <h2 class="d-flex gap-20 align-items-center">Add a Review
+                        <span (click)="addReview = false" class="material-symbols-outlined pointer">close</span>
+                    </h2>
+                    <form class="d-flex flex-column">
+                        <label>Your Review</label>
+                        <textarea rows="5" placeholder="Write your review here..."></textarea>
+                        <label>Name</label>
+                        <input type="text">
+                        <label>Email</label>
+                        <input type="text">
+    
+                        <button class="btn-primary">Submit</button>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
 </section>
-

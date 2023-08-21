@@ -23,22 +23,6 @@
         background-position: 70%;
     }
 
-    & .img1 {
-        background: url(https://images.bewakoof.com/t1080/men-s-black-explorer-nasa-graphic-printed-oversized-t-shirt-591083-1683033465-1.jpg);
-        background-size: cover;
-    }
-
-    & .img2 {
-        background: url(https://images.bewakoof.com/t1080/men-s-black-explorer-nasa-graphic-printed-oversized-t-shirt-591083-1683033476-3.jpg);
-        background-size: cover;
-        background-position: 90%;
-    }
-
-    & .img3 {
-        background: url(https://images.bewakoof.com/t1080/men-s-black-explorer-nasa-graphic-printed-oversized-t-shirt-591083-1683033471-2.jpg);
-        background-size: cover;
-    }
-
     & .img-details {
         width: 230px;
         height: 230px;
@@ -49,44 +33,14 @@
     & .products-imgs-container {
         margin-block-start: 20px;
         /* width: 100%; */
-        gap: 10px;
+        /* gap: 10px; */
+        flex-wrap: wrap;
 
-        & .row1 {
-            gap: 10px;
+        /* margin-inline: -5px; */
+        & .gal-img {
+            width: 50%;
+            /* margin-inline: 5px; */
         }
-
-    }
-
-    & .gal-img {
-        width: 50%;
-        height: 350px;
-        /* margin-inline: 5px; */
-    }
-
-    .gal1 {
-        background: url(https://images.bewakoof.com/t1080/men-s-black-explorer-nasa-graphic-printed-oversized-t-shirt-591083-1683033465-1.jpg);
-        background-size: cover;
-        background-position: center;
-    }
-
-    .gal2 {
-        background: url(https://images.bewakoof.com/t1080/men-s-black-explorer-nasa-graphic-printed-oversized-t-shirt-591083-1683033476-3.jpg);
-        background-size: cover;
-        background-position: 90%;
-        background-position: center;
-
-
-    }
-
-    .gal3 {
-        background: url(https://images.bewakoof.com/t1080/men-s-black-explorer-nasa-graphic-printed-oversized-t-shirt-591083-1683033471-2.jpg);
-        background-size: cover;
-
-    }
-
-    .gal4 {
-        background: url(https://images.bewakoof.com/t1080/men-s-black-explorer-nasa-graphic-printed-oversized-t-shirt-591083-1682596293-5.jpg);
-        background-size: cover;
     }
 
     .gal & .prod-details-carousel {
@@ -106,19 +60,29 @@
         font-weight: 500;
     }
 
-    .rating {
-        & span {
-            border: 1px solid transparent;
-            color: #FFD700;
-        }
+    & .old-price {
+        font-size: 24px !important;
+        text-decoration: line-through;
+        color: rgba(var(--danger), 0.5);
     }
 
-    .material-symbols-outlined {
-        font-variation-settings:
-            'FILL' 1,
+    .rating {
+        & span{
+            border: 1px solid transparent;
+            color: rgba(var(--primary));
+
+            font-variation-settings:
             'wght' 400,
             'GRAD' 0,
             'opsz' 48
+        }
+        & .filled {
+            font-variation-settings:
+            'FILL' 1 ,
+            'wght' 400,
+            'GRAD' 0,
+            'opsz' 48
+        }
     }
 
     & .sizes {
@@ -184,26 +148,6 @@
         text-align: center;
     }
 
-    .blue {
-        background-color: rgb(0, 172, 245);
-    }
-
-    .pink {
-        background-color: pink;
-    }
-
-    .red {
-        background-color: red;
-    }
-
-    .teal {
-        background-color: rgb(44, 196, 196);
-    }
-
-    .yellow {
-        background-color: yellow;
-    }
-
     .cart-div {
         margin-block: 20px;
         width: 100%;
@@ -212,7 +156,6 @@
             width: 100px;
         }
     }
-    
 
     .cart-div select {
         padding-block: 5px;
@@ -328,17 +271,39 @@
             }
         }
 
-    
+
 
     }
+
     & label {
         padding-block-end: 4px;
         padding-inline-start: 5px;
     }
+}
 
+.addReview {
+    animation: addReview 0.5s ease-in-out;
+}
 
-
-
-
-
+@keyframes addReview {
+    0% {
+        opacity: 0;
+        transform: translateY(-70px);
+    }
+    20% {
+        transform: translateY(-50px);
+    }
+    40% {
+        transform: translateY(-30px);
+    }
+    60% {
+        transform: translateY(-10px);
+    }
+    80% {
+        transform: translateY(10px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0px);
+    }
 }

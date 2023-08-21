@@ -10,9 +10,9 @@ export class ExploreComponent {
 
   productArr: productData[] = [];
 
-  constructor(fetchData: FetchDataService) {
-    fetchData.getData().subscribe(data => {
-      console.log("here", data);
+  constructor(private fetchData: FetchDataService) {
+    this.fetchData.getData().subscribe(data => {
+      // console.log("here", data);
       this.productArr = data.map((item: any) => new productData(item));
       console.log( "product array", this.productArr);
       

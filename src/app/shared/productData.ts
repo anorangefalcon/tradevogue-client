@@ -1,13 +1,16 @@
 export class productData {
     sku: string = '';
     name: string = '';
-    price: number = 0;
-    oldPrice: number = 0;
-    image: string = '';
+    price: any = undefined;
+    oldPrice: any = undefined;
+
+    image: string[] =  [];
+
     sizes: string[] = [];
     colors: string[] = [];
     description: string = '';
     stockQuantity: number = 0;
+    orderQuantity: number[] = [];
 
     info: any = {
         productCode: '',

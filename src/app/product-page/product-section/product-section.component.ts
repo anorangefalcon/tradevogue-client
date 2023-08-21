@@ -1,6 +1,8 @@
-import { Component, ElementRef } from '@angular/core';
+import { Component, ElementRef, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { OwlOptions } from 'ngx-owl-carousel-o';
 import { CustomSelect } from 'src/app/shared/customSelect/custom-select';
+import { FetchDataService } from 'src/app/shared/services/fetch-data.service';
 
 
 @Component({
@@ -8,14 +10,40 @@ import { CustomSelect } from 'src/app/shared/customSelect/custom-select';
   templateUrl: './product-section.component.html',
   styleUrls: ['./product-section.component.css']
 })
-export class ProductSectionComponent {
+export class ProductSectionComponent implements OnInit{
 
-  constructor(private elem_ref: ElementRef){}
+  productDetails: any = {};
+  avgRating: number = 0;
+  addReview: boolean = false;
 
-  ngOnInit(){
+  constructor(
+    private elem_ref: ElementRef, 
+    private route: ActivatedRoute,
+    private fetchService: FetchDataService 
+    ) {}
+
+  ngOnInit() : void{
+    this.productDetails.info = [];
+    this.productDetails.reviews = [];
+    
     const element = this.elem_ref.nativeElement.querySelectorAll('.customSelect');
     let select = new CustomSelect(element);
- 
+
+    this.route.params.subscribe(params => {
+      const sku = params['sku'];
+
+      this.fetchService.getData().subscribe((data: any[]) => {
+        this.productDetails = data.find((item )=> {
+          return item['sku'] === sku;
+        });
+        this.avgRating = 0;
+        for(let i = 0; i < (this.productDetails.reviews).length; i++){
+          this.avgRating += this.productDetails.reviews[i].rating;
+        }
+        this.avgRating = this.avgRating / this.productDetails.reviews.length;
+      });
+    });
+    
   }
 
   customOptions: OwlOptions = {
@@ -68,6 +96,14 @@ export class ProductSectionComponent {
       }
     },
     nav: true
+  }
+
+  createArrayToIterate(num: number){
+    const newTotal = Math.floor(num);
+    if (newTotal <= 0) {
+      return [];
+    }
+    return Array(newTotal).fill(0);
   }
 
 }

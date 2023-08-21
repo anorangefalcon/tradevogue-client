@@ -12,4 +12,6 @@ export class FetchDataService {
   getData(): Observable<any> {
     return this.http.get(this.url);
   }
+
+
 }
