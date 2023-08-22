@@ -7,7 +7,7 @@ footer {
         display: none;
     }
     & .footer-content{
-        padding-block: 100px;   
+        padding-block: 80px;   
         width: 100%;
         color: rgb(var(--new-text-black));
         
@@ -102,7 +102,7 @@ footer {
         }
     }
     .copyright-footer {
-        padding-block: 30px;
+        padding-block: 20px;
         & p{
             color: rgb(var(--text-gray));
             
@@ -128,8 +128,42 @@ footer {
     }
 }
 @media screen and (max-width: 990px){
+    .second-col {
+        display: none;
+    }
     .accordian{
+        margin-block-start: 30px;
         display: flex !important;
         flex-direction: column;
+
+        & span{
+            /* transform: rotate(0); */
+            transition: all 0.3s ease-in-out;
+        }
+    }
+    .acc label{
+        display: flex;
+        justify-content: space-between;
+        padding-block: 15px;
+        border-block-end: 1px solid rgb(var(--text-gray), 0.5);
+    }
+    .acc input[type="checkbox"]{
+        display: none;
+    }
+    .sub-links {
+        /* padding: 10px;
+        line-height: 20px; */
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.5s;
+    }
+    .acc input[type="checkbox"]:checked + label + .sub-links {
+        max-height: 400px;
+    }
+    .acc input[type="checkbox"]:checked + label span{
+        transform: rotate(-180deg);
+    }
+    .acc ul {
+        margin-block-start: 15px;
     }
 }
