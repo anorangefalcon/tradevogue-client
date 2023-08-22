@@ -145,6 +145,8 @@ footer {
         display: flex;
         justify-content: space-between;
         padding-block: 15px;
+        font-weight: 600;
+        font-size: 14px;
         border-block-end: 1px solid rgb(var(--text-gray), 0.5);
     }
     .acc input[type="checkbox"]{
@@ -165,5 +167,11 @@ footer {
     }
     .acc ul {
         margin-block-start: 15px;
+        margin-block-end: 10px;
+    }
+    .acc input[type="checkbox"]:checked + label {
+        & label {
+            background-color: aqua;
+        }
     }
 }
