@@ -38,8 +38,8 @@
     <div class="panel" [ngClass]="{ expanded2: section.expanded }">
       <div *ngFor="let child of section.childrens">
         <button class=" main-acc child custom-title" (click)="toggleChild(child)">
-            <div>{{ child.title }}</div>
-            <div class="custom">{{ child.expanded ? '-' : '+' }}</div>
+          <div>{{ child.title }}</div>
+          <div class="custom">{{ child.expanded ? '-' : '+' }}</div>
         </button>
         <div class="panel2" [ngClass]="{ expanded2: child.expanded }">
           <!-- <div [ngClass]="{ expanded2: child.expanded }" class="panel"> -->

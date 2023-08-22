@@ -135,7 +135,7 @@ h5,
 h6 {
     /* font-family: 'Poppins', sans-serif; */
     /* font-family: 'Playfair Display', serif; */
-    font-family: 'Comfortaa', sans-serif;
+    font-family: 'Poppins', sans-serif;
 }
 
 h1 {
@@ -155,7 +155,7 @@ h3 {
 
 body {
     /* font-family: 'Lato__', sans-serif !important; */
-    font-family: 'Montserrat', sans-serif;
+    font-family: 'Poppins', sans-serif;
     font-size: 16px;
     color: rgb(var(--text-black));
 }
