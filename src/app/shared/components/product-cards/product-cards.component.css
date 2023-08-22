@@ -1,3 +1,7 @@
+.product-cards{
+    padding-block: 100px;
+}
+
 .card-container{
     width: 100%;
     grid-template-columns: repeat(4, 1fr);

@@ -90,27 +90,26 @@
     }
 
     .sizes-radios {
-        padding: 4px;
         border-radius: 3px;
         position: relative;
         width: fit-content;
     }
 
     .sizes-radios input {
-        appearance: none;
+        display: none;
+    }
+
+    .sizes-radios input + label{
         cursor: pointer;
         border-radius: 2px;
         padding: 5px 10px;
-        margin-inline: 5px;
         border: 1px solid rgba(var(--text-black), 0.2);
-        /* background-color: rgba(var(--text-black), 0.1); */
-        color: rgb(var(--text-black));
         font-size: 15px;
         font-family: sans-serif;
         transition: all 0.1s;
     }
 
-    .sizes-radios input:checked {
+    .sizes-radios input:checked + label{
         border: 1px solid rgb(var(--text-black));
     }
 

@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { LayoutComponent } from './layout/layout.component';
 // import { LoginComponent } from './auth/login/login.component';
 // import { SignUpComponent } from './auth/sign-up/sign-up.component';
+import { FooterComponent } from './shared/components/footer/footer.component';
 import { AuthLayoutComponent } from './auth-layout/auth-layout.component';
 import { HomeComponent } from './home/home.component';
 import { ProductsComponent } from './dashboard/products/products.component';

@@ -1,7 +1,9 @@
-.home{
+/* .home{
     display: flex;
     flex-direction: column;
     gap: 90px;
+} */
+.home-carousel {
+    padding-block: 100px;
 }
-
 /* @media screen and (max-width: ) */

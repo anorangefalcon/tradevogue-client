@@ -9,7 +9,7 @@
     background-image: url(../../../assets/deal-of-week-component/dealOfWeek-homeBg.png);
     background-repeat: no-repeat;
     background-size: cover;
-    padding-block: 50px;
+    padding-block: 100px;
   
   & .container{
     display: flex;

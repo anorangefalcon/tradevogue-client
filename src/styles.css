@@ -31,6 +31,10 @@
     font-family: 'Montserrat Italic';
     src: url('../src/assets/Fonts/Montserrat/Montserrat-Italic-VariableFont_wght.ttf');
 }
+/* @font-face {
+    font-family: 'Poppins';
+    src: url('../src/assets/Fonts/');
+} */
 
 
 /* Remove default margin */
@@ -119,6 +123,10 @@ select {
     --danger: 223, 22, 33;
     --success: 60, 167, 23;
 
+    --gray : 247, 248, 250;
+    --new-text-black : 51, 51, 51;
+    --text-gray: 111, 111, 111;
+
     /* dark-purple */
     /* --text: #FFFFFF;
     --background: #0a0c10;
@@ -179,7 +187,7 @@ body {
 }
 
 button {
-    /* font-family: 'Poppins', sans-serif; */
+   
     cursor: pointer;
     border: none;
     transition: 0.3s ease-in-out;
@@ -191,6 +199,7 @@ button {
 .btn-primary {
     background-color: rgb(var(--primary));
     color: rgb(var(--text-white));
+
 }
 
 .btn-primary:hover {
@@ -635,3 +644,14 @@ mw100 {
         background-color: rgba(0, 0, 0, 0.153);
     }
 }
+@media screen and (max-width: 1250px) {
+    .container{
+        max-width: 960px;
+    }
+}
+@media screen and (max-width: 990px) {
+    .container{
+        max-width: 720px;
+    }
+}
+

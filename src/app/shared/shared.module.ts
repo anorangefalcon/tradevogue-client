@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NavbarComponent } from './components/navbar/navbar.component';
-import { FooterComponent } from './components/footer/footer.component';
 import { ProductCardsComponent } from './components/product-cards/product-cards.component';
 import { ProductCardCarouselComponent } from './components/product-card-carousel/product-card-carousel.component';
 import { CarouselModule } from 'ngx-owl-carousel-o';
@@ -13,18 +12,23 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { RouterModule } from '@angular/router';
 import { PopOpenDirective } from './Directives/pop-open.directive';
 import { PopCloseDirective } from './Directives/pop-close.directive';
+import { FooterComponent } from './components/footer/footer.component';
+import { FacilitiesComponent } from './components/facilities/facilities.component';
+import { NewsletterComponent } from './components/newsletter/newsletter.component';
 
 @NgModule({
   declarations: [
     NavbarComponent,
-    FooterComponent,
     ProductCardsComponent,
     ProductCardCarouselComponent,
     CardTemplateComponent,
     SearchBarComponent,
     SupportComponent,
     PopOpenDirective,
-    PopCloseDirective
+    PopCloseDirective,
+    FooterComponent,
+    FacilitiesComponent,
+    NewsletterComponent
   ],
   imports: [
     CommonModule,
@@ -35,6 +39,8 @@ import { PopCloseDirective } from './Directives/pop-close.directive';
   exports: [
     NavbarComponent,
     FooterComponent,
+    FacilitiesComponent,
+    NewsletterComponent,
     ProductCardsComponent,
     ProductCardCarouselComponent,
     CardTemplateComponent,
