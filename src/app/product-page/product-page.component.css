@@ -9,3 +9,16 @@
         background-color: rgb(238, 139, 139);
     }
 }
+
+/* .crousel{
+
+    .owl-theme .owl-nav {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        position: absolute;
+        inset-block-start: 50%;
+        transform: translateY(-50%);
+        margin-top: 0 !important
+    }
+} */

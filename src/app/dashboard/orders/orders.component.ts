@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef} from '@angular/core';
+import { CustomSelect } from 'src/app/shared/customSelect/custom-select';
 
 @Component({
   selector: 'app-orders',
@@ -8,6 +9,13 @@ import { Component } from '@angular/core';
 export class OrdersComponent {
   order_status:string = 'Completed';
   payment_status: string = 'Confirmed';
+
+  constructor(private element: ElementRef){}
+
+  ngOnInit(){
+    let e = this.element.nativeElement.querySelectorAll('.customSelect');
+    let select  = new CustomSelect(e);
+  }
 
   orders: any[] = [
     {'orderId': '1234','product': 'Men Jeans','category': 'Jeans','size': 'L, XL, XXL','quantity': 150,'order_status': 'Confirmed','payment_status': 'OnDelivery'},

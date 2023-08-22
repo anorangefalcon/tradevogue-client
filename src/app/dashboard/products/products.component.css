@@ -64,13 +64,15 @@
     }
 
     .operational-buttons {
-        border: 1px solid rgba(var(--text-black), 0.1);
-        border-radius: 10px;
+
+        gap: 10px;
 
         & button {
+            
+            border: 1px solid rgba(var(--text-black), 0.1);
+            border-radius: 5px;
             background: none;
             padding: 7px;
-            border-radius: 0;
             cursor:auto;
         }
 
@@ -265,6 +267,10 @@
                 color: white;
             }
         }
+    }
+
+    & .table-controls{
+        justify-content: flex-end;
     }
 
 }

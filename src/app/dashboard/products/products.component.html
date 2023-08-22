@@ -47,27 +47,33 @@
                 
                 <div class="d-flex gap-20">
                     <!-- Product Inventory -->
-                   <select name="" id="inventory_status">
-                       <option value="" selected disabled>Filter by Stock Status</option>
-                       <option value="">Out of Stock</option>
-                       <option value="">Low Inventory</option>
-                       <option value="">In Stock</option>
-                   </select>
+                   <div class="customSelect">
+                    <select name="" id="inventory_status">
+                        <option value="" selected disabled>Filter by Stock Status</option>
+                        <option value="">Out of Stock</option>
+                        <option value="">Low Inventory</option>
+                        <option value="">In Stock</option>
+                    </select>
+                   </div>
                    <!-- Product Category -->
-                   <select name="" id="" class="form-select">
-                       <option value="" selected disabled>Product Catgory</option>
-                       <option value="">Category 1</option>
-                       <option value="">Category 2</option>
-                       <option value="">Category 3</option>
-                       <option value="">Category 4</option>
-                   </select>
+                   <div class="customSelect">
+                    <select name="" id="" class="form-select">
+                        <option value="" selected disabled>Product Catgory</option>
+                        <option value="">Category 1</option>
+                        <option value="">Category 2</option>
+                        <option value="">Category 3</option>
+                        <option value="">Category 4</option>
+                    </select>
+                   </div>
                    <!-- Rating -->
-                   <select name="" id="">
-                       <option value="" selected disabled>Sort by: Rating</option>
-                       <option value="">Best Seller</option>
-                       <option value="">Top Rated</option>
-                       <option value="">New In</option>
-                   </select>
+                   <div class="customSelect">
+                    <select name="" id="">
+                        <option value="" selected disabled>Sort by: Rating</option>
+                        <option value="">Best Seller</option>
+                        <option value="">Top Rated</option>
+                        <option value="">New In</option>
+                    </select>
+                   </div>
                    <!-- <select name="" id="">
                        <option value="" selected disabled>Best Seller Product</option>
                        <option value=""></option>
@@ -111,8 +117,8 @@
                         }; let i = index">
                             <td class="product-items">
                                 <div class="item-check d-flex justify-content-center">
-                                    <input type="checkbox" id="i">
-                                    <label for='i'>
+                                    <input type="checkbox" id="row{{i}}">
+                                    <label for='row{{i}}'>
                                         <span class="material-symbols-outlined">done</span>
                                     </label>
                                 </div>

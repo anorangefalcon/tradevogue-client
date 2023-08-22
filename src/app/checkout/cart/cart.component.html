@@ -1,66 +1,579 @@
-<div class="cart-container d-flex flex-column">
-    <div class="cart-item ">
-        <a routerLink="/product">
-            <img src="../../../assets/deal-of-week-component/shirt.png" alt="Product Image">
-        </a>
+<div class="cart-container d-flex flex-wrap">
 
-        <div class="item-details d-flex flex-column">
-            <a routerLink="/product">
-                <h2>Mr. Bean Sweater</h2>
-            </a>
-            <p>Price: $99.99</p>
-            <div class="options d-flex flex-column gap-20">
+    <div class="cart-items d-flex">
+        <div class="col d-flex justify-content-md-between">
+            <!-- 
+            <div class="item-check d-flex justify-content-center">
+                <input type="checkbox" id="all_product1">
+                <label for='all_product1'>
+                    <span class="material-symbols-outlined">done</span>
+                </label>
+            </div> -->
+            <div class="d-flex gap-30">
+                <a routerLink="/product" class="product-img">
+                    <img src="../../../assets/deal-of-week-component/shirt.png" alt="Product Image">
+                </a>
 
-                <div class="sizes d-flex gap-5 align-items-center">
-                    <p class="labels">Size:</p>
-                    <div class="sizes-opt d-flex">
+                <div class="product-info d-flex flex-column justify-content-center gap-5">
+                    <a routerLink="/product">
+                        <h4>Mr. Bean Sweater</h4>
+                    </a>
+                    <div class="sizes d-flex gap-10 align-items-center">
+                        <p class="labels">Size:</p>
                         <div class="sizes-radios ">
-                            <input label="S" type="radio" name="size" value="S">
-                            <input label="M" type="radio" name="size" value="M">
-                            <input label="L" type="radio" name="size" value="L">
-                            <input label="XL" type="radio" name="size" value="XL">
-                            <input label="XXL" type="radio" name="size" value="XXL">
+                            <input label="S" type="radio" name="size" id="size" checked>
+                            <label for="size">S</label>
                         </div>
                     </div>
-                </div>
-
-                <div class="colors d-flex gap-5 align-items-center">
-                    <p class="labels">Color:</p>
-                    <div class="colors-opt d-flex">
-                        <div class="colors-radios d-flex align-items-center">
-                            <input type="radio" name="color" value="pink" class="pink">
-                            <input type="radio" name="color" value="blue" class="blue">
-                            <input type="radio" name="color" value="red" class="red">
-                            <input type="radio" name="color" value="teal" class="teal">
-                            <input type="radio" name="color" value="yellow" class="yellow">
+                    <div class="colors d-flex gap-10 align-items-center">
+                        <p class="labels">Color:</p>
+                        <div class="colors-radios d-flex align-items-center relative">
+                            <input type="radio" name="color" value="pink" class="pink" checked>
                         </div>
+                    </div>
+
+                    <div class="d-flex align-items-center gap-10">
+                        <p class="labels">Price: </p>
+                        <span class="fs-14">$99.99</span>
                     </div>
                 </div>
             </div>
-            <div class="operation d-flex gap-20">
-                <div class="quantity-btn-outer">
-                    <div class="quantity">
-                        <button class="quantity-btn">
-                            <span class="material-symbols-outlined">
-                                remove
-                            </span>
-                        </button>
-                        <span class="quantity-value d-flex align-items-center">1</span>
-                        <button class="quantity-btn">
-                            <span class="material-symbols-outlined">
-                                add
-                            </span>
-                        </button>
+            <div class="d-flex gap-15 flex-column justify-content-center align-items-center">
+                <div class="d-flex gap-10 align-items-center">
+                    <!-- <p class="labels">Quantity:</p> -->
+                    <div class="quantity-btn-outer">
+                        <div class="quantity">
+                            <button class="quantity-btn">
+                                <span class="material-symbols-outlined">
+                                    remove
+                                </span>
+                            </button>
+                            <span class="quantity-value fs-14 d-flex align-items-center">1</span>
+                            <button class="quantity-btn">
+                                <span class="material-symbols-outlined">
+                                    add
+                                </span>
+                            </button>
+                        </div>
                     </div>
                 </div>
                 <button class="remove-btn d-flex align-items-center">
-                    <span class="material-symbols-outlined">
-                        close
-                    </span>
+                    <a href="javascript:void(0);" class="d-flex align-items-center gap-5">
+                        <!-- <span class="material-symbols-outlined">delete</span> -->
+                        Remove Item</a>
                 </button>
+
+            </div>
+
+            <div class="final-price d-flex align-items-center">
+                $99.99
             </div>
         </div>
 
     </div>
+
+
     
+    <div class="cart-items d-flex">
+        <div class="col d-flex justify-content-md-between">
+            <!-- 
+            <div class="item-check d-flex justify-content-center">
+                <input type="checkbox" id="all_product1">
+                <label for='all_product1'>
+                    <span class="material-symbols-outlined">done</span>
+                </label>
+            </div> -->
+            <div class="d-flex gap-30">
+                <a routerLink="/product" class="product-img">
+                    <img src="../../../assets/deal-of-week-component/shirt.png" alt="Product Image">
+                </a>
+
+                <div class="product-info d-flex flex-column justify-content-center gap-5">
+                    <a routerLink="/product">
+                        <h4>Mr. Bean Sweater</h4>
+                    </a>
+                    <div class="sizes d-flex gap-10 align-items-center">
+                        <p class="labels">Size:</p>
+                        <div class="sizes-radios ">
+                            <input label="S" type="radio" name="size" id="size" checked>
+                            <label for="size">S</label>
+                        </div>
+                    </div>
+                    <div class="colors d-flex gap-10 align-items-center">
+                        <p class="labels">Color:</p>
+                        <div class="colors-radios d-flex align-items-center relative">
+                            <input type="radio" name="color" value="pink" class="pink" checked>
+                        </div>
+                    </div>
+
+                    <div class="d-flex align-items-center gap-10">
+                        <p class="labels">Price: </p>
+                        <span class="fs-14">$99.99</span>
+                    </div>
+                </div>
+            </div>
+            <div class="d-flex gap-15 flex-column justify-content-center align-items-center">
+                <div class="d-flex gap-10 align-items-center">
+                    <!-- <p class="labels">Quantity:</p> -->
+                    <div class="quantity-btn-outer">
+                        <div class="quantity">
+                            <button class="quantity-btn">
+                                <span class="material-symbols-outlined">
+                                    remove
+                                </span>
+                            </button>
+                            <span class="quantity-value fs-14 d-flex align-items-center">1</span>
+                            <button class="quantity-btn">
+                                <span class="material-symbols-outlined">
+                                    add
+                                </span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <button class="remove-btn d-flex align-items-center">
+                    <a href="javascript:void(0);" class="d-flex align-items-center gap-5">
+                        <!-- <span class="material-symbols-outlined">delete</span> -->
+                        Remove Item</a>
+                </button>
+
+            </div>
+
+            <div class="final-price d-flex align-items-center">
+                $99.99
+            </div>
+        </div>
+
+    </div>
+    <div class="cart-items d-flex">
+        <div class="col d-flex justify-content-md-between">
+            <!-- 
+            <div class="item-check d-flex justify-content-center">
+                <input type="checkbox" id="all_product1">
+                <label for='all_product1'>
+                    <span class="material-symbols-outlined">done</span>
+                </label>
+            </div> -->
+            <div class="d-flex gap-30">
+                <a routerLink="/product" class="product-img">
+                    <img src="../../../assets/deal-of-week-component/shirt.png" alt="Product Image">
+                </a>
+
+                <div class="product-info d-flex flex-column justify-content-center gap-5">
+                    <a routerLink="/product">
+                        <h4>Mr. Bean Sweater</h4>
+                    </a>
+                    <div class="sizes d-flex gap-10 align-items-center">
+                        <p class="labels">Size:</p>
+                        <div class="sizes-radios ">
+                            <input label="S" type="radio" name="size" id="size" checked>
+                            <label for="size">S</label>
+                        </div>
+                    </div>
+                    <div class="colors d-flex gap-10 align-items-center">
+                        <p class="labels">Color:</p>
+                        <div class="colors-radios d-flex align-items-center relative">
+                            <input type="radio" name="color" value="pink" class="pink" checked>
+                        </div>
+                    </div>
+
+                    <div class="d-flex align-items-center gap-10">
+                        <p class="labels">Price: </p>
+                        <span class="fs-14">$99.99</span>
+                    </div>
+                </div>
+            </div>
+            <div class="d-flex gap-15 flex-column justify-content-center align-items-center">
+                <div class="d-flex gap-10 align-items-center">
+                    <!-- <p class="labels">Quantity:</p> -->
+                    <div class="quantity-btn-outer">
+                        <div class="quantity">
+                            <button class="quantity-btn">
+                                <span class="material-symbols-outlined">
+                                    remove
+                                </span>
+                            </button>
+                            <span class="quantity-value fs-14 d-flex align-items-center">1</span>
+                            <button class="quantity-btn">
+                                <span class="material-symbols-outlined">
+                                    add
+                                </span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <button class="remove-btn d-flex align-items-center">
+                    <a href="javascript:void(0);" class="d-flex align-items-center gap-5">
+                        <!-- <span class="material-symbols-outlined">delete</span> -->
+                        Remove Item</a>
+                </button>
+
+            </div>
+
+            <div class="final-price d-flex align-items-center">
+                $99.99
+            </div>
+        </div>
+
+    </div>
+    <div class="cart-items d-flex">
+        <div class="col d-flex justify-content-md-between">
+            <!-- 
+            <div class="item-check d-flex justify-content-center">
+                <input type="checkbox" id="all_product1">
+                <label for='all_product1'>
+                    <span class="material-symbols-outlined">done</span>
+                </label>
+            </div> -->
+            <div class="d-flex gap-30">
+                <a routerLink="/product" class="product-img">
+                    <img src="../../../assets/deal-of-week-component/shirt.png" alt="Product Image">
+                </a>
+
+                <div class="product-info d-flex flex-column justify-content-center gap-5">
+                    <a routerLink="/product">
+                        <h4>Mr. Bean Sweater</h4>
+                    </a>
+                    <div class="sizes d-flex gap-10 align-items-center">
+                        <p class="labels">Size:</p>
+                        <div class="sizes-radios ">
+                            <input label="S" type="radio" name="size" id="size" checked>
+                            <label for="size">S</label>
+                        </div>
+                    </div>
+                    <div class="colors d-flex gap-10 align-items-center">
+                        <p class="labels">Color:</p>
+                        <div class="colors-radios d-flex align-items-center relative">
+                            <input type="radio" name="color" value="pink" class="pink" checked>
+                        </div>
+                    </div>
+
+                    <div class="d-flex align-items-center gap-10">
+                        <p class="labels">Price: </p>
+                        <span class="fs-14">$99.99</span>
+                    </div>
+                </div>
+            </div>
+            <div class="d-flex gap-15 flex-column justify-content-center align-items-center">
+                <div class="d-flex gap-10 align-items-center">
+                    <!-- <p class="labels">Quantity:</p> -->
+                    <div class="quantity-btn-outer">
+                        <div class="quantity">
+                            <button class="quantity-btn">
+                                <span class="material-symbols-outlined">
+                                    remove
+                                </span>
+                            </button>
+                            <span class="quantity-value fs-14 d-flex align-items-center">1</span>
+                            <button class="quantity-btn">
+                                <span class="material-symbols-outlined">
+                                    add
+                                </span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <button class="remove-btn d-flex align-items-center">
+                    <a href="javascript:void(0);" class="d-flex align-items-center gap-5">
+                        <!-- <span class="material-symbols-outlined">delete</span> -->
+                        Remove Item</a>
+                </button>
+
+            </div>
+
+            <div class="final-price d-flex align-items-center">
+                $99.99
+            </div>
+        </div>
+
+    </div>
+    <div class="cart-items d-flex">
+        <div class="col d-flex justify-content-md-between">
+            <!-- 
+            <div class="item-check d-flex justify-content-center">
+                <input type="checkbox" id="all_product1">
+                <label for='all_product1'>
+                    <span class="material-symbols-outlined">done</span>
+                </label>
+            </div> -->
+            <div class="d-flex gap-30">
+                <a routerLink="/product" class="product-img">
+                    <img src="../../../assets/deal-of-week-component/shirt.png" alt="Product Image">
+                </a>
+
+                <div class="product-info d-flex flex-column justify-content-center gap-5">
+                    <a routerLink="/product">
+                        <h4>Mr. Bean Sweater</h4>
+                    </a>
+                    <div class="sizes d-flex gap-10 align-items-center">
+                        <p class="labels">Size:</p>
+                        <div class="sizes-radios ">
+                            <input label="S" type="radio" name="size" id="size" checked>
+                            <label for="size">S</label>
+                        </div>
+                    </div>
+                    <div class="colors d-flex gap-10 align-items-center">
+                        <p class="labels">Color:</p>
+                        <div class="colors-radios d-flex align-items-center relative">
+                            <input type="radio" name="color" value="pink" class="pink" checked>
+                        </div>
+                    </div>
+
+                    <div class="d-flex align-items-center gap-10">
+                        <p class="labels">Price: </p>
+                        <span class="fs-14">$99.99</span>
+                    </div>
+                </div>
+            </div>
+            <div class="d-flex gap-15 flex-column justify-content-center align-items-center">
+                <div class="d-flex gap-10 align-items-center">
+                    <!-- <p class="labels">Quantity:</p> -->
+                    <div class="quantity-btn-outer">
+                        <div class="quantity">
+                            <button class="quantity-btn">
+                                <span class="material-symbols-outlined">
+                                    remove
+                                </span>
+                            </button>
+                            <span class="quantity-value fs-14 d-flex align-items-center">1</span>
+                            <button class="quantity-btn">
+                                <span class="material-symbols-outlined">
+                                    add
+                                </span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <button class="remove-btn d-flex align-items-center">
+                    <a href="javascript:void(0);" class="d-flex align-items-center gap-5">
+                        <!-- <span class="material-symbols-outlined">delete</span> -->
+                        Remove Item</a>
+                </button>
+
+            </div>
+
+            <div class="final-price d-flex align-items-center">
+                $99.99
+            </div>
+        </div>
+
+    </div>
+
+    <div class="cart-items d-flex">
+        <div class="col d-flex justify-content-md-between">
+            <!-- 
+            <div class="item-check d-flex justify-content-center">
+                <input type="checkbox" id="all_product1">
+                <label for='all_product1'>
+                    <span class="material-symbols-outlined">done</span>
+                </label>
+            </div> -->
+            <div class="d-flex gap-30">
+                <a routerLink="/product" class="product-img">
+                    <img src="../../../assets/deal-of-week-component/shirt.png" alt="Product Image">
+                </a>
+
+                <div class="product-info d-flex flex-column justify-content-center gap-5">
+                    <a routerLink="/product">
+                        <h4>Mr. Bean Sweater</h4>
+                    </a>
+                    <div class="sizes d-flex gap-10 align-items-center">
+                        <p class="labels">Size:</p>
+                        <div class="sizes-radios ">
+                            <input label="S" type="radio" name="size" id="size" checked>
+                            <label for="size">S</label>
+                        </div>
+                    </div>
+                    <div class="colors d-flex gap-10 align-items-center">
+                        <p class="labels">Color:</p>
+                        <div class="colors-radios d-flex align-items-center relative">
+                            <input type="radio" name="color" value="pink" class="pink" checked>
+                        </div>
+                    </div>
+
+                    <div class="d-flex align-items-center gap-10">
+                        <p class="labels">Price: </p>
+                        <span class="fs-14">$99.99</span>
+                    </div>
+                </div>
+            </div>
+            <div class="d-flex gap-15 flex-column justify-content-center align-items-center">
+                <div class="d-flex gap-10 align-items-center">
+                    <!-- <p class="labels">Quantity:</p> -->
+                    <div class="quantity-btn-outer">
+                        <div class="quantity">
+                            <button class="quantity-btn">
+                                <span class="material-symbols-outlined">
+                                    remove
+                                </span>
+                            </button>
+                            <span class="quantity-value fs-14 d-flex align-items-center">1</span>
+                            <button class="quantity-btn">
+                                <span class="material-symbols-outlined">
+                                    add
+                                </span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <button class="remove-btn d-flex align-items-center">
+                    <a href="javascript:void(0);" class="d-flex align-items-center gap-5">
+                        <!-- <span class="material-symbols-outlined">delete</span> -->
+                        Remove Item</a>
+                </button>
+
+            </div>
+
+            <div class="final-price d-flex align-items-center">
+                $99.99
+            </div>
+        </div>
+
+    </div>
+
+    <div class="cart-items d-flex">
+        <div class="col d-flex justify-content-md-between">
+            <!-- 
+            <div class="item-check d-flex justify-content-center">
+                <input type="checkbox" id="all_product1">
+                <label for='all_product1'>
+                    <span class="material-symbols-outlined">done</span>
+                </label>
+            </div> -->
+            <div class="d-flex gap-30">
+                <a routerLink="/product" class="product-img">
+                    <img src="../../../assets/deal-of-week-component/shirt.png" alt="Product Image">
+                </a>
+
+                <div class="product-info d-flex flex-column justify-content-center gap-5">
+                    <a routerLink="/product">
+                        <h4>Mr. Bean Sweater</h4>
+                    </a>
+                    <div class="sizes d-flex gap-10 align-items-center">
+                        <p class="labels">Size:</p>
+                        <div class="sizes-radios ">
+                            <input label="S" type="radio" name="size" id="size" checked>
+                            <label for="size">S</label>
+                        </div>
+                    </div>
+                    <div class="colors d-flex gap-10 align-items-center">
+                        <p class="labels">Color:</p>
+                        <div class="colors-radios d-flex align-items-center relative">
+                            <input type="radio" name="color" value="pink" class="pink" checked>
+                        </div>
+                    </div>
+
+                    <div class="d-flex align-items-center gap-10">
+                        <p class="labels">Price: </p>
+                        <span class="fs-14">$99.99</span>
+                    </div>
+                </div>
+            </div>
+            <div class="d-flex gap-15 flex-column justify-content-center align-items-center">
+                <div class="d-flex gap-10 align-items-center">
+                    <!-- <p class="labels">Quantity:</p> -->
+                    <div class="quantity-btn-outer">
+                        <div class="quantity">
+                            <button class="quantity-btn">
+                                <span class="material-symbols-outlined">
+                                    remove
+                                </span>
+                            </button>
+                            <span class="quantity-value fs-14 d-flex align-items-center">1</span>
+                            <button class="quantity-btn">
+                                <span class="material-symbols-outlined">
+                                    add
+                                </span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <button class="remove-btn d-flex align-items-center">
+                    <a href="javascript:void(0);" class="d-flex align-items-center gap-5">
+                        <!-- <span class="material-symbols-outlined">delete</span> -->
+                        Remove Item</a>
+                </button>
+
+            </div>
+
+            <div class="final-price d-flex align-items-center">
+                $99.99
+            </div>
+        </div>
+
+    </div>
+
+    <div class="cart-items d-flex">
+        <div class="col d-flex justify-content-md-between">
+            <!-- 
+            <div class="item-check d-flex justify-content-center">
+                <input type="checkbox" id="all_product1">
+                <label for='all_product1'>
+                    <span class="material-symbols-outlined">done</span>
+                </label>
+            </div> -->
+            <div class="d-flex gap-30">
+                <a routerLink="/product" class="product-img">
+                    <img src="../../../assets/deal-of-week-component/shirt.png" alt="Product Image">
+                </a>
+
+                <div class="product-info d-flex flex-column justify-content-center gap-5">
+                    <a routerLink="/product">
+                        <h4>Mr. Bean Sweater</h4>
+                    </a>
+                    <div class="sizes d-flex gap-10 align-items-center">
+                        <p class="labels">Size:</p>
+                        <div class="sizes-radios ">
+                            <input label="S" type="radio" name="size" id="size" checked>
+                            <label for="size">S</label>
+                        </div>
+                    </div>
+                    <div class="colors d-flex gap-10 align-items-center">
+                        <p class="labels">Color:</p>
+                        <div class="colors-radios d-flex align-items-center relative">
+                            <input type="radio" name="color" value="pink" class="pink" checked>
+                        </div>
+                    </div>
+
+                    <div class="d-flex align-items-center gap-10">
+                        <p class="labels">Price: </p>
+                        <span class="fs-14">$99.99</span>
+                    </div>
+                </div>
+            </div>
+            <div class="d-flex gap-15 flex-column justify-content-center align-items-center">
+                <div class="d-flex gap-10 align-items-center">
+                    <!-- <p class="labels">Quantity:</p> -->
+                    <div class="quantity-btn-outer">
+                        <div class="quantity">
+                            <button class="quantity-btn">
+                                <span class="material-symbols-outlined">
+                                    remove
+                                </span>
+                            </button>
+                            <span class="quantity-value fs-14 d-flex align-items-center">1</span>
+                            <button class="quantity-btn">
+                                <span class="material-symbols-outlined">
+                                    add
+                                </span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <button class="remove-btn d-flex align-items-center">
+                    <a href="javascript:void(0);" class="d-flex align-items-center gap-5">
+                        <!-- <span class="material-symbols-outlined">delete</span> -->
+                        Remove Item</a>
+                </button>
+
+            </div>
+
+            <div class="final-price d-flex align-items-center">
+                $99.99
+            </div>
+        </div>
+
+    </div>
+
+
 </div>

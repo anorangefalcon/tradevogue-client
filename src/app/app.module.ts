@@ -12,7 +12,7 @@ import { LayoutComponent } from './layout/layout.component';
 import { AuthLayoutComponent } from './auth-layout/auth-layout.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { DashboardModule } from './dashboard/dashboard.module';
-import { CarouselModule } from 'ngx-owl-carousel-o';
+// import { CarouselModule } from 'ngx-owl-carousel-o';
 import { DataTablesModule } from 'angular-datatables';
 import { ProductPageModule } from './product-page/product-page.module';
 import { FaqPageModule } from './faq-page/faq-page.module';
@@ -44,7 +44,7 @@ import { HttpClientModule } from '@angular/common/http';
     HomeModule,
     ReactiveFormsModule,
     DashboardModule,
-    CarouselModule,
+    // CarouselModule,
     DataTablesModule,
     ProductPageModule,
     FaqPageModule,

@@ -1,0 +1,21 @@
+.crousel{
+
+    .owl-theme .owl-nav {
+        display: flex;
+        gap: 20px;
+        position: absolute;
+        inset-inline-end: 0;
+        inset-block-start: -67px;
+    }
+
+    .owl-carousel .owl-nav .owl-prev, .owl-carousel .owl-nav .owl-next{
+        padding: 0 !important;
+        margin: 0 !important;
+        & span{
+            font-size: 30px;
+            font-weight: 300;
+            color: rgb(var(--text-black));
+        }
+        background-color: transparent !important;
+    }
+}

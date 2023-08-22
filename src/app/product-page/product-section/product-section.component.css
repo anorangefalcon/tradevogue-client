@@ -103,6 +103,7 @@
         border-radius: 2px;
         padding: 5px 10px;
         border: 1px solid rgba(var(--text-black), 0.2);
+        color: rgb(var(--text-black));
         font-size: 15px;
         font-family: sans-serif;
         transition: all 0.1s;
@@ -292,13 +293,23 @@
             }
         }
 
-
-
     }
 
     & label {
         padding-block-end: 4px;
         padding-inline-start: 5px;
+    }
+}
+
+.crousel{
+    .owl-theme .owl-nav {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        position: absolute;
+        inset-block-start: 50%;
+        transform: translateY(-50%);
+        margin-top: 0 !important
     }
 }
 

@@ -2,6 +2,7 @@ export class CustomSelect {
     
     constructor(private element: HTMLSelectElement){
         this.custom_Selection();
+        console.log(this.element);
     }
 
     custom_Selection(){
@@ -10,6 +11,7 @@ export class CustomSelect {
 
         let selectElement: any;
         let  a: any;
+        console.log(this.element);
         for(let e = 0; e<this.element.length; e++){
 
             this.element[e].classList.add('custom-select');

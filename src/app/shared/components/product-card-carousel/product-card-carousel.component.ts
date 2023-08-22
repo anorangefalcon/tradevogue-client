@@ -32,7 +32,7 @@ export class ProductCardCarouselComponent {
     dots: false,
     autoplay: true,
     navSpeed: 300,
-    nav: false,
+    nav: true,
     navText: [
       '<span class="material-symbols-outlined custom-nav-btn">navigate_before</span>',
       '<span class="material-symbols-outlined custom-nav-btn">navigate_next</span>'

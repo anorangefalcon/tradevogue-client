@@ -2,7 +2,7 @@
 
     <div class="container d-flex gap-30">
         <div class="product-carousel">
-            <owl-carousel-o [options]="customOptions">
+            <owl-carousel-o [options]="customOptions" [ngClass]="{crousel: true}">
                 <ng-template carouselSlide *ngFor="let image of productDetails.image">
                     <div class="img-div d-flex justify-content-center align-items-center"
                         [ngStyle]="{ 'background': 'url(' + image + ')', 'background-size': 'cover' }">

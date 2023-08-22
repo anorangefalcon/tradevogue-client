@@ -24,7 +24,7 @@
 
 .item1 {
   grid-area: women;
-  background: url(../../../assets/collections-component/women1.png), linear-gradient(to top, rgb(var(--accent), 0.3) 20%, rgb(var(--secondary)));
+  background: url(../../../assets/collections-component/women1.png), rgba(255, 192, 203, 0.2);
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat; 
@@ -33,7 +33,7 @@
 
 .item2 {
   grid-area: men;
-  background: url(../../../assets/collections-component/men.png), linear-gradient(to top, rgb(233, 233, 233) 10%, rgb(var(--secondary)));
+  background: url(../../../assets/collections-component/men.png), rgba(0, 204, 255, 0.05);
   background-size: cover;
   background-position: right top;
   background-repeat: no-repeat;
@@ -42,7 +42,7 @@
 
 .item3 {
   grid-area: kids;
-  background: url(../../../assets/collections-component/men.png), linear-gradient(to top, rgb(233, 233, 233) 10%, rgb(var(--secondary)));
+  background: url(../../../assets/collections-component/men.png), rgb(var(--secondary), 0.5);
   background-size: contain;
   background-position: right top;
   background-repeat: no-repeat;
@@ -50,7 +50,7 @@
 
 .item4 {
   grid-area: gift;
-  background: url(../../../assets/collections-component/men.png), linear-gradient(to top, rgb(233, 233, 233) 10%, rgb(var(--secondary)));
+  background: url(../../../assets/collections-component/men.png), rgb(var(--secondary), 0.5);
   background-size: contain;
   background-position: right top;
   background-repeat: no-repeat;
@@ -94,7 +94,7 @@ p{
   flex-direction: column;
   justify-content: end;
   padding: 20px;
-  background: linear-gradient(to top right, rgba(0, 0, 0, 0.214) 2%, rgba(255, 255, 255, 0.049) 40%);
+  /* background: linear-gradient(to top right, rgba(0, 0, 0, 0.214) 2%, rgba(255, 255, 255, 0.049) 40%); */
 
   & h3{
     background: linear-gradient(90deg, rgb(var(--primary)) , rgb(var(--primary)));

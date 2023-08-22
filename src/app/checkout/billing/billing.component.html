@@ -1,14 +1,11 @@
 <section>
     <div class="container  d-flex flex-column">
-        <h2 class="text-center">How would you like to order</h2>
+        <h2 class="text-center">Shipping Details</h2>
         <form>
             <div class="form__group d-flex flex-column width-50">
                 <label class="form__label">First Name<span>*</span></label>
-             
                 <input type="text" placeholder="Enter Your First Name" class="form__input/">
-             
             </div>
-
 
             <div class="form__group d-flex flex-column width-50">
                 <label class="form__label">Last Name<span>*</span></label>
@@ -43,19 +40,20 @@
                 <label class="form__label">PostCode <span>*</span></label>
              
                 <input type="text" placeholder="" class="form__input/">
-             
             </div>
 
             <div class="form__group d-flex flex-column width-100">
                 <label class="form__label">Country <span>*</span></label>
              
-                <select id="country" name="country" class="form__input/">
-                    <option value="us">United States</option>
-                    <option value="ca">Canada</option>
-                    <option value="uk">United Kingdom</option>
-                    <option value="au">Australia</option>
-                    <!-- Add more options for different countries here -->
-                </select>
+                <div class="customSelect">
+                    <select id="country" name="country" class="form__input/">
+                        <option value="us">United States</option>
+                        <option value="ca">Canada</option>
+                        <option value="uk">United Kingdom</option>
+                        <option value="au">Australia</option>
+                        <!-- Add more options for different countries here -->
+                    </select>
+                </div>
              
             </div>
 
@@ -119,7 +117,6 @@
                     <span class="material-symbols-outlined accept__icon">done</span>
                 </label>
                 <p>Billing is same as shipping address</p>
-             
             </div>
 
             <p class="text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime aspernatur unde odit aliquam repellat molestias aut libero, sed nobis iste?</p>
@@ -136,7 +133,7 @@
 
 
 
-<div>
+<!-- <div>
     <h2>Products tags</h2>
   
     <div style="display:flex; border:2px solid black; position: relative; height:40px;">
@@ -158,4 +155,4 @@
 </div>
 
    
-</div>
+</div> -->

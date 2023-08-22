@@ -1,7 +1,5 @@
-import { Component, OnInit} from '@angular/core';
-// import $ from 'jquery';
-// import 'select2/dist/css/select2.min.css';
-// import 'select2';
+import { Component, OnInit, ElementRef} from '@angular/core';
+import { CustomSelect } from 'src/app/shared/customSelect/custom-select';
 
 @Component({
   selector: 'app-products',
@@ -34,8 +32,13 @@ export class ProductsComponent implements OnInit{
   pageSize:number = 8;
   currentPage: number=1;
 
+  constructor(private element: ElementRef){}
+
   ngOnInit(): void {
     console.log(this.items);
+    
+    let e = this.element.nativeElement.querySelectorAll('.customSelect');
+    let select  = new CustomSelect(e);
   }
 
   pageChanged(event:any){

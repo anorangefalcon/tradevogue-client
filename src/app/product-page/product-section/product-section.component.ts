@@ -4,7 +4,6 @@ import { OwlOptions } from 'ngx-owl-carousel-o';
 import { CustomSelect } from 'src/app/shared/customSelect/custom-select';
 import { FetchDataService } from 'src/app/shared/services/fetch-data.service';
 
-
 @Component({
   selector: 'app-product-section',
   templateUrl: './product-section.component.html',

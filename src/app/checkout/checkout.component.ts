@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component,HostListener } from '@angular/core';
 
 @Component({
   selector: 'app-checkout',
@@ -7,4 +7,15 @@ import { Component } from '@angular/core';
 })
 export class CheckoutComponent {
 
+  inventory_count: number = 0;
+  navbar_scroll_style: boolean = false;
+
+  @HostListener('window:scroll', []) onScroll(){
+    if(window.scrollY > 80){
+      this.navbar_scroll_style = true;
+    }else{
+      this.navbar_scroll_style = false;
+    }
+    
+  }
 }
