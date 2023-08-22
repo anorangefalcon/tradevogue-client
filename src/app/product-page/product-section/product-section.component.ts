@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { OwlOptions } from 'ngx-owl-carousel-o';
+import { CustomSelect } from 'src/app/shared/customSelect/custom-select';
 import { FetchDataService } from 'src/app/shared/services/fetch-data.service';
 
 
@@ -17,6 +18,7 @@ export class ProductSectionComponent implements OnInit {
   offerPercentage: number = 0;
  
   constructor(
+    private elem_ref: ElementRef,
     private route: ActivatedRoute,
     private fetchService: FetchDataService
   ) {}
@@ -44,6 +46,13 @@ export class ProductSectionComponent implements OnInit {
     });
   }
 
+  ngAfterViewInit(){
+    const element = this.elem_ref.nativeElement.querySelectorAll('.customSelect');
+    let select = new CustomSelect(element);
+
+    // const element1 = this.elem_ref.nativeElement.querySelector('.customSection1');
+    // let select1 = new AddClassActive(element1);
+  }
   
   
   customOptions: OwlOptions = {
