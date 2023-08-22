@@ -1,5 +1,5 @@
 .explore-container{
-    padding-block-start: 100px;
+    padding-block-start: 120px;
 }
 
 .explore-cards{
@@ -7,17 +7,27 @@
     grid-template-columns: repeat(4, 1fr);
     gap: 30px;
     /* margin-inline: -15px; */
-    flex-wrap: wrap;
     justify-content: center;
+
 }
-@media screen and (max-width: 768px) {
+
+@media screen and (max-width: 1020px) {
+    .explore-cards{
+        grid-template-columns: repeat(3, 1fr);
+        justify-items: center;
+        & div{
+            max-width: 280px;
+        }
+    }
+}
+@media screen and (max-width: 720px) {
     .explore-cards{
         grid-template-columns: repeat(2, 1fr);
+        /* justify-items: center; */
     }
 }
     
-
-@media screen and (max-width: 420px) {
+@media screen and (max-width: 530px) {
     .explore-cards{
         grid-template-columns: repeat(1, 1fr);
     }

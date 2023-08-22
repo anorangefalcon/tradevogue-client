@@ -1,28 +1,49 @@
 <div class="card-item-template">
-    <div class="card-item-header">
-        <img [src]= product.image?.[0] alt="Product Image">
-        
-        <a routerLink="/cart" class="cart"><span class="material-symbols-outlined">
-            add_shopping_cart
+    <a routerLink='/product/{{product.sku}}' class="pointer grid gap-10">
+        <div class="card-item-header">
+            <img [src]=product.image?.[1] alt="Product Image">
+            <img class="hover-img" [src]=product.image?.[0] alt="Product Image">
+        </div>
+
+        <div class="card-item-content d-flex flex-column align-items-center gap-5">
+            <h4>{{ product.name }}</h4>
+
+            <div *ngIf="avgRating !== 0" class="rating d-flex align-items-center">
+                <span *ngFor="let i of createArrayToIterate(avgRating)"
+                    class="material-symbols-outlined filled">star</span>
+                <span *ngIf="(avgRating % 1) !== 0" class="material-symbols-outlined">star_half</span>
+                <span *ngFor="let i of createArrayToIterate(5 - avgRating)"
+                    class="material-symbols-outlined">star</span>
+            </div>
+
+            <div class="price d-flex gap-5 align-items-center">
+                <p class="current-price">
+                    ₹{{ product.price }}
+                </p>
+                <p class="old-price" *ngIf="product.oldPrice !== (undefined || 0)">
+                    ₹{{ product.oldPrice }}
+                </p>
+                <p *ngIf="offerPercentage !== 0" class="offer-percentage">
+                   ({{ offerPercentage }}% off)
+                </p>
+            </div>
+
+        </div>
+    </a>
+    <div class="options d-flex justify-content-center gap-15">
+        <a routerLink="/cart" class="cart cart-logo"><span class="material-symbols-outlined">
+                add_shopping_cart
+            </span>
+        </a>
+
+        <a routerLink="/cart" class="cart eye-logo"><span class="material-symbols-outlined">
+                visibility
+            </span>
+        </a>
+
+        <a routerLink="/cart" class="cart wishlist-logo"><span class="material-symbols-outlined">
+                favorite
             </span>
         </a>
     </div>
-
-    <a routerLink= '/product/{{product.sku}}' class="pointer">
-    <div class="card-item-content d-flex flex-column">
-        <!-- <div class="type-wishlist d-flex gap-5">
-            <h6 *ngFor="let size of product.sizes">
-                {{ size }}
-            </h6>
-        </div> -->
-        <h3>{{ product.name }}</h3>
-        <div class="price d-flex gap-10 align-items-center">
-            <p class="current-price">
-                ₹{{ product.price }}
-            </p>
-            <p class="old-price" *ngIf="product.oldPrice !== (undefined || 0)">
-                ₹{{ product.oldPrice }}
-            </p>
-        </div>
-    </div>
-</a>
+</div>

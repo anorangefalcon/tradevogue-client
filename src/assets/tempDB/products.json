@@ -2,12 +2,12 @@
     {
         "sku": "SKU123",
         "name": "Pikachu Oversized Jersey",
-        "price": 29.99,
-        "oldPrice": 39.99,
+        "price": 1190,
+        "oldPrice": 1999,
         "image": [
             "https://assets.bonkerscorner.com/uploads/2023/05/03103121/Pikachu-25-oversized-jersey-4.jpg",
-            "https://assets.bonkerscorner.com/uploads/2023/05/03103147/Pikachu-25-oversized-jersey-5.jpg",
-            "https://assets.bonkerscorner.com/uploads/2023/05/03103143/Pikachu-25-oversized-jersey-6.jpg"
+            "https://assets.bonkerscorner.com/uploads/2023/05/03103143/Pikachu-25-oversized-jersey-6.jpg",
+            "https://assets.bonkerscorner.com/uploads/2023/05/03103147/Pikachu-25-oversized-jersey-5.jpg"
         ],
         "sizes": [
             "S",

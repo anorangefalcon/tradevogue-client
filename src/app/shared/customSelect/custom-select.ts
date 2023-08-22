@@ -6,6 +6,8 @@ export class CustomSelect {
 
     custom_Selection(){
 
+        console.log(this.element, 'ssssss');
+
         let selectElement: any;
         let  a: any;
         for(let e = 0; e<this.element.length; e++){

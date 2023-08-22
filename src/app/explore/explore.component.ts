@@ -12,7 +12,7 @@ export class ExploreComponent {
 
   constructor(private fetchData: FetchDataService) {
     this.fetchData.getData().subscribe(data => {
-      // console.log("here", data);
+      console.log("here", data);
       this.productArr = data.map((item: any) => new productData(item));
       console.log( "product array", this.productArr);
       

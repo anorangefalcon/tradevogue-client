@@ -655,3 +655,38 @@ mw100 {
     }
 }
 
+
+
+/* Owl Crousel */
+
+.owl-carousel.owl-theme.owl-loaded.owl-responsive.owl-drag {
+    position: relative !important;
+}
+
+.owl-theme .owl-dots{
+    position: absolute !important;
+    inset-block-end: 0;
+    inset-inline-start: 50%;
+    transform: translateX(-50%);
+}
+
+.owl-theme .owl-nav {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    position: absolute;
+    inset-block-start: 50%;
+    transform: translateY(-50%);
+    margin-top: 0 !important
+}
+
+.owl-carousel .owl-nav .owl-prev, .owl-carousel .owl-nav .owl-next{
+    padding: 0 !important;
+    margin: 0 !important;
+    & span{
+        font-size: 45px;
+        font-weight: 300;
+        color: rgb(var(--text-black));
+    }
+    background-color: transparent !important;
+}
