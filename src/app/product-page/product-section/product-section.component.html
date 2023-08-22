@@ -1,6 +1,6 @@
 <section *ngIf="productDetails !== {} " class="product">
 
-    <div class="container d-flex gap-30">
+    <div class="container d-flex gap-65">
         <div class="product-carousel">
             <owl-carousel-o [options]="customOptions" [ngClass]="{crousel: true}">
                 <ng-template carouselSlide *ngFor="let image of productDetails.image">
@@ -19,160 +19,101 @@
         <div class="product-desc">
             <h2 class="prod-name">{{ productDetails.name }}</h2>
             <p class="subTitle">{{ productDetails.info['subTitle'] }}</p>
-            <div class="d-flex align-items-center gap-10">
-                <h5 class="price">₹{{ productDetails.price }}</h5>
-
-                <div class="d-flex flex-column">
-                    <p *ngIf="productDetails.oldPrice != (undefined || 0)" class="old-price">₹{{ productDetails.oldPrice }}
-                    </p>
-                    <p class="offer-percentage" *ngIf="offerPercentage !== 0">
-                        ({{ offerPercentage }}% Off)</p>
-                </div>
-            </div>
-
-
-            <div class="reviews-avail d-flex align-items-end gap-10">
-                <div *ngIf="avgRating !== 0" class="rating d-flex align-items-center">
-                    <span *ngFor="let i of createArrayToIterate(avgRating)"
-                        class="material-symbols-outlined filled">star</span>
-                    <span *ngIf="(avgRating % 1) !== 0" class="material-symbols-outlined">star_half</span>
-                    <span *ngFor="let i of createArrayToIterate(5 - avgRating)"
-                        class="material-symbols-outlined">star</span>
-                </div>
-                <p>({{avgRating}}/5 · {{productDetails.reviews.length}} Reviews)</p>
-                <!-- <div class="avail">
-                    <p><strong>Available</strong> : 1000</p>
-                </div> -->
-            </div>
-            <div class="sizes d-flex align-items-center gap-20">
-                <p>Size:</p>
-                <div class="sizes-opt d-flex gap-10">
-                    <div *ngFor="let productSize of productDetails.sizes" class="sizes-radios">
-                        <input type="radio" name="size" [value]=productSize id="size_{{ productSize }}">
-                        <label for="size_{{ productSize }}">{{ productSize }}</label>
+            <div class="prod-info d-flex flex-column gap-25">
+                <div class="d-flex align-items-center gap-10">
+                    <h5 class="price">₹{{ productDetails.price }}</h5>
+    
+                    <div class="offer d-flex gap-5 align-items-center">
+                        <p *ngIf="productDetails.oldPrice != (undefined || 0)" class="old-price">₹{{ productDetails.oldPrice }}
+                        </p>
+                        <p class="offer-percentage" *ngIf="offerPercentage !== 0">
+                            ({{ offerPercentage }}% Off)</p>
                     </div>
                 </div>
-            </div>
-            <div class="colors d-flex align-items-center gap-15">
-                <p>Color:</p>
-                <div class="colors-opt d-flex gap-10">
-                    <div class="colors-radios d-flex align-items-center" *ngFor="let color of productDetails.colors">
-                        <input type="radio" name="color" [value]=color [style.background-color]="color">
+    
+    
+                <div class="reviews-avail d-flex align-items-center gap-10">
+                    <div *ngIf="avgRating !== 0" class="rating d-flex align-items-center">
+                        <span *ngFor="let i of createArrayToIterate(avgRating)"
+                            class="material-symbols-outlined filled">star</span>
+                        <span *ngIf="(avgRating % 1) !== 0" class="material-symbols-outlined">star_half</span>
+                        <span *ngFor="let i of createArrayToIterate(5 - avgRating)"
+                            class="material-symbols-outlined">star</span>
                     </div>
+                    <p>({{avgRating}}/5 · {{productDetails.reviews.length}} Reviews)</p>
+                    <!-- <div class="avail">
+                        <p><strong>Available</strong> : 1000</p>
+                    </div> -->
                 </div>
-            </div>
-
-            <div class="customSelect d-flex align-items-center gap-15">
-                <!-- <p>Quantity:</p> -->
-
-                <select placeholder-text="Select Quantity">
-                    <option *ngFor="let quantity of productDetails.orderQuantity" [value]="quantity">
-                        {{ quantity }}
-                    </option>
-                </select>
-
-                <!-- <select name="" id="">
-                    <option value="" disabled selected>Select Brand</option>
-                    <option value="">Brand 1</option>
-                    <option value="">Brand 2</option>
-                    <option value="">Brand 3</option>
-                    <option value="">Brand 4</option>
-                    <option value="">Brand 5</option>
-                </select> -->
-            </div>
-            
-            <div class="cart-div d-flex gap-10 align-items-center">
-                <button class="btn-primary wishlist-btn d-flex align-items-center">
-                    <span class="material-symbols-outlined">
-                        favorite
-                    </span>
-                </button>
-                <button class="btn-primary d-flex gap-10 align-items-center">
-                    <span class="material-symbols-outlined">
-                        shopping_cart
-                    </span>
-                    <p>ADD TO CART</p>
-                </button>
-            </div>
-            <div class="sku d-flex gap-10">
-                <h4>Sku :</h4>
-                <p class="sku_id">{{ productDetails.sku }}</p>
-            </div>
-            <div class="tags d-flex gap-10">
-                <h4>Tags :</h4>
-                <p class="sku_id"><a>Fashion</a>, <a>Oversized</a>, <a>Boys</a></p>
-            </div>
-            <div class="prod-details">
-                <h2>Product Description</h2>
-                <p>
-                    {{ productDetails.description }}
-                </p>
-                <!-- <h2 class="feat">Features</h2>
-                <ul class="feat_list">
-                    <li>Lorem, ipsum dolor sit amet consectetur adipisicing.</li>
-                    <li>Lorem, ipsum dolor sit amet consectetur adipisicing.</li>
-                    <li>Lorem, ipsum dolor sit amet consectetur adipisicing.</li>
-                    <li>Lorem, ipsum dolor sit amet consectetur adipisicing.</li>
-                    <li>Lorem, ipsum dolor sit amet consectetur adipisicing.</li>
-                </ul> -->
-                <h2>Information</h2>
-                <table>
-                    <tr>
-                        <th>Product Code</th>
-                        <td>{{ productDetails.info.productCode }}</td>
-                    </tr>
-                    <tr>
-                        <th>Brand</th>
-                        <td>{{ productDetails.info.brand }}</td>
-                    </tr>
-                    <tr>
-                        <th>Composition</th>
-                        <td>{{ productDetails.info.composition }}</td>
-                    </tr>
-                    <tr>
-                        <th>Weight</th>
-                        <td>{{ productDetails.info.weight }}</td>
-                    </tr>
-                </table>
-                <h2>Reviews</h2>
-                <div class="review-container d-flex flex-column gap-10">
-                    <div class="review-card" *ngFor="let review of productDetails.reviews">
-                        <div class="review">
-                            <p class="rev">
-                                {{ review.comment }}
-                            </p>
-                            <div class="person-info d-flex justify-content-md-between">
-                                <p>{{ review.username }}</p>
-                                <p> {{ review.rating }}/5 ·
-                                    {{ review.date }}
-                                </p>
-                            </div>
+                <div class="sizes d-flex align-items-center gap-20">
+                    <p>Size:</p>
+                    <div class="sizes-opt d-flex gap-10">
+                        <div *ngFor="let productSize of productDetails.sizes" class="sizes-radios">
+                            <input type="radio" name="size" [value]=productSize id="size_{{ productSize }}">
+                            <label for="size_{{ productSize }}">{{ productSize }}</label>
                         </div>
                     </div>
-
-                    <div class="d-flex" style="padding-inline-start: 4px;">
-                        <span (click)="addReview = true" *ngIf="addReview === false" class="pointer">
-                            Write a Review
-                        </span>
+                </div>
+                <div class="colors d-flex align-items-center gap-15">
+                    <p>Color:</p>
+                    <div class="colors-opt d-flex gap-10">
+                        <div class="colors-radios d-flex align-items-center" *ngFor="let color of productDetails.colors">
+                            <input type="radio" name="color" [value]=color [style.background-color]="color">
+                        </div>
                     </div>
                 </div>
+    
+                <div class="customSelect d-flex gap-15 align-items-center">
+                    <p>Quantity:</p>
+    
+                    <select placeholder-text="Select Quantity">
+                        <option value="" disabled selected>Select Quantity</option>
+                        <option *ngFor="let quantity of productDetails.orderQuantity" [value]="quantity">
+                            {{ quantity }}
+                        </option>
+                    </select>
+    
+                    <!-- <select name="" id="">
+                        <option value="">100</option>
+                        <option value="">200</option>
+                        <option value="">300</option>
+                    </select> -->
+                </div>
+                
+                <div class="cart-div d-flex gap-10 align-items-center">
+                    <button class="btn-primary wishlist-btn d-flex align-items-center">
+                        <span class="material-symbols-outlined">
+                            favorite
+                        </span>
+                    </button>
+                    <button class="btn-primary d-flex gap-10 align-items-center">
+                        <span class="material-symbols-outlined">
+                            shopping_cart
+                        </span>
+                        <p>ADD TO CART</p>
+                    </button>
+                </div>
 
-                <div *ngIf="addReview === true" class="addReview">
-                    <h2 class="d-flex gap-20 align-items-center">Add a Review
-                        <span (click)="addReview = false" class="material-symbols-outlined pointer">close</span>
-                    </h2>
-                    <form class="d-flex flex-column">
-                        <label>Your Review</label>
-                        <textarea rows="5" placeholder="Write your review here..."></textarea>
-                        <label>Name</label>
-                        <input type="text">
-                        <label>Email</label>
-                        <input type="text">
+                <p>
+                    {{ productDetails.description }} 
+                    {{ productDetails.description }}
+                    {{ productDetails.description }}
+                    {{ productDetails.description }}
+                </p>
 
-                        <button class="btn-primary">Submit</button>
-                    </form>
+                <div class="tags d-flex gap-10 d-flex align-items-center">
+                    <h4>TAGS :</h4>
+                    <a *ngFor="let tag of productDetails.info.tags">
+                        {{ tag }}
+                    </a>
+                   
+                </div>
+                <div class="sku d-flex gap-10">
+                    <h4>SKU :</h4>
+                    <p class="sku_id">{{ productDetails.sku }}</p>
                 </div>
             </div>
+            
         </div>
     </div>
 </section>

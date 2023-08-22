@@ -116,9 +116,11 @@ select {
     --text-black: 7, 7, 7;
     --text-white: 255, 255, 255;
     --background: 255, 255, 255;
-    --primary: 89, 25, 79;
+    /* --primary: 89, 25, 79; */
+    --primary: 223, 65, 23;
     --secondary: 241, 241, 241;
-    --accent: 88, 30, 129;
+    /* --accent: 88, 30, 129; */
+    --accent : 223, 106, 23;
 
     --danger: 223, 22, 33;
     --success: 60, 167, 23;

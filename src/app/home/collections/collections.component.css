@@ -42,7 +42,8 @@
 
 .item3 {
   grid-area: kids;
-  background: url(../../../assets/collections-component/men.png), rgb(var(--secondary), 0.5);
+  background: url(../../../assets/collections-component/trends.png), rgb(var(--secondary), 0.5);
+  background-blend-mode: color;
   background-size: contain;
   background-position: right top;
   background-repeat: no-repeat;
@@ -50,7 +51,8 @@
 
 .item4 {
   grid-area: gift;
-  background: url(../../../assets/collections-component/men.png), rgb(var(--secondary), 0.5);
+  background: url(../../../assets/collections-component/explore.png), rgba(255, 255, 241);
+  background-blend-mode: multiply;
   background-size: contain;
   background-position: right top;
   background-repeat: no-repeat;

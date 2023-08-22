@@ -1,0 +1,133 @@
+.prod-details h2 {
+    font-size: 32px;
+    /* margin-block-start: 30px; */
+    /* margin-block-end: 10px; */
+}
+
+.prod-details p {
+    font-size: 14px;
+    color: rgba(var(--text-black), 0.8);
+}
+
+.prod-details {
+
+
+    .feat {
+        font-size: 32px !important;
+    }
+
+    .feat_list {
+        list-style-type: disc !important;
+    }
+
+    .feat_list li {
+        /* margin-block: 5px; */
+        margin-inline-start: 10px;
+    }
+
+    & th {
+        text-align: left;
+        width: 180px;
+
+    }
+
+    & form textarea,
+    form input {
+        margin-block-end: 15px;
+        border-radius: 8px;
+        border: 1px solid transparent;
+        background-color: rgb(var(--text-black), 0.05);
+        padding: 7px;
+        font-size: 13px;
+    }
+
+    & input {
+        padding-block: 5px;
+    }
+
+    & input:focus,
+    textarea:focus {
+        outline: none;
+    }
+
+    & input:focus,
+    textarea:focus {
+        border: 1px solid rgba(var(--text-black), 0.8);
+    }
+
+    & button {
+        border-radius: 8px;
+    }
+
+    .review-section {
+        & .review-card {
+
+            background-color: rgba(var(--text-black), 0.05);
+            border-radius: 8px;
+            padding: 5px;
+
+
+
+            & .review {
+
+
+                padding-block: 8px;
+                padding-inline: 10px;
+
+
+                & .rev {
+                    font-size: 14px !important;
+                    /* font-weight: 600; */
+                    margin-block-end: 5px;
+                }
+
+                & .person-info p {
+                    font-size: 14px !important;
+                    font-weight: 600;
+                }
+            }
+
+        }
+    }
+
+    & label {
+        padding-block-end: 4px;
+        padding-inline-start: 5px;
+    }
+
+}
+
+.section-switcher {
+    border-block-start: 1px solid rgba(var(--text-black), 0.2);
+    margin-block-start: 15px;
+    padding-block: 15px;
+
+    & .section-item {
+        font-size: 16px;
+        font-weight: 500;
+        text-transform: uppercase;
+        position: relative;
+        padding-bottom: 8px;
+        transition: border-width 0.3s ease-in-out;
+    }
+
+    & .section-item::before {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 0;
+        height: 2px;
+        background-color: rgb(var(--primary));
+        transition: width 0.3s ease-in-out;
+    }
+
+    & .section-item.active::before,
+     .section-item:hover::before {
+        width: 100%;
+    }
+    & .section-item.active{
+        color: rgb(var(--primary));
+    }
+
+}

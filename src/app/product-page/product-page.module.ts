@@ -5,6 +5,7 @@ import { SharedModule } from '../shared/shared.module';
 import { RouterModule, Routes } from '@angular/router';
 import { CarouselModule } from 'ngx-owl-carousel-o';
 import { ProductSectionComponent } from './product-section/product-section.component';
+import { ProductDetailsComponent } from './product-details/product-details.component';
 
 
 const routes: Routes = [
@@ -14,7 +15,8 @@ const routes: Routes = [
 @NgModule({
   declarations: [
     ProductPageComponent,
-    ProductSectionComponent
+    ProductSectionComponent,
+    ProductDetailsComponent
   ],
   imports: [
     CommonModule,

@@ -13,18 +13,21 @@ export class ProductSectionComponent implements OnInit {
 
   productDetails: any = {};
   avgRating: number = 0;
-  addReview: boolean = false;
+  checkSelect: boolean = false;
   offerPercentage: number = 0;
- 
+  currentCustomSelect: any;
+
   constructor(
     private elem_ref: ElementRef,
     private route: ActivatedRoute,
     private fetchService: FetchDataService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.productDetails.info = [];
     this.productDetails.reviews = [];
+
+    currentCustomSelect: CustomSelect;
 
     this.route.params.subscribe(params => {
       const sku = params['sku'];
@@ -41,19 +44,21 @@ export class ProductSectionComponent implements OnInit {
         if (this.productDetails.oldPrice !== (undefined || 0)) {
           this.offerPercentage = Math.floor((this.productDetails.oldPrice - this.productDetails.price) / this.productDetails.oldPrice * 100);
         }
+        setTimeout(() => {
+          const element = this.elem_ref.nativeElement.querySelectorAll('.customSelect');
+  
+          if (this.currentCustomSelect) {
+            this.currentCustomSelect.destroy();
+          }
+  
+          this.currentCustomSelect = new CustomSelect(element);
+        }, 0);
       });
     });
   }
 
-  ngAfterViewInit(){
-    const element = this.elem_ref.nativeElement.querySelectorAll('.customSelect');
-    let select = new CustomSelect(element);
+ 
 
-    // const element1 = this.elem_ref.nativeElement.querySelector('.customSection1');
-    // let select1 = new AddClassActive(element1);
-  }
-  
-  
   customOptions: OwlOptions = {
     loop: true,
 
