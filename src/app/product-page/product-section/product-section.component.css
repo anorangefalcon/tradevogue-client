@@ -256,3 +256,52 @@
 .short-description{
     opacity: 0.7;
 }
+
+
+.zoomed-carousel-outer{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 120;
+    background-color: rgba(0, 0, 0, 0.772);
+    backdrop-filter: blur(1px);
+    transition: all 0.2s ease-in-out;
+}
+.zoomed-carousel{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    height: 80%;
+    width: 40%;
+    z-index: 150;
+    animation: zoomed-carousel-animation 0.3s ease-in-out;
+}
+.zoom-close-btn{
+    position: absolute;
+    top: 10%;
+    right: 30%;
+    z-index: 160;
+    padding: 5px 10px;
+    background-color: rgba(255, 255, 255, 0.5);
+    backdrop-filter: blur(1px);
+    transition: all 0.2s ease-in-out;
+    cursor: pointer;
+    &:hover{
+        color: rgb(var(--danger));
+    }
+    transition: 1s ease-in-out;
+}
+
+@keyframes zoomed-carousel-animation {
+    from {
+        transform: translate(-50%, -48%);
+        opacity: 0;
+    }
+    to {
+        transform: translate(-50%, -50%);
+        opacity: 1;
+    }
+}

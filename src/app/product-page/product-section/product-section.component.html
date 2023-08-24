@@ -11,11 +11,13 @@
             </owl-carousel-o>
 
             <div class="products-imgs-container row d-flex">
-                <div class="gal-img pointer" *ngFor="let image of data.productDetails.image"
+                <div class="gal-img pointer" *ngFor="let image of data.productDetails.image; let i = index"
                     [ngStyle]="{ 'background': 'url(' + image + ')', 'background-size': 'cover', 'background-position': 'center' }
-                     ">
+                     "
+                     (click) = "showZoomedCarousel(i)">
                 </div>
             </div> 
+
         </div>
         <div class="product-desc">
             <h2 class="prod-name">{{ data.productDetails.name }}</h2>
@@ -116,5 +118,17 @@
             </div>
             
         </div>
+    </div>
+    <div *ngIf="showCarousel === true" class="zoomed-carousel-outer">
+        <div class="zoom-close-btn" (click) = "showCarousel = false">
+            <span class="material-symbols-outlined">close</span>
+        </div>
+        <owl-carousel-o [options]="zoomCarouselOptions" [ngClass]="{crousel: true}" class = "zoomed-carousel" >
+            <ng-template carouselSlide *ngFor="let image of data.productDetails.image">
+                <div class="img-div d-flex justify-content-center align-items-center"
+                    [ngStyle]="{ 'background': 'url(' + image + ')', 'background-size': 'cover' }">
+                </div>
+            </ng-template>
+        </owl-carousel-o>
     </div>
 </section>

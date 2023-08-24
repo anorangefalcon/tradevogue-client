@@ -10,7 +10,7 @@ export class NavbarComponent {
   navbar_scroll_style: boolean = false;
 
   @HostListener('window:scroll', []) onScroll(){
-    if(window.scrollY > 80){
+    if(window.scrollY > 40){
       this.navbar_scroll_style = true;
     }else{
       this.navbar_scroll_style = false;

@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, OnInit } from '@angular/core';
+import { Component, ElementRef, HostListener, Input, OnInit, Renderer2 } from '@angular/core';
 import { OwlOptions } from 'ngx-owl-carousel-o';
 import { CustomSelect } from 'src/app/shared/customSelect/custom-select';
 
@@ -11,10 +11,12 @@ export class ProductSectionComponent implements OnInit {
 
   constructor(
     private elem_ref: ElementRef,
+    private renderer: Renderer2
   ) { }
 
   @Input() data: any = {};
   currentCustomSelect: CustomSelect | undefined;
+  showCarousel: boolean = false;
 
   ngOnInit(): void {
     console.log(this.data, "hehe data");
@@ -58,31 +60,7 @@ export class ProductSectionComponent implements OnInit {
       }
     },
   }
-  customOptions1: OwlOptions = {
-    loop: true,
-    mouseDrag: true,
-    touchDrag: true,
-    pullDrag: true,
-    dots: false,
-    autoplay: false,
-    navSpeed: 700,
-    navText: ['<i class="fa fa-angle-left" aria-hidden="true"></i>', '<i class="fa fa-angle-right" aria-hidden="true"></i>'],
-    responsive: {
-      0: {
-        items: 2
-      },
-      400: {
-        items: 2
-      },
-      740: {
-        items: 2
-      },
-      940: {
-        items: 2
-      }
-    },
-    nav: true
-  }
+
 
   createArrayToIterate(num: number) {
     const newTotal = Math.floor(num);
@@ -91,5 +69,45 @@ export class ProductSectionComponent implements OnInit {
     }
     return Array(newTotal).fill(0);
   }
+
+  showZoomedCarousel(image: any) {
+    this.showCarousel = true;
+    this.zoomCarouselOptions.startPosition = image;
+  }
+  @HostListener('document:keyup', ['$event'])
+  handleKeyboardEvent(event: KeyboardEvent) {
+    if (event.key === 'Escape' && this.showCarousel === true) {
+      this.showCarousel = false;
+    }
+  }
+
+
+  zoomCarouselOptions: OwlOptions = {
+    loop: false,
+    rewind: true,
+    mouseDrag: true,
+    touchDrag: true,
+    pullDrag: true,
+    dots: false,
+    nav: true,
+    autoplay: false,
+    navText: ['<span class="material-symbols-outlined">chevron_left</span>', '<span class="material-symbols-outlined">chevron_right</span>'],
+    navSpeed: 600,
+    responsive: {
+      0: {
+        items: 1
+      },
+      400: {
+        items: 1
+      },
+      740: {
+        items: 1
+      },
+      940: {
+        items: 1
+      }
+    },
+  }
+
 
 }
