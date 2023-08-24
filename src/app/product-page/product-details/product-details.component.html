@@ -9,43 +9,40 @@
     <div [ngSwitch]="selectedSection" class="prod-details">
 
         <div *ngSwitchCase="'description'" class="description-section">
-            <h2>Product Description</h2>
             <p>
-                {{ productDetails.description }}
-                {{ productDetails.description }}
-                {{ productDetails.description }}
-                {{ productDetails.description }}
-                {{ productDetails.description }}
-                {{ productDetails.description }}
+                {{ data.productDetails.description }}
+                {{ data.productDetails.description }}
+                {{ data.productDetails.description }}
+                {{ data.productDetails.description }}
+                {{ data.productDetails.description }}
+                {{ data.productDetails.description }}
             </p>
         </div>
 
         <div *ngSwitchCase="'information'" class="information-section">
-            <h2>Information</h2>
             <table>
                 <tr>
                     <th>Product Code</th>
-                    <td>{{ productDetails.info.productCode }}</td>
+                    <td>{{ data.productDetails.info.productCode }}</td>
                 </tr>
                 <tr>
                     <th>Brand</th>
-                    <td>{{ productDetails.info.brand }}</td>
+                    <td>{{ data.productDetails.info.brand }}</td>
                 </tr>
                 <tr>
                     <th>Composition</th>
-                    <td>{{ productDetails.info.composition }}</td>
+                    <td>{{ data.productDetails.info.composition }}</td>
                 </tr>
                 <tr>
                     <th>Weight</th>
-                    <td>{{ productDetails.info.weight }}</td>
+                    <td>{{ data.productDetails.info.weight }}</td>
                 </tr>
             </table>
         </div>
 
         <div *ngSwitchCase="'reviews'" class="reviews-section">
-            <h2>Reviews</h2>
             <div class="review-container d-flex flex-column gap-10">
-                <div class="review-card" *ngFor="let review of productDetails.reviews">
+                <div class="review-card" *ngFor="let review of data.productDetails.reviews">
                     <div class="review">
                         <p class="rev">
                             {{ review.comment }}

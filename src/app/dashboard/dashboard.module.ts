@@ -10,6 +10,7 @@ import { ProductsComponent } from './products/products.component';
 import { OrdersComponent } from './orders/orders.component';
 import { SharedModule } from '../shared/shared.module';
 import { AddproductComponent } from './addproduct/addproduct.component';
+import { AccountComponent } from './account/account.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { AddproductComponent } from './addproduct/addproduct.component';
     StatisticsComponent,
     ProductsComponent,
     OrdersComponent,
-    AddproductComponent
+    AddproductComponent,
+    AccountComponent
   ],
   
   imports: [

@@ -23,6 +23,9 @@ const routes: Routes = [
     SharedModule,
     RouterModule.forChild(routes),
     CarouselModule,
+  ],
+  exports: [
+    ProductSectionComponent
   ]
 })
 export class ProductPageModule { }

@@ -8,13 +8,13 @@ import { CardTemplateComponent } from './components/card-template/card-template.
 import { SearchBarComponent } from './components/search-bar/search-bar.component';
 import { SupportComponent } from './components/support/support.component';
 import { MatTabsModule } from '@angular/material/tabs';
-
 import { RouterModule } from '@angular/router';
 import { PopOpenDirective } from './Directives/pop-open.directive';
 import { PopCloseDirective } from './Directives/pop-close.directive';
 import { FooterComponent } from './components/footer/footer.component';
 import { FacilitiesComponent } from './components/facilities/facilities.component';
 import { NewsletterComponent } from './components/newsletter/newsletter.component';
+import { ProductPageModule } from '../product-page/product-page.module';
 
 @NgModule({
   declarations: [
@@ -28,13 +28,14 @@ import { NewsletterComponent } from './components/newsletter/newsletter.componen
     PopCloseDirective,
     FooterComponent,
     FacilitiesComponent,
-    NewsletterComponent
+    NewsletterComponent,
   ],
   imports: [
     CommonModule,
     CarouselModule,
     MatTabsModule,
-    RouterModule
+    RouterModule,
+    // ProductPageModule
   ],
   exports: [
     NavbarComponent,

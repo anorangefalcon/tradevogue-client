@@ -1,4 +1,7 @@
 export class CustomSelect {
+    destroy() {
+      throw new Error('Method not implemented.');
+    }
     
     constructor(private element: HTMLSelectElement){
         this.custom_Selection();

@@ -1,8 +1,6 @@
-import { Component, ElementRef, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, ElementRef, Input, OnInit } from '@angular/core';
 import { OwlOptions } from 'ngx-owl-carousel-o';
 import { CustomSelect } from 'src/app/shared/customSelect/custom-select';
-import { FetchDataService } from 'src/app/shared/services/fetch-data.service';
 
 @Component({
   selector: 'app-product-section',
@@ -11,57 +9,32 @@ import { FetchDataService } from 'src/app/shared/services/fetch-data.service';
 })
 export class ProductSectionComponent implements OnInit {
 
-  productDetails: any = {};
-  avgRating: number = 0;
-  checkSelect: boolean = false;
-  offerPercentage: number = 0;
-  currentCustomSelect: any;
-
   constructor(
     private elem_ref: ElementRef,
-    private route: ActivatedRoute,
-    private fetchService: FetchDataService
   ) { }
 
+  @Input() data: any = {};
+  currentCustomSelect: CustomSelect | undefined;
+
   ngOnInit(): void {
-    this.productDetails.info = [];
-    this.productDetails.reviews = [];
+    console.log(this.data, "hehe data");
 
-    currentCustomSelect: CustomSelect;
 
-    this.route.params.subscribe(params => {
-      const sku = params['sku'];
+    setTimeout(() => {
+      const element = this.elem_ref.nativeElement.querySelectorAll('.customSelect');
 
-      this.fetchService.getData().subscribe((data: any[]) => {
-        this.productDetails = data.find((item) => {
-          return item['sku'] === sku;
-        });
-        this.avgRating = 0;
-        for (let i = 0; i < (this.productDetails.reviews).length; i++) {
-          this.avgRating += this.productDetails.reviews[i].rating;
-        }
-        this.avgRating = this.avgRating / this.productDetails.reviews.length;
-        if (this.productDetails.oldPrice !== (undefined || 0)) {
-          this.offerPercentage = Math.floor((this.productDetails.oldPrice - this.productDetails.price) / this.productDetails.oldPrice * 100);
-        }
-        setTimeout(() => {
-          const element = this.elem_ref.nativeElement.querySelectorAll('.customSelect');
-  
-          if (this.currentCustomSelect) {
-            this.currentCustomSelect.destroy();
-          }
-  
-          this.currentCustomSelect = new CustomSelect(element);
-        }, 0);
-      });
-    });
+      if (this.currentCustomSelect) {
+        this.currentCustomSelect.destroy();
+      }
+
+      this.currentCustomSelect = new CustomSelect(element);
+    }, 0);
   }
 
- 
+
 
   customOptions: OwlOptions = {
     loop: true,
-
     mouseDrag: true,
     touchDrag: true,
     pullDrag: true,
