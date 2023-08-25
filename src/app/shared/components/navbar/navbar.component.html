@@ -17,7 +17,7 @@
         <ul class="account-actions d-flex align-items-center gap-20">
 
             <li class="cart relative">
-                <a href="javascript: void(0);">
+                <a [routerLink]="['/cart']">
                     <span class="material-symbols-outlined">shopping_cart</span>
                     <span id="inventory_count" class="absolute">{{inventory_count}}</span>
                 </a>

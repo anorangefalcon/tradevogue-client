@@ -39,8 +39,19 @@
 
     }
 }
-@media screen and (max-width: 1100px){
-    .facilities .container {
-        flex-direction: column;
+@media screen and (max-width: 1250px){
+    .text {
+        & h4{
+            font-size: 14px !important;
+        }
     }
 }
+@media screen and (max-width: 990px){
+    .facilities .container {
+        flex-wrap: wrap;
+    }
+    .facility {
+        
+    }
+}
+

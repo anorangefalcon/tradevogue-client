@@ -48,11 +48,11 @@
                         <p><strong>Available</strong> : 1000</p>
                     </div> -->
                 </div>
-                <div class="sizes d-flex align-items-center gap-20">
+                <div class="sizes d-flex align-items-center gap-20" id="sizes" >
                     <p>Size:</p>
                     <div class="sizes-opt d-flex gap-10">
                         <div *ngFor="let productSize of data.productDetails.sizes" class="sizes-radios">
-                            <input type="radio" name="size" [value]=productSize id="size_{{ productSize }}">
+                            <input type="radio" name="size" [value]=productSize id="size_{{ productSize }}" [(ngModel)]="selectedSize">
                             <label for="size_{{ productSize }}">{{ productSize }}</label>
                         </div>
                     </div>
@@ -61,12 +61,12 @@
                     <p>Color:</p>
                     <div class="colors-opt d-flex gap-10">
                         <div class="colors-radios d-flex align-items-center" *ngFor="let color of data.productDetails.colors">
-                            <input type="radio" name="color" [value]=color [style.background-color]="color">
+                            <input type="radio" name="color" [value]=color [style.background-color]="color" [(ngModel)]="selectedColor">
                         </div>
                     </div>
                 </div>
     
-                <div class="customSelect d-flex gap-15 align-items-center">
+                <div class=" d-flex gap-15 align-items-center">
                     <p>Quantity:</p>
     
                     <!-- <select placeholder-text="Select Quantity">
@@ -76,10 +76,10 @@
                         </option>
                     </select> -->
     
-                    <select name="" id="">
-                        <option value="">100</option>
-                        <option value="">200</option>
-                        <option value="">300</option>
+                    <select name="" [(ngModel)]="selectedQ">
+                        <option value="100">100</option>
+                        <option value="200">200</option>
+                        <option value="300">300</option>
                     </select>
                 </div>
                 
@@ -89,7 +89,7 @@
                             favorite
                         </span>
                     </button>
-                    <button class="btn-primary d-flex gap-10 align-items-center">
+                    <button class="btn-primary d-flex gap-10 align-items-center" (click)="addToCart()">
                         <span class="material-symbols-outlined">
                             shopping_cart
                         </span>

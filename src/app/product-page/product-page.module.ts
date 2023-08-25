@@ -6,7 +6,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { CarouselModule } from 'ngx-owl-carousel-o';
 import { ProductSectionComponent } from './product-section/product-section.component';
 import { ProductDetailsComponent } from './product-details/product-details.component';
-
+import { FormsModule } from '@angular/forms';
 
 const routes: Routes = [
   { path: '', component: ProductPageComponent },
@@ -20,6 +20,7 @@ const routes: Routes = [
   ],
   imports: [
     CommonModule,
+    FormsModule,
     SharedModule,
     RouterModule.forChild(routes),
     CarouselModule,

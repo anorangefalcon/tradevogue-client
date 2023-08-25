@@ -16,18 +16,20 @@
         letter-spacing: 0.7px;
     }
     & input {
-        min-width: 570px;
+        width: 570px;
         font-size: 14px;
         padding: 12px 15px;
         background-color: rgb(var(--text-white));
         border: none;
+        border-radius: 5px;
         outline: none;
     }
     & ::placeholder{
         letter-spacing: 0.7px;
+        color: rgb(var(--text-black), 0.4);
     }
      & button {
-        border-radius: 0px !important;
+        border-radius: 5px !important;
         padding: 10px 25px;
     }
     
@@ -46,6 +48,12 @@
 }
 @media screen and (max-width: 1400px){
     input {
-        width: 580px;
+        width: 520px !important;
     }
+}
+@media screen and (max-width: 990px) {
+    input {
+        width : 300px;
+    }
+    
 }

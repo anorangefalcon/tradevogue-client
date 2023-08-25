@@ -1,6 +1,7 @@
 import { Component, ElementRef, HostListener, Input, OnInit, Renderer2 } from '@angular/core';
 import { OwlOptions } from 'ngx-owl-carousel-o';
 import { CustomSelect } from 'src/app/shared/customSelect/custom-select';
+import { FetchDataService } from 'src/app/shared/services/fetch-data.service';
 
 @Component({
   selector: 'app-product-section',
@@ -8,10 +9,14 @@ import { CustomSelect } from 'src/app/shared/customSelect/custom-select';
   styleUrls: ['./product-section.component.css']
 })
 export class ProductSectionComponent implements OnInit {
+  cartStorage : any[] = [];
+  selectedSize: string = "";
+  selectedColor: string = "";
+  selectedQ: number = 0;
 
   constructor(
     private elem_ref: ElementRef,
-    private renderer: Renderer2
+    private localStorageService: FetchDataService
   ) { }
 
   @Input() data: any = {};
@@ -33,6 +38,17 @@ export class ProductSectionComponent implements OnInit {
     }, 0);
   }
 
+
+  addToCart() {
+    const cartItem = {
+      sku: this.data.productDetails.sku,
+      size: this.selectedSize,
+      color: this.selectedColor,
+      quantity: this.selectedQ
+    }
+    
+    this.localStorageService.addToCart(cartItem);
+  }
 
 
   customOptions: OwlOptions = {

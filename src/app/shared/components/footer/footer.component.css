@@ -153,8 +153,6 @@ footer {
         display: none;
     }
     .sub-links {
-        /* padding: 10px;
-        line-height: 20px; */
         max-height: 0;
         overflow: hidden;
         transition: max-height 0.5s;
@@ -168,10 +166,5 @@ footer {
     .acc ul {
         margin-block-start: 15px;
         margin-block-end: 10px;
-    }
-    .acc input[type="checkbox"]:checked + label {
-        & label {
-            background-color: aqua;
-        }
     }
 }

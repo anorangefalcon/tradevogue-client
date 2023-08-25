@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { FetchDataService } from '../../services/fetch-data.service';
 @Component({
   selector: 'app-card-template',
   templateUrl: './card-template.component.html',
@@ -6,7 +7,12 @@ import { Component, Input } from '@angular/core';
 })
 export class CardTemplateComponent {
 
+
   @Input() product: any = {};
+
+  constructor(
+    private localStorageService: FetchDataService
+  ) { }
 
   avgRating: number = 0;
   offerPercentage: number = 0;
@@ -29,4 +35,11 @@ export class CardTemplateComponent {
     return Array(newTotal).fill(0);
   }
     
+  addToCart(){
+    const cartItem = {
+      sku: this.product.sku,
+    }
+    
+    this.localStorageService.addToCart(cartItem);
+  }
 }
