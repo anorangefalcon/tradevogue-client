@@ -1,13 +1,13 @@
 <div class="summary-container d-flex flex-column gap-10">
     <h2 class="border text-center">Order Summary</h2>
     <div class="border items-container d-flex flex-column gap-10">
-        <div class="item" *ngFor="let item of storageCart">
+        <div class="item" *ngFor="let item of cart.details">
             <div class="itemname d-flex justify-content-md-between">
-                <p>{{item.extra?.name}}</p>
-                <p>₹{{item.extra?.price}}</p>
+                <p>{{item.name}}</p>
+                <p>₹{{item.price}}</p>
             </div>
             <div class="itemtype d-flex justify-content-md-between">
-                <p>{{item.extra?.description}}</p>
+                <p>{{item.description}}</p>
                 <p>Qty: {{item.Quantity}}</p>
             </div>
         </div>
@@ -15,21 +15,21 @@
 
     <div class="border subtotal d-flex justify-content-md-between">
         <p>Subtotal</p>
-        <p>₹{{this.subTotal}}</p>
+        <p>₹{{cart.amounts.subTotal}}</p>
     </div>
     <div class="border shipping d-flex justify-content-md-between">
         <p>Shipping</p>
-        <p>₹{{this.shipping}}</p>
+        <p>₹{{cart.amounts.shipping}}</p>
     </div>
 
     <div class="border savings d-flex justify-content-md-between">
         <p>Savings</p>
-        <p class="savings-amt">₹{{this.savings}}</p>
+        <p class="savings-amt">₹{{cart.amounts.savings}}</p>
     </div>
 
     <div class="total d-flex justify-content-md-between">
         <p>Total</p>
-        <p>₹{{this.total}}</p>
+        <p>₹{{cart.amounts.total}}</p>
     </div>
     <button class="btn-primary"><a href="">Proceed to Checkout</a></button>
 </div>

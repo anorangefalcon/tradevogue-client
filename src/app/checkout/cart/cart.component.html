@@ -3,12 +3,12 @@
         <div class="col d-flex justify-content-md-between">
             <div class="d-flex gap-30">
                 <a routerLink="/product" class="product-img">
-                    <img [src]= item.extra?.image?.[0]  alt="Product Image">
+                    <img [src]= item?.image?.[0]  alt="Product Image">
                 </a>
 
                 <div class="product-info d-flex flex-column justify-content-center gap-5">
                     <a routerLink="/product">
-                        <h4>{{item.extra?.name}}</h4>
+                        <h4>{{item?.name}}</h4>
                     </a>
                     <div class="sizes d-flex gap-10 align-items-center">
                         <p class="labels">Size:</p>
@@ -21,7 +21,7 @@
 
                     <div class="d-flex align-items-center gap-10">
                         <p class="labels">Price: </p>
-                        <span class="fs-14">₹{{item.extra?.price}}</span>
+                        <span class="fs-14">₹{{item?.price}}</span>
                     </div>
                 </div>
             </div>
@@ -53,7 +53,7 @@
             </div>
 
             <div class="final-price d-flex align-items-center">
-                ₹{{item.extra?.price}}
+                ₹{{item?.price}}
             </div>
         </div>
 

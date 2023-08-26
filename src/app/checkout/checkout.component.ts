@@ -1,14 +1,22 @@
-import { Component,HostListener } from '@angular/core';
+import { Component,HostListener, OnInit } from '@angular/core';
+import { CartService } from '../shared/services/cart.service';
 
 @Component({
   selector: 'app-checkout',
   templateUrl: './checkout.component.html',
   styleUrls: ['./checkout.component.css']
 })
-export class CheckoutComponent {
+export class CheckoutComponent implements OnInit {
 
-  inventory_count: number = 0;
   navbar_scroll_style: boolean = false;
+
+  cartCount: number = 0;
+  ngOnInit(){
+    const localCart = localStorage.getItem("myCart");
+    const localCartArr = localCart ? JSON.parse(localCart) : null;
+    this.cartCount = localCartArr.length;
+  }
+
 
   @HostListener('window:scroll', []) onScroll(){
     if(window.scrollY > 80){
