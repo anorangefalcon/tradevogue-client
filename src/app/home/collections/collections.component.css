@@ -26,14 +26,15 @@
   grid-area: women;
   background: url(../../../assets/collections-component/women1.png), rgba(255, 192, 203, 0.2);
   background-size: cover;
+  background-blend-mode: multiply;
   background-position: center;
   background-repeat: no-repeat; 
-  /* scale: 0.8; */
 }
 
 .item2 {
   grid-area: men;
-  background: url(../../../assets/collections-component/men.png), rgba(0, 204, 255, 0.05);
+  background: url(../../../assets/collections-component/men.png), rgba(var(--secondary));
+  background-blend-mode: multiply;
   background-size: cover;
   background-position: right top;
   background-repeat: no-repeat;
@@ -45,7 +46,7 @@
   background: url(../../../assets/collections-component/trends.png), rgb(var(--secondary), 0.5);
   background-blend-mode: color;
   background-size: contain;
-  background-position: right top;
+  background-position: right;
   background-repeat: no-repeat;
 }
 

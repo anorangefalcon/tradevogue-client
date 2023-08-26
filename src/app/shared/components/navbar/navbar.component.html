@@ -1,5 +1,129 @@
 <header [class.active]="navbar_scroll_style == true">
-    <nav class="container d-flex align-items-center justify-content-md-between">
+    <nav class="navbar container d-flex align-items-center justify-content-md-between relative">
+        <div class="branding d-flex gap-10 align-items-center">
+            <span class="dropdown material-symbols-outlined">menu</span>
+            <a [routerLink]="['/']">
+                <img src="../../assets/logo.svg" alt="Trade Vogue Logo">
+            </a>
+        </div>
+        <ul class="d-flex gap-30 nav-items active">
+            <li class="nav-links">
+                <a class="active d-flex flex-column gap-5" href="">
+                    <!-- <span class="material-symbols-outlined">home</span> -->
+                    Home
+                </a>
+            </li>
+            <li class="nav-links">
+                <a href="" class=" d-flex flex-column gap-5">
+                    <!-- <span class="material-symbols-outlined">male</span> -->
+                    Men
+                </a>
+            </li>
+            <li class="nav-links">
+                <a href="" class=" d-flex flex-column gap-5">
+                    <!-- <span class="material-symbols-outlined">female</span> -->
+                    Women
+                </a>
+            </li>
+        </ul>
+        <ul class="navbar-features d-flex align-items-center gap-20 m-gap-15 s-gap-10">
+            <li>
+                <a class="icons" href="javscript:void(0);">
+                    <span class="material-symbols-outlined">search</span>
+                    <div class="search sub-items d-flex flex-column gap-15">
+                        <app-search-bar></app-search-bar>
+                    </div>
+                </a>
+            </li>
+            <li>
+                <a class="icons" href="javscript:void(0);">
+                    <span class="wishlist_count material-symbols-outlined">
+                        favorite
+                        <span class="count" id="wishList">0</span>
+                    </span>
+                </a>
+            </li>
+            <li>
+                <a class="icons" href="javscript:void(0);">
+                    <span class="material-symbols-outlined">
+                        notifications
+                        <span class="count" id="notification">0</span>
+                    </span>
+                    <ul class="sub-items d-flex flex-column gap-15">
+                        <li class="d-flex align-items-center justify-content-md-between">
+                            <h4>Notifications</h4>
+                            <h6>5 Unread</h6>
+                        </li>
+                        <li>
+                            <span>
+    
+                            </span>
+                        </li>
+                        <li>
+                            <button class="btn-primary d-flex align-items-center mw100"><a href=""
+                                    style="color: rgb(var(--text-white));">View All</a></button>
+                        </li>
+                    </ul>
+                </a>
+            </li>
+            <li>
+                <a class="icons" href="javscript:void(0);">
+                    <span class="material-symbols-outlined">
+                        shopping_cart
+                        <span class="count" id="inventory">5</span>
+                    </span>
+                    <ul class="sub-items d-flex flex-column gap-15">
+                        <li class="d-flex align-items-center justify-content-md-between">
+                            <h4>Cart Items</h4>
+                            <h6>5 items</h6>
+                        </li>
+                        <li>
+                            <span>
+    
+                            </span>
+                        </li>
+                        <li>
+                            <button class="btn-primary d-flex align-items-center mw100"><a href="" style="color: rgb(var(--text-white));">Proceed to checkout</a></button>
+                        </li>
+                    </ul>
+                </a>
+            </li>
+            <li>
+                <a class="icons" href="javscript:void(0);">
+                    <span class="material-symbols-outlined">person</span>
+                    <ul class="sub-items d-flex flex-column gap-15">
+    
+                        <li class="sub-links">
+                            <div class="header">
+                                <span>Welcome</span>
+                                <p>Access your account and manage your order</p>
+                            </div>
+                            <div class="d-flex justify-content-md-between gap-13">
+                                <a href="" id="login">
+                                    <span class="material-symbols-outlined">login</span>
+                                    <span>Login</span>
+                                </a>
+                                <a href="" id="register">
+                                    <span class="material-symbols-outlined">person_add</span>
+                                    <span>Register</span>
+                                </a>
+                            </div>
+                            <div>
+    
+                            </div>
+                        </li>
+    
+                        <li class="sub-links d-flex flex-column justify-content-start">
+                            <a href="">Contact Us</a>
+                            <a href="">FAQ</a>
+                        </li>
+                    </ul>
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- <nav class="container d-flex align-items-center justify-content-md-between">
         <a [routerLink]="['/']">
             <img class="branding" src="../../assets/logo.svg" alt="Trade Vogue Logo">
         </a>
@@ -61,5 +185,5 @@
             </li>
 
         </ul>
-    </nav>
+    </nav> -->
 </header>

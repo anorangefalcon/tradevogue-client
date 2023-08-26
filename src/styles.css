@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
 /* Box sizing rules */
 *,
 *::before,
@@ -7,10 +9,6 @@
     box-sizing: border-box;
 }
 
-/* @font-face {
-    font-family: 'eyesome';
-    src: url('../src/assets/EyesomeFont/eyesome-regular.otf');
-} */
 
 @font-face {
     font-family: 'Apercu Movistar';
@@ -166,6 +164,10 @@ h3 {
     font-weight: 500;
 }
 
+h4,h5,h6{
+    font-weight: 500;
+}
+
 body {
     /* font-family: 'Lato__', sans-serif !important; */
     font-family: 'Poppins', sans-serif;
@@ -298,12 +300,12 @@ ul {
 }
 
 /* Width and Hright */
-mh100 {
+.mh100 {
     height: 100%;
 }
 
-mw100 {
-    width: 100%;
+.mw100 {
+    min-width: 100%;
 }
 
 
@@ -653,7 +655,7 @@ mw100 {
         background-color: rgba(0, 0, 0, 0.153);
     }
 }
-@media screen and (max-width: 1250px) {
+/* @media screen and (max-width: 1250px) {
     .container{
         max-width: 960px;
     }
@@ -662,7 +664,7 @@ mw100 {
     .container{
         max-width: 720px;
     }
-}
+} */
 
 
 
