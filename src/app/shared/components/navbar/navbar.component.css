@@ -132,8 +132,8 @@ header.active {
     }
 
 
-    & .sub-items {
-        display: none;
+    & .sub-items{
+        /* display: none; */
         position: absolute;
         inset-block-start: calc(100%);
         inset-inline-end: 0px;

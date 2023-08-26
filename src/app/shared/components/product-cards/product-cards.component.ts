@@ -14,6 +14,14 @@ export class ProductCardsComponent {
     fetchProducts.getData().subscribe((data)=>{
       console.log(data,"davinder here");
       this.products = data.slice(0, 4);
+      console.log(data);
+      this.products = data.slice(0,4);
+      // for(let i=0; i<data.length; i++){
+      //   this.products.push(data[i]);
+      //   if(i>=3){
+      //     break;
+      //   }
+      // }    
     });
   }
 

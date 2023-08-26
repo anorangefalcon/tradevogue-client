@@ -10,6 +10,7 @@ import { CheckoutComponent } from './checkout/checkout.component';
 import { CartComponent } from './checkout/cart/cart.component';
 import { BillingComponent } from './checkout/billing/billing.component';
 import { ExploreComponent } from './explore/explore.component';
+import { HelpPageComponent } from './help-page/help-page.component';
 const routes: Routes = [
 
   {
@@ -30,6 +31,7 @@ const routes: Routes = [
       },
     ]
   },
+  {path: 'help', component: HelpPageComponent},
 
   {
     path: 'auth', loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule)
