@@ -7,6 +7,8 @@ import { RouterModule, Routes } from '@angular/router';
 import { BillingComponent } from './billing/billing.component';
 import { OrderSummaryComponent } from './order-summary/order-summary.component';
 import { PipesPipe } from '../checkout/billing/pipes.pipe';
+
+
 const routers: Routes = [
   { path: '', component: CheckoutComponent },
 
@@ -26,4 +28,6 @@ const routers: Routes = [
     RouterModule.forChild(routers),
   ]
 })
-export class CheckoutModule { }
+export class CheckoutModule{
+
+}

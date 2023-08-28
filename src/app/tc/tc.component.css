@@ -5,12 +5,12 @@
         width: 100%;
         min-height: 400px;
         /* background-image: url(../../assets/tc-bg.jpg); */
-        background-color: rgb(var(--primary));
+        background-color: rgb(var(--accent),0.1);
         background-image: url(../../assets/deal-of-week-component/dealOfWeek-homeBg.png);
         background-repeat: no-repeat;
         background-size: cover;
         background-position: bottom;
-        color: rgb(var(--text-white));
+        color: rgb(var(--text-black));
     }
 
     & h2 {
@@ -19,7 +19,7 @@
     }
 
     & .cond {
-        margin-block-start: -35px;
+        margin-block-end: -40px;
     }
 
     & p {

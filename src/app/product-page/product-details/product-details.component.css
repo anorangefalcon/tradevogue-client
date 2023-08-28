@@ -4,10 +4,10 @@
     /* margin-block-end: 10px; */
 }
 
-.prod-details p {
+/* .prod-details p {
     font-size: 14px;
     color: rgba(var(--text-black), 0.8);
-}
+} */
 
 .prod-details {
 
@@ -36,13 +36,18 @@
         margin-block-end: 15px;
         border-radius: 8px;
         border: 1px solid transparent;
-        background-color: rgb(var(--text-black), 0.05);
+        background-color: rgb(var(--primary), 0.05);
         padding: 7px;
-        font-size: 13px;
+        
     }
 
-    & input {
-        padding-block: 5px;
+    & form input {
+        padding-block: 10px;
+
+    }
+    & form textarea {
+        padding-inline-start: 10px;
+        font-size: 14px;
     }
 
     & input:focus,
@@ -57,42 +62,86 @@
 
     & button {
         border-radius: 8px;
+        height: 42px;
+        width : 100px;
+        margin-inline-end: 0;
+        
     }
+    .rating {
+        & span {
+            border: 1px solid transparent;
+            color: #fe9704;
+            font-size: 18px;
+            font-variation-settings:
+                'wght' 400,
+                'GRAD' 0,
+                'opsz' 48
+        }
+    
+        & .filled {
+            font-variation-settings:
+                'FILL' 1,
+                'wght' 400,
+                'GRAD' 0,
+                'opsz' 48
+        }
+    }
+    
 
-    .review-section {
-        & .review-card {
 
-            background-color: rgba(var(--text-black), 0.05);
+    .reviews-section {
+
+        & .review-cards,
+        .review-form {
+            width: 50%;
+        }
+
+        & .review-cards {
+
             border-radius: 8px;
             padding: 5px;
 
-
-
-            & .review {
-
-
-                padding-block: 8px;
-                padding-inline: 10px;
-
-
-                & .rev {
-                    font-size: 14px !important;
-                    /* font-weight: 600; */
-                    margin-block-end: 5px;
-                }
+            & .review-card {
+                background-color: rgb(var(--primary), 0.05);
+                padding : 10px;
+                border-radius: 5px;
 
                 & .person-info p {
-                    font-size: 14px !important;
-                    font-weight: 600;
-                }
+                font-size: 16px !important;
+                font-weight: 600 !important;
+            }
+            }
+        
+        }
+        & .review-form {
+
+            
+            padding-block: 8px;
+            padding-inline: 30px;
+
+            & h2 {
+                margin-block-end: 15px;
+            }
+            & textarea {
+                resize: none;
             }
 
+
+            & .rev {
+                font-size: 14px !important;
+                /* font-weight: 600; */
+                margin-block-end: 5px;
+            }
+
+           
+            
         }
+
     }
 
     & label {
-        padding-block-end: 4px;
-        padding-inline-start: 5px;
+        padding-block-end: 5px;
+        padding-inline-start: 10px;
     }
 
 }
@@ -123,10 +172,11 @@
     }
 
     & .section-item.active::before,
-     .section-item:hover::before {
+    .section-item:hover::before {
         width: 100%;
     }
-    & .section-item.active{
+
+    & .section-item.active {
         color: rgb(var(--primary));
     }
 

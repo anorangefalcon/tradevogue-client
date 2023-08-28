@@ -54,6 +54,8 @@ export class CartService {
           return item.sku == this.cart.details[i].sku;
         }));
 
+        console.log("match sku is ",matchSku);
+        
         Object.assign(this.cart.details[i],
           Object.fromEntries(
             fields.map(field => [
@@ -71,6 +73,8 @@ export class CartService {
         this.cart.amounts.savings += (this.cart.details[i].oldPrice * this.cart.details[i].Quantity);
       }
       this.cart.amounts.savings -= this.cart.amounts.total;
+
+      
     })
 
     if (what === 'details') {

@@ -14,4 +14,12 @@ export class ProductDetailsComponent {
   constructor() {}
 
   ngOnInit(): void {}
+
+  createArrayToIterate(num: number) {
+    const newTotal = Math.floor(num);
+    if (newTotal <= 0) {
+      return [];
+    }
+    return Array(newTotal).fill(0);
+  }
 }

@@ -1,4 +1,4 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, Input, ElementRef, ViewChild } from '@angular/core';
 
 @Component({
   selector: 'app-billing',
@@ -6,6 +6,7 @@ import { Component, ElementRef, ViewChild } from '@angular/core';
   styleUrls: ['./billing.component.css']
 })
 export class BillingComponent {
+
 
   @ViewChild('mydiv') my_div:ElementRef | undefined;
   search_text:any='';

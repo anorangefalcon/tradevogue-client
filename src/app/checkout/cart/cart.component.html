@@ -30,12 +30,12 @@
                     <!-- <p class="labels">Quantity:</p> -->
                     <div class="quantity-btn-outer">
                         <div class="quantity">
-                            <button class="quantity-btn">
+                            <button class="quantity-btn" >
                                 <span class="material-symbols-outlined">
                                     remove
                                 </span>
                             </button>
-                            <span class="quantity-value fs-14 d-flex align-items-center">1</span>
+                            <span class="quantity-value fs-14 d-flex align-items-center">{{item.Quantity}}</span>
                             <button class="quantity-btn">
                                 <span class="material-symbols-outlined">
                                     add
@@ -44,9 +44,8 @@
                         </div>
                     </div>
                 </div>
-                <button class="remove-btn d-flex align-items-center">
-                    <a href="javascript:void(0);" class="d-flex align-items-center gap-5">
-                        <!-- <span class="material-symbols-outlined">delete</span> -->
+                <button class="remove-btn d-flex align-items-center" (click)="remove_item(item.sku)">
+                    <a class="d-flex align-items-center gap-5">
                         Remove Item</a>
                 </button>
 

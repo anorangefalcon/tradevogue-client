@@ -1,6 +1,22 @@
 .container {
     background-color: rgb(255,255,255);
-    padding-block: 100px;
+    padding-block: 50px;
+}
+.helpBox {
+    width: 100%;
+    min-height: 400px;
+    /* background-image: url(../../assets/tc-bg.jpg); */
+    background-color: rgb(var(--accent),0.1);
+    background-image: url(../../assets/deal-of-week-component/dealOfWeek-homeBg.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: bottom;
+    color: rgb(var(--text-black));
+
+    & h2 {
+        font-size: 84px !important;
+        letter-spacing: 2.2px;
+    }
 }
 
 .map-wrap {
