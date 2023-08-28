@@ -13,7 +13,7 @@
         overflow: hidden;
         text-overflow: ellipsis;
     }
-
+    animation: show-animation 0.5s ease-in-out;
     transition: transform 0.3s ease-in-out;
 }
 
