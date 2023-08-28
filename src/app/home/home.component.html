@@ -1,10 +1,20 @@
 <div class="home">
     <app-hero></app-hero>
-    <app-facilities></app-facilities>
-    <app-collections></app-collections>
-    <app-deal-of-week></app-deal-of-week>
-    <app-product-cards></app-product-cards>
-    <app-offers></app-offers>
+    <section id="facilites" class="py-100">
+        <app-facilities></app-facilities>
+    </section>
+    <section id="collection" class="pb-100">
+        <app-collections></app-collections>
+    </section>
+    <section id="deals">
+        <app-deal-of-week></app-deal-of-week>
+    </section>
+    <section id="products" class="py-100">
+        <app-product-cards></app-product-cards>
+    </section>
+    <section id="offers">
+        <app-offers></app-offers>
+    </section>
 
     <div class="home-carousel d-flex flex-column gap-30">
         <div class="container section-header">
@@ -17,7 +27,10 @@
         </div>
         <app-product-card-carousel></app-product-card-carousel>
     </div>
-
-    <app-gallery></app-gallery>
-    <app-newsletter></app-newsletter>
+    <section id="newsletter">
+        <app-newsletter></app-newsletter>
+    </section>
+    <section id="gallery" class="py-100">
+        <app-gallery></app-gallery>
+    </section>
 </div>

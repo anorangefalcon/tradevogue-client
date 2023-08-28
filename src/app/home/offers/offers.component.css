@@ -1,33 +1,22 @@
 img {
-  max-height: 309px;
+  max-height: 280px;
 }
 
-.row  {
-    display: flex;
-    align-items: center;
-    flex-direction: row;
-    justify-content: center;
-    gap: 20px;
-}
-
-.title {
-    margin-bottom: 0px !important;
+.offer-title {
     line-height: 1.2 !important;
-    width: 270px !important;
     height: 96px !important;
-    font-size: 36px !important;
-    font-weight: 400 !important;
+    font-size: 32px !important;
+    font-weight: 500 !important;
     color: rgb(51,51,51);
 }
 
 .col {
-display: flex;
+    display: flex;
     flex-direction: row;
     align-items: center;
-    /* padding-inline: 62px !important; */
     justify-content: center;
+
     padding: 20px;
-    /* margin: 0 auto; */
     width: 50%;
     border-radius: 10px;
 }
@@ -41,7 +30,7 @@ display: flex;
 }
 
 .subtitle {
-  color: rgb(223,65,23);
+  color: rgb(var(--primary));
 }
 
 
@@ -49,6 +38,7 @@ display: flex;
     display: flex;
     flex-direction: column;
     gap: 13px;
+    width: 50%;
 }
 
 .btn-style3 {
@@ -88,9 +78,23 @@ a, a:hover {
     transition: all .3s ease-in-out 0s;
 }
 
-/* a, a:hover {
-    text-decoration: none;
-    -webkit-transition: all .3s ease-in-out 0s;
-    -o-transition: all .3s ease-in-out 0s;
-    transition: all .3s ease-in-out 0s;
-} */
+
+/* 
+.col-1{
+  background: url("../../../assets/deal-of-week-component/women_tshirt.png"),  rgb(236,242,247);
+  background-position: left top;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-blend-mode: multiply;
+}
+
+.col-2{
+  background: url("../../../assets/deal-of-week-component/women_tshirt.png"),  rgb(254,247,247); 
+  
+  background-position: left top;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-blend-mode: multiply;
+}
+
+*/

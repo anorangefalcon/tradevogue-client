@@ -19,17 +19,18 @@
         }
 
         & h3 {
-            font-size: 52px !important;
+            font-size: 60px !important;
             font-weight: 400;
             letter-spacing: 1.2px;
-            margin-bottom: 15px;
+            margin-bottom: 10px;
         }
 
         & h5 {
-            font-size: 20px !important;
+            font-size: 18px !important;
             text-transform: uppercase;
-            font-weight: 700;
-            margin-bottom: 5px
+            font-weight: 500;
+            margin-bottom: 5px;
+            color: rgb(var(--primary));
         }
     }
 
@@ -46,13 +47,14 @@
 
     & .shop__button {
 
-        & a {
-            color: rgb(var(--primary));
+        & a{
+            font-size: 18px !important;
+            text-transform: uppercase;
+            font-weight: 500;
         }
-
         & .icons {
             font-weight: 400;
-            color: rgb(var(--primary)); 
+            /* color: rgb(var(--primary));  */
             transition: all 0.3s ease-in-out;
         }
 
@@ -151,9 +153,6 @@
         & .deal-week-img {
             width: 100%;
 
-            & img {
-                /* max-height: 200px;    */
-            }
         }
     }
 }

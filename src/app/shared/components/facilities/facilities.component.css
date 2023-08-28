@@ -1,7 +1,7 @@
 .facilities {
-    padding-block: 90px;
-    /* padding-block-start: 10px; */
     color: rgb(var(--new-text-black));
+    /* background-color: aquamarine;
+    min-height: 200px; */
 
     .gap-40 {
         gap: 40px;
@@ -49,9 +49,6 @@
 @media screen and (max-width: 990px){
     .facilities .container {
         flex-wrap: wrap;
-    }
-    .facility {
-        
     }
 }
 

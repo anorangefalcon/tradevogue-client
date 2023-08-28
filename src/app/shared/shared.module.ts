@@ -14,8 +14,6 @@ import { PopCloseDirective } from './Directives/pop-close.directive';
 import { FooterComponent } from './components/footer/footer.component';
 import { FacilitiesComponent } from './components/facilities/facilities.component';
 import { NewsletterComponent } from './components/newsletter/newsletter.component';
-import { HoverClickFocusDirective } from './Directives/hover-click-focus.directive';
-import { UnhoverUnclickBlurDirective } from './Directives/unhover-unclick-blur.directive';
 
 @NgModule({
   declarations: [
@@ -30,8 +28,6 @@ import { UnhoverUnclickBlurDirective } from './Directives/unhover-unclick-blur.d
     FooterComponent,
     FacilitiesComponent,
     NewsletterComponent,
-    HoverClickFocusDirective,
-    UnhoverUnclickBlurDirective
   ],
   imports: [
     CommonModule,
@@ -52,8 +48,6 @@ import { UnhoverUnclickBlurDirective } from './Directives/unhover-unclick-blur.d
     SupportComponent,
     PopOpenDirective,
     PopCloseDirective,
-    UnhoverUnclickBlurDirective,
-    HoverClickFocusDirective,
   ]
 })
 export class SharedModule { }

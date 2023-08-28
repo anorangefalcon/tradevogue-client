@@ -1,12 +1,10 @@
 .hero-section {
-    /* margin-block-start: 80px; */
 
     & .container{
         padding-inline: 0px;
-        padding-block-start: 80px;
+        padding-block-start: 100px;
     }
- 
-    /* background-image: url(../../assets/hero-bg.png); */
+    
     & .hero-text {
         width: 50%;
     }

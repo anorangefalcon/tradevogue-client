@@ -3,26 +3,31 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    /* background-color: rgb(var(--accent), 0.1); */
-    /* background-image: url(../../../assets/deal-of-week-component/dealOfWeek-homeBg.png); */
     background-repeat: no-repeat;
     background-size: cover;
-    padding-block: 100px;
   
   & .container{
     display: flex;
     flex-direction: column;
     justify-content: center;
-  
-    gap:25px;
-    /* align-items: center; */
+    align-items: center;
+    text-align: center !important;
 
-    
-    & h2{
+    & h3{
         color:rgba(var(--text-black));
         font-size: 26px;
         font-weight: 400;
-        margin-bottom: 20px;
+    }
+
+    & .gallery__collection{
+      
+      & img{
+        width: 25%;
+        height: 300px;
+        object-fit: cover;
+        object-position: top;
+        padding: 5px;
+      }
     }
 
     .card-div{
