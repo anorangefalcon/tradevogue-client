@@ -21,7 +21,7 @@
 
                     <div class="d-flex align-items-center gap-10">
                         <p class="labels">Price: </p>
-                        <span class="fs-14">₹{{item?.price}}</span>
+                        <p>₹{{item?.price}}</p>
                     </div>
                 </div>
             </div>
@@ -44,15 +44,15 @@
                         </div>
                     </div>
                 </div>
-                <button class="remove-btn d-flex align-items-center" (click)="remove_item(item.sku)">
+                <!-- <button class="remove-btn d-flex align-items-center" (click)="remove_item(item.sku)">
                     <a class="d-flex align-items-center gap-5">
                         Remove Item</a>
-                </button>
+                </button> -->
 
             </div>
 
             <div class="final-price d-flex align-items-center">
-                ₹{{item?.price}}
+                <p>₹{{item?.price}}</p>
             </div>
         </div>
 
