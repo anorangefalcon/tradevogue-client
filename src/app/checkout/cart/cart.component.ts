@@ -8,11 +8,13 @@ import { CartService } from 'src/app/shared/services/cart.service';
 })
 export class CartComponent implements OnInit {
   cartArr: any[] = [];
+  totalPrice : number = 0;
 
   constructor(private cartService: CartService) {}
 
   ngOnInit() {
     this.cartArr = this.cartService.fetchCart("details");
+    
    }
 
 

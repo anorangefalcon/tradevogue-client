@@ -1,15 +1,30 @@
 .prod-details h2 {
     font-size: 32px;
-    /* margin-block-start: 30px; */
-    /* margin-block-end: 10px; */
+
+}
+.information-section {
+    & table {
+        width: 100%;
+        border: 1px solid;
+        border-spacing: 0;
+    }
+
+    & th, td{
+        border: 1px solid;
+
+    }
 }
 
-/* .prod-details p {
-    font-size: 14px;
-    color: rgba(var(--text-black), 0.8);
-} */
+
 
 .prod-details {
+
+
+    .description-section,
+    .information-section,
+    .reviews-section {
+        padding-block-start: 10px;
+    }
 
 
     .feat {
@@ -38,13 +53,14 @@
         border: 1px solid transparent;
         background-color: rgb(var(--primary), 0.05);
         padding: 7px;
-        
+
     }
 
     & form input {
         padding-block: 10px;
 
     }
+
     & form textarea {
         padding-inline-start: 10px;
         font-size: 14px;
@@ -63,10 +79,11 @@
     & button {
         border-radius: 8px;
         height: 42px;
-        width : 100px;
+        width: 100px;
         margin-inline-end: 0;
-        
+
     }
+
     .rating {
         & span {
             border: 1px solid transparent;
@@ -77,7 +94,7 @@
                 'GRAD' 0,
                 'opsz' 48
         }
-    
+
         & .filled {
             font-variation-settings:
                 'FILL' 1,
@@ -86,45 +103,58 @@
                 'opsz' 48
         }
     }
-    
+
 
 
     .reviews-section {
 
-        & .review-cards,
-        .review-form {
-            width: 50%;
+        & .review-cards {
+            width: 100%;
         }
+
 
         & .review-cards {
 
             border-radius: 8px;
             padding: 5px;
 
+            & .rev {
+                font-size: 14px !important;
+            }
+
             & .review-card {
-                background-color: rgb(var(--primary), 0.05);
-                padding : 10px;
-                border-radius: 5px;
+                /* background-color: rgb(var(--primary), 0.05); */
+                border-radius: 0;
+                border-block-end: 1px solid rgba(var(--text-black), 0.2);
+                /* padding : 10px; */
+                padding-block-end: 20px;
 
                 & .person-info p {
-                font-size: 16px !important;
-                font-weight: 600 !important;
+                    font-size: 12px !important;
+                    font-weight: 400 !important;
+                    opacity: 70%;
+                    
+                }
+                
             }
+
+            & textarea {
+                resize: none !important;
             }
-        
+
+
         }
+
         & .review-form {
 
-            
+
             padding-block: 8px;
             padding-inline: 30px;
 
             & h2 {
                 margin-block-end: 15px;
             }
-            & textarea {
-                resize: none;
-            }
+
 
 
             & .rev {
@@ -133,8 +163,8 @@
                 margin-block-end: 5px;
             }
 
-           
-            
+
+
         }
 
     }
