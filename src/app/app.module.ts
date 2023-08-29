@@ -24,6 +24,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { HttpClientModule } from '@angular/common/http';
 import { HelpPageComponent } from './help-page/help-page.component';
+import { SettingsComponent } from './settings/settings.component';
 
 
 @NgModule({
@@ -34,6 +35,7 @@ import { HelpPageComponent } from './help-page/help-page.component';
     TcComponent,
     ExploreComponent,
     HelpPageComponent,
+    SettingsComponent,
   ],
   imports: [
     BrowserModule,

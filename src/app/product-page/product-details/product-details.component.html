@@ -12,7 +12,7 @@
     <div [ngSwitch]="selectedSection" class="prod-details">
 
         <div *ngSwitchCase="'description'" class="description-section">
-            <p>
+            <p class="fs-14"> 
                 {{ data.productDetails.description }}
                 {{ data.productDetails.description }}
                 {{ data.productDetails.description }}
@@ -23,21 +23,21 @@
         </div>
 
         <div *ngSwitchCase="'information'" class="information-section">
-            <table>
+            <table class="fs-14">
                 <tr>
-                    <th>Product Code</th>
+                    <th class="fs-14">Product Code</th>
                     <td>{{ data.productDetails.info.productCode }}</td>
                 </tr>
                 <tr>
-                    <th>Brand</th>
+                    <th class="fs-14">Brand</th>
                     <td>{{ data.productDetails.info.brand }}</td>
                 </tr>
                 <tr>
-                    <th>Composition</th>
+                    <th class="fs-14">Composition</th>
                     <td>{{ data.productDetails.info.composition }}</td>
                 </tr>
                 <tr>
-                    <th>Weight</th>
+                    <th class="fs-14">Weight</th>
                     <td>{{ data.productDetails.info.weight }}</td>
                 </tr>
             </table>
@@ -45,50 +45,57 @@
 
         <div *ngSwitchCase="'reviews'" class="reviews-section d-flex">
             <div class="review-cards d-flex flex-column gap-20">
-                <div class="review-card" *ngFor="let review of data.productDetails.reviews">
-                    <div class="review">
-                        <p class="rev">
-                            {{ review.comment }}
-                        </p>
-                        <div class="person-info d-flex justify-content-md-between">
-                            <p class="fw-600 ">{{ review.username }}</p>
-                            <p class="fw-600 "> 
-                                {{ review.date }}
+                <div class="review-card d-flex flex-column gap-5" *ngFor="let review of data.productDetails.reviews">
+                    
+                        <div>
+                            <p class="rev">
+                                {{ review.comment }}
                             </p>
                         </div>
-                        <div *ngIf="data.avgRating !== 0" class="rating d-flex align-items-center">
+                        <div class="person-info d-flex justify-content-md-between">
+                            <div *ngIf="data.avgRating !== 0" class="rating d-flex align-items-center">
+                                <span *ngFor="let i of createArrayToIterate(data.avgRating)"
+                                    class="material-symbols-outlined filled">star</span>
+                                <span *ngIf="(data.avgRating % 1) !== 0" class="material-symbols-outlined">star_half</span>
+                                <span *ngFor="let i of createArrayToIterate(5 - data.avgRating)"
+                                    class="material-symbols-outlined">star</span>
+                            </div>
+                            <p class="fw-600 ">{{ review.username }} · {{ review.date }}</p>
+                            
+                        </div>
+                        
+                   
+                </div>
+                <!-- <div class="d-flex" style="padding-inline-start: 4px;">
+                    <span (click)="addReview = true" *ngIf="addReview === false" class="pointer">
+                        Write a Review
+                    </span>
+                </div> -->
+                <h2 class="d-flex gap-20 align-items-center">Add a Review</h2>
+                <form class="d-flex flex-column gap-5">
+                    <!-- <label>Your Review</label><div *ngIf="data.avgRating !== 0" class="rating d-flex align-items-center">
                             <span *ngFor="let i of createArrayToIterate(data.avgRating)"
                                 class="material-symbols-outlined filled">star</span>
                             <span *ngIf="(data.avgRating % 1) !== 0" class="material-symbols-outlined">star_half</span>
                             <span *ngFor="let i of createArrayToIterate(5 - data.avgRating)"
                                 class="material-symbols-outlined">star</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="d-flex" style="padding-inline-start: 4px;">
-                    <!-- <span (click)="addReview = true" *ngIf="addReview === false" class="pointer">
-                        Write a Review
-                    </span> -->
-                </div>
-            </div>
-            <div class="review-form">
-                <h2 class="d-flex gap-20 align-items-center">Add a Review
-        
-                </h2>
-                <form class="d-flex flex-column gap-5">
-                    <label>Your Review</label>
+                        </div> -->
                     <textarea rows="5" placeholder="Write your review here..."></textarea>
-                    <label>Name</label>
+                    <!-- <label>Name</label>
                     <input type="text">
                     <label>Email</label>
-                    <input type="text">
+                    <input type="text"> -->
 
                     <div class="d-flex ">
                         <button class="btn-primary ">Submit</button>
                     </div>
                 </form>
+
+
             </div>
+            <!-- <div class="review-form">
+               
+            </div> -->
 
         </div>
 
