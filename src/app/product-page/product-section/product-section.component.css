@@ -227,6 +227,7 @@
         color: rgb(var(--primary));
         cursor: pointer;
     }
+    animation: show-animation 0.5s ease-in-out;
 }
 .crousel{
     .owl-theme .owl-nav {

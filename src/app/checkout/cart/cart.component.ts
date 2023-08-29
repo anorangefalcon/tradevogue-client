@@ -7,32 +7,18 @@ import { CartService } from 'src/app/shared/services/cart.service';
   styleUrls: ['./cart.component.css']
 })
 export class CartComponent implements OnInit {
+  
+  constructor(private cartService: CartService) { }
   cartArr: any[] = [];
-  totalPrice : number = 0;
-
-  constructor(private cartService: CartService) {}
-
+  
   ngOnInit() {
     this.cartArr = this.cartService.fetchCart("details");
-    
-   }
+  }
 
-
-   remove_item(el:any){
-    console.log("el is ",el);
-    console.log("cart arr ",this.cartArr);
-    
-    const x=this.cartArr.filter((item)=>{
-      // console.log("item is ",item);
-      
-      return item.sku!=el;
-    })
-
-    console.log("x iw ",x);
-    this.cartArr=x;
-    
-    
-   }
+  remove_item(sku: any) {
+    this.cartService.removeItem(sku);
+    this.cartArr = this.cartService.fetchCart("details");
+  }
 }
 
 
