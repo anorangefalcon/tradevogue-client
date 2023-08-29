@@ -1,4 +1,4 @@
-import { Component,HostListener, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { FetchDataService } from '../shared/services/fetch-data.service';
 
 @Component({

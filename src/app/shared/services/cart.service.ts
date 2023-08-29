@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { EventEmitter, Injectable } from '@angular/core';
 import { FetchDataService } from './fetch-data.service';
 
 @Injectable({
@@ -6,7 +6,11 @@ import { FetchDataService } from './fetch-data.service';
 })
 export class CartService {
 
-  constructor(private fetchData: FetchDataService) { }
+  constructor(private fetchData: FetchDataService) {
+    this.fetchDetails();
+  }
+
+  // reinitializeData = new EventEmitter<boolean>();
 
   // used to add items to cart in localStorage
   cartStorage: any[] = [];
@@ -27,6 +31,8 @@ export class CartService {
     this.cartStorage.push({ "sku": data.sku, "size": data.size, "color": data.color, "Quantity": data.quantity });
     const myCart = JSON.stringify(this.cartStorage);
     localStorage.setItem("myCart", myCart);
+
+    this.fetchDetails();
   }
 
 
@@ -39,43 +45,46 @@ export class CartService {
       total: 0
     }
   };
-  fetchCart(what: string = '') {
+
+  fetchDetails() {
     const fields = ["name", "price", "oldPrice", "image"];
     const localCart = localStorage.getItem("myCart");
 
+
     this.cart.details = localCart ? JSON.parse(localCart) : null;
 
-    this.fetchData.getData().subscribe((data) => {
-      console.log(this.cart.details.length, "hi");
+    if (this.cart.details !== null) {
 
-      for (let i = 0; i < this.cart.details.length; i++) {
+      this.fetchData.getData().subscribe((data) => {
 
-        const matchSku = (data.find((item: any) => {
-          return item.sku == this.cart.details[i].sku;
-        }));
+        for (let i = 0; i < this.cart.details.length; i++) {
 
-        console.log("match sku is ",matchSku);
-        
-        Object.assign(this.cart.details[i],
-          Object.fromEntries(
-            fields.map(field => [
-              field, matchSku[field]
-            ])
-          )
-        );
+          const matchSku = (data.find((item: any) => {
+            return item.sku == this.cart.details[i].sku;
+          }));
 
-        //amounting payment:        
-        this.cart.amounts.subTotal += (this.cart.details[i].price * this.cart.details[i].Quantity);
-        this.cart.amounts.shipping += 50;
-        console.log(this.cart.amounts.shipping);
+          Object.assign(this.cart.details[i],
+            Object.fromEntries(
+              fields.map(field => [
+                field, matchSku[field]
+              ])
+            )
+          );
 
-        this.cart.amounts.total = this.cart.amounts.subTotal + this.cart.amounts.shipping;
-        this.cart.amounts.savings += (this.cart.details[i].oldPrice * this.cart.details[i].Quantity);
-      }
-      this.cart.amounts.savings -= this.cart.amounts.total;
+          //amounting payment:        
+          this.cart.amounts.subTotal += (this.cart.details[i].price * this.cart.details[i].Quantity);
+          this.cart.amounts.shipping += 50;
 
-      
-    })
+          this.cart.amounts.total = this.cart.amounts.subTotal + this.cart.amounts.shipping;
+          this.cart.amounts.savings += (this.cart.details[i].oldPrice * this.cart.details[i].Quantity);
+        }
+        this.cart.amounts.savings -= this.cart.amounts.total;
+      })
+
+    }
+  }
+
+  fetchCart(what: string = '') {
 
     if (what === 'details') {
       return this.cart.details;
@@ -87,4 +96,23 @@ export class CartService {
     return this.cart;
   }
 
+  removeItem(sku: any) {
+    const localStorageData = localStorage.getItem("myCart");
+
+    if (localStorageData) {
+      this.cartStorage = JSON.parse(localStorageData);
+
+      this.cartStorage = this.cartStorage.filter((item)=>{
+        return item.sku !== sku;
+      });
+    }
+
+    const myCart = JSON.stringify(this.cartStorage);
+    localStorage.setItem("myCart", myCart);
+    this.fetchDetails();
+  }
+
+  // fixData(){
+  //   this.reinitializeData.emit(true);
+  // }
 }

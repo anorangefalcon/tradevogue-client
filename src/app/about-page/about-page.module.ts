@@ -1,9 +1,8 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NgModule } from '@angular/core';
 import { AboutPageComponent } from './about-page.component';
-// import { CarouselModule } from 'ngx-owl-carousel-o'; 
 import { CarouselModule } from 'ngx-owl-carousel-o';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 @NgModule({
   declarations: [
     AboutPageComponent
@@ -14,4 +13,4 @@ import { CarouselModule } from 'ngx-owl-carousel-o';
     BrowserAnimationsModule
   ]
 })
-export class AboutPageModule { }
+export class AboutPageModule {}

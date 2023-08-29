@@ -23,7 +23,9 @@
         font-size: 12px !important;
     }
 }
-
+.product-image{
+    padding-inline-start: 5px;
+}
 .cart-items {
     width: 100%;
     display: flex;
@@ -118,25 +120,29 @@
 
 .remove-btn {
     padding: 0 !important;
-    border-radius: 0;
     border: none;
     cursor: pointer;
     font-size: 14px;
-    background-color: transparent;
-    /* position: absolute; */
-    inset-block-start: 15px;
-    inset-inline-end: 10px;
-
-    & a{
-        color: rgb(var(--danger));
-    }
+    position: absolute;
+    inset-block-start: -5.5px;
+    inset-inline-start: -2px;
+    background-color: rgb(var(--text-black));
+    border-radius: 50%;
+    transition: background-color 0.3s ease-in-out;
+    border: 2px solid rgb(var(--text-white));
 
     & span {
-        font-weight: 300;
-        font-size: 24px;
+        color: rgb(var(--text-white));
+        font-weight: 600;
+        font-size: 16px;
     }
 }
 
+.remove-btn:hover {
+    background-color: rgb(var(--danger));
+    border-radius: 50%;
+}
+    
 .colors-radios input {
     width: 14px;
     height: 14px;
