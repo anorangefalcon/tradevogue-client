@@ -8,7 +8,6 @@ import { Component } from '@angular/core';
 
 export class SupportComponent {
     selectedTabIndex = 0;
-    
    toggleChat() {
     const chatBtn = document.querySelector('.icon-support');
     const chatBox = document.querySelector('.messenger');
@@ -31,6 +30,4 @@ export class SupportComponent {
       this.selectedTabIndex = 2;
     }
   }
-  
-  
 }

@@ -6,13 +6,10 @@ import { CartService } from '../../services/cart.service';
   styleUrls: ['./card-template.component.css']
 })
 export class CardTemplateComponent {
-
-
+  
   @Input() product: any = {};
 
-  constructor(
-    private localStorageService: CartService
-  ) { }
+  constructor(private localStorageService: CartService) { }
 
   avgRating: number = 0;
   offerPercentage: number = 0;
@@ -20,6 +17,7 @@ export class CardTemplateComponent {
   ngOnInit(): void {
     for (let review of this.product.reviews) {
       this.avgRating += review.rating;
+    // console.log('reviews are ',this.product.reviews[0].rating);
     }
     this.avgRating = this.avgRating / this.product.reviews.length;
     if (this.product.oldPrice !== (undefined || 0)) {
