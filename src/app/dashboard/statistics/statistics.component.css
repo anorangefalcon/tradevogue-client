@@ -73,7 +73,7 @@
     }
 
     & .column-1 {
-        border-inline-start: 3px solid rgb(var(--dash-blue-clr));
+        /* border-inline-start: 3px solid rgb(var(--dash-blue-clr)); */
 
         & .icons {
             color: rgb(var(--dash-blue-clr));
@@ -82,7 +82,7 @@
     }
 
     & .column-2 {
-        border-left: 3px solid rgb(var(--dash-yellow-clr));
+        /* border-left: 3px solid rgb(var(--dash-yellow-clr)); */
 
         & .icons {
             color: rgb(var(--dash-yellow-clr));
@@ -92,7 +92,7 @@
     }
 
     & .column-3 {
-        border-left: 3px solid rgb(var(--dash-green-clr));
+        /* border-left: 3px solid rgb(var(--dash-green-clr)); */
 
         & .icons {
             color: rgb(var(--dash-green-clr));
@@ -102,7 +102,7 @@
     }
 
     & .column-4 {
-        border-left: 3px solid rgb(var(--dash-red-clr));
+        /* border-left: 3px solid rgb(var(--dash-red-clr)); */
 
         & .icons {
             color: rgb(var(--dash-red-clr));

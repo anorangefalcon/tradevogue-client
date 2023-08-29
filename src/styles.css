@@ -580,7 +580,6 @@ ul {
         max-height: 0px;
         opacity: 0;
         overflow: hidden;
-        /* border-radius: 0px 0px 6px 6px; */
         border-radius: 6px;
         order: 1;
         z-index: 1;

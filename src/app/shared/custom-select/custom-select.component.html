@@ -1,0 +1,4 @@
+<div class="select_display" (click)="toggleClass()" (focus)="toggleClass()" (blur)="toggleClass()" >{{selectedOption}}</div>
+<ul class="options__container" [class.active]="isactive == true">
+    <li class="option" *ngFor="let option of options" data-value=`option` (click)="updateSelected(option)">{{option}}</li>
+</ul> 

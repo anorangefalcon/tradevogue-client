@@ -2,6 +2,10 @@
     <div class="heading">
         <h1>Add Product</h1>
     </div>
+    <app-custom-select
+    [options] = "countries"
+    [selectedOption]="SelectData" (final_option)="update($event)"></app-custom-select>
+
     <div class=" product-form">
         <form action="" class="row-1 add__product d-flex">
 

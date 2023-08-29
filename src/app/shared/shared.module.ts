@@ -14,6 +14,7 @@ import { PopCloseDirective } from './Directives/pop-close.directive';
 import { FooterComponent } from './components/footer/footer.component';
 import { FacilitiesComponent } from './components/facilities/facilities.component';
 import { NewsletterComponent } from './components/newsletter/newsletter.component';
+import { CustomSelectComponent } from './custom-select/custom-select.component';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { NewsletterComponent } from './components/newsletter/newsletter.componen
     FooterComponent,
     FacilitiesComponent,
     NewsletterComponent,
+    CustomSelectComponent,
   ],
   imports: [
     CommonModule,
@@ -48,6 +50,7 @@ import { NewsletterComponent } from './components/newsletter/newsletter.componen
     SupportComponent,
     PopOpenDirective,
     PopCloseDirective,
+    CustomSelectComponent
   ]
 })
 export class SharedModule { }

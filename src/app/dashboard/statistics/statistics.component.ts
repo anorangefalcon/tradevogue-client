@@ -1,4 +1,3 @@
-import { NONE_TYPE } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
 import Chart from 'chart.js/auto';
 

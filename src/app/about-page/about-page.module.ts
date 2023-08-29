@@ -10,7 +10,8 @@ import { CarouselModule } from 'ngx-owl-carousel-o';
   ],
   imports: [
     CommonModule,
-    CarouselModule
+    CarouselModule,
+    BrowserAnimationsModule
   ]
 })
 export class AboutPageModule { }

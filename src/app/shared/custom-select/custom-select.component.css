@@ -1,0 +1,48 @@
+.select_display {
+    position: relative;
+    padding: 5px 20px;
+    width: 20%;
+    border: 2px solid black;
+    border-radius: 5px;
+}
+
+.select_display::after {
+    content: '';
+    border-top: 4px solid black;
+    border-right: 4px solid transparent;
+    border-left: 4px solid transparent;
+    display: block;
+    position: absolute;
+    inset-inline-end: 10px;
+    inset-block-start: 50%;
+    transform: translateY(-50%);
+}
+
+ul.options__container {
+    background-color: lightblue;
+    width: 20%;
+    height: 0px;
+    overflow: auto;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease-in-out;
+}
+
+.options__container.active {
+    height: 150px;
+    opacity: 1;
+    visibility: visible;
+}
+
+.options__container.active + .select_display::after{
+    transform: rotate(180deg);
+} 
+
+ul.options__container li.option {
+    padding: 5px 20px;
+    cursor: pointer;
+}
+
+ul li:hover {
+    background-color: lightgrey;
+}

@@ -8,6 +8,8 @@ import { CustomSelect } from 'src/app/shared/customSelect/custom-select';
 })
 export class AddproductComponent {
   // customSelect  =  new AddClassActive();
+  countries: string[] = ['USA', 'Canada', 'UK', 'Australia'];
+  SelectData: string = "Select Country";
 
   constructor(private elem_ref: ElementRef){}
 
@@ -17,6 +19,11 @@ export class AddproductComponent {
 
     // const element1 = this.elem_ref.nativeElement.querySelector('.customSection1');
     // let select1 = new AddClassActive(element1);
+  }
+
+  update(selected: string){
+    console.log(selected);
+    this.SelectData = selected;
   }
  
 }
