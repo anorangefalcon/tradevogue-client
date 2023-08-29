@@ -9,7 +9,7 @@
 
         <!-- COMPONENT SHOW DIV -->
         <div class="width-80">
-            <div class="profile" *ngIf="showData=='profile'">
+            <div class="profile" *ngIf="showData=='profile' ">
             <div class="title">
                 <h2>Profile Details</h2>
             </div>
@@ -76,10 +76,8 @@
     
               <button class="btn-primary" (click)="editClick()" #myButton>Edit Details</button>
             </div>
-
-            
-            
-            <div  *ngIf="showData=='orders'" class="Allorders">
+     
+            <div  *ngIf="showData=='orders' " class="Allorders">
 
                 <div *ngFor="let order of userData.orders" class="order">
                 <div class="d-flex justify-content-md-between orderDetails" >
