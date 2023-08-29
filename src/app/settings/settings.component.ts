@@ -1,6 +1,7 @@
 import { Component, ElementRef, Renderer2, ViewChild } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { FetchDataService } from '../shared/services/fetch-data.service';
+import { RouterLinksService } from '../shared/services/router-links.service';
 
 @Component({
   selector: 'app-settings',
@@ -8,7 +9,14 @@ import { FetchDataService } from '../shared/services/fetch-data.service';
   styleUrls: ['./settings.component.css']
 })
 export class SettingsComponent {
-  showData:any='orders';
+  showData : string = 'profile';
+
+  showProfile(){
+    this.showData = 'profile';
+  }
+  showOrders(){
+    this.showData = 'orders';
+  }
 
   // change component click listener
   changeComponent(el:any){
@@ -22,7 +30,7 @@ export class SettingsComponent {
   signupForm:any;
 
   userData:any;
-  constructor(private renderer: Renderer2,private fb:FormBuilder, private userService:FetchDataService){
+  constructor(private renderer: Renderer2,private fb:FormBuilder, private userService:FetchDataService, private routerService : RouterLinksService){
     this.signupForm= fb.group(
   
       
@@ -34,25 +42,32 @@ export class SettingsComponent {
         
       });   
 
-      this.getData();
-    // call to service
-  
-  //     console.log("data is ",data);
-  //     this.userData=data;
-  //   });
+      // this.showData=routerService.();
+      // console.log("show data ", this.showData);
       
-
-     
+      this.getData();
+    
+   
   };
 
+  ngOnInit() {
+    this.routerService.showData$.subscribe(data => {
+      this.showData = data;
+      console.log("show data is", this.showData);
+      
+    });
+
+  }
 
 async  getData(this: any){
 // const x= this.userService?.getUserData();
 await this.userService.getUserData().subscribe((data:any)=>{
   console.log("data is",data);
   const x=data.filter((el:any)=>el.userId==1);
-  // console.log("x is s",x);
+  console.log("x is s",x);
   this.userData=x[0];
+  console.log(this.userData);
+  
   
 });
 
@@ -61,7 +76,7 @@ await this.userService.getUserData().subscribe((data:any)=>{
 
 
 
- 
+
   editClick(){
     
     const x=(this?.myButton?.nativeElement.innerHTML);
