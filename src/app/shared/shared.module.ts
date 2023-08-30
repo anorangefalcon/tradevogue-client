@@ -16,6 +16,7 @@ import { FacilitiesComponent } from './components/facilities/facilities.componen
 import { NewsletterComponent } from './components/newsletter/newsletter.component';
 import { CustomSelectComponent } from './custom-select/custom-select.component';
 import { ReactiveFormsModule} from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -39,6 +40,7 @@ import { ReactiveFormsModule} from '@angular/forms';
     CarouselModule,
     MatTabsModule,
     RouterModule,
+    FormsModule
     // ProductPageModule
   ],
   exports: [

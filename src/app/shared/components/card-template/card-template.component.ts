@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { CartService } from '../../services/cart.service';
+import { OwlOptions } from 'ngx-owl-carousel-o';
 @Component({
   selector: 'app-card-template',
   templateUrl: './card-template.component.html',
@@ -8,11 +9,14 @@ import { CartService } from '../../services/cart.service';
 export class CardTemplateComponent {
   
   @Input() product: any = {};
+  showPopup: boolean = false;
+
 
   constructor(private localStorageService: CartService) { }
 
   avgRating: number = 0;
   offerPercentage: number = 0;
+   selectedColor: string = "";
 
   ngOnInit(): void {
     for (let review of this.product.reviews) {
@@ -40,4 +44,32 @@ export class CardTemplateComponent {
     
     this.localStorageService.addToCart(cartItem);
   }
+
+
+    customOptions: OwlOptions = {
+    loop: true,
+    mouseDrag: true,
+    touchDrag: true,
+    pullDrag: true,
+    dots: false,
+    nav: true,
+    autoplay: true,
+    navText: ['<span class="material-symbols-outlined">chevron_left</span>', '<span class="material-symbols-outlined">chevron_right</span>'],
+    navSpeed: 600,
+    responsive: {
+      0: {
+        items: 1
+      },
+      400: {
+        items: 1
+      },
+      740: {
+        items: 1
+      },
+      940: {
+        items: 1
+      }
+    },
+  }
+
 }
