@@ -7,7 +7,7 @@
             </a>
         </div>
         <ul class="d-flex gap-30 nav-items active">
-            <li class="nav-links" >
+            <li class="nav-links">
                 <a class="active d-flex flex-column gap-5" [routerLink]="['/']">
                     <!-- <span class="material-symbols-outlined">home</span> -->
                     Home
@@ -27,21 +27,24 @@
             </li>
         </ul>
         <ul class="navbar-features d-flex align-items-center gap-20 m-gap-15 s-gap-10">
-            <li>
+            <!-- <li>
                 <a class="icons" href="javscript:void(0);">
                     <span class="material-symbols-outlined">search</span>
                     <div class="search sub-items d-flex flex-column gap-15">
                         <app-search-bar></app-search-bar>
                     </div>
                 </a>
-            </li>
+            </li> -->
+            <div class="search">
+                <app-search-bar></app-search-bar>
+            </div>
             <li>
-                <a class="icons" href="javscript:void(0);">
+                <!-- <a class="icons" href="javscript:void(0);">
                     <span class="wishlist_count material-symbols-outlined">
                         favorite
                         <span class="count" id="wishList">0</span>
                     </span>
-                </a>
+                </a> -->
             </li>
             <li>
                 <a class="icons" href="javscript:void(0);">
@@ -67,24 +70,58 @@
                 </ul>
             </li>
             <li>
-                <a class="icons" href="javscript:void(0);">
+                <a class="icons" [routerLink]="['/cart']">
                     <span class="material-symbols-outlined">
                         shopping_cart
-                        <span class="count" id="inventory">5</span>
+                        <span *ngIf="cart_count > 0" class="count" id="inventory">{{ cart_count }}</span>
                     </span>
                 </a>
                 <ul class="sub-items d-flex flex-column gap-15">
                     <li class="d-flex align-items-center justify-content-md-between">
-                        <h4>Cart Items</h4>
-                        <h6>5 items</h6>
+                        <h4>Cart</h4>
+                        <h6>{{ cart_count }} items</h6>
                     </li>
                     <li>
                         <span>
+                            <div class="cart-items d-flex" *ngFor="let item of cartArr">
+                                <div class="col d-flex justify-content-md-between">
+                                    <div class="product-image d-flex gap-30">
+                                        <a routerLink="/product/{{item.sku}}" class="product-img">
+                                            <img [src]=item?.image?.[0] alt="Product Image">
+                                        </a>
 
+                                        <div class="product-info d-flex flex-column justify-content-center gap-5">
+                                            <a routerLink="/product/{{item.sku}}">
+                                                <h4>{{item?.name}}</h4>
+                                            </a>
+                                            <div class="d-flex align-items-center gap-10">
+                                                <p class="labels">Price: </p>
+                                                <p>₹{{item?.price}}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex gap-15 flex-column justify-content-center align-items-center">
+                                        <div class="d-flex gap-10 align-items-center">
+                                            <!-- <p class="labels">Quantity:</p> -->
+                                        </div>
+                                        <!-- <button class="remove-btn d-flex align-items-center" (click)="remove_item(item.sku)">
+                                            <span class="material-symbols-outlined">
+                                                close
+                                            </span>
+                                        </button> -->
+                                    </div>
+
+                                    <div class="final-price d-flex align-items-center">
+                                        <p>₹{{(item?.price * item?.Quantity) | number : '1.0-2'}}</p>
+                                    </div>
+                                </div>
+
+                            </div>
                         </span>
                     </li>
                     <li>
-                        <button class="btn-primary d-flex align-items-center mw100"><a href="" style="color: rgb(var(--text-white));">Proceed to checkout</a></button>
+                        <button class="btn-primary d-flex align-items-center mw100"><a [routerLink]="['/cart']"
+                                style="color: rgb(var(--text-white));">Open Cart</a></button>
                     </li>
                 </ul>
             </li>
@@ -100,11 +137,11 @@
                             <p>Access your account and manage your order</p>
                         </div>
                         <div class="d-flex justify-content-md-between gap-13">
-                            <a href="" id="login">
+                            <a [routerLink]="['/auth/login']" id="login">
                                 <span class="material-symbols-outlined">login</span>
                                 <span>Login</span>
                             </a>
-                            <a href="" id="register">
+                            <a [routerLink]="['/auth/signup']" id="register">
                                 <span class="material-symbols-outlined">person_add</span>
                                 <span>Register</span>
                             </a>
@@ -115,8 +152,8 @@
                     </li>
 
                     <li class="sub-links d-flex flex-column justify-content-start">
-                        <a href="">Contact Us</a>
-                        <a href="">FAQ</a>
+                        <a [routerLink]="['/about']">Contact Us</a>
+                        <a [routerLink]="['/faq']">FAQ</a>
                     </li>
                 </ul>
             </li>

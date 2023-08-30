@@ -17,10 +17,6 @@ export class ProductCardCarouselComponent {
   //will fetch ?queryParam according to whatToFetch (but a dummy which gets 10 data from a .json)
   constructor(private fetchDataService: FetchDataService) {
     this.fetchDataService.getData().subscribe(data => {
-      // for(let i=0; i<5; i++){
-      //   this.productArr.push(data[i]);
-      // }
-      console.log(data.length , "vivek here");
       while(this.productArr.length < data.length){
          this.productArr.push(data[this.i+=1]);
       }

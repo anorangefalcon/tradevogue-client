@@ -69,17 +69,11 @@
                 <div class="d-flex gap-15 align-items-center">
                     <p>Quantity:</p>
     
-                    <!-- <select placeholder-text="Select Quantity">
+                    <select placeholder-text="Select Quantity" [(ngModel)]="selectedQ">
                         <option value="" disabled selected>Select Quantity</option>
                         <option *ngFor="let quantity of data.productDetails.orderQuantity" [value]="quantity">
                             {{ quantity }}
                         </option>
-                    </select> -->
-    
-                    <select name="" [(ngModel)]="selectedQ">
-                        <option value="100" selected>100</option>
-                        <option value="200">200</option>
-                        <option value="300">300</option>
                     </select>
                 </div>
                 

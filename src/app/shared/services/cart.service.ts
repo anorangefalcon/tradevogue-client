@@ -1,5 +1,6 @@
-import { EventEmitter, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { FetchDataService } from './fetch-data.service';
+import { BehaviorSubject, Observable, map } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -10,10 +11,13 @@ export class CartService {
     this.fetchDetails();
   }
 
-  // reinitializeData = new EventEmitter<boolean>();
-
   // used to add items to cart in localStorage
   cartStorage: any[] = [];
+  // used as a subject for cart to be as observable
+  cartSubject = new BehaviorSubject<any>({});
+  // actual data lies here
+  cart$ = this.cartSubject.asObservable();
+
   addToCart(data: any) {
     const localStorageData = localStorage.getItem("myCart");
 
@@ -21,7 +25,7 @@ export class CartService {
       this.cartStorage = JSON.parse(localStorageData);
 
       const skuFound = this.cartStorage.find((item: any) => {
-        return item.sku == data.sku;
+        return item.sku === data.sku;
       });
       if (skuFound) {
         return;
@@ -31,39 +35,32 @@ export class CartService {
     this.cartStorage.push({ "sku": data.sku, "size": data.size, "color": data.color, "Quantity": data.quantity });
     const myCart = JSON.stringify(this.cartStorage);
     localStorage.setItem("myCart", myCart);
-
+    
     this.fetchDetails();
   }
 
-
-  cart: any = {
-    details: [],
-    amounts: {
-      subTotal: 0,
-      shipping: 0,
-      savings: 0,
-      total: 0
-    }
-  };
-
   fetchDetails() {
-    const fields = ["name", "price", "oldPrice", "image"];
+    const cartDetails: any = {
+      details: [],
+      amounts: {
+        subTotal: 0,
+        shipping: 0,
+        savings: 0,
+        total: 0
+      }
+    }
+  const fields = ["name", "price", "oldPrice", "image", "orderQuantity"];
     const localCart = localStorage.getItem("myCart");
+    cartDetails.details = localCart ? JSON.parse(localCart) : null;
 
-
-    this.cart.details = localCart ? JSON.parse(localCart) : null;
-
-    if (this.cart.details !== null) {
-
+    if (cartDetails.details !== null) {
       this.fetchData.getData().subscribe((data) => {
-
-        for (let i = 0; i < this.cart.details.length; i++) {
-
+        for (let i = 0; i < cartDetails.details.length; i++) {
           const matchSku = (data.find((item: any) => {
-            return item.sku == this.cart.details[i].sku;
+            return item.sku == cartDetails.details[i].sku;
           }));
 
-          Object.assign(this.cart.details[i],
+          Object.assign(cartDetails.details[i],
             Object.fromEntries(
               fields.map(field => [
                 field, matchSku[field]
@@ -72,37 +69,29 @@ export class CartService {
           );
 
           //amounting payment:        
-          this.cart.amounts.subTotal += (this.cart.details[i].price * this.cart.details[i].Quantity);
-          this.cart.amounts.shipping += 50;
+          cartDetails.amounts.subTotal += (cartDetails.details[i].price * cartDetails.details[i].Quantity);
+          cartDetails.amounts.shipping += 50;
 
-          this.cart.amounts.total = this.cart.amounts.subTotal + this.cart.amounts.shipping;
-          this.cart.amounts.savings += (this.cart.details[i].oldPrice * this.cart.details[i].Quantity);
+          cartDetails.amounts.total = cartDetails.amounts.subTotal + cartDetails.amounts.shipping;
+          cartDetails.amounts.savings += (cartDetails.details[i].oldPrice * cartDetails.details[i].Quantity);
         }
-        this.cart.amounts.savings -= this.cart.amounts.total;
+        cartDetails.amounts.savings -= cartDetails.amounts.total;
+
+
       })
 
+      this.cartSubject.next(cartDetails);
     }
   }
 
-  fetchCart(what: string = '') {
-
-    if (what === 'details') {
-      return this.cart.details;
-    }
-    else if (what === ('amounts' || 'amount')) {
-      return this.cart.amounts;
-    }
-
-    return this.cart;
-  }
-
+  
   removeItem(sku: any) {
     const localStorageData = localStorage.getItem("myCart");
-
+    
     if (localStorageData) {
       this.cartStorage = JSON.parse(localStorageData);
-
-      this.cartStorage = this.cartStorage.filter((item)=>{
+      
+      this.cartStorage = this.cartStorage.filter((item) => {
         return item.sku !== sku;
       });
     }
@@ -112,7 +101,24 @@ export class CartService {
     this.fetchDetails();
   }
 
-  // fixData(){
-  //   this.reinitializeData.emit(true);
-  // }
+  fetchCart(what: string = ''): Observable<any> {
+   
+    if (what === 'count') {
+      return this.cart$.pipe(
+        map(data => data.details.length)
+      );
+    }
+    else if (what === 'details') {
+      return this.cart$.pipe(
+        map(data => data.details)
+      );
+    }
+    else if (what === ('amount' || 'amounts')) {
+      return this.cart$.pipe(
+        map(data => data.amounts)
+      );
+    }
+    return this.cart$;
+  }
+
 }
