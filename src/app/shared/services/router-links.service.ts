@@ -16,10 +16,6 @@ export class RouterLinksService {
     
   }
 
-  // data='profile';
 
-  // showData(){
-  //   return this.data;
-  // }
 
 }

@@ -21,6 +21,8 @@ export class SettingsComponent {
   // change component click listener
   changeComponent(el:any){
     this.showData=el;
+    // console.log();
+    
   }
 
 

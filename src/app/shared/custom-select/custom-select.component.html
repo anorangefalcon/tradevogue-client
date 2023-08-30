@@ -1,4 +1,30 @@
-<div class="select_display" (click)="toggleClass()" (focus)="toggleClass()" (blur)="toggleClass()" >{{selectedOption}}</div>
+<form [formGroup]="Form">
+<div class="select_display" (click)="toggleClass()" formControlName="name" (focus)="toggleClass()" (blur)="toggleClass()">{{selectedOption}}</div>
+<p *ngIf="Form.get('name').value==='Select Country'"> country is not selected</p>
+
 <ul class="options__container" [class.active]="isactive == true">
     <li class="option" *ngFor="let option of options" data-value=`option` (click)="updateSelected(option)">{{option}}</li>
 </ul> 
+
+
+
+
+
+<button class="btn-primary registerbtn" (click)="onSubmit()">Register</button>
+</form>"
+
+
+
+<!--  NAOTHER  -->
+<!-- 
+<form [formGroup]="myForm">
+    <div class="select_display" (click)="toggleClass()" [formControlName]="'username'" (focus)="toggleClass()" (blur)="toggleClass()">{{ selectedOption }}</div>
+    <p *ngIf="myForm.get('username').invalid && myForm.get('username').touched">Country is not selected</p>
+  
+    <ul class="options__container" [class.active]="isactive">
+      <li class="option" *ngFor="let option of options" (click)="updateSelected(option)">{{ option }}</li>
+    </ul>
+  
+    <button class="btn-primary registerbtn" [disabled]="myForm.invalid" (click)="onSubmit()">Register</button>
+  </form>
+   -->
