@@ -15,6 +15,8 @@ import { FooterComponent } from './components/footer/footer.component';
 import { FacilitiesComponent } from './components/facilities/facilities.component';
 import { NewsletterComponent } from './components/newsletter/newsletter.component';
 import { CustomSelectComponent } from './custom-select/custom-select.component';
+import { ReactiveFormsModule} from '@angular/forms';
+
 
 @NgModule({
   declarations: [
@@ -33,6 +35,7 @@ import { CustomSelectComponent } from './custom-select/custom-select.component';
   ],
   imports: [
     CommonModule,
+    ReactiveFormsModule,
     CarouselModule,
     MatTabsModule,
     RouterModule,
