@@ -11,6 +11,9 @@ export class ProductDetailsComponent {
   addReview: boolean = false;
   selectedSection = 'description';
 
+  tempUserRating: number = -1;
+  userRating: number = -1;
+  
   constructor() {}
 
   ngOnInit(): void {}
