@@ -2,6 +2,7 @@
     font-size: 32px;
 
 }
+
 .information-section {
     & table {
         width: 100%;
@@ -9,7 +10,8 @@
         border-spacing: 0;
     }
 
-    & th, td{
+    & th,
+    td {
         border: 1px solid;
 
     }
@@ -133,9 +135,9 @@
                     font-size: 12px !important;
                     font-weight: 400 !important;
                     opacity: 70%;
-                    
+
                 }
-                
+
             }
 
             & textarea {
@@ -210,4 +212,24 @@
         color: rgb(var(--primary));
     }
 
+}
+
+.edit-rating {
+    & span {
+        font-size: 40px;
+        font-weight: 300;
+        color: #fe9704;
+
+        font-variation-settings:
+            'FILL' 0,
+            'GRAD' 0,
+            'opsz' 48
+    }
+
+    & .filled{
+        font-variation-settings:
+            'FILL' 1,
+            'GRAD' 0,
+            'opsz' 48
+    }
 }
