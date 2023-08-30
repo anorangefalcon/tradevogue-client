@@ -7,17 +7,37 @@ import { CartService } from 'src/app/shared/services/cart.service';
   styleUrls: ['./cart.component.css']
 })
 export class CartComponent implements OnInit {
-  
+
   constructor(private cartService: CartService) { }
   cartArr: any[] = [];
-  
+
   ngOnInit() {
-    this.cartArr = this.cartService.fetchCart("details");
+    this.cartService.fetchCart("details").subscribe((data) => {
+      this.cartArr = data;
+    });
   }
 
   remove_item(sku: any) {
     this.cartService.removeItem(sku);
-    this.cartArr = this.cartService.fetchCart("details");
+  }
+
+  changeQuantity(what: string, sku: string, selectedQuantity: number) {
+    const productIndex = this.cartArr.findIndex((item: any) => {
+      return item.sku === sku;
+    });
+
+    const quantityIndex = this.cartArr[productIndex].orderQuantity.findIndex((q: any) => {
+      return selectedQuantity == q;
+    });
+
+
+    if (what === 'next') {
+      this.cartArr[productIndex].Quantity = this.cartArr[productIndex].orderQuantity[quantityIndex + 1];
+    }
+    else if (what === 'previous'){
+      this.cartArr[productIndex].Quantity = this.cartArr[productIndex].orderQuantity[quantityIndex - 1];
+    }
+
   }
 }
 

@@ -24,9 +24,6 @@ export class ProductSectionComponent implements OnInit {
   showCarousel: boolean = false;
 
   ngOnInit(): void {
-    console.log(this.data, "hehe data");
-
-
     setTimeout(() => {
       const element = this.elem_ref.nativeElement.querySelectorAll('.customSelect');
 

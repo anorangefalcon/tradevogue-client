@@ -65,6 +65,9 @@ header.active {
     }
 }
 
+.search{
+    height: 40px;
+}
 
 .search.sub-items{
     padding: 0px !important;
@@ -167,7 +170,7 @@ header.active {
         & .sub-links {
             display: flex;
             flex-direction: column;
-            gap: 15px;
+            /* gap: 15px; */
             justify-content: flex-start;
             align-items: flex-start;
         }

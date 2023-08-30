@@ -10,11 +10,13 @@ export class OrderSummaryComponent implements OnInit {
 
   updateBoolean: boolean = false;
   cart: any = {};
+
   constructor(private cartService: CartService) { }
 
   ngOnInit(): void {
-    this.cart = this.cartService.fetchCart();
-    console.log(this.cart, "jiji");
+    this.cartService.fetchCart().subscribe((data)=>{
+      this.cart = data;
+    });
   } 
 
 }
