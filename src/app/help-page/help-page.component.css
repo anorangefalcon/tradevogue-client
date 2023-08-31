@@ -144,12 +144,10 @@ input, textarea, select {
     }
 }
 
-.info {
-    label {
-            font-weight: 600 !important;
+.info label {
+    font-weight: 600 !important;
     margin-bottom: 0px !important;
-    }
-    }
+}
 
 
 .contact-us-page .contact-content .contact-form-warp ul.form-fill {
