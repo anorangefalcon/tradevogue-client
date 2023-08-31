@@ -1,19 +1,28 @@
 <div class="explore-container d-flex ">
 
     <div class="filters d-flex flex-column gap-10">
-        <h4>FILTERS</h4>
+        <div class="head d-flex justify-content-md-between align-items-center">
+            <h4>FILTERS</h4>
+            <button class="clear-btn" (click)="clear()">Clear all</button>
+        </div>
         <div class="brand-filter d-flex flex-column gap-10">
             <h5>BRAND</h5>
             <div class="brand-check d-flex gap-5">
-                <input type="checkbox" name="brand" id="bonkers">
+                <input type="checkbox" name="brand" id="bonkers" >
                 <label for="bonkers">Bonkers Corners</label>
             </div>
         </div>
         <div class="category-filter d-flex flex-column gap-10">
             <h5>CATEGORY</h5>
-            <div class="price-check d-flex gap-5">
-                <input type="checkbox" name="category" id="category">
-                <label for="category">Joggers</label>
+            <div class="category-check d-flex gap-5" *ngFor="let category of categories">
+                <input   type="checkbox"
+                [(ngModel)]="selectedCategory"
+                (change)="applyCategoryFilter()"
+                name="category"
+                [id]="category"
+                [value]="category"
+                    >
+                    <label [for]="category">{{ category }}</label>
             </div>
         </div>
         <div class="price-filter d-flex flex-column gap-10">

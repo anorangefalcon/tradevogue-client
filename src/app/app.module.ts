@@ -25,7 +25,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { HttpClientModule } from '@angular/common/http';
 import { HelpPageComponent } from './help-page/help-page.component';
 import { SettingsComponent } from './settings/settings.component';
-
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -48,6 +48,7 @@ import { SettingsComponent } from './settings/settings.component';
     HomeModule,
     ReactiveFormsModule,
     DashboardModule,
+    FormsModule,
     // CarouselModule,
     DataTablesModule,
     ProductPageModule,
