@@ -1,6 +1,6 @@
 /* chat-bot	 */
 @import "~bootstrap-icons/font/bootstrap-icons.css";
-
+/* @import url('https://fonts.googleapis.com/css?family=Hind:300,400&display=swap'); */
 #chat-bot {
   position: fixed;
   bottom: 20px;
@@ -189,10 +189,6 @@ visibility: hidden;
   margin-bottom: 10px;
 }
 
-
-
-
-@import url('https://fonts.googleapis.com/css?family=Hind:300,400&display=swap');
 .hide-arrows .mat-tab-header-pagination-before {
   display: none !important;
 }

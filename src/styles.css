@@ -669,7 +669,7 @@ ul {
 
 /* Owl Crousel */
 
-.owl-carousel.owl-theme.owl-loaded.owl-responsive.owl-drag {
+/* .owl-carousel.owl-theme.owl-loaded.owl-responsive.owl-drag {
     position: relative !important;
 }
 
@@ -678,7 +678,7 @@ ul {
     inset-block-end: 0;
     inset-inline-start: 50%;
     transform: translateX(-50%);
-}
+} */
 
 /* .owl-theme .owl-nav {
     display: flex;
@@ -711,3 +711,4 @@ ul {
         transform: translateY(0px);
     }
 }
+
