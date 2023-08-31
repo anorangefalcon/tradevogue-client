@@ -19,6 +19,9 @@ export class CardTemplateComponent {
    selectedColor: string = "";
 
   ngOnInit(): void {
+
+    console.log("product is", this.product);
+    
     for (let review of this.product.reviews) {
       this.avgRating += review.rating;
     // console.log('reviews are ',this.product.reviews[0].rating);
