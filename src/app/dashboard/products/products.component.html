@@ -40,38 +40,44 @@
                             <span class="material-symbols-outlined operational-buttons-add">add</span>
                         </button>
                         <button class="d-flex align-items-center gap-5">
-                            <span class="material-symbols-outlined operational-buttons-delete">delete</span>
+                            <span class="material-symbols-outlined operational-buttons-delete" (click)="DeleteAll()">delete</span>
                         </button>
                     </span>
                 </div>
                 
                 <div class="d-flex gap-20">
                     <!-- Product Inventory -->
-                   <div class="customSelect">
-                    <select name="" id="inventory_status">
+                   <div class="">
+                    <select name="" id="inventory_status" (change)="optionChange($event)">
                         <option value="" selected disabled>Filter by Stock Status</option>
-                        <option value="">Out of Stock</option>
-                        <option value="">Low Inventory</option>
-                        <option value="">In Stock</option>
+                        <option *ngFor="let opt of stockStatus">
+                            {{opt}}
+                        </option>
+                     
                     </select>
                    </div>
                    <!-- Product Category -->
-                   <div class="customSelect">
-                    <select name="" id="" class="form-select">
+                   <div class="">
+                    <select name="" id="category" class="form-select" (change)="optionChange($event)">
+                       
                         <option value="" selected disabled>Product Catgory</option>
-                        <option value="">Category 1</option>
-                        <option value="">Category 2</option>
-                        <option value="">Category 3</option>
-                        <option value="">Category 4</option>
+                        <option *ngFor="let opt of options">
+                            {{opt}}
+                        </option>
+                     
                     </select>
                    </div>
                    <!-- Rating -->
-                   <div class="customSelect">
-                    <select name="" id="">
+                   <div class="">
+                    <select name="" id="rating" (change)="optionChange($event)">
                         <option value="" selected disabled>Sort by: Rating</option>
-                        <option value="">Best Seller</option>
+                        <!-- <option value="">Best Seller</option>
                         <option value="">Top Rated</option>
-                        <option value="">New In</option>
+                        <option value="">New In</option> -->
+                        <option *ngFor="let opt of rating">
+                            {{opt}}
+                        </option>
+
                     </select>
                    </div>
                    <!-- <select name="" id="">
@@ -85,7 +91,7 @@
                    <a id="apply-fliter" class="button d-flex gap-5 align-items-center" href="javascript: void(0);">
                        Apply<i class="fa-solid fa-chevron-right"></i>
                    </a>
-                   <a id="clear-filter" class="button" href="javascript: void(0);">Clear</a>
+                   <a id="clear-filter" class="button" href="javascript: void(0);" >Clear</a>
                </div>
             </div>
             <div class="product-list">
@@ -111,14 +117,14 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr *ngFor="let item of items | paginate: {
+                        <tr *ngFor="let item of items | filter:inventory_status | filter:catgo | filter: _rating  | paginate: {
                             itemsPerPage: pageSize,
                             currentPage: currentPage
                         }; let i = index">
                             <td class="product-items">
                                 <div class="item-check d-flex justify-content-center">
                                     <input type="checkbox" id="row{{i}}">
-                                    <label for='row{{i}}'>
+                                    <label for='row{{i}}' (click)="check(item)" >
                                         <span class="material-symbols-outlined">done</span>
                                     </label>
                                 </div>
@@ -136,7 +142,7 @@
                             <td class="product-items">{{item.category}}</td>
     
                             <td class="product-items">&#8377; {{item.price}}</td>
-    
+                            
                             <td class="product-items">{{item.unit_sold}}</td>
     
                             <td class="product-items">
@@ -179,7 +185,7 @@
                                     <a href="javascript:void(0);" style="color: rgb(var(--dash-blue-clr));">
                                         <i class="fa-icon fa-regular fa-pen-to-square"></i>
                                     </a>
-                                    <a href="javascript:void(0);" style="color: rgb(var(--dash-red-clr));">
+                                    <a href="javascript:void(0);" style="color: rgb(var(--dash-red-clr));"  (click)="deleteFun(item)">
                                         <i class="fa-icon fa-regular fa-trash-can"></i>
                                     </a>
                                 </div>
