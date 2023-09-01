@@ -74,8 +74,8 @@
 
             <p id="description">{{product.description}}</p>
             <div class="price">
-                <h1 id="number-discount">₹{{ product.price }}</h1>
-                <p id="number-full">{{product.oldPrice}}</p>
+                <h1  id="number-discount">₹{{ product.price }}</h1>
+                <p id="number-full" *ngIf="product.oldPrice !== (undefined || 0)">₹{{product.oldPrice}}</p>
             </div>
 
             <div class="colors d-flex align-items-center gap-15">

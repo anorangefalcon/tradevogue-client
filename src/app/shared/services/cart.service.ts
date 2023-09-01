@@ -35,7 +35,7 @@ export class CartService {
     this.cartStorage.push({ "sku": data.sku, "size": data.size, "color": data.color, "Quantity": data.quantity });
     const myCart = JSON.stringify(this.cartStorage);
     localStorage.setItem("myCart", myCart);
-    
+
     this.fetchDetails();
   }
 
@@ -68,7 +68,7 @@ export class CartService {
             )
           );
 
-          //amounting payment:        
+          //amounting payment:
           cartDetails.amounts.subTotal += (cartDetails.details[i].price * cartDetails.details[i].Quantity);
           cartDetails.amounts.shipping += 50;
 

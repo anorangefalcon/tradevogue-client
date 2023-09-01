@@ -20,7 +20,7 @@ export class CardTemplateComponent {
 
   ngOnInit(): void {
 
-    console.log("product is", this.product);
+    // console.log("product is", this.product);
     
     for (let review of this.product.reviews) {
       this.avgRating += review.rating;

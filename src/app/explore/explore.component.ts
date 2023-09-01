@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { ProductsFilterService } from '../shared/services/products-filter.service';
 import { FetchDataService } from '../shared/services/fetch-data.service';
 
 @Component({
@@ -10,41 +9,60 @@ import { FetchDataService } from '../shared/services/fetch-data.service';
 export class ExploreComponent implements OnInit {
   productArr: any[] = [];
   original_data: any[] = [];
+  colors: string[] = ["Blue", "Black", "Green"];
   categories: any[] = [];
-  selectedCategory: string = '';
+  selectedCategory: string[] = [];
+  selectedColor: string[] = [];
 
-  constructor(
-    private fetchData: FetchDataService,
-    private productFilter: ProductsFilterService
-  ) {}
+  constructor(private fetchData: FetchDataService) {}
 
   ngOnInit(): void {
     this.fetchData.getData().subscribe(data => {
       this.productArr = data;
       this.original_data = data;
 
-      for (let i = 0; i < this.productArr.length; i++) {
-        let category = this.productArr[i]['info']['category'];
-        if (!this.categories.includes(category)) {
-          this.categories.push(category);
+      this.productArr.forEach(product => {
+        if (!this.categories.includes(product.info.category)) {
+          this.categories.push(product.info.category);
         }
-      }
+      });
     });
   }
 
-  applyCategoryFilter(): void {
-    if (this.selectedCategory) {
+  toggleCategory(category: any) {
+    if (this.selectedCategory.includes(category)) {
+      this.selectedCategory = this.selectedCategory.filter(c => c !== category);
+    } else {
+      this.selectedCategory.push(category);
+    }
+
+    this.applyFilters();
+  }
+
+toggleColor(color: any) {
+  if (this.selectedColor.includes(color)) {
+    this.selectedColor = this.selectedColor.filter(c => c !== color);
+  } else {
+    this.selectedColor.push(color);
+  }
+
+  this.applyFilters();
+}
+
+  applyFilters() {
+    if (this.selectedCategory.length > 0 || this.selectedColor.length > 0) {
       this.productArr = this.original_data.filter(item =>
-        item.info.category === this.selectedCategory
+        this.selectedCategory.includes(item.info.category) ||
+        this.selectedColor.some(color => item.colors.includes(color))
       );
     } else {
       this.productArr = this.original_data;
     }
   }
 
-  clear(): void {
-    this.selectedCategory = '';
-    this.productFilter.clearFilter();
-    this.productArr = this.original_data;
+  clear() {
+    this.selectedCategory = [];
+    this.selectedColor = []; 
+    this.applyFilters();
   }
 }

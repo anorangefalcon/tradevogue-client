@@ -131,10 +131,31 @@
                 </a>
                 <ul class="sub-items d-flex flex-column gap-15">
 
-                    <li class="sub-links">
+                    <li *ngIf="!isUserLogin" class="sub-links">
                         <div class="header">
                             <span>Welcome</span>
                             <p>Access your account and manage your order</p>
+                        </div>
+                        <div class="d-flex justify-content-md-between gap-13">
+                            <a [routerLink]="['/auth/login']" id="login">
+                                <span class="material-symbols-outlined">login</span>
+                                <span>Login</span>
+                            </a>
+                            <a [routerLink]="['/auth/signup']" id="register">
+                                <span class="material-symbols-outlined">person_add</span>
+                                <span>Register</span>
+                            </a>
+                        </div>
+                        <div>
+
+                        </div>
+                    </li>
+
+
+                    <li *ngIf="isUserLogin" class="sub-links">
+                        <div class="header">
+                            <span>Welcome</span>
+                            <p>{{purchaser}}</p>
                         </div>
                         <div class="d-flex justify-content-md-between gap-13">
                             <a [routerLink]="['/auth/login']" id="login">
