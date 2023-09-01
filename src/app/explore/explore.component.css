@@ -17,7 +17,6 @@
 .filters {
     width: 12%;
 
-    
     & h4 {
         font-weight: 600;
         border-block-end: 1px solid rgb(var(--text-black), 0.2);
@@ -43,8 +42,7 @@
         font-size: 12px !important;
         padding: 0;
         color: rgb(var(--accent));
-        /* transform: translateY(-5px); */
-
+       
     }
 
 }

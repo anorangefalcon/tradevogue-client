@@ -25,6 +25,8 @@ export class NavbarComponent implements OnInit {
 
   ngOnInit() {
     this.cartService.fetchCart().subscribe((data) => {
+    
+      
       this.cart_count = data.details.length;
       this.cartArr = data.details;
     })
