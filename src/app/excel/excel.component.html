@@ -1,9 +1,8 @@
 <p>excel works!</p>
-<input type="file" (change)="handleFileInput($event)">
-
-<p *ngIf="message=='show'">data </p>
+<input type="file" accept=".xlsx, .csv" (change)="handleFileInput($event)">
 
 
+<!-- 
 <p *ngIf="error_ocured!=0">{{error_ocured}}</p>
 
-<button (click)="error()">Show errors </button>
+<button (click)="error()">Check for Errors</button> -->
