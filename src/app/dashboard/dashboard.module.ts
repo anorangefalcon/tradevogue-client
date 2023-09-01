@@ -18,6 +18,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     SidepanelComponent,
     StatisticsComponent,
     ProductsComponent,
+    // FilterPipe,
     OrdersComponent,
     AddproductComponent,
     AccountComponent
@@ -25,6 +26,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
   
   imports: [
     CommonModule,
+    // FilterPipe,
     DashboardRoutingModule,
     SharedModule,
     NgxPaginationModule,

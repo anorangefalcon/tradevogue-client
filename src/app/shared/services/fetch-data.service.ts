@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient} from '@angular/common/http';
-import { Observable} from 'rxjs';
+import { BehaviorSubject, Observable} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -22,6 +22,15 @@ export class FetchDataService {
       
     
   }
+
+
+
+
+  //  CHANGE FILTER DATA
+
+  data = new BehaviorSubject<any>({});
+  // actual data lies here
+  cart$ = this.data.asObservable();
 
 
 
