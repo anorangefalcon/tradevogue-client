@@ -73,6 +73,10 @@ a:not([class]) {
     text-decoration-skip-ink: auto;
 }
 
+.default-animation{
+    animation: show-animation 0.3s ease-in-out;
+}
+
 /* Make images easier to work with */
 img,
 picture {

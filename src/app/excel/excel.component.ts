@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import * as XLSX from 'xlsx';
+
 @Component({
   selector: 'app-excel',
   templateUrl: './excel.component.html',
@@ -7,62 +8,81 @@ import * as XLSX from 'xlsx';
 })
 export class ExcelComponent {
 
+  product = {
+    sku: '',
+    name: '',
+    price: undefined,
+    oldPrice: undefined,
+    image: [],
+    sizes: [],
+    colors: [],
+    description: '',
+    stockQuantity: 0,
+    orderQuantity: [],
+    info: {
+      productCode: '',
+      category: '',
+      subTitle: '',
+      brand: '',
+      weight: '',
+      composition: '',
+      tags: [],
+    },
+    available: true,
+    reviews: [
+      {
+        username: '',
+        rating: 0,
+        comment: '',
+        date: ''
+      }
+    ]
+  }
+  products = [];
 
-  data:any=[];
-  message:any;
-  handleFileInput(event:any){
-    // messasge=
-    this.message='show';
-    let file=event.target.files[0];
-    // console.log("file is ",file)
-    let fileReader=new FileReader();
+  handleFileInput(event: any) {
+    let file = event.target.files[0];
+    const excelData: any = {};
+
+    let fileReader = new FileReader();
     fileReader.readAsBinaryString(file);
 
-    
-    fileReader.onload=(e)=>{
-      // console.log("e is ",e);
-      
+    fileReader.onload = (e) => {
       const fileContent = e?.target?.result;
-      // console.log("fileContent is ",(fileContent));
-      
-      const workbook = XLSX.read(fileContent,{type:'binary'});
 
-      // console.log("workbook is ",workbook);
+      const workbook = XLSX.read(fileContent, { type: 'binary' });
+      // contains ref to multiple worksheets[]
+      const workSheets = workbook.Sheets;
+      // array containing names of sheets inside worksheets
+      let sheetNames = Object.keys(workSheets);
+      if (sheetNames.length > 1) {
+        sheetNames.splice(0, 1);
+      }
 
-      
-      const firstSheetName = workbook.SheetNames[0];
-      // console.log("firstSheet Name is ",firstSheetName);
-      
-      const worksheet = workbook.Sheets[firstSheetName];
+      // final array of json objects
+      for (let sheetName of sheetNames) {
+        excelData[sheetName] = (XLSX.utils.sheet_to_json(workSheets[sheetName]));
+      }
+      console.log(excelData, "Excel");
+      // console.log(this.product, "Product, 1");
 
-      const jsonData = XLSX.utils.sheet_to_json(worksheet);
-      this.message='done';
-      // console.log(jsonData);
-      this.data=jsonData;
-
+      this.validateFile(excelData);
     }
-
-    // console.log("outside content");
-    
-
   }
 
 
-  error_ocured:any=0;
+  validateFile(data: any) {
+    let errors: any = {};
+    const productKeys = Object.keys(this.product);
+    // console.log(productKeys, "Product Keys");
 
-  error(){
-    // console.log(dat);
-    let given_length=5;
-    console.log('data is ',this.data);
- for(let i=0;i<this.data.length;i++){
-     if( Object.keys(this.data[i]).length!=given_length){
-      return  this.error_ocured=this.data[i].__rowNum__;
-    
-     }
+    for (let sheet of Object.keys(data)) {
+      data[sheet].forEach((obj: any) => {
+        
+      })
     }
-    
-  }
 
+    console.log(errors);
+  }
 
 }
-;

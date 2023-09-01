@@ -56,12 +56,12 @@ header {
 }
 
 header.active {
-    box-shadow: 0 2px 10px rgb(var(--text-black), 0.1);
-    background-color: rgb(var(--text-white), 0.9);
-    /* backdrop-filter: blur(10px); */
+    box-shadow: 0 5px 10px rgb(var(--text-black), 0.1);
+    background-color: rgb(var(--text-white), 0.8);
+    backdrop-filter: blur(10px);
     padding-block: 0;
     & .navbar{
-        height: 90px;
+        height: 80px;
     }
 }
 
