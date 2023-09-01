@@ -2,42 +2,72 @@
     <div class="heading">
         <h1>Add Product</h1>
     </div>
-    <app-custom-select
-    [options] = "countries"
-    [selectedOption]="SelectData" (final_option)="update($event)"></app-custom-select>
 
     <div class=" product-form">
-        <form action="" class="row-1 add__product d-flex">
+        <form action="" class="row-1 add__product d-flex" [formGroup]="productsForm">
 
             <div class="col">
                 <div class="form__group">
                     <label for="" class="input__label">Product Images :</label>
+
                     <div class="product-images">
-                        <input type="file" multiple id="images" />
-                        <label for="images">Drag & Drop your Files</label>
+                        <input type="file" id="productImages" (change)="onFileChange($event)" multiple />
+                        <label for="productImages">Drag & Drop your Files</label>
                     </div>
+
+                    <div class="error d-flex gap-15">
+                        <small *ngIf="productsForm.get('productImages')?.hasError('invalidExtension') ">Invalid
+                            Extension</small>
+                        <small *ngIf="productsForm.get('productImages')?.hasError('exceedCount')">Maximum 6 Images
+                            Allowed</small>
+                    </div>
+
+                    <div *ngIf="productImages.length !== 0" class="images__container d-flex flex-column gap-5">
+                        <span *ngFor="let image of productImages; let i=index"
+                            class="images d-flex justify-content-md-between align-items-center">
+                            <span>{{image}}</span>
+                            <span class="material-symbols-outlined" (click)="deleteImage(image)">close</span>
+                        </span>
+                    </div>
+
                     <small>
-                        Minimum 0f 6 images are need to be uploaded,make sure the image size match the proper background size and all images should be uniformly maintained with width and height to the image container,image size should not exceed 2MB,once uploaded to change the image you need to wait minimum of 24hrs. 
+                        Maximum 0f 6 images are need to be uploaded,make sure the image size match the proper background
+                        size and all images should be uniformly maintained with width and height to the image
+                        container,image size should not exceed 2MB,once uploaded to change the image you need to wait
+                        minimum of 24hrs.
                     </small>
                 </div>
+
                 <div class="form__group">
-                    <label for="" class="input__label">Product Name</label>
-                    <input type="text" placeholder="Name">
+                    <label for="" class="input__label">Product Name<span class="important">*</span></label>
+                    <input type="text" placeholder="Name" #productName formControlName="productname">
+                    <div class="error d-flex flex-wrap">
+                        <small
+                            *ngIf="productsForm.get('productname')?.hasError('required') && productsForm.get('productname')?.touched">*
+                            Field Required</small>
+                        <small *ngIf="productsForm.get('productname')?.hasError('invalidName')">*Invalid Name</small>
+                    </div>
                 </div>
                 <div class="form__group">
-                    <label for="" class="input__label">Product Code</label>
-                    <input type="text" name="" id="" placeholder="Product Code">
+                    <label for="" class="input__label">Product Code<span class="important">*</span></label>
+                    <input type="text" name="" id="" placeholder="Product Code" formControlName="productCode">
+
+                    <div class="error d-flex flex-wrap">
+                        <small
+                            *ngIf="productsForm.get('productCode')?.hasError('required') && productsForm.get('productCode')?.touched">*Required</small>
+                    </div>
                 </div>
+
                 <div class="select-options d-flex flex-wrap gap-20">
                     <div class="form__group">
                         <div class="d-flex justify-content-md-between">
-                            <label for="" class="input__label">Category</label>
+                            <label for="" class="input__label">Category<span class="important">*</span></label>
                             <a href="javascript: void(0);" appPopOpen><i class="fa-solid fa-plus"></i></a>
                         </div>
                         <dialog>
                             <div class="card d-flex flex-column gap-20">
                                 <div class="row-1 d-flex align-items-center justify-content-md-between">
-                                    <h4>Add Category</h4>
+                                    <h4>Add Category></h4>
                                     <a href="javascript:void(0);" appPopClose><span
                                             class="material-symbols-outlined">close</span></a>
                                 </div>
@@ -81,20 +111,26 @@
                                 </div>
                             </div>
                         </dialog>
-                        <div class="customSelect">
-                            <select name="">
-                                <option value="" disabled selected>Select Category</option>
-                                <option value="">Category 1</option>
-                                <option value="">Category 2</option>
-                                <option value="">Category 3</option>
-                                <option value="">Category 4</option>
-                                <option value="">Category 5</option>
-                            </select>
+                        <div class="relative">
+                            <span class="display" (click)="toggleClass($event)">
+                                <input type="text" class="select" id="category" formControlName="category"
+                                    placeholder="Select Category" autocomplete="off" (blur)="blurClass($event)">
+                            </span>
+                            <ul class="options__container ">
+                                <li class="option" *ngFor="let category of categories;"
+                                    (click)="updateSelected(category,'category')">{{category}}</li>
+                            </ul>
+                        </div>
+                        <div class="error">
+                            <small
+                                *ngIf="productsForm.get('category')?.hasError('required') && productsForm.get('category')?.touched">*Field
+                                Required</small>
                         </div>
                     </div>
+
                     <div class="form__group">
                         <div class="d-flex justify-content-md-between">
-                            <label for="" class="input__label">Brand</label>
+                            <label for="" class="input__label">Brand<span class="important">*</span></label>
                             <a href="javascript: void(0);" appPopOpen><i class="fa-solid fa-plus"></i></a>
                         </div>
                         <dialog>
@@ -140,31 +176,47 @@
                                 </div>
                             </div>
                         </dialog>
-                        <div class="customSelect">
-                            <select name="" id="">
-                                <option value="" disabled selected>Select Brand</option>
-                                <option value="">Brand 1</option>
-                                <option value="">Brand 2</option>
-                                <option value="">Brand 3</option>
-                                <option value="">Brand 4</option>
-                                <option value="">Brand 5</option>
-                            </select>
+                        <div class="relative">
+                            <span class="display" (click)="toggleClass($event)">
+                                <input type="text" class="select" id="brand" formControlName="brand"
+                                    placeholder="Select Brand" autocomplete="off" (blur)="blurClass($event)">
+                            </span>
+                            <ul class="options__container">
+                                <li class="option" *ngFor="let option of brands"
+                                    (click)="updateSelected(option,'brand')">{{option}}</li>
+                            </ul>
+                        </div>
+
+                        <div class="error">
+                            <small
+                                *ngIf="productsForm.get('brand')?.hasError('required') && productsForm.get('brand')?.touched">*Field
+                                Required</small>
                         </div>
                     </div>
+
                     <div class="form__group">
-                        <label for="" class="input__label">Gender</label>
-                        <div class="customSelect">
-                            <select name="" id="">
-                                <option value="" disabled selected>Select Gender</option>
-                                <option value="">All</option>
-                                <option value="">Male</option>
-                                <option value="">Female</option>
-                            </select>
+                        <label for="" class="input__label">Gender<span class="important">*</span></label>
+                        <div class="relative">
+                            <span class="display" (click)="toggleClass($event)">
+                                <input type="text" class="select" id="gender" formControlName="gender"
+                                    placeholder="Select Gender" autocomplete="off" (blur)="blurClass($event)">
+                            </span>
+                            <ul class="options__container">
+                                <li class="option" *ngFor="let option of gender"
+                                    (click)="updateSelected(option,'gender')">
+                                    {{option}}</li>
+
+                            </ul>
+                        </div>
+                        <div class="error">
+                            <small
+                                *ngIf="productsForm.get('gender')?.hasError('required') && productsForm.get('gender')?.touched">*Field
+                                Required</small>
                         </div>
                     </div>
                     <div class="form__group">
                         <div class="d-flex justify-content-md-between">
-                            <label for="" class="input__label">Size</label>
+                            <label for="" class="input__label">Size<span class="important">*</span></label>
                             <a href="javascript: void(0);" appPopOpen><i class="fa-solid fa-plus"></i></a>
                         </div>
                         <dialog>
@@ -210,33 +262,48 @@
                                 </div>
                             </div>
                         </dialog>
-                        <div class="customSelect">
-                            <select name="" id="">
-                                <option value="" disabled selected>Select Size</option>
-                                <option value="">XXL</option>
-                                <option value="">XL</option>
-                                <option value="">L</option>
-                                <option value="">M</option>
-                                <option value="">S</option>
-                            </select>
+                        <div class="relative">
+                            <span class="display" (click)="toggleClass($event)">
+                                <input type="text" class="select" id="sizes" formControlName="sizes"
+                                    placeholder="Select Sizes" autocomplete="off">
+                            </span>
+                            <ul class="options__container multiSelect">
+                                <li *ngFor="let option of sizes" class="option">
+                                    <input type="checkbox" id='{{option}}' value='{{option}}'
+                                        (click)="updateMultiSelected($event,'sizes')">
+                                    <label for='{{option}}'>{{option}}</label>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="error">
+                            <small
+                                *ngIf="productsForm.get('sizes')?.hasError('required') && productsForm.get('sizes')?.touched">*Field
+                                Required</small>
                         </div>
                     </div>
                     <div class="form__group">
-                        <label for="" class="input__label">Colors</label>
-                        <div class="customSelect">
-                            <select name="" id="">
-                                <option value="" disabled selected>Select Colors</option>
-                                <option value="">Color 1</option>
-                                <option value="">Color 2</option>
-                                <option value="">Color 3</option>
-                                <option value="">Color 4</option>
-                                <option value="">Color 5</option>
-                            </select>
+                        <label for="" class="input__label">Colors<span class="important">*</span></label>
+                        <div class="relative">
+                            <span class="display" (click)="toggleClass($event)">
+                                <input type="text" class="select" id="colors" formControlName="colors"
+                                    placeholder="Select Colors" autocomplete="off" (blur)="blurClass($event)">
+                            </span>
+                            <ul class="options__container">
+                                <li class="option" *ngFor="let color of colors"
+                                    (click)="updateSelected(color,'colors')">
+                                    {{color}}</li>
+
+                            </ul>
+                        </div>
+                        <div class="error">
+                            <small
+                                *ngIf="productsForm.get('colors')?.hasError('required') && productsForm.get('colors')?.touched">*Field
+                                Required</small>
                         </div>
                     </div>
                     <div class="form__group">
                         <div class="d-flex justify-content-md-between">
-                            <label for="" class="input__label">Product Tags</label>
+                            <label for="" class="input__label">Product Tags<span class="important">*</span></label>
                             <a href="javascript: void(0);" appPopOpen><i class="fa-solid fa-plus"></i></a>
                         </div>
                         <dialog>
@@ -282,50 +349,82 @@
                                 </div>
                             </div>
                         </dialog>
-                        <div class="customSelect">
-                            <select name="" id="">
-                                <option value="" disabled selected>Select Tag</option>
-                                <option value="">Tag 1</option>
-                                <option value="">Tag 2</option>
-                                <option value="">Tag 3</option>
-                                <option value="">Tag 4</option>
-                                <option value="">Tag 5</option>
-                            </select>
+                        <div class="relative">
+                            <span class="display" (click)="toggleClass($event)">
+                                <input type="text" class="select" id="tags" formControlName="tags"
+                                    placeholder="Select Tags" autocomplete="off">
+                            </span>
+                            <ul class="options__container multiSelect">
+                                <li *ngFor="let tag of tags" class="option">
+                                    <input type="checkbox" id='{{tag}}' value='{{tag}}'
+                                        (click)="updateMultiSelected($event,'tags')">
+                                    <label for='{{tag}}'>{{tag}}</label>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="error">
+                            <small
+                                *ngIf="productsForm.get('tags')?.hasError('required') && productsForm.get('tags')?.touched">*Field
+                                Required</small>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="col">
-                <div class="price__block d-flex">
-                    <div class="form__group">
-                        <label for="" class="input__label">Actual Price</label>
-                        <input type="text" placeholder="Actual Price">
-                    </div>
-                    <div class="form__group">
-                        <label for="" class="input__label">Sale Price</label>
-                        <input type="text" placeholder="Sale Price">
-                    </div>
-                    <div class="form__group">
-                        <label for="" class="input__label">Discount Price</label>
-                        <input type="text" name="" id="" placeholder="Discount in %age">
-                    </div>
-                </div>
                 <div class="quantity-block d-flex">
                     <div class="form__group">
-                        <label for="" class="input__label">Product Type</label>
-                        <input type="text" placeholder="Product Type">
+                        <label for="price" class="input__label">Actual Price<span class="important">*</span></label>
+                        <input type="number" placeholder="Actual Price" id="price" formControlName="actualprice"
+                            required />
+
+                        <div class="error">
+                            <small
+                                *ngIf="productsForm.get('actualprice')?.hasError('required') && productsForm.get('actualprice')?.touched">*Field
+                                Required</small>
+                        </div>
                     </div>
                     <div class="form__group">
-                        <label for="" class="input__label">Item Weight</label>
-                        <input type="text" placeholder="Weight in gms">
+                        <label for="discount" class="input__label">Discount (%age)</label>
+                        <input type="number" placeholder="Sale Price" id="discount" formControlName="discount" />
                     </div>
                     <div class="form__group">
-                        <label for="" class="input__label">Quantity in Stock</label>
-                        <input type="text" placeholder="Quantity">
+                        <label for="discount" class="input__label">Discount Price</label>
+                        <input type="number" placeholder="Discount Price" id="discount" formControlName="salesPrice"
+                            readonly />
+                    </div>
+                    <div class="form__group">
+                        <label for="materialType" class="input__label">Material Type<span
+                                class="important">*</span></label>
+                        <input type="text" placeholder="Material Type" id="materialType" formControlName="materialType"
+                            required />
+                        <div class="error">
+                            <small
+                                *ngIf="productsForm.get('materialType')?.hasError('required') && productsForm.get('materialType')?.touched">*Field
+                                Required</small>
+                        </div>
+                    </div>
+                    <div class="form__group">
+                        <label for="itemWeight" class="input__label">Item Weight<span class="important">*</span></label>
+                        <input type="number" placeholder="Weight in gms" id="itemWeight" formControlName="weight" required/>
+                        <div class="error">
+                            <small
+                                *ngIf="productsForm.get('weight')?.hasError('required') && productsForm.get('weight')?.touched">*Field
+                                Required</small>
+                        </div>
+                    </div>
+                    <div class="form__group">
+                        <label for="" class="input__label">Quantity in Stock<span class="important">*</span></label>
+                        <input type="number" placeholder="Quantity" id="quantity" formControlName="stockQuantity" required/>
+
+                        <div class="error">
+                            <small
+                                *ngIf="productsForm.get('stockQuantity')?.hasError('required') && productsForm.get('stockQuantity')?.touched">*Field
+                                Required</small>
+                        </div>
                     </div>
                     <div class="form__group">
                         <div class="d-flex justify-content-md-between">
-                            <label for="" class="input__label">Order Quantity</label>
+                            <label for="" class="input__label">Order Quantity<span class="important">*</span></label>
                             <a href="javascript: void(0);" appPopOpen><i class="fa-solid fa-plus"></i></a>
                         </div>
                         <dialog>
@@ -371,23 +470,28 @@
                                 </div>
                             </div>
                         </dialog>
-                        <div class="customSelect">
-                            <select name="" id="">
-                                <option value="">Select Order Quantity</option>
-                                <option value="">100</option>
-                                <option value="">200</option>
-                                <option value="">300</option>
-                                <option value="">400</option>
-                            </select>
+                        <div class="relative">
+                            <span class="display" (click)="toggleClass($event)">
+                                <input type="text" class="select" id="orderQuantity" formControlName="orderQuantity"
+                                    placeholder="Select Tags" autocomplete="off">
+                            </span>
+                            <ul class="options__container multiSelect">
+                                <li *ngFor="let order of orderQuantity" class="option">
+                                    <input type="checkbox" id='{{order}}' value='{{order}}'
+                                        (click)="updateMultiSelected($event,'orderQuantity')">
+                                    <label for='{{order}}'>{{order}}</label>
+                                </li>
+                            </ul>
                         </div>
                         <small>
-                            *Order Quantity is various Unit to be Sold   
+                            *Order Quantity is various Unit to be Sold
                         </small>
+                        <div class="error">
+                            <small
+                                *ngIf="productsForm.get('orderQuantity')?.hasError('required') && productsForm.get('orderQuantity')?.touched">*Field
+                                Required</small>
+                        </div>
                     </div>
-                </div>
-                <div class="form__group">
-                    <label for="" class="input__label">Product Features</label>
-                    <textarea name="" id="" cols="30" rows="2"></textarea>
                 </div>
                 <div class="form__group">
                     <label for="" class="input__label">Product Description</label>
@@ -400,13 +504,14 @@
 
         </form>
         <div class="buttons d-flex justify-content-end gap-20">
-            <button class="add d-flex align-items-center gap-5">
-                <a href="javascript:void(0);">Add Product</a>
-                <span class="material-symbols-outlined">add</span>
-            </button>
-            <button class="draft d-flex align-items-center gap-5">
-                <a href="javascript:void(0);">Save Product</a>
+            <!-- <button class="draft d-flex align-items-center gap-5">
+                <i class="fa-regular fa-note-sticky"></i>
+                <a href="javascript:void(0);">Save as Draft</a>
                 <span class="material-symbols-outlined">download</span>
+            </button> -->
+            <button class="add d-flex align-items-center gap-5" (click)="onsubmit()">
+                <a href="javascript:void(0);">Submit Product</a>
+                <span class="material-symbols-outlined">upload</span>
             </button>
         </div>
     </div>

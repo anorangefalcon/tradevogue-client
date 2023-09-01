@@ -1,5 +1,4 @@
 import { Component, OnInit, ElementRef} from '@angular/core';
-import { CustomSelect } from 'src/app/shared/customSelect/custom-select';
 
 @Component({
   selector: 'app-products',
@@ -36,9 +35,6 @@ export class ProductsComponent implements OnInit{
 
   ngOnInit(): void {
     console.log(this.items);
-    
-    let e = this.element.nativeElement.querySelectorAll('.customSelect');
-    let select  = new CustomSelect(e);
   }
 
   pageChanged(event:any){

@@ -1,5 +1,4 @@
 import { Component, ElementRef} from '@angular/core';
-import { CustomSelect } from 'src/app/shared/customSelect/custom-select';
 
 @Component({
   selector: 'app-orders',
@@ -13,8 +12,6 @@ export class OrdersComponent {
   constructor(private element: ElementRef){}
 
   ngOnInit(){
-    let e = this.element.nativeElement.querySelectorAll('.customSelect');
-    let select  = new CustomSelect(e);
   }
 
   orders: any[] = [
