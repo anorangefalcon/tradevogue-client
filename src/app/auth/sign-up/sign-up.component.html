@@ -5,133 +5,136 @@
 
 <section class="signup-section d-flex flex-">
 
-  
+
 
   <div class="left-part d-flex justify-content-center align-items-center">
     <div class="form-container d-flex flex-column">
       <h2 class="text-center">Hi there!</h2>
 
       <form [formGroup]="signupForm" class="d-flex flex-column gap-15">
-
         <div class="form__group relative d-flex flex-column">
           <label class="form__label">Username<span>*</span></label>
           <span class="material-symbols-outlined form__icon absolute">person</span>
           <input type="text" id="username" formControlName="username" placeholder="Enter Your Username">
 
 
-      
-<small *ngIf="signupForm.get('username')?.hasError('invalidUser') && !signupForm.get('username')?.hasError('required') && signupForm.get('username').touched"
-class="invalid">Username not available.</small>
+
+          <small
+            *ngIf="isFormSubmitted && signupForm.get('username')?.hasError('invalidUser') && !signupForm.get('username')?.hasError('required') && signupForm.get('username').touched"
+            class="invalid">Username not available.</small>
 
 
         </div>
 
 
-     
-        <div class="form__group relative d-flex flex-column">  
-          <label class="form__label">Email<span>*</span></label>        
+
+        <div class="form__group relative d-flex flex-column">
+          <label class="form__label">Email<span>*</span></label>
           <span class="material-symbols-outlined form__icon absolute">mail</span>
           <input type="email" id="email" formControlName="email" placeholder="Enter Your Email">
-<!--         
+          <!--         
           [ngClass]="{'wrapper-invalid': (signupForm.get('email')?.invalid && signupForm.get('email').touched)}"
           [ngClass]="{'wrapper-valid': signupForm.get('email')?.valid && signupForm.get('email').touched}"
           > -->
-          <small *ngIf="signupForm?.get('email')?.hasError('email') && signupForm.get('email')?.touched" class="invalid">
+          <small *ngIf="isFormSubmitted && signupForm?.get('email')?.hasError('email') && signupForm.get('email')?.touched"
+            class="invalid">
             Please enter valid Email.
           </small>
-  
-        
+
+
         </div>
 
-     
 
-      
+
+
         <div class="form__group d-flex  flex-column relative">
           <label class="form__label">Password<span>*</span></label>
           <span class="material-symbols-outlined key form__icon absolute">key</span>
           <input [type]="password" id="password" formControlName="password" placeholder="Enter Your Password">
-          <button class="eye-btn flex justify-content-center align-items-center" (click)="toggle_password(1)"><span class="material-symbols-outlined eye">{{showPassword? 'visibility' : 'visibility_off'}}</span></button>
-        <!-- [ngClass]="{'wrapper-invalid': (signupForm.get('password')?.invalid) && signupForm.get('password').touched}"
+          <button class="eye-btn flex justify-content-center align-items-center" (click)="toggle_password(1)"><span
+              class="material-symbols-outlined eye">{{showPassword? 'visibility' : 'visibility_off'}}</span></button>
+          <!-- [ngClass]="{'wrapper-invalid': (signupForm.get('password')?.invalid) && signupForm.get('password').touched}"
         [ngClass]="{'wrapper-valid': (signupForm.get('password')?.valid && signupForm.get('password').touched)}"
          -->
-         
-       
-
-         <div class="password-helper d-flex justify-content-md-between">
 
 
-          <div class="helper-inside ">
-            <p [ngClass]="{'red-text': signupForm?.get('password')?.hasError('minlength') && !signupForm?.get('password')?.hasError('required'),
+
+          <div class="password-helper d-flex justify-content-md-between">
+
+
+            <div class="helper-inside ">
+              <p [ngClass]="{'red-text': signupForm?.get('password')?.hasError('minlength') && !signupForm?.get('password')?.hasError('required'),
          'green-text': !signupForm?.get('password')?.hasError('minlength') && !signupForm?.get('password')?.hasError('required')}"
-              *ngIf="!signupForm?.get('password')?.hasError('required') && signupForm.get('password')?.dirty">
-              <small class="material-symbols-outlined">
-                check_circle
-              </small>Minimum 8 characters
-            </p>
+                *ngIf="!signupForm?.get('password')?.hasError('required') && signupForm.get('password')?.dirty">
+                <small class="material-symbols-outlined">
+                  check_circle
+                </small>Minimum 8 characters
+              </p>
 
-            <p [ngClass]="{'red-text': signupForm?.get('password')?.hasError('uppercaseLetter') && !signupForm?.get('password')?.hasError('required'),
+              <p [ngClass]="{'red-text': signupForm?.get('password')?.hasError('uppercaseLetter') && !signupForm?.get('password')?.hasError('required'),
          'green-text': !signupForm?.get('password')?.hasError('uppercaseLetter') && !signupForm?.get('password')?.hasError('required')}"
-              *ngIf="!signupForm?.get('password')?.hasError('required') && signupForm.get('password')?.dirty">
-              <small class="material-symbols-outlined">
-                check_circle
-              </small>One uppercase letter
-            </p>
-            
-            <p [ngClass]="{'red-text': signupForm?.get('password')?.hasError('lowercaseLetter') && !signupForm?.get('password')?.hasError('required'),
+                *ngIf="!signupForm?.get('password')?.hasError('required') && signupForm.get('password')?.dirty">
+                <small class="material-symbols-outlined">
+                  check_circle
+                </small>One uppercase letter
+              </p>
+
+              <p [ngClass]="{'red-text': signupForm?.get('password')?.hasError('lowercaseLetter') && !signupForm?.get('password')?.hasError('required'),
    'green-text': !signupForm?.get('password')?.hasError('lowercaseLetter') && !signupForm?.get('password')?.hasError('required')}"
-              *ngIf="!signupForm?.get('password')?.hasError('required') && signupForm.get('password')?.dirty">
-              <small class="material-symbols-outlined">
-                check_circle
-              </small>One lowercase letter
-            </p>
-          </div>
+                *ngIf="!signupForm?.get('password')?.hasError('required') && signupForm.get('password')?.dirty">
+                <small class="material-symbols-outlined">
+                  check_circle
+                </small>One lowercase letter
+              </p>
+            </div>
 
-          <div class="helper-inside">
-            <p [ngClass]="{'red-text': signupForm?.get('password')?.hasError('digit') && !signupForm?.get('password')?.hasError('required'),
+            <div class="helper-inside">
+              <p [ngClass]="{'red-text': signupForm?.get('password')?.hasError('digit') && !signupForm?.get('password')?.hasError('required'),
    'green-text': !signupForm?.get('password')?.hasError('digit') && !signupForm?.get('password')?.hasError('required')}"
-              *ngIf="!signupForm?.get('password')?.hasError('required') && signupForm.get('password')?.dirty">
-              <small class="material-symbols-outlined">
-                check_circle
-              </small>One numeric character
-            </p>
+                *ngIf="!signupForm?.get('password')?.hasError('required') && signupForm.get('password')?.dirty">
+                <small class="material-symbols-outlined">
+                  check_circle
+                </small>One numeric character
+              </p>
 
-            <p [ngClass]="{'red-text': signupForm?.get('password')?.hasError('specialCharacter') && !signupForm?.get('password')?.hasError('required'),
+              <p [ngClass]="{'red-text': signupForm?.get('password')?.hasError('specialCharacter') && !signupForm?.get('password')?.hasError('required'),
    'green-text': !signupForm?.get('password')?.hasError('specialCharacter') && !signupForm?.get('password')?.hasError('required')}"
-              *ngIf="!signupForm?.get('password')?.hasError('required') && signupForm.get('password')?.dirty">
-              <small class="material-symbols-outlined">
-                check_circle
-              </small>One speacial character
-            </p>
+                *ngIf="!signupForm?.get('password')?.hasError('required') && signupForm.get('password')?.dirty">
+                <small class="material-symbols-outlined">
+                  check_circle
+                </small>One speacial character
+              </p>
+            </div>
+
+
+
+
           </div>
 
 
-
-
         </div>
 
 
-        </div>
-      
 
-      
 
 
 
         <div class="form__group d-flex  flex-column relative">
           <label class="form__label">Confirm Password<span>*</span></label>
           <span class="material-symbols-outlined key form__icon absolute">key</span>
-          <input [type]="password2" id="confirmPassword" formControlName="confirmPassword"
+          <input  [type]="password2" id="confirmPassword" formControlName="confirmPassword"
             placeholder="Re-enter Your Password">
-            <button class="eye-btn flex justify-content-center align-items-center"  (click)="toggle_password(2)"><span class="material-symbols-outlined eye">{{showPassword2? 'visibility' : 'visibility_off'}}</span></button>
+          <button class="eye-btn flex justify-content-center align-items-center" (click)="toggle_password(2)"><span
+              class="material-symbols-outlined eye">{{showPassword2? 'visibility' : 'visibility_off'}}</span></button>
 
 
-            <small *ngIf="signupForm?.get('confirmPassword')?.invalid && signupForm.get('confirmPassword')?.touched"
-              class="invalid">
-              Your passwords and confirm password do not match.
-            </small>
+          <small *ngIf="signupForm?.get('confirmPassword')?.invalid && signupForm.get('confirmPassword')?.touched"
+            class="invalid">
+            Your passwords and confirm password do not match.
+          </small>
 
 
-            <!-- 
+          <!-- 
               [ngClass]="{'wrapper-invalid': (signupForm.get('confirmPassword')?.invalid && signupForm.get('confirmPassword').touched)}"
           [ngClass]="{'wrapper-valid': signupForm.get('confirmPassword')?.valid && signupForm.get('confirmPassword').touched}"
              -->

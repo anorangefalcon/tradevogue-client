@@ -1,5 +1,6 @@
 import { Component, HostListener, OnInit } from '@angular/core';
 import { CartService } from '../../services/cart.service';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-navbar',
@@ -7,11 +8,20 @@ import { CartService } from '../../services/cart.service';
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent implements OnInit {
+  isUserLogin: boolean = false;
+  purchaser: string = "";
   cart_count: number = 0;
   cartArr: any[] = [];
   navbar_scroll_style: boolean = false;
 
-  constructor(private cartService: CartService) { }
+  constructor(private cartService: CartService , private cookie : CookieService) {
+    const storedLoginDetails = this.cookie.get('loginDetails');
+    if (storedLoginDetails) {
+      this.isUserLogin = true;
+      const storedLoginDetailsObj = JSON.parse(storedLoginDetails);
+      this.purchaser = storedLoginDetailsObj.username;
+    }
+   }
 
   ngOnInit() {
     this.cartService.fetchCart().subscribe((data) => {

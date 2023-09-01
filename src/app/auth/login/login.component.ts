@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { passwordStrengthValidator, usernameValidator} from './validators';
+import { CookieService } from 'ngx-cookie-service';
+import { Router } from '@angular/router';
+import { UserDataService } from '../user-data.service';
 
 @Component({
   selector: 'app-login',
@@ -11,11 +14,12 @@ export class LoginComponent {
 
   loginForm : FormGroup;
 
+
   passwordFieldType: string = 'password';
   showPassword: boolean = false;
   isFormSubmitted: boolean = false;
 
-  constructor(private fb:FormBuilder){
+  constructor(private fb:FormBuilder , private cookies :  CookieService , private router : Router , private userData : UserDataService){
     this.loginForm = fb.group(
       {
         username: fb.control('', [Validators.required, usernameValidator]), 
@@ -24,12 +28,37 @@ export class LoginComponent {
     )
   }
 
-  onLogin(){
-    this.isFormSubmitted = !this.isFormSubmitted;
-    console.log("hello");
-    const data = this.loginForm;
-    console.log(data);  
-  }
+
+onLogin() {
+  this.isFormSubmitted = !this.isFormSubmitted;
+  const username = this.loginForm.get('username')?.value;
+  const password = this.loginForm.get('password')?.value;
+  
+  this.userData.login(username, password).subscribe((isLoggedIn: boolean) => {
+    if (isLoggedIn) {
+      const user = { username: username, password: password };
+      this.cookies.set("loginDetails", JSON.stringify(user));
+      this.router.navigate(['/']);
+    }
+  });
+}
+
+
+
+
+  // onLogin(){
+    // this.isFormSubmitted = !this.isFormSubmitted;
+  //   if(this.isFormSubmitted){
+  //      if(this.loginForm.valid) {
+  //           this.cookies.set("loginDetails",JSON.stringify(this.loginForm.value));
+  //           console.log("loginDetails",this.loginForm.value);
+  //           this.router.navigate(['/']);
+  //      }
+  //   }
+  //   console.log("hello");
+  //   const data = this.loginForm;
+  //   console.log(data);
+  // }
 
   togglePasswordVisibility() {
     this.showPassword = !this.showPassword;

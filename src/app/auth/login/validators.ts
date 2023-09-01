@@ -1,4 +1,5 @@
 import { FormControl } from '@angular/forms';
+import { UserDataService } from '../user-data.service';
 
 
 
@@ -22,7 +23,11 @@ export function passwordStrengthValidator(control: FormControl): { [key: string]
       return { 'password-fail': true };
     }
 
-    return null; // Validation passed
+    if(value == 'Pass@123.'){
+      return null;
+    }
+
+    return { 'password-fail': true };
   }
 export function usernameValidator(control: FormControl): { [key: string]: boolean } | null {
     const value: string = control.value || '';
@@ -30,5 +35,6 @@ export function usernameValidator(control: FormControl): { [key: string]: boolea
     if (value == "admin"){
         return null;
     }
+    
     return {'invalidUsername': true}
 }

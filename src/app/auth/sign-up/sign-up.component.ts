@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
 import { Validators, FormBuilder } from '@angular/forms';
 import { passwordStrengthValidator, matchPasswordValidator,usernameValidator } from '../validators'; // Adjust the path to the correct location
-
-
+import { CookieService } from 'ngx-cookie-service';
+import { UserDataService } from '../user-data.service';
+// import { UserDataService } from '../user-data.service';
 
 @Component({
   selector: 'app-sign-up',
@@ -12,15 +13,20 @@ import { passwordStrengthValidator, matchPasswordValidator,usernameValidator } f
 export class SignUpComponent {
 
 signupForm:any;
+users = [];
 isFormSubmitted: boolean = false;
 password:string='password';
 password2:string='password';
 showPassword:boolean=false;
 showPassword2:boolean=false;
-constructor(private fb:FormBuilder){
+constructor(private fb:FormBuilder, private cookie : CookieService, private userData:UserDataService){
 
+   this.userData.getData().subscribe((data:any)=>{
 
-
+    this.users=data;
+    console.log(this.users);
+    });
+  
 
   this.signupForm= fb.group(
 
@@ -44,11 +50,34 @@ constructor(private fb:FormBuilder){
 
 
   // ON SUBMIT METHOD
-  onSubmit(){
-    this.isFormSubmitted = true;
-
-    console.log(this.signupForm);
+onSubmit() {
+  this.isFormSubmitted = true;
+  if (this.isFormSubmitted) {
+    if (this.signupForm.valid) {
+      const signupDetails = JSON.stringify(this.signupForm.value);
+      const storedSignupDetails = this.cookie.get('signupDetails');
+      let signupDetailsArray = [];
+      if (storedSignupDetails) {
+        signupDetailsArray = JSON.parse(storedSignupDetails);
+      }
+      signupDetailsArray.push(signupDetails);
+      this.cookie.set('signupDetails', JSON.stringify(signupDetailsArray));
+      console.log("signupDetails", signupDetails);
+    }
   }
+  console.log(this.signupForm);
+
+  // Retrieve 
+  const storedSignupDetails = this.cookie.get('signupDetails');
+  if (storedSignupDetails) {
+    const signupDetailsArray = JSON.parse(storedSignupDetails);
+    for (const signupDetails of signupDetailsArray) {
+      const parsedSignupDetails = JSON.parse(signupDetails);
+      const username = parsedSignupDetails.username;
+      console.log('Username:', username);
+    }
+  }
+}
 
 
   toggle_password(el:any){
