@@ -10,6 +10,7 @@ import { OrdersComponent } from './orders/orders.component';
 import { SharedModule } from '../shared/shared.module';
 import { AddproductComponent } from './addproduct/addproduct.component';
 import { AccountComponent } from './account/account.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,8 @@ import { AccountComponent } from './account/account.component';
     DashboardRoutingModule,
     SharedModule,
     NgxPaginationModule,
+    ReactiveFormsModule, 
+    FormsModule
   ]
 })
 export class DashboardModule { }

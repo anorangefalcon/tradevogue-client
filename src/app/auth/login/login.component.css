@@ -122,6 +122,7 @@
         color: rgb(var(--text-black), 0.9);
         padding-bottom: 5px;
     }
+    
     & label span{
         color: rgb(var(--danger));
     }

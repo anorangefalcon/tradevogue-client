@@ -322,6 +322,14 @@ ul {
     flex-direction: column;
 }
 
+.flex-column-reverse{
+    flex-direction: column-reverse;
+}
+
+.flex-order{
+    order: 1;
+}
+
 .justify-content-start {
     justify-content: flex-start;
 }

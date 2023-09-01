@@ -22,7 +22,10 @@
     "allowSyntheticDefaultImports": true,
     "lib": [
       "ES2022",
-      "dom"
+      "dom",
+      "es5",
+      "es6",
+      "dom.iterable"
     ]
   },
   "angularCompilerOptions": {

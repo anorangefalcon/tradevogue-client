@@ -1,6 +1,5 @@
 import { Component, ElementRef, HostListener, Input, OnInit, Renderer2 } from '@angular/core';
 import { OwlOptions } from 'ngx-owl-carousel-o';
-import { CustomSelect } from 'src/app/shared/customSelect/custom-select';
 import { CartService } from 'src/app/shared/services/cart.service';
 
 @Component({
@@ -8,32 +7,16 @@ import { CartService } from 'src/app/shared/services/cart.service';
   templateUrl: './product-section.component.html',
   styleUrls: ['./product-section.component.css']
 })
-export class ProductSectionComponent implements OnInit {
+export class ProductSectionComponent{
   cartStorage: any[] = [];
   selectedSize: string = "";
   selectedColor: string = "";
   selectedQ: number = 0;
 
-  constructor(
-    private elem_ref: ElementRef,
-    private cartService: CartService
-  ) { }
+  constructor(private elem_ref: ElementRef, private cartService: CartService) { }
 
   @Input() data: any = {};
-  currentCustomSelect: CustomSelect | undefined;
   showCarousel: boolean = false;
-
-  ngOnInit(): void {
-    setTimeout(() => {
-      const element = this.elem_ref.nativeElement.querySelectorAll('.customSelect');
-
-      if (this.currentCustomSelect) {
-        this.currentCustomSelect.destroy();
-      }
-
-      this.currentCustomSelect = new CustomSelect(element);
-    }, 0);
-  }
 
 
   addToCart() {
