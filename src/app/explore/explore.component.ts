@@ -1,68 +1,84 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FetchDataService } from '../shared/services/fetch-data.service';
+import { ProductsFilterService } from '../shared/services/products-filter.service';
 
 @Component({
   selector: 'app-explore',
   templateUrl: './explore.component.html',
   styleUrls: ['./explore.component.css']
 })
-export class ExploreComponent implements OnInit {
+
+export class ExploreComponent {
+
   productArr: any[] = [];
-  original_data: any[] = [];
-  colors: string[] = ["Blue", "Black", "Green"];
+  original_data: any[] = []; 
+  // colors:any=[];
+  unique:any=[];
   categories: any[] = [];
-  selectedCategory: string[] = [];
-  selectedColor: string[] = [];
+  
+  selectedCategory: String = '';
 
-  constructor(private fetchData: FetchDataService) {}
+  constructor(private fetchData: FetchDataService,private myservice:ProductsFilterService) {
 
-  ngOnInit(): void {
-    this.fetchData.getData().subscribe(data => {
-      this.productArr = data;
-      this.original_data = data;
+   let obj= this.myservice.fetchUnique();
+  // console,
+  this.productArr=obj.data;
+  this.unique=obj.unique;
 
-      this.productArr.forEach(product => {
-        if (!this.categories.includes(product.info.category)) {
-          this.categories.push(product.info.category);
-        }
-      });
-    });
+  console.log("product is ",this.productArr);
+  console.log("uniique is ",this.unique);
+  
+  
   }
 
-  toggleCategory(category: any) {
-    if (this.selectedCategory.includes(category)) {
-      this.selectedCategory = this.selectedCategory.filter(c => c !== category);
-    } else {
-      this.selectedCategory.push(category);
+  i = 0;
+  categoryChecked(el: any) {
+
+    let type = el.target.value;
+    console.log(type);
+
+    if (el.target.checked){
+
+      if (this.i == 0) {
+        let filteredData = (this.original_data.filter((item) => {
+          return item.info.category == type
+        }));
+        this.productArr = filteredData;
+        this.i++;
+        return;
+      }
+  
+      let filteredData = (this.original_data.filter((item) => {
+        return item.info.category == type
+      })
+      )
+  
+      filteredData.map(item => {
+        this.productArr.push(item); 
+      })
+   
+
     }
+    if (!el.target.checked) {
+      this.productArr = this.productArr.filter(item =>
+        item.info.category != type);
+    }
+    // console.log(this.productArr, "finalll");
 
-    this.applyFilters();
-  }
-
-toggleColor(color: any) {
-  if (this.selectedColor.includes(color)) {
-    this.selectedColor = this.selectedColor.filter(c => c !== color);
-  } else {
-    this.selectedColor.push(color);
-  }
-
-  this.applyFilters();
-}
-
-  applyFilters() {
-    if (this.selectedCategory.length > 0 || this.selectedColor.length > 0) {
-      this.productArr = this.original_data.filter(item =>
-        this.selectedCategory.includes(item.info.category) ||
-        this.selectedColor.some(color => item.colors.includes(color))
-      );
-    } else {
+    if (this.productArr.length === 0)
+    {
       this.productArr = this.original_data;
+      this.i = 0;
     }
   }
 
   clear() {
-    this.selectedCategory = [];
-    this.selectedColor = []; 
-    this.applyFilters();
+    this.productArr = this.original_data;
+    
+    
+    
   }
+  
+
 }
+
