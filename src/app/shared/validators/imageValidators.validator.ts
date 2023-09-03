@@ -1,27 +1,14 @@
 import { AbstractControl } from "@angular/forms";
+import { type } from "jquery";
 
-export function imagesValidation(control: AbstractControl): {[key: string]: any} | null{
-    let images = control.value;
-    
-    for(let i=0;i<images.length;i++){
-        let [_, ext] = images[i].split('.');
+export function imageSizeValidator(control: AbstractControl): {[key: string]: any} | null {
+    let imageList = control.value;
 
-        if(ext === 'jpg' || ext === 'jpeg' || ext === 'png'){
-            continue;
-        }else{
-            return { "invalidExtension": true }
-        }
-    }
+    let files = imageList.filter((image: any)=>{
+        return image.size > 5242880; //5MB
+    });
 
-    return null;
-}
-
-export function imagesCount(control: AbstractControl): {[key: string]: any} | null{
-    let images = control.value;
-
-    if(images.length > 6){
-        return { "exceedCount": true }
-    }
+    if(files.length != 0) return { "exceedSize": true, "errorFiles": files}
 
     return null;
 }

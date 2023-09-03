@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import Chart from 'chart.js/auto';
+import { FetchDataService } from 'src/app/shared/services/fetch-data.service';
 
 @Component({
   selector: 'app-statistics',
@@ -16,9 +17,13 @@ export class StatisticsComponent implements OnInit {
   isOrderChange: boolean = false;
   isRevenueChange: boolean = true;
 
+  constructor(private fetchdata: FetchDataService){}
+
   ngOnInit(): void {
     this.createBarChart();
     this.createDonut();
+
+    this.popularProducts();
     // this.createTable();
 
     // $('#datatable').DataTable({
@@ -131,16 +136,45 @@ export class StatisticsComponent implements OnInit {
     });
   }
 
-  // createLineChart(){
-  //   this.lineChart = new Chart('lineChart',{
-  //     type: 'line',
-  //     data: [{
-  //       labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-  //       datasets: [{
-  //         label: Customer
-  //       }]
-  //     }]
-  //   });
-  // }
+  productList: any[] = [];
 
+
+  popularProducts(){
+    this.fetchdata.getSellerData().subscribe((data: any)=>{
+
+      let products = data[0]['products'][0];
+      this.productList = [];
+
+      products.forEach((item: any) => {
+
+        let product = {
+          image: '',
+          name: '',
+          category: '',
+          profit: 0,
+          revenue: 0,
+          rating: 0
+        }
+
+        product.image = item['image'][0];
+        product.name = item['name'];
+        product.category = item['info']['category'];
+
+        let reviews = item["reviews"];
+        let rating = 0;
+        reviews?.forEach((review: any)=>{
+          rating += review['rating'];
+        });
+        rating /= reviews?.length;
+        product.rating = rating;
+        product.revenue = 20000;
+        product.profit = 5000;
+
+        this.productList.push(product);
+        // Add logic if their tie in rating based upon unit sold or something
+      });
+      this.productList.sort((a,b)=> b.rating - a.rating); 
+      this.productList = this.productList.slice(0, 3);
+    })
+  }
 }
