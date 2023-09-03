@@ -117,7 +117,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr *ngFor="let item of items | filter:inventory_status | filter:catgo | filter: _rating  | paginate: {
+                        <tr *ngFor="let item of items | paginate: {
                             itemsPerPage: pageSize,
                             currentPage: currentPage
                         }; let i = index">
@@ -129,7 +129,7 @@
                                     </label>
                                 </div>
                             </td>
-    
+     
                             <th class="product-items">
                                 <div class=" d-flex gap-10 align-center mh100">
                                     <div class="product-image">
