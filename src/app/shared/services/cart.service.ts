@@ -55,6 +55,8 @@ export class CartService {
 
     if (cartDetails.details !== null) {
       this.fetchData.getData().subscribe((data) => {
+        // console.log("data inside cart is ",data);
+        
         for (let i = 0; i < cartDetails.details.length; i++) {
           const matchSku = (data.find((item: any) => {
             return item.sku == cartDetails.details[i].sku;

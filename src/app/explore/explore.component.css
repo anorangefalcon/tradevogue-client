@@ -21,6 +21,7 @@
         font-weight: 600;
         border-block-end: 1px solid rgb(var(--text-black), 0.2);
         padding-block-end: 10px;
+       
     }
     & label {
         font-size: 12px !important;

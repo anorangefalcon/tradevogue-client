@@ -6,66 +6,158 @@ import { FetchDataService } from './fetch-data.service';
 })
 export class ProductsFilterService {
 
-  productData: any[] = [];
-  originalProductData: any[] = [];
-  uniqueValues: any[] = [
-    { 'categories': [] },
-    { 'brands': [] },
-    { 'colors': [] },
-
-  ];
-
-
-  constructor(private fetchData: FetchDataService) { }
-
-  async fetchUnique() {
-
-    const data = await this.fetchData.getData().toPromise();
-
-    this.productData = data; // we will filter products in ProductData array
-    this.originalProductData = data //so that our original values doesnt change
-
-    this.productData.forEach((product) => {
-      let category = product.info.category;
-
-      if (!this.uniqueValues[0].categories.includes(category)) {
-        this.uniqueValues[0].categories.push(category);
-      }
-
-      let brand = product.info.brand;
-
-      if (!this.uniqueValues[1].brands.includes(brand)) {
-        this.uniqueValues[1].brands.push(brand);
-      }
-
-      let color = product.colors;
-      this.uniqueValues[2].colors = this.uniqueValues[2].colors.concat(color);
-
-    });
-
-    this.uniqueValues[2]['colors'] = this.filterColor(this.uniqueValues[2].colors);
-
-    console.log("Unique Values: ", this.uniqueValues);
-
-    return { "productData": this.originalProductData, "uniqueData": this.uniqueValues};
+  filters: any = [];
+  filterFields: any = [];
+  uniqueValues = {}
+  ProductData:any=[];
+  constructor(private fetchData: FetchDataService) {
+    this.ProductData=this.getData();
+   
   }
 
-  filterColor(data: any) {
-    data = data.filter((item: any, index: any) => {
 
-      const result = data.indexOf(item) == index;
+async getData(){
+//  const x=await this.fetchData.getData().subscribe((data) => {
 
-      if (result) {
-        return item;
+//     this.filters = ["sizes", "colors", "brand", "category", "price"];
+
+//     const filteredObj: any = {};
+//     this.filterFields = data.map((obj: any) => {
+
+//       for (let filter of this.filters) {
+//         console.log("genjvnfjv");
+        
+//         if (Object.hasOwn(obj.info, filter)) {
+//           console.log("fulter is ",filter);
+          
+//           filteredObj[filter] = obj.info[filter];
+//           console.log("filterobject is ",filteredObj);
+          
+//         }
+//         else {
+//           filteredObj[filter] = obj[filter];
+//         }
+//       }
+
+
+
+//       console.log("filterdata  is  ",this.filterFields);
+      
+//       return JSON.parse(JSON.stringify(filteredObj));
+//     });
+//     console.log(this.filterFields);
+//   })
+
+
+const x = await this.fetchData.getData().toPromise();
+// console.log("x is ",x);
+this.filters = ["sizes", "colors", "brand", "category", "price"];
+
+    const filteredObj: any = {"sizes":[],"colors":[],"category":[],"price":[],"brand":[]};
+     x.map((obj: any) => {
+      // console.log("x ibside ");
+      
+      for (let filter of this.filters) {
+        
+
+        const val= obj.info[filter];
+
+        if (Object.hasOwn(obj.info, filter)) {
+          // console.log("fulter is ",filter);
+        
+          // console.log("val is ",val);
+          
+          if(Array.isArray(val)){
+            for (let v in val){
+              // console.log("");
+              // filter="sizes";
+              
+              // console.log(filteredObj[filter]," vjnvjfnjfv");
+              const x=filteredObj[filter];
+              if(!x.includes(val)){
+                x.push(val);
+              }
+              // if(!filteredObj[filter].includes(val)){ filteredObj[filter].push(val);  }
+            }
+          }
+
+          else{
+
+            // console.log)
+            // filter="sizes";
+            
+            const x=filteredObj[filter];
+            if(!x.includes(val)){
+              x.push(val);
+            }
+            
+            // console.log(filteredObj[filter]," vjnvjfnjfv" , " filter ",filter);
+            // if(!filteredObj[filter].includes(val)){ filteredObj.filter.push(val); }
+          }
+        
+         
+          
+        }
+        else {
+
+          // console.log("Val ue ois ",val , " filter is ",filter);
+          const val= obj[filter];
+
+          if(Array.isArray(val)){
+            for (let v in val){
+              // console.log("");
+              // filter="sizes";
+              
+              // console.log(filteredObj[filter]," vjnvjfnjfv");
+              const x=filteredObj[filter];
+              if(!x.includes(val)){
+                x.push(val);
+              }
+              // if(!filteredObj[filter].includes(val)){ filteredObj[filter].push(val);  }
+            }
+          }
+
+          else{
+
+            // console.log)
+            // filter="sizes";
+            
+            const x=filteredObj[filter];
+            if(!x.includes(val)){
+              x.push(val);
+            }
+            
+            // console.log(filteredObj[filter]," vjnvjfnjfv" , " filter ",filter);
+            // if(!filteredObj[filter].includes(val)){ filteredObj.filter.push(val); }
+          }
+        
+      
+        }
       }
 
-    })
-    return data;
-  }
 
+      console.log("filterobj is ",filteredObj);
+      
+
+
+
+})
+
+
+
+// console.log("filterobj ius ",filteredObj);
 
 
 }
+
+}
+
+
+
+
+ 
+
+
 
 
 

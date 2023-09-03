@@ -1,5 +1,4 @@
-<div class="explore-container d-flex ">
-
+<!-- <div class="explore-container d-flex ">
     <div class="filters d-flex flex-column gap-10">
         <div class="head d-flex justify-content-md-between align-items-center">
             <h4>FILTERS</h4>
@@ -7,18 +6,18 @@
         </div>
         <div class="brand-filter d-flex flex-column gap-10">
             <h5>BRAND</h5>
-            <div class="brand-check d-flex gap-5">
-                <input type="checkbox" name="brand" id="bonkers" >
-                <label for="bonkers">Bonkers Corners</label>
+            <div class="brand-check d-flex gap-5" *ngFor="let brand of uniqueData[1].brands">
+                <input type="checkbox" name="brand" id="{{brand}}" value = "{{brand}}">
+                <label for="{{brand}}">{{brand}}</label>
             </div>
         </div>
         <div class="category-filter d-flex flex-column gap-10">
             <h5>CATEGORY</h5>
-            <!-- <div class="category-check d-flex gap-5" *ngFor="let category of categories">
+            <div class="category-check d-flex gap-5" *ngFor="let category of uniqueData[0].categories">
                 <input type="checkbox" name="category" id="{{category}}" value="{{category}}"
-                   (click) = "categoryChecked($event)" >
+                 >
                 <label for="{{category}}">{{category}}</label>
-            </div> -->
+            </div>
         </div>
         <div class="price-filter d-flex flex-column gap-10">
             <h5>PRICE</h5>
@@ -29,10 +28,10 @@
         </div>
         <div class="color-filter d-flex flex-column gap-10">
             <h5>COLOR</h5>
-            <div class="color-check d-flex gap-5 align-items-center"    >
-                <input type="checkbox" name="price" id="price">
-                <div class="color-circle"></div>
-                <label for="price">Green</label>
+            <div class="color-check d-flex gap-5 align-items-center" *ngFor="let color of uniqueData[2].colors">
+                <input type="checkbox" name="color" id="{{color}}" value = "{{color}}">
+                <div class="color-circle" [style.background-color]="color"></div>
+                <label for="{{color}}">{{color}}</label>
             </div>
         </div>
         <div class="discount-filter d-flex flex-column gap-10">
@@ -43,5 +42,46 @@
             </div>
         </div>
     </div>
+    <div class="explore-cards grid">
+        <div *ngFor="let product of productData">
+          <app-card-template [product]="product"></app-card-template>
+        </div>
+    </div>
    
 </div>
+
+
+
+
+ <div class="explore-cards grid">
+    <div *ngFor="let product of productData">
+      <app-card-template [product]="product"></app-card-template>
+    </div>
+</div> -->
+
+
+<!-- {{uniqueData}} -->
+
+<!-- {{productData[0].sku}} -->
+
+<!-- {{uniqueData[1].brands}} -->
+<!-- <div *ngFor="let i of uniqueData">
+    <li *ngFor="let item of i | keyvalue">
+       
+       
+       <div *ngFor="let ii of item.value">
+        {{ii}}
+       </div> 
+       
+        {{ item.value }} -->
+
+        <!-- <p>let item</p>
+    </li>
+      
+</div>  -->
+
+
+
+<!-- <div *ngFor="let i of uniqueData">
+    {{i|json}}
+</div> --> 
