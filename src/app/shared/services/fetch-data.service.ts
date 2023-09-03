@@ -7,8 +7,9 @@ import { BehaviorSubject, Observable } from 'rxjs';
 })
 export class FetchDataService {
   url = '../../../assets/tempDB/products.json';
-  userUrl = '../../../assets/tempDB/usersData.json';
-  constructor(private http: HttpClient) {}
+  userUrl='../../../assets/tempDB/usersData.json';
+  sellerUrl='../../../assets/tempDB/seller.json';
+  constructor(private http: HttpClient) { }
 
   getData(): Observable<any> {
     return this.http.get(this.url);
@@ -18,7 +19,11 @@ export class FetchDataService {
     // let x;
     //  const x=this.http.get(this.userUrl).toPromise();
 
-    return this.http.get(this.userUrl);
+     return this.http.get(this.userUrl);
+  }
+
+  getSellerData(){
+    return this.http.get(this.sellerUrl);
   }
 
   //  CHANGE FILTER DATA
