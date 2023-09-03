@@ -31,6 +31,7 @@ export class productData {
             date: ''
         }
     ];
+
     constructor(data?: Partial<productData>) {
         if (data) {
             Object.assign(this, data);

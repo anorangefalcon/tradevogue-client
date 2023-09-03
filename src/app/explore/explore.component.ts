@@ -12,23 +12,27 @@ export class ExploreComponent {
 
   productData: any[] = [];
   uniqueData: any[] = [];
-
+  // category=any[]:
+  brands:any[]=[];
   constructor(private productFilter: ProductsFilterService) {
 
     this.getServiceData();
-
+    console.log("brnad is ",this.uniqueData);
+    
   }
 
   async getServiceData() {
 
-    const data = await this.productFilter.fetchUnique();
+    // const data = await this.productFilter.fetchUnique();
+    // console.log("Data is ",data);
     
-    this.productData = data.productData;
-    this.uniqueData = data.uniqueData;
+    // // this.productData = data.productData;
+    // // this.uniqueData = data.uniqueData;
 
-    console.log("Product Data", this.productData);
-    console.log("Unique Data", this.uniqueData);
-    
+    // console.log("Product Data", this.productData);
+    // console.log("Unique Data", this.uniqueData);
+    // // this.brands=this.uniqueData[1].brands;
+    // console.log(this.uniqueData[1].brands, "brands");
     
   }
 
