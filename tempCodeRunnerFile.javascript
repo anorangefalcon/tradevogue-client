@@ -1,24 +1,6 @@
-function fetchData() {
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-  
-        const data = { message: 'Hello, World!' };
-        resolve(data);
-      }, 1000); 
-    });
-  }
+const x=[{color:"A"},{color:"B"}]
+console.log("x is ",x);
 
-async function getData() {
-    try {
-      const response = await fetchData(); 
-      const result = response.message;
-      console.log(" result is ",response); 
-      return result;
-    } catch (error) {
-      console.error('An error occurred:', error);
-    }
-  }
+const y=x.map((el)=>{ return el});
 
-
-  
-  console.log("getData is ",getData());
+console.log("y is ",x[0].color);

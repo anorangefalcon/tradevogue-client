@@ -209,7 +209,7 @@ export class ProductsComponent implements OnInit {
     
     console.log("inside funciton ")
     // this.filters={};
-    this.items=this.myService.filtered_data(this.items,this.filters);
+    this.myService.filtered_data(this.items,this.filters);
   
   
   }
