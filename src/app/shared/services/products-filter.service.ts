@@ -18,11 +18,11 @@ export class ProductsFilterService {
       category: [],
       price: [],
       brand: [],
-      tags : []
+      tags: []
     };
 
     originalData.map((data: any) => {
-      
+
       for (let filter of Object.keys(filterObj)) {
 
         if (Object.hasOwn(data.info, filter)) {
@@ -31,7 +31,7 @@ export class ProductsFilterService {
           if (Array.isArray(value)) {
             for (let v of value) {
               const arr = filterObj[filter];
-              
+
               if (!arr.includes(v)) {
                 arr.push(v);
               }
@@ -64,6 +64,14 @@ export class ProductsFilterService {
         }
       }
     });
+
+
+    Object.keys(filterObj).forEach(el => {
+
+      if (filterObj[el].length > 3) {
+        filterObj[el].push(false)
+      }
+    })
     return { originalData, filterObj };
   }
 }
