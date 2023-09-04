@@ -1,5 +1,6 @@
 import { Component, OnInit, ElementRef, ChangeDetectorRef } from '@angular/core';
 import { FetchDataService } from 'src/app/shared/services/fetch-data.service';
+
 @Component({
   selector: 'app-products',
   templateUrl: './products.component.html',
@@ -9,7 +10,7 @@ export class ProductsComponent implements OnInit {
   // product_inventory: number = 0;
   // product_rating: number = 3;
 
-  constructor(private element: ElementRef,private myService:FetchDataService) {}
+  constructor(private element: ElementRef,private fetchdata:FetchDataService) {}
 
   // constructor(myService:FetchDataService){}
   val: any = '';
@@ -204,12 +205,9 @@ export class ProductsComponent implements OnInit {
     }
 
     this.filters=[{'inventory_status':this.inventory_status},{'category':this.catgo},{'ratings':this.new_ratings}];
-    
-    // let new_item = { [id]: value };
-    
     console.log("inside funciton ")
     // this.filters={};
-    this.myService.filtered_data(this.items,this.filters);
+    this.fetchdata.filtered_data(this.items,this.filters);
   
   
   }
@@ -251,6 +249,10 @@ export class ProductsComponent implements OnInit {
   ngAfterViewInit(){
   }
 
+  
+
+  productList: any[] = [];
+
   fetchData(){
     //   this.myService.cart$.subscribe((data:any) => {
     //   // this.cartArr = data;
@@ -259,19 +261,58 @@ export class ProductsComponent implements OnInit {
     //   // this.items=data;
     // });
 
+    this.fetchdata.getSellerData().subscribe((data: any)=>{
+
+      let products = data[0]['products'][0];
+      console.log(typeof(products), products);
+      this.productList = [];
+
+      products.forEach((item: any)=>{
+
+        let product = {
+          itemId: 0,
+          image: '',
+          name: '',
+          category: '',
+          price: 0,
+          unit_sold: this.getRandomnumber(150, 400),
+          product_inventory: this.getRandomnumber(0, 50),
+          rating: 0,
+          last_updated: '03/11/2023 - 4.23PM',
+        }
+
+        product.image = item['image'][0];
+        product.name = item['name'];
+        product.category = item['info']['category'];
+        product.price = item['price'];
+
+        let reviews = item["reviews"];
+        let rating = 0;
+
+        reviews?.forEach((review: any)=>{
+          rating += review['rating'];
+        });
+
+        rating /= reviews?.length;
+        product.rating = rating;
+
+        this.productList.push(product);
+      })
+      console.log("Product List::" , this.productList);
+    })
+
     console.log("outsied funciton ");
     
     return;
   }
 
 
-
+   getRandomnumber(min: number, max: number) {
+    return Math.floor(Math.random() * (max - min + 1) ) + min;
+  }
 
   pageChanged(event: any) {
     this.currentPage = event;
   }
-
- 
-
 
 }

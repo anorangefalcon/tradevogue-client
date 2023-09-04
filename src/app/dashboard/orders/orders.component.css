@@ -30,10 +30,7 @@
         box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
         border-radius: 10px;
         background-color: #ffffff;
-
-
         border-inline-start: 3px solid transparent;
-
         transition: box-shadow 0.3s ease-in-out;
 
         & .material-symbols-outlined {
@@ -46,8 +43,6 @@
             justify-content: CENTER;
             ALIGN-ITEMS: CENTER;
         }
-
-
     }
 
     .card:hover {
@@ -55,10 +50,6 @@
     }
 
     & .col-1 {
-        & .card {
-            border-inline-start: 3px solid rgb(var(--dash-blue-clr));
-        }
-
         & .material-symbols-outlined {
             color: rgb(var(--dash-blue-clr));
             background: linear-gradient(327deg, rgb(var(--dash-blue-clr), 0.2), rgba(255, 255, 255, 0));
@@ -66,10 +57,6 @@
     }
 
     & .col-2 {
-        & .card {
-            border-inline-start: 3px solid rgb(var(--dash-green-clr));
-        }
-
         & .material-symbols-outlined {
             color: rgb(var(--dash-green-clr));
             background: linear-gradient(327deg, rgb(var(--dash-green-clr), 0.2), rgba(255, 255, 255, 0));
@@ -77,10 +64,6 @@
     }
 
     & .col-3 {
-        & .card {
-            border-inline-start: 3px solid rgb(var(--dash-red-clr));
-        }
-
         & .material-symbols-outlined {
             color: rgb(var(--dash-red-clr));
             background: linear-gradient(327deg, rgb(var(--dash-red-clr), 0.2), rgba(255, 255, 255, 0));
@@ -88,10 +71,6 @@
     }
 
     & .col-4 {
-        & .card {
-            border-inline-start: 3px solid rgb(var(--dash-yellow-clr));
-        }
-
         & .material-symbols-outlined {
             color: rgb(var(--dash-yellow-clr));
             background: linear-gradient(327deg, rgb(var(--dash-yellow-clr), 0.2), rgba(255, 255, 255, 0));
@@ -214,15 +193,9 @@
                 transition: all 0.3s ease-in-out;
 
                 &:hover{
-                    background-color: rgb(var(--secondary), 0.5);
-                    color: white;
+                    color: rgb(var(--primary));;
                 }
             }
-/* 
-            & a:hover span {
-                color: rgba(var(--primary), 0.8);
-
-            } */
     }
 
 

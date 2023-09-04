@@ -1,7 +1,5 @@
 import { Component } from '@angular/core';
 import { ProductsFilterService } from '../shared/services/products-filter.service';
-import { data } from 'jquery';
-import { Observable ,of} from 'rxjs';
 
 @Component({
   selector: 'app-explore',
@@ -12,35 +10,24 @@ import { Observable ,of} from 'rxjs';
 export class ExploreComponent {
 
   productData: any[] = [];
-  dataLoaded:any=false;
-  uniqueData: any[] = [];
-  // category=any[]:
-  brands:any[]=[];
+  dataLoaded:any = false;
+  uniqueData = {};
+  filters : any[] = [];
+ 
   constructor(private productFilter: ProductsFilterService) {
     this.productFilter.getData().then((data)=>{
-      console.log("data i s",data);
-      // data;s
+      // console.log(data);
+      
       this.productData=data.originalData;
-      this.uniqueData=data.filteredObj;
+      // console.log(this.productData);
+      
+      this.uniqueData=data.filterObj;
+      // console.log(this.uniqueData);
+
       this.dataLoaded=true;
+
     });
 
-
-    console.log("this.prodcut data i s ",this.productData);
-    
-  
   }
-
-
-  ngOnInit(){
- 
-  
-}
-
-
-
-
-
-
 }
 

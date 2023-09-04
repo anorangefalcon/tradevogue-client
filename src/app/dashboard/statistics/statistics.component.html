@@ -130,97 +130,33 @@
             </div>
             <div class="row-2">
                 <table class="product-row">
-                    <tbody class="d-flex flex-column gap-25">
-                        <tr class="product-card d-flex justify-content-md-between gap-10">
+                    <tbody class="d-flex flex-column gap-15">
+                        <tr class="product-card d-flex justify-content-md-between gap-10"
+                            *ngFor="let product of productList">
+
                             <td class="d-flex gap-20">
                                 <div class="product-image">
-                                    <span class="material-symbols-outlined icons">laundry</span>
+                                    <img src='{{product.image}}' alt="product_image.png">
+                                    <!-- <span class="material-symbols-outlined icons">laundry</span> -->
                                 </div>
                                 
                                 <div class="product-name">
-                                    <h4>Product Name</h4>
-                                    <p>Category</p>
+                                    <h4>{{product.name}}</h4>
+                                    <p>{{product.category}}</p>
                                 </div>
                             </td>
                             <td class="d-flex gap-20">
                                 <div class="revenue">
-                                    <h4>&#8377; 20000</h4>
+                                    <h4>&#8377; {{product.revenue}}</h4>
                                     <p>Revenue</p>
                                 </div>
                                 <div class="profit">
-                                    <h4>&#8377; 6000</h4>
+                                    <h4>&#8377; {{product.profit}}</h4>
                                     <p>Profit</p>
                                 </div>
                             </td>
                         </tr>
-                        <tr class="product-card d-flex justify-content-md-between gap-10">
-                            <td class="d-flex gap-20">
-                                <div class="product-image">
-                                    <span class="material-symbols-outlined icons">laundry</span>
-                                </div>
-                                
-                                <div class="product-name">
-                                    <h4>Product Name</h4>
-                                    <p>Category</p>
-                                </div>
-                            </td>
-                            <td class="d-flex gap-20">
-                                <div class="revenue">
-                                    <h4>&#8377; 15000</h4>
-                                    <p>Revenue</p>
-                                </div>
-                                <div class="profit">
-                                    <h4>&#8377; 8000</h4>
-                                    <p>Profit</p>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr class="product-card d-flex justify-content-md-between gap-10">
-                            <td class="d-flex gap-20">
-                                <div class="product-image">
-                                    <span class="material-symbols-outlined icons">laundry</span>
-                                </div>
-                                
-                                <div class="product-name">
-                                    <h4>Product Name</h4>
-                                    <p>Category</p>
-                                </div>
-                            </td>
-                            <td class="d-flex gap-20">
-                                <div class="revenue">
-                                    <h4>&#8377; 12000</h4>
-                                    <p>Revenue</p>
-                                </div>
-                                <div class="profit">
-                                    <h4>&#8377; 3000</h4>
-                                    <p>Profit</p>
-                                </div>
-                            </td>
-                            
-                        </tr>
-                        <tr class="product-card d-flex justify-content-md-between gap-10">
-                            <td class="d-flex gap-20">
-                                <div class="product-image">
-                                    <span class="material-symbols-outlined icons">laundry</span>
-                                </div>
-                                
-                                <div class="product-name">
-                                    <h4>Product Name</h4>
-                                    <p>Category</p>
-                                </div>
-                            </td>
-                            <td class="d-flex gap-20">
-                                <div class="revenue">
-                                    <h4>&#8377; 10000</h4>
-                                    <p>Revenue</p>
-                                </div>
-                                <div class="profit">
-                                    <h4>&#8377; 2500</h4>
-                                    <p>Profit</p>
-                                </div>
-                            </td>
-                            
-                        </tr>
+
                     </tbody>
                 </table>
             </div>

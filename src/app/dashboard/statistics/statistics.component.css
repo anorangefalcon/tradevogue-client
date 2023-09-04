@@ -208,17 +208,14 @@
             }
 
             & .product-image {
-                display: flex;
-                align-items: center;
-                justify-content: center;
                 width: 50px;
-                height: 50px;
-                border-radius: 5px;
+                height: 65px;
+                border-radius: 5px; 
+                overflow: hidden;
                 background-color: rgba(var(--dash-blue-clr), 0.05);
-
-                & .icons {
-                    font-size: 25px !important;
-                    color: black;
+                
+                img{
+                    object-fit: cover;
                 }
             }
 
