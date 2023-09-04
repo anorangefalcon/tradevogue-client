@@ -160,8 +160,22 @@
 
         & td,
         th {
+            font-weight: 600;
             padding: 10px;
             vertical-align: middle;
+            font-size: 13px;
+            white-space: nowrap;
+        }
+
+        & th span{
+            width: 20ch;
+            overflow: scroll;
+            text-overflow: ellipsis;
+
+            &::-webkit-scrollbar{
+                width: 0;
+                display: none;
+            }
         }
 
         & .product-image {
@@ -180,22 +194,14 @@
             }
         }
 
-        /* & .heading{
-            text-transform: uppercase;
-            color: rgb(var(--secondary));
-            letter-spacing: 0.26px;
-        } */
 
         & .item-check {
             & input[type="checkbox"] {
-                /* background-color: red; */
                 display: none;
             }
-
-           
-
             & .material-symbols-outlined {
                 display: flex;
+                cursor: pointer;
                 justify-content: center;
                 align-items: center;
                 font-size: 16px;
