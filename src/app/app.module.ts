@@ -26,7 +26,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { HelpPageComponent } from './help-page/help-page.component';
 import { SettingsComponent } from './settings/settings.component';
 import { FormsModule } from '@angular/forms';
-import { ExcelComponent } from './excel/excel.component';
 // import { FilterPipe } from './shared/Pipe/filter.pipe';
 
 
@@ -39,7 +38,6 @@ import { ExcelComponent } from './excel/excel.component';
     ExploreComponent,
     HelpPageComponent,
     SettingsComponent,
-    ExcelComponent,
     // FilterPipe
   ],
   imports: [
