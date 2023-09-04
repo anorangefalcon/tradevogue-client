@@ -19,7 +19,7 @@ export class ExploreComponent {
   constructor(private productFilter: ProductsFilterService) {
     this.productFilter.getData().then((data)=>{
       console.log("data i s",data);
-      // data;
+      // data;s
       this.productData=data.originalData;
       this.uniqueData=data.filteredObj;
       this.dataLoaded=true;
@@ -35,7 +35,7 @@ export class ExploreComponent {
   ngOnInit(){
  
   
-  }
+}
 
 
 
