@@ -1,44 +1,52 @@
-import { Component } from '@angular/core';
+import { Injectable } from '@angular/core';
 import * as XLSX from 'xlsx';
 
-@Component({
-  selector: 'app-excel',
-  templateUrl: './excel.component.html',
-  styleUrls: ['./excel.component.css']
-})
-export class ExcelComponent {
+export class UploadExcelService {
+
+  constructor() { }
+
   product: any = {};
   products: any[] = [];
   errors: any = {};
 
   // handles inputed files
-  handleFileInput(event: any) {
+  handleFileInput(event: any, singleFeild: string): Promise<any> {
+
+    let dataAndErrors: any = {};
     let file = event.target.files[0];
     const excelData: any = {};
 
     let fileReader = new FileReader();
     fileReader.readAsBinaryString(file);
 
-    fileReader.onload = (e) => {
-      const fileContent = e?.target?.result;
+    return new Promise((resolve, reject) => {
+      fileReader.onload = (e) => {
+        const fileContent = e?.target?.result;
 
-      const workbook = XLSX.read(fileContent, { type: 'binary' });
-      // contains ref to multiple worksheets[]
-      const workSheets = workbook.Sheets;
-      // array containing names of sheets inside worksheets
-      let sheetNames = Object.keys(workSheets);
+        const workbook = XLSX.read(fileContent, { type: 'binary' });
+        // contains ref to multiple worksheets[]
+        const workSheets = workbook.Sheets;
+        // array containing names of sheets inside worksheets
+        let sheetNames = Object.keys(workSheets);
 
-      // final array of json objects
-      for (let sheetName of sheetNames) {
-        excelData[sheetName] = (XLSX.utils.sheet_to_json(workSheets[sheetName]));
-        excelData[sheetName].forEach((element: any) => {
-          element['row'] = element['__rowNum__'];
-        });
+        // final array of json objects
+        for (let sheetName of sheetNames) {
+          excelData[sheetName] = (XLSX.utils.sheet_to_json(workSheets[sheetName]));
+          excelData[sheetName].forEach((element: any) => {
+            element['row'] = element['__rowNum__'];
+          });
+        }
+        // console.log("excel-> ", excelData);
+        if (singleFeild !== '') {
+          dataAndErrors = this.validateSingleFeildFile(excelData, singleFeild);
+        }
+        else{
+          dataAndErrors = this.validateFile(excelData);
+        }
+        resolve(dataAndErrors);
       }
-      console.log("excel-> ", excelData);
+    });
 
-      this.validateFile(excelData);
-    }
   }
 
   // main magic happens here
@@ -60,10 +68,10 @@ export class ExcelComponent {
       'composition',
       'tags',
     ];
+
     this.errors = {}
 
     for (let sheet of Object.keys(data)) {
-      console.log(sheet, "Sheet");
 
       this.errors[sheet] = {
         warning: {
@@ -108,13 +116,15 @@ export class ExcelComponent {
             }
           ]
         }
+
+
         // converting object keys to camelCase
         obj = this.keysToLowerCase(obj);
 
         // checking if all required keys are present
-        const allReqKyes = this.isCompleteSubset(Object.keys(obj), reqProductKeys);
+        const allReqKeys = this.isCompleteSubset(Object.keys(obj), reqProductKeys);
 
-        if (allReqKyes === true) {
+        if (allReqKeys === true) {
           for (let key of Object.keys(obj)) {
             // not letting user set important keys explicitly
             if (key !== 'reviews' && key !== 'available' && key !== 'sku' && key !== 'row') {
@@ -167,15 +177,55 @@ export class ExcelComponent {
           if (!this.errors[sheet]['rejected']['insuffeciientFeilds'][obj['row']]) {
             this.errors[sheet]['rejected']['insuffeciientFeilds'][obj['row']] = [];
           }
-          this.errors[sheet]['rejected']['insuffeciientFeilds'][obj['row']] = allReqKyes['missing'];
+          this.errors[sheet]['rejected']['insuffeciientFeilds'][obj['row']] = allReqKeys['missing'];
         }
-
       });
     }
 
-    console.log(this.products, "Products");
+    return {
+      data: this.products,
+      errors: this.errors
+    }
+  }
 
-    console.log(this.errors);
+  // now lets make same function as validate file but for files only containing one feild like brand
+  validateSingleFeildFile(data: any, singleFeild: string) {
+    const reqProductKeys: any = [singleFeild];
+    this.errors = {};
+    let reqData: any = [];
+
+    for (let sheet of Object.keys(data)) {
+      this.errors[sheet] = {
+        warning: {
+          notRequired: {}
+        },
+        rejected: {
+          empty: [],
+        }
+      };
+
+      data[sheet].forEach((obj: any) => {
+        obj = this.keysToLowerCase(obj);
+        const allReqKeys = this.isCompleteSubset(Object.keys(obj), reqProductKeys);
+        
+        if(allReqKeys === true){
+          if(!reqData.includes(obj[singleFeild].trim())){
+            reqData.push(obj[singleFeild].trim());
+          }
+        }
+        else{
+          if (!this.errors[sheet]['rejected']['empty']) {
+            this.errors[sheet]['rejected']['empty'] = [];
+          }
+          this.errors[sheet]['rejected']['empty'].push(obj['row']);  
+        }
+      });
+
+    }
+    return {
+      data: reqData,
+      errors: this.errors
+    }
   }
 
   // helper functions
@@ -215,3 +265,34 @@ export class ExcelComponent {
   }
 
 }
+
+
+
+// how to use this service template:
+/*
+<input type="file" accept=".xlsx, .csv" (change)="fileUpload($event)">
+
+constructor(private uploadExcelService: UploadExcelService) { }
+
+  // for entire data
+  fileUpload(event: any) {
+    const errors = this.uploadExcelService.handleFileInput(event);
+    errors.then((data: any) => {
+      console.log("data-> ", data);
+    });
+  }
+
+  // for a particular feild
+  fileUpload(event: any) {
+    const errors = this.uploadExcelService.handleFileInput(event, 'brand');
+    errors.then((data: any) => {
+      console.log("data-> ", data);
+    });
+  }
+
+  data returns object containing:
+  {
+    data: {}/[],
+    errors: {}
+  }
+*/
