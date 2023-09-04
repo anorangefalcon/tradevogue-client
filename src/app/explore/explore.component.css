@@ -21,14 +21,21 @@
         font-weight: 600;
         border-block-end: 1px solid rgb(var(--text-black), 0.2);
         padding-block-end: 10px;
+        font-size: 20px !important;
        
+    }
+    & .capital {
+        text-transform: capitalize;
+    }
+    .types:last-child{
+        border-bottom: none;
     }
     & label {
         font-size: 12px !important;
         color: rgb(var(--text-black), 0.8);
         white-space: nowrap;
     }
-    & .brand-filter, .price-filter, .color-filter, .category-filter {
+    & .types {
         border-block-end: 1px solid rgb(var(--text-black), 0.2); 
         padding-block-end: 10px;
     }

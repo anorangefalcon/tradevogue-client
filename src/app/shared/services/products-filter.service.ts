@@ -1,89 +1,69 @@
 import { Injectable } from '@angular/core';
 import { FetchDataService } from './fetch-data.service';
-import { NgZone } from '@angular/core';
+
 @Injectable({
   providedIn: 'root',
 })
+
 export class ProductsFilterService {
-  filters: any = [];
-  filterFields: any = [];
-  uniqueValues = {};
-  ProductData: any = [];
-  constructor(private fetchData: FetchDataService) {
-  
-  }
+
+  constructor(private fetchData: FetchDataService) { }
 
   async getData() {
 
-
     const originalData = await this.fetchData.getData().toPromise();
-  
-    const filteredObj: any = {
+    const filterObj: any = {
       sizes: [],
       colors: [],
       category: [],
       price: [],
       brand: [],
-    
+      tags : []
     };
 
-    
-    originalData.map((obj: any) => {  
-
-      for (let filter of Object.keys(filteredObj)) {
-
+    originalData.map((data: any) => {
       
-        if (Object.hasOwn(obj.info, filter)) {
-          const val = obj.info[filter];
+      for (let filter of Object.keys(filterObj)) {
 
-          if (Array.isArray(val)) {
-            for (let v of val) {
-              const x = filteredObj[filter];
-              if (!x.includes(v)) {
-                x.push(v);
+        if (Object.hasOwn(data.info, filter)) {
+          const value = data.info[filter];
+
+          if (Array.isArray(value)) {
+            for (let v of value) {
+              const arr = filterObj[filter];
+              
+              if (!arr.includes(v)) {
+                arr.push(v);
               }
             }
           } else {
-            const x = filteredObj[filter];
-            if (!x.includes(val)) {
-              x.push(val);
+            const arr = filterObj[filter];
+            if (!arr.includes(value)) {
+              arr.push(value);
             }
           }
-        } 
-        
+        }
+
         else {
-          const val = obj[filter];
+          const value = data[filter];
 
-          if (Array.isArray(val)) {
-            for (let v of val) {
-              const x = filteredObj[filter];
+          if (Array.isArray(value)) {
+            for (let v of value) {
+              const arr = filterObj[filter];
 
-              if (!x.includes(v)) {
-                x.push(v);
+              if (!arr.includes(v)) {
+                arr.push(v);
               }
             }
           } else {
-            const x = filteredObj[filter];
-            if (!x.includes(val)) {
-              x.push(val);
+            const arr = filterObj[filter];
+            if (!arr.includes(value)) {
+              arr.push(value);
             }
           }
         }
       }
-
-     
     });
-
-
-
-    console.log(" filter ",filteredObj);
-    
-    // this.ProductData=originalData;
-    // this.uniqueValues=filteredObj;
-    return {originalData,filteredObj};
-    
-    // return;
-    
-   
+    return { originalData, filterObj };
   }
 }
