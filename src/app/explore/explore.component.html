@@ -1,97 +1,24 @@
-<!-- <div class="explore-container d-flex ">
-    <div class="filters d-flex flex-column gap-10">
-        <div class="head d-flex justify-content-md-between align-items-center">
-            <h4>FILTERS</h4>
-            <button  class="clear-btn" >Clear all</button>
-        </div>
-        <div class="brand-filter d-flex flex-column gap-10">
-            <h5>BRAND</h5>
-            <div class="brand-check d-flex gap-5" *ngFor="let brand of uniqueData[1].brands">
-                <input type="checkbox" name="brand" id="{{brand}}" value = "{{brand}}">
-                <label for="{{brand}}">{{brand}}</label>
+<div *ngIf="dataLoaded">
+    <div class="explore-container d-flex">
+        <div class="filters d-flex flex-column gap-10">
+            <div class="head ">
+                <h4>FILTERS</h4>
+                <!-- <button  class="clear-btn" >Clear all</button> -->
+            </div>
+            <div *ngFor="let filter of uniqueData | keyvalue" class="types">
+                <div class="category d-flex flex-column gap-10" >
+                    <h5 class="capital">{{ filter.key }}</h5>
+                    <div class="d-flex gap-10" *ngFor="let value of filter.value">
+                        <input type="checkbox" [name]="filter.key" [value]="value" [id]="value">
+                        <label [for]="value" class="capital">{{ value }}</label>
+                    </div>
+                </div>
             </div>
         </div>
-        <div class="category-filter d-flex flex-column gap-10">
-            <h5>CATEGORY</h5>
-            <div class="category-check d-flex gap-5" *ngFor="let category of uniqueData[0].categories">
-                <input type="checkbox" name="category" id="{{category}}" value="{{category}}"
-                 >
-                <label for="{{category}}">{{category}}</label>
-            </div>
-        </div>
-        <div class="price-filter d-flex flex-column gap-10">
-            <h5>PRICE</h5>
-            <div class="price-check d-flex gap-5">
-                <input type="checkbox" name="price" id="price">
-                <label for="price">₹500 - ₹1000</label>
-            </div>
-        </div>
-        <div class="color-filter d-flex flex-column gap-10">
-            <h5>COLOR</h5>
-            <div class="color-check d-flex gap-5 align-items-center" *ngFor="let color of uniqueData[2].colors">
-                <input type="checkbox" name="color" id="{{color}}" value = "{{color}}">
-                <div class="color-circle" [style.background-color]="color"></div>
-                <label for="{{color}}">{{color}}</label>
-            </div>
-        </div>
-        <div class="discount-filter d-flex flex-column gap-10">
-            <h5>DISCOUNT</h5>
-            <div class="discount-check d-flex gap-5 align-items-center">
-                <input type="radio" name="discount" id="discount">
-                <label for="discount">30% and above</label>
+        <div class="explore-cards grid">
+            <div *ngFor="let product of productData">
+                <app-card-template [product]="product"></app-card-template>
             </div>
         </div>
     </div>
-    <div class="explore-cards grid">
-        <div *ngFor="let product of productData">
-          <app-card-template [product]="product"></app-card-template>
-        </div>
-    </div>
-   
-</div>
-
-
-
-
- <div class="explore-cards grid">
-    <div *ngFor="let product of productData">
-      <app-card-template [product]="product"></app-card-template>
-    </div>
-</div> -->
-
-
-<!-- {{uniqueData}} -->
-
-<!-- {{productData[0].sku}} -->
-
-<!-- {{uniqueData[1].brands}} -->
-<!-- <div *ngFor="let i of uniqueData">
-    <li *ngFor="let item of i | keyvalue">
-       
-       
-       <div *ngFor="let ii of item.value">
-        {{ii}}
-       </div> 
-       
-        {{ item.value }} -->
-
-        <!-- <p>let item</p>
-    </li>
-      
-</div>  -->
-
-
-
-<!-- <div *ngFor="let i of uniqueData">
-    {{i|json}}
-</div> --> 
-
-<div *ngIf="dataLoaded"> 
-
-    <!-- {{productData[0].sku}} example -->
-    
-    
-    <!-- REST HTML DONE HERE -->
-    
-
 </div>
