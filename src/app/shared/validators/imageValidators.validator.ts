@@ -16,7 +16,7 @@ export function imageSizeValidator(control: AbstractControl): {[key: string]: an
 export function invalidformat(control: AbstractControl): {[key: string]: any} | null{
     let field = control.value;
 
-    if(/[0-9]/.test(field)){
+    if(/[0-9]/.test(field) || /[!@#$%^&*(),.?":{}|<>]/.test(field)){
         return { "invalidName": true }
     }
     return null;

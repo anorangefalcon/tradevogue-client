@@ -2,6 +2,7 @@ import { Component, ElementRef, HostListener, Renderer2, asNativeElements } from
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ImageUploadService } from 'src/app/shared/services/image-upload.service';
 import { imageSizeValidator, invalidformat } from 'src/app/shared/validators/imageValidators.validator';
+import { UploadExcelService } from '../services/upload-excel.service';
 
 @Component({
   selector: 'app-addproduct',
@@ -24,7 +25,12 @@ export class AddproductComponent {
   productImageUrl: any = [];
   errorFile: any = []; //Duplicate File For display Purposes
 
-  constructor(private elem_ref: ElementRef, private render: Renderer2, private fb: FormBuilder, private upload: ImageUploadService) {
+  constructor(private elem_ref: ElementRef, 
+    private render: Renderer2, 
+    private fb: FormBuilder, 
+    private upload: ImageUploadService,
+    private excel: UploadExcelService) 
+  {
     this.productsForm = this.fb.group({
       productImages: [[], {
         validators: [
@@ -153,6 +159,8 @@ export class AddproductComponent {
       this.productImagesD = data.filter((file: any) => {
         return !this.errorFile.filter((errorfile: any)=> {return errorfile.name === file.name})
       })
+      console.log(this.productImagesD);
+      
     } else{
       this.productImagesD = this.productImages;
     }
@@ -187,6 +195,32 @@ export class AddproductComponent {
       this.productsForm.get(type)?.setValue(inputList);
     }
 
+  }
+
+  uploadFile(event: Event){
+    let data = this.excel.handleFileInput(event);
+    data.then((products)=>{
+      console.log(products);
+      
+      let product_keys = Object.keys(products['errors']);
+      product_keys.forEach((sheet)=>{
+        let sheets_keys = Object.keys(products['errors'][sheet]);
+        // console.log(sheets_keys);
+
+        sheets_keys.forEach((errors)=>{
+          let error_list = Object.keys(products['errors'][sheet][errors]);
+          // console.log(error_list); 
+
+          error_list.forEach((detail)=>{
+            console.log(detail);
+            
+          })
+
+        })
+      })
+
+
+    })
   }
 
   onsubmit() {

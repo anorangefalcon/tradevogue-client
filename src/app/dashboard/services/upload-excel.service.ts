@@ -10,7 +10,7 @@ export class UploadExcelService {
   errors: any = {};
 
   // handles inputed files
-  handleFileInput(event: any, singleFeild: string): Promise<any> {
+  handleFileInput(event: any, singleFeild: string = ''): Promise<any> {
 
     let dataAndErrors: any = {};
     let file = event.target.files[0];
