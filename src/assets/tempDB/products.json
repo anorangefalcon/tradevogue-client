@@ -16,7 +16,7 @@
             "XL"
         ],
         "colors": [
-            "Cyan",
+            "#85f5f5",
             "Yellow"
         ],
         "description": "A comfortable oversized jersey featuring Pikachu design.",
@@ -95,7 +95,7 @@
             "productCode": "PC123",
             "category": "Jumper",
             "subTitle": "Casual Collection",
-            "brand": "Bonkers Corner",
+            "brand": "Levis",
             "weight": "350g",
             "composition": "Canvas",
             "tags": [
@@ -154,7 +154,7 @@
             "productCode": "PC456",
             "category": "Oversized T-shirt",
             "subTitle": "Urban Collection",
-            "brand": "Bonkers Corner",
+            "brand": "Zudio",
             "weight": "180g",
             "composition": "Cotton Blend",
             "tags": [
@@ -525,5 +525,3 @@
         ]
     }
 ]
-
-
