@@ -15,14 +15,14 @@ export class FetchDataService {
     return this.http.get(this.url);
   }
 
-  getUserData() {
+  getUserData():Observable<any>{
     // let x;
     //  const x=this.http.get(this.userUrl).toPromise();
 
      return this.http.get(this.userUrl);
   }
 
-  getSellerData(){
+  getSellerData():Observable<any>{
     return this.http.get(this.sellerUrl);
   }
 

@@ -12,7 +12,6 @@ import { BillingComponent } from './checkout/billing/billing.component';
 import { ExploreComponent } from './explore/explore.component';
 import { HelpPageComponent } from './help-page/help-page.component';
 import { SettingsComponent } from './settings/settings.component';
-import { ExcelComponent } from './excel/excel.component';
 const routes: Routes = [
 
   {
@@ -43,10 +42,6 @@ const routes: Routes = [
   },
   {
     path: 'dashboard', loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule)
-  },
-
-  {
-    path: 'excel', component: ExcelComponent
   },
   
 ];

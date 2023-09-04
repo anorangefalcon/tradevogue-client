@@ -12,6 +12,7 @@ import { AddproductComponent } from './addproduct/addproduct.component';
 import { AccountComponent } from './account/account.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AddproductfeaturesComponent } from './addproductfeatures/addproductfeatures.component';
+import { UploadExcelService } from './services/upload-excel.service';
 
 @NgModule({
   declarations: [
@@ -34,6 +35,9 @@ import { AddproductfeaturesComponent } from './addproductfeatures/addproductfeat
     NgxPaginationModule,
     ReactiveFormsModule, 
     FormsModule
-  ]
+  ],
+  providers: [
+    UploadExcelService
+  ],
 })
 export class DashboardModule { }
