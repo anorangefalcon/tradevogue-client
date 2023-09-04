@@ -1,4 +1,4 @@
-<div class="container checkout-container d-flex ">
+<div *ngIf="cartCount>0" class="container checkout-container d-flex ">
     <div class="cart d-flex flex-column gap-10">
         <div class="border d-flex justify-content-md-between">
             <h4>Total Items :</h4>
@@ -7,4 +7,12 @@
         <router-outlet class="cartAndBilling"></router-outlet>
     </div>
     <app-order-summary  [class.active]="navbar_scroll_style == true" class="orderSummary"></app-order-summary>
+</div>
+
+<!-- when cart count is zero -->
+<div *ngIf="cartCount === 0" class="empty d-flex flex-column justify-content-center align-items-center">
+    <h1 class="text-center">Your cart is empty</h1>
+    <div class="text-center">
+        <button [routerLink]="['/explore']" class="btn btn-primary">Continue Shopping</button>
+    </div>
 </div>

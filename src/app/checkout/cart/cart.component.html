@@ -1,4 +1,4 @@
-<div class="cart-container d-flex flex-wrap">
+<div class="cart-container d-flex flex-wrap default-animation">
     <div class="cart-items d-flex" *ngFor="let item of cartArr">
         <div class="col d-flex justify-content-md-between">
             <div class="product-image d-flex gap-30">
@@ -29,7 +29,7 @@
                 <div class="d-flex gap-10 align-items-center">
                     <div class="quantity-btn-outer">
                         <div class="quantity">
-                            <button class="quantity-btn" (click)="changeQuantity('next', item.sku, item.Quantity)">
+                            <button class="quantity-btn" (click)="changeQuantity('previous', item.sku, item.Quantity)">
                                 <span class="material-symbols-outlined">
                                     remove
                                 </span>
