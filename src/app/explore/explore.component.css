@@ -2,11 +2,12 @@
     padding-block-start: 120px;
     padding-inline: 20px;
     gap: 20px;
-
+    width: 100%;
+    /* justify-content: space-between; */
 }
 
 .explore-cards{
-    width: 100%;
+    width: 85%;
     grid-template-columns: repeat(4, 1fr);
     gap: 30px;
     /* margin-inline: -15px; */
@@ -15,7 +16,10 @@
 
 }
 .filters {
-    width: 12%;
+    position: sticky;
+    inset-block-start: 0;
+    inset-inline-start: 0;
+    width: 15%;
 
     & h4 {
         font-weight: 600;
@@ -23,6 +27,11 @@
         padding-block-end: 10px;
         font-size: 20px !important;
        
+    }
+    & .show-btn {
+        font-size: 12px !important;
+        color: rgb(var(--accent));
+        cursor: pointer;
     }
     & .capital {
         text-transform: capitalize;
