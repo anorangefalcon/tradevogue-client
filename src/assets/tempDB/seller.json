@@ -3,8 +3,11 @@
         "sellerID": 122355,
         "organization": "Cobra Kai",
         "brands": [
+<<<<<<< HEAD
             "Bonkers Corner",
             "Bonkers Corner",
+=======
+>>>>>>> fea92818e675c4b64adf0bd37e2d35609bef596c
             "Bonkers Corner"
         ],
         "categories": [
@@ -14,10 +17,46 @@
             "Bag",
             "Accessories"
         ],
+<<<<<<< HEAD
         "products": [
             [
     
     
+=======
+        "sizes": [
+            "S",
+            "M",
+            "L",
+            "XL",
+            "XXL",
+            "XXXL"
+        ],
+        "colors": [
+            "red",
+            "blue",
+            "green",
+            "pink",
+            "black",
+            "white",
+            "purple"
+        ],
+        "tags": [
+            "pokemon",
+            "jersey",
+            "oversized",
+            "sneakers",
+            "canvas",
+            "patterned",
+            "t-shirt",
+            "oversized",
+            "urban"
+        ],
+        "orderQuantity":[
+            100, 150, 200, 300, 400
+        ],
+        "products": [
+            [
+>>>>>>> fea92818e675c4b64adf0bd37e2d35609bef596c
                 {
                     "sku": "SKU123",
                     "name": "Pikachu Oversized Jersey",
@@ -424,7 +463,10 @@
                         }
                     ]
                 },
+<<<<<<< HEAD
             
+=======
+>>>>>>> fea92818e675c4b64adf0bd37e2d35609bef596c
                 {
                     "sku": "SKU456",
                     "name": "Sage Inside Out Oversized T-shirt",
@@ -543,6 +585,7 @@
                         }
                     ]
                 }
+<<<<<<< HEAD
             ]            
         ],
         "orders": [
@@ -1124,6 +1167,9 @@
                     ]
                 }
             ]            
+=======
+            ]
+>>>>>>> fea92818e675c4b64adf0bd37e2d35609bef596c
         ],
         "orders": [
             "612d4e8a9a8e4f001f8e4d01",

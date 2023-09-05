@@ -12,7 +12,6 @@ import { BillingComponent } from './checkout/billing/billing.component';
 import { ExploreComponent } from './explore/explore.component';
 import { HelpPageComponent } from './help-page/help-page.component';
 import { SettingsComponent } from './settings/settings.component';
-import { ExcelComponent } from './excel/excel.component';
 import { NoPageComponent } from './no-page/no-page.component';
 import { ProductSectionComponent } from './product-page/product-section/product-section.component';
 import { ProductDetailsComponent } from './product-page/product-details/product-details.component';
@@ -57,13 +56,6 @@ const routes: Routes = [
   {
     path: 'dashboard', data: { breadcrumb: 'Dashboard' }, loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule)
   },
-
-  {
-    path: 'excel', component: ExcelComponent, data: { breadcrumb: 'Excel' },
-  },
-  {
-    path: '**', component: NoPageComponent, data: { breadcrumb: '404' },
-  }
 
 ];
 

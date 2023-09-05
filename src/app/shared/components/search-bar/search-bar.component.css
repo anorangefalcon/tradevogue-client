@@ -10,6 +10,8 @@
     border-radius: 5px;
     padding-inline-start: 15px;
     padding-inline-end: 50px;
+
+    animation: search-bar-expands 1s cubic-bezier(0, 0, 0.31, 0.9);
 }
 .search button {
     position: absolute;
@@ -28,4 +30,14 @@
 }
 .loginbtn{
     display: block;
+}
+
+@keyframes search-bar-expands {
+    from {
+        width: 5%;
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
 }

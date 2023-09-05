@@ -39,6 +39,31 @@ export class CartService {
     this.fetchDetails();
   }
 
+
+  // could be more optimised but cant due to cap Q in quantity
+  updateCart(data: any) {
+    const localStorageData = localStorage.getItem("myCart");
+
+    if (localStorageData) {
+      this.cartStorage = JSON.parse(localStorageData);
+
+      const skuFound = this.cartStorage.find((item: any) => {
+        return item.sku === data.sku;
+      });
+      if (skuFound) {
+        skuFound.size = data.size;
+        skuFound.color = data.color;
+        skuFound.Quantity = data.quantity;
+      }
+    }
+
+    const myCart = JSON.stringify(this.cartStorage);
+    localStorage.setItem("myCart", myCart);
+
+    this.fetchDetails();
+  }
+
+
   fetchDetails() {
     const cartDetails: any = {
       details: [],
@@ -55,6 +80,8 @@ export class CartService {
 
     if (cartDetails.details !== null) {
       this.fetchData.getData().subscribe((data) => {
+        // console.log("data inside cart is ",data);
+        
         for (let i = 0; i < cartDetails.details.length; i++) {
           const matchSku = (data.find((item: any) => {
             return item.sku == cartDetails.details[i].sku;
@@ -73,9 +100,10 @@ export class CartService {
           cartDetails.amounts.shipping += 50;
 
           cartDetails.amounts.total = cartDetails.amounts.subTotal + cartDetails.amounts.shipping;
-          cartDetails.amounts.savings += (cartDetails.details[i].oldPrice * cartDetails.details[i].Quantity);
+          cartDetails.amounts.savings += cartDetails.details[i].oldPrice * cartDetails.details[i].Quantity;
         }
         cartDetails.amounts.savings -= cartDetails.amounts.total;
+        cartDetails.amounts.savings = Math.floor(cartDetails.amounts.savings);
 
 
       })
@@ -83,7 +111,6 @@ export class CartService {
       this.cartSubject.next(cartDetails);
     }
   }
-
   
   removeItem(sku: any) {
     const localStorageData = localStorage.getItem("myCart");

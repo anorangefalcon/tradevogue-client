@@ -1,3 +1,7 @@
+.empty{
+    min-height: calc(100vh - 150px);
+}
+
 .checkout-container{
     padding-block-start: 100px;
     padding-block-end: 50px;

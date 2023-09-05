@@ -1,68 +1,52 @@
-import { Component, OnInit } from '@angular/core';
-import { FetchDataService } from '../shared/services/fetch-data.service';
+import { Component } from '@angular/core';
+import { ProductsFilterService } from '../shared/services/products-filter.service';
 
 @Component({
   selector: 'app-explore',
   templateUrl: './explore.component.html',
   styleUrls: ['./explore.component.css']
 })
-export class ExploreComponent implements OnInit {
-  productArr: any[] = [];
-  original_data: any[] = [];
-  colors: string[] = ["Blue", "Black", "Green"];
-  categories: any[] = [];
-  selectedCategory: string[] = [];
-  selectedColor: string[] = [];
 
-  constructor(private fetchData: FetchDataService) {}
+export class ExploreComponent {
 
-  ngOnInit(): void {
-    this.fetchData.getData().subscribe(data => {
-      this.productArr = data;
-      this.original_data = data;
+  productData: any[] = [];
+  dataLoaded: any = false;
+  uniqueData: { [field: string]: any[] } = {};
+  filters: any[] = [];
+  filterObj: any = {}
 
-      this.productArr.forEach(product => {
-        if (!this.categories.includes(product.info.category)) {
-          this.categories.push(product.info.category);
-        }
-      });
+
+
+  constructor(private productFilter: ProductsFilterService) {
+    this.productFilter.getData().then((data) => {
+      // console.log(data);
+
+      this.productData = data.originalData;
+      // console.log(this.productData);
+
+      this.uniqueData = data.filterObj;
+      console.log(this.uniqueData);
+
+      this.dataLoaded = true;
+
     });
   }
 
-  toggleCategory(category: any) {
-    if (this.selectedCategory.includes(category)) {
-      this.selectedCategory = this.selectedCategory.filter(c => c !== category);
+  toggleShowItems(key: any, event: any) {
+    let target = event.target.innerHTML;
+    event.target.innerHTML = (target === 'Show Less') ? 'Show More' : 'Show Less';
+    this.uniqueData[key][-1] = !this.uniqueData[key][-1];
+  }
+
+  onChecked(event: any, field: string) {
+    if (!this.filterObj.hasOwnProperty(field)) {
+      this.filterObj[field] = [event.target.value];
     } else {
-      this.selectedCategory.push(category);
+      this.filterObj[field].push(event.target.value);
     }
 
-    this.applyFilters();
+    // console.log(this.filterObj);
   }
 
-toggleColor(color: any) {
-  if (this.selectedColor.includes(color)) {
-    this.selectedColor = this.selectedColor.filter(c => c !== color);
-  } else {
-    this.selectedColor.push(color);
-  }
-
-  this.applyFilters();
 }
 
-  applyFilters() {
-    if (this.selectedCategory.length > 0 || this.selectedColor.length > 0) {
-      this.productArr = this.original_data.filter(item =>
-        this.selectedCategory.includes(item.info.category) ||
-        this.selectedColor.some(color => item.colors.includes(color))
-      );
-    } else {
-      this.productArr = this.original_data;
-    }
-  }
-
-  clear() {
-    this.selectedCategory = [];
-    this.selectedColor = []; 
-    this.applyFilters();
-  }
-}

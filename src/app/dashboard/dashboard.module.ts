@@ -11,6 +11,8 @@ import { SharedModule } from '../shared/shared.module';
 import { AddproductComponent } from './addproduct/addproduct.component';
 import { AccountComponent } from './account/account.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { AddproductfeaturesComponent } from './addproductfeatures/addproductfeatures.component';
+import { UploadExcelService } from './services/upload-excel.service';
 
 @NgModule({
   declarations: [
@@ -21,7 +23,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     // FilterPipe,
     OrdersComponent,
     AddproductComponent,
-    AccountComponent
+    AccountComponent,
+    AddproductfeaturesComponent
   ],
   
   imports: [
@@ -32,6 +35,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     NgxPaginationModule,
     ReactiveFormsModule, 
     FormsModule
-  ]
+  ],
+  providers: [
+    UploadExcelService
+  ],
 })
 export class DashboardModule { }

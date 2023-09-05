@@ -1,6 +1,8 @@
 import { Component, ElementRef, HostListener, Renderer2, asNativeElements } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { imagesCount, imagesValidation, invalidformat } from 'src/app/shared/validators/imageValidators.validator';
+import { ImageUploadService } from 'src/app/shared/services/image-upload.service';
+import { imageSizeValidator, invalidformat } from 'src/app/shared/validators/imageValidators.validator';
+import { UploadExcelService } from '../services/upload-excel.service';
 
 @Component({
   selector: 'app-addproduct',
@@ -18,15 +20,23 @@ export class AddproductComponent {
   orderQuantity: number[] = [100, 200, 300, 400, 500];
 
   productsForm: FormGroup;
-  productImages: any = [];
+  productImages: any = []; //Orginal File For Validation and storage
+  productImagesD: any = [];
+  productImageUrl: any = [];
+  errorFile: any = []; //Duplicate File For display Purposes
 
-  constructor(private elem_ref: ElementRef, private render: Renderer2, private fb: FormBuilder) {
+  constructor(private elem_ref: ElementRef, 
+    private render: Renderer2, 
+    private fb: FormBuilder, 
+    private upload: ImageUploadService,
+    private excel: UploadExcelService) 
+  {
     this.productsForm = this.fb.group({
-      productImages: [this.productImages, {
+      productImages: [[], {
         validators: [
           Validators.required,
-          imagesValidation,
-          imagesCount
+          Validators.maxLength(6),
+          imageSizeValidator
         ]
       }],
       productname: ['', {
@@ -75,8 +85,9 @@ export class AddproductComponent {
           Validators.required,
         ]
       }],
-      salesprice: [],
+      salesPrice: [],
       discount: [0],
+      discountPrice: [],
       materialType: ['', {
         validators: [
           Validators.required
@@ -100,19 +111,12 @@ export class AddproductComponent {
     });
   }
 
-  // ngOnInit() : void {
-  //   Array.from(document.querySelectorAll(".option")).forEach((ele) => {
-  //     ele.addEventListener("click", () => this.updateSelected("category", $event))
-  //   })
-  // }
   // Single Select Function for Click, Blur, Update
   element!: HTMLInputElement;
 
   toggleClass(e: Event) {
     this.element = <HTMLInputElement>e.target;
-    // console.log(this.element);
     let ele = <HTMLInputElement>this.element.parentElement?.nextSibling;
-    // console.log(ele);
     $(ele).toggleClass('active');
   }
 
@@ -120,40 +124,67 @@ export class AddproductComponent {
     console.log(e);
     this.element = <HTMLInputElement>e.target;
     console.log((<HTMLInputElement>this.element.parentElement?.parentElement)?.contains(this.element));
-    if( !(<HTMLInputElement>this.element.parentElement?.parentElement)?.contains(this.element)){
-        console.log("here")
-        let ele = <HTMLInputElement>this.element.parentElement?.nextSibling;
-        $(ele).removeClass('active');
+    if (!(<HTMLInputElement>this.element.parentElement?.parentElement)?.contains(this.element)) {
+      console.log("here")
+      let ele = <HTMLInputElement>this.element.parentElement?.nextSibling;
+      $(ele).removeClass('active');
     }
   }
-  
-  updateSelected(option: any, type: string) {    
+
+  updateSelected(option: any, type: string) {
     this.productsForm.get(type)?.setValue(option);
     let ele = <HTMLInputElement>this.element.parentElement?.nextSibling;
     $(ele).removeClass('active');
   }
-  
-  // Handle Images
+
+  // Handle Images when not added in collection
   onFileChange(event: Event) {
-    const fileInput = event.target as HTMLInputElement;
-    const images = fileInput?.files;
-    for (let i = 0; i < images?.length!; i++) {
-      this.productImages.push(images![i].name);
+
+    let file = (<HTMLInputElement>event.target)?.files;
+
+    for (let j = 0; j < file!.length; j++) {
+      this.productImages.push(file![j]);
     }
+
     this.productsForm.get('productImages')?.setValue(this.productImages);
+
+    // Check Validators Error
+    // If true separate error files from accepted files
+    this.errorFile = [];
+    if (this.productsForm.get('productImages')?.hasError('errorFiles')) {
+      let data = this.productsForm.get('productImages')?.value;
+
+      // error section updated
+      this.errorFile.push(this.productsForm.get('productImages')?.getError('errorFiles'));
+      this.productImagesD = data.filter((file: any) => {
+        return !this.errorFile.filter((errorfile: any)=> {return errorfile.name === file.name})
+      })
+      console.log(this.productImagesD);
+      
+    } else{
+      this.productImagesD = this.productImages;
+    }
+
+    if (this.productsForm.get('productImages')?.hasError('maxlength')) {
+      this.productImagesD = this.productImages.slice(0, 6);
+      this.errorFile.push(this.productImages.slice(6, this.productImages.length));
+      console.log(this.errorFile);
+    }
   }
 
   // Delete Image
   deleteImage(image: any) {
+    console.log("Delete");
+
     this.productImages = this.productImages.filter((img: any) => {
-      return img !== image;
+      return img.name !== image;
     });
     this.productsForm.get('productImages')?.setValue(this.productImages);
   }
 
 
   updateMultiSelected(event: Event, type: string) {
-    let inputList = this.productsForm.get('sizes')?.value;
+    let inputList = this.productsForm.get(type)?.value;
     let checkbox = <HTMLInputElement>event.target;
 
     if (checkbox.checked) {
@@ -166,10 +197,51 @@ export class AddproductComponent {
 
   }
 
-  onsubmit() {
-    console.log(this.productsForm);
-    console.log("formcontrol vla ", typeof (this.productsForm.get('sizes')?.value));
+  uploadFile(event: Event){
+    let data = this.excel.handleFileInput(event);
+    data.then((products)=>{
+      console.log(products);
+      
+      let product_keys = Object.keys(products['errors']);
+      product_keys.forEach((sheet)=>{
+        let sheets_keys = Object.keys(products['errors'][sheet]);
+        // console.log(sheets_keys);
 
+        sheets_keys.forEach((errors)=>{
+          let error_list = Object.keys(products['errors'][sheet][errors]);
+          // console.log(error_list); 
+
+          error_list.forEach((detail)=>{
+            console.log(detail);
+            
+          })
+
+        })
+      })
+
+
+    })
+  }
+
+  onsubmit() {
+    this.errorFile = [];
+
+    if (!this.productsForm.valid) {
+      this.productsForm.markAllAsTouched();
+    } else {
+      // this.productImages.forEach(async () => {
+
+      //   await this.upload.fileupload(this.productsForm.get('productName')?.value, this.productsForm.get('productImages')?.value)
+      //     .then((response: any) => {
+      //       console.log(response);
+      //       this.productImageUrl.push(response);
+      //     })
+      //     .catch((error: any) => {
+      //       this.errorFile.push(error.Error);
+      //     })
+      //     console.log("Hello");
+      // })
+    }
 
   }
 }

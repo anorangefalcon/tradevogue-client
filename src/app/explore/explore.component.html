@@ -1,55 +1,32 @@
-<div class="explore-container d-flex">
-  <div class="filters d-flex flex-column gap-10">
-    <div class="head d-flex justify-content-md-between align-items-center">
-      <h4>FILTERS</h4>
-      <button class="clear-btn" (click)="clear()">Clear all</button>
-    </div>
-    <div class="brand-filter d-flex flex-column gap-10">
-      <h5>BRAND</h5>
-      <div class="brand-check d-flex gap-5">
-        <input type="checkbox" name="brand" id="bonkers">
-        <label for="bonkers">Bonkers Corners</label>
-      </div>
-    </div>
-    <div class="category-filter d-flex flex-column gap-10">
-      <h5>CATEGORY</h5>
-      <div class="category-check d-flex gap-5" *ngFor="let category of categories">
-        <input type="checkbox"
-               [checked]="selectedCategory.includes(category)"
-               (click)="toggleCategory(category)"
-               [id]="category">
-        <label [for]="category">{{ category }}</label>
-      </div>
-    </div>
-<div class="color-filter d-flex flex-column gap-10">
-  <h5>COLOR</h5>
-  <div class="category-check d-flex gap-5" *ngFor="let color of colors">
-    <input type="checkbox"
-           [checked]="selectedColor.includes(color)"
-           (click)="toggleColor(color)"
-           [id]="color">
-    <label [for]="color">{{ color }}</label>
-  </div>
-</div>
-    <div class="price-filter d-flex flex-column gap-10">
-      <h5>PRICE</h5>
-      <div class="price-check d-flex gap-5">
-        <input type="checkbox" name="price" id="price">
-        <label for="price">₹500 - ₹1000</label>
-      </div>
-    </div>
-    <div class="discount-filter d-flex flex-column gap-10">
-      <h5>DISCOUNT</h5>
-      <div class="discount-check d-flex gap-5 align-items-center">
-        <input type="radio" name="discount" id="discount">
-        <label for="discount">30% and above</label>
-      </div>
-    </div>
-  </div>
+<div class="explore-container container d-flex">
 
-  <div class="explore-cards grid">
-    <div *ngFor="let product of productArr">
-      <app-card-template [product]="product"></app-card-template>
+    <div *ngIf="dataLoaded" class="filters d-flex flex-column gap-10">
+        <div class="head">
+            <h4>FILTERS</h4>
+            <!-- <button  class="clear-btn" >Clear all</button> -->
+        </div>
+        <div *ngFor="let filter of uniqueData | keyvalue " class="types">
+            <div class="category d-flex flex-column gap-10">
+                <h5 class="capital">{{ filter.key }}</h5>
+                <div *ngFor="let value of filter.value | slice:0:3; let i = index" class="d-flex gap-10">
+                    <input type="checkbox" [name]="filter.key" [value]="value" [id]="value" (change)="onChecked($event, filter.key)">
+                    <label [for]="value" class="capital">{{ value}}</label>
+                </div>
+
+                <div *ngIf="filter.value[-1]==true" class="d-flex flex-column gap-10">
+                    <div *ngFor="let value of filter.value | slice:3:-1; let i = index" class="d-flex gap-10">
+                        <input type="checkbox" [name]="filter.key" [value]="value" [id]="value" (change)="onChecked($event, filter.key)">
+                        <label [for]="value" class="capital">{{ value}}</label>
+                    </div>
+                </div>
+
+                <a class="show-btn" *ngIf="filter.value.length>3" (click)="toggleShowItems(filter.key,$event)">Show More</a>
+            </div>
+        </div>
     </div>
-  </div>
+    <div class="explore-cards grid">
+        <div *ngFor="let product of productData" class="idhar">
+            <app-card-template [product]="product"></app-card-template>
+        </div>
+    </div>
 </div>
