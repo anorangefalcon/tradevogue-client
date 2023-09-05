@@ -13,9 +13,9 @@ export class ExploreComponent {
   dataLoaded: any = false;
   uniqueData: { [field: string]: any[] } = {};
   filters: any[] = [];
-  filterObj :any= {}
-  
-  
+  filterObj: any = {}
+
+
 
   constructor(private productFilter: ProductsFilterService) {
     this.productFilter.getData().then((data) => {
@@ -30,30 +30,23 @@ export class ExploreComponent {
       this.dataLoaded = true;
 
     });
-
   }
-  toggleShowItems(el: any, eve: any) {
 
-    if (eve.target.innerHTML == 'Show Less') {
-      eve.target.innerHTML = 'Show More';
-    }
-    else {
-      eve.target.innerHTML = 'Show Less';
-    }
-    this.uniqueData[el][-1] = !this.uniqueData[el][-1];
-
+  toggleShowItems(key: any, event: any) {
+    let target = event.target.innerHTML;
+    event.target.innerHTML = (target === 'Show Less') ? 'Show More' : 'Show Less';
+    this.uniqueData[key][-1] = !this.uniqueData[key][-1];
   }
-  
-  onChecked(el: any, field: string) {
-    
+
+  onChecked(event: any, field: string) {
     if (!this.filterObj.hasOwnProperty(field)) {
-        this.filterObj[field] = [el.target.value]; 
+      this.filterObj[field] = [event.target.value];
     } else {
-        this.filterObj[field].push(el.target.value); 
+      this.filterObj[field].push(event.target.value);
     }
 
-    console.log(this.filterObj);
-}
+    // console.log(this.filterObj);
+  }
 
 }
 
