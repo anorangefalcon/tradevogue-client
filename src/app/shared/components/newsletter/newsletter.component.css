@@ -1,0 +1,59 @@
+.newsletter {
+    padding-block: 100px;
+    /* background: url(../../../../assets/newbg.jpeg); */
+    background: linear-gradient(#2222229c, #22222267), url(../../../../assets/newbg.jpeg);
+
+    /* background: url('https://plus.unsplash.com/premium_photo-1673502750959-bc29600bc189?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2071&q=80'); */
+    /* background-color: rgb(var(--accent), 0.1); */
+    /* background-image: url(../../../../assets/deal-of-week-component/dealOfWeek-homeBg.png); */
+    background-repeat: no-repeat;
+    background-size: cover;
+    color: rgb(var(--text-white));
+    /* background-position: center; */
+    & h2{
+        font-size: 30px !important;
+        font-weight: 600;
+        letter-spacing: 0.7px;
+    }
+    & input {
+        width: 570px;
+        font-size: 14px;
+        padding: 12px 15px;
+        background-color: rgb(var(--text-white));
+        border: none;
+        border-radius: 5px;
+        outline: none;
+    }
+    & ::placeholder{
+        letter-spacing: 0.7px;
+        color: rgb(var(--text-black), 0.4);
+    }
+     & button {
+        border-radius: 5px !important;
+        padding: 10px 25px;
+    }
+    
+    
+    & .medias {
+         margin-block-start: 10px; 
+        & i {
+            font-size: 18px;
+            color: rgb(var(--text-white));
+            transition: 0.3s ease-in-out;
+        }
+        & i:hover{
+            color: rgb(var(--accent));
+        }
+    }
+}
+@media screen and (max-width: 1400px){
+    input {
+        width: 520px !important;
+    }
+}
+@media screen and (max-width: 990px) {
+    input {
+        width : 300px;
+    }
+    
+}

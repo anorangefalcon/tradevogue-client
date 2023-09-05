@@ -1,0 +1,158 @@
+#deal-of-week {
+    background-color: rgb(var(--success), 0.1);
+    background-image: url(../../../assets/deal-of-week-component/dealOfWeek-homeBg.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+
+    & .container {
+        min-height: 450px;
+    }
+
+    & .sub-heading {
+        width: 50%;
+
+        & p {
+            font-size: 18px !important;
+            color: rgb(var(--accent));
+            font-weight: 500;
+
+        }
+
+        & h3 {
+            font-size: 60px !important;
+            font-weight: 400;
+            letter-spacing: 1.2px;
+            margin-bottom: 10px;
+        }
+
+        & h5 {
+            font-size: 18px !important;
+            text-transform: uppercase;
+            font-weight: 500;
+            margin-bottom: 5px;
+            color: rgb(var(--primary));
+        }
+    }
+
+    & .deal-week-img {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 50%;
+
+        & img {
+            max-height: 400px;
+        }
+    }
+
+    & .shop__button {
+
+        & a{
+            font-size: 18px !important;
+            text-transform: uppercase;
+            font-weight: 500;
+        }
+        & .icons {
+            font-weight: 400;
+            /* color: rgb(var(--primary));  */
+            transition: all 0.3s ease-in-out;
+        }
+
+        & a:hover+.icons {
+            transform: translateX(5px);
+        }
+    }
+
+}
+
+
+@media screen and (max-width: 1024px) {
+
+    #deal-of-week {
+
+        & .sub-heading {
+            & h3 {
+                font-size: 38px !important;
+            }
+
+            & h5 {
+                font-size: 18px !important;
+            }
+        }
+
+        & .deal-week-img {
+            & img {
+                max-height: 350px;
+            }
+        }
+    }
+
+}
+
+
+@media screen and (max-width: 768px) {
+
+    #deal-of-week {
+
+        & .container {
+            min-height: 250px;
+        }
+
+        & .sub-heading {
+            & p {
+                font-size: 12px !important;
+            }
+
+            & h3 {
+                font-size: 24px !important;
+            }
+
+            & h5 {
+                font-size: 14px !important;
+            }
+        }
+
+        & .deal-week-img {
+            & img {
+                max-height: 200px;
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 480px) {
+
+    #deal-of-week {
+
+        & .container {
+            min-height: 250px;
+            flex-direction: column;
+            padding-block: 30px;
+        }
+
+        & .sub-heading {
+            width: 100%;
+            text-align: center;
+            margin-bottom: 20px;
+
+
+            & p {
+                font-size: 12px !important;
+            }
+
+            & h3 {
+                font-size: 24px !important;
+                margin-bottom: 5px;
+            }
+
+            & h5 {
+                font-size: 14px !important;
+            }
+        }
+
+        & .deal-week-img {
+            width: 100%;
+
+        }
+    }
+}

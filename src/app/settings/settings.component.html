@@ -1,0 +1,126 @@
+<section>
+    <div class="container d-flex">
+        <!--BUTTONS DIV -->
+        <div class="constant">
+            <button (click)="changeComponent('orders')">Orders</button>
+            <button (click)="changeComponent('profile')">Profile</button>
+            <!-- <button>Orders</button> -->
+        </div>
+
+        <!-- COMPONENT SHOW DIV -->
+        <div class="width-80">
+            <div class="profile" *ngIf="showData=='profile' ">
+            <div class="title">
+                <h2>Profile Details</h2>
+            </div>
+            <div class="content">
+               <div class="common">
+
+                <div class="d-flex justify-content-md-between">
+                    <p>Name</p>
+                    <input type="text" value="{{userData.FullName.firstName}} {{userData.FullName.lastName}}"  [readonly]="isReadOnly">
+                    
+                </div>
+               
+                <div class="d-flex justify-content-md-between">
+                    <p>username</p>
+                    <input type="text" value={{userData.username}} [readonly]="isReadOnly">
+                    
+                </div>
+    
+                <div class="d-flex justify-content-md-between">
+                    <p>useremail</p>
+                    <input type="email" value={{userData.email}} [readonly]="isReadOnly">
+                </div>
+    
+    
+                <div class="d-flex justify-content-md-between">
+                    <p>mobileNo</p>
+                    <input type="email" value={{userData.mobileNo}} [readonly]="isReadOnly">
+                </div>
+    
+                <div class="d-flex justify-content-md-between">
+                    <p>Gender</p>
+                    <!-- <p>{{userData.gender}}</p> -->
+                    
+
+                    <div class="d-flex gender-top">
+
+                    <div class="gender" *ngIf="userData.gender=='male' || !isReadOnly">
+                        <input type="radio" name="male" *ngIf="!isReadOnly"> 
+                        <label for="male">Male</label>
+                      
+                    </div>
+
+                    <div class="gender" *ngIf="userData.gender=='female' || !isReadOnly">
+                        <input type="radio" name="female" *ngIf="!isReadOnly">
+                        <label for="female">Female</label>
+                    </div>
+                </div>
+                </div>
+              
+                <div class="d-flex justify-content-md-between">
+                    <p>DOB</p>
+                    <input type="date" value={{userData.DOB}} [readonly]="isReadOnly" class="width-198">
+                </div>
+    
+                <div class="d-flex justify-content-md-between">
+                    <p>Address</p>
+                    <input type="text" value="{{userData.address}}"  [readonly]="isReadOnly">
+                    
+                </div>
+
+    
+               </div>
+              </div>
+    
+              <button class="btn-primary" (click)="editClick()" #myButton>Edit Details</button>
+            </div>
+     
+            <div  *ngIf="showData=='orders' " class="Allorders">
+
+                <div *ngFor="let order of userData.orders" class="order">
+                <div class="d-flex justify-content-md-between orderDetails" >
+                    <div class="common">
+                 <p><b> OrderId </b> : {{order.orderId}} </p>
+               <p><b> OrderDate : </b>{{order.orderDate}} </p>
+            </div>
+
+            <div class="common">
+               <p><b>ShipTo :</b>{{order.shipTo}}</p>
+                <p><b>ProductCount :</b>{{order.products.length}}</p>
+            </div>
+
+                <div class="d-flex align-center">
+                <p class="text-center"><b>OrderTotal : </b>{{order.orderTotal}}</p>
+                </div>
+                </div>
+
+
+                <div class="productsList">
+                <div *ngFor="let product of order.products" class="d-flex  justify-content-md-between productItem">
+
+
+                    <div class="d-flex gap-30">
+                    <img src="{{product.image}}" style="width: 100px; height: 100px;">
+
+                    <div class="d-flex flex-column justify-content-center gap-5">
+                    <h4>{{product.name}}</h4>
+                    <p>{{product.description}}</p>
+                    <p>Status:{{product.status}}</p>
+                </div>
+            </div>
+                    <p class="price d-flex align-center">{{product.price}}</p>
+                </div>
+
+
+            </div>
+            </div>
+ 
+             </div>
+        </div>
+
+       
+
+    </div>
+</section>

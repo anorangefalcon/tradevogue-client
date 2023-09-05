@@ -1,0 +1,114 @@
+#dashboard-section{
+    height: 100vh;
+    width: 100%;
+    /* background-color: rgb(var(--dash-card-clr)) ; */
+    
+    & .nav-header{
+        padding-inline: 20px;
+        padding-block: 30px;
+    }
+
+    & .side-panel {
+        width: 240px;
+        height: 100%;
+        /* background-color: rgb(var(--dash-card-clr)) ; */
+        box-shadow: 2px 0px 5px rgba(128, 128, 128, 0.164);  
+        position: fixed;
+        inset-block-start: 0;
+        inset-inline-start: 0;
+        height: 100%;
+        transition: all 0.2s ease-in-out;
+        overflow: hidden;
+        z-index: 5;
+        background-color: rgb(var(--dash-card-clr));
+    }
+
+/* 
+    & .side-panel.active{
+        width: 250px;
+    } */
+
+    & .panel-items{
+        display: flex;
+        flex-direction: column;
+        /* padding-block: 50px; */
+        /* margin-block-start: 20px; */
+        overflow: scroll;
+
+        &::-webkit-scrollbar{
+            display: none;
+        }   
+    }
+
+    & .panel-links{
+        width: 100%;
+        display: flex;
+        align-items: center;
+        flex-direction: column ;
+        transition: all 0.2s ease-in-out;
+        cursor: pointer;
+        
+        & a{
+            display: flex;
+            align-items: center;
+            display: flex;
+            width: 100%;
+            padding: 12px 20px;
+        }
+
+        &:is(:hover){
+            background-color: rgb(var(--primary), 0.05);
+        }
+    }
+
+    & .icons{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 10px;
+        width: 30px;
+        height: 30px;
+    }
+
+    & .material-symbols-outlined {
+        font-size: 20px;
+        font-weight: 300;
+        color: rgb(var(--primary));
+    }
+
+    & .link-text{
+        color: rgb(var(--dash-title-clr));
+    }
+
+    & .toggle-button{
+        & .icons{
+            /* inset-block-start: 20px;
+            inset-inline-end: 16px; */
+            margin-right: 0px;
+            font-size: 30px;
+        }
+    }
+
+    & .sub-items{
+        width: 100%;
+        background-color: rgb(var(--secondary), 0.05);
+        transition: all 1s ease-in-out;
+        height: 0;
+        overflow: hidden;
+        padding-inline-start: 20px;
+
+        & .sub-links{
+            transition: all 0.2s ease-in-out;
+        }
+
+        & .sub-links:hover{
+            opacity: 0.5;
+        }
+    }
+
+    & .collapse{
+        display: block;
+        height: max-content;
+    }
+
+ }

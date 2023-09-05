@@ -1,1 +1,15 @@
-<p>product-cards works!</p>
+<div class="product-cards container">
+    <div class="section-header">
+        <h2 class="section-heading">
+            Latest Arrival
+        </h2>
+        <p class="section-sub-heading">
+            Explore latest apparel for this fall
+        </p>
+    </div>
+    <div class="card-container grid">
+        <div *ngFor="let product of products;">
+            <app-card-template [product]="product"></app-card-template>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,109 @@
+#dashboard-section{
+    
+    /* DashBoard Colors */
+    --background-clr: 238, 238, 238;
+    --dash-card-clr: 255, 255, 255;
+    --dash-yellow-clr: 249, 165, 80;
+    /* --dash-green-clr: 16, 196, 105; */
+    --dash-green-clr: var(--success);
+    --dash-blue-clr: 24, 138, 226;
+    /* --dash-red-clr: 255, 91, 91; */
+    --dash-red-clr: var(--danger);
+    --dash-title-clr: 34, 40, 49;
+    /* --dash-title-clr: 0, 28, 48; */
+    --dash-sub-title-clr: 57, 62, 70;
+
+    /* --background-clr: 0, 0, 0;
+    --dash-card-clr: 44, 44, 49;
+    --dash-yellow-clr: 249, 165, 80;
+    --dash-green-clr: var(--success);
+    --dash-blue-clr: 24, 138, 226;
+    --dash-red-clr: var(--danger);
+    --dash-title-clr: 255, 255, 255;
+    --dash-sub-title-clr: 200, 200, 200;
+    
+    --text-black: 255, 255, 255;
+    --text-white: 0, 0, 0;
+    --background: 34, 34, 34;
+    --primary: 255, 255, 255;
+    --secondary: 200, 200, 200;
+    --accent: 0, 173, 181;
+    --danger: 223, 22, 33;
+    --success: 60, 167, 23; */
+
+    display: flex;
+    font-size: 14px !important;
+    background-color: rgb(var(--background-clr), 0.4);
+
+    & .content{
+        margin-left: 240px;
+        padding: 24px;
+        width: 100dvw;
+    }
+    
+
+    & .spike{
+
+        & .fa-arrow-trend-up{
+            color: rgb(var(--dash-green-clr)) !important;
+            font-size: 12px !important;
+        }
+        & .value{
+            color: rgb(var(--dash-green-clr)) !important;
+            font-size: 12px !important;
+        }
+    }
+
+    & .table-controls{
+        & pagination-controls{
+            display: flex;
+            align-items: center;
+            
+            & .ngx-pagination {
+                margin-bottom: 0 !important;
+            }
+
+            & .ngx-pagination .current{
+                padding: 7px 12px;
+                background-color: rgb(var(--accent), 0.9) !important;
+                border-radius: 5px;
+            }
+        }
+    }
+
+    
+    & .drop{
+        
+        & .fa-arrow-trend-down{
+            color: rgb(var(--dash-red-clr)) !important;
+            font-size: 12px !important;
+        }
+        & .value{
+            color: rgb(var(--dash-red-clr)) !important;
+            font-size: 12px !important;
+            font-weight: 500;
+        }
+    }
+
+    & .inventory{
+        font-weight: 600;
+        font-size: 13px;
+    }
+    & .inventory.good{
+        color: rgb(var(--success));
+    }
+    & .inventory.okay{
+        color: rgba(255, 85, 0, 0.992);
+    }
+    & .inventory.bad{
+        color: rgb(var(--danger));
+    }
+    
+}
+
+/* Apply rounded corners to the legend container */
+.rounded-legend .chartjs-render-monitor .chartjs-size-monitor-expand,
+.rounded-legend .chartjs-render-monitor .chartjs-size-monitor-shrink,
+.rounded-legend .chartjs-render-monitor {
+    border-radius: 10px; /* Adjust the border radius as needed */
+}

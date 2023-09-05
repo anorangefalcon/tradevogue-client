@@ -1,1 +1,45 @@
-<p>login works!</p>
+<div class="header d-flex fixed align-items-center">
+    <img src="../../assets/logo.svg" class="head-logo"alt="logo" width="150px">
+</div>
+
+<section class="login d-flex">
+    <div class="left-part d-flex justify-content-center align-items-center ">
+        <div class="form-container d-flex flex-column">
+            <h2 class="text-center">Welcome Back</h2>
+
+                <form [formGroup]="loginForm"  class="d-flex flex-column gap-15">
+
+                    <!-- USERNAME INPUT  -->
+                    <div class="form__group relative d-flex flex-column">
+                        <label class="form__label">Username<span>*</span></label>
+                        <span class="material-symbols-outlined person form__icon absolute">person</span>
+                        <input type="text" placeholder="Enter Your Username" formControlName="username" class="form__input/">
+                        <small *ngIf="isFormSubmitted && loginForm?.get('username')?.hasError('invalidUsername') && !loginForm?.get('username')?.hasError('required') && loginForm?.get('username')?.touched"
+                        class="invalid errmsg">*Please enter valid username.</small>
+                    </div>
+                    
+                    <!-- PASSWORD INPUT  -->
+                    <div class="form__group d-flex  flex-column relative">
+
+                        <!-- [ngClass]="{'wrapper-invalid': (loginForm?.get('password')?.hasError('required') || loginForm?.get('password')?.hasError('password-fail')) && loginForm?.get('password')?.touched}"
+                        [ngClass]="{'wrapper-valid': (!loginForm?.get('password')?.hasError('required') && !loginForm?.get('password')?.hasError('password-fail')) && loginForm?.get('password')?.touched}"> -->
+                        <label>Password<span>*</span></label>
+                        <span class="material-symbols-outlined key  form__icon absolute">key</span>
+                        <input [type]="passwordFieldType" placeholder="Enter Your Password" formControlName="password">
+                        <button class="eye-btn flex justify-content-center align-items-center" (click)="togglePasswordVisibility()">
+                            <span class="material-symbols-outlined eye">{{ showPassword ? 'visibility' : 'visibility_off' }}</span>
+                        </button>
+                        <small>
+                        <p *ngIf="isFormSubmitted && loginForm?.get('password')?.hasError('password-fail') && !loginForm?.get('password')?.hasError('required') && loginForm?.get('password')?.touched"
+                        class="invalid">*Please enter valid password.</p>
+                        </small>
+                    </div>
+
+                    <a class="forgot-pass" href="#">Forgot password?</a>
+                    <button class="btn-primary loginbtn" (click)="onLogin()">Login</button>
+                    <p class="text-center acc-text">Don't have an account? <a class="sign-up-text" [routerLink]="['/signup']">Sign up</a></p>
+                </form>
+        </div>
+    </div>
+    <div class="right-part"></div>
+</section>

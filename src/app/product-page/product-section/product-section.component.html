@@ -1,0 +1,132 @@
+<section *ngIf="data.productDetails !== {} " class="product">
+
+    <div class="container d-flex gap-65">
+        <div class="product-carousel">
+            <owl-carousel-o [options]="customOptions" [ngClass]="{crousel: true}">
+                <ng-template carouselSlide *ngFor="let image of data.productDetails.image">
+                    <div class="img-div d-flex justify-content-center align-items-center"
+                        [ngStyle]="{ 'background': 'url(' + image + ')', 'background-size': 'cover' }">
+                    </div>
+                </ng-template>
+            </owl-carousel-o>
+
+
+         
+            <div class="products-imgs-container row d-flex">
+                <div class="gal-img pointer" *ngFor="let image of data.productDetails.image; let i = index"
+                    [ngStyle]="{ 'background': 'url(' + image + ')', 'background-size': 'cover', 'background-position': 'center' }
+                     "
+                     (click) = "showZoomedCarousel(i)">
+                </div>
+            </div> 
+
+        </div>
+        <div class="product-desc">
+            <h2 class="prod-name">{{ data.productDetails.name }}</h2>
+            <p class="subTitle">{{ data.productDetails.info['subTitle'] }}</p>
+            <div class="prod-info d-flex flex-column gap-25">
+                <div class="d-flex align-items-center gap-10">
+                    <h5 class="price">₹{{ data.productDetails.price }}</h5>
+    
+                    <div class="offer d-flex gap-5 align-items-center">
+                        <p *ngIf="data.productDetails.oldPrice != (undefined || 0)" class="old-price">₹{{ data.productDetails.oldPrice }}
+                        </p>
+                        <p class="offer-percentage" *ngIf="data.offerPercentage !== 0">
+                            ({{ data.offerPercentage }}% Off)</p>
+                    </div>
+                </div>
+    
+    
+                <div class="reviews-avail d-flex align-items-center gap-10">
+                    <div *ngIf="data.avgRating !== 0" class="rating d-flex align-items-center">
+                        <span *ngFor="let i of createArrayToIterate(data.avgRating)"
+                            class="material-symbols-outlined filled">star</span>
+                        <span *ngIf="(data.avgRating % 1) !== 0" class="material-symbols-outlined">star_half</span>
+                        <span *ngFor="let i of createArrayToIterate(5 - data.avgRating)"
+                            class="material-symbols-outlined">star</span>
+                    </div>
+                    <p>({{data.avgRating}}/5 · {{data.productDetails.reviews.length}} Reviews)</p>
+                    <!-- <div class="avail">
+                        <p><strong>Available</strong> : 1000</p>
+                    </div> -->
+                </div>
+                <div class="sizes d-flex align-items-center gap-20" id="sizes" >
+                    <p>Size:</p>
+                    <div class="sizes-opt d-flex gap-10">
+                        <div *ngFor="let productSize of data.productDetails.sizes" class="sizes-radios">
+                            <input type="radio" name="size" [value]=productSize id="size_{{ productSize }}" [(ngModel)]="selectedSize">
+                            <label for="size_{{ productSize }}">{{ productSize }}</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="colors d-flex align-items-center gap-15">
+                    <p>Color:</p>
+                    <div class="colors-opt d-flex gap-10">
+                        <div class="colors-radios d-flex align-items-center" *ngFor="let color of data.productDetails.colors">
+                            <input type="radio" name="color" [value]=color [style.background-color]="color" [(ngModel)]="selectedColor">
+                        </div>
+                    </div>
+                </div>
+    
+                <div class="d-flex gap-15 align-items-center">
+                    <p>Quantity:</p>
+    
+                    <select placeholder-text="Select Quantity" [(ngModel)]="selectedQ">
+                        <option value="" disabled selected>Select Quantity</option>
+                        <option *ngFor="let quantity of data.productDetails.orderQuantity" [value]="quantity">
+                            {{ quantity }}
+                        </option>
+                    </select>
+                </div>
+                
+                <div class="cart-div d-flex gap-10 align-items-center">
+                    <button class="btn-primary wishlist-btn d-flex align-items-center">
+                        <span class="material-symbols-outlined">
+                            favorite
+                        </span>
+                    </button>
+                    <button class="btn-primary d-flex gap-10 align-items-center" (click)="addToCart()">
+                        <span class="material-symbols-outlined">
+                            shopping_cart
+                        </span>
+                        <p>ADD TO CART</p>
+                    </button>
+                </div>
+
+                <div class="short-description">
+                    {{ data.productDetails.description }} 
+                    {{ data.productDetails.description }}
+                    {{ data.productDetails.description }}
+                    {{ data.productDetails.description }}
+                </div>
+
+                <div class="tags d-flex gap-10 d-flex align-items-center">
+                    <h4>TAGS :</h4>
+                    <a *ngFor="let tag of data.productDetails.info.tags">
+                        {{ tag }}
+                    </a>
+                   
+                </div>
+                <div class="sku d-flex gap-10">
+                    <h4>SKU :</h4>
+                    <p class="sku_id">{{ data.productDetails.sku }}</p>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+    <div *ngIf="showCarousel === true" class="zoomed-carousel-outer">
+        <div class="zoom-close-btn" (click) = "showCarousel = false">
+            <span class="material-symbols-outlined">close</span>
+        </div>
+        <owl-carousel-o [options]="zoomCarouselOptions" [ngClass]="{crousel: true}" class = "zoomed-carousel" >
+            <ng-template carouselSlide *ngFor="let image of data.productDetails.image">
+                <div class="img-div d-flex justify-content-center align-items-center"
+                    [ngStyle]="{ 'background': 'url(' + image + ')', 'background-size': 'cover' }">
+                </div>
+            </ng-template>
+        </owl-carousel-o>
+    </div>
+</section>
+
+

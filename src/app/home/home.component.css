@@ -1,0 +1,16 @@
+.home-carousel {
+    padding-block: 100px;
+}
+
+.py-100{ /* Padding Block 100*/
+  padding-block: 100px;  
+}
+
+.pb-100{
+    padding-block-end: 100px;
+}
+
+
+
+
+/* @media screen and (max-width: ) */
