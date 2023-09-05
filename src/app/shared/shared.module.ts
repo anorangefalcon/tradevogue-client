@@ -18,6 +18,7 @@ import { CustomSelectComponent } from './custom-select/custom-select.component';
 import { ReactiveFormsModule} from '@angular/forms';
 import { FormsModule } from '@angular/forms';
 import { FilterPipe } from './Pipe/filter.pipe';
+import { ProductFilterPipe } from './Pipe/product-filter.pipe';
 
 
 @NgModule({
@@ -35,6 +36,7 @@ import { FilterPipe } from './Pipe/filter.pipe';
     NewsletterComponent,
     CustomSelectComponent,
     FilterPipe,
+    ProductFilterPipe,
   ],
   imports: [
     CommonModule,
@@ -57,6 +59,7 @@ import { FilterPipe } from './Pipe/filter.pipe';
     SupportComponent,
     PopOpenDirective,
     FilterPipe,
+    ProductFilterPipe,
     PopCloseDirective,
     CustomSelectComponent
   ]

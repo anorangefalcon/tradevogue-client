@@ -10,7 +10,7 @@
     /* --dash-red-clr: 255, 91, 91; */
     --dash-red-clr: var(--danger);
     --dash-title-clr: 34, 40, 49;
-    --dash-title-clr: 0, 28, 48;
+    /* --dash-title-clr: 0, 28, 48; */
     --dash-sub-title-clr: 57, 62, 70;
 
     /* --background-clr: 0, 0, 0;

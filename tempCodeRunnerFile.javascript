@@ -1,3 +1,6 @@
-let a="abc";
-let obj={"abc":10};
-console.log(obj[a]);
+const x=[{color:"A"},{color:"B"}]
+console.log("x is ",x);
+
+const y=x.map((el)=>{ return el});
+
+console.log("y is ",x[0].color);

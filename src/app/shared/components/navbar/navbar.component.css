@@ -209,6 +209,17 @@ header.active {
     }
 }
 
+.cart-items{
+    & img{
+        max-width: 40px;
+    }
+    & h4{
+        font-size: 12px !important;
+    }
+    & p{
+        font-size: 8px !important;
+    }
+}
 
 @media screen and (max-width: 768px) {
     .container {
