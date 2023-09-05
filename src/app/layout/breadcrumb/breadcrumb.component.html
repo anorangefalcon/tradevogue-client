@@ -1,0 +1,13 @@
+<div class="breadcrumb container" style="padding-inline: 20px " *ngIf="breadcrumbs.length > 0">
+  <ng-container *ngFor="let breadcrumb of breadcrumbs; let last = last">
+    <ng-container style="font-weight: 100;" *ngIf="!last && breadcrumb.label !== null">
+      <a [routerLink]="breadcrumb.url">{{ breadcrumb.label }}</a> /
+    </ng-container>
+    <ng-container *ngIf="breadcrumb.label === 'Product Section'">
+      <a [routerLink]="['/explore']">Explore</a> / 
+    </ng-container>
+    <ng-container *ngIf="last && breadcrumb.label !== null">
+      <a [routerLink]="breadcrumb.url" style="font-weight: 600; border-block-end: 1px solid rgb(var(--text-black), 0.2);">{{ breadcrumb.label }}</a>
+    </ng-container>
+  </ng-container>
+</div>

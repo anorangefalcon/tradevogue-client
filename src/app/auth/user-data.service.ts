@@ -25,24 +25,5 @@ export class UserDataService {
     );
   }
 
-appendUser(user: any): Observable<any> {
-  return this.getData().pipe(
-    map((data: any[]) => {
-      const userToAdd = {
-        username: user.username,
-        email: user.email,
-        password: user.password
-      };
-      console.log("User to add: ", userToAdd);
-      data.push(userToAdd);
-      return data;
-    }),
-    switchMap((updatedData: any[]) => {
-      console.log("Sending PUT request with updated data: ", updatedData);
-      return this.http.put(this.userDetailsUrl, updatedData);
-    })
-  )
-}
-
 
 }

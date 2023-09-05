@@ -18,16 +18,17 @@ export class ProductPageComponent implements OnInit{
 
   constructor(
     private route: ActivatedRoute,
-    private fetchService: FetchDataService
+    private fetchService: FetchDataService,
   ) { }
+
+   breadcrumbs: { label: string; url: string }[] = [];
 
   ngOnInit(): void {
     this.data.productDetails.info = [];
     this.data.productDetails.reviews = [];
-
-
     this.route.params.subscribe(params => {
       const sku = params['sku'];
+      
       
       this.fetchService.getData().subscribe((data: any[]) => {
         this.data.productDetails = data.find((item) => {
@@ -45,5 +46,4 @@ export class ProductPageComponent implements OnInit{
     });
     
   }
-  
 }

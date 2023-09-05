@@ -50,86 +50,124 @@
     </div>
     <div class="card user__form d-flex flex-column gap-30">
         <div class="header d-flex justify-content-center align-items-center gap-20 text-center">
-            <input type="radio" name="form" id="profile__form" checked>
-            <label for="profile__form" (click)="changeForm()">
+            <input type="radio" name="form" id="profile__form" checked (click)="changee = true">
+            <label for="profile__form">
                 <h4>Profile Details</h4>
             </label>
-            <input type="radio" name="form" id="account__form">
-            <label for="account__form" (click)="changeForm()">
+            <input type="radio" name="form" id="account__form" (click)="changee = false">
+            <label for="account__form">
                 <h4>Account Details</h4>
             </label>
         </div>
 
 
-        <div class="profile-form" *ngIf="formChange === false; else accountForm">
+        <div class="profile-form" *ngIf="changee === true">
             <form action="" class="d-flex gap-20">
                 <div class="form__container col-1">
-                    <div class="form__group">
+                    <div class="form__group" [formGroup]="form">
                         <div class="input__title">
-                            <label for="">First Name</label>
+                            <label for="firstName">First Name</label>
                         </div>
                         <div class="form__input">
-                            <input type="text" id="" required placeholder="First Name" />
+                            <input type="text" id="firstName" [(ngModel)]="firstName" name="firstName"
+                                formControlName="firstName" required minlength="2" maxlength="50"
+                                (keypress)="validateNames($event)" />
+                            <div *ngIf="form.get('firstName').invalid && (form.get('firstName').dirty || form.get('firstName').touched)"
+                                class="error-message">
+                                <div *ngIf="form.get('firstName').hasError('required')">First Name is required.
+                                </div>
+                                <div *ngIf="form.get('firstName').hasError('minlength')">First Name should have at
+                                    least 2 characters.</div>
+                                <div *ngIf="form.get('firstName').hasError('maxlength')">First Name should have at
+                                    most 50 characters.</div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="form__group" [formGroup]="form">
+                        <div class="input__title">
+                            <label for="lastName">Last Name</label>
+                        </div>
+                        <div class="form__input">
+                            <input type="text" id="lastName" [(ngModel)]="lastName" name="lastName"
+                                formControlName="lastName" required minlength="2" maxlength="50"
+                                (keypress)="validateNames($event)" />
+                            <div *ngIf="form.get('lastName').invalid && (form.get('lastName').dirty || form.get('lastName').touched)"
+                                class="error-message">
+                                <div *ngIf="form.get('lastName').hasError('required')">Last Name is required.</div>
+                                <div *ngIf="form.get('lastName').hasError('minlength')">Last Name should have at least 2
+                                    characters.</div>
+                                <div *ngIf="form.get('lastName').hasError('maxlength')">Last Name should have at most 50
+                                    characters.</div>
+                            </div>
                         </div>
                     </div>
+
                     <div class="form__group">
                         <div class="input__title">
-                            <label for="">Last Name</label>
+                            <label for="email">Email</label>
                         </div>
                         <div class="form__input">
-                            <input type="text" id="" required placeholder="Last Name" />
+                            <input type="email" id="email" required placeholder="Email"
+                                pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"
+                                [formControl]="form.controls['email']" />
+                            <div
+                                *ngIf="form.controls['email'].invalid && (form.controls['email'].dirty || form.controls['email'].touched)">
+                                <div *ngIf="form.controls['email'].errors.required">Email is required.</div>
+                                <div *ngIf="form.controls['email'].errors.pattern">Invalid email format.</div>
+                            </div>
                         </div>
                     </div>
+
                     <div class="form__group">
                         <div class="input__title">
-                            <label for="">Email</label>
+                            <label for="mobile">Mobile</label>
                         </div>
                         <div class="form__input">
-                            <input type="email" id="" required placeholder="Email" />
+                            <input type="number" id="mobile" required placeholder="Mobile" pattern="[0-9]{10}"
+                                [formControl]="form.controls['mobile']" />
+                            <div
+                                *ngIf="form.controls['mobile'].invalid && (form.controls['mobile'].dirty || form.controls['mobile'].touched)">
+                                <div *ngIf="form.controls['mobile'].errors.required">Mobile is required.</div>
+                                <div *ngIf="form.controls['mobile'].errors.pattern">Mobile should be a 10-digit number.
+                                </div>
+                            </div>
                         </div>
                     </div>
+
                     <div class="form__group">
                         <div class="input__title">
-                            <label for="">Mobile</label>
+                            <label for="password">Password</label>
                         </div>
                         <div class="form__input">
-                            <input type="text" id="" required placeholder="Mobile" />
+                            <input type="{{ passwordVisible ? 'text' : 'password' }}" id="password" required
+                                placeholder="Password" [formControl]="form.controls['password']" />
+                            <span class="eye-icon" (click)="togglePasswordVisibility()">
+                                <i class="fa" [class.fa-eye]="passwordVisible"
+                                    [class.fa-eye-slash]="!passwordVisible"></i>
+                            </span>
+                            <div *ngIf="form.controls['password'].invalid && (form.controls['password'].dirty || form.controls['password'].touched)"
+                                class="error-message">
+                                <div *ngIf="form.controls['password'].hasError('required')">Password is required.</div>
+                                <div *ngIf="form.controls['password'].hasError('minlength')">Password should have a
+                                    minimum length of 8 characters.</div>
+                                <div *ngIf="form.controls['password'].hasError('pattern')">
+                                    Password should contain at least one capital letter and at least one special
+                                    character.
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                    <div class="form__group">
-                        <div class="input__title">
-                            <label for="">Password</label>
-                        </div>
-                        <div class="form__input">
-                            <input type="password" id="" required placeholder="Password" />
-                        </div>
-                        <a href="javascript:void(0)">Change Password</a>
                     </div>
                 </div>
-                
+
                 <div class="form__container col-2">
-                    <div class="form__group">
+                  <div class="form__group">
                         <div class="input__title">
-                            <label for="">Country</label>
+                            <label for="">Address</label>
                         </div>
                         <div class="form__input">
-                            <input type="text" id="" required placeholder="Select Country" />
-                        </div>
-                    </div>
-                    <div class="form__group">
-                        <div class="input__title">
-                            <label for="">State</label>
-                        </div>
-                        <div class="form__input">
-                            <input type="text" id="" required placeholder="Select State" />
-                        </div>
-                    </div>
-                    <div class="form__group">
-                        <div class="input__title">
-                            <label for="">City</label>
-                        </div>
-                        <div class="form__input">
-                            <input type="text" id="" required placeholder="Select City" />
+                            <input type="text" id="address" required placeholder="Address" />
                         </div>
                     </div>
                     <div class="form__group">
@@ -137,81 +175,112 @@
                             <label for="">Pincode</label>
                         </div>
                         <div class="form__input">
-                            <input type="text" id="" required placeholder="Pincode" />
+                            <input type="text" placeholder="Enter Pincode" id="postalCode" [(ngModel)]="postalCode"
+                                name="postalCode" class="form-control" required (input)="onPostalCodeChange()">
                         </div>
                     </div>
                     <div class="form__group">
                         <div class="input__title">
-                            <label for="">Address</label>
+                            <label for="">State</label>
                         </div>
                         <div class="form__input">
-                            <input type="text" id="" required placeholder="Address" />
+                            <input type="text" id="state" value="{{state}}" required placeholder="State" [disabled]="!pincodeFilled" />
+                        </div>
+                    </div>
+                    <div class="form__group">
+                        <div class="input__title">
+                            <label for="">City</label>
+                        </div>
+                        <div class="form__input">
+                            <input type="text" id="city" value="{{county}}" required placeholder="City" [disabled]="!pincodeFilled" />
+                        </div>
+                    </div>
+                    <div class="form__group">
+                        <div class="input__title">
+                            <label for="">Country</label>
+                        </div>
+                        <div class="form__input">
+                            <input type="text" id="country" value="{{country}}" required placeholder="Country" [disabled]="!pincodeFilled" />
                         </div>
                     </div>
                 </div>
             </form>
-            <button class="btn-secondary">Update Information</button>
+            <button class="btn-secondary" (click)="get(form.value)">Update Information</button>
         </div>
-        <ng-template #accountForm>
-            <div class="account-form">
-                <form action="">
-                    <div class="form__container">
-                        <div class="col col-1">
-                            <div class="form__group">
-                                <div class="input__title">
-                                    <label for=""></label>
-                                </div>
-                                <div class="input__form">
-                                    <input type="text" required/>
-                                </div>
-                            </div>
-                            <div class="form__group">
-                                <div class="input__title">
-                                    <label for=""></label>
-                                </div>
-                                <div class="input__form">
-                                    <input type="text" required/>
-                                </div>
-                            </div>
-                            <div class="form__group">
-                                <div class="input__title">
-                                    <label for=""></label>
-                                </div>
-                                <div class="input__form">
-                                    <input type="text" required/>
-                                </div>
-                            </div>
+        <div class="account-form" *ngIf="changee === false">
+            <form action="" class="d-flex gap-20">
+                <div class="col col-1">
+                    <div class="form__group">
+                        <div class="input__title">
+                            <label for="">Bank Name</label>
                         </div>
-                        <div class="col col-2">
-                            <div class="form__group">
-                                <div class="input__title">
-                                    <label for=""></label>
-                                </div>
-                                <div class="input__form">
-                                    <input type="text" required/>
-                                </div>
-                            </div>
-                            <div class="form__group">
-                                <div class="input__title">
-                                    <label for=""></label>
-                                </div>
-                                <div class="input__form">
-                                    <input type="text" required/>
-                                </div>
-                            </div>
-                            <div class="form__group">
-                                <div class="input__title">
-                                    <label for=""></label>
-                                </div>
-                                <div class="input__form">
-                                    <input type="text" required/>
-                                </div>
-                            </div>
+                        <div class="input__form">
+                            <input type="text" required />
                         </div>
                     </div>
-                </form>
+                    <div class="form__group">
+                        <div class="input__title">
+                            <label for="">Account Holder</label>
+                        </div>
+                        <div class="input__form">
+                            <input type="text" required />
+                        </div>
+                    </div>
+                    <div class="form__group">
+                        <div class="input__title">
+                            <label for="">Account Number</label>
+                        </div>
+                        <div class="input__form">
+                            <input type="number" required maxlength="17" minlength="5" />
+                        </div>
+                    </div>
+                </div>
+                <div class="col col-2">
+                    <div class="form__group">
+                        <div class="input__title">
+                            <label for="">IFSC</label>
+                        </div>
+                        <div class="input__form">
+                            <input type="text" required maxlength="11" />
+                        </div>
+                    </div>
+                    <div class="form__group">
+                        <div class="input__title">
+                            <label for="">GST</label>
+                        </div>
+                        <div class="input__form">
+                            <input type="text" required maxlength="15" />
+                        </div>
+                    </div>
+                    <div class="form__group">
+                        <div class="input__title">
+                            <label for="">TIN</label>
+                        </div>
+                        <div class="input__form">
+                            <input type="text" maxlength="11" />
+                        </div>
+                    </div>
+                </div>
+            </form>
 
-            </div>
-        </ng-template>
+        </div>
     </div>
 </div>
+
+
+
+
+<!-- <div class="container">
+  <h1>Postal Code Information</h1>
+  <form>
+    <div class="form-group">
+      <label for="postalCode">Enter Postal Code:</label>
+      <input type="text" id="postalCode" [(ngModel)]="postalCode" name="postalCode" class="form-control" required (input)="onPostalCodeChange()">
+    </div>
+  </form>
+  <div *ngIf="country">
+    <p>Country: {{ country }}</p>
+    <p>State: {{ state }}</p>
+    <p>County: {{ county }}</p>
+  </div>
+</div> -->
