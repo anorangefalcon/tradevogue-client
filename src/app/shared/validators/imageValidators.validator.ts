@@ -1,5 +1,4 @@
 import { AbstractControl } from "@angular/forms";
-import { type } from "jquery";
 
 export function imageSizeValidator(control: AbstractControl): {[key: string]: any} | null {
     let imageList = control.value;

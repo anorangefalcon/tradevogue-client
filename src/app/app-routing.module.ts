@@ -13,22 +13,11 @@ import { ExploreComponent } from './explore/explore.component';
 import { HelpPageComponent } from './help-page/help-page.component';
 import { SettingsComponent } from './settings/settings.component';
 import { NoPageComponent } from './no-page/no-page.component';
-import { ProductSectionComponent } from './product-page/product-section/product-section.component';
-import { ProductDetailsComponent } from './product-page/product-details/product-details.component';
 const routes: Routes = [
 
   {
     path: '', component: LayoutComponent, data: { breadcrumb: 'Home' },
     children: [
-      { path: '', component: HomeComponent },
-      {
-    path: 'setting', component:SettingsComponent
-  },
-      { path: 't&c', component: TcComponent },
-      { path: 'faq', component: FaqPageComponent },
-      { path: 'product/:sku', component: ProductPageComponent },
-      { path: 'about', component: AboutPageComponent },
-      { path: 'explore', component: ExploreComponent },
       { path: '', component: HomeComponent, data: { breadcrumb: 'Home' } },
       {
         path: 'setting', component: SettingsComponent, data: { breadcrumb: 'Setting' }
@@ -38,10 +27,7 @@ const routes: Routes = [
       {
         path: 'product/:sku',
         component: ProductPageComponent,
-        data: { breadcrumb: null },
-        children: [
-          { path: '', component: ProductSectionComponent, data: { breadcrumb: 'Product Section' } },
-        ]
+        data: { breadcrumb: 'Product' }
       },
       { path: 'about', component: AboutPageComponent, data: { breadcrumb: 'About' } },
       { path: 'explore', component: ExploreComponent, data: { breadcrumb: 'Explore' } },
@@ -63,10 +49,7 @@ const routes: Routes = [
     path: 'auth', data: { breadcrumb: 'Auth' }, loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule)
   },
   {
-    path: 'dashboard', loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule)
-  },
-  
-   { path: 'dashboard', data: { breadcrumb: 'Dashboard' }, loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule)
+    path: 'dashboard', data: { breadcrumb: 'Dashboard' }, loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule)
   },
 
 ];

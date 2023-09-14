@@ -9,8 +9,6 @@ import { SearchBarComponent } from './components/search-bar/search-bar.component
 import { SupportComponent } from './components/support/support.component';
 import { MatTabsModule } from '@angular/material/tabs';
 import { RouterModule } from '@angular/router';
-import { PopOpenDirective } from './Directives/pop-open.directive';
-import { PopCloseDirective } from './Directives/pop-close.directive';
 import { FooterComponent } from './components/footer/footer.component';
 import { FacilitiesComponent } from './components/facilities/facilities.component';
 import { NewsletterComponent } from './components/newsletter/newsletter.component';
@@ -29,8 +27,6 @@ import { ProductFilterPipe } from './Pipe/product-filter.pipe';
     CardTemplateComponent,
     SearchBarComponent,
     SupportComponent,
-    PopOpenDirective,
-    PopCloseDirective,
     FooterComponent,
     FacilitiesComponent,
     NewsletterComponent,
@@ -57,10 +53,8 @@ import { ProductFilterPipe } from './Pipe/product-filter.pipe';
     CardTemplateComponent,
     SearchBarComponent,
     SupportComponent,
-    PopOpenDirective,
     FilterPipe,
     ProductFilterPipe,
-    PopCloseDirective,
     CustomSelectComponent
   ]
 })

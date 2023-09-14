@@ -4,8 +4,6 @@ import { ProductPageComponent } from './product-page.component';
 import { SharedModule } from '../shared/shared.module';
 import { RouterModule, Routes } from '@angular/router';
 import { CarouselModule } from 'ngx-owl-carousel-o';
-import { ProductSectionComponent } from './product-section/product-section.component';
-import { ProductDetailsComponent } from './product-details/product-details.component';
 import { FormsModule } from '@angular/forms';
 
 const routes: Routes = [
@@ -14,10 +12,8 @@ const routes: Routes = [
 
 @NgModule({
   declarations: [
-    ProductPageComponent,
-    ProductSectionComponent,
-    ProductDetailsComponent
-  ],
+    ProductPageComponent
+    ],
   imports: [
     CommonModule,
     FormsModule,
@@ -26,7 +22,6 @@ const routes: Routes = [
     CarouselModule,
   ],
   exports: [
-    ProductSectionComponent
   ]
 })
 export class ProductPageModule { }

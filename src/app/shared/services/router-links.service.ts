@@ -15,7 +15,4 @@ export class RouterLinksService {
     console.log("this.showdata val", this.showDataValue);
     
   }
-
-
-
 }

@@ -45,3 +45,56 @@
         flex-direction: column;
     }
 }
+
+/* ORDER SUMMARY */
+.summary-container{
+    width: 100%;
+    padding-block: 20px;
+    padding-inline: 20px;
+    background-color: rgb(var(--secondary), 0.5);
+
+    & h2 {
+        font-size: 24px;
+        color: rgb(var(--text-black));
+    }
+    & .border-end {
+        padding-block-end: 10px;
+        border-block-end: 1px solid rgb(var(--text-black),0.09);
+    }
+    & .item {
+
+        & .itemname p{
+            font-size: 14px !important;
+            font-weight: 500;
+        }
+        & .itemtype p {
+            font-size: 12px !important;
+            color: rgb(var(--text-black),0.6);
+        }
+    }
+
+    & .subtotal p, .shipping p{
+        font-size: 14px !important;
+
+        &:first-child{
+            font-weight: 500;
+        }
+    }
+
+    & .savings{
+        & .savings-amt{
+            color: rgb(var(--success));
+        }
+    }
+
+    & .total p {
+        font-size: 20px !important;
+        font-weight: 500;
+    }
+
+    & .btn-primary a{
+        font-size: 14px !important;
+        font-weight: 600;
+        color: rgb(var(--text-white));
+    }
+}

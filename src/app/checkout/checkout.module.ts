@@ -5,7 +5,6 @@ import { CheckoutComponent } from './checkout.component';
 import { CartComponent } from './cart/cart.component';
 import { RouterModule, Routes } from '@angular/router';
 import { BillingComponent } from './billing/billing.component';
-import { OrderSummaryComponent } from './order-summary/order-summary.component';
 import { PipesPipe } from '../checkout/billing/pipes.pipe';
 
 
@@ -20,7 +19,6 @@ const routers: Routes = [
     CartComponent,
     BillingComponent,
     PipesPipe,
-    OrderSummaryComponent
   ],
   imports: [
     CommonModule,
