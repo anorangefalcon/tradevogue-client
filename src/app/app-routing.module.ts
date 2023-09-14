@@ -12,10 +12,13 @@ import { BillingComponent } from './checkout/billing/billing.component';
 import { ExploreComponent } from './explore/explore.component';
 import { HelpPageComponent } from './help-page/help-page.component';
 import { SettingsComponent } from './settings/settings.component';
+import { NoPageComponent } from './no-page/no-page.component';
+import { ProductSectionComponent } from './product-page/product-section/product-section.component';
+import { ProductDetailsComponent } from './product-page/product-details/product-details.component';
 const routes: Routes = [
 
   {
-    path: '', component: LayoutComponent,
+    path: '', component: LayoutComponent, data: { breadcrumb: 'Home' },
     children: [
       { path: '', component: HomeComponent },
       {
@@ -26,24 +29,46 @@ const routes: Routes = [
       { path: 'product/:sku', component: ProductPageComponent },
       { path: 'about', component: AboutPageComponent },
       { path: 'explore', component: ExploreComponent },
+      { path: '', component: HomeComponent, data: { breadcrumb: 'Home' } },
       {
-        path: 'cart', component: CheckoutComponent,
+        path: 'setting', component: SettingsComponent, data: { breadcrumb: 'Setting' }
+      },
+      { path: 't&c', component: TcComponent, data: { breadcrumb: 'Term & Condition' } },
+      { path: 'faq', component: FaqPageComponent, data: { breadcrumb: 'Faq' } },
+      {
+        path: 'product/:sku',
+        component: ProductPageComponent,
+        data: { breadcrumb: null },
         children: [
-          { path: '', component: CartComponent },
-          { path: 'billing', component: BillingComponent }
+          { path: '', component: ProductSectionComponent, data: { breadcrumb: 'Product Section' } },
         ]
       },
+      { path: 'about', component: AboutPageComponent, data: { breadcrumb: 'About' } },
+      { path: 'explore', component: ExploreComponent, data: { breadcrumb: 'Explore' } },
+      {
+        path: 'cart',
+        component: CheckoutComponent,
+        data: { breadcrumb: 'Cart' },
+        children: [
+          { path: '', component: CartComponent, data: { breadcrumb: 'Cart' } },
+          { path: 'billing', component: BillingComponent, data: { breadcrumb: 'Billing' } }
+        ]
+      },
+
     ]
   },
-  {path: 'help', component: HelpPageComponent},
+  { path: 'help', component: HelpPageComponent, data: { breadcrumb: 'Help' } },
 
   {
-    path: 'auth', loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule)
+    path: 'auth', data: { breadcrumb: 'Auth' }, loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule)
   },
   {
     path: 'dashboard', loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule)
   },
   
+   { path: 'dashboard', data: { breadcrumb: 'Dashboard' }, loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule)
+  },
+
 ];
 
 @NgModule({

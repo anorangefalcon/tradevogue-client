@@ -10,8 +10,8 @@ export class ProductsComponent implements OnInit {
   // product_inventory: number = 0;
   // product_rating: number = 3;
 
-  constructor(private element: ElementRef,private fetchdata:FetchDataService) {}
-  
+  constructor(private element: ElementRef, private fetchdata: FetchDataService) { }
+
   val: any = '';
   val2: any = 'avfmvkf';
   rating: any[] = [1, 2, 3, 4, 5];
@@ -22,7 +22,7 @@ export class ProductsComponent implements OnInit {
   inventory_status: any = '';
   _rating: any = {};
 
-  new_ratings:any='';
+  new_ratings: any = '';
   catgo: any = '';
 
 
@@ -36,33 +36,33 @@ export class ProductsComponent implements OnInit {
     let id = this.val2?.getAttribute('id');
     console.log('id is ', id);
     let value = this.val2.value;
-    if(id=='inventory_status'){
-      this.inventory_status=value;
+    if (id == 'inventory_status') {
+      this.inventory_status = value;
     }
 
-    else if(id=='rating'){
-      this.new_ratings=value;
-    } 
+    else if (id == 'rating') {
+      this.new_ratings = value;
+    }
 
     else {
-      this.catgo=value;
+      this.catgo = value;
     }
 
-    this.filters=[{'inventory_status':this.inventory_status},{'category':this.catgo},{'ratings':this.new_ratings}];
+    this.filters = [{ 'inventory_status': this.inventory_status }, { 'category': this.catgo }, { 'ratings': this.new_ratings }];
     console.log("inside funciton ")
     // this.filters={};
-    this.fetchdata.filtered_data(this.productList,this.filters);
-  
-  
+    this.fetchdata.filtered_data(this.productList, this.filters);
+
+
   }
 
   deleteFun(el: any) {
     console.log('el is ', el.id);
-     this.productList.filter((element: any) => {
+    this.productList.filter((element: any) => {
       return element.itemId != el.itemId;
     });
 
-   
+
   }
 
   check(el: any) {
@@ -89,15 +89,15 @@ export class ProductsComponent implements OnInit {
     this.fetchData();
     // Promise.resolve().then(()=>this.fetchData());
   }
-  
-  ngAfterViewInit(){
+
+  ngAfterViewInit() {
   }
 
-  
+
 
   productList: any[] = [];
 
-  fetchData(){
+  fetchData() {
     //   this.myService.cart$.subscribe((data:any) => {
     //   // this.cartArr = data;
     //   console.log("inside  funciton ");
@@ -105,16 +105,16 @@ export class ProductsComponent implements OnInit {
     //   // this.items=data;
     // });
 
-    this.fetchdata.getSellerData().subscribe((data: any)=>{
-
+    this.fetchdata.getSellerData().subscribe((data: any) => {
+      let counter = 0
       let products = data[0]['products'][0];
-      console.log(typeof(products), products);
+      console.log(typeof (products), products);
       this.productList = [];
 
-      products.forEach((item: any)=>{
+      products.forEach((item: any) => {
 
         let product = {
-          itemId: 0,
+          itemId: counter++,
           image: '',
           name: '',
           category: '',
@@ -123,6 +123,7 @@ export class ProductsComponent implements OnInit {
           product_inventory: this.getRandomnumber(0, 50),
           rating: 0,
           last_updated: '03/11/2023 - 4.23PM',
+          checked: false
         }
 
         product.image = item['image'][0];
@@ -133,7 +134,7 @@ export class ProductsComponent implements OnInit {
         let reviews = item["reviews"];
         let rating = 0;
 
-        reviews?.forEach((review: any)=>{
+        reviews?.forEach((review: any) => {
           rating += review['rating'];
         });
 
@@ -142,21 +143,69 @@ export class ProductsComponent implements OnInit {
 
         this.productList.push(product);
       })
-      console.log("Product List::" , this.productList);
+      console.log("Product List::", this.productList);
     })
 
     console.log("outsied funciton ");
-    
+
     return;
   }
 
 
-   getRandomnumber(min: number, max: number) {
-    return Math.floor(Math.random() * (max - min + 1) ) + min;
+  getRandomnumber(min: number, max: number) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
   }
 
   pageChanged(event: any) {
     this.currentPage = event;
   }
+
+  deleteList: any = []
+  checkboxParent: any = null;
+  checkboxChild: any = null;
+
+  changeDetection(e: Event) {
+    let element = (<HTMLInputElement>e.target)
+    let id: any = element.getAttribute('id');
+    console.log(id)
+
+    if (id == "all_product") {
+      console.log('hello->all');
+      if(element.checked){
+        this.checkboxParent = true;
+        this.checkboxChild = true;
+        this.productList.forEach((product: any)=>{
+          this.deleteList.push(product.itemId);
+        })
+      }else{
+        this.checkboxParent = null;
+        this.checkboxChild = null;
+        this.deleteList = []
+      }
+
+    } else{
+      console.log('hello->child');
+      if (element.checked){
+        this.deleteList.push(Number(id));
+      } else { 
+        if(this.checkboxParent == true) this.checkboxParent = null;
+        this.deleteList.splice(this.deleteList.indexOf(Number(id)), 1);
+      }
+    }
+    // console.log(this.deleteList);
+    
+  }
+
+  deleteItems() {
+    if (this.deleteList.length != 0) {
+      this.productList = this.productList.filter((product: any) => {
+        return !this.deleteList.includes(product.itemId);
+      })
+      this.deleteList = [];
+      this.checkboxParent = null;
+      this.checkboxChild = null;
+    } 
+  }
+
 
 }

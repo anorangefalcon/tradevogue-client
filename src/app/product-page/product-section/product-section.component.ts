@@ -13,7 +13,7 @@ export class ProductSectionComponent{
   selectedColor: string = "";
   selectedQ: number = 0;
 
-  constructor(private cartService: CartService) { }
+  constructor(private cartService: CartService) {}
 
   @Input() data: any = {};
   showCarousel: boolean = false;

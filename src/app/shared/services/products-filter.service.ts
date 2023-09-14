@@ -18,52 +18,39 @@ export class ProductsFilterService {
       category: [],
       price: [],
       brand: [],
-      tags : []
+      tags: []
     };
 
     originalData.map((data: any) => {
-      
+
       for (let filter of Object.keys(filterObj)) {
 
-        if (Object.hasOwn(data.info, filter)) {
-          const value = data.info[filter];
-
-          if (Array.isArray(value)) {
-            for (let v of value) {
-              const arr = filterObj[filter];
-              
-              if (!arr.includes(v)) {
-                arr.push(v);
-              }
-            }
-          } else {
+        const target = filter in data ? data : data.info;
+        const value = target[filter];
+        if(Array.isArray(value)) {
+          for (let v of value) {
             const arr = filterObj[filter];
-            if (!arr.includes(value)) {
-              arr.push(value);
+
+            if (!arr.includes(v)) {
+              arr.push(v);
             }
           }
         }
-
         else {
-          const value = data[filter];
-
-          if (Array.isArray(value)) {
-            for (let v of value) {
-              const arr = filterObj[filter];
-
-              if (!arr.includes(v)) {
-                arr.push(v);
-              }
-            }
-          } else {
-            const arr = filterObj[filter];
-            if (!arr.includes(value)) {
-              arr.push(value);
-            }
+          const arr = filterObj[filter];
+          if (!arr.includes(value)) {
+            arr.push(value);
           }
         }
       }
     });
+
+    Object.keys(filterObj).forEach(el => {
+
+      if (filterObj[el].length > 3) {
+        filterObj[el].push(false)
+      }
+    })
     return { originalData, filterObj };
   }
 }

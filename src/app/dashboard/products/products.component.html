@@ -40,7 +40,7 @@
                             <span class="material-symbols-outlined operational-buttons-add">add</span>
                         </button>
                         <button class="d-flex align-items-center gap-5">
-                            <span class="material-symbols-outlined operational-buttons-delete" (click)="DeleteAll()">delete</span>
+                            <span class="material-symbols-outlined operational-buttons-delete" (click)="deleteItems()">delete</span>
                         </button>
                     </span>
                 </div>
@@ -95,12 +95,12 @@
                </div>
             </div>
             <div class="product-list">
-                <table id="datatable1" class="text-wrap">
+                <table id="datatable1" class="text-wrap" (change)="changeDetection($event)">
                     <thead>
                         <tr>
                             <th class="product-items heading">
                                 <div class="item-check d-flex justify-content-center">
-                                    <input type="checkbox" id="all_product">
+                                    <input [attr.checked]="checkboxParent" [(ngModel)]="checkboxParent" type="checkbox" id="all_product">
                                     <label for='all_product'>
                                         <span class="material-symbols-outlined">done</span>
                                     </label>
@@ -123,8 +123,8 @@
                         }; let i = index">
                             <td class="product-items">
                                 <div class="item-check d-flex justify-content-center">
-                                    <input type="checkbox" id="row{{i}}">
-                                    <label for='row{{i}}' (click)="check(item)" >
+                                    <input [attr.checked]="checkboxChild" type="checkbox" id="{{item.itemId}}">
+                                    <label for='{{item.itemId}}' >
                                         <span class="material-symbols-outlined">done</span>
                                     </label>
                                 </div>

@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { passwordStrengthValidator, usernameValidator} from './validators';
 import { CookieService } from 'ngx-cookie-service';
-import { Router } from '@angular/router';
+import { Router , ActivatedRoute } from '@angular/router';
 import { UserDataService } from '../user-data.service';
 
 @Component({
@@ -19,7 +19,7 @@ export class LoginComponent {
   showPassword: boolean = false;
   isFormSubmitted: boolean = false;
 
-  constructor(private fb:FormBuilder , private cookies :  CookieService , private router : Router , private userData : UserDataService){
+  constructor(private fb:FormBuilder , private cookies :  CookieService , private router : Router , private userData : UserDataService, private route: ActivatedRoute){
     this.loginForm = fb.group(
       {
         username: fb.control('', [Validators.required, usernameValidator]), 
@@ -38,7 +38,13 @@ onLogin() {
     if (isLoggedIn) {
       const user = { username: username, password: password };
       this.cookies.set("loginDetails", JSON.stringify(user));
-      this.router.navigate(['/']);
+
+      const returnUrl = this.route.snapshot.queryParamMap.get('returnUrl');
+      if (returnUrl) {
+        this.router.navigateByUrl(returnUrl);
+      } else {
+        this.router.navigate(['/']);
+      }
     }
   });
 }

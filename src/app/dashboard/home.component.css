@@ -31,15 +31,128 @@
     --danger: 223, 22, 33;
     --success: 60, 167, 23; */
 
-    display: flex;
     font-size: 14px !important;
     background-color: rgb(var(--background-clr), 0.4);
 
-    & .content{
-        margin-left: 240px;
-        padding: 24px;
-        width: 100dvw;
+
+    & .navbar{
+        height: 100vh;
+        width: 74px;
+        overflow: hidden;
+        box-shadow: 2px 0px 5px rgba(128, 128, 128, 0.164);  
+        position: fixed;
+        inset-block-start: 0;
+        inset-inline-start: 0;
+        transition: all 0.2s ease-in-out;
+        overflow: hidden;
+        z-index: 5;
+        padding: 6px 12px;
+        background-color: rgb(var(--dash-card-clr));
     }
+
+    & .header{
+        height: 60px;
+        justify-content: center;
+    }
+
+    & .navbar.active > .header{
+        justify-content: space-between;
+    }
+
+    & .branding{
+        display: none;
+    }
+
+    & .navbar.active > .header .branding{
+        display: block;
+    }
+
+    & .navbar.active{
+        width: 240px;
+        opacity: 1;
+    }
+
+    & .content{
+        position: absolute;
+        width: calc(100% - 74px);
+        left: 74px;
+        padding: 24px;
+        overflow: hidden;
+        transition: all 0.3s ease-in-out;
+    }
+
+    & .navbar.active + .content{
+        width: calc(100% - 240px);
+        left: 240px;
+    }
+
+    & .navbar.active > .sidebar .navlist li .link-text{
+        opacity: 1;
+        pointer-events: auto;
+        display: flex;
+        align-items: center;
+    }    
+
+    & .sidebar {
+        width: 100%;
+
+        & .navlist li {
+            position: relative;
+            width: 100%;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.2s ease-in-out;
+            border-radius: 8px;
+            /* border-bottom: 2px solid; */
+    
+            &:hover{
+                background-color: rgb(var(--primary), 0.05);
+            }
+
+            & .link-text{
+                display: none;
+                opacity: 0;
+                color: rgb(var(--dash-title-clr));
+                transition: all 0.2s ease-in-out;
+                pointer-events: none;
+            }
+    
+            & a {
+                display: flex;
+                align-items: center;
+                width: 100%;
+                padding-block: 12px;
+            }
+    
+            & .icons {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                text-align: center;
+                height: 30px;
+                min-width: 50px;
+                font-weight: 400;
+                font-size: 20px;
+                color: rgb(var(--primary));
+            }
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     
 
     & .spike{
