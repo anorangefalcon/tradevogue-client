@@ -12,7 +12,6 @@ import { BillingComponent } from './checkout/billing/billing.component';
 import { ExploreComponent } from './explore/explore.component';
 import { HelpPageComponent } from './help-page/help-page.component';
 import { SettingsComponent } from './settings/settings.component';
-import { NoPageComponent } from './no-page/no-page.component';
 const routes: Routes = [
 
   {

@@ -9,7 +9,6 @@ import { BreadcrumbService } from '../breadcrumb.service';
 })
 export class BreadcrumbComponent implements OnInit {
   breadcrumbs: Array<{ label: string; url: string }> = [];
-
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
