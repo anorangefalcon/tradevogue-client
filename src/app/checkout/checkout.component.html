@@ -1,8 +1,9 @@
 <div *ngIf="cartCount>0" class="container checkout-container d-flex ">
     <div class="cart d-flex flex-column gap-10">
         <div class="border d-flex justify-content-md-between">
-            <h4>Total Items :</h4>
-            <span>{{cartCount}} item</span>
+            <h4>Cart : </h4>
+            <span>{{cartCount}} item<span *ngIf="cartCount>1">s</span>
+            </span>
         </div>
         <router-outlet class="cartAndBilling"></router-outlet>
     </div>

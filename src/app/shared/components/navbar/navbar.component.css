@@ -4,6 +4,7 @@
 
 header {
     position: fixed;
+    box-shadow: 0 2px 5px rgb(var(--text-black), 0.1);
     letter-spacing: 1.2px;
     font-weight: 500;
     width: 100%;
@@ -12,7 +13,7 @@ header {
     /* padding-block: 20px; */
 
     & .navbar {
-        height: 100px;
+        height: 80px;
         transition: all 0.3s ease-in-out;
     }
 

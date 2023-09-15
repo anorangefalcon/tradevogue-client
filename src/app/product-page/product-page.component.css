@@ -1,6 +1,4 @@
 .product {
-    padding-block-start: 120px;
-
     & .product-carousel {
         width: 50%;
         overflow: hidden;
@@ -424,11 +422,6 @@
 
         & .review-cards {
             width: 100%;
-        }
-
-
-        & .review-cards {
-
             border-radius: 8px;
             padding: 5px;
 
