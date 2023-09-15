@@ -143,7 +143,7 @@ export class StatisticsComponent implements OnInit {
     this.fetchdata.getSellerData().subscribe((data: any)=>{
 
       let products = data[0]['products'][0];
-      this.productList = [];
+      this.productList = []; 
 
       products.forEach((item: any) => {
 

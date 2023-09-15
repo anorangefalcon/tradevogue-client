@@ -1,13 +1,140 @@
 .home-carousel {
-    padding-block: 100px;
+  padding-block: 100px;
 }
 
-.py-100{ /* Padding Block 100*/
-  padding-block: 100px;  
+.py-100 {
+  /* Padding Block 100*/
+  padding-block: 100px;
 }
 
-.pb-100{
-    padding-block-end: 100px;
+.pb-100 {
+  padding-block-end: 100px;
+}
+
+
+
+.facilities {
+  color: rgb(var(--new-text-black));
+  /* background-color: aquamarine;
+  min-height: 200px; */
+
+  .gap-40 {
+    gap: 40px;
+  }
+
+  & .facility {
+    width: 33.3%;
+
+    & i,
+    span {
+      color: rgb(var(--primary));
+      font-size: 44px;
+      font-weight: 500;
+
+    }
+
+    & .rupee {
+      font-weight: 300;
+    }
+
+    & .text {
+
+      & h4,
+      p {
+        letter-spacing: 0.7px;
+      }
+
+      & h4 {
+        font-weight: 600;
+      }
+
+      & p {
+        font-size: 14px !important;
+        margin-block-start: 2px;
+        color: rgb(var(--text-gray));
+      }
+
+    }
+
+
+
+
+  }
+}
+
+.newsletter {
+  padding-block: 100px;
+  background: linear-gradient(#2222229c, #22222267), url(../../assets/newbg.jpeg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  color: rgb(var(--text-white));
+
+  & h2 {
+    font-size: 30px !important;
+    font-weight: 600;
+    letter-spacing: 0.7px;
+  }
+
+  & input {
+    width: 570px;
+    font-size: 14px;
+    padding: 12px 15px;
+    background-color: rgb(var(--text-white));
+    border: none;
+    border-radius: 5px;
+    outline: none;
+  }
+
+  & ::placeholder {
+    letter-spacing: 0.7px;
+    color: rgb(var(--text-black), 0.4);
+  }
+
+  & button {
+    border-radius: 5px !important;
+    padding: 10px 25px;
+  }
+
+
+  & .medias {
+    margin-block-start: 10px;
+
+    & i {
+      font-size: 18px;
+      color: rgb(var(--text-white));
+      transition: 0.3s ease-in-out;
+    }
+
+    & i:hover {
+      color: rgb(var(--accent));
+    }
+  }
+}
+
+
+
+@media screen and (max-width: 1400px) {
+  input {
+    width: 520px !important;
+  }
+}
+
+@media screen and (max-width: 1250px) {
+  .text {
+    & h4 {
+      font-size: 14px !important;
+    }
+  }
+}
+
+@media screen and (max-width: 990px) {
+  input {
+    width: 300px;
+  }
+
+  .facilities .container {
+    flex-wrap: wrap;
+  }
 }
 
 

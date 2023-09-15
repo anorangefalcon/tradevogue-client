@@ -10,8 +10,6 @@ import { SupportComponent } from './components/support/support.component';
 import { MatTabsModule } from '@angular/material/tabs';
 import { RouterModule } from '@angular/router';
 import { FooterComponent } from './components/footer/footer.component';
-import { FacilitiesComponent } from './components/facilities/facilities.component';
-import { NewsletterComponent } from './components/newsletter/newsletter.component';
 import { CustomSelectComponent } from './custom-select/custom-select.component';
 import { ReactiveFormsModule} from '@angular/forms';
 import { FormsModule } from '@angular/forms';
@@ -28,8 +26,6 @@ import { ProductFilterPipe } from './Pipe/product-filter.pipe';
     SearchBarComponent,
     SupportComponent,
     FooterComponent,
-    FacilitiesComponent,
-    NewsletterComponent,
     CustomSelectComponent,
     FilterPipe,
     ProductFilterPipe,
@@ -46,8 +42,6 @@ import { ProductFilterPipe } from './Pipe/product-filter.pipe';
   exports: [
     NavbarComponent,
     FooterComponent,
-    FacilitiesComponent,
-    NewsletterComponent,
     ProductCardsComponent,
     ProductCardCarouselComponent,
     CardTemplateComponent,

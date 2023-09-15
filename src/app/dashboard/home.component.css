@@ -1,5 +1,5 @@
-#dashboard-section{
-    
+#dashboard-section {
+
     /* DashBoard Colors */
     --background-clr: 238, 238, 238;
     --dash-card-clr: 255, 255, 255;
@@ -35,11 +35,11 @@
     background-color: rgb(var(--background-clr), 0.4);
 
 
-    & .navbar{
+    & .navbar {
         height: 100vh;
         width: 74px;
         overflow: hidden;
-        box-shadow: 2px 0px 5px rgba(128, 128, 128, 0.164);  
+        box-shadow: 2px 0px 5px rgba(128, 128, 128, 0.164);
         position: fixed;
         inset-block-start: 0;
         inset-inline-start: 0;
@@ -50,29 +50,29 @@
         background-color: rgb(var(--dash-card-clr));
     }
 
-    & .header{
+    & .header {
         height: 60px;
         justify-content: center;
     }
 
-    & .navbar.active > .header{
+    & .navbar.active>.header {
         justify-content: space-between;
     }
 
-    & .branding{
+    & .branding {
         display: none;
     }
 
-    & .navbar.active > .header .branding{
+    & .navbar.active>.header .branding {
         display: block;
     }
 
-    & .navbar.active{
+    & .navbar.active {
         width: 240px;
         opacity: 1;
     }
 
-    & .content{
+    & .content {
         position: absolute;
         width: calc(100% - 74px);
         left: 74px;
@@ -81,17 +81,17 @@
         transition: all 0.3s ease-in-out;
     }
 
-    & .navbar.active + .content{
+    & .navbar.active+.content {
         width: calc(100% - 240px);
         left: 240px;
     }
 
-    & .navbar.active > .sidebar .navlist li .link-text{
+    & .navbar.active>.sidebar .navlist li .link-text {
         opacity: 1;
         pointer-events: auto;
         display: flex;
         align-items: center;
-    }    
+    }
 
     & .sidebar {
         width: 100%;
@@ -104,26 +104,26 @@
             transition: all 0.2s ease-in-out;
             border-radius: 8px;
             /* border-bottom: 2px solid; */
-    
-            &:hover{
+
+            &:hover {
                 background-color: rgb(var(--primary), 0.05);
             }
 
-            & .link-text{
+            & .link-text {
                 display: none;
                 opacity: 0;
                 color: rgb(var(--dash-title-clr));
                 transition: all 0.2s ease-in-out;
                 pointer-events: none;
             }
-    
+
             & a {
                 display: flex;
                 align-items: center;
                 width: 100%;
                 padding-block: 12px;
             }
-    
+
             & .icons {
                 display: flex;
                 align-items: center;
@@ -138,6 +138,52 @@
         }
     }
 
+    & .sub-navlist {
+        height: 0;
+        overflow: hidden;
+        opacity: 0;
+        transition: all 1s ease-in-out;
+
+        & li{
+            padding-inline-start: 40px;
+        }
+    }
+
+    & .nav-links .dropdown .arrowbtn{
+        padding-inline: 10px;
+        transition: all 0.3s ease-in-out;
+        transform: rotate(0deg);
+    }
+/* 
+    & .navbar ul li .sub-navlist {
+        position: absolute;
+        height: max-content;
+        opacity: 1;
+        display: block;
+    } */
+
+    @media screen and (min-width: 768px) {
+        & .nav-links:hover > .sub-navlist {
+            height: max-content;
+            opacity: 1;
+            display: block;
+        }
+
+        & .nav-links:hover .dropdown .arrowbtn{
+            transform: rotate(-180deg);
+        }
+    }
+    @media screen and (max-width: 767px) {
+        & .navbar.active li.active > .sub-navlist {
+            height: max-content;
+            opacity: 1;
+            display: block;
+        }
+
+        & .nav-links.active .dropdown .arrowbtn{
+            transform: rotate(-180deg);
+        }
+    }
 
 
 
@@ -153,30 +199,32 @@
 
 
 
-    
 
-    & .spike{
 
-        & .fa-arrow-trend-up{
+
+    & .spike {
+
+        & .fa-arrow-trend-up {
             color: rgb(var(--dash-green-clr)) !important;
             font-size: 12px !important;
         }
-        & .value{
+
+        & .value {
             color: rgb(var(--dash-green-clr)) !important;
             font-size: 12px !important;
         }
     }
 
-    & .table-controls{
-        & pagination-controls{
+    & .table-controls {
+        & pagination-controls {
             display: flex;
             align-items: center;
-            
+
             & .ngx-pagination {
                 margin-bottom: 0 !important;
             }
 
-            & .ngx-pagination .current{
+            & .ngx-pagination .current {
                 padding: 7px 12px;
                 background-color: rgb(var(--accent), 0.9) !important;
                 border-radius: 5px;
@@ -184,39 +232,44 @@
         }
     }
 
-    
-    & .drop{
-        
-        & .fa-arrow-trend-down{
+
+    & .drop {
+
+        & .fa-arrow-trend-down {
             color: rgb(var(--dash-red-clr)) !important;
             font-size: 12px !important;
         }
-        & .value{
+
+        & .value {
             color: rgb(var(--dash-red-clr)) !important;
             font-size: 12px !important;
             font-weight: 500;
         }
     }
 
-    & .inventory{
+    & .inventory {
         font-weight: 600;
         font-size: 13px;
     }
-    & .inventory.good{
+
+    & .inventory.good {
         color: rgb(var(--success));
     }
-    & .inventory.okay{
+
+    & .inventory.okay {
         color: rgba(255, 85, 0, 0.992);
     }
-    & .inventory.bad{
+
+    & .inventory.bad {
         color: rgb(var(--danger));
     }
-    
+
 }
 
 /* Apply rounded corners to the legend container */
 .rounded-legend .chartjs-render-monitor .chartjs-size-monitor-expand,
 .rounded-legend .chartjs-render-monitor .chartjs-size-monitor-shrink,
 .rounded-legend .chartjs-render-monitor {
-    border-radius: 10px; /* Adjust the border radius as needed */
+    border-radius: 10px;
+    /* Adjust the border radius as needed */
 }
