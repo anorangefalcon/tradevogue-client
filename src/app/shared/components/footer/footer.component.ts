@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { RouterLinksService } from '../../services/router-links.service';
-import { SettingsComponent } from 'src/app/settings/settings.component';
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-footer',
@@ -8,7 +9,7 @@ import { SettingsComponent } from 'src/app/settings/settings.component';
   styleUrls: ['./footer.component.css']
 })
 export class FooterComponent {
-  constructor(private routerService: RouterLinksService) {}
+  constructor(private routerService: RouterLinksService, private router: Router) {}
 
   show(el: any) {
     if (el == 'profile') {
@@ -23,5 +24,11 @@ export class FooterComponent {
       console.log("show data called by order history")
     }
     
+  }
+
+  onPayment() {
+    console.log("hoja");
+    this.router.navigate(['/t&c#payment'])
+ 
   }
 }

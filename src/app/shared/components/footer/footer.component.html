@@ -82,19 +82,19 @@
                     <h4 class="letter-spacing">MY ACCOUNT</h4>
                     <ul class="d-flex flex-column gap-20">
                         <li>
-                            <a href="#">Payment Policy</a>
+                            <a href="/t&c#payment" (click)="onPayment()">Payment Policy</a>
                         </li>
                         <li>
                             <a href="#">Return Policy</a>
                         </li>
-                        <li>
+                        <!-- <li>
                             <a href="#">Privacy Policy</a>
-                        </li>
+                        </li> -->
                         <li>
                             <a href="#">Shipping Policy</a>
                         </li>
                         <li>
-                            <a href="#">Terms & Conditions</a>
+                            <a href="#" routerLink="/t&c">Terms & Conditions</a>
                         </li>
                     </ul>
                 </div>
@@ -110,9 +110,9 @@
                         <li>
                             <a routerLink="/setting" (click)="show('orders')">Order history</a>
                         </li>
-                        <li>
+                        <!-- <li>
                             <a href="#">Wishlist</a>
-                        </li>
+                        </li> -->
                     </ul>
                 </div>
             </div>
@@ -234,8 +234,6 @@
 
                 </div>
             </div>
-
-
         </div>
     </div>
     <div class="copyright-footer d-flex justify-content-center align-items-center">
