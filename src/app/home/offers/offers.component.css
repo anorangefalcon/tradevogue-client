@@ -3,98 +3,129 @@ img {
 }
 
 .offer-title {
-    line-height: 1.2 !important;
-    height: 96px !important;
-    font-size: 32px !important;
-    font-weight: 500 !important;
-    color: rgb(51,51,51);
+  line-height: 1.2 !important;
+  font-size: 32px !important;
+  font-weight: 500 !important;
+  color: rgb(51, 51, 51);
+  margin-bottom: 30px;
 }
 
 .col {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-
-    padding: 20px;
-    width: 50%;
-    border-radius: 10px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-evenly;
+  padding: 20px;
+  width: 50%;
+  border-radius: 10px;
 }
 
 .col:first-child {
-  background-color:rgb(236,242,247);
+  background-color: rgb(236, 242, 247);
 }
 
 .col:last-child {
-  background-color:rgb(254,247,247);
+  background-color: rgb(254, 247, 247);
 }
 
 .subtitle {
   color: rgb(var(--primary));
+  font-weight: 500;
 }
 
 
 .banner-text {
-    display: flex;
-    flex-direction: column;
-    gap: 13px;
-    width: 50%;
+  display: flex;
+  flex-direction: column;
+  gap: 13px;
+  width: 50%;
 }
 
 .btn-style3 {
-    color: #fff;
-    font-size: 14px;
-    padding: 13px 20px;
-    background-color: #df4117;
-    text-transform: uppercase;
-    font-weight: 600;
-    border: 2px solid #df4117;
-    border-radius: 10px;
-    letter-spacing: .5px;
-    display: inline-block;
-    align-items: center;
-    text-align: center;
-    width: 137px;
+  color: #fff;
+  font-size: 14px;
+  padding: 13px 20px;
+  background-color: rgb(var(--primary));
+  text-transform: uppercase;
+  font-weight: 600;
+  border: 1px solid rgb(var(--primary));
+  border-radius: 5px;
+  letter-spacing: .5px;
+  text-align: center;
+  width: 137px;
 }
 
-       .col {
-            transition: background-color 0.3s ease-in-out; 
-            cursor: pointer;
-        }
+.col {
+  transition: background-color 0.3s ease-in-out;
+  cursor: pointer;
+}
 
-        .col:hover {
-            background-color: rgba(0, 0, 0, 0.1); 
-        }
+.col:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+}
 
 .btn-style3:hover {
-    color: #df4117;
-    background-color: #0000;
-    border: 2px solid #df4117;
-    box-shadow: 0 0 10px #0000000d;
+  color: #df4117;
+  background-color: #0000;
+  border: 2px solid #df4117;
+  box-shadow: 0 0 10px #0000000d;
 }
 
-a, a:hover {
-    text-decoration: none;
-    transition: all .3s ease-in-out 0s;
+a,
+a:hover {
+  text-decoration: none;
+  transition: all .3s ease-in-out 0s;
 }
 
 
-/* 
-.col-1{
-  background: url("../../../assets/deal-of-week-component/women_tshirt.png"),  rgb(236,242,247);
-  background-position: left top;
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-blend-mode: multiply;
+@media screen and (max-width: 1024px) {
+  img {
+    max-height: 240px;
+  }
+
+  .col{
+    padding: 15px;
+    min-height: 240px;
+  }
+
+  .offer-title {
+    font-size: 28px !important;
+    margin-block-end: 20px;
+  }  
+
+  .btn-style3 {
+    font-size: 13px;
+    padding: 11px 15px;
+    font-weight: 500;
+    width: 123px;
+  }
 }
 
-.col-2{
-  background: url("../../../assets/deal-of-week-component/women_tshirt.png"),  rgb(254,247,247); 
-  
-  background-position: left top;
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-blend-mode: multiply;
-}
+@media screen and (max-width: 768px) {
+  img {
+    max-height: 260px;
+  }
 
-*/
+  .row{
+    flex-wrap: wrap;
+  }
+
+  .col{
+    padding: 10px;
+    width: 100%;
+  }
+
+  .subtitle{
+    font-size: 14px;
+  }
+
+  .offer-title {
+    font-weight: 600;
+    /* font-size: 22px !important; */
+  }  
+
+  .btn-style3 {
+    font-size: 12px;
+    width: 105px;
+  }
+}

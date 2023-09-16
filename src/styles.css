@@ -611,3 +611,20 @@ button {
         transform: translateY(0px);
     }
 }
+
+
+@media screen and (max-width: 768px) {
+    .section-header {
+        text-align: left;
+        margin-bottom: 30px;
+    }
+    
+    .section-heading {
+        font-size: 30px !important;
+    }
+    
+    .section-sub-heading {
+        font-size: 14px !important;
+        font-weight: 300 !important;
+    }
+}
