@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { ProductsFilterService } from '../shared/services/products-filter.service';
 
+import { DemoService } from '../demo.service';
+
 @Component({
   selector: 'app-explore',
   templateUrl: './explore.component.html',
@@ -9,26 +11,20 @@ import { ProductsFilterService } from '../shared/services/products-filter.servic
 
 export class ExploreComponent {
 
-  productData: any[] = [];
-  dataLoaded: any = false;
+  productData: any = [];
+
   uniqueData: { [field: string]: any[] } = {};
   filters: any[] = [];
   filterObj: any = {}
+  FilterApplied: any = {};
 
 
+  constructor(private productFilter: ProductsFilterService, private demoService: DemoService) {}
 
-  constructor(private productFilter: ProductsFilterService) {
+  ngOnInit(): void {
     this.productFilter.getData().then((data) => {
-      // console.log(data);
-
       this.productData = data.originalData;
-      // console.log(this.productData);
-
       this.uniqueData = data.filterObj;
-      console.log(this.uniqueData);
-
-      this.dataLoaded = true;
-
     });
   }
 
@@ -39,14 +35,28 @@ export class ExploreComponent {
   }
 
   onChecked(event: any, field: string) {
-    if (!this.filterObj.hasOwnProperty(field)) {
-      this.filterObj[field] = [event.target.value];
-    } else {
-      this.filterObj[field].push(event.target.value);
+    if (event.target.checked) {
+      if (Array.isArray(this.FilterApplied[field])) {
+        this.FilterApplied[field].push(event.target.value);
+      }
+      else {
+        this.FilterApplied[field] = []
+        this.FilterApplied[field].push(event.target.value);
+      }
+    }
+    else {
+      this.FilterApplied[field]?.splice(this.FilterApplied[field].indexOf(event.target.value));
     }
 
-    // console.log(this.filterObj);
+    let result: any = []
+
+    result = this.productFilter.Filter2(this.FilterApplied, this.productData).then((data: any) => {
+      if (data.length == 0) {
+        this.productData = this.productFilter.getData();
+        this.productData = this.productData.originalData;
+        return;
+      }
+      this.productData = data;
+    });
   }
-
 }
-

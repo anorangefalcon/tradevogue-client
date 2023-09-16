@@ -9,6 +9,8 @@ import { map } from 'rxjs/operators';
   styleUrls: ['./account.component.css'],
 })
 export class AccountComponent {
+
+  Check:boolean=false;
   changee: boolean = true;
  profileForm:any = FormGroup;
  form: any = FormGroup;
@@ -32,12 +34,13 @@ validateNames(event: KeyboardEvent) {
 }
 
 get(dsfs: any) {
- console.log(dsfs);
+  this.Check=true;
+ console.log(this.Check);
 }
 
 
 
-
+AccountForm!:FormGroup
 
   constructor(private postalCodeService: ApiService , private formBuilder: FormBuilder) {
     this.profileForm = this.formBuilder.group({
@@ -58,6 +61,19 @@ get(dsfs: any) {
         ],
       ],
   });
+
+
+  this.AccountForm=this.formBuilder.group({
+  BankName:['', Validators.required],
+  AccountHolder:['', Validators.required],
+  AccountNo:['', Validators.required],
+  IFSC:['', Validators.required],
+  
+  GST:['', Validators.required],
+
+  
+  })
+
    }
    
 

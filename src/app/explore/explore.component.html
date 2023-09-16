@@ -1,13 +1,13 @@
 <div class="explore-container container d-flex">
 
-    <div *ngIf="dataLoaded" class="filters d-flex flex-column gap-10">
+    <div  class="filters d-flex flex-column gap-10">
         <div class="head">
             <h4>FILTERS</h4>
-            <!-- <button  class="clear-btn" >Clear all</button> -->
+           
         </div>
         <div *ngFor="let filter of uniqueData | keyvalue " class="types">
             <div class="category d-flex flex-column gap-10">
-                <h5 class="capital">{{ filter.key }}</h5>
+                <h5 class="capital">{{ filter.key }} </h5>
                 <div *ngFor="let value of filter.value | slice:0:3; let i = index" class="d-flex gap-10">
                     <input type="checkbox" [name]="filter.key" [value]="value" [id]="value" (change)="onChecked($event, filter.key)">
                     <label [for]="value" class="capital">{{ value}}</label>

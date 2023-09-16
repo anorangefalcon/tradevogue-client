@@ -213,14 +213,15 @@
         <button class="btn-secondary" (click)="get(form.value)">Update Information</button>
     </div>
     <div class="account-form" *ngIf="changee === false">
-        <form action="" class="d-flex gap-20">
+        <form action="" class="d-flex gap-20" [formGroup]="AccountForm">
             <div class="form__container col col-1">
                 <div class="form__group">
                     <div class="input__title">
                         <label for="">Bank Name</label>
                     </div>
                     <div class="input__form">
-                        <input type="text" required />
+                        <input type="text" required  formControlName="BankName"/>
+                        <span *ngIf="AccountForm?.get('BankName')?.hasError('required') && Check==true">bank name is required</span>
                     </div>
                 </div>
                 <div class="form__group">
@@ -228,7 +229,8 @@
                         <label for="">Account Holder</label>
                     </div>
                     <div class="input__form">
-                        <input type="text" required />
+                        <input type="text" required formControlName="AccountHolder" />
+                        <span *ngIf="AccountForm?.get('AccountHolder')?.hasError('required') && Check==true">account holder name is required</span>
                     </div>
                 </div>
                 <div class="form__group">
@@ -236,7 +238,9 @@
                         <label for="">Account Number</label>
                     </div>
                     <div class="input__form">
-                        <input type="number" required maxlength="17" minlength="5" />
+                        <input type="number" required maxlength="17" minlength="5"  formControlName="AccountNo"/>
+                        <span *ngIf="AccountForm?.get('AccountNo')?.hasError('required') && Check==true">account no is required</span>
+
                     </div>
                 </div>
             </div>
@@ -246,15 +250,19 @@
                         <label for="">IFSC</label>
                     </div>
                     <div class="input__form">
-                        <input type="text" required maxlength="11" />
+                        <input type="text" required maxlength="11"  formControlName="IFSC"/>
+                        <span *ngIf="AccountForm?.get('IFSC')?.hasError('required') && Check==true">IFSC no is required</span>
+
                     </div>
                 </div>
                 <div class="form__group">
                     <div class="input__title">
                         <label for="">GST</label>
                     </div>
-                    <div class="input__form">
-                        <input type="text" required maxlength="15" />
+                    <div class="input__form"> 
+                        <input type="text" required maxlength="15" formControlName="GST" />
+                        <span *ngIf="AccountForm?.get('GST')?.hasError('required') && Check==true">GST no is required</span>
+
                     </div>
                 </div>
                 <div class="form__group">

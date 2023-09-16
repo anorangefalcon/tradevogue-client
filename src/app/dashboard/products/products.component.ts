@@ -51,7 +51,7 @@ export class ProductsComponent implements OnInit {
     this.filters = [{ 'inventory_status': this.inventory_status }, { 'category': this.catgo }, { 'ratings': this.new_ratings }];
     console.log("inside funciton ")
     // this.filters={};
-    this.fetchdata.filtered_data(this.productList, this.filters);
+    // this.fetchdata.filtered_data(this.productList, this.filters);
 
 
   }

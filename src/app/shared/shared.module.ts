@@ -11,10 +11,10 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { RouterModule } from '@angular/router';
 import { FooterComponent } from './components/footer/footer.component';
 import { CustomSelectComponent } from './custom-select/custom-select.component';
-import { ReactiveFormsModule} from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
-import { FilterPipe } from './Pipe/filter.pipe';
 import { ProductFilterPipe } from './Pipe/product-filter.pipe';
+
 
 
 @NgModule({
@@ -27,8 +27,7 @@ import { ProductFilterPipe } from './Pipe/product-filter.pipe';
     SupportComponent,
     FooterComponent,
     CustomSelectComponent,
-    FilterPipe,
-    ProductFilterPipe,
+    ProductFilterPipe
   ],
   imports: [
     CommonModule,
@@ -36,8 +35,8 @@ import { ProductFilterPipe } from './Pipe/product-filter.pipe';
     CarouselModule,
     MatTabsModule,
     RouterModule,
-    FormsModule
-    // ProductPageModule
+    FormsModule,
+
   ],
   exports: [
     NavbarComponent,
@@ -47,7 +46,6 @@ import { ProductFilterPipe } from './Pipe/product-filter.pipe';
     CardTemplateComponent,
     SearchBarComponent,
     SupportComponent,
-    FilterPipe,
     ProductFilterPipe,
     CustomSelectComponent
   ]
