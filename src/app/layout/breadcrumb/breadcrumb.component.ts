@@ -9,6 +9,7 @@ import { BreadcrumbService } from '../breadcrumb.service';
 })
 export class BreadcrumbComponent implements OnInit {
   breadcrumbs: Array<{ label: string; url: string }> = [];
+  activeSku:any;
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
@@ -37,6 +38,9 @@ export class BreadcrumbComponent implements OnInit {
     breadcrumbs: Array<{ label: string; url: string }> = []
   ): Array<{ label: string; url: string }> {
     const snapshot = route.snapshot;
+    this.activeSku = route.snapshot.params['sku'];
+    console.log('activeSku', this.activeSku);
+    
     // console.log('snapshot', snapshot);
 
     const breadcrumbLabel: string = snapshot.data['breadcrumb'];

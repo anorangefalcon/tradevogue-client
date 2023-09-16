@@ -24,13 +24,14 @@ const routes: Routes = [
       },
       { path: 't&c', component: TcComponent, data: { breadcrumb: 'Term & Condition' } },
       { path: 'faq', component: FaqPageComponent, data: { breadcrumb: 'Faq' } },
+      { path: 'help', component: HelpPageComponent, data: { breadcrumb: 'Help' } },
       {
         path: 'product/:sku',
         component: ProductPageComponent,
         data: { breadcrumb: 'Product' }
       },
       { path: 'about', component: AboutPageComponent, data: { breadcrumb: 'About' } },
-      { path: 'explore', component: ExploreComponent, data: { breadcrumb: 'Explore' } },
+      { path: 'explore', component: ExploreComponent, data: { breadcrumb: 'Explore' }},
       {
         path: 'cart',
         component: CheckoutComponent,
@@ -40,21 +41,18 @@ const routes: Routes = [
           { path: 'billing', component: BillingComponent, data: { breadcrumb: 'Billing' } }
         ]
       },
+      {
+          path: '**', component: NoPageComponent, data: { breadcrumb: '404' } 
+        },
 
     ]
   },
-  { path: 'help', component: HelpPageComponent, data: { breadcrumb: 'Help' } },
-
   {
     path: 'auth', data: { breadcrumb: 'Auth' }, loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule)
   },
   {
     path: 'dashboard', data: { breadcrumb: 'Dashboard' }, loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule)
   },
-  {
-    path: '**', component: NoPageComponent, data: { breadcrumb: '404' } 
- }
-
 ];
 
 @NgModule({

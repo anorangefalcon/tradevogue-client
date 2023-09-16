@@ -119,7 +119,7 @@
                             <p>Access your account and manage your order</p>
                         </div>
                         <div class="d-flex justify-content-md-between gap-13">
-                            <a href="" id="login">
+                            <a [routerLink]="['/auth/login']" id="login">
                                 <span class="material-symbols-outlined">login</span>
                                 <span>Login</span>
                             </a>
@@ -155,8 +155,8 @@
                     </li>
 
                     <li class="sub-links d-flex flex-column justify-content-start">
-                        <a href="">Contact Us</a>
-                        <a href="">FAQ</a>
+                        <a [routerLink]="['/help']">Contact Us</a>
+                        <a [routerLink]="['/faq']">FAQ</a>
                     </li>
                 </ul>
             </li>
