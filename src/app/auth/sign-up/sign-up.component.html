@@ -7,7 +7,7 @@
 
 
 
-  <div class="left-part d-flex justify-content-center align-items-center">
+  <div class="column left-column d-flex justify-content-center align-items-center">
     <div class="form-container d-flex flex-column">
       <h2 class="text-center">Hi there!</h2>
 
@@ -36,7 +36,8 @@
           [ngClass]="{'wrapper-invalid': (signupForm.get('email')?.invalid && signupForm.get('email').touched)}"
           [ngClass]="{'wrapper-valid': signupForm.get('email')?.valid && signupForm.get('email').touched}"
           > -->
-          <small *ngIf="isFormSubmitted && signupForm?.get('email')?.hasError('email') && signupForm.get('email')?.touched"
+          <small
+            *ngIf="isFormSubmitted && signupForm?.get('email')?.hasError('email') && signupForm.get('email')?.touched"
             class="invalid">
             Please enter valid Email.
           </small>
@@ -122,7 +123,7 @@
         <div class="form__group d-flex  flex-column relative">
           <label class="form__label">Confirm Password<span>*</span></label>
           <span class="material-symbols-outlined key form__icon absolute">key</span>
-          <input  [type]="password2" id="confirmPassword" formControlName="confirmPassword"
+          <input [type]="password2" id="confirmPassword" formControlName="confirmPassword"
             placeholder="Re-enter Your Password">
           <button class="eye-btn flex justify-content-center align-items-center" (click)="toggle_password(2)"><span
               class="material-symbols-outlined eye">{{showPassword2? 'visibility' : 'visibility_off'}}</span></button>
@@ -143,7 +144,7 @@
 
         <button class="btn-primary registerbtn" (click)="onSubmit()">Register</button>
         <p class="text-center acc-text">Already have an account?
-          <a class="login-text" [routerLink]="['/login']">Login</a>
+          <a class="login-text" [routerLink]="['/auth/login']">Login</a>
         </p>
 
 
@@ -153,7 +154,7 @@
 
   <!-- img -->
 
-  <div class="right-part">
+  <div class="right-column column">
 
   </div>
 

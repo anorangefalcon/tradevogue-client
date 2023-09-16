@@ -1,17 +1,14 @@
 .hero-section {
 
-    & .container{
+    & .hero-content{
         padding-inline: 0px;
-        padding-block-start: 100px;
+        padding-block-start: 80px;
+        height: calc(100vh);
+        
     }
     
     & .hero-text {
         width: 50%;
-    }
-
-    & .hero-model-img {
-        width: 50%;
-        overflow: hidden;
     }
 
     .bg1 {
@@ -28,33 +25,33 @@
         background-size: cover;
     }
 
+    & .hero-model-img {
+        width: 50%;
+        overflow: hidden;
+
+        & img{
+            min-height: 100%;
+            object-fit: cover;
+            object-position: top;
+        }
+    }
+
+
     & .hero-img1 {
-        min-height: 100%;
-        background: url(../../../assets/girl.png);
-        background-size: cover;
-        background-repeat: no-repeat;
-        background-position: bottom;
         filter: grayscale(25%);
-        /* scale: 0.9; */
+        /* object-position: 50px -50px; */
     }
 
     & .hero-img2 {
-        min-height: 100%;
-        width: 100%;
-        background: url(../../../assets/boy2.png);
-        background-size: cover;
-        background-repeat: no-repeat;
-        background-position: bottom;
         filter: brightness(90%);
         scale: 1.1;
     }
 
-}
+    & .hero-text-container{
+        padding: 20px;
+    }
 
-.hero-content {
-    height: calc(100vh);
 }
-
 
 @media screen and (max-width: 768px) {
 

@@ -104,7 +104,8 @@
             }
 
             & h3 {
-                font-size: 24px !important;
+                font-size: 28px !important;
+                text-wrap: nowrap;
             }
 
             & h5 {
@@ -117,7 +118,20 @@
                 max-height: 200px;
             }
         }
+
+        & .shop__button {
+            & a{
+                font-size: 16px !important;
+            }
+            & .icons {
+                font-weight: 400;
+                font-size: 23px !important;
+            }
+        }
     }
+
+
+    
 }
 
 @media screen and (max-width: 480px) {
@@ -153,6 +167,18 @@
         & .deal-week-img {
             width: 100%;
 
+        }
+
+        & .shop__button {
+            justify-content: center;
+
+            & a{
+                font-size: 13px !important;
+            }
+            & .icons {
+                font-weight: 400;
+                font-size: 20px !important;
+            }
         }
     }
 }

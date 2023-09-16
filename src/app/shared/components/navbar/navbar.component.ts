@@ -8,7 +8,9 @@ import { CookieService } from 'ngx-cookie-service';
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent implements OnInit {
+  isSearching: boolean = false;
   isUserLogin: boolean = false;
+  hamburgerOpen: boolean = false;
   purchaser: string = "";
   cart_count: number = 0;
   cartArr: any[] = [];

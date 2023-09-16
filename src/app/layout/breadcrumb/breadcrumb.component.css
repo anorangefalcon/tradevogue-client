@@ -1,0 +1,34 @@
+.breadcrumb{
+    padding-block-start: 95px;
+    padding-block-end: 15px;
+
+    font-size: 12px;
+}
+
+.border-bottom{
+    font-weight: 500;
+}
+
+.breadcrumb-container {
+  font-size: 16px;
+  margin: 10px 0;
+}
+
+.breadcrumb-link {
+  text-decoration: none;
+  color: #050505;
+  transition: color 0.3s;
+}
+
+.breadcrumb-link:hover {
+  color: #0b0b0b; 
+}
+
+.breadcrumb-separator {
+  color: #ccc;
+  margin: 0 5px;
+}
+
+.breadcrumb-last {
+  font-weight: bold; 
+}

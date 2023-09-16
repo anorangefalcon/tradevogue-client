@@ -122,8 +122,7 @@ input, textarea, select {
 }
 
 .contact-info {
-    width: 50% !important;
-    margin-left: 30px !important;
+    width: 50% ;
 }
 
 .form-title {
@@ -327,4 +326,32 @@ li label {
 
 .margin-bottom {
     margin-bottom: 18px;
+}
+.map {
+    width: 100% !important;
+}
+
+@media  (max-width: 768px) {
+
+.contact-content {
+    flex-direction: column-reverse;
+}
+
+.contact-info {
+    width: 100% ;
+}
+
+.contact-form-warp {
+    width: 100%;
+}
+
+.helpBox h2 {
+    font-size: 30px !important;
+    letter-spacing: 1.2px;
+}
+
+.container {
+    padding-block: 35px;
+}
+
 }

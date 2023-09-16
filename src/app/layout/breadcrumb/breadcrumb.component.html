@@ -1,0 +1,38 @@
+<!-- <div class="breadcrumb container" *ngIf="breadcrumbs.length > 0">
+  <ng-container *ngFor="let breadcrumb of breadcrumbs; let last = last">
+    <ng-container *ngIf="!last && breadcrumb.label !== null">
+      <a [routerLink]="breadcrumb.url" class="breadcrumb-link">{{ breadcrumb.label }}</a>
+      <span class="breadcrumb-separator"> > </span>
+    </ng-container>
+    <ng-container *ngIf="breadcrumb.label === 'Product'">
+      <a [routerLink]="['explore']" class="breadcrumb-link">Explore</a>
+      <span class="breadcrumb-separator"> > </span>
+      <a class="breadcrumb-link breadcrumb-active">{{ activeSku }}-</a>
+    </ng-container>
+    <ng-container *ngIf="last && breadcrumb.label !== null">
+      <a [routerLink]="breadcrumb.url" class="breadcrumb-link breadcrumb-last">{{ breadcrumb.label }}</a>
+    </ng-container>
+  </ng-container>
+</div> -->
+
+
+<div class="breadcrumb container" *ngIf="breadcrumbs.length > 0">
+  <ng-container *ngFor="let breadcrumb of breadcrumbs; let last = last">
+    <ng-container *ngIf="!last && breadcrumb.label !== null">
+      <a [routerLink]="breadcrumb.url" class="breadcrumb-link">{{ breadcrumb.label }}</a>
+      <span class="breadcrumb-separator"> > </span>
+    </ng-container>
+    <ng-container *ngIf="breadcrumb.label === 'Product'">
+      <a [routerLink]="['explore']" class="breadcrumb-link">Explore</a>
+      <span class="breadcrumb-separator"> > </span>
+      <ng-container *ngIf="activeSku && breadcrumb.label !== null">
+        <a [routerLink]="breadcrumb.url" class="breadcrumb-link">{{ breadcrumb.label }}</a>
+        <span class="breadcrumb-separator">/</span>
+        <a class="breadcrumb-link breadcrumb-active breadcrumb-last">{{ activeSku }}</a>
+      </ng-container>
+    </ng-container>
+    <ng-container *ngIf="last && breadcrumb.label!== 'Product' && breadcrumb.label !== null">
+      <a [routerLink]="breadcrumb.url" class="breadcrumb-link breadcrumb-last">{{ breadcrumb.label }}</a>
+    </ng-container>
+  </ng-container>
+</div>

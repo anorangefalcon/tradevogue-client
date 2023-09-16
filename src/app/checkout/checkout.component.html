@@ -1,12 +1,60 @@
 <div *ngIf="cartCount>0" class="container checkout-container d-flex ">
     <div class="cart d-flex flex-column gap-10">
         <div class="border d-flex justify-content-md-between">
-            <h4>Total Items :</h4>
-            <span>{{cartCount}} item</span>
+            <h4>Cart : </h4>
+            <span>{{cartCount}} item<span *ngIf="cartCount>1">s</span>
+            </span>
         </div>
         <router-outlet class="cartAndBilling"></router-outlet>
     </div>
-    <app-order-summary  [class.active]="navbar_scroll_style == true" class="orderSummary"></app-order-summary>
+
+    <div class="orderSummary" [class.active]="navbar_scroll_style == true" >
+        <div class="summary-container d-flex flex-column gap-10">
+            <h2 class="border-end text-center">Order Summary</h2>
+            <div class="border-end items-container d-flex flex-column gap-10">
+                <div class="item" *ngFor="let item of cart.details">
+                    <div class="itemname d-flex justify-content-md-between">
+                        <p>{{item.name}}</p>
+                        <p>₹{{item.price}}</p>
+                    </div>
+                    <div class="itemtype d-flex justify-content-md-between">
+                        <p>{{item.description}}</p>
+                        <p>Qty: {{item.Quantity}}</p>
+                    </div>
+                </div>
+            </div>
+        
+            <div class="border-end subtotal d-flex justify-content-md-between">
+                <p>Subtotal</p>
+                <p>₹{{cart.amounts.subTotal}}</p>
+            </div>
+            <div class="border-end shipping d-flex justify-content-md-between">
+                <p>Shipping</p>
+                <p>₹{{cart.amounts.shipping}}</p>
+            </div>
+        
+            <div class="border-end savings d-flex justify-content-md-between">
+                <p>Savings</p>
+                <p class="savings-amt">₹{{cart.amounts.savings}}</p>
+            </div>
+        
+            <div class="total d-flex justify-content-md-between">
+                <p>Total</p>
+                <p>₹{{cart.amounts.total}}</p>
+            </div>
+            <button (click)="checkLogin()" class="btn-primary"><a>Proceed to Checkout</a></button>
+        </div>
+        
+        
+    </div>
+</div>
+
+<!-- when cart count is zero -->
+<div *ngIf="cartCount === 0" class="empty d-flex flex-column justify-content-center align-items-center">
+    <h1 class="text-center">Your cart is empty</h1>
+    <div class="text-center">
+        <button [routerLink]="['/explore']" class="btn btn-primary">Continue Shopping</button>
+    </div>
 </div>
 
 <!-- when cart count is zero -->

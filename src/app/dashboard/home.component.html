@@ -1,6 +1,75 @@
 <section id="dashboard-section" class="d-flex">
-    <div class="navbar">
-        <app-sidepanel></app-sidepanel>
+    <div class="navbar" [class.active]="isCollapse == false" >
+        <div class="header d-flex align-items-center">
+            <div class="branding">
+                <a [routerLink]="['/']">
+                    <img src="../../../assets/logo.svg" alt="Logo" style="height: 40px;">
+                </a> 
+            </div>
+
+            <a href="javascript:void(0);" class="toggle-button" (click)="toggle()">
+                <span class="d-flex justify-content-center icons material-symbols-outlined mw100">menu</span>
+            </a>
+        </div>
+
+        <div class="sidebar">
+            <ul class="navlist">
+                <li class="nav-links" routerLink="/dashboard">
+                    <a href=" javascript:void(0);" class="dropdown">
+                        <div class="d-flex align-center">
+                            <span class="icons material-symbols-outlined">grid_view</span>
+                            <span class="link-text">Overview</span>
+                        </div>
+                    </a>
+                </li>
+                    <li class="nav-links" routerLink="/dashboard">
+                    <a href=" javascript:void(0);" class="dropdown">
+                        <div class="d-flex align-center">
+                            <span class="icons material-symbols-outlined">bar_chart_4_bars</span>
+                            <span class="link-text">Sales</span>
+                        </div>
+                    </a>
+                </li>
+                <li class="nav-links" [class.active]="isProductBtnActive == true">
+                    <a href=" javascript:void(0);" class="dropdown d-flex justify-content-md-between" (click)="product_dropdown()">
+                        <div class="d-flex align-center">
+                            <span class="icons material-symbols-outlined">inventory</span>
+                            <span class="link-text">Products</span>
+                        </div>
+                        <span class="arrowbtn material-symbols-outlined">arrow_drop_down</span>
+                    </a>
+                    <ul class="sub-navlist">
+                        <li class="sub-links" routerLink="/dashboard/products" ><a href="javascript:void(0);">Product Managment</a></li>
+                        <li class="sub-links" routerLink="/dashboard/features"><a href="javascript:void(0);">Add Product Features</a></li>
+                        <li class="sub-links" routerLink="/dashboard/addproduct"><a href="javascript:void(0);">Add New Product</a></li>
+                    </ul>
+                </li>
+                <li class="nav-links" routerLink="/dashboard/orders">
+                    <a href=" javascript:void(0);" class="dropdown">
+                        <div class="d-flex align-center">
+                            <span class="icons material-symbols-outlined">shopping_cart</span>
+                            <span class="link-text">Orders</span>
+                        </div>
+                    </a>
+                </li>
+                <li class="nav-links">
+                    <a href=" javascript:void(0);" class="dropdown">
+                        <div class="d-flex align-center">
+                            <span class="icons material-symbols-outlined">reviews</span>
+                            <span class="link-text">Reviews</span>
+                        </div>
+                    </a>
+                </li>
+                <li class="nav-links"  routerLink="/dashboard/account">
+                    <a href=" javascript:void(0);" class="dropdown">
+                        <div class="d-flex align-center">
+                            <span class="icons material-symbols-outlined">settings</span>
+                            <span class="link-text">Setting</span>
+                        </div>
+                    </a>
+                </li>
+            </ul>
+        </div>
     </div>
     <div class="content">
         <router-outlet></router-outlet>

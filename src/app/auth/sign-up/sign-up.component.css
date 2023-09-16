@@ -7,102 +7,97 @@
 
 .signup-section {
     min-height: 100vh;
-   
-    /* display: flex; */
     flex-direction: row-reverse;
 
     /* RIGHT SIDE */
 
-
-
-    & .left-part, .right-part {
+    & .column {
         padding: 0;
-        width: 50%;
-        padding-block: 30px;
+        width: 100%;
         background-color: rgb(var(--background));
+        padding-block: 30px;
     }
 
-   
+    & .form-container {
+        padding-inline: 20px;
+        width: 70% ;
+        & h2 {
+            font-size: 46px;
+            font-weight: 500;
+            letter-spacing: 0.4px;
+            line-height: 0.9;
+            margin-block-end: 50px;
+        }
+        
+
+        & .key {
+            transform: rotate(90deg);
+        }
+
+        & .invalid {
+            color: rgb(var(--danger));
+            font-size: 12px !important;
+
+        }
+
+        & .eye {
+            font-size: 15px;
+            color: rgb(var(--text-black), 0.3);
+            font-weight: 900;
+        }
 
 
-        & .form-container {
-            min-width: 370px;
-           
-            & h2{
-                font-size: 50px;
-                font-weight: 500;
-                letter-spacing: 0.4px;
-                line-height: 0.9;
-                margin-block-end: 50px;
-            }
-           
-    
-            & .key {
-                transform: rotate(90deg);
-            }
-
-            & .invalid {
-                color: rgb(var(--danger));
-                font-size: 12px !important;
-    
-            }
-    
+        & .eye-btn:is(:active, :hover) {
             & .eye {
-                font-size: 15px;
-                color: rgb(var(--text-black), 0.3);
-                font-weight: 900;
-            }
-    
-            
-            & .eye-btn:is(:active, :hover) {
-                & .eye {
-    
-                    color: rgb(var(--primary), 0.7);
-                }
-            }
-    
-    
-            & .eye-btn {
-               
-                padding: 13px 5px;
-                border-radius: 10px;
-                border: none;
-               
-                position: absolute;
-                inset-block-start: 30px;
-                inset-inline-end: 7px;
-                background-color: transparent;
-            }
-    
-           
-    
-            & .login-text {
-                color: rgb(var(--primary));
-    
-                &:is(:hover, :active, :focus) {
-                    text-decoration: underline;
-                }
-            }
-            & .acc-text {
-                font-size: 14px !important;
-            }
-            & .forgot-pass {
-                font-size: 14px;
-                text-align: right;
-                color: rgb(var(--primary));
-                padding-inline-end: 10px;
+
+                color: rgb(var(--primary), 0.7);
             }
         }
-    
-    
+
+
+        & .eye-btn {
+
+            padding: 13px 5px;
+            border-radius: 10px;
+            border: none;
+
+            position: absolute;
+            inset-block-start: 30px;
+            inset-inline-end: 7px;
+            background-color: transparent;
+        }
+
+
+
+        & .login-text {
+            color: rgb(var(--primary));
+
+            &:is(:hover, :active, :focus) {
+                text-decoration: underline;
+            }
+        }
+
+        & .acc-text {
+            font-size: 14px !important;
+        }
+
+        & .forgot-pass {
+            font-size: 14px;
+            text-align: right;
+            color: rgb(var(--primary));
+            padding-inline-end: 10px;
+        }
+    }
+
+
 
 
     /* IMAGE APRT  */
-    & .right-part {
+    & .right-column {
         background-image: url("https://images.unsplash.com/photo-1615222443417-6d76586644a9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fGZhc2hpb24lMjBtb2RlbHN8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=800&q=60");
         background-size: cover;
 
-       
+
     }
 
 }
@@ -110,22 +105,26 @@
 .password-helper {
     padding-inline: 10px;
     /* margin-top: -24px; */
-    
+
     /* margin-bottom: 24px; */
     margin-block-start: 8px;
+
     & .helper-inside {
         width: 50%;
         display: flex;
         flex-direction: column;
         gap: 5px;
-        & p, small{
+
+        & p,
+        small {
             font-size: 12px !important;
-            
+
         }
 
-        & small{
+        & small {
             margin: 0;
         }
+
         & p {
             color: rgb(var(--text-black), 0.6);
             display: flex;
@@ -133,7 +132,7 @@
             gap: 5px;
         }
     }
-    
+
 }
 
 
@@ -158,11 +157,11 @@
 
 
 
-.form__group{
-    
+.form__group {
+
     width: 100%;
-   
-    & input{
+
+    & input {
         width: 100%;
         height: 52px;
         padding-inline-start: 40px;
@@ -173,20 +172,22 @@
         outline: none;
 
     }
-    & input:focus{
+
+    & input:focus {
         border-color: rgb(var(--text-black), 0.4);
     }
-    
+
     & label {
         font-size: 14px;
         color: rgb(var(--text-black), 0.9);
         padding-bottom: 5px;
     }
-    & label span{
+
+    & label span {
         color: rgb(var(--danger));
     }
 
-    & .form__icon{
+    & .form__icon {
         display: flex;
         align-items: center;
         justify-content: center;
@@ -197,7 +198,7 @@
         color: rgb(var(--text-black), 0.5);
     }
 
-    & ::placeholder{
+    & ::placeholder {
         color: rgb(var(--text-black), 0.3);
     }
 
@@ -205,12 +206,50 @@
         margin-block-start: 8px;
     }
 
-    
+
 }
+
 .registerbtn {
     height: 52px;
     border-radius: 8px;
 }
 
 
+@media screen and (max-width: 960px){
+    .form-container {
+       
+        & h2 {
+            font-size: 40px !important;
+        }
+    }
+}
 
+
+@media screen and (max-width: 768px){
+    .signup-section {
+        position: relative;
+
+        & .left-column{
+            position: absolute;
+            inset-inline: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #00000027;
+            backdrop-filter: blur(2px);
+        }
+
+        & .form-container{
+            background-color: rgb(var(--background));
+            width: 70% !important;
+            margin: 20px;
+            padding: 50px;
+            border-radius: 5px;
+        }
+
+        & .right-column{
+            width: 100%;
+            /* position: absolute;
+            inset-inline-start: 0; */
+        }
+    }
+}

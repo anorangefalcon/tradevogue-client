@@ -9,16 +9,12 @@ import { SearchBarComponent } from './components/search-bar/search-bar.component
 import { SupportComponent } from './components/support/support.component';
 import { MatTabsModule } from '@angular/material/tabs';
 import { RouterModule } from '@angular/router';
-import { PopOpenDirective } from './Directives/pop-open.directive';
-import { PopCloseDirective } from './Directives/pop-close.directive';
 import { FooterComponent } from './components/footer/footer.component';
-import { FacilitiesComponent } from './components/facilities/facilities.component';
-import { NewsletterComponent } from './components/newsletter/newsletter.component';
 import { CustomSelectComponent } from './custom-select/custom-select.component';
-import { ReactiveFormsModule} from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
-import { FilterPipe } from './Pipe/filter.pipe';
 import { ProductFilterPipe } from './Pipe/product-filter.pipe';
+
 
 
 @NgModule({
@@ -29,14 +25,9 @@ import { ProductFilterPipe } from './Pipe/product-filter.pipe';
     CardTemplateComponent,
     SearchBarComponent,
     SupportComponent,
-    PopOpenDirective,
-    PopCloseDirective,
     FooterComponent,
-    FacilitiesComponent,
-    NewsletterComponent,
     CustomSelectComponent,
-    FilterPipe,
-    ProductFilterPipe,
+    ProductFilterPipe
   ],
   imports: [
     CommonModule,
@@ -44,23 +35,18 @@ import { ProductFilterPipe } from './Pipe/product-filter.pipe';
     CarouselModule,
     MatTabsModule,
     RouterModule,
-    FormsModule
-    // ProductPageModule
+    FormsModule,
+
   ],
   exports: [
     NavbarComponent,
     FooterComponent,
-    FacilitiesComponent,
-    NewsletterComponent,
     ProductCardsComponent,
     ProductCardCarouselComponent,
     CardTemplateComponent,
     SearchBarComponent,
     SupportComponent,
-    PopOpenDirective,
-    FilterPipe,
     ProductFilterPipe,
-    PopCloseDirective,
     CustomSelectComponent
   ]
 })
