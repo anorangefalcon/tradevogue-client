@@ -41,9 +41,6 @@ const routes: Routes = [
           { path: 'billing', component: BillingComponent, data: { breadcrumb: 'Billing' } }
         ]
       },
-      {
-          path: '**', component: NoPageComponent, data: { breadcrumb: '404' } 
-        },
 
     ]
   },
@@ -53,6 +50,9 @@ const routes: Routes = [
   {
     path: 'dashboard', data: { breadcrumb: 'Dashboard' }, loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule)
   },
+        {
+          path: '**', component: NoPageComponent, data: { breadcrumb: '404' } 
+        },
 ];
 
 @NgModule({
