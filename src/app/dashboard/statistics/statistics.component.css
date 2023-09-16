@@ -208,7 +208,7 @@
                 overflow: hidden;
                 background-color: rgba(var(--dash-blue-clr), 0.05);
                 
-                img{
+                & img{
                     object-fit: cover;
                 }
             }

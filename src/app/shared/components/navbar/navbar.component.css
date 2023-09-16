@@ -224,6 +224,7 @@ header.active {
     }
 }
 
+
 .cart-items {
     & img {
         max-width: 40px;
@@ -234,6 +235,7 @@ header.active {
     }
 
     & p {
+
         font-size: 8px !important;
     }
 }

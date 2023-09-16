@@ -22,10 +22,12 @@ export class ProductsFilterService {
     };
 
     originalData.map((data: any) => {
+
       for (let filter of Object.keys(filterObj)) {
         const target = filter in data ? data : data.info;
         const value = target[filter];
         if (Array.isArray(value)) {
+
           for (let v of value) {
             const arr = filterObj[filter];
 
@@ -48,6 +50,7 @@ export class ProductsFilterService {
         filterObj[el].push(false)
       }
     });
+
     return { originalData, filterObj };
   }
 

@@ -19,6 +19,7 @@ export class ExploreComponent {
   FilterApplied: any = {};
 
 
+
   constructor(private productFilter: ProductsFilterService, private demoService: DemoService) {}
 
   ngOnInit(): void {
@@ -33,6 +34,7 @@ export class ExploreComponent {
     event.target.innerHTML = (target === 'Show Less') ? 'Show More' : 'Show Less';
     this.uniqueData[key][-1] = !this.uniqueData[key][-1];
   }
+
 
   onChecked(event: any, field: string) {
     if (event.target.checked) {
