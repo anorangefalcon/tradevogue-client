@@ -1,18 +1,28 @@
-<header [class.active]="navbar_scroll_style == true">
+<header [class.active]="(navbar_scroll_style == true) || (hamburgerOpen)">
     <nav class="navbar container d-flex align-items-center justify-content-md-between relative">
         <div class="branding d-flex gap-10 align-items-center">
-            <span class="dropdown material-symbols-outlined">menu</span>
-            <a [routerLink]="['/']">
-                <img src="../../assets/logo.svg" alt="Trade Vogue Logo">
+
+            <div [ngClass]="hamburgerOpen ? 'dropdown-active' : ''"  class="dropdown pointer"
+            (click)="hamburgerOpen = !hamburgerOpen">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+
+            <a class="logo" [routerLink]="['/']">
+                <picture>
+                    <source media="(min-width: 480px)" srcset="../../assets/logo.svg">
+                    <img src="../../../../assets/logo-mobile.svg" alt="Trade Vogue Logo">
+                </picture>
             </a>
         </div>
-        <ul class="d-flex gap-30 nav-items active">
-            <li class="nav-links">
+        <ul class="d-flex gap-30 nav-items" [class.active]="hamburgerOpen">
+            <!-- <li class="nav-links">
                 <a class="active d-flex flex-column gap-5" [routerLink]="['/']">
-                    <!-- <span class="material-symbols-outlined">home</span> -->
+                    <span class="material-symbols-outlined">home</span>
                     Home
                 </a>
-            </li>
+            </li> -->
             <li class="nav-links">
                 <a href="" class=" d-flex flex-column gap-5" [routerLink]="['/explore']">
                     <!-- <span class="material-symbols-outlined">male</span> -->
@@ -25,27 +35,32 @@
                     Women
                 </a>
             </li>
+            <li class="nav-links">
+                <a href="" class=" d-flex flex-column gap-5" [routerLink]="['/explore']">
+                    <!-- <span class="material-symbols-outlined">offer</span> -->
+                    Offers
+                </a>
+            </li>
         </ul>
         <ul class="navbar-features d-flex align-items-center gap-20 m-gap-15 s-gap-10">
+            
+            <div class="search" [ngClass]="isSearching ? 'search-mobile' : ''">
+                <span (click)="isSearching = false" class="back material-symbols-outlined pointer">
+                    keyboard_backspace
+                </span>
+                <app-search-bar (click)="hamburgerOpen = false" class="search-bar"></app-search-bar>
+            </div>
+            <span (click)="isSearching = !isSearching; hamburgerOpen = false" class="search-icon-mobile material-symbols-outlined">
+                search
+            </span>
             <!-- <li>
                 <a class="icons" href="javscript:void(0);">
-                    <span class="material-symbols-outlined">search</span>
-                    <div class="search sub-items d-flex flex-column gap-15">
-                        <app-search-bar></app-search-bar>
-                    </div>
-                </a>
-            </li> -->
-            <div class="search">
-                <app-search-bar></app-search-bar>
-            </div>
-            <li>
-                <!-- <a class="icons" href="javscript:void(0);">
                     <span class="wishlist_count material-symbols-outlined">
                         favorite
                         <span class="count" id="wishList">0</span>
                     </span>
-                </a> -->
-            </li>
+                </a>
+            </li> -->
             <li>
                 <a class="icons" href="javscript:void(0);">
                     <span class="material-symbols-outlined">
@@ -56,7 +71,7 @@
                 <ul class="sub-items d-flex flex-column gap-15">
                     <li class="d-flex align-items-center justify-content-md-between">
                         <h4>Notifications</h4>
-                        <h6>5 Unread</h6>
+                        <h6>0 Unread</h6>
                     </li>
                     <li>
                         <span>

@@ -14,7 +14,7 @@ import { OffersComponent } from './offers/offers.component';
 import { DealOfWeekComponent } from './deal-of-week/deal-of-week.component';
 
 const routes: Routes = [
-  // { path: '', component: HomeComponent }
+  { path: '', component: HomeComponent }
 ];
 
 
