@@ -62,9 +62,10 @@
 
 
         <div class="profile-form" *ngIf="changee === true">
-            <form action="" class="d-flex gap-20">
+            
+            <form action=""  [formGroup]="form" class="d-flex gap-20">
                 <div class="form__container col-1">
-                    <div class="form__group" [formGroup]="form">
+                    <div class="form__group" >
                         <div class="input__title">
                             <label for="firstName">First Name</label>
                         </div>
@@ -217,29 +218,29 @@
             <div class="form__container col col-1">
                 <div class="form__group">
                     <div class="input__title">
-                        <label for="">Bank Name</label>
+                        <label for="">Bank Name <span class="important">*</span></label>
                     </div>
                     <div class="input__form">
                         <input type="text" required  formControlName="BankName"/>
-                        <span *ngIf="AccountForm?.get('BankName')?.hasError('required') && Check==true">bank name is required</span>
+                        <small *ngIf="AccountForm?.get('BankName')?.hasError('required') && Check==true">Field Required</small>
                     </div>
                 </div>
                 <div class="form__group">
                     <div class="input__title">
-                        <label for="">Account Holder</label>
+                        <label for="">Account Holder <span class="important">*</span></label>
                     </div>
                     <div class="input__form">
                         <input type="text" required formControlName="AccountHolder" />
-                        <span *ngIf="AccountForm?.get('AccountHolder')?.hasError('required') && Check==true">account holder name is required</span>
+                        <small *ngIf="AccountForm?.get('AccountHolder')?.hasError('required') && Check==true">Field Required</small>
                     </div>
                 </div>
                 <div class="form__group">
                     <div class="input__title">
-                        <label for="">Account Number</label>
+                        <label for="">Account Number <span class="important">*</span></label>
                     </div>
                     <div class="input__form">
                         <input type="number" required maxlength="17" minlength="5"  formControlName="AccountNo"/>
-                        <span *ngIf="AccountForm?.get('AccountNo')?.hasError('required') && Check==true">account no is required</span>
+                        <small *ngIf="AccountForm?.get('AccountNo')?.hasError('required') && Check==true">Field Required</small>
 
                     </div>
                 </div>
@@ -247,27 +248,27 @@
             <div class="col col-2">
                 <div class="form__group">
                     <div class="input__title">
-                        <label for="">IFSC</label>
+                        <label for="">IFSC <span class="important">*</span></label>
                     </div>
                     <div class="input__form">
                         <input type="text" required maxlength="11"  formControlName="IFSC"/>
-                        <span *ngIf="AccountForm?.get('IFSC')?.hasError('required') && Check==true">IFSC no is required</span>
+                        <small *ngIf="AccountForm?.get('IFSC')?.hasError('required') && Check==true">Field Required</small>
 
                     </div>
                 </div>
                 <div class="form__group">
                     <div class="input__title">
-                        <label for="">GST</label>
+                        <label for="">GST<span class="important">*</span></label>
                     </div>
                     <div class="input__form"> 
                         <input type="text" required maxlength="15" formControlName="GST" />
-                        <span *ngIf="AccountForm?.get('GST')?.hasError('required') && Check==true">GST no is required</span>
+                        <small *ngIf="AccountForm?.get('GST')?.hasError('required') && Check==true">Field Required</small>
 
                     </div>
                 </div>
                 <div class="form__group">
                     <div class="input__title">
-                        <label for="">TIN</label>
+                        <label for="">TIN </label>
                     </div>
                     <div class="input__form">
                         <input type="text" maxlength="11" />

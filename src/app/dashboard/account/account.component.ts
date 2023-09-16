@@ -35,7 +35,7 @@ validateNames(event: KeyboardEvent) {
 
 get(dsfs: any) {
   this.Check=true;
- console.log(this.Check);
+//  console.log(this.Check);
 }
 
 
@@ -43,10 +43,8 @@ get(dsfs: any) {
 AccountForm!:FormGroup
 
   constructor(private postalCodeService: ApiService , private formBuilder: FormBuilder) {
-    this.profileForm = this.formBuilder.group({
-    // firstName: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(50)]],
-  });
 
+    //  FOR PROFILE SECTION FORM
   this.form = this.formBuilder.group({
     firstName: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(50),  this.validateNames ]],
     lastName: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(50) , this.validateNames]],
@@ -62,7 +60,7 @@ AccountForm!:FormGroup
       ],
   });
 
-
+ //  FOR ACCOUNT SECTION FORM
   this.AccountForm=this.formBuilder.group({
   BankName:['', Validators.required],
   AccountHolder:['', Validators.required],

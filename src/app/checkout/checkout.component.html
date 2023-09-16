@@ -10,6 +10,7 @@
 
     <div class="orderSummary" [class.active]="navbar_scroll_style == true" >
         <div class="summary-container d-flex flex-column gap-10">
+            
             <h2 class="border-end text-center">Order Summary</h2>
             <div class="border-end items-container d-flex flex-column gap-10">
                 <div class="item" *ngFor="let item of cart.details">
@@ -23,7 +24,13 @@
                     </div>
                 </div>
             </div>
-        
+            
+            <!-- <div>
+            <div class="Router-outlet">
+            <router-outlet class="cartAndBilling"></router-outlet>
+        </div> -->
+        <!-- </div> -->
+
             <div class="border-end subtotal d-flex justify-content-md-between">
                 <p>Subtotal</p>
                 <p>₹{{cart.amounts.subTotal}}</p>
@@ -44,6 +51,7 @@
             </div>
             <button (click)="checkLogin()" class="btn-primary"><a>Proceed to Checkout</a></button>
         </div>
+        
         
         
     </div>

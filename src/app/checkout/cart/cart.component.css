@@ -252,9 +252,9 @@
         font-size: 14px !important;
     }
 
-    .labels {
+    /* .labels {
         display: none;
-    }
+    } */
 
     .cart-item {
         gap: 20px;
@@ -348,4 +348,24 @@
         font-size: 12px;
         padding-inline: 5px;
     }
+}
+
+
+
+
+
+
+
+
+
+.product-image{
+width: 12%;
+}
+
+
+.ProductINFO{
+    width: 88%;
+    /* background-color: green !important; */
+    display: flex;
+    justify-content: space-between;
 }
