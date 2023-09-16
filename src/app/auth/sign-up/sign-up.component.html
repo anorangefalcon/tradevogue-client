@@ -1,15 +1,12 @@
-<div class="head-logo">
-  <img src="../../assets/logo.svg" alt="logo" width="150px">
-</div>
-
-
 <section class="signup-section d-flex flex-">
-
-
 
   <div class="column left-column d-flex justify-content-center align-items-center">
     <div class="form-container d-flex flex-column">
-      <h2 class="text-center">Hi there!</h2>
+      <div class="header fixed">
+        <a routerLink="/"><img src="../../assets/logo.svg" alt="logo"></a>
+      </div>
+      
+      <h2 class="register-title text-center">Hi there!</h2>
 
       <form [formGroup]="signupForm" class="d-flex flex-column gap-15">
         <div class="form__group relative d-flex flex-column">
@@ -17,13 +14,9 @@
           <span class="material-symbols-outlined form__icon absolute">person</span>
           <input type="text" id="username" formControlName="username" placeholder="Enter Your Username">
 
-
-
           <small
             *ngIf="isFormSubmitted && signupForm.get('username')?.hasError('invalidUser') && !signupForm.get('username')?.hasError('required') && signupForm.get('username').touched"
             class="invalid">Username not available.</small>
-
-
         </div>
 
 
@@ -120,7 +113,7 @@
 
 
 
-        <div class="form__group d-flex  flex-column relative">
+        <div class="form__group d-flex flex-column relative">
           <label class="form__label">Confirm Password<span>*</span></label>
           <span class="material-symbols-outlined key form__icon absolute">key</span>
           <input [type]="password2" id="confirmPassword" formControlName="confirmPassword"

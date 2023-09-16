@@ -95,6 +95,7 @@
 
     & .sidebar {
         width: 100%;
+        height: calc(100% - 60px);
 
         & .navlist li {
             position: relative;
@@ -154,13 +155,24 @@
         transition: all 0.3s ease-in-out;
         transform: rotate(0deg);
     }
-/* 
-    & .navbar ul li .sub-navlist {
-        position: absolute;
-        height: max-content;
-        opacity: 1;
-        display: block;
-    } */
+
+    & .nav-links.profile {
+        position: absolute !important;
+        bottom: 0;
+        left: 0;
+
+        & .photo-section{
+            height: 50px;
+            min-width: 50px;
+            /* background-color: aqua; */
+        }
+
+        & #profile__photo{
+            width: 45px;
+            height: 45px;
+            border-radius: 5px;
+        }
+    }
 
     @media screen and (min-width: 768px) {
         & .nav-links:hover > .sub-navlist {
