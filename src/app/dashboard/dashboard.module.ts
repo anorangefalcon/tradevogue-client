@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { NgModel } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { DashboardRoutingModule } from './dashboard-routing.module';
@@ -34,7 +35,8 @@ import { UploadExcelService } from './services/upload-excel.service';
     FormsModule
   ],
   providers: [
-    UploadExcelService
+    UploadExcelService,
+    NgModel
   ],
 })
 export class DashboardModule { }

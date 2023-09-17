@@ -1,5 +1,6 @@
 <div class="setting d-flex gap-20 mw100">
     <div class="user__info d-flex flex-column gap-20">
+        <!-- User information section -->
         <div class="card info__card d-flex flex-column align-items-center gap-15">
             <div class="images">
                 <img id="profile__photo" src="../../../assets/Gallery/Gallery1 (3).jpg" alt="">
@@ -8,13 +9,15 @@
                     <i class="camera__icon fa-solid fa-camera"></i>
                 </label>
             </div>
-            <div class="d-flex flex-column gap-5 align-items-center ">
+            <div class="d-flex flex-column gap-5 align-items-center">
                 <h3 class="seller__name">Andrew Gonza</h3>
                 <p class="__title">Seller</p>
             </div>
             <p class="activity">Last Active: 02/10/2023</p>
             <a class="mw100"><button class="btn-primary">Log Out</button></a>
         </div>
+
+        <!-- Features section -->
         <div class="card features d-flex flex-column gap-10">
             <ul class="d-flex flex-column gap-10">
                 <li>
@@ -27,7 +30,9 @@
                 </li>
             </ul>
         </div>
-        <div class=" card personal__info d-flex flex-column gap-15">
+
+        <!-- Personal information section -->
+        <div class="card personal__info d-flex flex-column gap-15">
             <h4>Personal Info</h4>
             <ul class="d-flex flex-column gap-10">
                 <li>
@@ -48,124 +53,128 @@
             </ul>
         </div>
     </div>
+
+    <!-- User form section -->
     <div class="card user__form d-flex flex-column gap-30">
+        <!-- Form header with radio buttons to switch between profile and account details -->
         <div class="header d-flex justify-content-center align-items-center gap-20 text-center">
-            <input type="radio" name="form" id="profile__form" checked (click)="changee = true">
+            <input type="radio" name="form" id="profile__form" [checked]="changee" (click)="changee = true">
             <label for="profile__form">
                 <h4>Profile Details</h4>
             </label>
-            <input type="radio" name="form" id="account__form" (click)="changee = false">
+            <input type="radio" name="form" id="account__form" [checked]="!changee" (click)="changee = false">
             <label for="account__form">
                 <h4>Account Details</h4>
             </label>
         </div>
 
-
+        <!-- Profile form -->
         <div class="profile-form" *ngIf="changee === true">
-            
-            <form action=""  [formGroup]="form" class="d-flex gap-20">
+            <form [formGroup]="profileForm" class="d-flex gap-20">
+                <!-- Profile form fields go here -->
                 <div class="form__container col-1">
-                    <div class="form__group" >
+                    <!-- First Name -->
+                    <div class="form__group">
                         <div class="input__title">
                             <label for="firstName">First Name</label>
                         </div>
                         <div class="form__input">
-                            <input type="text" id="firstName" [(ngModel)]="firstName" name="firstName"
-                                formControlName="firstName" required minlength="2" maxlength="50"
-                                (keypress)="validateNames($event)" />
-                            <div *ngIf="form.get('firstName').invalid && (form.get('firstName').dirty || form.get('firstName').touched)"
+                            <input type="text" id="firstName" formControlName="firstName" required minlength="2"
+                                maxlength="50" (keypress)="validateNames($event)" />
+                            <div *ngIf="profileForm.get('firstName')?.invalid && (profileForm.get('firstName')?.dirty || profileForm.get('firstName')?.touched)"
                                 class="error-message">
-                                <div *ngIf="form.get('firstName').hasError('required')">First Name is required.
+                                <div *ngIf="profileForm.get('firstName')?.hasError('required')">First Name is required.
                                 </div>
-                                <div *ngIf="form.get('firstName').hasError('minlength')">First Name should have at
-                                    least 2 characters.</div>
-                                <div *ngIf="form.get('firstName').hasError('maxlength')">First Name should have at
-                                    most 50 characters.</div>
+                                <div *ngIf="profileForm.get('firstName')?.hasError('minlength')">First Name should have
+                                    at least 2 characters.</div>
+                                <div *ngIf="profileForm.get('firstName')?.hasError('maxlength')">First Name should have
+                                    at most 50 characters.</div>
                             </div>
                         </div>
-
                     </div>
 
-                    <div class="form__group" [formGroup]="form">
+                    <!-- Last Name -->
+                    <div class="form__group">
                         <div class="input__title">
                             <label for="lastName">Last Name</label>
                         </div>
                         <div class="form__input">
-                            <input type="text" id="lastName" [(ngModel)]="lastName" name="lastName"
-                                formControlName="lastName" required minlength="2" maxlength="50"
-                                (keypress)="validateNames($event)" />
-                            <div *ngIf="form.get('lastName').invalid && (form.get('lastName').dirty || form.get('lastName').touched)"
+                            <input type="text" id="lastName" formControlName="lastName" required minlength="2"
+                                maxlength="50" (keypress)="validateNames($event)" />
+                            <div *ngIf="profileForm.get('lastName')?.invalid && (profileForm.get('lastName')?.dirty || profileForm.get('lastName')?.touched)"
                                 class="error-message">
-                                <div *ngIf="form.get('lastName').hasError('required')">Last Name is required.</div>
-                                <div *ngIf="form.get('lastName').hasError('minlength')">Last Name should have at least 2
-                                    characters.</div>
-                                <div *ngIf="form.get('lastName').hasError('maxlength')">Last Name should have at most 50
-                                    characters.</div>
+                                <div *ngIf="profileForm.get('lastName')?.hasError('required')">Last Name is required.
+                                </div>
+                                <div *ngIf="profileForm.get('lastName')?.hasError('minlength')">Last Name should have at
+                                    least 2 characters.</div>
+                                <div *ngIf="profileForm.get('lastName')?.hasError('maxlength')">Last Name should have at
+                                    most 50 characters.</div>
                             </div>
                         </div>
                     </div>
 
-                    <div class="form__group">
+                    <!-- Email -->
+                    <div class="form__group" [formGroup]="profileForm">
                         <div class="input__title">
                             <label for="email">Email</label>
                         </div>
                         <div class="form__input">
-                            <input type="email" id="email" required placeholder="Email"
-                                pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"
-                                [formControl]="form.controls['email']" />
-                            <div
-                                *ngIf="form.controls['email'].invalid && (form.controls['email'].dirty || form.controls['email'].touched)">
-                                <div *ngIf="form.controls['email'].errors.required">Email is required.</div>
-                                <div *ngIf="form.controls['email'].errors.pattern">Invalid email format.</div>
+                            <input type="email" id="email" required placeholder="Email" formControlName="email" />
+                            <div *ngIf="profileForm.get('email')?.invalid && (profileForm.get('email')?.dirty || profileForm.get('email')?.touched)"
+                                class="error-message">
+                                <div *ngIf="profileForm.get('email')?.hasError('required')">Email is required.</div>
+                                <div *ngIf="profileForm.get('email')?.hasError('pattern')">Invalid email format.</div>
                             </div>
                         </div>
                     </div>
 
+                    <!-- Mobile -->
                     <div class="form__group">
                         <div class="input__title">
                             <label for="mobile">Mobile</label>
                         </div>
                         <div class="form__input">
-                            <input type="number" id="mobile" required placeholder="Mobile" pattern="[0-9]{10}"
-                                [formControl]="form.controls['mobile']" />
-                            <div
-                                *ngIf="form.controls['mobile'].invalid && (form.controls['mobile'].dirty || form.controls['mobile'].touched)">
-                                <div *ngIf="form.controls['mobile'].errors.required">Mobile is required.</div>
-                                <div *ngIf="form.controls['mobile'].errors.pattern">Mobile should be a 10-digit number.
-                                </div>
+                            <input type="number" id="mobile" formControlName="mobile" required placeholder="Mobile"
+                                pattern="[0-9]{10}" />
+                            <div *ngIf="profileForm.get('mobile')?.invalid && (profileForm.get('mobile')?.dirty || profileForm.get('mobile')?.touched)"
+                                class="error-message">
+                                <div *ngIf="profileForm.get('mobile')?.hasError('required')">Mobile is required.</div>
+                                <div *ngIf="profileForm.get('mobile')?.hasError('pattern')">Mobile should be a 10-digit
+                                    number.</div>
                             </div>
                         </div>
                     </div>
 
+                    <!-- Password -->
                     <div class="form__group">
                         <div class="input__title">
                             <label for="password">Password</label>
                         </div>
                         <div class="form__input">
-                            <input type="{{ passwordVisible ? 'text' : 'password' }}" id="password" required
-                                placeholder="Password" [formControl]="form.controls['password']" />
+                            <input type="{{ passwordVisible ? 'text' : 'password' }}" id="password"
+                                formControlName="password" required placeholder="Password" />
                             <span class="eye-icon" (click)="togglePasswordVisibility()">
                                 <i class="fa" [class.fa-eye]="passwordVisible"
                                     [class.fa-eye-slash]="!passwordVisible"></i>
                             </span>
-                            <div *ngIf="form.controls['password'].invalid && (form.controls['password'].dirty || form.controls['password'].touched)"
+                            <div *ngIf="profileForm.get('password')?.invalid && (profileForm.get('password')?.dirty || profileForm.get('password')?.touched)"
                                 class="error-message">
-                                <div *ngIf="form.controls['password'].hasError('required')">Password is required.</div>
-                                <div *ngIf="form.controls['password'].hasError('minlength')">Password should have a
-                                    minimum length of 8 characters.</div>
-                                <div *ngIf="form.controls['password'].hasError('pattern')">
-                                    Password should contain at least one capital letter and at least one special
-                                    character.
+                                <div *ngIf="profileForm.get('password')?.hasError('required')">Password is required.
                                 </div>
+                                <div *ngIf="profileForm.get('password')?.hasError('minlength')">Password should have a
+                                    minimum length of 8 characters.</div>
+                                <div *ngIf="profileForm.get('password')?.hasError('pattern')">Password should contain at
+                                    least one capital letter and at least one special character.</div>
                             </div>
                         </div>
                     </div>
                 </div>
 
+                <!-- Address and Pincode -->
                 <div class="form__container col-2">
                     <div class="form__group">
                         <div class="input__title">
-                            <label for="">Address</label>
+                            <label for="address">Address</label>
                         </div>
                         <div class="form__input">
                             <input type="text" id="address" required placeholder="Address" />
@@ -174,101 +183,122 @@
 
                     <div class="form__group">
                         <div class="input__title">
-                            <label for="">Pincode</label>
+                            <label for="postalCode">Pincode</label>
                         </div>
                         <div class="form__input">
-                            <input type="text" placeholder="Enter Pincode" id="postalCode" [(ngModel)]="postalCode"
-                                name="postalCode" class="form-control" required (input)="onPostalCodeChange()">
+                            <input type="text" placeholder="Enter Pincode" id="postalCode" formControlName="postalCode"
+                                (input)="onPostalCodeInputChange()">
                         </div>
+
                     </div>
+
                     <div class="form__group">
                         <div class="input__title">
-                            <label for="">State</label>
+                            <label for="state">State</label>
                         </div>
                         <div class="form__input">
-                            <input type="text" id="state" value="{{state}}" required placeholder="State"
+                            <input type="text" id="state" [value]="state" required placeholder="State"
                                 [disabled]="!pincodeFilled" />
                         </div>
                     </div>
+
                     <div class="form__group">
                         <div class="input__title">
-                            <label for="">City</label>
+                            <label for="city">City</label>
                         </div>
                         <div class="form__input">
-                            <input type="text" id="city" value="{{county}}" required placeholder="City"
+                            <input type="text" id="city" [value]="county" required placeholder="City"
                                 [disabled]="!pincodeFilled" />
                         </div>
                     </div>
+
                     <div class="form__group">
                         <div class="input__title">
-                            <label for="">Country</label>
+                            <label for="country">Country</label>
                         </div>
                         <div class="form__input">
-                            <input type="text" id="country" value="{{country}}" required placeholder="Country"
+                            <input type="text" id="country" [value]="country" required placeholder="Country"
                                 [disabled]="!pincodeFilled" />
                         </div>
                     </div>
                 </div>
             </form>
         </div>
-        <button class="btn-secondary" (click)="get(form.value)">Update Information</button>
+
+        <!-- Update Information Button -->
+        <button class="btn-secondary" type="submit">Update Information</button>
     </div>
+
+    <!-- Account form -->
     <div class="account-form" *ngIf="changee === false">
         <form action="" class="d-flex gap-20" [formGroup]="AccountForm">
             <div class="form__container col col-1">
+                <!-- Bank Name -->
                 <div class="form__group">
                     <div class="input__title">
-                        <label for="">Bank Name <span class="important">*</span></label>
+                        <label for="BankName">Bank Name <span class="important">*</span></label>
                     </div>
                     <div class="input__form">
-                        <input type="text" required  formControlName="BankName"/>
-                        <small *ngIf="AccountForm?.get('BankName')?.hasError('required') && Check==true">Field Required</small>
+                        <input type="text" required formControlName="BankName" />
+                        <small *ngIf="AccountForm?.get('BankName')?.hasError('required') && Check == true">Field
+                            Required</small>
                     </div>
                 </div>
+
+                <!-- Account Holder -->
                 <div class="form__group">
                     <div class="input__title">
-                        <label for="">Account Holder <span class="important">*</span></label>
+                        <label for="AccountHolder">Account Holder <span class="important">*</span></label>
                     </div>
                     <div class="input__form">
                         <input type="text" required formControlName="AccountHolder" />
-                        <small *ngIf="AccountForm?.get('AccountHolder')?.hasError('required') && Check==true">Field Required</small>
+                        <small *ngIf="AccountForm?.get('AccountHolder')?.hasError('required') && Check == true">Field
+                            Required</small>
                     </div>
                 </div>
+
+                <!-- Account Number -->
                 <div class="form__group">
                     <div class="input__title">
-                        <label for="">Account Number <span class="important">*</span></label>
+                        <label for="AccountNo">Account Number <span class="important">*</span></label>
                     </div>
                     <div class="input__form">
-                        <input type="number" required maxlength="17" minlength="5"  formControlName="AccountNo"/>
-                        <small *ngIf="AccountForm?.get('AccountNo')?.hasError('required') && Check==true">Field Required</small>
-
+                        <input type="number" required maxlength="17" minlength="5" formControlName="AccountNo" />
+                        <small *ngIf="AccountForm?.get('AccountNo')?.hasError('required') && Check == true">Field
+                            Required</small>
                     </div>
                 </div>
             </div>
+
             <div class="col col-2">
+                <!-- IFSC -->
                 <div class="form__group">
                     <div class="input__title">
-                        <label for="">IFSC <span class="important">*</span></label>
+                        <label for="IFSC">IFSC <span class="important">*</span></label>
                     </div>
                     <div class="input__form">
-                        <input type="text" required maxlength="11"  formControlName="IFSC"/>
-                        <small *ngIf="AccountForm?.get('IFSC')?.hasError('required') && Check==true">Field Required</small>
-
+                        <input type="text" required maxlength="11" formControlName="IFSC" />
+                        <small *ngIf="AccountForm?.get('IFSC')?.hasError('required') && Check == true">Field
+                            Required</small>
                     </div>
                 </div>
+
+                <!-- GST -->
                 <div class="form__group">
                     <div class="input__title">
-                        <label for="">GST<span class="important">*</span></label>
+                        <label for="GST">GST<span class="important">*</span></label>
                     </div>
-                    <div class="input__form"> 
+                    <div class="input__form">
                         <input type="text" required maxlength="15" formControlName="GST" />
-                        <small *ngIf="AccountForm?.get('GST')?.hasError('required') && Check==true">Field Required</small>
-
+                        <small *ngIf="AccountForm?.get('GST')?.hasError('required') && Check == true">Field
+                            Required</small>
                     </div>
                 </div>
+
+                <!-- TIN -->
                 <div class="form__group">
                     <div class="input__title">
-                        <label for="">TIN </label>
+                        <label for="TIN">TIN </label>
                     </div>
                     <div class="input__form">
                         <input type="text" maxlength="11" />
@@ -278,22 +308,3 @@
         </form>
     </div>
 </div>
-
-
-
-
-
-<!-- <div class="container">
-  <h1>Postal Code Information</h1>
-  <form>
-    <div class="form-group">
-      <label for="postalCode">Enter Postal Code:</label>
-      <input type="text" id="postalCode" [(ngModel)]="postalCode" name="postalCode" class="form-control" required (input)="onPostalCodeChange()">
-    </div>
-  </form>
-  <div *ngIf="country">
-    <p>Country: {{ country }}</p>
-    <p>State: {{ state }}</p>
-    <p>County: {{ county }}</p>
-  </div>
-</div> -->

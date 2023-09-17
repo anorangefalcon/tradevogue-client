@@ -1,56 +1,67 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 import { ApiService } from '../services/api.service';
-import { FormBuilder, FormGroup, Validators , AbstractControl, ValidationErrors} from '@angular/forms';
-import { map } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-account',
   templateUrl: './account.component.html',
   styleUrls: ['./account.component.css'],
 })
-export class AccountComponent {
-
-  Check:boolean=false;
+export class AccountComponent implements OnInit {
+  Check: boolean = false;
   changee: boolean = true;
- profileForm:any = FormGroup;
- form: any = FormGroup;
- postalCode: string = '';
- firstName: string = '';
- lastName: string = '';
+  profileForm!: FormGroup;
+  AccountForm!: FormGroup; // Define AccountForm as a FormGroup
+  postalCode: string = '';
   country: string = '';
   state: string = '';
   county: string = '';
   passwordVisible: boolean = false;
-pincodeFilled: boolean = false;
+  pincodeFilled: boolean = false;
+  private postalCodeInput = new Subject<string>();
 
-validateNames(event: KeyboardEvent) {
-  const input = event.key;
-  const isNumber = /\d/.test(input);
-  const isSpecialCharacter = /[!@#$%^&*()_+{}\[\]:;<>,.?~\\|"'-]/.test(input);
-
-  if (isNumber || isSpecialCharacter) {
-    event.preventDefault();
-  }
-}
-
-get(dsfs: any) {
-  this.Check=true;
-//  console.log(this.Check);
-}
+  constructor(
+    private postalCodeService: ApiService,
+    private formBuilder: FormBuilder
+  ) { }
 
 
-
-AccountForm!:FormGroup
-
-  constructor(private postalCodeService: ApiService , private formBuilder: FormBuilder) {
-
-    //  FOR PROFILE SECTION FORM
-  this.form = this.formBuilder.group({
-    firstName: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(50),  this.validateNames ]],
-    lastName: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(50) , this.validateNames]],
-    email: ['', [Validators.required, Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}')]],
-     mobile: ['', [Validators.required, Validators.pattern('[0-9]{10}')]],
-     password: [
+  ngOnInit() {
+    this.profileForm = this.formBuilder.group({
+      firstName: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(2),
+          Validators.maxLength(50),
+          this.validateNames,
+        ],
+      ],
+      lastName: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(2),
+          Validators.maxLength(50),
+          this.validateNames,
+        ],
+      ],
+      email: [
+        '',
+        [
+          Validators.required,
+          Validators.pattern(
+            '[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}'
+          ),
+        ],
+      ],
+      mobile: [
+        '',
+        [Validators.required, Validators.pattern('[0-9]{10}')],
+      ],
+      password: [
         '',
         [
           Validators.required,
@@ -58,49 +69,72 @@ AccountForm!:FormGroup
           Validators.pattern(/^(?=.*[A-Z])(?=.*[!@#$%^&*()_+{}\[\]:;<>,.?~\\-])/),
         ],
       ],
-  });
+      postalCode: [
+        '',
+        [Validators.required, Validators.pattern('[0-9]{6}')],
+      ],
+    });
 
- //  FOR ACCOUNT SECTION FORM
-  this.AccountForm=this.formBuilder.group({
-  BankName:['', Validators.required],
-  AccountHolder:['', Validators.required],
-  AccountNo:['', Validators.required],
-  IFSC:['', Validators.required],
-  
-  GST:['', Validators.required],
+    this.AccountForm = this.formBuilder.group({
+      // Create a FormGroup for AccountForm
+      BankName: ['', Validators.required],
+      AccountHolder: ['', Validators.required],
+      AccountNo: ['', [Validators.required, Validators.maxLength(17), Validators.minLength(5)]],
+      IFSC: ['', [Validators.required, Validators.maxLength(11)]],
+      GST: ['', [Validators.required, Validators.maxLength(15)]],
+    });
 
-  
-  })
-
-   }
-   
-
-  onPostalCodeChange() {
-    if (this.postalCode) {
-      this.pincodeFilled = true;
-      this.postalCodeService.getDetailsByPostalCode(this.postalCode)
-        .subscribe((data: any[]) => {
-          if (data.length > 0) {
-            this.country = data[0].COUNTRY;
-            this.state = data[0].STATE;
-            this.county = data[0].COUNTY;
+    this.postalCodeInput
+      .pipe(
+        debounceTime(300),
+        distinctUntilChanged(),
+        switchMap((value: string) => {
+          if (value) {
+            this.pincodeFilled = true;
+            return this.postalCodeService.getDetailsByPostalCode(value);
           } else {
+            this.pincodeFilled = false;
             this.country = '';
             this.state = '';
             this.county = '';
+            return [];
           }
-        });
-    } else {
-      this.pincodeFilled = false;
-      this.country = '';
-      this.state = '';
-      this.county = '';
+        })
+      )
+      .subscribe((data: any[]) => {
+        if (data.length > 0) {
+          this.country = data[0].COUNTRY;
+          this.state = data[0].STATE;
+          this.county = data[0].COUNTY;
+        } else {
+          this.country = '';
+          this.state = '';
+          this.county = '';
+        }
+      });
+  }
+
+  onPostalCodeInputChange() {
+    const postalCodeValue = this.profileForm?.get('postalCode')?.value;
+    this.postalCodeInput.next(postalCodeValue);
+  }
+
+
+  togglePasswordVisibility() {
+    this.passwordVisible = !this.passwordVisible;
+  }
+
+  validateNames(event: KeyboardEvent) {
+    const input = event.key;
+    const isNumber = /\d/.test(input);
+    const isSpecialCharacter = /[!@#$%^&*()_+{}\[\]:;<>,.?~\\-]/.test(input);
+
+    if (isNumber || isSpecialCharacter) {
+      event.preventDefault();
     }
   }
 
-  
-togglePasswordVisibility() {
-    this.passwordVisible = !this.passwordVisible;
-}
-}
+  updateInformation() {
 
+  }
+}
