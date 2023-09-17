@@ -50,6 +50,9 @@ export class ProductCardCarouselComponent {
       },
       940: {
         items: 5
+      },
+      1450: {
+        items: 4
       }
     }
   }
