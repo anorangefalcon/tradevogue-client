@@ -18,6 +18,8 @@ export class ExploreComponent {
   filterObj: any = {}
   FilterApplied: any = {};
 
+  filtersOpen: boolean = false;
+
 
 
   constructor(private productFilter: ProductsFilterService, private demoService: DemoService) {}
@@ -60,5 +62,8 @@ export class ExploreComponent {
       }
       this.productData = data;
     });
+  }
+  toggleFilters() {
+    this.filtersOpen = !this.filtersOpen;
   }
 }

@@ -1,27 +1,60 @@
 <div class="explore-container container d-flex">
-    <div  class="filters d-flex flex-column gap-10">
+    <div class="filters d-flex flex-column gap-10">
         <div class="head">
             <h4>FILTERS</h4>
-           
+
         </div>
         <div *ngFor="let filter of uniqueData | keyvalue " class="types">
             <div class="category d-flex flex-column gap-10">
                 <h5 class="capital">{{ filter.key }} </h5>
 
                 <div *ngFor="let value of filter.value | slice:0:3; let i = index" class="d-flex gap-10">
-                    <input type="checkbox" [name]="filter.key" [value]="value" [id]="value" (change)="onChecked($event, filter.key)">
+                    <input type="checkbox" [name]="filter.key" [value]="value" [id]="value"
+                        (change)="onChecked($event, filter.key)">
                     <label [for]="value" class="capital">{{ value}}</label>
                 </div>
 
                 <div *ngIf="filter.value[-1]==true" class="d-flex flex-column gap-10">
                     <div *ngFor="let value of filter.value | slice:3:-1; let i = index" class="d-flex gap-10">
-                        <input type="checkbox" [name]="filter.key" [value]="value" [id]="value" (change)="onChecked($event, filter.key)">
+                        <input type="checkbox" [name]="filter.key" [value]="value" [id]="value"
+                            (change)="onChecked($event, filter.key)">
                         <label [for]="value" class="capital">{{ value}}</label>
                     </div>
                 </div>
 
-                <a class="show-btn" *ngIf="filter.value.length>3" (click)="toggleShowItems(filter.key,$event)">Show More</a>
+                <a class="show-btn" *ngIf="filter.value.length>3" (click)="toggleShowItems(filter.key,$event)">Show
+                    More</a>
             </div>
+        </div>
+    </div>
+    <div class="filter-icon" (click)="toggleFilters()">
+        <span class="material-symbols-outlined" [ngClass]="filtersOpen ? 'filtersMenu' : ''">
+            filter_alt
+        </span>
+        <div class="filtersMenu" *ngIf="filtersOpen">
+            <div *ngFor="let filter of uniqueData | keyvalue " class="types">
+                <div class="category d-flex flex-column gap-10">
+                    <h5 class="capital">{{ filter.key }} </h5>
+
+                    <div *ngFor="let value of filter.value | slice:0:3; let i = index" class="d-flex gap-10">
+                        <input type="checkbox" [name]="filter.key" [value]="value" [id]="value"
+                            (change)="onChecked($event, filter.key)">
+                        <label [for]="value" class="capital">{{ value}}</label>
+                    </div>
+
+                    <div *ngIf="filter.value[-1]==true" class="d-flex flex-column gap-10">
+                        <div *ngFor="let value of filter.value | slice:3:-1; let i = index" class="d-flex gap-10">
+                            <input type="checkbox" [name]="filter.key" [value]="value" [id]="value"
+                                (change)="onChecked($event, filter.key)">
+                            <label [for]="value" class="capital">{{ value}}</label>
+                        </div>
+                    </div>
+
+                    <a class="show-btn" *ngIf="filter.value.length>3" (click)="toggleShowItems(filter.key,$event)">Show
+                        More</a>
+                </div>
+            </div>
+
         </div>
     </div>
     <div class="explore-cards grid">
