@@ -16,12 +16,9 @@ section{
 .profile{
     
         margin: 0 auto;
-        /* width: 50%; */
         display: flex;
         flex-direction: column;
         gap:15px;
-        /* background-color: yellow; */
-        /* padding-block: 50px; */
         
         & .title{
            padding-block: 30px;
@@ -85,7 +82,6 @@ section{
 
 .gender-top{
     display: flex;
-    /* display: flex; */
     width: 198.1px;
     gap: 51px;
 }
@@ -101,8 +97,9 @@ section{
 gap:20px;
 width: 100%;
 display: flex;
-border:2px solid rgba(var(--text-black), 0.5);
+/* border:2px solid rgba(var(--text-black), 0.5); */  
 flex-direction: column;
+border: 1px solid (rgba(var(--text-black), 0.5));
 & p{
     font-size: 12px !important;
 }
@@ -110,8 +107,10 @@ flex-direction: column;
 & .orderDetails{
     display: flex;
     justify-content: space-between;
-    background-color:rgba(var(--primary),0.5);
+    background-color:rgba(var(--primary), 0.9);
+    
     padding:10px;
+    color: rgba(var(--text-white));
     & .common{
         display: flex;
         flex-direction: column;

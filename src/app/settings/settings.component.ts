@@ -9,10 +9,10 @@ import { RouterLinksService } from '../shared/services/router-links.service';
   styleUrls: ['./settings.component.css']
 })
 export class SettingsComponent {
-  showData : string = 'profile';
+  showData : string = 'orders';
 
   showProfile(){
-    this.showData = 'profile';
+    this.showData = 'orders';
   }
   showOrders(){
     this.showData = 'orders';

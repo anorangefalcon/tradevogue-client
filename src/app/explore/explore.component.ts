@@ -18,12 +18,14 @@ export class ExploreComponent {
   filterObj: any = {}
   FilterApplied: any = {};
 
+  filtersOpen: boolean = false;
+
 
 
   constructor(private productFilter: ProductsFilterService, private demoService: DemoService) {}
 
   ngOnInit(): void {
-    this.productFilter.getData().then((data) => {
+    this.productFilter.getData().then((data:any) => {
       this.productData = data.originalData;
       this.uniqueData = data.filterObj;
     });
@@ -60,5 +62,8 @@ export class ExploreComponent {
       }
       this.productData = data;
     });
+  }
+  toggleFilters() {
+    this.filtersOpen = !this.filtersOpen;
   }
 }

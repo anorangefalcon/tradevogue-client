@@ -9,63 +9,71 @@ export class ProductsFilterService {
 
   constructor(private fetchData: FetchDataService) {}
 
-  async getData() {
-    const originalData = await this.fetchData.getData().toPromise();
+   getData() {
 
-    const filterObj: any = {
-      sizes: [],
-      colors: [],
-      category: [],
-      price: [],
-      brand: [],
-      tags: []
-    };
-
-    originalData.map((data: any) => {
-
-      for (let filter of Object.keys(filterObj)) {
-        const target = filter in data ? data : data.info;
-        const value = target[filter];
-        if (Array.isArray(value)) {
-
-          for (let v of value) {
-            const arr = filterObj[filter];
-
-            if (!arr.includes(v)) {
-              arr.push(v);
+    let promise=new Promise(async (resolve,reject)=>{
+      await this.fetchData.getData().subscribe((originalData)=>{
+        const filterObj: any = {
+          sizes: [],
+          colors: [],
+          category: [],
+          price: [],
+          brand: [],
+          tags: []
+        };
+    
+        originalData.map((data: any) => {
+    
+          for (let filter of Object.keys(filterObj)) {
+            const target = filter in data ? data : data.info;
+            const value = target[filter];
+            if (Array.isArray(value)) {
+    
+              for (let v of value) {
+                const arr = filterObj[filter];
+    
+                if (!arr.includes(v)) {
+                  arr.push(v);
+                }
+              }
+            }
+            else {
+              const arr = filterObj[filter];
+              if (!arr.includes(value)) {
+                arr.push(value);
+              }
             }
           }
-        }
-        else {
-          const arr = filterObj[filter];
-          if (!arr.includes(value)) {
-            arr.push(value);
+        });
+    
+        Object.keys(filterObj).forEach(el => {
+          if (filterObj[el].length > 3) {
+            filterObj[el].push(false)
           }
-        }
-      }
-    });
+        });
 
-    Object.keys(filterObj).forEach(el => {
-      if (filterObj[el].length > 3) {
-        filterObj[el].push(false)
-      }
-    });
+        let result={ originalData, filterObj };
+        resolve(result);
 
-    return { originalData, filterObj };
+      })  
+    })
+
+    return promise;
   }
 
   removeEmptyKeys(filteredObject: any) {
     for (const key in filteredObject) {
-      console.log(key, Array.isArray(filteredObject[key]));
+     
       if (Array.isArray(filteredObject[key]) && filteredObject[key].length == 0) delete filteredObject[key];
     }
   }
 
   async Filter2(filteredObject: any, OriginalArray: any) {
     this.removeEmptyKeys(filteredObject);
-    console.log('filter is ', filteredObject);
+   
 
-    OriginalArray = (await this.getData()).originalData
+    OriginalArray = (await this.getData())
+    OriginalArray=OriginalArray.originalData;
 
     if (Object.keys(filteredObject).length == 0) {
       return OriginalArray;
