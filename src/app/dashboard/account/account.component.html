@@ -3,8 +3,11 @@
         <!-- User information section -->
         <div class="card info__card d-flex flex-column align-items-center gap-15">
             <div class="images">
-                <img id="profile__photo" src="../../../assets/Gallery/Gallery1 (3).jpg" alt="">
-                <input type="file" id="seller_image" />
+                <img *ngIf="userPhoto != ''; else dummy" [src]="userPhoto" alt="UserPhoto">
+                <ng-template #dummy>
+                    <img  id="profile__photo" src="../../../assets/default.jpg" alt="UserPhoto">
+                </ng-template>
+                <input type="file" id="seller_image" (change)="uploadImage($event)" />
                 <label for="seller_image">
                     <i class="camera__icon fa-solid fa-camera"></i>
                 </label>

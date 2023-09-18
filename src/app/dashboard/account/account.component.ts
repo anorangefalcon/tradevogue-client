@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 import { ApiService } from '../services/api.service';
 import { Subject } from 'rxjs';
+import { ImageUploadService } from 'src/app/shared/services/image-upload.service';
 
 @Component({
   selector: 'app-account',
@@ -20,11 +21,15 @@ export class AccountComponent implements OnInit {
   county: string = '';
   passwordVisible: boolean = false;
   pincodeFilled: boolean = false;
+  userPhoto: string = '';  
   private postalCodeInput = new Subject<string>();
+
+
 
   constructor(
     private postalCodeService: ApiService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private imageUpload: ImageUploadService 
   ) { }
 
 
@@ -136,5 +141,9 @@ export class AccountComponent implements OnInit {
 
   updateInformation() {
 
+  }
+
+  uploadImage(e: Event){
+    const file = (e.target as HTMLInputElement).files![0];
   }
 }

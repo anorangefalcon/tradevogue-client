@@ -12,7 +12,7 @@
             </a>
         </div>
 
-        <div class="sidebar relative">
+        <div class="sidebar relative" >
             <ul class="navlist">
                 <li class="nav-links" routerLink="/dashboard">
                     <a href=" javascript:void(0);" class="dropdown">
@@ -60,21 +60,16 @@
                         </div>
                     </a>
                 </li>
-                <li class="nav-links"  routerLink="/dashboard/account">
-                    <a href=" javascript:void(0);" class="dropdown">
-                        <div class="d-flex align-center">
-                            <span class="icons material-symbols-outlined">settings</span>
-                            <span class="link-text">Setting</span>
-                        </div>
-                    </a>
-                </li>
 
-                <li class="nav-links profile d-flex align-items-center gap-10">
-                    <div class="photo-section d-flex justify-content-center align-center">
+                <li class="nav-links profile d-flex align-items-center gap-10 relative" routerLink="/dashboard/account">
+                    
+                    <div class="photo-section relative d-flex justify-content-center align-center">
                         <img id="profile__photo" src="../../../assets/Gallery/Gallery1 (3).jpg" alt="">
+                        <span class="account__icon absolute material-symbols-outlined">settings</span>               
                     </div>
-                    <span>
-                        <h5 class="profile-title">Abhishek Rana</h5>
+
+                    <span class="profile-content">
+                        <h4 class="profile-title">Abhishek Rana</h4>
                         <p class="profile-sub-title">Seller</p>
                     </span>
                 </li>

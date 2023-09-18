@@ -19,6 +19,20 @@ export class DashboardComponent {
   //     this.isCollapse = false;
   //   }
   // }
+  
+  ngOnInit(){
+    window.addEventListener("resize", ()=>{
+      let check = window.matchMedia("(max-width: 767px)");
+      if (check.matches){ 
+        this.isCollapse = true;
+        return;
+      }
+      this.isCollapse = false;
+    });
+  }
+
+    
+
 
   toggle(){
     this.isCollapse = !this.isCollapse;
