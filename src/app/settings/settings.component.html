@@ -16,6 +16,8 @@
             <div class="content">
                <div class="common">
 
+                
+
                 <div class="d-flex justify-content-md-between">
                     <p>Name</p>
                     <input type="text" value="{{userData.FullName.firstName}} {{userData.FullName.lastName}}"  [readonly]="isReadOnly">
@@ -41,8 +43,7 @@
     
                 <div class="d-flex justify-content-md-between">
                     <p>Gender</p>
-                    <!-- <p>{{userData.gender}}</p> -->
-                    
+                       
 
                     <div class="d-flex gender-top">
 
@@ -73,6 +74,72 @@
     
                </div>
               </div>
+
+
+
+
+              <!--  FOMR GROUP -->
+              <form [formGroup]="signupForm" class="d-flex gap-15">
+                <div class="form__group relative d-flex flex-column">
+                  <label class="form__label">Name<span>*</span></label>
+                  <span class="material-symbols-outlined form__icon absolute">person</span>
+                  <input type="text" id="name" formControlName="username" placeholder="Enter Your Username">
+                
+                </div>
+
+
+                <div class="form__group relative d-flex flex-column">
+                    <label class="form__label">Username<span>*</span></label>
+                    <span class="material-symbols-outlined form__icon absolute">person</span>
+                    <input type="text" id="username" formControlName="username" placeholder="Enter Your Username">
+                  
+                  </div>
+
+
+
+
+                  <div class="form__group relative d-flex flex-column">
+                    <label class="form__label">Useremail<span>*</span></label>
+                    <span class="material-symbols-outlined form__icon absolute">person</span>
+                    <input type="text" id="email" formControlName="email" placeholder="Enter Your Username">
+                  
+                  </div>
+
+
+                  <div class="form__group relative d-flex flex-column">
+                    <label class="form__label">mobileNo<span>*</span></label>
+                    <span class="material-symbols-outlined form__icon absolute">person</span>
+                    <input type="text" id="mobileNo" formControlName="mobileNo" placeholder="Enter Your Username">
+                  
+                  </div>
+
+
+                  <div class="form__group relative d-flex flex-column">
+                    <label class="form__label">gender<span>*</span></label>
+                    <span class="material-symbols-outlined form__icon absolute">person</span>
+                    <input type="text" id="gender" formControlName="gender" placeholder="Enter Your Username">
+                  
+                  </div>
+
+
+                  <div class="form__group relative d-flex flex-column">
+                    <label class="form__label">dob<span>*</span></label>
+                    <span class="material-symbols-outlined form__icon absolute">person</span>
+                    <input type="text" id="dob" formControlName="dob" placeholder="Enter Your Username">
+                  
+                  </div>
+
+                  <div class="form__group relative d-flex flex-column">
+                    <label class="form__label">address<span>*</span></label>
+                    <span class="material-symbols-outlined form__icon absolute">person</span>
+                    <input type="text" id="address" formControlName="address" placeholder="Enter Your Username">
+                  
+                  </div>
+
+
+                </form>
+
+              
     
               <button class="btn-primary" (click)="editClick()" #myButton>Edit Details</button>
             </div>

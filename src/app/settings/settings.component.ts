@@ -37,10 +37,16 @@ export class SettingsComponent {
   
       
       {
+        name:fb.control('',[Validators.required]),
+        
         username:fb.control('',[Validators.required]),
         email:fb.control('',[Validators.email,Validators.required]),
-        password:fb.control('',[Validators.required,Validators.minLength(8)]),
-        confirmPassword: fb.control('',[Validators.required,])
+        mobileNo:fb.control('',[Validators.email,Validators.required]),
+        gender:fb.control('',[Validators.email,Validators.required]),
+        dob:fb.control('',[Validators.email,Validators.required]),
+        address:fb.control('',[Validators.email,Validators.required]),
+        // password:fb.control('',[Validators.required,Validators.minLength(8)]),
+        // confirmPassword: fb.control('',[Validators.required,])
         
       });   
 
