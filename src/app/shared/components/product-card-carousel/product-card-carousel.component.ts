@@ -23,6 +23,7 @@ export class ProductCardCarouselComponent {
     });
   }
 
+
   customOptions: OwlOptions = {
     loop: false,
     rewind: true,
@@ -48,11 +49,11 @@ export class ProductCardCarouselComponent {
       740: {
         items: 3
       },
-      940: {
-        items: 5
-      },
-      1450: {
+      1000: {
         items: 4
+      },
+      1300: {
+        items: 5
       }
     }
   }

@@ -66,12 +66,13 @@
 .filter .types{
     margin-block-start: 10px;
 }
-.filtersMenu {
-    background-color: rgb(var(--text-white));
-    opacity: 1;
-    /* min-width: 20vw; */
-    z-index: 99;
+.filter-icon{
     height: 100vh;
+}
+.filtersMenu {
+    background-color: rgb(var(--text-white),);
+    z-index: 99;
+    
 }
 
 @media screen and (max-width: 1370px){
@@ -92,19 +93,16 @@
         width: 80%;
         grid-template-columns: repeat(3, 1fr);
         gap: 30px;
-
     }
 }
 
 @media screen and (max-width: 1040px){
     .explore-cards {
         gap : 15px;
+        width: 85%;
     }
     .filters {
         width: 15%;
-    }
-    .explore-cards {
-        width: 85%;
     }
     .explore-container {
         gap: 15px;
@@ -127,39 +125,46 @@
 }
 @media screen and (max-width: 970px){
     .filters{
-        width: 20%;
+        width: 25%;
     }
     .explore-cards {
-        width: 80%;
+        width: 75%;
         grid-template-columns: repeat(2, 1fr);
         column-gap: 0px;
-
-
     }
 }
-
-@media screen and (max-width: 530px) {
+@media screen and (max-width: 850px){
+    .filters {
+        width: 20%;
+    }
     .explore-cards{
-        grid-template-columns: repeat(1, 1fr);
-        
+        width: 80%;
     }
 }
+
 @media screen and (max-width: 790px){
-    .explore-cards{
-        column-gap: 15px;
+    .explore-container{
+        flex-direction: column;
     }
-}
-@media screen and (max-width: 730px){
     .filters{
         display: none;
+    }
+    .explore-cards{
+        column-gap: 15px;
+        width: 100%;
     }
     .filter-icon{
         width: 8%;
         display: flex;
+        flex-direction: column;
+        gap: 0px;
         & span {
             color: rgb(var(--text-black), 0.8)
         }
     }
+}
+@media screen and (max-width: 730px){
+
     .explore-container{
         gap: 15px;
     }
@@ -167,7 +172,12 @@
         padding-inline: 15px;
     }
 }
-
+@media screen and (max-width: 590px) {
+    .explore-cards{
+        grid-template-columns: repeat(1, 1fr);
+        padding-inline: 0px;
+    }
+}
 
 
 

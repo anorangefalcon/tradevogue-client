@@ -399,3 +399,18 @@
         min-width: 280px;
     }
 }
+@media screen and (max-width: 780px){
+    .card-item-header img {
+        min-width: 300px;
+    }
+}
+@media screen and (max-width: 685px){
+    .card-item-header img {
+        min-width: 250px;
+    }
+}
+@media screen and (max-width: 590px){
+    .card-item-header img {
+        min-width: 300px;
+    }
+}
