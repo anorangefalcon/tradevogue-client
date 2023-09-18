@@ -1,18 +1,17 @@
 .explore-container{
-    /* padding-block-start: 100px; */
     padding-inline: 20px;
     gap: 20px;
     width: 100%;
-    /* justify-content: space-between; */
+  
 }
-
+.filter-icon {
+    display: none;
+}
 .explore-cards{
     width: 85%;
     grid-template-columns: repeat(4, 1fr);
     gap: 30px;
-    /* margin-inline: -15px; */
     justify-content: center;
-    /* padding-inline: 30px; */
 
 }
 .filters {
@@ -64,6 +63,54 @@
 
 }
 
+.filter .types{
+    margin-block-start: 10px;
+}
+.filtersMenu {
+    background-color: rgb(var(--text-white));
+    opacity: 1;
+    /* min-width: 20vw; */
+    z-index: 99;
+    height: 100vh;
+}
+
+@media screen and (max-width: 1370px){
+    .explore-cards {
+        gap: 15px;
+        width: 87%;
+    }
+    .filters {
+        width: 13%;
+    }
+}
+
+@media screen and (max-width: 1290px){
+    .filters {
+        width: 20%;
+    }
+    .explore-cards {
+        width: 80%;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 30px;
+
+    }
+}
+
+@media screen and (max-width: 1040px){
+    .explore-cards {
+        gap : 15px;
+    }
+    .filters {
+        width: 15%;
+    }
+    .explore-cards {
+        width: 85%;
+    }
+    .explore-container {
+        gap: 15px;
+    }
+}
+
 @media screen and (max-width: 1020px) {
     .explore-cards{
         grid-template-columns: repeat(3, 1fr);
@@ -73,15 +120,60 @@
         }
     }
 }
-@media screen and (max-width: 720px) {
+@media screen and (max-width: 990px){
     .explore-cards{
-        grid-template-columns: repeat(2, 1fr);
-        /* justify-items: center; */
+        column-gap: 0px ;
     }
 }
-    
+@media screen and (max-width: 970px){
+    .filters{
+        width: 20%;
+    }
+    .explore-cards {
+        width: 80%;
+        grid-template-columns: repeat(2, 1fr);
+        column-gap: 0px;
+
+
+    }
+}
+
 @media screen and (max-width: 530px) {
     .explore-cards{
         grid-template-columns: repeat(1, 1fr);
+        
     }
 }
+@media screen and (max-width: 790px){
+    .explore-cards{
+        column-gap: 15px;
+    }
+}
+@media screen and (max-width: 730px){
+    .filters{
+        display: none;
+    }
+    .filter-icon{
+        width: 8%;
+        display: flex;
+        & span {
+            color: rgb(var(--text-black), 0.8)
+        }
+    }
+    .explore-container{
+        gap: 15px;
+    }
+    .explore-cards{
+        padding-inline: 15px;
+    }
+}
+
+
+
+
+/* @media screen and (max-width: 720px) {
+    .explore-cards{
+        grid-template-columns: repeat(2, 1fr);
+       
+    }
+} */
