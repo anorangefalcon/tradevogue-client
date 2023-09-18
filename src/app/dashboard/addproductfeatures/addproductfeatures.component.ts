@@ -82,6 +82,7 @@ export class AddproductfeaturesComponent {
 
   uploadFile(event: Event, field: string){
     const data = this.uploadExcel.handleFileInput(event, field);
+    console.log(data);
     data.then((resolve)=>{
       let items = resolve['data'];
       items.forEach((item: any)=>{

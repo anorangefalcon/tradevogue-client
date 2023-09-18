@@ -10,6 +10,8 @@ import { UploadExcelService } from '../services/upload-excel.service';
   styleUrls: ['./addproduct.component.css']
 })
 export class AddproductComponent {
+  isSubmitted: boolean = false;
+
   // Array for Various Selects
   categories: string[] = ['Category 1', 'Category 2', 'Category 3', 'Category 4', 'Category 5', 'Category 6'];
   brands: string[] = ['Brand 1', 'Brand 2', 'Brand 3', 'Brand 4'];
@@ -24,6 +26,7 @@ export class AddproductComponent {
   productImagesD: any = [];
   productImageUrl: any = [];
   errorFile: any = []; //Duplicate File For display Purposes
+
 
   constructor(private elem_ref: ElementRef, 
     private render: Renderer2, 
@@ -175,13 +178,12 @@ export class AddproductComponent {
   // Delete Image
   deleteImage(image: any) {
     console.log("Delete");
-
     this.productImages = this.productImages.filter((img: any) => {
       return img.name !== image;
     });
     this.productsForm.get('productImages')?.setValue(this.productImages);
   }
-
+  
 
   updateMultiSelected(event: Event, type: string) {
     let inputList = this.productsForm.get(type)?.value;
@@ -194,8 +196,9 @@ export class AddproductComponent {
       inputList.splice(inputList.indexOf(checkbox.value), 1);
       this.productsForm.get(type)?.setValue(inputList);
     }
-
   }
+
+  // Handles Imgages
 
   uploadFile(event: Event){
     let data = this.excel.handleFileInput(event);
@@ -215,13 +218,15 @@ export class AddproductComponent {
             console.log(detail);
             
           })
-
         })
       })
-
-
     })
   }
+
+  updateFormFields(e: any, field: string){
+    this.productsForm.get(field)?.setValue(e);
+  }
+
 
   onsubmit() {
     this.errorFile = [];

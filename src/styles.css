@@ -305,6 +305,11 @@ ul {
     flex-wrap: wrap;
 }
 
+.flex-center{
+    align-items: center;
+    justify-content: center;
+}
+
 
 
 /* Grid utilities */

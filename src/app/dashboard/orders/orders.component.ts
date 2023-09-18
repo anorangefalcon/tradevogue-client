@@ -9,6 +9,11 @@ export class OrdersComponent {
   order_status:string = 'Completed';
   payment_status: string = 'Confirmed';
 
+
+  categoryOption: any[] = ['Category 1', 'Category 2', 'Category 3', 'Category 4'];
+  orderStatus: any[] = ['Confirmed', 'Pending', 'Returned', 'Canceled'];
+
+
   constructor(private element: ElementRef){}
 
   ngOnInit(){
@@ -33,5 +38,9 @@ export class OrdersComponent {
 
   pageChanged(event:any){
     this.currentPage = event; 
+  }
+
+  updateFields(e: any, type: string){
+    console.log(e);
   }
 }

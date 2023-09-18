@@ -1,11 +1,11 @@
 <section id="product-adding-section">
-    <div class="heading">
+    <div class="heading d-flex justify-content-md-between align-center">
         <h1>Add Product</h1>
         <div class="file-section">
             <input type="file" id="sizes" maxlength="1" minlength="1" (change)="uploadFile($event)"
             accept="image/CSV, application/vnd.ms-excel ,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" />
             <label for="sizes"><span class="material-symbols-outlined">upload_file</span></label>
-            <a href="" download><span class="material-symbols-outlined">download</span></a>
+            <a class="downloadBtn" href="" download><span class="material-symbols-outlined">download</span></a>
         </div>
     </div>
 
@@ -80,22 +80,13 @@
                 <div class="select-options d-flex flex-wrap gap-20">
                     <div class="form__group">
                         <div class="d-flex justify-content-md-between">
-                            <label for="" class="input__label">Category<span class="important">*</span></label>
+                            <label class="input__label">Category<span class="important">*</span></label>
                         </div>
                         <div class="relative">
-                            <span class="display" (click)="toggleClass($event)">
-                                <input type="text" class="select" id="category" formControlName="category"
-                                    placeholder="Select Category" autocomplete="off" (blur)="blurClass($event)">
-                            </span>
-                            <ul class="options__container ">
-                                <li class="option" *ngFor="let category of categories;"
-                                    (click)="updateSelected(category,'category')">{{category}}</li>
-                            </ul>
+                            <app-custom-select [options]="categories" [selectedOption]="'Select Category'" (final_option)="updateFormFields($event, 'category')"></app-custom-select>
                         </div>
                         <div class="error">
-                            <small
-                                *ngIf="productsForm.get('category')?.hasError('required') && productsForm.get('category')?.touched">*Field
-                                Required</small>
+                            <small *ngIf="isSubmitted && productsForm.get('category')?.hasError('required')">*Field Required</small>
                         </div>
                     </div>
 
@@ -104,41 +95,24 @@
                             <label for="" class="input__label">Brand<span class="important">*</span></label>
                         </div>
                         <div class="relative">
-                            <span class="display" (click)="toggleClass($event)">
-                                <input type="text" class="select" id="brand" formControlName="brand"
-                                    placeholder="Select Brand" autocomplete="off" (blur)="blurClass($event)">
-                            </span>
-                            <ul class="options__container">
-                                <li class="option" *ngFor="let option of brands"
-                                    (click)="updateSelected(option,'brand')">{{option}}</li>
-                            </ul>
+                            <app-custom-select [options]="brands" [selectedOption]="'Select Brand'" (final_option)="updateFormFields($event, 'brand')"></app-custom-select>
                         </div>
 
                         <div class="error">
                             <small
                                 *ngIf="productsForm.get('brand')?.hasError('required') && productsForm.get('brand')?.touched">*Field
-                                Required</small>
+                                Required
+                            </small>
                         </div>
                     </div>
 
                     <div class="form__group">
                         <label for="" class="input__label">Gender<span class="important">*</span></label>
                         <div class="relative">
-                            <span class="display" (click)="toggleClass($event)">
-                                <input type="text" class="select" id="gender" formControlName="gender"
-                                    placeholder="Select Gender" autocomplete="off" (blur)="blurClass($event)">
-                            </span>
-                            <ul class="options__container">
-                                <li class="option" *ngFor="let option of gender"
-                                    (click)="updateSelected(option,'gender')">
-                                    {{option}}</li>
-
-                            </ul>
+                            <app-custom-select [options]="gender" [selectedOption]="'Select Gender'" (final_option)="updateFormFields($event, 'gender')"></app-custom-select>
                         </div>
                         <div class="error">
-                            <small
-                                *ngIf="productsForm.get('gender')?.hasError('required') && productsForm.get('gender')?.touched">*Field
-                                Required</small>
+                            <small *ngIf="productsForm.get('gender')?.hasError('required') && isSubmitted">*Field Required</small>
                         </div>
                     </div>
                     <div class="form__group">
@@ -146,42 +120,19 @@
                             <label for="" class="input__label">Size<span class="important">*</span></label>
                         </div>
                         <div class="relative">
-                            <span class="display" (click)="toggleClass($event)">
-                                <input type="text" class="select" id="sizes" formControlName="sizes"
-                                    placeholder="Select Sizes" autocomplete="off">
-                            </span>
-                            <ul class="options__container multiSelect">
-                                <li *ngFor="let option of sizes" class="option">
-                                    <input type="checkbox" id='{{option}}' value='{{option}}'
-                                        (click)="updateMultiSelected($event,'sizes')">
-                                    <label for='{{option}}'>{{option}}</label>
-                                </li>
-                            </ul>
+                            <app-custom-select [options]="sizes" [type]="'multiple'" [selectedOption]="'Select Sizes'" (SelectedList)="updateFormFields($event, 'sizes')"></app-custom-select>
                         </div>
                         <div class="error">
-                            <small
-                                *ngIf="productsForm.get('sizes')?.hasError('required') && productsForm.get('sizes')?.touched">*Field
-                                Required</small>
+                            <small *ngIf="productsForm.get('sizes')?.hasError('required') && isSubmitted">*Field Required</small>
                         </div>
                     </div>
                     <div class="form__group">
                         <label for="" class="input__label">Colors<span class="important">*</span></label>
                         <div class="relative">
-                            <span class="display" (click)="toggleClass($event)">
-                                <input type="text" class="select" id="colors" formControlName="colors"
-                                    placeholder="Select Colors" autocomplete="off" (blur)="blurClass($event)">
-                            </span>
-                            <ul class="options__container">
-                                <li class="option" *ngFor="let color of colors"
-                                    (click)="updateSelected(color,'colors')">
-                                    {{color}}</li>
-
-                            </ul>
+                            <app-custom-select [options]="colors" [type]="'multiple'" [selectedOption]="'Select Colors'" (SelectedList)="updateFormFields($event, 'colors')"></app-custom-select>
                         </div>
                         <div class="error">
-                            <small
-                                *ngIf="productsForm.get('colors')?.hasError('required') && productsForm.get('colors')?.touched">*Field
-                                Required</small>
+                            <small *ngIf="productsForm.get('colors')?.hasError('required') && isSubmitted">*Field Required</small>
                         </div>
                     </div>
                     <div class="form__group">
@@ -189,22 +140,10 @@
                             <label for="" class="input__label">Product Tags<span class="important">*</span></label>
                         </div>
                         <div class="relative">
-                            <span class="display" (click)="toggleClass($event)">
-                                <input type="text" class="select" id="tags" formControlName="tags"
-                                    placeholder="Select Tags" autocomplete="off">
-                            </span>
-                            <ul class="options__container multiSelect">
-                                <li *ngFor="let tag of tags" class="option">
-                                    <input type="checkbox" id='{{tag}}' value='{{tag}}'
-                                        (click)="updateMultiSelected($event,'tags')">
-                                    <label for='{{tag}}'>{{tag}}</label>
-                                </li>
-                            </ul>
+                            <app-custom-select [options]="tags" [type]="'multiple'" [selectedOption]="'Select Tags'" (SelectedList)="updateFormFields($event, 'tags')"></app-custom-select>
                         </div>
                         <div class="error">
-                            <small
-                                *ngIf="productsForm.get('tags')?.hasError('required') && productsForm.get('tags')?.touched">*Field
-                                Required</small>
+                            <small *ngIf="productsForm.get('tags')?.hasError('required') && isSubmitted">*Field Required</small>
                         </div>
                     </div>
                 </div>
@@ -269,17 +208,7 @@
                         </div>
                         
                         <div class="relative">
-                            <span class="display" (click)="toggleClass($event)">
-                                <input type="text" class="select" id="orderQuantity" formControlName="orderQuantity"
-                                    placeholder="Select Tags" autocomplete="off">
-                            </span>
-                            <ul class="options__container multiSelect">
-                                <li *ngFor="let order of orderQuantity" class="option">
-                                    <input type="checkbox" id='{{order}}' value='{{order}}'
-                                        (click)="updateMultiSelected($event,'orderQuantity')">
-                                    <label for='{{order}}'>{{order}}</label>
-                                </li>
-                            </ul>
+                            <app-custom-select [options]="orderQuantity" [type]="'multiple'" [selectedOption]="'Select Quantity'" (SelectedList)="updateFormFields($event, 'orderQuantity')"></app-custom-select>
                         </div>
                         <small>
                             *Order Quantity is various Unit to be Sold

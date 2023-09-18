@@ -1,30 +1,50 @@
-<form [formGroup]="Form">
-<div class="select_display" (click)="toggleClass()" formControlName="name" (focus)="toggleClass()" (blur)="toggleClass()">{{selectedOption}}</div>
-<p *ngIf="Form.get('name').value==='Select Country'"> country is not selected</p>
-
-<ul class="options__container" [class.active]="isactive == true">
-    <li class="option" *ngFor="let option of options" data-value=`option` (click)="updateSelected(option)">{{option}}</li>
-</ul> 
-
-
-
-
-
-<button class="btn-primary registerbtn" (click)="onSubmit()">Register</button>
-</form>"
-
-
-
-<!--  NAOTHER  -->
-<!-- 
-<form [formGroup]="myForm">
-    <div class="select_display" (click)="toggleClass()" [formControlName]="'username'" (focus)="toggleClass()" (blur)="toggleClass()">{{ selectedOption }}</div>
-    <p *ngIf="myForm.get('username').invalid && myForm.get('username').touched">Country is not selected</p>
-  
-    <ul class="options__container" [class.active]="isactive">
-      <li class="option" *ngFor="let option of options" (click)="updateSelected(option)">{{ option }}</li>
+<ng-container *ngIf="type != 'multiple'; else multiSelect">
+  <div class="custom-select d-flex flex-column flex-order" tabindex="0">
+    <ul id="options__container" role="listbox" [class.active]="isactive == true">
+      <li class="disabled__option">
+        <label for="empty">{{selectedOption}}</label>
+      </li>
+      <li role="option" *ngFor="let option of options; let i=index" tabindex="{{i+2}}"
+        (change)="updateSelected(option)">
+        <input type="radio" name="options" [id]="option" />
+        <label [for]="option">{{option}}</label>
+      </li>
     </ul>
-  
-    <button class="btn-primary registerbtn" [disabled]="myForm.invalid" (click)="onSubmit()">Register</button>
-  </form>
-   -->
+    <button id="selected__container" (click)="isactive = !isactive" tabindex="1"
+      class="d-flex mw100 align-center relative" role="combobox" aria-labelledby="selected__container"
+      aria-haspopup="listbox" aria-expanded="false" aria-controls="option__container">
+      <span class="selected__text">{{selected}}</span>
+      <!-- <span class="absolute d-flex flex-center clear_icon material-symbols-outlined">close</span> -->
+      <span class="absolute d-flex flex-center arrow_icon material-symbols-outlined">arrow_drop_down</span>
+    </button>
+  </div>
+</ng-container>
+
+<ng-template #multiSelect>
+  <div class="custom-select d-flex flex-column flex-order" tabindex="0">
+    <ul id="options__container" role="listbox" [class.active]="isactive == true">
+      <li class="disabled__option">
+        <label for="empty">{{selectedOption}}</label>
+      </li>
+      <li class="checkbox__options" role="option" *ngFor="let option of options; let i=index" tabindex="{{i+2}}"
+        (change)="updateMutliSelected($event)">
+        <input type="checkbox" [value]="option" name="options" [id]="option" />
+        <label [for]="option">{{option}}</label>
+      </li>
+    </ul>
+    <button id="selected__container" (click)="isactive = !isactive" tabindex="1"
+      class="d-flex mw100 align-center relative" role="combobox" aria-labelledby="selected__container"
+      aria-haspopup="listbox" aria-expanded="false" aria-controls="option__container">
+
+      <span *ngIf="selected == selectedOption; else selectedList">{{selected}}</span>
+      <ng-template #selectedList>
+        <ng-container *ngFor="let item of multiSelected; let i=index">
+          <span class="option__selected__text">{{item}}</span>
+          <!-- <span class="clear_icon material-symbols-outlined">close</span> -->
+        </ng-container>
+      </ng-template>
+
+      <span class="absolute d-flex flex-center arrow_icon material-symbols-outlined">arrow_drop_down</span>
+    </button>
+  </div>
+</ng-template>

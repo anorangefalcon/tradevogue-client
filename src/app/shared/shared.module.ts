@@ -16,7 +16,6 @@ import { FormsModule } from '@angular/forms';
 import { ProductFilterPipe } from './Pipe/product-filter.pipe';
 
 
-
 @NgModule({
   declarations: [
     NavbarComponent,
@@ -27,7 +26,7 @@ import { ProductFilterPipe } from './Pipe/product-filter.pipe';
     SupportComponent,
     FooterComponent,
     CustomSelectComponent,
-    ProductFilterPipe
+    ProductFilterPipe,
   ],
   imports: [
     CommonModule,

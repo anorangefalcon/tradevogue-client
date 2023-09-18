@@ -1,5 +1,4 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { AbstractControl, FormBuilder, ValidationErrors } from '@angular/forms';
 
 @Component({
   selector: 'app-custom-select',
@@ -7,72 +6,52 @@ import { AbstractControl, FormBuilder, ValidationErrors } from '@angular/forms';
   styleUrls: ['./custom-select.component.css']
 })
 export class CustomSelectComponent {
-  @Input () options: string[] = [];
-  @Input () selectedOption: string = '';
+  @Input () options: any[] = [];
+  @Input () selectedOption: any = '';
+  @Input () type: string = ''; // Multi
   @Output () final_option = new EventEmitter<string>();
+  @Output () SelectedList = new EventEmitter<any>();
 
-  Form:any;
-  constructor(private fb:FormBuilder){
-
-
-    console.log('this selected form value is ',this.selectedOption);
-    
-
-    
-      
-    
-    }
-
-
-  ngOnInit(){
-    console.log('this selected form value  inside ngonoint is ',this.selectedOption);
-    this.Form= this.fb.group(
-  
-      
-      {
-        name:this.fb.control(this.selectedOption,[this.defaultValueValidator('Select Country')]),
-       
-        
-      }); 
-   
-  }
-
+  selected: any = '';
+  multiSelected: any[] = [];
   isactive:boolean = false;
+  clearbtn:boolean = true;
+  
+  ngOnInit(){
+    this.selected = this.selectedOption;
+  }
 
   toggleClass(){
     this.isactive  = !this.isactive;
   }
-
+  
   updateSelected(option: string){
-    this.selectedOption = option; 
-    this.Form.get('name').setValue(this.selectedOption);
-    this.final_option.emit(option);
+    this.selected = option;
     this.isactive = false;
-
+    this.final_option.emit(option);
+    this.clearbtn = true;
   }
 
-
-  defaultValueValidator(defaultValue: any) {
-    return (control: AbstractControl): ValidationErrors | null => {
-      if (control.value === defaultValue) {
-        return { defaultValueError: true };
-      }
-      return null;
-
+  updateMutliSelected(e: Event){
+    let element = <HTMLInputElement>e.target;
+    if(element.checked){
+      this.multiSelected.push(element.value);
+      this.selected = "e";
+    }else{
+      this.multiSelected = this.multiSelected.filter((item)=>{
+        return item != element.value;
+      })
+      this.SelectedList.emit(this.multiSelected);
     }
-  };
-
-  onSubmit(){
-    console.log("form is ",this.Form);
-    console.log("selected option is ",this.selectedOption);
-    console.log("name values i s",this.Form.get('name').value);
-    
-    
-    
+    console.log(this.multiSelected);
   }
 
+  clearSelected(){
+    this.selected = this.selectedOption;
+    this.final_option.emit('');
+  }
 
-
-
-
+  // deleteOption(index: number){
+  //   this.multiSelected.splice(index, 1);
+  // }
 }

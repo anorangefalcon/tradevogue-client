@@ -60,6 +60,7 @@
 
                     <div class="file-section">
                         <input type="file" id="brand" maxlength="1" minlength="1"
+                            (change)="uploadFile($event, 'Category')"
                             accept="image/CSV, application/vnd.ms-excel ,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" />
                         <label for="brand"><span class="material-symbols-outlined">upload_file</span></label>
                         <a href="../../../assets/ExcelSampleFile/brand.xlsx" download><span
@@ -107,7 +108,7 @@
                         <input type="file" id="quantity" maxlength="1" minlength="1"
                             accept="image/CSV, application/vnd.ms-excel ,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" />
                         <label for="quantity"><span class="material-symbols-outlined">upload_file</span></label>
-                        <a href="" download><span class="material-symbols-outlined">download</span></a>
+                        <a href="../../../assets/ExcelSampleFile/orders.xlsx" download><span class="material-symbols-outlined">download</span></a>
                     </div>
                 </div>
             <div class="row-2 d-flex flex-column">
@@ -153,7 +154,7 @@
                         <input type="file" id="tag" maxlength="1" minlength="1"
                             accept="image/CSV, application/vnd.ms-excel ,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" />
                         <label for="tag"> <span class="material-symbols-outlined">upload_file</span></label>
-                        <a href="" download><span class="material-symbols-outlined">download</span></a>
+                        <a href="../../../assets/ExcelSampleFile/Tag.xlsx" download><span class="material-symbols-outlined">download</span></a>
                     </div>
                 </div>
                 <div class="row-2 d-flex flex-column">
@@ -199,7 +200,7 @@
                         <input type="file" id="sizes" maxlength="1" minlength="1"
                             accept="image/CSV, application/vnd.ms-excel ,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" />
                         <label for="sizes"><span class="material-symbols-outlined">upload_file</span></label>
-                        <a href="" download><span class="material-symbols-outlined">download</span></a>
+                        <a href="../../../assets/ExcelSampleFile/Size.xlsx" download><span class="material-symbols-outlined">download</span></a>
                     </div>
                 </div>
                 <div class="row-2 d-flex flex-column">

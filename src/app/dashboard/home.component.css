@@ -37,7 +37,7 @@
 
     & .navbar {
         height: 100vh;
-        width: 0px;
+        width: 74px;
         overflow: hidden;
         box-shadow: 2px 0px 5px rgba(128, 128, 128, 0.164);
         position: fixed;
@@ -73,17 +73,17 @@
     }
 
     & .content {
-        position: absolute;
-        width: calc(100% );
-        /* left: 74px; */
+        background-color: rgba(var(--secondary), 0.01);
+        width: calc(100% - 74px);
+        margin-inline-start: 74px;
+        height: 100%;
         padding: 24px;
-        overflow: hidden;
         transition: all 0.3s ease-in-out;
     }
 
     & .navbar.active+.content {
         width: calc(100% - 240px);
-        left: 240px;
+        margin-inline-start: 240px;
     }
 
     & .navbar.active>.sidebar .navlist li .link-text {

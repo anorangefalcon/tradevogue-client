@@ -13,6 +13,7 @@ import { AccountComponent } from './account/account.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AddproductfeaturesComponent } from './addproductfeatures/addproductfeatures.component';
 import { UploadExcelService } from './services/upload-excel.service';
+import { SalesAnalysisComponent } from './sales-analysis/sales-analysis.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { UploadExcelService } from './services/upload-excel.service';
     OrdersComponent,
     AddproductComponent,
     AccountComponent,
-    AddproductfeaturesComponent
+    AddproductfeaturesComponent,
+    SalesAnalysisComponent
   ],
   
   imports: [
