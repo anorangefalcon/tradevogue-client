@@ -23,7 +23,7 @@ export class ExploreComponent {
   constructor(private productFilter: ProductsFilterService, private demoService: DemoService) {}
 
   ngOnInit(): void {
-    this.productFilter.getData().then((data) => {
+    this.productFilter.getData().then((data:any) => {
       this.productData = data.originalData;
       this.uniqueData = data.filterObj;
     });
