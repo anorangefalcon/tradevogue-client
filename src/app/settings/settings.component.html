@@ -2,18 +2,40 @@
     <div class="container d-flex">
         <!--BUTTONS DIV -->
         <div class="constant">
-            <button (click)="changeComponent('orders')">Orders</button>
-            <button (click)="changeComponent('profile')">Profile</button>
+            <div>
+            <h2>User Profiles</h2>
+       
+            <button (click)="changeComponent('orders')" class="active">
+                <span class="material-symbols-outlined">
+                    person
+                    </span>
+            <p>    Orders </p>
+            </button>
+            <button (click)="changeComponent('profile')">
+                <span class="material-symbols-outlined">
+                    favorite
+                    </span>
+           <p>     Profile</p>
+            </button>
+        </div>
+        <button (click)="changeComponent('profile')" class="logout">
+            <span class="material-symbols-outlined">
+                logout
+                </span>
+       <p>     LOGOUT</p>
+        </button>
+
             <!-- <button>Orders</button> -->
         </div>
 
         <!-- COMPONENT SHOW DIV -->
-        <div class="width-80">
+        <div class>
             <div class="profile" *ngIf="showData=='profile' ">
-            <div class="title">
+           
+            
                 <h2>Profile Details</h2>
-            </div>
-            <div class="content">
+          
+            <!-- <div class="content">
                <div class="common">
 
                 
@@ -73,7 +95,7 @@
 
     
                </div>
-              </div>
+              </div> -->
 
 
 
@@ -140,8 +162,10 @@
                 </form>
 
               
-    
+                
+                <div class="buttonDiv">
               <button class="btn-primary" (click)="editClick()" #myButton>Edit Details</button>
+            </div>
             </div>
      
             <div  *ngIf="showData=='orders' " class="Allorders">
