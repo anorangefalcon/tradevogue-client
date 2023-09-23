@@ -27,6 +27,7 @@ export class SettingsComponent {
 
 
   @ViewChild('myButton') myButton: ElementRef | undefined;
+
   isReadOnly:boolean=true;
   
   signupForm:any;
@@ -90,9 +91,12 @@ await this.userService.getUserData().subscribe((data:any)=>{
     const x=(this?.myButton?.nativeElement.innerHTML);
    
     this.isReadOnly=!this.isReadOnly;
+
+   
+
     if(x=='Edit Details'){
-      
       this.renderer.setProperty(this?.myButton?.nativeElement, 'innerHTML', 'Save');
+      
       
     }
     else{
