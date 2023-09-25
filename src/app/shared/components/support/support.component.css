@@ -467,3 +467,10 @@ p {
     height: 30px;
     fill: #333;
   }
+
+  @media screen and (max-width: 820px) {
+    #chat-bot{
+      bottom: 59px;
+      right: 6px;
+  }
+}
