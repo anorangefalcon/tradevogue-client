@@ -9,17 +9,19 @@ import { RouterLinksService } from '../shared/services/router-links.service';
   styleUrls: ['./settings.component.css']
 })
 export class SettingsComponent {
-  showData : string = 'orders';
+  showData : string = "orders";
 
-  showProfile(){
-    this.showData = 'orders';
-  }
-  showOrders(){
-    this.showData = 'orders';
-  }
+  // showProfile(){
+  //   this.showData = 'orders';
+  // }
+  // showOrders(){
+  //   this.showData = 'orders';
+  // }
 
   // change component click listener
   changeComponent(el:any){
+    console.log('EL IS ',el);
+    
     this.showData=el;
     // console.log();
     
@@ -62,7 +64,8 @@ export class SettingsComponent {
   ngOnInit() {
     this.routerService.showData$.subscribe(data => {
       this.showData = data;
-      console.log("show data is", this.showData);
+      this.showData='orders';
+     
       
     });
 

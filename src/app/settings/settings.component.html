@@ -57,144 +57,187 @@
         </div> -->
 
         <!-- COMPONENT SHOW DIV -->
-        
-            <div class="profile" *ngIf="showData=='profile' ">
+
+        <div class="profile" *ngIf="showData=='profile'">
 
 
-                <div class="common">
-                    <h2>
+            <div class="common">
+                <h2>
 
-                        Profile Details
+                    Profile Details
 
 
 
-                    </h2>
+                </h2>
 
-                    <span class="material-symbols-outlined edit-btn" *ngIf="isReadOnly" (click)="editClick()">
-                        edit
-                        </span>
+                <span class="material-symbols-outlined edit-btn" *ngIf="isReadOnly" (click)="editClick()">
+                    edit
+                </span>
 
-                        <button class="btn-primary" *ngIf="!isReadOnly" (click)="editClick()" #myButton>Save</button>
+                <button class="btn-primary" *ngIf="!isReadOnly" (click)="editClick()" #myButton>Save</button>
+
+            </div>
+
+
+
+
+
+
+
+
+            <form [formGroup]="signupForm" class="d-flex gap-15 disableInput"
+                [ngClass]="isReadOnly === true ? 'disableInput' : 'enableInput'">
+                <div class="form__group relative d-flex flex-column">
+                    <label class="form__label">NAME<span>*</span></label>
+                    <span class="material-symbols-outlined form__icon absolute">person</span>
+                    <input type="text" id="name" formControlName="username" placeholder="Enter Your Username">
+
+                </div>
+
+
+                <div class="form__group relative d-flex flex-column">
+                    <label class="form__label">USERNAME<span>*</span></label>
+                    <span class="material-symbols-outlined form__icon absolute">person</span>
+                    <input type="text" id="username" formControlName="username" placeholder="Enter Your Username">
 
                 </div>
 
 
 
 
+                <div class="form__group relative d-flex flex-column">
+                    <label class="form__label">USEREMAIL<span>*</span></label>
+                    <span class="material-symbols-outlined form__icon absolute">person</span>
+                    <input type="text" id="email" formControlName="email" placeholder="Enter Your Username">
+
+                </div>
 
 
+                <div class="form__group relative d-flex flex-column">
+                    <label class="form__label">MOBILENO<span>*</span></label>
+                    <span class="material-symbols-outlined form__icon absolute">person</span>
+                    <input type="text" id="mobileNo" formControlName="mobileNo" placeholder="Enter Your Username">
+
+                </div>
 
 
-                <form [formGroup]="signupForm" class="d-flex gap-15 disableInput"
-                    [ngClass]="isReadOnly === true ? 'disableInput' : 'enableInput'">
-                    <div class="form__group relative d-flex flex-column">
-                        <label class="form__label">NAME<span>*</span></label>
-                        <span class="material-symbols-outlined form__icon absolute">person</span>
-                        <input type="text" id="name" formControlName="username" placeholder="Enter Your Username">
+                <div class="form__group relative d-flex flex-column">
+                    <label class="form__label">GENDER<span>*</span></label>
+                    <span class="material-symbols-outlined form__icon absolute">person</span>
+                    <input type="text" id="gender" formControlName="gender" placeholder="Enter Your Username">
 
-                    </div>
+                </div>
 
 
-                    <div class="form__group relative d-flex flex-column">
-                        <label class="form__label">USERNAME<span>*</span></label>
-                        <span class="material-symbols-outlined form__icon absolute">person</span>
-                        <input type="text" id="username" formControlName="username" placeholder="Enter Your Username">
+                <div class="form__group relative d-flex flex-column">
+                    <label class="form__label">DOB<span>*</span></label>
+                    <span class="material-symbols-outlined form__icon absolute">person</span>
+                    <input type="text" id="dob" formControlName="dob" placeholder="Enter Your Username">
 
-                    </div>
+                </div>
 
+                <div class="form__group relative d-flex flex-column">
+                    <label class="form__label">ADDRESS<span>*</span></label>
+                    <span class="material-symbols-outlined form__icon absolute">person</span>
+                    <input type="text" id="address" formControlName="address" placeholder="Enter Your Username">
 
-
-
-                    <div class="form__group relative d-flex flex-column">
-                        <label class="form__label">USEREMAIL<span>*</span></label>
-                        <span class="material-symbols-outlined form__icon absolute">person</span>
-                        <input type="text" id="email" formControlName="email" placeholder="Enter Your Username">
-
-                    </div>
+                </div>
 
 
-                    <div class="form__group relative d-flex flex-column">
-                        <label class="form__label">MOBILENO<span>*</span></label>
-                        <span class="material-symbols-outlined form__icon absolute">person</span>
-                        <input type="text" id="mobileNo" formControlName="mobileNo" placeholder="Enter Your Username">
-
-                    </div>
-
-
-                    <div class="form__group relative d-flex flex-column">
-                        <label class="form__label">GENDER<span>*</span></label>
-                        <span class="material-symbols-outlined form__icon absolute">person</span>
-                        <input type="text" id="gender" formControlName="gender" placeholder="Enter Your Username">
-
-                    </div>
-
-
-                    <div class="form__group relative d-flex flex-column">
-                        <label class="form__label">DOB<span>*</span></label>
-                        <span class="material-symbols-outlined form__icon absolute">person</span>
-                        <input type="text" id="dob" formControlName="dob" placeholder="Enter Your Username">
-
-                    </div>
-
-                    <div class="form__group relative d-flex flex-column">
-                        <label class="form__label">ADDRESS<span>*</span></label>
-                        <span class="material-symbols-outlined form__icon absolute">person</span>
-                        <input type="text" id="address" formControlName="address" placeholder="Enter Your Username">
-
-                    </div>
-
-
-                </form>
+            </form>
 
 
 
 
 
-            </div>
+        </div>
 
-            <div *ngIf="showData=='orders' " class="Allorders">
+     
 
+            <div class="Allorders"  *ngIf="showData=='orders'">
                 <div *ngFor="let order of userData.orders" class="order">
                     <div class="d-flex justify-content-md-between orderDetails">
-                        <div class="common">
-                            <p><b> ORDER ID </b> : {{order.orderId}} </p>
-                            <p><b> ORDER DATE : </b>{{order.orderDate}} </p>
+
+
+
+                        <div class="orderDetailFirstColumn">
+                            <div>
+                                <p class="orderDetialsHeading"> Order Id</p>
+                                <p> {{order.orderId}}</p>
+                            </div>
+
+
+                            <div>
+                                <p class="orderDetialsHeading"> Order Date </p>
+                                <p> {{order.orderDate}}</p>
+                            </div>
+
+
+                            <div>
+                                <p class="orderDetialsHeading"> Total Amount </p>
+                                <p> {{order.orderTotal}}</p>
+                            </div>
+
+
                         </div>
 
-                        <div class="common">
-                            <p><b>SHIP TO :</b>{{order.shipTo}}</p>
-                            <p><b>PRODUCT COUNT :</b>{{order.products.length}}</p>
+                        <div class="orderDetailSecondColumn">
+                            <button>View Order</button>
+                            <button>View Invoice</button>
                         </div>
 
-                        <div class="d-flex align-center">
-                            <p class="text-center"><b>TOTAL : </b>{{order.orderTotal}}</p>
-                        </div>
                     </div>
 
 
                     <div class="productsList">
                         <div *ngFor="let product of order.products"
-                            class="d-flex  justify-content-md-between productItem">
+                            class="d-flex flex-column gap-20 justify-content-md-between productItem">
 
 
-                            <div class="d-flex gap-30">
-                                <img src="{{product.image}}" style="width: 100px; height: 100px;">
+                            <div class="productItemFirstRow">
+                                <div class="d-flex gap-20">
+                                    <img src="{{product.image}}" style="width: 100px; height: 100px;">
 
-                                <div class="d-flex flex-column justify-content-center gap-5">
-                                    <h4>{{product.name}}</h4>
-                                    <p>{{product.description}}</p>
-                                    <p>Status:{{product.status}}</p>
+                                    <div class="d-flex flex-column gap-5">
+                                        <p>{{product.name}}</p>
+                                        <p>{{product.description}}</p>
+
+                                    </div>
+
+
+                                </div>
+                                <!-- <p>Status:{{product.status}}</p> -->
+
+                                <p class="price d-flex">{{product.price}}</p>
+                            </div>
+
+                            <div class="productItemSecondRow">
+                                <div class="status">
+                                    <span class="material-symbols-outlined pending" *ngIf="product.status=='pending'">
+                                        local_shipping
+                                        </span>
+
+                                        <span class="material-symbols-outlined done_logo" *ngIf="product.status=='delivered'" cla>
+                                            done
+                                            </span> 
+                                        
+                                    <p>{{product.status}}</p>
+                                </div>
+                                <div class="btns">
+                                    <button class="viewProduct">View Product</button>
+                                    <button>Buy Again</button>
                                 </div>
                             </div>
-                            <p class="price d-flex align-center">{{product.price}}</p>
-                        </div>
 
+                        </div>
 
                     </div>
                 </div>
 
             </div>
-        
+    
+
+
 
 
     </div>
