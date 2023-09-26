@@ -1,6 +1,6 @@
 <section>
     <div class="container d-flex">
-        <!--BUTTONS DIV -->
+      
 
         <nav class="navbar d-flex flex-column gap-25">
 
@@ -28,35 +28,7 @@
 
 
 
-        <!-- 
-        <div class="constant">
-            <div>
-            <h2>User Profiles</h2>
-       
-            <button (click)="changeComponent('orders')" class="active">
-                <span class="material-symbols-outlined">
-                    person
-                    </span>
-               Orders 
-            </button>
-            <button (click)="changeComponent('profile')">
-                <span class="material-symbols-outlined">
-                    favorite
-                    </span>
-              Profile
-            </button>
-        </div>
-        <button (click)="changeComponent('profile')" class="logout">
-            <span class="material-symbols-outlined">
-                logout
-                </span>
-         LOGOUT
-        </button>
-
-           
-        </div> -->
-
-        <!-- COMPONENT SHOW DIV -->
+   
 
         <div class="profile" *ngIf="showData=='profile'">
 
@@ -152,93 +124,142 @@
 
         </div>
 
-     
-
-            <div class="Allorders"  *ngIf="showData=='orders'">
-                <div *ngFor="let order of userData.orders" class="order">
-                    <div class="d-flex justify-content-md-between orderDetails">
 
 
-
-                        <div class="orderDetailFirstColumn">
-                            <div>
-                                <p class="orderDetialsHeading"> Order Id</p>
-                                <p> {{order.orderId}}</p>
-                            </div>
+        <div class="Allorders" *ngIf="showData=='orders'">
+            <div *ngFor="let order of userData.orders" class="order">
+                <!-- {{order| json}} ORDER IS  -->
+                <div class="d-flex justify-content-md-between orderDetails">
 
 
-                            <div>
-                                <p class="orderDetialsHeading"> Order Date </p>
-                                <p> {{order.orderDate}}</p>
-                            </div>
 
-
-                            <div>
-                                <p class="orderDetialsHeading"> Total Amount </p>
-                                <p> {{order.orderTotal}}</p>
-                            </div>
-
-
+                    <div class="orderDetailFirstColumn">
+                        <div>
+                            <p class="orderDetialsHeading"> Order Id</p>
+                            <p> {{order.orderId}}</p>
                         </div>
 
-                        <div class="orderDetailSecondColumn">
-                            <button>View Order</button>
-                            <button>View Invoice</button>
+
+                        <div>
+                            <p class="orderDetialsHeading"> Order Date </p>
+                            <p> {{order.orderDate}}</p>
                         </div>
+
+
+                        <div>
+                            <p class="orderDetialsHeading"> Total Amount </p>
+                            <p> {{order.orderTotal}}</p>
+                        </div>
+
 
                     </div>
 
+                    <div class="orderDetailSecondColumn">
+                        <button (click)="ViewProduct(order)">View Order
+                            <span class="material-symbols-outlined" #expand>
+                                expand_more
+                            </span>
+                        </button>
+                        <button>View Invoice</button>
+                    </div>
 
-                    <div class="productsList">
-                        <div *ngFor="let product of order.products"
-                            class="d-flex flex-column gap-20 justify-content-md-between productItem">
+                </div>
 
 
-                            <div class="productItemFirstRow">
-                                <div class="d-flex gap-20">
-                                    <img src="{{product.image}}" style="width: 100px; height: 100px;">
+                <!-- {{order|json}} -->
+                <div class="productsList" [ngClass]="{ expanded2: order.expanded }">
+                    <div *ngFor="let product of order.products"
+                        class="d-flex flex-column gap-20 justify-content-md-between productItem">
 
-                                    <div class="d-flex flex-column gap-5">
-                                        <p>{{product.name}}</p>
-                                        <p>{{product.description}}</p>
 
-                                    </div>
+                        <div class="productItemFirstRow" >
+                            <div class="d-flex gap-20">
+                                <img src="{{product.image}}" style="width: 100px; height: 100px;">
+
+                                <div class="product-detials">
+                                    <h3>{{product.name}}</h3>
+                                    <p>Size: {{product.size}}</p>
+                                    <p>Color: {{product.color}}</p>
 
 
                                 </div>
-                                <!-- <p>Status:{{product.status}}</p> -->
 
-                                <p class="price d-flex">{{product.price}}</p>
+
                             </div>
 
-                            <div class="productItemSecondRow">
-                                <div class="status">
-                                    <span class="material-symbols-outlined pending" *ngIf="product.status=='pending'">
-                                        local_shipping
+
+
+                            <div class="d-flex flex-column gap-15 justify-content-evenly">
+
+                                <div class="d-flex justify-content-md-between">
+                                    <div class="status relative">
+
+
+                                        <span class="absolute material-symbols-outlined pending"
+                                            *ngIf="product.status=='pending'">
+                                            local_shipping
                                         </span>
 
-                                        <span class="material-symbols-outlined done_logo" *ngIf="product.status=='delivered'" cla>
+                                        <span class="absolute material-symbols-outlined done_logo"
+                                            *ngIf="product.status=='delivered'" cla>
                                             done
-                                            </span> 
-                                        
-                                    <p>{{product.status}}</p>
+                                        </span>
+
+                                        <p>{{product.status}}</p>
+                                    </div>
+                                    <p class="price d-flex">{{product.price}}</p>
                                 </div>
+
                                 <div class="btns">
                                     <button class="viewProduct">View Product</button>
                                     <button>Buy Again</button>
                                 </div>
+
+
+
                             </div>
 
                         </div>
-
+                  
                     </div>
-                </div>
 
+                </div>
             </div>
-    
+
+        </div>
+
+
 
 
 
 
     </div>
+
+
+
+    <div class="d-flex">
+
+
+        <button (click)="PreviousPage()">Previous</button>
+
+
+
+
+
+        <button *ngIf="CurrentPage!=1" (click)="Gotopage(1)">{{1}}</button>
+        <p *ngIf="CurrentPage>2"> ....</p>
+        <button *ngIf="CurrentPage>2" (click)="Gotopage(CurrentPage-1)">{{CurrentPage-1}}</button>
+
+        <button class="blue">{{CurrentPage}}</button>
+
+        <button (click)="Gotopage(CurrentPage+1)" *ngIf="CurrentPage!=TotalPages">{{CurrentPage+1}}</button>
+        <p *ngIf="CurrentPage!=TotalPages-1 && CurrentPage!=TotalPages "> ....</p>
+        <button (click)="Gotopage(TotalPages)"
+            *ngIf="CurrentPage!=TotalPages && CurrentPage!=TotalPages-1">{{TotalPages}}</button>
+
+
+
+        <button (click)="NextPage()">Next</button>
+    </div>
+
 </section>

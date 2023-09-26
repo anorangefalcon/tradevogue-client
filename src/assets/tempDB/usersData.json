@@ -17,19 +17,25 @@
         "orderDate": "1-2-2012",
         "shipTo": "xtz",
         "orderTotal": 600,
+       
         "products": [
           {
             "productID": 1,
             "image": "https://images.pexels.com/photos/1311590/pexels-photo-1311590.jpeg?auto=compress&cs=tinysrgb&w=1600",
-            "name": "x",
+            "name": "Pikachu Oversized Jersey",
+            "size":"S",
+            "color":"green",
             "description": "this is nice prioduct",
             "status": "delivered",
-            "price": 100
+            "price": "₹1190"
+
           },
           {
             "productID": 2,
             "image": "https://images.pexels.com/photos/3026284/pexels-photo-3026284.jpeg?auto=compress&cs=tinysrgb&w=1600",
-            "name": "x",
+            "name": "Tshirt",
+            "size":"S",
+            "color":"green",
             "description": "this is nice prioduct",
             "status": "pending",
             "price": 200
@@ -37,12 +43,15 @@
           {
             "productID": 3,
             "image": "https://images.pexels.com/photos/17981049/pexels-photo-17981049/free-photo-of-man-in-eyeglasses-in-black-and-white.jpeg?auto=compress&cs=tinysrgb&w=1600",
-            "name": "x",
+            "name": "Tshirt",
+            "size":"S",
+            "color":"green",
             "description": "this is nice prioduct",
             "status": "delivered",
             "price": 300
           }
-        ]
+        ],
+        "expanded": false
       },
       {
         "orderId": 2,
@@ -74,10 +83,13 @@
             "status": "pending",
             "price": 300
           }
-        ]
+        ],
+        "expanded": false
       },
+     
       {}
     ]
+   
   },
   {
     "userId": 2,

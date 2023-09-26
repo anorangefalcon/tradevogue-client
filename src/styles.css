@@ -284,6 +284,10 @@ ul {
     justify-content: center;
 }
 
+.justify-content-evenly {
+    justify-content: space-evenly;
+}
+
 .justify-content-md-between {
     justify-content: space-between;
 }
