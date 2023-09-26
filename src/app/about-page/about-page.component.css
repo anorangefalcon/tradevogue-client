@@ -487,27 +487,6 @@ button {
 
 }
 
-@media screen and (max-width: 1450px) {
-    .about .container {
-        gap: 50px;
-        padding-block: 60px;
-        padding-inline: 50px;
-    }
-
-    .another .container {
-        padding-inline: 50px;
-        gap: 50px;
-    }
-
-    .team-members .container {
-        padding-inline: 50px;
-
-        & .heading {
-            margin-block-end: 0px;
-        }
-    }
-
-}
 
 @media screen and (max-width: 1290px) {
     .about .container {

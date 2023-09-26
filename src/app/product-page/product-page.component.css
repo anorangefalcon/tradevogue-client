@@ -278,7 +278,12 @@
     }
     transition: 1s ease-in-out;
 }
-
+.icons {
+    display: none;
+}
+.next{
+    padding-block-start: 40px;
+}
 @keyframes zoomed-carousel-animation {
     from {
         transform: translate(-50%, -48%);
@@ -300,7 +305,7 @@
 .information-section {
     & table {
         width: 100%;
-        border: 0.5px solid rgba(var(--text-black), 0.8);
+        border: 0.5px solid rgba(var(--text-black), 0.5);
         border-spacing: 0;
     }
 
@@ -578,7 +583,7 @@
         font-size: 28px !important;
     }
     .rating span{
-        font-size: 18px;
+        font-size: 15px;
     }
     .rate {
         font-size: 16px;
@@ -589,9 +594,7 @@
 
 }
 @media screen and (max-width: 470px){
-    .prod-name{
-        font-size: 26px !important;
-    }
+   
     .subTitle {
         font-size: 14px !important;
         margin-block-end: 10px !important;
@@ -601,17 +604,17 @@
     }
     .offer {
         & .old-price, .offer-percentage {
-            font-size: 14px !important;
+            font-size: 12px !important;
         }
     }
     .rate {
-        font-size: 14px !important;
+        font-size: 11px !important;
     }
     .sizes-radios label {
         font-size: 12px !important;
     }
     .sizes p, .colors p, .quan , .tags h4, .sku h4, .sku_id{
-        font-size: 14px !important;
+        font-size: 12px !important;
     }
     .wishlist-btn span {
         font-size: 20px;
@@ -622,11 +625,40 @@
     .cart p, .cart span {
         font-size: 14px !important;
     }
+    .text {
+        display: none;
+    }
+    .icons {
+        display: flex;
+        gap: 40px;
+
+        & span {
+            font-weight: 300;
+        }
+    }
+   
 }
 
 @media screen and (max-width: 390px){
+    .owl-carousel .owl-nav .owl-prev, .owl-carousel .owl-nav .owl-next{
+        & .span {
+            font-size: 12px !important;
+        }
+    }
+    .img-div{
+        min-height: 500px !important;
+    }
+    .tags h4 {
+        display: none;
+    }
+    .sizes-radios input+label{
+        padding: 5px 7px;
+    }
+    select {
+        width : 120px;
+    }
     .section-switcher{
-        gap: 15px !important;
+        gap: 35px !important;
         padding-block-end: 5px;
     }
     .section-item {
@@ -664,5 +696,6 @@
     .tags {
         flex-wrap: wrap;
     }
+   
 }
 

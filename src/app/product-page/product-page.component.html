@@ -137,13 +137,32 @@
 
 <div class="container">
 
-    <div class="section-switcher d-flex gap-30 justify-content-center">
+    <div class="section-switcher d-flex gap-30 justify-content-center text">
         <div (click)="selectedSection = 'description'" [class.active]="selectedSection === 'description'"
             class="section-item pointer">Description</div>
         <div (click)="selectedSection = 'information'" [class.active]="selectedSection === 'information'"
             class="section-item pointer">Information</div>
         <div (click)="selectedSection = 'reviews'" [class.active]="selectedSection === 'reviews'"
             class="section-item pointer">Reviews</div>
+    </div>
+    <div class="section-switcher d-flex gap-30 justify-content-center icons">
+        <div (click)="selectedSection = 'description'" [class.active]="selectedSection === 'description'"
+            class="section-item pointer">
+            <span class="material-symbols-outlined">
+                article
+            </span>
+        </div>
+        <div (click)="selectedSection = 'information'" [class.active]="selectedSection === 'information'"
+            class="section-item pointer">
+            <span class="material-symbols-outlined">
+                info
+            </span>
+        </div>
+        <div (click)="selectedSection = 'reviews'" [class.active]="selectedSection === 'reviews'"
+            class="section-item pointer">
+            <span class="material-symbols-outlined">
+                hotel_class
+            </span></div>
     </div>
 
     <div [ngSwitch]="selectedSection" class="prod-details">
@@ -229,7 +248,7 @@
 
 <!-- explore more  -->
 
-<div class="container">
+<div class="container next">
     <h2 class="section-heading">Popular Products</h2>
     <p class="section-sub-heading">
         Explore our most popular products.

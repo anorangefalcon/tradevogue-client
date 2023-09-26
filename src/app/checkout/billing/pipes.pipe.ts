@@ -19,7 +19,7 @@ export class PipesPipe implements PipeTransform {
     })
     console.log("value is ",value);
     return value;
-    return value;
+   
   }
 
 }

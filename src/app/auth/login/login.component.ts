@@ -13,8 +13,6 @@ import { UserDataService } from '../user-data.service';
 export class LoginComponent {
 
   loginForm : FormGroup;
-
-
   passwordFieldType: string = 'password';
   showPassword: boolean = false;
   isFormSubmitted: boolean = false;
@@ -69,7 +67,7 @@ onLogin() {
   togglePasswordVisibility() {
     this.showPassword = !this.showPassword;
     this.passwordFieldType = this.showPassword ? 'text' : 'password';
-    console.log("pass");
+
     
 }
 

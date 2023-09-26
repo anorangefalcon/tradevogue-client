@@ -9,7 +9,7 @@ header {
     font-weight: 500;
     width: 100%;
     transition: all 0.3s ease-in-out;
-    z-index: 99;
+    z-index: 97;
     /* padding-block: 20px; */
 
     & .navbar {

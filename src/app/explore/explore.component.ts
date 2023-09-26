@@ -63,7 +63,5 @@ export class ExploreComponent {
       this.productData = data;
     });
   }
-  toggleFilters() {
-    this.filtersOpen = !this.filtersOpen;
-  }
+ 
 }

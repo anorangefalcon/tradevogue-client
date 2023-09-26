@@ -26,7 +26,7 @@ import { ProductFilterPipe } from './Pipe/product-filter.pipe';
     SupportComponent,
     FooterComponent,
     CustomSelectComponent,
-    ProductFilterPipe,
+    ProductFilterPipe
   ],
   imports: [
     CommonModule,
