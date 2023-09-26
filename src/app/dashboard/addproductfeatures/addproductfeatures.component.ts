@@ -26,12 +26,14 @@ export class AddproductfeaturesComponent {
   orderQuantity!: FormGroup;
 
   // Data
-  categoryList: string[] = [];
-  brandsList: string[] = [];
-  sizeList: string[] = [];
-  colorsList: string[] = [];
-  tagList: string[] = [];
-  orderQuantityList: number[] = [];
+  dataList: any = {
+    categoryList: [],
+    brandsList: [],
+    sizesList: [],
+    colorsList: [],
+    tagsList: [],
+    quantitiesList: [],
+  }
 
   constructor(private featuredata: FetchDataService, private uploadExcel: UploadExcelService){}
 
@@ -69,39 +71,37 @@ export class AddproductfeaturesComponent {
 
     // FetchData Service
     this.featuredata.getSellerData().subscribe((data: any)=>{
-      this.categoryList = data[0]['categories'];
-      console.log(this.categoryList);
-      this.brandsList = data[0]['brands'];
-      this.sizeList = data[0]['sizes'];
-      this.orderQuantityList = data[0]['orderQuantity'];
-      this.tagList = data[0]['tags'];
-      this.colorsList = data[0]['colors'];
+      this.dataList.categoryList = data[0]['categories'];
+      console.log(this.dataList.categoryList);
+      this.dataList.brandsList = data[0]['brands'];
+      this.dataList.sizesList = data[0]['sizes'];
+      this.dataList.quantitiesList = data[0]['orderQuantity'];
+      this.dataList.tagsList = data[0]['tags'];
+      this.dataList.colorsList = data[0]['colors'];
     });
 
   }
 
   uploadFile(event: Event, field: string){
-    const data = this.uploadExcel.handleFileInput(event, field);
-    console.log(data);
-    data.then((resolve)=>{
+    const fieldList = field.toLowerCase() + 'List';
+    const dataObserver = this.uploadExcel.handleFileInput(event, field);
+    console.log(field);
+    
+    dataObserver.then((resolve)=>{
+      console.log('data + errors',resolve);
+      
       let items = resolve['data'];
+      console.log(items, 'data', fieldList);
+      
       items.forEach((item: any)=>{
-        if(!this.categoryList.includes(item))
-          this.categoryList.push(item);
+        if(!this.dataList[fieldList].includes(item))
+          this.dataList[fieldList].push(item);
       })
     })
   }
-
-
   
-  deleteItem(type: string, e: Event) {
-    let target = <HTMLSpanElement>e.target;
-    let targetElement = (<HTMLSpanElement>target.previousSibling).innerText;
-    
-    if (this.hasOwnProperty(type)) {
-      let index = (this as any)[type].indexOf(targetElement);
-      (this as any)[type].splice(index, 1);
-    }
+  deleteItem(type: string, index: number) {
+    this.dataList[type].splice(index, 1);
   }
   
   submit(type: string, form: string, control: string) {

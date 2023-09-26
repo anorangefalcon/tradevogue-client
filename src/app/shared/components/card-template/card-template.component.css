@@ -27,7 +27,6 @@
 .card-item-header {
     background: linear-gradient(to bottom, rgba(var(--text-black), 0.1) 0%, rgba(var(--text-white), 0.2) 100%);
     position: relative;
-    height: 70%;
     overflow: hidden;
 
     & img {
@@ -68,7 +67,7 @@
 
 .card-item-content{
     padding-inline: 10px;
-    /* height: 30%; */
+    height: 15%;
 }
 
 
@@ -146,6 +145,9 @@
     .card-item-template{
         display: grid;
         gap: 5px;
+        & a{
+            height: fit-content;
+        }
     }
     .cart {
         display: flex;
@@ -286,6 +288,10 @@
   cursor: pointer;
   font-weight: bold;
 } */
+
+.card-item-header {
+    max-height: 370px;
+}
 
 
 .image-carousel {

@@ -15,7 +15,7 @@
                             (change)="uploadFile($event, 'category')"
                             accept="image/CSV, application/vnd.ms-excel ,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" />
                         <label for="category"><span class="material-symbols-outlined">upload_file</span></label>
-                        <a href="../../../assets/ExcelSampleFile/category.xlsx" download><span
+                        <a href="../../../assets/ExcelSampleFile/Categories_Sample.xlsx" download><span
                                 class="material-symbols-outlined">download</span></a>
                     </div>
                 </div>
@@ -23,10 +23,10 @@
                     <div class="column d-flex flex-column gap-10">
                         <!-- <h6>Available</h6> -->
                         <div class="category d-flex gap-10 flex-column">
-                            <div *ngFor="let option of categoryList | productFilter:categories.get('category')?.value;">
+                            <div *ngFor="let option of dataList.categoryList | productFilter:categories.get('category')?.value; let i = index">
                                 <span>{{option}}</span>
                                 <span class="material-symbols-outlined"
-                                    (click)="deleteItem('categoryList', $event)">close</span>
+                                    (click)="deleteItem('categoryList', i)">close</span>
                             </div>
                         </div>
                     </div>
@@ -41,12 +41,12 @@
                                     <span class="material-symbols-outlined">add</span>
                                 </button>
                             </div>
-                            <div class="error">
+                            <!-- <div class="error">
                                 <small
                                     *ngIf="categories.get('category')?.hasError('required') && categories.get('category')?.touched &&  categories.get('category')?.invalid">Field
                                     Required</small>
                                 <small *ngIf="categories.get('category')?.hasError('invalidName')">Invalid Name</small>
-                            </div>
+                            </div> -->
                         </form>
                     </div>
                 </div>
@@ -60,10 +60,10 @@
 
                     <div class="file-section">
                         <input type="file" id="brand" maxlength="1" minlength="1"
-                            (change)="uploadFile($event, 'Category')"
+                            (change)="uploadFile($event, 'brands')"
                             accept="image/CSV, application/vnd.ms-excel ,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" />
                         <label for="brand"><span class="material-symbols-outlined">upload_file</span></label>
-                        <a href="../../../assets/ExcelSampleFile/brands.xlsx" download><span
+                        <a href="../../../assets/ExcelSampleFile/Brands_Sample.xlsx" download><span
                                 class="material-symbols-outlined">download</span></a>
                     </div>
                 </div>
@@ -71,10 +71,10 @@
                     <div class="column d-flex flex-column gap-10">
                         <!-- <h6>Available</h6> -->
                         <div class="category d-flex gap-10 flex-column">
-                            <div *ngFor="let option of brandsList | productFilter:brands.get('brand')?.value">
+                            <div *ngFor="let option of dataList.brandsList | productFilter:brands.get('brand')?.value; let i = index">
                                 <span>{{option}}</span>
                                 <span class="material-symbols-outlined"
-                                    (click)="deleteItem('brandsList', $event)">close</span>
+                                    (click)="deleteItem('brandsList', i)">close</span>
                             </div>
                         </div>
                     </div>
@@ -87,12 +87,12 @@
                                     <span class="material-symbols-outlined">add</span>
                                 </button>
                             </div>
-                            <div class="error">
+                            <!-- <div class="error">
                                 <small
                                     *ngIf="brands.get('brand')?.hasError('required') && brands.get('brand')?.touched &&  brands.get('brand')?.invalid">Field
                                     Required</small>
                                 <small *ngIf="brands.get('brand')?.hasError('invalidName')">Invalid Name</small>
-                            </div>
+                            </div> -->
                         </form>
                     </div>
                 </div>
@@ -106,9 +106,10 @@
 
                     <div class="file-section">
                         <input type="file" id="quantity" maxlength="1" minlength="1"
-                            accept="image/CSV, application/vnd.ms-excel ,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" />
+                            accept="image/CSV, application/vnd.ms-excel ,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+                            (change)="uploadFile($event, 'quantities')" />
                         <label for="quantity"><span class="material-symbols-outlined">upload_file</span></label>
-                        <a href="../../../assets/ExcelSampleFile/orders.xlsx" download><span class="material-symbols-outlined">download</span></a>
+                        <a href="../../../assets/ExcelSampleFile/orderQuantity_Sample.xlsx" download><span class="material-symbols-outlined">download</span></a>
                     </div>
                 </div>
             <div class="row-2 d-flex flex-column">
@@ -116,10 +117,10 @@
                     <!-- <h6>Available</h6> -->
                     <div class="category d-flex gap-10 flex-column">
                         <div
-                            *ngFor="let option of orderQuantityList | productFilter:orderQuantity.get('quantity')?.value;">
+                            *ngFor="let option of dataList.quantitiesList | productFilter:orderQuantity.get('quantity')?.value; let i = index">
                             <span>{{option}}</span>
                             <span class="material-symbols-outlined"
-                                (click)="deleteItem('orderQuantityList', $event)">close</span>
+                                (click)="deleteItem('quantitiesList', i)">close</span>
                         </div>
                     </div>
                 </div>
@@ -132,12 +133,12 @@
                                 <span class="material-symbols-outlined">add</span>
                             </button>
                         </div>
-                        <div class="error">
+                        <!-- <div class="error">
                             <small
                                 *ngIf="orderQuantity.get('quantity')?.hasError('required') && orderQuantity.get('quantity')?.touched &&  orderQuantity.get('quantity')?.invalid">Field
                                 Required</small>
                             <small *ngIf="orderQuantity.get('quantity')?.hasError('invalidName')">Invalid Name</small>
-                        </div>
+                        </div> -->
                     </form>
                 </div>
             </div>
@@ -152,19 +153,20 @@
 
                     <div class="file-section">
                         <input type="file" id="tag" maxlength="1" minlength="1"
-                            accept="image/CSV, application/vnd.ms-excel ,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" />
+                            accept="image/CSV, application/vnd.ms-excel ,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" 
+                            (change)="uploadFile($event, 'Tags')"/>
                         <label for="tag"> <span class="material-symbols-outlined">upload_file</span></label>
-                        <a href="../../../assets/ExcelSampleFile/Tag.xlsx" download><span class="material-symbols-outlined">download</span></a>
+                        <a href="../../../assets/ExcelSampleFile/Tags_Sample.xlsx" download><span class="material-symbols-outlined">download</span></a>
                     </div>
                 </div>
                 <div class="row-2 d-flex flex-column">
                     <div class="column d-flex flex-column gap-10">
                         <!-- <h6>Available</h6> -->
                         <div class="category d-flex gap-10 flex-column">
-                            <div *ngFor="let option of tagList | productFilter:tags.get('tag')?.value;">
+                            <div *ngFor="let option of dataList.tagsList | productFilter:tags.get('tag')?.value; let i = index">
                                 <span>{{option}}</span>
                                 <span class="material-symbols-outlined"
-                                    (click)="deleteItem('tagList', $event)">close</span>
+                                    (click)="deleteItem('tagsList', i)">close</span>
                             </div>
                         </div>
                     </div>
@@ -177,12 +179,12 @@
                                     <span class="material-symbols-outlined">add</span>
                                 </button>
                             </div>
-                            <div class="error">
+                            <!-- <div class="error">
                                 <small
                                     *ngIf="tags.get('tag')?.hasError('required') && tags.get('tag')?.touched &&  tags.get('tag')?.invalid">Field
                                     Required</small>
                                 <small *ngIf="tags.get('tag')?.hasError('invalidName')">Invalid Name</small>
-                            </div>
+                            </div> -->
                         </form>
                     </div>
                 </div>
@@ -198,19 +200,20 @@
 
                     <div class="file-section">
                         <input type="file" id="sizes" maxlength="1" minlength="1"
-                            accept="image/CSV, application/vnd.ms-excel ,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" />
+                            accept="image/CSV, application/vnd.ms-excel ,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" 
+                            (change)="uploadFile($event, 'Sizes')"/>
                         <label for="sizes"><span class="material-symbols-outlined">upload_file</span></label>
-                        <a href="../../../assets/ExcelSampleFile/Size.xlsx" download><span class="material-symbols-outlined">download</span></a>
+                        <a href="../../../assets/ExcelSampleFile/Sizes_Sample.xlsx" download><span class="material-symbols-outlined">download</span></a>
                     </div>
                 </div>
                 <div class="row-2 d-flex flex-column">
                     <div class="column d-flex flex-column gap-10">
                         <!-- <h6>Available</h6> -->
                         <div class="category d-flex gap-10 flex-column">
-                            <div *ngFor="let option of sizeList | productFilter:sizes.get('size')?.value">
+                            <div *ngFor="let option of dataList.sizesList | productFilter:sizes.get('size')?.value; let i = index">
                                 <span>{{option}}</span>
                                 <span class="material-symbols-outlined"
-                                    (click)="deleteItem('sizeList', $event)">close</span>
+                                    (click)="deleteItem('sizesList', i)">close</span>
                             </div>
                         </div>
                     </div>
@@ -223,12 +226,12 @@
                                     <span class="material-symbols-outlined">add</span>
                                 </button>
                             </div>
-                            <div class="error">
+                            <!-- <div class="error">
                                 <small
                                     *ngIf="sizes.get('size')?.hasError('required') && sizes.get('size')?.touched &&  sizes.get('size')?.invalid">Field
                                     Required</small>
                                 <small *ngIf="sizes.get('size')?.hasError('invalidName')">Invalid Name</small>
-                            </div>
+                            </div> -->
                         </form>
                     </div>
                 </div>

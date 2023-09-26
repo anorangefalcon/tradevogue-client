@@ -9,7 +9,7 @@
                 <span></span>
             </div>
 
-            <a class="logo" [routerLink]="['/']">
+            <a class="logo" [routerLink]="['/']" (click)="hamburgerOpen = false">
                 <picture>
                     <source media="(min-width: 480px)" srcset="../../assets/logo.svg">
                     <img src="../../../../assets/logo-mobile.svg" alt="Trade Vogue Logo">
