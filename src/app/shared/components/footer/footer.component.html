@@ -24,12 +24,12 @@
                 </div>
                 <div class="medias d-flex gap-10">
                     <div class="logo-circle d-flex justify-content-center align-items-center">
-                        <a href="#">
+                        <a href="https://www.facebook.com/profile.php?id=61551726754963&mibextid=LQQJ4d">
                             <i class="fa-brands fa-facebook-f"></i>
                         </a>
                     </div>
                     <div class="logo-circle d-flex justify-content-center align-items-center">
-                        <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="https://instagram.com/tradevogue?igshid=MzRlODBiNWFlZA=="><i class="fa-brands fa-instagram"></i></a>
                     </div>
                     <div class="logo-circle d-flex justify-content-center align-items-center">
                         <a href="#">
@@ -44,21 +44,39 @@
                     <h4 class="letter-spacing">TOP CATEGORIES</h4>
                     <ul class="d-flex flex-column gap-20">
                         <li>
-                            <a href="#">T-shirts</a>
+                            <a routerLink="/explore">T-shirts</a>
                         </li>
                         <li>
-                            <a href="#">Shirts</a>
+                            <a routerLink="/explore">Shirts</a>
                         </li>
                         <li>
-                            <a href="#">Cargos</a>
+                            <a routerLink="/explore">Cargos</a>
                         </li>
                         <li>
-                            <a href="#">Shorts</a>
+                            <a routerLink="/explore">Shorts</a>
                         </li>
                         <li>
-                            <a href="#">Tops</a>
+                            <a routerLink="/explore">Tops</a>
                         </li>
 
+                    </ul>
+                </div>
+                <div class="footer-col d-flex flex-column gap-30">
+                    <h4 class="letter-spacing">CUSTOMER SERVICE</h4>
+                    <ul class="d-flex flex-column gap-20">
+                        <li>
+                            <a routerLink="/help">Contact Us</a>
+                        </li>
+                        <li>
+                            <a routerLink="/t&c">Cancellation</a>
+                        </li>
+                        <li>
+                            <a routerLink="/t&c">Return</a>
+                        </li>
+                       
+                        <!-- <li>
+                            <a href="#">Wishlist</a>
+                        </li> -->
                     </ul>
                 </div>
                 <div class="footer-col d-flex flex-column gap-30">
@@ -71,36 +89,19 @@
                             <a href="#" routerLink="/t&c">Terms & Conditions</a>
                         </li>
                         <li>
+                            <a routerLink="/faq">FAQs</a>
+                        </li>
+                        <!-- <li>
                             <a href="#">Blogs</a>
-                        </li>
-                        <li>
+                        </li> -->
+                        <!-- <li>
                             <a href="#">Return Policy</a>
-                        </li>
+                        </li> -->
                     </ul>
                 </div>
                 <div class="footer-col d-flex flex-column gap-30">
                     <h4 class="letter-spacing">MY ACCOUNT</h4>
                     <ul class="d-flex flex-column gap-20">
-                        <li>
-                            <a href="/t&c#payment" (click)="onPayment()">Payment Policy</a>
-                        </li>
-                        <li>
-                            <a href="#">Return Policy</a>
-                        </li>
-                        <!-- <li>
-                            <a href="#">Privacy Policy</a>
-                        </li> -->
-                        <li>
-                            <a href="#">Shipping Policy</a>
-                        </li>
-                        <li>
-                            <a href="#" routerLink="/t&c">Terms & Conditions</a>
-                        </li>
-                    </ul>
-                </div>
-                <div class="footer-col d-flex flex-column gap-30">
-                    <h4 class="letter-spacing">CUSTOMER SERVICE</h4>
-                    <ul class="d-flex flex-column gap-10">
                         <li>
                             <a routerLink="/setting" (click)=" show('profile')" >Account</a>
                         </li>
@@ -111,10 +112,17 @@
                             <a routerLink="/setting" (click)="show('orders')">Order history</a>
                         </li>
                         <!-- <li>
-                            <a href="#">Wishlist</a>
+                            <a href="/t&c#payment" (click)="onPayment()">Payment Policy</a>
+                        </li> -->
+                        <!-- <li>
+                            <a href="#">Return Policy</a>
+                        </li> -->
+                        <!-- <li>
+                            <a href="#">Shipping Policy</a>
                         </li> -->
                     </ul>
                 </div>
+               
             </div>
 
             <div class="accordian">
@@ -225,6 +233,9 @@
                             </li>
                             <li>
                                 <a href="#">Return Policy</a>
+                            </li>
+                            <li>
+                                <a href="#">Contact Us</a>
                             </li>
                         </ul>
 

@@ -29,6 +29,7 @@ export function passwordStrengthValidator(control: FormControl): { [key: string]
 
     return { 'password-fail': true };
   }
+  
 export function usernameValidator(control: FormControl): { [key: string]: boolean } | null {
     const value: string = control.value || '';
 
