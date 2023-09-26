@@ -27,7 +27,7 @@
                 <!-- Filters -->
                 <div class="filters d-flex gap-15">
                     <!-- Product Inventory -->
-                    <app-custom-select [options]="stockStatus" [selectedOption]="'Filter by Stock Status'"
+                    <app-custom-select [options]="stockStatus"  [selectedOption]="'Filter by Stock Status'"
                         (final_option)="updateFields($event, 'stockStatus')"></app-custom-select>
 
                     <!-- Product Category -->

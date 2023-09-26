@@ -1,4 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { ProductFilterPipe } from '../Pipe/product-filter.pipe';
+
 
 @Component({
   selector: 'app-custom-select',
@@ -8,7 +10,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 export class CustomSelectComponent {
   @Input () options: any[] = [];
   @Input () selectedOption: any = '';
-  @Input () type: string = ''; // Multi
+  @Input () type: string = ''; // multiSelect //select //searchSelect
   @Output () final_option = new EventEmitter<string>();
   @Output () SelectedList = new EventEmitter<any>();
 
@@ -16,9 +18,24 @@ export class CustomSelectComponent {
   multiSelected: any[] = [];
   isactive:boolean = false;
   clearbtn:boolean = true;
+  filter: string = '';
   
   ngOnInit(){
-    this.selected = this.selectedOption;
+    console.log(this.type);
+    // this.selected = this.selectedOption;
+  }
+
+  filterData(e: Event): any{
+    const element =  e.target  as HTMLInputElement
+    // console.log((e.target  as HTMLInputElement).value.length);
+    if(element.value.length == 0){
+      this.isactive = false;
+      this.filter = '';
+      return;
+    } 
+    this.isactive = true;
+    this.filter = element.value;
+
   }
 
   toggleClass(){
@@ -30,6 +47,7 @@ export class CustomSelectComponent {
     this.isactive = false;
     this.final_option.emit(option);
     this.clearbtn = true;
+    this.filter = '';
   }
 
   updateMutliSelected(e: Event){
@@ -49,6 +67,10 @@ export class CustomSelectComponent {
   clearSelected(){
     this.selected = this.selectedOption;
     this.final_option.emit('');
+  }
+
+  collapseSelect(e: Event){
+    console.log(e.target);
   }
 
   // deleteOption(index: number){

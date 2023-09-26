@@ -163,7 +163,7 @@ header.active {
             display: block;
             height: 0;
             width: 0;
-            border-block-end: 10px solid rgba(255, 255, 255, 0.9);
+            border-block-end: 10px solid rgba(243, 243, 243, 0.9);
             border-inline-start: 10px solid transparent;
             border-inline-end: 10px solid transparent;
             inset-block-start: -9px;

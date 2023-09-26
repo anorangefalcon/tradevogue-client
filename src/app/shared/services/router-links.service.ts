@@ -5,14 +5,13 @@ import { BehaviorSubject } from 'rxjs';
   providedIn: 'root'
 })
 export class RouterLinksService {
-  
+
   constructor() { }
   private showDataValue = new BehaviorSubject<string>('profile');
   showData$ = this.showDataValue.asObservable();
 
-  updateShowData(data : string) {
+  updateShowData(data: string) {
     this.showDataValue.next(data);
     console.log("this.showdata val", this.showDataValue);
-    
   }
 }

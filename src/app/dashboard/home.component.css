@@ -36,22 +36,20 @@
 
 
     & .navbar {
-        min-height: 100vh;
-        height: 100%;
+        height: 100dvh;
         width: 74px;
-        overflow: hidden;
-        box-shadow: 2px 0px 5px rgba(128, 128, 128, 0.164);
         position: fixed;
         inset-block-start: 0;
         inset-inline-start: 0;
-        transition: all 0.2s ease-in-out;
-        overflow: hidden;
         z-index: 5;
         padding: 6px 12px;
+        overflow: hidden;
         background-color: rgb(var(--dash-card-clr));
+        box-shadow: 2px 0px 5px rgba(128, 128, 128, 0.164);
+        transition: all 0.2s ease-in-out;
     }
 
-    & .header {
+    & .navbar > .header {
         height: 60px;
         justify-content: center;
     }
@@ -99,7 +97,7 @@
 
     & .sidebar {
         width: 100%;
-        height: calc(100vh - 80px);
+        height: calc(100vh - 78px);
 
         & .navlist li {
             position: relative;
@@ -110,7 +108,7 @@
             border-radius: 8px;
 
             &:hover {
-                background-color: rgba(237, 237, 237, 0.293);
+                background-color: rgba(237, 237, 237, 0.421);
             }
 
             & .link-text {
@@ -141,17 +139,13 @@
                 color: rgb(var(--primary));
             }
         }
-
-        /* & .navlist li:last-child:hover{
-
-        } */
     }
 
     & .sub-navlist {
         height: 0;
         overflow: hidden;
         opacity: 0;
-        transition: all 1s ease-in-out;
+        transition: all 0.5s ease-in-out;
 
         & li {
             padding-inline-start: 40px;
@@ -166,8 +160,8 @@
 
     & .nav-links.profile {
         position: absolute !important;
-        bottom: 0;
-        left: 0;
+        inset-block-end: 0;
+        inset-inline-start: 0;
         cursor: pointer;
 
         & .photo-section {
@@ -188,6 +182,7 @@
         }
 
         & .profile-title {
+            font-size: 14px;
             text-wrap: nowrap;
         }
 
@@ -216,9 +211,8 @@
 
     @media screen and (min-width: 768px) {
         & .nav-links:hover>.sub-navlist {
-            height: max-content;
+            height: 135px;
             opacity: 1;
-            display: block;
         }
 
         & .nav-links:hover .dropdown .arrowbtn {
@@ -228,31 +222,14 @@
 
     @media screen and (max-width: 767px) {
         & .navbar.active li.active>.sub-navlist {
-            height: max-content;
+            height: 135px;
             opacity: 1;
-            display: block;
         }
 
         & .nav-links.active .dropdown .arrowbtn {
             transform: rotate(-180deg);
         }
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
     & .spike {

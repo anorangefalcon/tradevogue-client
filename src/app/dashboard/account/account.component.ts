@@ -74,6 +74,7 @@ export class AccountComponent implements OnInit {
           Validators.pattern(/^(?=.*[A-Z])(?=.*[!@#$%^&*()_+{}\[\]:;<>,.?~\\-])/),
         ],
       ],
+      address: ['', [Validators.required]],
       postalCode: [
         '',
         [Validators.required, Validators.pattern('[0-9]{6}')],

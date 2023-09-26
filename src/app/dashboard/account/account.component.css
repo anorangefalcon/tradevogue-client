@@ -1,7 +1,7 @@
 .user__info{
     width: 22%;
 }
-.user__form{
+.user__form{ 
     width: 78%;
 }
 
@@ -177,5 +177,18 @@
         & input:focus{
             border-color: rgb(var(--primary), 0.8);
         }
+
+        & .eye-icon {
+            inset-block-start: 0;
+            inset-inline-end: 0;
+            width: 40px;
+            height: 100%;
+            color: rgba(128, 128, 128, 0.853);
+        }
+
+        & .password__input__field > input {
+            padding-inline-end: 40px;
+        }
+
     }
 }

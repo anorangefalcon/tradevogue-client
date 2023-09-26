@@ -14,6 +14,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AddproductfeaturesComponent } from './addproductfeatures/addproductfeatures.component';
 import { UploadExcelService } from './services/upload-excel.service';
 import { SalesAnalysisComponent } from './sales-analysis/sales-analysis.component';
+import { OrderPageComponent } from './order-page/order-page.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { SalesAnalysisComponent } from './sales-analysis/sales-analysis.componen
     AddproductComponent,
     AccountComponent,
     AddproductfeaturesComponent,
-    SalesAnalysisComponent
+    SalesAnalysisComponent,
+    OrderPageComponent
   ],
   
   imports: [

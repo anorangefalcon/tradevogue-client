@@ -83,7 +83,7 @@
                             <label class="input__label">Category<span class="important">*</span></label>
                         </div>
                         <div class="relative">
-                            <app-custom-select [options]="categories" [selectedOption]="'Select Category'" (final_option)="updateFormFields($event, 'category')"></app-custom-select>
+                            <app-custom-select [options]="categories" [type]="'searchSelect'" [selectedOption]="'Select Category'" (final_option)="updateFormFields($event, 'category')"></app-custom-select>
                         </div>
                         <div class="error">
                             <small *ngIf="isSubmitted && productsForm.get('category')?.hasError('required')">*Field Required</small>
@@ -95,7 +95,7 @@
                             <label for="" class="input__label">Brand<span class="important">*</span></label>
                         </div>
                         <div class="relative">
-                            <app-custom-select [options]="brands" [selectedOption]="'Select Brand'" (final_option)="updateFormFields($event, 'brand')"></app-custom-select>
+                            <app-custom-select [options]="brands" [type]="'searchSelect'" [selectedOption]="'Select Brand'" (final_option)="updateFormFields($event, 'brand')"></app-custom-select>
                         </div>
 
                         <div class="error">
@@ -109,7 +109,7 @@
                     <div class="form__group">
                         <label for="" class="input__label">Gender<span class="important">*</span></label>
                         <div class="relative">
-                            <app-custom-select [options]="gender" [selectedOption]="'Select Gender'" (final_option)="updateFormFields($event, 'gender')"></app-custom-select>
+                            <app-custom-select [options]="gender" [type]="'searchSelect'" [selectedOption]="'Select Gender'" (final_option)="updateFormFields($event, 'gender')"></app-custom-select>
                         </div>
                         <div class="error">
                             <small *ngIf="productsForm.get('gender')?.hasError('required') && isSubmitted">*Field Required</small>
@@ -120,7 +120,7 @@
                             <label for="" class="input__label">Size<span class="important">*</span></label>
                         </div>
                         <div class="relative">
-                            <app-custom-select [options]="sizes" [type]="'multiple'" [selectedOption]="'Select Sizes'" (SelectedList)="updateFormFields($event, 'sizes')"></app-custom-select>
+                            <app-custom-select [options]="sizes" [type]="'multiSelect'" [selectedOption]="'Select Sizes'" (SelectedList)="updateFormFields($event, 'sizes')"></app-custom-select>
                         </div>
                         <div class="error">
                             <small *ngIf="productsForm.get('sizes')?.hasError('required') && isSubmitted">*Field Required</small>
@@ -129,7 +129,7 @@
                     <div class="form__group">
                         <label for="" class="input__label">Colors<span class="important">*</span></label>
                         <div class="relative">
-                            <app-custom-select [options]="colors" [type]="'multiple'" [selectedOption]="'Select Colors'" (SelectedList)="updateFormFields($event, 'colors')"></app-custom-select>
+                            <app-custom-select [options]="colors" [type]="'multiSelect'" [selectedOption]="'Select Colors'" (SelectedList)="updateFormFields($event, 'colors')"></app-custom-select>
                         </div>
                         <div class="error">
                             <small *ngIf="productsForm.get('colors')?.hasError('required') && isSubmitted">*Field Required</small>
@@ -140,7 +140,7 @@
                             <label for="" class="input__label">Product Tags<span class="important">*</span></label>
                         </div>
                         <div class="relative">
-                            <app-custom-select [options]="tags" [type]="'multiple'" [selectedOption]="'Select Tags'" (SelectedList)="updateFormFields($event, 'tags')"></app-custom-select>
+                            <app-custom-select [options]="tags" [type]="'multiSelect'" [selectedOption]="'Select Tags'" (SelectedList)="updateFormFields($event, 'tags')"></app-custom-select>
                         </div>
                         <div class="error">
                             <small *ngIf="productsForm.get('tags')?.hasError('required') && isSubmitted">*Field Required</small>
@@ -208,7 +208,7 @@
                         </div>
                         
                         <div class="relative">
-                            <app-custom-select [options]="orderQuantity" [type]="'multiple'" [selectedOption]="'Select Quantity'" (SelectedList)="updateFormFields($event, 'orderQuantity')"></app-custom-select>
+                            <app-custom-select [options]="orderQuantity" [type]="'multiSelect'" [selectedOption]="'Select Quantity'" (SelectedList)="updateFormFields($event, 'orderQuantity')"></app-custom-select>
                         </div>
                         <small>
                             *Order Quantity is various Unit to be Sold

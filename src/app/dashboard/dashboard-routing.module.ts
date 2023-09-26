@@ -8,6 +8,7 @@ import { AddproductComponent } from './addproduct/addproduct.component';
 import { AccountComponent } from './account/account.component';
 import { AddproductfeaturesComponent } from './addproductfeatures/addproductfeatures.component';
 import { SalesAnalysisComponent } from './sales-analysis/sales-analysis.component';
+import { OrderPageComponent } from './order-page/order-page.component';
 
 const routes: Routes = [
   {
@@ -19,7 +20,8 @@ const routes: Routes = [
       { path: 'addproduct', component: AddproductComponent },
       { path: 'account', component: AccountComponent },
       { path: 'features', component: AddproductfeaturesComponent},
-      { path: 'sales', component: SalesAnalysisComponent}
+      { path: 'sales', component: SalesAnalysisComponent},
+      { path: 'orderDetails/:orderId', component: OrderPageComponent}
     ]
   },
 ];
