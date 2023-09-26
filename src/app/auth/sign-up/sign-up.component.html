@@ -16,7 +16,7 @@
 
           <small
             *ngIf="isFormSubmitted && signupForm.get('username')?.hasError('invalidUser') && !signupForm.get('username')?.hasError('required') && signupForm.get('username').touched"
-            class="invalid">Username not available.</small>
+            class="invalid">*Username not available.</small>
         </div>
 
 
@@ -32,7 +32,7 @@
           <small
             *ngIf="isFormSubmitted && signupForm?.get('email')?.hasError('email') && signupForm.get('email')?.touched"
             class="invalid">
-            Please enter valid Email.
+            *Please enter valid Email.
           </small>
 
 
@@ -96,7 +96,7 @@
                 *ngIf="!signupForm?.get('password')?.hasError('required') && signupForm.get('password')?.dirty">
                 <small class="material-symbols-outlined">
                   check_circle
-                </small>One speacial character
+                </small>One special character
               </p>
             </div>
 
@@ -124,14 +124,8 @@
 
           <small *ngIf="signupForm?.get('confirmPassword')?.invalid && signupForm.get('confirmPassword')?.touched"
             class="invalid">
-            Your passwords and confirm password do not match.
+            *Your passwords and confirm password do not match.
           </small>
-
-
-          <!-- 
-              [ngClass]="{'wrapper-invalid': (signupForm.get('confirmPassword')?.invalid && signupForm.get('confirmPassword').touched)}"
-          [ngClass]="{'wrapper-valid': signupForm.get('confirmPassword')?.valid && signupForm.get('confirmPassword').touched}"
-             -->
 
         </div>
 

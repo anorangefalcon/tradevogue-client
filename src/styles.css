@@ -305,7 +305,7 @@ ul {
     flex-wrap: wrap;
 }
 
-.flex-center{
+.flex-center {
     align-items: center;
     justify-content: center;
 }
@@ -606,6 +606,21 @@ button {
     background-color: transparent !important;
 }
 
+@media screen and (max-width: 450px) {
+
+    .owl-carousel .owl-nav .owl-prev,
+    .owl-carousel .owl-nav .owl-next {
+
+
+        & span {
+            font-size: 26px;
+
+        }
+
+
+    }
+}
+
 @keyframes show-animation {
     0% {
         opacity: 0;
@@ -624,11 +639,11 @@ button {
         text-align: left;
         margin-bottom: 30px;
     }
-    
+
     .section-heading {
         font-size: 30px !important;
     }
-    
+
     .section-sub-heading {
         font-size: 14px !important;
         font-weight: 300 !important;

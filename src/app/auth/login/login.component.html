@@ -11,11 +11,10 @@
                 <div class="form__group relative d-flex flex-column">
                     <label class="form__label">Username<span>*</span></label>
                     <span class="material-symbols-outlined person form__icon absolute">person</span>
-                    <input type="text" placeholder="Enter Your Username" formControlName="username"
-                        class="form__input/">
+                    <input type="text" placeholder="Enter Your Username" formControlName="username">
                     <small
                         *ngIf="isFormSubmitted && loginForm?.get('username')?.hasError('invalidUsername') && !loginForm?.get('username')?.hasError('required') && loginForm?.get('username')?.touched"
-                        class="invalid errmsg">*Please enter valid username.</small>
+                        class="invalid">*Please enter valid username.</small>
                 </div>
 
                 <!-- PASSWORD INPUT  -->
@@ -31,9 +30,8 @@
                         <span class="material-symbols-outlined eye">{{ showPassword ? 'visibility' : 'visibility_off'
                             }}</span>
                     </button>
-                    <small>
-                        <p *ngIf="isFormSubmitted && loginForm?.get('password')?.hasError('password-fail') && !loginForm?.get('password')?.hasError('required') && loginForm?.get('password')?.touched"
-                            class="invalid">*Please enter valid password.</p>
+                    <small *ngIf="isFormSubmitted && loginForm?.get('password')?.hasError('password-fail') && !loginForm?.get('password')?.hasError('required') && loginForm?.get('password')?.touched"
+                            class="invalid">*Please enter valid password.
                     </small>
                 </div>
 

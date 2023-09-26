@@ -38,8 +38,10 @@
         }
 
         & .invalid {
+            position : absolute;
             color: rgb(var(--danger));
             font-size: 12px !important;
+            inset-block-start: 80px;
 
         }
 
@@ -152,13 +154,10 @@
 }
 
 
-
-
-
-
 .form__group {
 
     width: 100%;
+    margin-block-end: 12px;
 
     & input {
         width: 100%;
@@ -166,7 +165,7 @@
         padding-inline-start: 40px;
         border-radius: 8px;
         border: 1px solid transparent;
-        background-color: rgb(var(--primary), 0.05);
+        background-color: #f5f5f5cf;
         font-size: 14px;
         outline: none;
 
@@ -201,9 +200,7 @@
         color: rgb(var(--text-black), 0.3);
     }
 
-    & small {
-        margin-block-start: 8px;
-    }
+    
 
 
 }

@@ -282,7 +282,8 @@
     display: none;
 }
 .next{
-    padding-block-start: 40px;
+    padding-block-start: 30px;
+    padding-block-end: 20px;
 }
 @keyframes zoomed-carousel-animation {
     from {
@@ -568,7 +569,7 @@
         width: 100% !important;
     }
     .prod-name{
-        font-size: 34px !important;
+        font-size: 24px !important;
     }
     .subTitle {
         padding-block: 8px !important;
@@ -640,6 +641,12 @@
 }
 
 @media screen and (max-width: 390px){
+    .next h2{
+        font-size: 24px !important;
+    }
+    .next p {
+        font-size: 12px !important;
+    }
     .owl-carousel .owl-nav .owl-prev, .owl-carousel .owl-nav .owl-next{
         & .span {
             font-size: 12px !important;
