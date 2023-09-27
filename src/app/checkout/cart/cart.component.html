@@ -22,6 +22,10 @@
                         <p class="labels">Color:</p>
                         <div class="color-circle" [ngStyle]="{'background-color': item.color}"></div>
                     </div>
+                    <div class="mobile-view d-flex gap-10 align-items-center">
+                        <p>{{item.size}}</p>
+                        <div class="color-circle" [ngStyle]="{'background-color': item.color}"></div>
+                    </div>
 
                     <div class="d-flex align-items-center gap-10">
                         <p class="labels">Price: </p>
