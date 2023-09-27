@@ -74,10 +74,9 @@ export class AccountComponent implements OnInit {
           Validators.pattern(/^(?=.*[A-Z])(?=.*[!@#$%^&*()_+{}\[\]:;<>,.?~\\-])/),
         ],
       ],
+      organization: [''],
       address: ['', [Validators.required]],
-      postalCode: [
-        '',
-        [Validators.required, Validators.pattern('[0-9]{6}')],
+      postalCode: ['', [Validators.required, Validators.pattern('[0-9]{6}')],
       ],
     });
 
@@ -89,6 +88,8 @@ export class AccountComponent implements OnInit {
       IFSC: ['', [Validators.required, Validators.maxLength(11)]],
       GST: ['', [Validators.required, Validators.maxLength(15)]],
     });
+
+
 
     this.postalCodeInput
       .pipe(

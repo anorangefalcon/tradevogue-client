@@ -5,7 +5,7 @@
             <div class="images">
                 <img *ngIf="userPhoto != ''; else dummy" [src]="userPhoto" alt="UserPhoto">
                 <ng-template #dummy>
-                    <img id="profile__photo" src="../../../assets/default.jpg" alt="UserPhoto">
+                    <img id="profile__photo" src="../../../assets/avatars/Male.svg" alt="UserPhoto">
                 </ng-template>
                 <input type="file" id="seller_image" (change)="uploadImage($event)" />
                 <label for="seller_image">
@@ -13,10 +13,10 @@
                 </label>
             </div>
             <div class="d-flex flex-column gap-5 align-items-center">
-                <h3 class="seller__name">Andrew Gonza</h3>
+                <h3 class="seller__name">Priyanshu Dhall</h3>
                 <p class="__title">Seller</p>
             </div>
-            <p class="activity">Last Active: 02/10/2023</p>
+            <!-- <p class="activity">Last Active: 02/10/2023</p> -->
             <a class="mw100"><button class="btn-primary">Log Out</button></a>
         </div>
 
@@ -40,7 +40,7 @@
             <ul class="d-flex flex-column gap-10">
                 <li>
                     <i class="fa-solid fa-envelope"></i>
-                    <span class="info__text">xyz@gmail.com</span>
+                    <span class="info__text">tradevogue@gmail.com</span>
                 </li>
                 <li>
                     <i class="fa-solid fa-location-dot"></i>
@@ -60,15 +60,19 @@
     <!-- User form section -->
     <div class="card user__form d-flex flex-column gap-30">
         <!-- Form header with radio buttons to switch between profile and account details -->
-        <div class="header d-flex justify-content-center align-items-center gap-20 text-center">
-            <input type="radio" name="form" id="profile__form" [checked]="changee" (click)="changee = true">
-            <label for="profile__form">
-                <h4>Profile Details</h4>
-            </label>
-            <input type="radio" name="form" id="account__form" [checked]="!changee" (click)="changee = false">
-            <label for="account__form">
-                <h4>Account Details</h4>
-            </label>
+        <div class="header d-flex justify-content-md-between align-items-center text-center">
+            <div class="div-nav d-flex align-center gap-20">
+                <input type="radio" name="form" id="profile__form" [checked]="changee" (click)="changee = true">
+                <label for="profile__form" [ngClass]="changee ? 'labelActive' : ''">
+                    <h4>Profile Details</h4>
+                </label>
+                <input type="radio" name="form" id="account__form" [checked]="!changee" (click)="changee = false">
+                <label [ngClass]="!changee ? 'labelActive' : ''" for="account__form">
+                    <h4>Account Details</h4>
+                </label>
+            </div>
+
+            <button class="btn-secondary" type="submit">Update Information</button>
         </div>
 
         <!-- Profile form -->
@@ -175,6 +179,8 @@
                     </div>
                 </div>
 
+                
+
                 <!-- Address and Pincode -->
                 <div class="form__container col-2">
                     <div class="form__group">
@@ -233,7 +239,7 @@
                 </div>
             </form>
             <!-- Update Information Button -->
-            <button class="btn-secondary" type="submit">Update Information</button>
+            <!-- <button class="btn-secondary" type="submit">Update Information</button> -->
         </div>
 
 
@@ -315,6 +321,7 @@
                     </div>
                 </div>
             </form>
-            <button class="btn-secondary" type="submit">Update Information</button>
+            <!-- Update Information Button -->
+            <!-- <button class="btn-secondary" type="submit">Update Information</button> -->
         </div>
     </div>
