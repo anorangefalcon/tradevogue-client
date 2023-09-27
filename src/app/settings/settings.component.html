@@ -1,6 +1,6 @@
 <section>
     <div class="container d-flex">
-      
+
 
         <nav class="navbar d-flex flex-column gap-25">
 
@@ -28,7 +28,7 @@
 
 
 
-   
+
 
         <div class="profile" *ngIf="showData=='profile'">
 
@@ -128,7 +128,7 @@
 
         <div class="Allorders" *ngIf="showData=='orders'">
             <div *ngFor="let order of userData.orders" class="order">
-                <!-- {{order| json}} ORDER IS  -->
+              
                 <div class="d-flex justify-content-md-between orderDetails">
 
 
@@ -166,13 +166,13 @@
                 </div>
 
 
-                <!-- {{order|json}} -->
+               
                 <div class="productsList" [ngClass]="{ expanded2: order.expanded }">
                     <div *ngFor="let product of order.products"
                         class="d-flex flex-column gap-20 justify-content-md-between productItem">
 
 
-                        <div class="productItemFirstRow" >
+                        <div class="productItemFirstRow">
                             <div class="d-flex gap-20">
                                 <img src="{{product.image}}" style="width: 100px; height: 100px;">
 
@@ -220,7 +220,7 @@
                             </div>
 
                         </div>
-                  
+
                     </div>
 
                 </div>

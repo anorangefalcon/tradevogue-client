@@ -13,10 +13,11 @@
           <label class="form__label">Username<span>*</span></label>
           <span class="material-symbols-outlined form__icon absolute">person</span>
           <input type="text" id="username" formControlName="username" placeholder="Enter Your Username">
-
+          
           <small
             *ngIf="isFormSubmitted && signupForm.get('username')?.hasError('invalidUser') && !signupForm.get('username')?.hasError('required') && signupForm.get('username').touched"
             class="invalid">*Username not available.</small>
+            
         </div>
 
 
@@ -25,10 +26,7 @@
           <label class="form__label">Email<span>*</span></label>
           <span class="material-symbols-outlined form__icon absolute">mail</span>
           <input type="email" id="email" formControlName="email" placeholder="Enter Your Email">
-          <!--         
-          [ngClass]="{'wrapper-invalid': (signupForm.get('email')?.invalid && signupForm.get('email').touched)}"
-          [ngClass]="{'wrapper-valid': signupForm.get('email')?.valid && signupForm.get('email').touched}"
-          > -->
+        
           <small
             *ngIf="isFormSubmitted && signupForm?.get('email')?.hasError('email') && signupForm.get('email')?.touched"
             class="invalid">
@@ -47,11 +45,7 @@
           <input [type]="password" id="password" formControlName="password" placeholder="Enter Your Password">
           <button class="eye-btn flex justify-content-center align-items-center" (click)="toggle_password(1)"><span
               class="material-symbols-outlined eye">{{showPassword? 'visibility' : 'visibility_off'}}</span></button>
-          <!-- [ngClass]="{'wrapper-invalid': (signupForm.get('password')?.invalid) && signupForm.get('password').touched}"
-        [ngClass]="{'wrapper-valid': (signupForm.get('password')?.valid && signupForm.get('password').touched)}"
-         -->
-
-
+        
 
           <div class="password-helper d-flex justify-content-md-between">
 
@@ -139,7 +133,7 @@
     </div>
   </div>
 
-  <!-- img -->
+
 
   <div class="right-column column">
 
