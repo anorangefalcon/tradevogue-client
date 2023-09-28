@@ -251,29 +251,33 @@ header.active {
 
     header {
         & .nav-items {
-            height: 0;
-            width: 0px;
+            height: 80px;
             width: 100%;
             opacity: 0;
+            visibility: hidden;
             overflow: hidden;
             position: absolute;
             flex-direction: column;
+            justify-content: center;
+            align-items: center;
             gap: 0px;
-            inset-block-start: 100%;
+            inset-block-start: 0;
             inset-inline-start: 0;
+            z-index: 96;
             transition: all 0.5s ease-in-out;
             background-color: rgb(var(--text-white), 0.98);
-             backdrop-filter: blur(10px);
+            backdrop-filter: blur(10px);
+
             & .nav-links a {
-                padding: 15px 20px;
-                text-align: left;
+                font-size: 27px !important;
+                padding-block: 10px;
             }
         }
 
         & .nav-items.active {
+            visibility: visible;
             height: 100vh;
             opacity: 1;
-            
         }
 
 
@@ -283,6 +287,9 @@ header.active {
                 display: flex;
                 position: relative;
                 height: 20.5%;
+                z-index: 99;
+
+                transition: all 0.5s ease-in-out;
                 & span {
                     height: 2px;
                     width: 18px;
@@ -308,11 +315,14 @@ header.active {
                         bottom: 0%;
                         transform: translateY(0) rotate(0);
                     }
+
                     transition: all 0.3s ease-in-out;
                 }
             }
 
-            & .dropdown-active{
+            & .dropdown-active {
+                transform: scale(1.5) translate(19px, 7px);
+                opacity: 0.6;
                 & span {
                     /* center line*/
                     &:nth-child(1) {
@@ -370,7 +380,7 @@ header.active {
         align-items: center;
         justify-content: space-between;
         background-color: white;
-        z-index: 6;
+        z-index: 99;
         padding: 10px;
 
         & .back {

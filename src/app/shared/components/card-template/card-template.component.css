@@ -67,7 +67,7 @@
 
 .card-item-content{
     padding-inline: 10px;
-    height: 15%;
+    /* height: 15%; */
 }
 
 
@@ -145,9 +145,6 @@
     .card-item-template{
         display: grid;
         gap: 5px;
-        & a{
-            height: fit-content;
-        }
     }
     .cart {
         display: flex;
@@ -157,8 +154,8 @@
         background-color: rgb(var(--text-white));
         border: 1px solid rgb(var(--primary), 0.2);
         border-radius: 50%;
-        height: 30px;
-        width: 30px;
+        height: 35px;
+        width: 35px;
         opacity: 1;
         transform: translateY(0px);
         transition: all 0.3s ease-in-out;

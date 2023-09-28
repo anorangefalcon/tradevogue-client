@@ -1,3 +1,6 @@
+.heading{
+    margin-bottom: 0 !important;
+}
 .tc {
 
     & .bg-img {

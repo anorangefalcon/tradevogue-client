@@ -10,10 +10,12 @@
                 <div class="row-1 d-flex align-items-center justify-content-md-between">
                     <h4>Category</h4>
 
+                    
+
                     <div class="file-section">
-                        <input type="file" id="category" maxlength="1" minlength="1"
-                            (change)="uploadFile($event, 'category')"
-                            accept="image/CSV, application/vnd.ms-excel ,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" />
+                        <input type="file" id="category" minlength="1"
+                            (input)="uploadFile($event, 'category')"
+                            accept="image/CSV, application/vnd.ms-excel ,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" multiple />
                         <label for="category"><span class="material-symbols-outlined">upload_file</span></label>
                         <a href="../../../assets/ExcelSampleFile/Categories_Sample.xlsx" download><span
                                 class="material-symbols-outlined">download</span></a>

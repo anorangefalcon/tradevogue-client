@@ -5,13 +5,13 @@
         <nav class="navbar d-flex flex-column gap-25">
 
             <ul class="nav-items">
-                <li class="nav-links"><a (click)="changeComponent('profile')">
+                <li class="nav-links" [ngClass]="(this.showData === 'profile') ? 'nav-link-active' : ''"><a (click)="changeComponent('profile')">
                         <span class="nav-icons material-symbols-outlined">
                             person
                         </span>
                         <span class="nav-txt">Home</span>
                     </a></li>
-                <li class="nav-links"><a (click)="changeComponent('orders')">
+                <li class="nav-links" [ngClass]="(this.showData === 'orders') ? 'nav-link-active' : ''"><a (click)="changeComponent('orders')">
                         <span class="nav-icons material-symbols-outlined">
                             favorite
                         </span>
@@ -25,10 +25,6 @@
                     </a></li>
             </ul>
         </nav>
-
-
-
-
 
         <div class="profile" *ngIf="showData=='profile'">
 

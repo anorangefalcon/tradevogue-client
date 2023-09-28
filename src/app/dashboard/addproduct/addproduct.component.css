@@ -4,8 +4,6 @@ app-custom-select{
 
 #product-adding-section {
 
-
-
     & .important{
        color: rgb(var(--danger));
     }
@@ -16,6 +14,7 @@ app-custom-select{
         /* box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
         border-radius: 10px;
         background-color: #ffffff; */
+
     }
 
     & .file-section{
@@ -36,28 +35,20 @@ app-custom-select{
         }
     }
 
-    & .product-form {
-        padding: 20px;
+    & .product_form {
+        padding-inline: 25px;
         box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
         border-radius: 10px;
         background-color: #ffffff;
     }
 
-    & .add__product {
-        display: flex;
-        margin-inline: -20px;
-        flex-wrap: wrap;
-        padding-block-end: 20px;
-        margin-block-end: 20px;
-    }
 
     & .col {
         width: 50%;
         display: flex;
         flex-direction: column;
-        gap: 16px;
-        padding-inline: 20px;
-
+        gap: 12px;
+        /* padding-inline: 20px; */
 
         & .quantity-block {
             gap: 20px;
@@ -68,64 +59,70 @@ app-custom-select{
         }
     }
 
+    & .col-2 .sub-block{
+        gap: 12px;
+
+        & .form__group{
+            width: 48%;
+        }
+    }    
+
     & .form__group {
+        position: relative;
         display: flex;
         flex-direction: column;
         gap: 8px;
+        /* margin-block-end: 12px; */
 
         & .input__label {
             font-weight: 500;
             font-size: 13px;
             letter-spacing: 1.1px;
         }
-    }
 
-    & .form__group:has(> select) {
-        width: 50%;
-    }
- 
-    & input,
-    select,
-    textarea {
-        width: 100%;
-        padding: 8px 14px;
-
-        &::-webkit-resizer {
-            display: none;
-          }
-
-        &::placeholder{
-            font-size: 13px;
+        & input, textarea {
+            width: 100%;
+            padding: 8px 14px;
+            border-radius: 5px;
+            border: 1px solid #00000020;
+            font-size: 14px;
+            outline: none;
+    
+            &::-webkit-resizer {
+                display: none;
+              }
+    
+            &::placeholder{
+                font-size: 13px;
+                font-weight: 500;
+            }
         }
-    }
 
-    & input,
-    textarea {
-        border-radius: 5px;
-        border: 1px solid #00000020;
-        font-size: 14px;
-        outline: none;
-    }
-
-    & ::placeholder {
-        color: rgb(var(--text-black), 0.5);
-    }
-
-    & input:focus,
-    textarea:focus {
-        border-color: rgb(var(--text-black), 0.4);
-    }
-
-    & .select-options {
-
-        & .form__group {
-            width: 48%;
+        & ::placeholder {
+            color: rgb(var(--text-black), 0.5);
         }
+
+        & input:focus,
+        textarea:focus {
+            border-color: rgb(var(--text-black), 0.4);
+        }
+
+        & input::-webkit-inner-spin-button{
+            display: none !important;
+        }
+
+        & #selected__container > input{
+            border: none !important;
+        }
+    
+
+        /* & .error{
+            position: absolute;
+            inset-block-end: -20px;
+            inset-inline-start: 0;
+        } */
     }
 
-    & input::-webkit-inner-spin-button{
-        display: none !important;
-    }
 
     & .product-images {
         position: relative;
@@ -200,11 +197,31 @@ app-custom-select{
         }
     }
 
-    & .row-1 {
+    & .row{ 
+        padding-block: 20px;   
+
+        & .next_prev_btn{
+            & .button{
+                padding-inline: 10px ;
+                background-color: rgb(var(--text-black), 0.04);
+                transition: all 0.3s ease-in-out;
+
+                & span{
+                    font-size: 18px !important;
+                    transition: all 0.3s ease-in-out;
+                }
+            }
+            & .button:hover{
+                background-color: rgb(var(--text-black), 0.06);
+            }
+            
+        }
+    }
+
+    & .row:not(:last-child){
         border-block-end: 1px solid rgb(var(--text-black), 0.1);
     }
-    
-    & .buttons{
+    & .row-2{
         
         & .add{
             color: rgb(var(--primary));
@@ -228,118 +245,16 @@ app-custom-select{
                 }
             }
         }
-        & .draft{
-            color: rgb(var(--success));
-            background-color: rgb(var(--success), 0.1);
-            & a{
-                color: rgb(var(--success));
-                font-weight: 600; 
-            }
-
-            & span{
-                font-size: 21px;
-            }
-
-            &:hover{
-                color: rgb(var(--text-white));
-                background-color: rgb(var(--success));
-                & a{
-                    color: rgb(var(--text-white));
-                    font-weight: 600; 
-                }
-            }
-        }
     }
 
-    & small{
-        font-weight: 600;
-        color: rgb(var(--text-black), 0.3);
+    & .note{
+        font-weight: 500;
+        color: rgb(var(--text-black), 0.45);
     }
 
-    /* Customize Select  */
-    & .select-selected {
-        color: rgb(var(--text-black), 0.3) !important;
-    }
-}
-
-
-/* Custom Select CSS */
-
-.select {
-    position: relative;
-    padding: 5px 20px;
-    /* border: 2px solid black !important; */
-    border-radius: 5px;
-    width: 100%;
-}
-
-.display::after {
-    content: '';
-    border-top: 4px solid black;
-    border-right: 4px solid transparent;
-    border-left: 4px solid transparent;
-    display: block;
-    position: absolute;
-    inset-inline-end: 10px;
-    inset-block-start: 50%;
-    transform: translateY(-50%);
-    z-index: 99;
-}
-
-ul.options__container {
-    position: absolute;
-    height: 0px;
-    overflow: hidden;
-    opacity: 0;
-    width: 100%;
-    visibility: hidden;
-    transition: all 0.3s ease-in-out;
-    margin-top: 10px;
-}
-
-.options__container.active {
-    height: 150px;
-    opacity: 1;
-    z-index: 10;
-    visibility: visible; 
-    background-color: rgb(var(--secondary));
-    overflow: auto;
-
-    &::-webkit-scrollbar{
-        width: 10px;
-        background-color: rgb(var(--primary), 0.1);
-    }
-    &::-webkit-scrollbar-thumb{
-        background-color: rgb(var(--primary), 0.1);
-    }
-}
-
-.options__container.active ~ .display::after{
-    transform: rotate(180deg);
-} 
-
-ul.options__container li.option {
-    padding: 8px 20px;
-    cursor: pointer;
-    width: 100%;
-    /* background-color: azure; */
-}
-
-ul li:hover {
-    background-color: lightgrey;
-}
-
-.multiSelect{
-    & li{
-        display: flex;
-        gap: 5px;
-    }
-    & li input[type="checkbox"]{
-        width: 15px !important;
-    }
 }
 
 .error small{
     color: rgb(var(--danger)) !important;
-    font-weight: 400 !important;
+    font-weight: 500 !important;
 }

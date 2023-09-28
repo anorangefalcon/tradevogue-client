@@ -1,5 +1,5 @@
 import { Component, ElementRef, HostListener, Renderer2, asNativeElements } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ImageUploadService } from 'src/app/shared/services/image-upload.service';
 import { imageSizeValidator, invalidformat } from 'src/app/shared/validators/imageValidators.validator';
 import { UploadExcelService } from '../services/upload-excel.service';
@@ -18,7 +18,7 @@ export class AddproductComponent {
   gender: string[] = ['Male', 'Female', 'All'];
   sizes: string[] = ['S', 'M', 'L', 'XL', 'XXL', 'XXXL'];
   colors: string[] = ['Color 1', 'Color 2', 'Color 3', 'Color 4'];
-  tags: string[] = ['tag 1', 'tag 2', 'tag 3', 'tag 4'];
+  tags: string[] = ['tag 1', 'tag 2', 'tag 3', 'tag 4','tag 5','tag 6','tag 7'];
   orderQuantity: number[] = [100, 200, 300, 400, 500];
 
   productsForm: FormGroup;
@@ -26,15 +26,129 @@ export class AddproductComponent {
   productImagesD: any = [];
   productImageUrl: any = [];
   errorFile: any = []; //Duplicate File For display Purposes
+  current_form: string = '';
 
 
-  constructor(private elem_ref: ElementRef, 
-    private render: Renderer2, 
-    private fb: FormBuilder, 
+  constructor(private elem_ref: ElementRef,
+    private render: Renderer2,
+    private fb: FormBuilder,
     private upload: ImageUploadService,
-    private excel: UploadExcelService) 
-  {
+    private excel: UploadExcelService) {
     this.productsForm = this.fb.group({
+
+
+      productImages: this.fb.array([
+        this.fb.group({
+          color: ['', {
+            validators: [
+              Validators.required
+            ]
+          }],
+
+          productImages: [[], {
+            validators: [
+              Validators.required,
+              Validators.maxLength(6),
+              imageSizeValidator
+            ]
+          }],
+        })
+      ]),
+
+      basicinfo: this.fb.group({
+        name: ['', {
+          validators: [
+            Validators.required,
+            invalidformat
+          ]
+        }],
+        code: ['', {
+          validators: [
+            Validators.required,
+          ]
+        }],
+        subtitle: ['', {
+          validators: [
+            Validators.required
+          ]
+        }],
+        description: ['', {
+          validators: [
+            Validators.required
+          ]
+        }],
+        category: ['', {
+          validators: [
+            Validators.required,
+          ]
+        }],
+        brand: ['', {
+          validators: [
+            Validators.required,
+          ]
+        }],
+        sizes: [[], {
+          validators: [
+            Validators.required
+          ]
+        }],
+        gender: ['', {
+          validators: [
+            Validators.required,
+          ]
+        }],
+        tags: [[], {
+          validators: [
+            Validators.required
+          ]
+        }],
+        actualprice: [, {
+          validators: [
+            Validators.required,
+          ]
+        }],
+        discount: [],
+        discountprice: [],
+        materialType: ['', {
+          validators: [
+            Validators.required
+          ]
+        }],
+        weight: ['', {
+          validators: [
+            Validators.required
+          ]
+        }],
+        stockQuantity: ['', {
+          validators: [
+            Validators.required
+          ]
+        }],
+        orderQuantity: [[], {
+          validators: [
+            Validators.required
+          ]
+        }]
+      })
+    });
+  }
+
+  productImagesFormArray() {
+    return (<FormArray>this.productsForm.get('productImages')).controls;
+  }
+
+  productSubForm(field: string){
+    return this.productsForm.get('basicinfo')?.get(field);
+  }
+
+  addProductImageForm() {
+    const template = this.fb.group({
+      color: ['', {
+        validators: [
+          Validators.required
+        ]
+      }],
+
       productImages: [[], {
         validators: [
           Validators.required,
@@ -42,102 +156,8 @@ export class AddproductComponent {
           imageSizeValidator
         ]
       }],
-      productname: ['', {
-        validators: [
-          Validators.required,
-          invalidformat
-        ]
-      }],
-      productCode: ['', {
-        validators: [
-          Validators.required,
-        ]
-      }],
-      category: ['', {
-        validators: [
-          Validators.required,
-        ]
-      }],
-      brand: ['', {
-        validators: [
-          Validators.required,
-        ]
-      }],
-      sizes: [[], {
-        validators: [
-          Validators.required
-        ]
-      }],
-      gender: ['', {
-        validators: [
-          Validators.required,
-        ]
-      }],
-      colors: ['', {
-        validators: [
-          Validators.required,
-        ]
-      }],
-      tags: [[], {
-        validators: [
-          Validators.required
-        ]
-      }],
-      actualprice: [, {
-        validators: [
-          Validators.required,
-        ]
-      }],
-      salesPrice: [],
-      discount: [0],
-      discountPrice: [],
-      materialType: ['', {
-        validators: [
-          Validators.required
-        ]
-      }],
-      weight: ['', {
-        validators: [
-          Validators.required
-        ]
-      }],
-      stockQuantity: ['', {
-        validators: [
-          Validators.required
-        ]
-      }],
-      orderQuantity: [[], {
-        validators: [
-          Validators.required
-        ]
-      }]
     });
-  }
-
-  // Single Select Function for Click, Blur, Update
-  element!: HTMLInputElement;
-
-  toggleClass(e: Event) {
-    this.element = <HTMLInputElement>e.target;
-    let ele = <HTMLInputElement>this.element.parentElement?.nextSibling;
-    $(ele).toggleClass('active');
-  }
-
-  blurClass(e: Event) {
-    console.log(e);
-    this.element = <HTMLInputElement>e.target;
-    console.log((<HTMLInputElement>this.element.parentElement?.parentElement)?.contains(this.element));
-    if (!(<HTMLInputElement>this.element.parentElement?.parentElement)?.contains(this.element)) {
-      console.log("here")
-      let ele = <HTMLInputElement>this.element.parentElement?.nextSibling;
-      $(ele).removeClass('active');
-    }
-  }
-
-  updateSelected(option: any, type: string) {
-    this.productsForm.get(type)?.setValue(option);
-    let ele = <HTMLInputElement>this.element.parentElement?.nextSibling;
-    $(ele).removeClass('active');
+    (<FormArray>this.productsForm.get('productImages')).push(template);
   }
 
   // Handle Images when not added in collection
@@ -160,11 +180,11 @@ export class AddproductComponent {
       // error section updated
       this.errorFile.push(this.productsForm.get('productImages')?.getError('errorFiles'));
       this.productImagesD = data.filter((file: any) => {
-        return !this.errorFile.filter((errorfile: any)=> {return errorfile.name === file.name})
+        return !this.errorFile.filter((errorfile: any) => { return errorfile.name === file.name })
       })
       console.log(this.productImagesD);
-      
-    } else{
+
+    } else {
       this.productImagesD = this.productImages;
     }
 
@@ -183,55 +203,58 @@ export class AddproductComponent {
     });
     this.productsForm.get('productImages')?.setValue(this.productImages);
   }
-  
-
-  updateMultiSelected(event: Event, type: string) {
-    let inputList = this.productsForm.get(type)?.value;
-    let checkbox = <HTMLInputElement>event.target;
-
-    if (checkbox.checked) {
-      inputList.push(checkbox.value);
-      this.productsForm.get(type)?.setValue(inputList);
-    } else {
-      inputList.splice(inputList.indexOf(checkbox.value), 1);
-      this.productsForm.get(type)?.setValue(inputList);
-    }
-  }
 
   // Handles Imgages
 
-  uploadFile(event: Event){
+  uploadFile(event: Event) {
     let data = this.excel.handleFileInput(event);
-    data.then((products)=>{
+    data.then((products) => {
       console.log(products);
-      
+
       let product_keys = Object.keys(products['errors']);
-      product_keys.forEach((sheet)=>{
+      product_keys.forEach((sheet) => {
         let sheets_keys = Object.keys(products['errors'][sheet]);
         // console.log(sheets_keys);
 
-        sheets_keys.forEach((errors)=>{
+        sheets_keys.forEach((errors) => {
           let error_list = Object.keys(products['errors'][sheet][errors]);
           // console.log(error_list); 
 
-          error_list.forEach((detail)=>{
+          error_list.forEach((detail) => {
             console.log(detail);
-            
           })
         })
       })
     })
   }
 
-  updateFormFields(e: any, field: string){
-    this.productsForm.get(field)?.setValue(e);
+  updateFormFields(e: any, field: string) {
+    console.log(e, ' :: ', field);
+    this.productsForm.get('basicinfo')?.get(field)?.patchValue(e);
+    console.log("Form :: ",this.productsForm.get('basicinfo')?.get(field)?.value);
+  }
+
+
+  calculateDiscount() {
+    const price = this.productsForm.get('basicinfo')?.get('actualprice')?.value;
+    if (price) {
+      const discount = this.productsForm.get('basicinfo')?.get('discount')?.value;
+      this.productsForm.get('basicinfo')?.get('discountprice')?.patchValue(price - Math.floor(price * (discount/100)));
+    }
+  }
+
+  textarea_letterCount: number = 0;
+  letterCounter(e: Event, totalcount: number){
+    this.textarea_letterCount = (<HTMLTextAreaElement>e.target).value.length;
+
   }
 
 
   onsubmit() {
     this.errorFile = [];
-
+    console.log(this.productsForm);
     if (!this.productsForm.valid) {
+
       this.productsForm.markAllAsTouched();
     } else {
       // this.productImages.forEach(async () => {

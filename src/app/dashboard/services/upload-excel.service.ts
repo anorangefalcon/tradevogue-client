@@ -16,6 +16,8 @@ export class UploadExcelService {
     let file = event.target.files[0];
     const excelData: any = {};
 
+    console.log("File", file);
+
     let fileReader = new FileReader();
     fileReader.readAsBinaryString(file);
 

@@ -86,6 +86,7 @@ export class AddproductfeaturesComponent {
     const fieldList = field.toLowerCase() + 'List';
     const dataObserver = this.uploadExcel.handleFileInput(event, field);
     console.log(field);
+    console.log("File");
     
     dataObserver.then((resolve)=>{
       console.log('data + errors',resolve);

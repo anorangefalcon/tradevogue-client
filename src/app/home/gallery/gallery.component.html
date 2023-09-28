@@ -1,6 +1,6 @@
 <section class="gallery">
 
-    <div class="container"> 
+    <div class="container" *ngIf="image_loaded; else dummygallery">
         <div class="section-header">
             <h3>
                 @{{username}} on Instagram
@@ -13,37 +13,81 @@
             </a>
             <a href="{{posts[1]?.postLink}}" target="_blank" class="card-div-2 common">
                 <img src="{{posts[1]?.imageLink}}">
-                <!-- <img src="https://images.unsplash.com/photo-1467043237213-65f2da53396f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80"> -->
             </a>
             <a href="{{posts[2]?.postLink}}" target="_blank" class="card-div-3 common">
                 <img src="{{posts[2]?.imageLink}}">
-                <!-- <img src="https://images.unsplash.com/photo-1562157873-818bc0726f68?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=654&q=80"> -->
             </a>
             <a href="{{posts[3]?.postLink}}" target="_blank" class="card-div-4 common">
                 <img src="{{posts[3]?.imageLink}}">
-                <!-- <img src="https://images.unsplash.com/photo-1540221652346-e5dd6b50f3e7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2069&q=80"> -->
             </a>
             <a href="{{posts[4]?.postLink}}" target="_blank" class="card-div-5 common">
                 <img src="{{posts[4]?.imageLink}}">
-                <!-- <img src="https://images.unsplash.com/photo-1603400521630-9f2de124b33b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80"> -->
             </a>
             <a href="{{posts[5]?.postLink}}" target="_blank" class="card-div-6 common">
                 <img src="{{posts[5]?.imageLink}}">
-                <!-- <img src="https://plus.unsplash.com/premium_photo-1676031940533-8f1ac6a07268?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80"> -->
             </a>
             <a href="{{posts[6]?.postLink}}" target="_blank" class="card-div-7 common">
                 <img src="{{posts[6]?.imageLink}}">
-                <!-- <img src="https://images.unsplash.com/photo-1551488831-00ddcb6c6bd3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"> -->
             </a>
             <a href="{{posts[7]?.postLink}}" target="_blank" class="card-div-8 common">
                 <img src="{{posts[7]?.imageLink}}">
-                <!-- <img src="https://images.unsplash.com/photo-1536992266094-82847e1fd431?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1178&q=80"> -->
             </a>
             <a href="{{posts[8]?.postLink}}" target="_blank" class="card-div-9 common">
                 <img src="{{posts[8]?.imageLink}}">
-                <!-- <img src="https://images.unsplash.com/photo-1434389677669-e08b4cac3105?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=810&q=80"> -->
             </a>
 
         </div>
-    </div> 
+    </div>
+
+
+
+    <ng-template #dummygallery>
+        <div class="container">
+            <div class="section-header">
+                <h3>
+                    @tradeVogue on Instagram
+                </h3>
+            </div>
+
+            <div class="card-div">
+                <a href="{{posts[0]?.postLink}}" target="_blank" class="card-div-1 common">
+                    <img
+                        src="https://images.unsplash.com/photo-1467043237213-65f2da53396f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80">
+                </a>
+                <a href="{{posts[1]?.postLink}}" target="_blank" class="card-div-2 common">
+                    <img
+                        src="https://images.unsplash.com/photo-1467043237213-65f2da53396f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80">
+                </a>
+                <a href="{{posts[2]?.postLink}}" target="_blank" class="card-div-3 common">
+                    <img
+                        src="https://images.unsplash.com/photo-1562157873-818bc0726f68?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=654&q=80">
+                </a>
+                <a href="{{posts[3]?.postLink}}" target="_blank" class="card-div-4 common">
+                    <img
+                        src="https://images.unsplash.com/photo-1540221652346-e5dd6b50f3e7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2069&q=80">
+                </a>
+                <a href="{{posts[4]?.postLink}}" target="_blank" class="card-div-5 common">
+                    <img
+                        src="https://images.unsplash.com/photo-1603400521630-9f2de124b33b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80">
+                </a>
+                <a href="{{posts[5]?.postLink}}" target="_blank" class="card-div-6 common">
+                    <img
+                        src="https://plus.unsplash.com/premium_photo-1676031940533-8f1ac6a07268?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80">
+                </a>
+                <a href="{{posts[6]?.postLink}}" target="_blank" class="card-div-7 common">
+                    <img
+                        src="https://images.unsplash.com/photo-1551488831-00ddcb6c6bd3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80">
+                </a>
+                <a href="{{posts[7]?.postLink}}" target="_blank" class="card-div-8 common">
+                    <img
+                        src="https://images.unsplash.com/photo-1536992266094-82847e1fd431?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1178&q=80">
+                </a>
+                <a href="{{posts[8]?.postLink}}" target="_blank" class="card-div-9 common">
+                    <img
+                        src="https://images.unsplash.com/photo-1434389677669-e08b4cac3105?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=810&q=80">
+                </a>
+
+            </div>
+        </div>
+    </ng-template>
 </section>

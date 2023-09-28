@@ -5,14 +5,14 @@
 }
 
 #selected__container{
-    min-width: 180px;
+    min-width: 160px;
     width: 100%;
     font-weight: 500;
     font-size: 13px;
     height: 40px;
     padding-block: 0px;
     border-radius: 5px;
-    cursor: pointer;
+    cursor:default;
     background-color: #fff;
     border: 1px solid #00000020;
     overflow: hidden;
@@ -20,7 +20,8 @@
     & input{
         padding-inline: 16px 35px;
         border: none;
-        font-size: 13px;
+        font-size: 13px !important;
+        font-weight: 500;
         width: 100%;
         height: 100%;
     }
@@ -106,6 +107,7 @@ input:focus{
     & label{
         font-size: 13px;
         padding: 10px 16px;
+        text-transform: capitalize;
         width: 100%;
         cursor: pointer;
         text-wrap: nowrap;
@@ -119,24 +121,7 @@ input:focus{
     font-weight: 400;
 }
 
-/* Multi Select Style */
-
-.option__selected__text{
-    background-color: rgb(var(--primary), 0.1);
-    border-radius: 2px;
-    min-width: 30px;
-    padding: 3px 6px;
-    margin-inline-end: 5px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
 .checkbox__options{
-
-    /* & input[type="checkbox"]{
-        width: 50px !important; 
-    } */
 
     & label {
         padding-inline: 0px !important;

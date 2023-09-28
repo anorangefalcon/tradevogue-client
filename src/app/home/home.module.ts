@@ -13,6 +13,7 @@ import { CarouselModule } from 'ngx-owl-carousel-o';
 import { OffersComponent } from './offers/offers.component';
 import { DealOfWeekComponent } from './deal-of-week/deal-of-week.component';
 
+
 const routes: Routes = [
   { path: '', component: HomeComponent }
 ];
@@ -31,8 +32,8 @@ const routes: Routes = [
     CommonModule,
     HomeRoutingModule,
     SharedModule,
+    CarouselModule,
     RouterModule.forChild(routes),
-    CarouselModule
   ]
 })
 export class HomeModule { }
