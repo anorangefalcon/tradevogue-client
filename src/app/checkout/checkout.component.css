@@ -230,10 +230,20 @@
     .items {
         display: none;
     }
+    .item-name{
+        width: 15ch !important;
+        text-overflow: ellipsis !important;
+        overflow: hidden;
+    }
 }
 @media screen and (max-width: 326px){
     .itemstotal p {
         font-size: 12px !important;
+    }
+    .item-name{
+        width: 15ch !important;
+        text-overflow: ellipsis !important;
+        overflow: hidden;
     }
     .item-name, .item-price , .subtotal p, .shipping p, .savings p{
         font-size: 12px !important;

@@ -125,7 +125,7 @@
                
             </div>
 
-            <div class="accordian">
+            <!-- <div class="accordian">
                 <div class="acc">
                     
                     <input type="checkbox" name="accord" id="top-cat">
@@ -244,7 +244,71 @@
 
 
                 </div>
+            </div> -->
+        <div class="responsive-links gap-15">
+            <div class="section d-flex flex-column gap-5">
+                <h5 class="subtitle">TOP CATEGORIES</h5>
+                <ul class="d-flex gap-10 list">
+                    <li>
+                        <a href="#">T-shirts</a>
+                    </li>
+                    <li>
+                        <a href="#">Shirts</a>
+                    </li>
+                    <li>
+                        <a href="#">Cargos</a>
+                    </li>
+                    <li>
+                        <a href="#">Shorts</a>
+                    </li>
+                    <li>
+                        <a href="#">Tops</a>
+                    </li>
+                </ul>
             </div>
+            <div class="section d-flex flex-column gap-5">
+                <h5 class="subtitle">CUSTOMER SERVICE</h5>
+                <ul class="d-flex gap-10 list">
+                    <li>
+                        <a routerLink="/help">Contact Us</a>
+                    </li>
+                    <li>
+                        <a routerLink="/t&c">Cancellation</a>
+                    </li>
+                    <li>
+                        <a routerLink="/t&c">Return</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="section d-flex flex-column gap-5">
+                <h5 class="subtitle">USEFUL LINKS</h5>
+                <ul class="d-flex gap-10 list">
+                    <li>
+                        <a href="#" routerLink="/about">About us</a>
+                    </li>
+                    <li>
+                        <a href="#" routerLink="/t&c">Terms & Conditions</a>
+                    </li>
+                    <li>
+                        <a routerLink="/faq">FAQs</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="section d-flex flex-column gap-5">
+                <h5 class="subtitle">MY ACCOUNT</h5>
+                <ul class="d-flex gap-10 list">
+                    <li>
+                        <a routerLink="/setting" (click)=" show('profile')" >Account</a>
+                    </li>
+                    <li>
+                        <a href="#" routerLink="/cart">My cart</a>
+                    </li>
+                    <li>
+                        <a routerLink="/setting" (click)="show('orders')">Order history</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
         </div>
     </div>
     <div class="copyright-footer d-flex justify-content-center align-items-center">

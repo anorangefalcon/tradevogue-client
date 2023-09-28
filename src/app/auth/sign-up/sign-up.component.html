@@ -116,7 +116,7 @@
               class="material-symbols-outlined eye">{{showPassword2? 'visibility' : 'visibility_off'}}</span></button>
 
 
-          <small *ngIf="signupForm?.get('confirmPassword')?.invalid && signupForm.get('confirmPassword')?.touched"
+          <small *ngIf="signupForm?.get('confirmPassword')?.invalid && signupForm.get('confirmPassword')?.touched && !signupForm.get('confirmPassword')?.hasError('required')"
             class="invalid">
             *Your passwords and confirm password do not match.
           </small>
