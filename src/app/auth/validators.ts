@@ -43,7 +43,8 @@ export function matchPasswordValidator(control:any,signupForm:FormGroup) {
     
     const password = signupForm?.get('password')?.value;
     const confirmPassword = control.value;
-  
+  if(password=='') return null;
+
     if (password === confirmPassword) {
       return null;
     } else {

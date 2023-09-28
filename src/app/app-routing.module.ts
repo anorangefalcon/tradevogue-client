@@ -20,7 +20,7 @@ const routes: Routes = [
     children: [
       { path: '', component: HomeComponent, data: { breadcrumb: 'Home' } },
       {
-        path: 'setting', component: SettingsComponent, data: { breadcrumb: 'Setting' }
+        path: 'usersetting', component: SettingsComponent, data: { breadcrumb: 'Setting' }
       },
       { path: 't&c', component: TcComponent, data: { breadcrumb: 'Term & Condition' } },
       { path: 'faq', component: FaqPageComponent, data: { breadcrumb: 'Faq' } },

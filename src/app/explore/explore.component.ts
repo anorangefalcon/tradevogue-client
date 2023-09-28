@@ -15,14 +15,14 @@ export class ExploreComponent {
 
   uniqueData: { [field: string]: any[] } = {};
   filters: any[] = [];
-  filterObj: any = {}
+
   FilterApplied: any = {};
 
   filtersOpen: boolean = false;
 
 
 
-  constructor(private productFilter: ProductsFilterService, private demoService: DemoService) {}
+  constructor(private productFilter: ProductsFilterService) {}
 
   ngOnInit(): void {
     this.productFilter.getData().then((data:any) => {
@@ -42,10 +42,13 @@ export class ExploreComponent {
     if (event.target.checked) {
       if (Array.isArray(this.FilterApplied[field])) {
         this.FilterApplied[field].push(event.target.value);
+       
       }
       else {
         this.FilterApplied[field] = []
         this.FilterApplied[field].push(event.target.value);
+        
+        
       }
     }
     else {

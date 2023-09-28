@@ -65,7 +65,6 @@ onSubmit() {
       // console.log("signupDetails", signupDetails);
     }
   }
-  // console.log(typeof(this.signupForm.get('password'), " type of apssword is"));
 
   // Retrieve 
   const storedSignupDetails = this.cookie.get('signupDetails');

@@ -13,6 +13,8 @@ export class ProductsFilterService {
 
     let promise=new Promise(async (resolve,reject)=>{
       await this.fetchData.getData().subscribe((originalData)=>{
+       
+        
         const filterObj: any = {
           sizes: [],
           colors: [],
@@ -23,18 +25,30 @@ export class ProductsFilterService {
         };
     
         originalData.map((data: any) => {
-    
-          for (let filter of Object.keys(filterObj)) {
+          // console.log('data i s',data);
+          
+          
+          for (let filter in (filterObj)) {
+            // console.log('filter is ',filter,filter in data);
+            
             const target = filter in data ? data : data.info;
+        
             const value = target[filter];
+      
             if (Array.isArray(value)) {
-    
+         
+              
               for (let v of value) {
+          
+                
                 const arr = filterObj[filter];
-    
+               
                 if (!arr.includes(v)) {
                   arr.push(v);
                 }
+
+
+                // console.log("arr is ",arr, " vi s ",v )
               }
             }
             else {
@@ -47,11 +61,14 @@ export class ProductsFilterService {
         });
     
         Object.keys(filterObj).forEach(el => {
+        
           if (filterObj[el].length > 3) {
             filterObj[el].push(false)
           }
         });
 
+    
+     
         let result={ originalData, filterObj };
         resolve(result);
 
@@ -69,8 +86,9 @@ export class ProductsFilterService {
   }
 
   async Filter2(filteredObject: any, OriginalArray: any) {
-    this.removeEmptyKeys(filteredObject);
    
+    this.removeEmptyKeys(filteredObject);
+
 
     OriginalArray = (await this.getData())
     OriginalArray=OriginalArray.originalData;
@@ -79,17 +97,22 @@ export class ProductsFilterService {
       return OriginalArray;
     }
 
-    let result = OriginalArray?.slice();
+    let result = OriginalArray;
+    
+    
     for (const key in filteredObject) {
       const valuesToFilter = filteredObject[key];
-      if (valuesToFilter.length == 0) {
-        continue;
-      }
+    
+    
       result = result.filter((item: any) => {
         if (!item[key]) item = item.info;
         if (Array.isArray(item[key])) {
+         
+          
+
           return valuesToFilter.some((value: any) => item[key].includes(value));
         } else {
+          
           return valuesToFilter.includes(item[key]);
         }
       });

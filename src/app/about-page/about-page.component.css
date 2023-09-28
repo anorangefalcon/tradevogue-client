@@ -133,14 +133,15 @@
                 & .content-data-common {
                     display: flex;
                     gap: 10px;
-
+                    width: 50%;
                     & .logo span {
-                        font-size: 45px;
+                        font-size: 32px;
                         font-weight: 300;
                     }
 
                     & .content {
                         display: flex;
+                        gap:5px;
                         flex-direction: column;
 
                         /* gap:10px; */
@@ -471,6 +472,8 @@ button {
                 color: white;
                 transition: opacity 0.35s ease;
 
+                & h3{text-align: center;}
+
             }
 
             & img {
@@ -668,6 +671,7 @@ button {
     .content-data{
         & .logo span {
             font-size: 32px !important;
+
         }
         .content h4 {
             font-size: 14px !important;

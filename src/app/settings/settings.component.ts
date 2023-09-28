@@ -25,7 +25,7 @@ export class SettingsComponent  {
   CurrentPage:number=1;
   entriesCount:number=7;
   TotalPages:number=0;
-  constructor(private renderer: Renderer2,private fb:FormBuilder,private el: ElementRef, private userService:FetchDataService){
+  constructor(private renderer: Renderer2,private routerlinkservice:RouterLinksService,private fb:FormBuilder,private el: ElementRef, private userService:FetchDataService){
    
    
    
@@ -46,7 +46,10 @@ export class SettingsComponent  {
 
    
     this.getData();
-    
+    routerlinkservice.showData$.subscribe((data)=>{
+      console.log('data is ',data);
+      this.showData=data;
+    });
    
   };
 
