@@ -58,7 +58,7 @@
           <label [for]="option">{{option}}</label>
         </li>
       </ul>
-      <div id="selected__container" class="relative" (click)="isactive = !isactive">
+      <div id="selected__container" class="singleSelect relative" (click)="isactive = !isactive">
         <input type="text" class="selected__text" (input)="filterData($event)"
           [value]="selected" [placeholder]="selectedOption" readonly>
         <span class="absolute d-flex flex-center arrow_icon material-symbols-outlined">arrow_drop_down</span>

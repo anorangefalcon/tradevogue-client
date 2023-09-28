@@ -153,4 +153,8 @@ export class ProductPageComponent implements OnInit{
     return Array(newTotal).fill(0);
   }
 
+  updateSelectedField(e: any){
+    this.selectedQ = e;
+  }
+
 }

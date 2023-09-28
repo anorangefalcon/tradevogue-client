@@ -74,12 +74,10 @@
                 <div class="d-flex gap-15 align-items-center">
                     <p class="quan">Quantity:</p>
 
-                    <select placeholder-text="Select Quantity" [(ngModel)]="selectedQ">
-                        <option value="" disabled selected>Select Quantity</option>
-                        <option *ngFor="let quantity of data.productDetails.orderQuantity" [value]="quantity">
-                            {{ quantity }}
-                        </option>
-                    </select>
+                    <app-custom-select selectedOption="'Select Quantity'" (final_option)="updateSelectedField($event)"
+                        [options]="data.productDetails.orderQuantity">
+
+                    </app-custom-select>
                 </div>
 
                 <div class="cart-div d-flex gap-10 align-items-center">
@@ -162,7 +160,8 @@
             class="section-item pointer">
             <span class="material-symbols-outlined">
                 hotel_class
-            </span></div>
+            </span>
+        </div>
     </div>
 
     <div [ngSwitch]="selectedSection" class="prod-details">
