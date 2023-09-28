@@ -16,7 +16,7 @@ export function invalidformat(control: AbstractControl): {[key: string]: any} | 
     let field = control.value;
 
     if(/[0-9]/.test(field) || /[!@#$%^&*(),.?":{}|<>]/.test(field)){
-        return { "invalidName": true }
+        return { "invalidformat": true }
     }
     return null;
 }

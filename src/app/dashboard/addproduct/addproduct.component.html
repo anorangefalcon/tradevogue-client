@@ -1,245 +1,381 @@
 <section id="product-adding-section">
+
     <div class="heading d-flex justify-content-md-between align-center">
         <h1>Add Product</h1>
         <div class="file-section">
             <input type="file" id="sizes" maxlength="1" minlength="1" (change)="uploadFile($event)"
-            accept="image/CSV, application/vnd.ms-excel ,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" />
+                accept="image/CSV, application/vnd.ms-excel ,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" />
             <label for="sizes"><span class="material-symbols-outlined">upload_file</span></label>
             <a class="downloadBtn" href="" download><span class="material-symbols-outlined">download</span></a>
         </div>
     </div>
 
-    <div class=" product-form">
-        <form action="" class="row-1 add__product d-flex" [formGroup]="productsForm">
+    <div class="product_form">
 
-            <div class="col">
-                <div class="form__group">
-                    <label for="" class="input__label">Product Images :</label>
+        <form action="" class="" [formGroup]="productsForm">
 
-                    <div class="product-images">
-                        <input type="file" id="productImages" accept="image/jpg, image/jpeg, image/png" maxlength="6" minlength="3"
-                            (change)="onFileChange($event)" multiple />
-                        <label for="productImages">Drag & Drop your Files</label>
-                    </div>
+            <div class="row row-1 d-flex justify-content-md-between">
+                <h2>Basic Info</h2>
 
-                    
-                    <div *ngIf="productImagesD.length !== 0" class="images__container d-flex flex-column gap-5">
-                        <span *ngFor="let image of productImagesD; let i=index"
-                        class="images d-flex justify-content-md-between align-items-center">
-                        <span>{{image.name}}</span>
-                        <span class="material-symbols-outlined" (click)="deleteImage(image.name)">close</span>
-                    </span>
-                </div>
-                
-                <div class="error d-flex gap-15">
-                    <small *ngIf="productsForm.get('productImages')?.hasError('required') && productsForm.get('productImages')?.touched">Required</small>
-                    <small *ngIf="productsForm.get('productImages')?.hasError('invalidExtension') ">Invalid
-                        Extension</small>
-                    <small *ngIf="productsForm.get('productImages')?.hasError('maxlength')">Maximum 6 Images
-                        Allowed</small>
-                    <small *ngIf="productsForm.get('productImages')?.hasError('exceedSize')">Maximum 5MB per Images
-                        Allowed</small>
-                </div>
-                
-                    <div *ngIf="errorFile.length !== 0" class="images__container d-flex flex-column gap-5">
-                        <span *ngFor="let file of errorFile[0]"
-                            class="error_images images d-flex justify-content-md-between align-items-center">
-                            <span>{{file.name}}</span>
-                            <span class="material-symbols-outlined" (click)="deleteImage(file.name)">close</span>
-                        </span>
-                    </div>
-
-                    <small>
-                        Maximum 0f 6 images and minimum of 3 images need to be uploaded,make sure the image size match the proper background
-                        size and all images should be uniformly maintained with width and height to the image
-                        container,image size should not exceed 5MB,once uploaded to change the image you need to wait
-                        minimum of 24hrs.
-                    </small>
-                </div>
-
-                <div class="form__group">
-                    <label for="" class="input__label">Product Name<span class="important">*</span></label>
-                    <input type="text" placeholder="Name" #productName formControlName="productname">
-                    <div class="error d-flex flex-wrap">
-                        <small
-                            *ngIf="productsForm.get('productname')?.hasError('required') && productsForm.get('productname')?.touched">*
-                            Field Required</small>
-                        <small *ngIf="productsForm.get('productname')?.hasError('invalidName')">*Invalid Name</small>
-                    </div>
-                </div>
-                <div class="form__group">
-                    <label for="" class="input__label">Product Code<span class="important">*</span></label>
-                    <input type="text" name="" id="" placeholder="Product Code" formControlName="productCode">
-
-                    <div class="error d-flex flex-wrap">
-                        <small
-                            *ngIf="productsForm.get('productCode')?.hasError('required') && productsForm.get('productCode')?.touched">*Required</small>
-                    </div>
-                </div>
-
-                <div class="select-options d-flex flex-wrap gap-20">
-                    <div class="form__group">
-                        <div class="d-flex justify-content-md-between">
-                            <label class="input__label">Category<span class="important">*</span></label>
-                        </div>
-                        <div class="relative">
-                            <app-custom-select [options]="categories" [type]="'searchSelect'" [selectedOption]="'Select Category'" (final_option)="updateFormFields($event, 'category')"></app-custom-select>
-                        </div>
-                        <div class="error">
-                            <small *ngIf="isSubmitted && productsForm.get('category')?.hasError('required')">*Field Required</small>
-                        </div>
-                    </div>
-
-                    <div class="form__group">
-                        <div class="d-flex justify-content-md-between">
-                            <label for="" class="input__label">Brand<span class="important">*</span></label>
-                        </div>
-                        <div class="relative">
-                            <app-custom-select [options]="brands" [type]="'searchSelect'" [selectedOption]="'Select Brand'" (final_option)="updateFormFields($event, 'brand')"></app-custom-select>
-                        </div>
-
-                        <div class="error">
-                            <small
-                                *ngIf="productsForm.get('brand')?.hasError('required') && productsForm.get('brand')?.touched">*Field
-                                Required
-                            </small>
-                        </div>
-                    </div>
-
-                    <div class="form__group">
-                        <label for="" class="input__label">Gender<span class="important">*</span></label>
-                        <div class="relative">
-                            <app-custom-select [options]="gender" [type]="'searchSelect'" [selectedOption]="'Select Gender'" (final_option)="updateFormFields($event, 'gender')"></app-custom-select>
-                        </div>
-                        <div class="error">
-                            <small *ngIf="productsForm.get('gender')?.hasError('required') && isSubmitted">*Field Required</small>
-                        </div>
-                    </div>
-                    <div class="form__group">
-                        <div class="d-flex justify-content-md-between">
-                            <label for="" class="input__label">Size<span class="important">*</span></label>
-                        </div>
-                        <div class="relative">
-                            <app-custom-select [options]="sizes" [type]="'multiSelect'" [selectedOption]="'Select Sizes'" (SelectedList)="updateFormFields($event, 'sizes')"></app-custom-select>
-                        </div>
-                        <div class="error">
-                            <small *ngIf="productsForm.get('sizes')?.hasError('required') && isSubmitted">*Field Required</small>
-                        </div>
-                    </div>
-                    <div class="form__group">
-                        <label for="" class="input__label">Colors<span class="important">*</span></label>
-                        <div class="relative">
-                            <app-custom-select [options]="colors" [type]="'multiSelect'" [selectedOption]="'Select Colors'" (SelectedList)="updateFormFields($event, 'colors')"></app-custom-select>
-                        </div>
-                        <div class="error">
-                            <small *ngIf="productsForm.get('colors')?.hasError('required') && isSubmitted">*Field Required</small>
-                        </div>
-                    </div>
-                    <div class="form__group">
-                        <div class="d-flex justify-content-md-between">
-                            <label for="" class="input__label">Product Tags<span class="important">*</span></label>
-                        </div>
-                        <div class="relative">
-                            <app-custom-select [options]="tags" [type]="'multiSelect'" [selectedOption]="'Select Tags'" (SelectedList)="updateFormFields($event, 'tags')"></app-custom-select>
-                        </div>
-                        <div class="error">
-                            <small *ngIf="productsForm.get('tags')?.hasError('required') && isSubmitted">*Field Required</small>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col">
-                <div class="quantity-block d-flex">
-                    <div class="form__group">
-                        <label for="price" class="input__label">Actual Price<span class="important">*</span></label>
-                        <input type="number" placeholder="Actual Price" id="price" formControlName="actualprice"
-                            required />
-
-                        <div class="error">
-                            <small
-                                *ngIf="productsForm.get('actualprice')?.hasError('required') && productsForm.get('actualprice')?.touched">*Field
-                                Required</small>
-                        </div>
-                    </div>
-                    <div class="form__group">
-                        <label for="discount" class="input__label">Discount (%age)</label>
-                        <input type="number" placeholder="Sale Price" id="discount" formControlName="discount" />
-                    </div>
-                    <div class="form__group">
-                        <label for="discount" class="input__label">Discount Price</label>
-                        <input type="number" placeholder="Discount Price" id="discount" formControlName="salesPrice"
-                            readonly />
-                    </div>
-                    <div class="form__group">
-                        <label for="materialType" class="input__label">Material Type<span
-                                class="important">*</span></label>
-                        <input type="text" placeholder="Material Type" id="materialType" formControlName="materialType"
-                            required />
-                        <div class="error">
-                            <small
-                                *ngIf="productsForm.get('materialType')?.hasError('required') && productsForm.get('materialType')?.touched">*Field
-                                Required</small>
-                        </div>
-                    </div>
-                    <div class="form__group">
-                        <label for="itemWeight" class="input__label">Item Weight<span class="important">*</span></label>
-                        <input type="number" placeholder="Weight in gms" id="itemWeight" formControlName="weight"
-                            required />
-                        <div class="error">
-                            <small
-                                *ngIf="productsForm.get('weight')?.hasError('required') && productsForm.get('weight')?.touched">*Field
-                                Required</small>
-                        </div>
-                    </div>
-                    <div class="form__group">
-                        <label for="" class="input__label">Quantity in Stock<span class="important">*</span></label>
-                        <input type="number" placeholder="Quantity" id="quantity" formControlName="stockQuantity"
-                            required />
-
-                        <div class="error">
-                            <small
-                                *ngIf="productsForm.get('stockQuantity')?.hasError('required') && productsForm.get('stockQuantity')?.touched">*Field
-                                Required</small>
-                        </div>
-                    </div>
-                    <div class="form__group">
-                        <div class="d-flex justify-content-md-between">
-                            <label for="" class="input__label">Order Quantity<span class="important">*</span></label>
-                        </div>
-                        
-                        <div class="relative">
-                            <app-custom-select [options]="orderQuantity" [type]="'multiSelect'" [selectedOption]="'Select Quantity'" (SelectedList)="updateFormFields($event, 'orderQuantity')"></app-custom-select>
-                        </div>
-                        <small>
-                            *Order Quantity is various Unit to be Sold
-                        </small>
-                        <div class="error">
-                            <small
-                                *ngIf="productsForm.get('orderQuantity')?.hasError('required') && productsForm.get('orderQuantity')?.touched">*Field
-                                Required</small>
-                        </div>
-                    </div>
-                </div>
-                <div class="form__group">
-                    <label for="" class="input__label">Product Description</label>
-                    <textarea name="" id="" cols="30" rows="10"></textarea>
-                    <small>
-                        *Description should not exceed 500 letters
-                    </small>
+                <div class="next_prev_btn d-flex align-items-center gap-15">
+                    <button class="button previous d-flex align-items-center gap-5" (click)="current_form = ''"
+                        [disabled]="current_form == ''">
+                        <span class="material-symbols-outlined">arrow_back_ios_new</span>
+                    </button>
+                    <button class="button next d-flex align-items-center gap-5"
+                        (click)="current_form = 'product_images'"
+                        [disabled]="productsForm.get('basicinfo')?.invalid || current_form == 'product_images'">
+                        <span class="material-symbols-outlined">arrow_forward_ios</span>
+                    </button>
                 </div>
             </div>
 
+            <div [ngSwitch]="current_form">
+
+                <div *ngSwitchCase="'product_images'">
+
+                    <div class="form-2">
+                        <div class="row row-1 d-flex">
+                            <h2>Product Images</h2>
+                            <a (click)="addProductImageForm()"><span
+                                    class="material-symbols-outlined">add_box</span></a>
+                        </div>
+                        <div formArrayName="productImages">
+                            <ng-container *ngFor="let form of productImagesFormArray();let i=index">
+                                <div [formGroupName]="i">
+
+                                    <div class="form__group">
+                                        <label for="colors" class="input__label">Colors<span
+                                                class="important">*</span></label>
+                                        <app-custom-select id="colors" [options]="colors" [type]="'multiSelect'"
+                                            [selectedOption]="'Select Colors'"
+                                            (SelectedList)="updateFormFields($event, 'colors')"></app-custom-select>
+                                        <span class="error">
+                                            <small
+                                                *ngIf="form.get('colors')?.hasError('required') && form.get('colors')?.touched">*Field
+                                                Required</small>
+                                        </span>
+                                    </div>
+                                    <div class="form__group">
+                                        <label for="" class="input__label">Product Images :</label>
+
+                                        <div class="product-images">
+                                            <input type="file" id="productImages"
+                                                accept="image/jpg, image/jpeg, image/png" maxlength="6" minlength="3"
+                                                (change)="onFileChange($event)" multiple />
+                                            <label for="productImages">Drag & Drop your Files</label>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </ng-container>
+                        </div>
+                    </div>
+                </div>
+                <div *ngSwitchDefault>
+                    <div formGroupName="basicinfo" class="form-1 row row-2 add_product d-flex gap-30">
+                        <div class="col col-1">
+                            <div class="form__group">
+                                <label for="name" class="input__label">Product Name<span
+                                        class="important">*</span></label>
+                                <input type="text" id="name" placeholder="Name" #productName formControlName="name">
+
+                                <span class="error d-flex gap-20 flex-wrap"
+                                    *ngIf="productSubForm('name')?.invalid && (productSubForm('name')?.dirty || productSubForm('name')?.touched)">
+                                    <small *ngIf="productSubForm('name')?.hasError('required')">*Field Required</small>
+                                    <small *ngIf="productSubForm('name')?.hasError('invalidformat')">*Invalid
+                                        Name</small>
+                                </span>
+
+                            </div>
+                            <div class="form__group">
+                                <label for="code" class="input__label">Product Code<span
+                                        class="important">*</span></label>
+                                <input type="text" id="code" placeholder="Product Code" formControlName="code">
+
+                                <span class="error d-flex flex-wrap"
+                                    *ngIf="productSubForm('code')?.invalid && (productSubForm('code')?.dirty || productSubForm('code')?.touched)">
+                                    <small *ngIf="productSubForm('code')?.hasError('required')">*Field Required</small>
+                                </span>
+                            </div>
+
+                            <div class="form__group">
+                                <label for="subtitle" class="input__label">Subtitle<span
+                                        class="important">*</span></label>
+                                <input type="text" id="subtitle" placeholder="Sub Title" formControlName="subtitle" />
+
+                                <span class="error d-flex flex-wrap"
+                                    *ngIf="productSubForm('subtitle')?.invalid && (productSubForm('subtitle')?.dirty || productSubForm('subtitle')?.touched)">
+                                    <small *ngIf="productSubForm('subtitle')?.hasError('required')">*Field
+                                        Required</small>
+                                </span>
+                            </div>
+                            <div class="form__group">
+                                <label for="description" class="input__label">Product Description <span
+                                        class="important">*</span></label>
+                                <textarea id="description" placeholder="Product Details..." cols="30" rows="9"
+                                    formControlName="description" maxlength="800" (input)="letterCounter($event, 800)"></textarea>
+                                <small class="note d-flex justify-content-md-between align-center">
+                                    *Description should not exceed 800 letters
+                                    <span>{{textarea_letterCount}} / 800</span>
+                                </small>
+
+                                <span class="error d-flex flex-wrap"
+                                    *ngIf="productSubForm('description')?.invalid && (productSubForm('description')?.dirty || productSubForm('description')?.touched)">
+                                    <small *ngIf="productSubForm('description')?.hasError('required')">*Field
+                                        Required</small>
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="col col-2">
+                            <div class="sub-block d-flex flex-wrap">
+                                <div class="form__group">
+                                    <label for="category" class="input__label">Category<span
+                                            class="important">*</span></label>
+                                    <app-custom-select id="categories" [options]="categories" [type]="'searchSelect'"
+                                        [selectedOption]="'Select Category'"
+                                        (final_option)="updateFormFields($event, 'category')"></app-custom-select>
+                                    <span class="error"
+                                        *ngIf="productSubForm('category')?.invalid && (productSubForm('category')?.dirty || productSubForm('category')?.touched)">
+                                        <small *ngIf="productSubForm('category')?.hasError('required')">*Field
+                                            Required</small>
+                                    </span>
+                                </div>
+
+                                <div class="form__group">
+                                    <label for="brand" class="input__label">Brand<span
+                                            class="important">*</span></label>
+                                    <app-custom-select id="brand" [options]="brands" [type]="'searchSelect'"
+                                        [selectedOption]="'Select Brand'"
+                                        (final_option)="updateFormFields($event, 'brand')"></app-custom-select>
+                                    <span class="error"
+                                        *ngIf="productSubForm('basicinfo')?.invalid && (productSubForm('basicinfo')?.dirty || productSubForm('basicinfo')?.touched)">
+                                        <small *ngIf="productSubForm('basicinfo')?.hasError('required')">*Field
+                                            Required</small>
+                                    </span>
+                                </div>
+
+                                <div class="form__group">
+                                    <label for="gender" class="input__label">Gender<span
+                                            class="important">*</span></label>
+                                    <app-custom-select id="gender" [options]="gender" [type]="'searchSelect'"
+                                        [selectedOption]="'Select Gender'"
+                                        (final_option)="updateFormFields($event, 'gender')"></app-custom-select>
+
+                                    <span class="error"
+                                        *ngIf="productSubForm('gender')?.invalid && (productSubForm('gender')?.dirty || productSubForm('gender')?.touched)">
+                                        <small *ngIf="productSubForm('gender')?.hasError('required')">*Field
+                                            Required</small>
+                                    </span>
+                                </div>
+
+                                <div class="form__group">
+                                    <label for="sizes" class="input__label">Size<span class="important">*</span></label>
+                                    <app-custom-select id="sizes" [options]="sizes" [type]="'multiSelect'"
+                                        [selectedOption]="'Select Sizes'"
+                                        (SelectedList)="updateFormFields($event, 'sizes')"></app-custom-select>
+                                    <span class="error"
+                                        *ngIf="productSubForm('sizes')?.invalid && (productSubForm('sizes')?.dirty || productSubForm('sizes')?.touched)">
+                                        <small *ngIf="productSubForm('sizes')?.hasError('required')">*Field
+                                            Required</small>
+                                    </span>
+                                </div>
+
+                                <div class="form__group">
+                                    <label for="" class="input__label">Product Tags<span
+                                            class="important">*</span></label>
+                                    <app-custom-select [options]="tags" [type]="'multiSelect'"
+                                        [selectedOption]="'Select Tags'"
+                                        (SelectedList)="updateFormFields($event, 'tags')"></app-custom-select>
+                                    <span class="error"
+                                        *ngIf="productSubForm('tags')?.invalid && (productSubForm('tags')?.dirty || productSubForm('tags')?.touched)">
+                                        <small *ngIf="productSubForm('tags')?.hasError('required')">*Field
+                                            Required</small>
+                                    </span>
+                                </div>
+
+                                <div class="form__group">
+                                    <label for="price" class="input__label">Actual Price<span
+                                            class="important">*</span></label>
+                                    <input type="number" placeholder="Actual Price" id="price"
+                                        formControlName="actualprice" required onKeyPress="if(this.value.length == 7) return false;" max="7" min="2"/>
+
+                                    <span class="error"
+                                        *ngIf="productSubForm('actualprice')?.invalid && (productSubForm('actualprice')?.dirty || productSubForm('actualprice')?.touched)">
+                                        <small *ngIf="productSubForm('actualprice')?.hasError('required')">*Field
+                                            Required</small>
+                                    </span>
+                                </div>
+
+
+                                <div class="form__group">
+                                    <label for="discount" class="input__label">Discount (%age)</label>
+                                    <input type="number" (input)="calculateDiscount()" placeholder="Discount"
+                                        id="discount" formControlName="discount"/>
+                                </div>
+
+                                <div class="form__group">
+                                    <label for="discountprice" class="input__label">Discount Price</label>
+                                    <input type="number" placeholder="Discount Price" id="discountprice" readonly
+                                        formControlName="discountprice" />
+                                </div>
+
+                                <div class="form__group">
+                                    <label for="materialType" class="input__label">Material Type<span
+                                            class="important">*</span></label>
+                                    <input type="text" placeholder="Material Type" id="materialType"
+                                        formControlName="materialType" required />
+                                    <span class="error"
+                                        *ngIf="productSubForm('materialType')?.invalid && (productSubForm('materialType')?.dirty || productSubForm('materialType')?.touched)">
+                                        <small *ngIf="productSubForm('materialType')?.hasError('required')">*Field
+                                            Required</small>
+                                    </span>
+                                </div>
+
+                                <div class="form__group">
+                                    <label for="itemWeight" class="input__label">Item Weight<span
+                                            class="important">*</span></label>
+                                    <input type="number" placeholder="Weight in gms" id="itemWeight"
+                                        formControlName="weight" required />
+                                    <span class="error"
+                                        *ngIf="productSubForm('weight')?.invalid && (productSubForm('weight')?.dirty || productSubForm('weight')?.touched)">
+                                        <small *ngIf="productSubForm('weight')?.hasError('required')">*Field
+                                            Required</small>
+                                    </span>
+                                </div>
+
+                                <div class="form__group">
+                                    <label for="quantity" class="input__label">Quantity in Stock<span
+                                            class="important">*</span></label>
+                                    <input type="number" placeholder="Quantity" id="quantity"
+                                        formControlName="stockQuantity" required />
+
+                                    <span class="error"
+                                        *ngIf="productSubForm('stockQuantity')?.invalid && (productSubForm('stockQuantity')?.dirty || productSubForm('stockQuantity')?.touched)">
+                                        <small *ngIf="productSubForm('stockQuantity')?.hasError('required')">*Field
+                                            Required</small>
+                                    </span>
+                                </div>
+
+                                <div class="form__group">
+                                    <label for="" class="input__label">Order Quantity<span
+                                            class="important">*</span></label>
+                                    <app-custom-select [options]="orderQuantity" [type]="'multiSelect'"
+                                        [selectedOption]="'Select Quantity'"
+                                        (SelectedList)="updateFormFields($event, 'orderQuantity')"></app-custom-select>
+                                    <small class="note">*Order Quantity is various Unit to be Sold</small>
+                                    <span class="error"
+                                        *ngIf="productSubForm('orderQuantity')?.invalid && (productSubForm('orderQuantity')?.dirty || productSubForm('orderQuantity')?.touched)">
+                                        <small *ngIf="productSubForm('orderQuantity')?.hasError('required')">*Field
+                                            Required</small>
+                                    </span>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
         </form>
-        <div class="buttons d-flex justify-content-end gap-20">
-            <!-- <button class="draft d-flex align-items-center gap-5">
-                <i class="fa-regular fa-note-sticky"></i>
-                <a href="javascript:void(0);">Save as Draft</a>
-                <span class="material-symbols-outlined">download</span>
-            </button> -->
+        <div class="row row-2 d-flex justify-content-end gap-20">
             <button class="add d-flex align-items-center gap-5" (click)="onsubmit()">
                 <a href="javascript:void(0);">Submit Product</a>
                 <span class="material-symbols-outlined">upload</span>
             </button>
         </div>
     </div>
-</section> 
+
+</section>
+
+
+
+<!-- 
+
+                <div class="form-2">
+                <div class="row row-1 d-flex">
+                    <h2>Product Images</h2>
+                    <a (click)="addProductImageForm()"><span class="material-symbols-outlined">add_box</span></a>
+                </div>
+                <div formArrayName="productImages">
+                    <ng-container *ngFor="let form of productImagesFormArray();let i=index">
+                        <div [formGroupName]="i">
+    
+                            <div class="form__group">
+                                <label for="colors" class="input__label">Colors<span class="important">*</span></label>
+                                <app-custom-select id="colors" [options]="colors" [type]="'multiSelect'"
+                                    [selectedOption]="'Select Colors'"
+                                    (SelectedList)="updateFormFields($event, 'colors')"></app-custom-select>
+                                <span class="error">
+                                    <small
+                                        *ngIf="form.get('colors')?.hasError('required') && form.get('colors')?.touched">*Field
+                                        Required</small>
+                                </span>
+                            </div>
+                            <div class="form__group">
+                                <label for="" class="input__label">Product Images :</label>
+    
+                                <div class="product-images">
+                                    <input type="file" id="productImages" accept="image/jpg, image/jpeg, image/png"
+                                        maxlength="6" minlength="3" (change)="onFileChange($event)" multiple />
+                                    <label for="productImages">Drag & Drop your Files</label>
+                                </div>
+                            </div>
+    
+                        </div>
+                    </ng-container>
+                </div>
+            </div>
+ -->
+
+
+
+
+<!-- 
+
+
+                <div class="form__group">
+                <label for="" class="input__label">Product Images :</label>
+
+                <div class="product-images">
+                    <input type="file" id="productImages" accept="image/jpg, image/jpeg, image/png" maxlength="6" minlength="3"
+                        (change)="onFileChange($event)" multiple />
+                    <label for="productImages">Drag & Drop your Files</label>
+                </div>
+
+                
+                <div *ngIf="productImagesD.length !== 0" class="images__container d-flex flex-column gap-5">
+                    <span *ngFor="let image of productImagesD; let i=index"
+                    class="images d-flex justify-content-md-between align-items-center">
+                    <span>{{image.name}}</span>
+                    <span class="material-symbols-outlined" (click)="deleteImage(image.name)">close</span>
+                </span>
+            </div>
+            
+            <div class="error d-flex gap-15">
+                <small *ngIf="productsForm.get('productImages')?.hasError('required') && productsForm.get('productImages')?.touched">Required</small>
+                <small *ngIf="productsForm.get('productImages')?.hasError('invalidExtension') ">Invalid
+                    Extension</small>
+                <small *ngIf="productsForm.get('productImages')?.hasError('maxlength')">Maximum 6 Images
+                    Allowed</small>
+                <small *ngIf="productsForm.get('productImages')?.hasError('exceedSize')">Maximum 5MB per Images
+                    Allowed</small>
+            </div>
+            
+                <div *ngIf="errorFile.length !== 0" class="images__container d-flex flex-column gap-5">
+                    <span *ngFor="let file of errorFile[0]"
+                        class="error_images images d-flex justify-content-md-between align-items-center">
+                        <span>{{file.name}}</span>
+                        <span class="material-symbols-outlined" (click)="deleteImage(file.name)">close</span>
+                    </span>
+                </div>
+
+                <small>
+                    Maximum 0f 6 images and minimum of 3 images need to be uploaded,make sure the image size match the proper background
+                    size and all images should be uniformly maintained with width and height to the image
+                    container,image size should not exceed 5MB,once uploaded to change the image you need to wait
+                    minimum of 24hrs.
+                </small>
+            </div>
+ -->

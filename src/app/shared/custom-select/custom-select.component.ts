@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { ProductFilterPipe } from '../Pipe/product-filter.pipe';
+import { ElementRef, HostListener,  } from '@angular/core';
 
 
 @Component({
@@ -19,15 +19,11 @@ export class CustomSelectComponent {
   isactive:boolean = false;
   clearbtn:boolean = true;
   filter: string = '';
-  
-  ngOnInit(){
-    console.log(this.type);
-    // this.selected = this.selectedOption;
-  }
+
+  constructor(private elementRef: ElementRef){}
 
   filterData(e: Event): any{
     const element =  e.target  as HTMLInputElement
-    // console.log((e.target  as HTMLInputElement).value.length);
     if(element.value.length == 0){
       this.isactive = false;
       this.filter = '';
@@ -52,28 +48,20 @@ export class CustomSelectComponent {
 
   updateMutliSelected(e: Event){
     let element = <HTMLInputElement>e.target;
+
     if(element.checked){
       this.multiSelected.push(element.value);
-      this.selected = "e";
     }else{
       this.multiSelected = this.multiSelected.filter((item)=>{
         return item != element.value;
       })
-      this.SelectedList.emit(this.multiSelected);
     }
-    console.log(this.multiSelected);
+    this.SelectedList.emit(this.multiSelected);
   }
 
-  clearSelected(){
-    this.selected = this.selectedOption;
-    this.final_option.emit('');
+  @HostListener('document:click', ['$event']) onClick(e: Event){
+    if(!this.elementRef.nativeElement.contains(e.target)){
+      this.isactive = false;
+    }
   }
-
-  collapseSelect(e: Event){
-    console.log(e.target);
-  }
-
-  // deleteOption(index: number){
-  //   this.multiSelected.splice(index, 1);
-  // }
 }
