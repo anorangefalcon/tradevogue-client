@@ -463,11 +463,10 @@ button {
             .content {
                 position: absolute;
                 top: 50%;
-                /* translate:(-50%,-50%); */
-                /* translateY:-50%; */
+              
                 left: 50%;
                 opacity: 0;
-                /* background-color: red; */
+              
                 transform: translate(-50%, -50%);
                 color: white;
                 transition: opacity 0.35s ease;

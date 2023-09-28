@@ -15,7 +15,7 @@
           <input type="text" id="username" formControlName="username" placeholder="Enter Your Username">
           
           <small
-            *ngIf="isFormSubmitted && signupForm.get('username')?.hasError('invalidUser') && !signupForm.get('username')?.hasError('required') && signupForm.get('username').touched"
+            *ngIf="isFormSubmitted && signupForm.get('username')?.hasError('invalidUser') && !signupForm.get('username')?.hasError('required') && signupForm.get('username')?.touched"
             class="invalid">*Username not available.</small>
             
         </div>
@@ -28,7 +28,7 @@
           <input type="email" id="email" formControlName="email" placeholder="Enter Your Email">
         
           <small
-            *ngIf="isFormSubmitted && signupForm?.get('email')?.hasError('email') && signupForm.get('email')?.touched"
+            *ngIf="isFormSubmitted && signupForm.get('email')?.hasError('email') && signupForm.get('email')?.touched"
             class="invalid">
             *Please enter valid Email.
           </small>
@@ -51,25 +51,25 @@
 
 
             <div class="helper-inside ">
-              <p [ngClass]="{'red-text': signupForm?.get('password')?.hasError('minlength') && !signupForm?.get('password')?.hasError('required'),
-         'green-text': !signupForm?.get('password')?.hasError('minlength') && !signupForm?.get('password')?.hasError('required')}"
-                *ngIf="!signupForm?.get('password')?.hasError('required') && signupForm.get('password')?.dirty">
+              <p [ngClass]="{'red-text': signupForm.get('password')?.hasError('minlength') && !signupForm.get('password')?.hasError('required'),
+         'green-text': !signupForm.get('password')?.hasError('minlength') && !signupForm.get('password')?.hasError('required')}"
+                *ngIf="!signupForm?.get('password')?.hasError('required')">
                 <small class="material-symbols-outlined">
                   check_circle
                 </small>Minimum 8 characters
               </p>
 
-              <p [ngClass]="{'red-text': signupForm?.get('password')?.hasError('uppercaseLetter') && !signupForm?.get('password')?.hasError('required'),
-         'green-text': !signupForm?.get('password')?.hasError('uppercaseLetter') && !signupForm?.get('password')?.hasError('required')}"
-                *ngIf="!signupForm?.get('password')?.hasError('required') && signupForm.get('password')?.dirty">
+              <p [ngClass]="{'red-text': signupForm.get('password')?.hasError('uppercaseLetter') && !signupForm.get('password')?.hasError('required'),
+         'green-text': !signupForm.get('password')?.hasError('uppercaseLetter') && !signupForm.get('password')?.hasError('required')}"
+                *ngIf="!signupForm?.get('password')?.hasError('required')">
                 <small class="material-symbols-outlined">
                   check_circle
                 </small>One uppercase letter
               </p>
 
-              <p [ngClass]="{'red-text': signupForm?.get('password')?.hasError('lowercaseLetter') && !signupForm?.get('password')?.hasError('required'),
-   'green-text': !signupForm?.get('password')?.hasError('lowercaseLetter') && !signupForm?.get('password')?.hasError('required')}"
-                *ngIf="!signupForm?.get('password')?.hasError('required') && signupForm.get('password')?.dirty">
+              <p [ngClass]="{'red-text': signupForm.get('password')?.hasError('lowercaseLetter') && !signupForm.get('password')?.hasError('required'),
+   'green-text': !signupForm.get('password')?.hasError('lowercaseLetter') && !signupForm.get('password')?.hasError('required')}"
+                *ngIf="!signupForm?.get('password')?.hasError('required')">
                 <small class="material-symbols-outlined">
                   check_circle
                 </small>One lowercase letter
@@ -77,17 +77,17 @@
             </div>
 
             <div class="helper-inside">
-              <p [ngClass]="{'red-text': signupForm?.get('password')?.hasError('digit') && !signupForm?.get('password')?.hasError('required'),
-   'green-text': !signupForm?.get('password')?.hasError('digit') && !signupForm?.get('password')?.hasError('required')}"
-                *ngIf="!signupForm?.get('password')?.hasError('required') && signupForm.get('password')?.dirty">
+              <p [ngClass]="{'red-text': signupForm.get('password')?.hasError('digit') && !signupForm.get('password')?.hasError('required'),
+   'green-text': !signupForm.get('password')?.hasError('digit') && !signupForm.get('password')?.hasError('required')}"
+                *ngIf="!signupForm?.get('password')?.hasError('required')">
                 <small class="material-symbols-outlined">
                   check_circle
                 </small>One numeric character
               </p>
 
-              <p [ngClass]="{'red-text': signupForm?.get('password')?.hasError('specialCharacter') && !signupForm?.get('password')?.hasError('required'),
-   'green-text': !signupForm?.get('password')?.hasError('specialCharacter') && !signupForm?.get('password')?.hasError('required')}"
-                *ngIf="!signupForm?.get('password')?.hasError('required') && signupForm.get('password')?.dirty">
+              <p [ngClass]="{'red-text': signupForm.get('password')?.hasError('specialCharacter') && !signupForm.get('password')?.hasError('required'),
+   'green-text': !signupForm.get('password')?.hasError('specialCharacter') && !signupForm.get('password')?.hasError('required')}"
+                *ngIf="!signupForm?.get('password')?.hasError('required')">
                 <small class="material-symbols-outlined">
                   check_circle
                 </small>One special character
@@ -110,7 +110,7 @@
         <div class="form__group d-flex flex-column relative">
           <label class="form__label">Confirm Password<span>*</span></label>
           <span class="material-symbols-outlined key form__icon absolute">key</span>
-          <input [type]="password2" id="confirmPassword" formControlName="confirmPassword"
+          <input [type]="confirmPassword" id="confirmPassword" formControlName="confirmPassword"
             placeholder="Re-enter Your Password">
           <button class="eye-btn flex justify-content-center align-items-center" (click)="toggle_password(2)"><span
               class="material-symbols-outlined eye">{{showPassword2? 'visibility' : 'visibility_off'}}</span></button>
