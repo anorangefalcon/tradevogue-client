@@ -1,6 +1,6 @@
 <div class="explore-container container d-flex">
 
-    <div class="phone-icons">
+    <div class="phone-icons" [ngClass]="filtersOpen ? 'phone-icons-active' : ''">
         <div class="filter-icon-div" (click)="filtersOpen = !filtersOpen">
             <span *ngIf="!filtersOpen" class="material-symbols-outlined">
                 discover_tune

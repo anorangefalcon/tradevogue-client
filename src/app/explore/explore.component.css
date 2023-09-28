@@ -154,6 +154,7 @@
     }
     .filter-mobile-active {
         visibility: visible;
+        z-index: 97;
         transform: translateY(0%);
         opacity: 1;
     }
@@ -165,6 +166,9 @@
 
     .phone-icons {
         display: flex;
+    }
+    .phone-icons-active{
+        z-index: 98;
     }
 }
 
