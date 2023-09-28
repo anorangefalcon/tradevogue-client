@@ -12,6 +12,7 @@ export class GalleryComponent {
 
   username: String = '';
   posts: any = [];
+  image_loaded: boolean = false;
 
   // we will expire this later and generate new to save securely.
   accID: String = '17841462170148259';
@@ -37,6 +38,7 @@ export class GalleryComponent {
                 imageLink: data.media_url
               });
             }
+            this.image_loaded = true;
           });
       }
     });

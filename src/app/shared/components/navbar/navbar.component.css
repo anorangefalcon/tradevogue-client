@@ -271,9 +271,9 @@ header.active {
         }
 
         & .nav-items.active {
-            height: 100vh;
+            height: 100%;
             opacity: 1;
-            
+            background-color: red;
         }
 
 

@@ -638,6 +638,10 @@ button {
 
 @media screen and (max-width: 450px) {
 
+    .container{
+        padding-inline: 10px !important; 
+    }
+
     .owl-carousel .owl-nav .owl-prev,
     .owl-carousel .owl-nav .owl-next {
 
@@ -665,6 +669,30 @@ button {
 
 
 @media screen and (max-width: 768px) {
+
+    .container{
+        padding-inline: 15px !important; 
+    }
+
+
+    .heading {
+    font-size: 48px;
+    font-weight: 400;
+    letter-spacing: 1.2px;
+    margin-bottom:35px;
+    font-weight: 500;
+
+    & p {
+        font-size: 16px !important;
+        font-weight: 700;
+    }
+
+    & h3 {
+        font-size: 65px !important;
+        font-weight: 700 !important;
+    }
+}
+
     .section-header {
         text-align: left;
         margin-bottom: 30px;
