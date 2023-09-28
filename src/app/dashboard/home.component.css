@@ -34,6 +34,9 @@
     font-size: 14px !important;
     background-color: rgb(var(--background-clr), 0.4);
 
+    & .bottonbar{
+        display: none;
+    }
 
     & .navbar {
         height: 100dvh;
@@ -80,7 +83,7 @@
         transition: all 0.3s ease-in-out;
     }
 
-    & .navbar.active+.content {
+    & .navbar.active + .content {
         width: calc(100% - 240px);
         margin-inline-start: 240px;
     }

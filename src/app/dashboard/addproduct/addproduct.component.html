@@ -15,17 +15,32 @@
         <form action="" class="" [formGroup]="productsForm">
 
             <div class="row row-1 d-flex justify-content-md-between">
-                <h2>Basic Info</h2>
+                <h2 *ngIf="current_form != 'product_images'; else title2">Basic Info</h2>
+                <ng-template #title2>
+                    <span class="d-flex gap-15">
+                        <h2>Product Images</h2>
+                        <a class="d-flex flex-center " (click)="addProductImageForm()"><span
+                                class="material-symbols-outlined">add_box</span></a>
+                    </span>
+                </ng-template>
 
                 <div class="next_prev_btn d-flex align-items-center gap-15">
                     <button class="button previous d-flex align-items-center gap-5" (click)="current_form = ''"
-                        [disabled]="current_form == ''">
+                        [disabled]="current_form == ''" [ngStyle]="{display: current_form == ''? 'none' : 'flex' }">
                         <span class="material-symbols-outlined">arrow_back_ios_new</span>
                     </button>
                     <button class="button next d-flex align-items-center gap-5"
                         (click)="current_form = 'product_images'"
-                        [disabled]="productsForm.get('basicinfo')?.invalid || current_form == 'product_images'">
+                        [disabled]="productsForm.get('basicinfo')?.invalid || current_form == 'product_images'"
+                        [ngStyle]="{display: current_form == 'product_images'? 'none' : 'flex' }" >
                         <span class="material-symbols-outlined">arrow_forward_ios</span>
+                    </button>
+
+                    <button class="add d-flex align-items-center gap-5" (click)="onsubmit()"
+                    [disabled]="productsForm.invalid"
+                    [ngStyle]="{display: current_form == ''? 'none' : 'flex' }">
+                        <a href="javascript:void(0);">Submit Product</a>
+                        <span class="material-symbols-outlined">upload</span>
                     </button>
                 </div>
             </div>
@@ -35,21 +50,19 @@
                 <div *ngSwitchCase="'product_images'">
 
                     <div class="form-2">
-                        <div class="row row-1 d-flex">
-                            <h2>Product Images</h2>
-                            <a (click)="addProductImageForm()"><span
-                                    class="material-symbols-outlined">add_box</span></a>
-                        </div>
-                        <div formArrayName="productImages">
+                        <div class="product__image__container grid grid-cols-2 gap-20" formArrayName="productImages">
                             <ng-container *ngFor="let form of productImagesFormArray();let i=index">
                                 <div [formGroupName]="i">
 
                                     <div class="form__group">
                                         <label for="colors" class="input__label">Colors<span
                                                 class="important">*</span></label>
-                                        <app-custom-select id="colors" [options]="colors" [type]="'multiSelect'"
-                                            [selectedOption]="'Select Colors'"
-                                            (SelectedList)="updateFormFields($event, 'colors')"></app-custom-select>
+
+                                        <span class="form__input">
+                                            <input type="text" id="color" placeholder="Choose/Enter your Color "
+                                                formControlName="color" required />
+                                            <input type="color" value="#188ae2" (input)="updateColor($event, i)">
+                                        </span>
                                         <span class="error">
                                             <small
                                                 *ngIf="form.get('colors')?.hasError('required') && form.get('colors')?.touched">*Field
@@ -57,16 +70,30 @@
                                         </span>
                                     </div>
                                     <div class="form__group">
-                                        <label for="" class="input__label">Product Images :</label>
-
+                                        <label [for]="'productImages'+ i" class="input__label">Product Images :</label>
                                         <div class="product-images">
-                                            <input type="file" id="productImages"
+                                            <input type="file" [id]="'productImages'+ i"
                                                 accept="image/jpg, image/jpeg, image/png" maxlength="6" minlength="3"
-                                                (change)="onFileChange($event)" multiple />
-                                            <label for="productImages">Drag & Drop your Files</label>
+                                                (change)="onFileChange($event, i)" multiple />
+                                            <span class="image_instruction relative d-flex flex-column text-center flex-center gap-10">
+                                                <h3>Upload Product Images</h3>
+
+                                                <small>
+                                                    Maximum 0f 6 images and minimum of 3 images need to be uploaded,make
+                                                    sure the image size match the proper background
+                                                    size and all images should be uniformly maintained with width and
+                                                    height to the image
+                                                    container,image size should not exceed 5MB,once uploaded to change
+                                                    the image you need to wait
+                                                    minimum of 24hrs.
+                                                </small>
+                                                <label [for]="'productImages'+ i" class="absolute d-flex flex-center gap-5">
+                                                    <span class="upload_icon material-symbols-outlined">add_a_photo</span>
+                                                    <!-- Upload File -->
+                                                </label>
+                                            </span>
                                         </div>
                                     </div>
-
                                 </div>
                             </ng-container>
                         </div>
@@ -114,7 +141,8 @@
                                 <label for="description" class="input__label">Product Description <span
                                         class="important">*</span></label>
                                 <textarea id="description" placeholder="Product Details..." cols="30" rows="9"
-                                    formControlName="description" maxlength="800" (input)="letterCounter($event, 800)"></textarea>
+                                    formControlName="description" maxlength="800"
+                                    (input)="letterCounter($event, 800)"></textarea>
                                 <small class="note d-flex justify-content-md-between align-center">
                                     *Description should not exceed 800 letters
                                     <span>{{textarea_letterCount}} / 800</span>
@@ -199,7 +227,8 @@
                                     <label for="price" class="input__label">Actual Price<span
                                             class="important">*</span></label>
                                     <input type="number" placeholder="Actual Price" id="price"
-                                        formControlName="actualprice" required onKeyPress="if(this.value.length == 7) return false;" max="7" min="2"/>
+                                        formControlName="actualprice" required
+                                        onKeyPress="if(this.value.length == 7) return false;" max="7" min="2" />
 
                                     <span class="error"
                                         *ngIf="productSubForm('actualprice')?.invalid && (productSubForm('actualprice')?.dirty || productSubForm('actualprice')?.touched)">
@@ -212,7 +241,7 @@
                                 <div class="form__group">
                                     <label for="discount" class="input__label">Discount (%age)</label>
                                     <input type="number" (input)="calculateDiscount()" placeholder="Discount"
-                                        id="discount" formControlName="discount"/>
+                                        id="discount" formControlName="discount" />
                                 </div>
 
                                 <div class="form__group">
@@ -279,55 +308,9 @@
 
             </div>
         </form>
-        <div class="row row-2 d-flex justify-content-end gap-20">
-            <button class="add d-flex align-items-center gap-5" (click)="onsubmit()">
-                <a href="javascript:void(0);">Submit Product</a>
-                <span class="material-symbols-outlined">upload</span>
-            </button>
-        </div>
     </div>
 
 </section>
-
-
-
-<!-- 
-
-                <div class="form-2">
-                <div class="row row-1 d-flex">
-                    <h2>Product Images</h2>
-                    <a (click)="addProductImageForm()"><span class="material-symbols-outlined">add_box</span></a>
-                </div>
-                <div formArrayName="productImages">
-                    <ng-container *ngFor="let form of productImagesFormArray();let i=index">
-                        <div [formGroupName]="i">
-    
-                            <div class="form__group">
-                                <label for="colors" class="input__label">Colors<span class="important">*</span></label>
-                                <app-custom-select id="colors" [options]="colors" [type]="'multiSelect'"
-                                    [selectedOption]="'Select Colors'"
-                                    (SelectedList)="updateFormFields($event, 'colors')"></app-custom-select>
-                                <span class="error">
-                                    <small
-                                        *ngIf="form.get('colors')?.hasError('required') && form.get('colors')?.touched">*Field
-                                        Required</small>
-                                </span>
-                            </div>
-                            <div class="form__group">
-                                <label for="" class="input__label">Product Images :</label>
-    
-                                <div class="product-images">
-                                    <input type="file" id="productImages" accept="image/jpg, image/jpeg, image/png"
-                                        maxlength="6" minlength="3" (change)="onFileChange($event)" multiple />
-                                    <label for="productImages">Drag & Drop your Files</label>
-                                </div>
-                            </div>
-    
-                        </div>
-                    </ng-container>
-                </div>
-            </div>
- -->
 
 
 

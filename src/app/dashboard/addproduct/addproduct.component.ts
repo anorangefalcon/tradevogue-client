@@ -161,38 +161,38 @@ export class AddproductComponent {
   }
 
   // Handle Images when not added in collection
-  onFileChange(event: Event) {
+  onFileChange(event: Event, index: number) {
 
     let file = (<HTMLInputElement>event.target)?.files;
 
     for (let j = 0; j < file!.length; j++) {
       this.productImages.push(file![j]);
     }
+    console.log(this.productImages);
+    // this.productsForm.get('productImages')?.setValue(this.productImages);
 
-    this.productsForm.get('productImages')?.setValue(this.productImages);
+    // // Check Validators Error
+    // // If true separate error files from accepted files
+    // this.errorFile = [];
+    // if (this.productsForm.get('productImages')?.hasError('errorFiles')) {
+    //   let data = this.productsForm.get('productImages')?.value;
 
-    // Check Validators Error
-    // If true separate error files from accepted files
-    this.errorFile = [];
-    if (this.productsForm.get('productImages')?.hasError('errorFiles')) {
-      let data = this.productsForm.get('productImages')?.value;
+    //   // error section updated
+    //   this.errorFile.push(this.productsForm.get('productImages')?.getError('errorFiles'));
+    //   this.productImagesD = data.filter((file: any) => {
+    //     return !this.errorFile.filter((errorfile: any) => { return errorfile.name === file.name })
+    //   })
+    //   console.log(this.productImagesD);
 
-      // error section updated
-      this.errorFile.push(this.productsForm.get('productImages')?.getError('errorFiles'));
-      this.productImagesD = data.filter((file: any) => {
-        return !this.errorFile.filter((errorfile: any) => { return errorfile.name === file.name })
-      })
-      console.log(this.productImagesD);
+    // } else {
+    //   this.productImagesD = this.productImages;
+    // }
 
-    } else {
-      this.productImagesD = this.productImages;
-    }
-
-    if (this.productsForm.get('productImages')?.hasError('maxlength')) {
-      this.productImagesD = this.productImages.slice(0, 6);
-      this.errorFile.push(this.productImages.slice(6, this.productImages.length));
-      console.log(this.errorFile);
-    }
+    // if (this.productsForm.get('productImages')?.hasError('maxlength')) {
+    //   this.productImagesD = this.productImages.slice(0, 6);
+    //   this.errorFile.push(this.productImages.slice(6, this.productImages.length));
+    //   console.log(this.errorFile);
+    // }
   }
 
   // Delete Image
@@ -232,6 +232,11 @@ export class AddproductComponent {
     console.log(e, ' :: ', field);
     this.productsForm.get('basicinfo')?.get(field)?.patchValue(e);
     console.log("Form :: ",this.productsForm.get('basicinfo')?.get(field)?.value);
+  }
+
+  updateColor(e: Event, index: number){
+    const color = (<HTMLInputElement>e.target).value;
+    this.productsForm.get('productImages')?.get(String(index))?.get('color')?.patchValue(color);
   }
 
 

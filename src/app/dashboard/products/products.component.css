@@ -60,30 +60,17 @@
         border-radius: 10px;
 
         & .product-list{
-            overflow-x: auto;
+            overflow: auto;
+
+            &::-webkit-scrollbar{
+                width: 2px;
+            }
             
         }
 
         & .product-header {
             padding-block-end: 20px;
             border-block-end: 1px solid rgb(var(--text-black), 0.1);
-
-            /* & .search-bar{
-                border-radius: 10px !important;
-                min-height: 35px;
-                border: 1px solid rgb(var(--text-black), 0.1);
-                padding-inline-end: 40px;
-            }
-    
-            & .search button{
-                padding-inline: 8px;
-                
-                & span{
-                    font-size: 20px;
-                    color: rgb(var(--text-black), 0.5);
-                    font-weight: 600;
-                }
-            } */
         }
 
         & table {
@@ -102,13 +89,15 @@
             white-space: nowrap;
         }
 
-        & th span{
+
+        /* BotherSome Checkbox */
+        & td .product-image + span{
             width: 20ch;
-            overflow: scroll;
+            overflow: auto;
             text-overflow: ellipsis;
 
             &::-webkit-scrollbar{
-                width: 0;
+                width: 2px;
                 display: none;
             }
         }

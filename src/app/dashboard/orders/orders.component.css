@@ -139,6 +139,8 @@
     }
 
     & .order-table {
+        overflow: auto;
+
         & table {
             width: 100%;
             border-collapse: collapse;
@@ -146,6 +148,7 @@
         }
 
         & .order-items {
+            text-wrap: nowrap;
             font-size: 14px;
             text-align: left;
             border: 1px solid rgba(128, 128, 128, 0.152);
