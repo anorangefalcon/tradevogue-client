@@ -85,13 +85,14 @@ export class ProductsFilterService {
     }
   }
 
-  async Filter2(filteredObject: any, OriginalArray: any) {
-   
+  async Filter(filteredObject: any, OriginalArray: any) {
+    
+    // console.log("porgiala array i s ",OriginalArray)
     this.removeEmptyKeys(filteredObject);
 
-
-    OriginalArray = (await this.getData())
-    OriginalArray=OriginalArray.originalData;
+    
+    // OriginalArray = (await this.getData())
+    // OriginalArray=OriginalArray.originalData;
 
     if (Object.keys(filteredObject).length == 0) {
       return OriginalArray;
@@ -102,7 +103,7 @@ export class ProductsFilterService {
     
     for (const key in filteredObject) {
       const valuesToFilter = filteredObject[key];
-    
+     
     
       result = result.filter((item: any) => {
         if (!item[key]) item = item.info;
@@ -112,11 +113,19 @@ export class ProductsFilterService {
 
           return valuesToFilter.some((value: any) => item[key].includes(value));
         } else {
+
+       
+
+         
           
           return valuesToFilter.includes(item[key]);
         }
       });
     }
+
+
+   
+    
     return result;
   }
 }
