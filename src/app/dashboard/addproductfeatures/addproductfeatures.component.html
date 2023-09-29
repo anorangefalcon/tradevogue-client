@@ -25,7 +25,7 @@
                     <div class="column d-flex flex-column gap-10">
                         <!-- <h6>Available</h6> -->
                         <div class="category d-flex gap-10 flex-column">
-                            <div *ngFor="let option of dataList.categoryList | productFilter:categories.get('category')?.value; let i = index">
+                            <div *ngFor="let option of dataList.categoryList | productFilter: data['category']; let i = index">
                                 <span>{{option}}</span>
                                 <span class="material-symbols-outlined"
                                     (click)="deleteItem('categoryList', i)">close</span>
@@ -34,12 +34,12 @@
                     </div>
                     <div class="column d-flex gap-10 flex-column">
                         <!-- <h6>Add new Category</h6> -->
-                        <form [formGroup]="categories" class="d-flex gap-5 flex-column relative">
-                            <input type="text" placeholder="Add Category" id="category" formControlName="category" />
+                        <div class="d-flex gap-5 flex-column relative">
+                            <input type="text" placeholder="Add Category" id="category" [(ngModel)]="data.category" />
 
                             <div class="button absolute">
                                 <button class="btn-primary" type="submit"
-                                    (click)="submit('categoryList', 'categories', 'category')">
+                                    (click)="addItem('category', 'categoryList')">
                                     <span class="material-symbols-outlined">add</span>
                                 </button>
                             </div>
@@ -49,7 +49,7 @@
                                     Required</small>
                                 <small *ngIf="categories.get('category')?.hasError('invalidName')">Invalid Name</small>
                             </div> -->
-                        </form>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -73,7 +73,7 @@
                     <div class="column d-flex flex-column gap-10">
                         <!-- <h6>Available</h6> -->
                         <div class="category d-flex gap-10 flex-column">
-                            <div *ngFor="let option of dataList.brandsList | productFilter:brands.get('brand')?.value; let i = index">
+                            <div *ngFor="let option of dataList.brandsList | productFilter: data['brand']; let i = index">
                                 <span>{{option}}</span>
                                 <span class="material-symbols-outlined"
                                     (click)="deleteItem('brandsList', i)">close</span>
@@ -82,10 +82,10 @@
                     </div>
                     <div class="column d-flex gap-10 flex-column">
                         <!-- <h6>Add Brand</h6> -->
-                        <form [formGroup]="brands" class="d-flex gap-5 flex-column relative">
-                            <input type="text" placeholder="Add Brand" id="brand" formControlName="brand" />
+                        <div class="d-flex gap-5 flex-column relative">
+                            <input type="text" placeholder="Add Brand" id="brand" [(ngModel)]="data.brand" />
                             <div class="button absolute">
-                                <button class="btn-primary" type="submit">
+                                <button class="btn-primary" type="submit" (click)="addItem('brand', 'brandsList')">
                                     <span class="material-symbols-outlined">add</span>
                                 </button>
                             </div>
@@ -95,7 +95,7 @@
                                     Required</small>
                                 <small *ngIf="brands.get('brand')?.hasError('invalidName')">Invalid Name</small>
                             </div> -->
-                        </form>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -119,7 +119,7 @@
                     <!-- <h6>Available</h6> -->
                     <div class="category d-flex gap-10 flex-column">
                         <div
-                            *ngFor="let option of dataList.quantitiesList | productFilter:orderQuantity.get('quantity')?.value; let i = index">
+                            *ngFor="let option of dataList.quantitiesList | productFilter: data['quantity']; let i = index">
                             <span>{{option}}</span>
                             <span class="material-symbols-outlined"
                                 (click)="deleteItem('quantitiesList', i)">close</span>
@@ -128,10 +128,10 @@
                 </div>
                 <div class="column d-flex gap-10 flex-column">
                     <!-- <h6>Add Quantity</h6> -->
-                    <form [formGroup]="orderQuantity" class="d-flex gap-5 flex-column relative">
-                        <input type="text" placeholder="Add Quantity" formControlName="quantity" id="quantity" />
+                    <div class="d-flex gap-5 flex-column relative">
+                        <input type="text" placeholder="Add Quantity" [(ngModel)]="data.quantity" id="quantity" />
                         <div class="button absolute">
-                            <button class="btn-primary" type="submit">
+                            <button class="btn-primary" type="submit" (click)="addItem('quantity', 'quantitiesList')">
                                 <span class="material-symbols-outlined">add</span>
                             </button>
                         </div>
@@ -141,7 +141,7 @@
                                 Required</small>
                             <small *ngIf="orderQuantity.get('quantity')?.hasError('invalidName')">Invalid Name</small>
                         </div> -->
-                    </form>
+                    </div>
                 </div>
             </div>
             </div>
@@ -165,7 +165,7 @@
                     <div class="column d-flex flex-column gap-10">
                         <!-- <h6>Available</h6> -->
                         <div class="category d-flex gap-10 flex-column">
-                            <div *ngFor="let option of dataList.tagsList | productFilter:tags.get('tag')?.value; let i = index">
+                            <div *ngFor="let option of dataList.tagsList | productFilter: data['tags']; let i = index">
                                 <span>{{option}}</span>
                                 <span class="material-symbols-outlined"
                                     (click)="deleteItem('tagsList', i)">close</span>
@@ -174,10 +174,10 @@
                     </div>
                     <div class="column d-flex gap-10 flex-column">
                         <!-- <h6>Add Tag</h6> -->
-                        <form [formGroup]="tags" class="d-flex gap-5 flex-column relative">
-                            <input type="text" placeholder="Add Tag" id="tag" formControlName="tag" />
+                        <div class="d-flex gap-5 flex-column relative">
+                            <input type="text" placeholder="Add Tag" id="tag" [(ngModel)]="data.tags" />
                             <div class="button absolute">
-                                <button class="btn-primary" type="submit">
+                                <button class="btn-primary" type="submit" (click)="addItem('tags', 'tagsList')">
                                     <span class="material-symbols-outlined">add</span>
                                 </button>
                             </div>
@@ -187,7 +187,7 @@
                                     Required</small>
                                 <small *ngIf="tags.get('tag')?.hasError('invalidName')">Invalid Name</small>
                             </div> -->
-                        </form>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -212,7 +212,7 @@
                     <div class="column d-flex flex-column gap-10">
                         <!-- <h6>Available</h6> -->
                         <div class="category d-flex gap-10 flex-column">
-                            <div *ngFor="let option of dataList.sizesList | productFilter:sizes.get('size')?.value; let i = index">
+                            <div *ngFor="let option of dataList.sizesList | productFilter: data['sizes']; let i = index">
                                 <span>{{option}}</span>
                                 <span class="material-symbols-outlined"
                                     (click)="deleteItem('sizesList', i)">close</span>
@@ -221,10 +221,10 @@
                     </div>
                     <div class="column d-flex gap-10 flex-column">
                         <!-- <h6>Add Size</h6> -->
-                        <form [formGroup]="sizes" class="d-flex gap-5 flex-column relative">
-                            <input type="text" placeholder="Add Size" id="size" formControlName="size" />
+                        <div class="d-flex gap-5 flex-column relative">
+                            <input type="text" placeholder="Add Size" id="size" [(ngModel)]="data.sizes" />
                             <div class="button absolute">
-                                <button class="btn-primary" type="submit">
+                                <button class="btn-primary" type="submit" (click)="addItem('sizes', 'sizesList')">
                                     <span class="material-symbols-outlined">add</span>
                                 </button>
                             </div>
@@ -234,7 +234,7 @@
                                     Required</small>
                                 <small *ngIf="sizes.get('size')?.hasError('invalidName')">Invalid Name</small>
                             </div> -->
-                        </form>
+                        </div>
                     </div>
                 </div>
             </div>

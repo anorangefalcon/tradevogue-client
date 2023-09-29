@@ -51,6 +51,7 @@
         font-size: 12px !important;
         color: rgb(var(--text-black), 0.8);
         white-space: nowrap;
+        cursor: pointer;
     }
 
     & .types {

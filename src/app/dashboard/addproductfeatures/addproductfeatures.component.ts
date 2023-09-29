@@ -25,49 +25,27 @@ export class AddproductfeaturesComponent {
   tags!: FormGroup;
   orderQuantity!: FormGroup;
 
-  // Data
+  // Data array
   dataList: any = {
     categoryList: [],
     brandsList: [],
     sizesList: [],
-    colorsList: [],
     tagsList: [],
     quantitiesList: [],
+  }
+
+  //Data
+  data: any = {
+    category: '',
+    brand: '',
+    sizes: '',
+    tags: '',
+    quantity: ''
   }
 
   constructor(private featuredata: FetchDataService, private uploadExcel: UploadExcelService){}
 
   ngOnInit() {
-    this.categories = new FormGroup({
-      category: new FormControl('', [
-        Validators.required,
-        invalidformat
-      ])
-    })
-    this.brands = new FormGroup({
-      brand: new FormControl('', [
-        Validators.required,
-        invalidformat
-      ])
-    })
-    this.sizes = new FormGroup({
-      size: new FormControl('', [
-        Validators.required,
-        invalidformat
-      ])
-    })
-    this.tags = new FormGroup({
-      tag: new FormControl('', [
-        Validators.required,
-        invalidformat
-      ])
-    })
-    this.orderQuantity = new FormGroup({
-      quantity: new FormControl('', [
-        Validators.required
-      ])
-    })
-    
 
     // FetchData Service
     this.featuredata.getSellerData().subscribe((data: any)=>{
@@ -100,28 +78,20 @@ export class AddproductfeaturesComponent {
       })
     })
   }
+
+  addItem(item: any, list: string){    
+    if(!this.dataList[list].includes(this.data[item])){
+      // this.dataList[list].splice(0, 0, this.data[item]);
+      this.dataList[list].push(this.data[item]);
+      this.data[item] = '';
+    }
+  }
   
   deleteItem(type: string, index: number) {
     this.dataList[type].splice(index, 1);
   }
   
-  submit(type: string, form: string, control: string) {
+  submit() {
 
-    let item = (this as any)[form].get(control).value;
-    if((this as any)[form].valid && !(this as any)[type].includes(item)){
-
-      (this as any)[type].splice(0,0,item); 
-      (this as any)[form].get(control).setValue('');
-    }
-    else{
-      (this as any)[form].markAllAsTouched();
-    }
-
-    // if (item != '' && !(this as any)[type].includes(item) ) {
-    //   (this as any)[type].splice(0,0,item);  
-    // }
   }
-
-
-
 }
