@@ -24,8 +24,9 @@
     </div>
 
     <div class="filters d-flex flex-column gap-10" [ngClass]="(filtersOpen === true) ? 'filter-mobile-active' : '' ">
-        <div class="head">
+        <div class="head d-flex justify-content-md-between align-items-center">
             <h4>FILTERS</h4>
+            <a href="#">Clear all</a>
         </div>
         <div *ngFor="let filter of uniqueData | keyvalue " class="types">
             <div class="category d-flex flex-column gap-10">

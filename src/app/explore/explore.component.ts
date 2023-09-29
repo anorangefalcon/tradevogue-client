@@ -45,7 +45,7 @@ export class ExploreComponent {
           
           value=Number(event.target.value)
           
-         
+      
         }
         
         

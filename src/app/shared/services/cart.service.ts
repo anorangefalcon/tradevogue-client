@@ -111,14 +111,19 @@ export class CartService {
 
           //amounting payment:
           cartDetails.amounts.subTotal += (cartDetails.details[i].price * cartDetails.details[i].Quantity);
+          cartDetails.amounts.subTotal = (cartDetails.amounts.subTotal).toFixed(2);
+
           cartDetails.amounts.shipping += 50;
-
           cartDetails.amounts.total = cartDetails.amounts.subTotal + cartDetails.amounts.shipping;
-          cartDetails.amounts.savings += cartDetails.details[i].oldPrice * cartDetails.details[i].Quantity;
-        }
-        cartDetails.amounts.savings -= cartDetails.amounts.total;
-        cartDetails.amounts.savings = Math.floor(cartDetails.amounts.savings);
 
+          cartDetails.amounts.savings += cartDetails.details[i].oldPrice * cartDetails.details[i].Quantity;
+          cartDetails.amounts.savings -= cartDetails.amounts.total;
+          cartDetails.amounts.savings = (cartDetails.amounts.savings).toFixed(2);
+          cartDetails.amounts.total = (cartDetails.amounts.total).toFixed(2);
+        }
+        console.log(cartDetails.amounts.total);
+        
+        console.log(cartDetails.amounts.total);
 
       })
 

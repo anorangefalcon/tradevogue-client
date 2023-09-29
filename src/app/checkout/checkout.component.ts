@@ -23,6 +23,7 @@ export class CheckoutComponent implements OnInit {
       this.cartCount = data;
     });
     this.cartService.fetchCart().subscribe((data) => {
+      console.log(data);
       this.cart = data;
     });
   }
