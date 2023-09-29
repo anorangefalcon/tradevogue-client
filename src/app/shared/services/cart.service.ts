@@ -92,38 +92,37 @@ export class CartService {
               ])
             )
           );
-              
 
-      // { temp until we connect db
-          if(!(cartDetails.details[i].color)){
-            cartDetails.details[i].color= (matchSku['colors'])[0]
+
+          // { temp until we connect db
+          if (!(cartDetails.details[i].color)) {
+            cartDetails.details[i].color = (matchSku['colors'])[0]
           }
-          if(!(cartDetails.details[i].price)){
-            cartDetails.details[i].price= (matchSku['price'])[0]
+          if (!(cartDetails.details[i].price)) {
+            cartDetails.details[i].price = (matchSku['price'])[0]
           }
-          if(!(cartDetails.details[i].Quantity)){
-            cartDetails.details[i].Quantity= (matchSku['orderQuantity'])[0]
+          if (!(cartDetails.details[i].Quantity)) {
+            cartDetails.details[i].Quantity = (matchSku['orderQuantity'])[0]
           }
-          if(!(cartDetails.details[i].size)){
-            cartDetails.details[i].size= (matchSku['sizes'])[0]
+          if (!(cartDetails.details[i].size)) {
+            cartDetails.details[i].size = (matchSku['sizes'])[0]
           }
-      // }
+          // }
 
           //amounting payment:
           cartDetails.amounts.subTotal += (cartDetails.details[i].price * cartDetails.details[i].Quantity);
-          cartDetails.amounts.subTotal = (cartDetails.amounts.subTotal).toFixed(2);
 
           cartDetails.amounts.shipping += 50;
-          cartDetails.amounts.total = cartDetails.amounts.subTotal + cartDetails.amounts.shipping;
 
-          cartDetails.amounts.savings += cartDetails.details[i].oldPrice * cartDetails.details[i].Quantity;
-          cartDetails.amounts.savings -= cartDetails.amounts.total;
-          cartDetails.amounts.savings = (cartDetails.amounts.savings).toFixed(2);
-          cartDetails.amounts.total = (cartDetails.amounts.total).toFixed(2);
+          cartDetails.amounts.savings += cartDetails.details[i].oldPrice * cartDetails.details[i].Quantity;  
         }
-        console.log(cartDetails.amounts.total);
         
-        console.log(cartDetails.amounts.total);
+        cartDetails.amounts.savings -= cartDetails.amounts.subTotal;
+        cartDetails.amounts.savings = (Math.round((cartDetails.amounts.savings) * 100))/100;
+
+        cartDetails.amounts.subTotal = (Math.round((cartDetails.amounts.subTotal) * 100)/100);
+        
+        cartDetails.amounts.total = cartDetails.amounts.subTotal + cartDetails.amounts.shipping;
 
       })
 
