@@ -1,5 +1,5 @@
 import { Component, ElementRef, Renderer2, ViewChild } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FetchDataService } from '../shared/services/fetch-data.service';
 import { RouterLinksService } from '../shared/services/router-links.service';
 
@@ -8,95 +8,122 @@ import { RouterLinksService } from '../shared/services/router-links.service';
   templateUrl: './settings.component.html',
   styleUrls: ['./settings.component.css']
 })
-export class SettingsComponent {
-  showData : string = 'profile';
+export class SettingsComponent  {
+  showData : string = "profile";
+  OrderLength:number=0;
 
-  showProfile(){
-    this.showData = 'profile';
-  }
-  showOrders(){
-    this.showData = 'orders';
-  }
-
-  // change component click listener
-  changeComponent(el:any){
+  changeComponent(el:string){
     this.showData=el;
-    // console.log();
-    
   }
 
-
-  @ViewChild('myButton') myButton: ElementRef | undefined;
+  @ViewChild('expand') ExpandBtn:ElementRef | undefined;
   isReadOnly:boolean=true;
   
-  signupForm:any;
+  signupForm:FormGroup;
 
-  userData:any;
-  constructor(private renderer: Renderer2,private fb:FormBuilder, private userService:FetchDataService, private routerService : RouterLinksService){
+  userData:any='';
+  CurrentPage:number=1;
+  entriesCount:number=7;
+  TotalPages:number=0;
+  constructor(private renderer: Renderer2,private routerlinkservice:RouterLinksService,private fb:FormBuilder,private el: ElementRef, private userService:FetchDataService){
+   
+   
+   
     this.signupForm= fb.group(
   
       
       {
+        name:fb.control('',[Validators.required]),
+        
         username:fb.control('',[Validators.required]),
         email:fb.control('',[Validators.email,Validators.required]),
-        password:fb.control('',[Validators.required,Validators.minLength(8)]),
-        confirmPassword: fb.control('',[Validators.required,])
-        
+        mobileNo:fb.control('',[Validators.email,Validators.required]),
+        gender:fb.control('',[Validators.email,Validators.required]),
+        dob:fb.control('',[Validators.email,Validators.required]),
+        address:fb.control('',[Validators.email,Validators.required]),
+     
       });   
 
-      // this.showData=routerService.();
-      // console.log("show data ", this.showData);
-      
-      this.getData();
-    
+   
+    this.getData();
+    this.routerlinkservice.showDataValue.subscribe((data:string)=>{
+      this.showData=data;
+    });
    
   };
 
-  ngOnInit() {
-    this.routerService.showData$.subscribe(data => {
-      this.showData = data;
-      console.log("show data is", this.showData);
-      
-    });
 
-  }
 
-async  getData(this: any){
-// const x= this.userService?.getUserData();
+
+
+async  getData(){
+
 await this.userService.getUserData().subscribe((data:any)=>{
-  console.log("data is",data);
-  const x=data.filter((el:any)=>el.userId==1);
-  console.log("x is s",x);
-  this.userData=x[0];
-  console.log(this.userData);
-  
-  
+
+  this.userData=data.filter((el:any)=>el.userId==1)[0];
+  this.OrderLength=this.userData.orders.length;
+  this.OrderLength=100;
+  this.PageCount();
 });
 
-// console.log("userdata is ",this.userData);
+
 }
 
+
+
+PageCount(){
+  
+  if(!(this.OrderLength/this.entriesCount)) return;
+ 
+  if(this.OrderLength%this.entriesCount){
+    
+    
+    this.TotalPages=Math.ceil(this.OrderLength/this.entriesCount);
+  }
+
+  else{
+    this.TotalPages=(this.OrderLength/this.entriesCount);
+  }
+
+ 
+}
 
 
 
   editClick(){
     
-    const x=(this?.myButton?.nativeElement.innerHTML);
-   
-    this.isReadOnly=!this.isReadOnly;
-    if(x=='Edit Details'){
-      
-      this.renderer.setProperty(this?.myButton?.nativeElement, 'innerHTML', 'Save');
-      
-    }
-    else{
-      this.renderer.setProperty(this?.myButton?.nativeElement, 'innerHTML', 'Edit Details');
+  this.isReadOnly=!this.isReadOnly;
+
     }
 
-    
-    
-    
-   
+
+
+ 
+  
+  ViewProduct(order:any){
+    order.expanded=!order.expanded;
+    if(order.expanded){
+      this.renderer.setProperty(this?.ExpandBtn?.nativeElement,'innerHTML',"expand_less")
+    }
+    else{
+      this.renderer.setProperty(this?.ExpandBtn?.nativeElement,'innerHTML',"expand_more")
+    }
    
   }
+
+
+  PreviousPage(){
+    if(this.CurrentPage==1) return;
+    this.CurrentPage-=1;
+  }
+
+  NextPage(){
+    if(this.CurrentPage>=this.TotalPages) return;
+    this.CurrentPage+=1;
+  }
+
+  Gotopage(el:number){
+    this.CurrentPage=el;
+  }
+
 }

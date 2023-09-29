@@ -1,53 +1,159 @@
-.select_display {
+.custom-select{
+    min-width: 100%;
     position: relative;
-    padding: 5px 20px;
-    border: 2px solid black;
-    border-radius: 5px;
+    font-weight: 500;
+}
+
+#selected__container{
+    min-width: 160px;
     width: 100%;
-}
+    font-weight: 500;
+    font-size: 13px;
+    height: 40px;
+    padding-block: 0px;
+    border-radius: 5px;
+    cursor:default;
+    background-color: #fff;
+    border: 1px solid #00000020;
+    overflow: hidden;
 
-.select_display::after {
-    content: '';
-    border-top: 4px solid black;
-    border-right: 4px solid transparent;
-    border-left: 4px solid transparent;
-    display: block;
-    position: absolute;
-    inset-inline-end: 10px;
-    inset-block-start: 50%;
-    transform: translateY(-50%);
-}
+    & input{
+        padding-inline: 16px 35px;
+        border: none;
+        font-size: 13px !important;
+        font-weight: 500;
+        width: 100%;
+        height: 100%;
+    }
 
-ul.options__container {
-    position: absolute;
-    height: 0px;
-    overflow: auto;
-    opacity: 0;
-    width: 275px;
-    visibility: hidden;
-    transition: all 0.3s ease-in-out;
+    & .arrow_icon{
+        inset-block-start: 0%;
+        inset-inline-end: 0%;
+        height: 100%;
+        width: 35px;
+        transition: transform ease-in-out 0.3s;
+    }
 
-    &::-webkit-scrollbar{
-        width: 2px;
+    & .clear_icon{
+        font-size: 18px;
+        inset-inline-end: 25px;
+        height: 100%;
+        color: rgb(24, 138, 226);
     }
 }
 
-.options__container.active {
-    height: 150px;
-    opacity: 1;
+#options__container{
+    position: absolute;
+    width: 100%;
+    z-index: 1;
+    box-shadow: 0 10px 10px rgba(0, 0, 0, 0.07);
+    background-color: #fff;
+    border: 1px solid #00000020;
+    border-radius: 5px;
+    max-height: 0px;
+    visibility: hidden;
+    /* opacity: 0; */
+    overflow-y: auto;
+    transition: all 0.3s ease;
+    inset-block-start: 50px;
+
+    &::-webkit-scrollbar{
+        width: 7px;
+    }
+    &::-webkit-scrollbar-track{
+        background: #f1f1f1;
+        border-radius: 25px;
+    }
+    &::-webkit-scrollbar-thumb{
+        background: #ccc;
+        border-radius: 25px;
+    }
+
+    & input[type="radio"]{
+        display: none;
+    }
+}
+
+input:focus{
+    border-color: rgb(var(--text-black), 0.2);
+}
+
+
+#options__container.active{
+    max-height: 180px;
     visibility: visible;
-    background-color: green ;
+    opacity: 1;
 }
 
-.options__container.active + .select_display::after{
-    transform: rotate(180deg);
-} 
-
-ul.options__container li.option {
-    padding: 5px 20px;
-    cursor: pointer;
+#options__container.active ~ #selected__container .arrow_icon{
+    transform: rotate(-180deg);
 }
 
-ul li:hover {
-    background-color: lightgrey;
+#options__container li{
+    display: flex;
+    align-items: center;
+    transition: all 0.3s ease;
+
+    &:hover{
+        background-color: #f2f2f2;
+    }
+    & input:checked + label{
+        background-color: rgb(242, 242, 242);
+    }
+    & input:focus + label{
+        background-color: rgb(242, 242, 242);
+    }
+
+    & label{
+        font-size: 13px;
+        padding: 10px 16px;
+        text-transform: capitalize;
+        width: 100%;
+        cursor: pointer;
+        text-wrap: nowrap;
+    }
+}
+
+.disabled__option{
+    pointer-events: none;
+    background-color: rgb(242, 242, 242);
+    color: rgb(124, 124, 124);
+    font-weight: 400;
+}
+
+.checkbox__options{
+
+    & label {
+        padding-inline: 0px !important;
+    }
+
+    & input[type="checkbox"] {
+        display: none;
+    }
+
+    & input[type="checkbox"] + label {
+        width: 50px !important;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    & .material-symbols-outlined {
+        display: flex;
+        cursor: pointer;
+        justify-content: center;
+        align-items: center;
+        font-size: 16px;
+        font-weight: 400;
+        color: white;
+        width: 15px;
+        height: 15px;
+        border-radius: 3px;
+        border: 1px solid rgba(128, 128, 128, 0.264);
+    }
+
+    & input[type="checkbox"]:checked+label .material-symbols-outlined {
+        background-color: rgb(var(--accent));
+        border-color: rgb(var(--accent));
+    }
 }

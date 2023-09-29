@@ -1,0 +1,42 @@
+#productDetails{
+
+    & .product__content{ 
+
+        gap: 20px;
+        grid-template-columns: repeat(1fr, 250px);
+    }
+
+    & .grid__items{
+        padding: 20px;
+        box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+        border-radius: 10px;
+        border: none;
+        background-color: rgb(var(--dash-card-clr));
+    }
+
+    & .customerInfo{
+        grid-column-start: 1;
+        grid-column-end: 2;
+    }
+
+    & .orderStatus{
+        grid-column-start: 2;
+        grid-column-end: 5;
+    }
+
+    & .OrderItems{
+        grid-column-start: 1;
+        grid-column-end: 5;
+    }
+
+
+    & table{
+        & td, th{
+            padding: 10px;
+        }
+
+        & th{
+            text-align: left;
+        }
+    }
+}

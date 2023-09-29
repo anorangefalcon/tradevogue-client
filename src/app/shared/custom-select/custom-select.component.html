@@ -1,30 +1,68 @@
-<form [formGroup]="Form">
-<div class="select_display" (click)="toggleClass()" formControlName="name" (focus)="toggleClass()" (blur)="toggleClass()">{{selectedOption}}</div>
-<p *ngIf="Form.get('name').value==='Select Country'"> country is not selected</p>
+<div [ngSwitch]="type">
 
-<ul class="options__container" [class.active]="isactive == true">
-    <li class="option" *ngFor="let option of options" data-value=`option` (click)="updateSelected(option)">{{option}}</li>
-</ul> 
+  <div *ngSwitchCase="'searchSelect'" onClick>
+    <div class="custom-select d-flex flex-column flex-order">
+      <ul id="options__container" role="listbox" [class.active]="isactive == true">
+        <li class="disabled__option">
+          <label for="empty">{{selectedOption}}</label>
+        </li>
+        <li role="option" *ngFor="let option of options | productFilter: filter; let i=index" tabindex="{{i+2}}"
+          (change)="updateSelected(option)">
+          <input type="radio" name="options" [id]="option" />
+          <label [for]="option">{{option}}</label>
+        </li>
+      </ul>
+      <div id="selected__container" class="relative">
+        <input type="search" class="selected__text" (input)="filterData($event)" [value]="selected"
+          [placeholder]="selectedOption">
+        <span (click)="isactive = !isactive"
+          class="absolute d-flex flex-center arrow_icon material-symbols-outlined">arrow_drop_down</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Multi Select Option -->
+  <div *ngSwitchCase="'multiSelect'" onClick>
+    <div class="custom-select d-flex flex-column flex-order" tabindex="0" (blur)="isactive = false">
+      <ul id="options__container" role="listbox" [class.active]="isactive == true">
+        <li class="disabled__option">
+          <label for="empty">{{selectedOption}}</label>
+        </li>
+        <!-- <li >
+          <input type="search" placeholder="Search ...." (input)="filterData($event)" id="search">
+        </li> -->
+        <li class="checkbox__options" role="option" *ngFor="let option of options; let i=index" tabindex="{{i+2}}"
+          (change)="updateMutliSelected($event)">
+          <input type="checkbox" [value]="option" name="options" [id]="option" />
+          <label for="option"><span class="material-symbols-outlined">done</span></label>
+          <label [for]="option">{{option}}</label>
+        </li>
+      </ul>
+      <div id="selected__container" class="relative" (click)="isactive = !isactive">
+        <input type="text" class="selected__text"  [value]="multiSelected.join(' , ')" [placeholder]="selectedOption">
+        <span class="absolute d-flex flex-center arrow_icon material-symbols-outlined">arrow_drop_down</span>
+      </div>
+    </div>
+  </div>
 
 
-
-
-
-<button class="btn-primary registerbtn" (click)="onSubmit()">Register</button>
-</form>"
-
-
-
-<!--  NAOTHER  -->
-<!-- 
-<form [formGroup]="myForm">
-    <div class="select_display" (click)="toggleClass()" [formControlName]="'username'" (focus)="toggleClass()" (blur)="toggleClass()">{{ selectedOption }}</div>
-    <p *ngIf="myForm.get('username').invalid && myForm.get('username').touched">Country is not selected</p>
-  
-    <ul class="options__container" [class.active]="isactive">
-      <li class="option" *ngFor="let option of options" (click)="updateSelected(option)">{{ option }}</li>
-    </ul>
-  
-    <button class="btn-primary registerbtn" [disabled]="myForm.invalid" (click)="onSubmit()">Register</button>
-  </form>
-   -->
+  <div *ngSwitchDefault>
+    <div class="custom-select d-flex flex-column flex-order" onClick>
+      <ul id="options__container" role="listbox" [class.active]="isactive == true">
+        <li class="disabled__option">
+          <label for="empty">{{selectedOption}}</label>
+        </li>
+        <li role="option" *ngFor="let option of options | productFilter: filter; let i=index" tabindex="{{i+2}}"
+          (change)="updateSelected(option)">
+          <input type="radio" name="options" [id]="option" />
+          <label [for]="option">{{option}}</label>
+        </li>
+      </ul>
+      <div id="selected__container" class="singleSelect relative" (click)="isactive = !isactive">
+        <input type="text" class="selected__text" (input)="filterData($event)"
+          [value]="selected" [placeholder]="selectedOption" readonly>
+        <span class="absolute d-flex flex-center arrow_icon material-symbols-outlined">arrow_drop_down</span>
+      </div>
+    </div>
+  </div>
+</div>

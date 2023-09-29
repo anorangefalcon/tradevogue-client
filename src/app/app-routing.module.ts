@@ -20,7 +20,7 @@ const routes: Routes = [
     children: [
       { path: '', component: HomeComponent, data: { breadcrumb: 'Home' } },
       {
-        path: 'setting', component: SettingsComponent, data: { breadcrumb: 'Setting' }
+        path: 'usersetting', component: SettingsComponent, data: { breadcrumb: 'Setting' }
       },
       { path: 't&c', component: TcComponent, data: { breadcrumb: 'Term & Condition' } },
       { path: 'faq', component: FaqPageComponent, data: { breadcrumb: 'Faq' } },
@@ -41,24 +41,26 @@ const routes: Routes = [
           { path: 'billing', component: BillingComponent, data: { breadcrumb: 'Billing' } }
         ]
       },
-      {
-          path: '**', component: NoPageComponent, data: { breadcrumb: '404' } 
-        },
-
     ]
   },
   {
     path: 'auth', data: { breadcrumb: 'Auth' }, loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule)
   },
   {
-    path: 'dashboard', data: { breadcrumb: 'Dashboard' }, loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule)
+    path: 'dashboard', loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule)
   },
+  {
+    path: '**', component: NoPageComponent, data: { breadcrumb: '404' } 
+  },
+
 ];
 
 @NgModule({
   imports: [
     RouterModule.forRoot(routes),
-    RouterModule.forRoot(routes, { scrollPositionRestoration: 'enabled' })
+    RouterModule.forRoot(routes, { scrollPositionRestoration: 'enabled' }),
+    // RouterModule.forRoot(routes, { anchorScrolling: 'enabled' })
+
   ],
   exports: [RouterModule]
 })

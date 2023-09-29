@@ -1,4 +1,4 @@
-import { Component, HostListener, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit, ElementRef } from '@angular/core';
 import { CartService } from '../shared/services/cart.service';
 import { CookieService } from 'ngx-cookie-service';
 import { Router } from '@angular/router';
@@ -16,34 +16,45 @@ export class CheckoutComponent implements OnInit {
   updateBoolean: boolean = false;
   cart: any = {};
 
-  constructor (private cartService: CartService, private cookie: CookieService , private route:Router){}
+  constructor(private cartService: CartService, private cookie: CookieService, private route: Router, private el: ElementRef) { }
 
   ngOnInit() {
-    this.cartService.fetchCart("count").subscribe((data)=>{
+    this.cartService.fetchCart("count").subscribe((data) => {
       this.cartCount = data;
     });
-    this.cartService.fetchCart().subscribe((data)=>{
+    this.cartService.fetchCart().subscribe((data) => {
+      console.log(data);
       this.cart = data;
     });
   }
 
   redirectToLogin() {
-    const returnUrl = '/cart/billing'; 
+    const returnUrl = '/cart/billing';
     this.route.navigate(['/auth/login'], { queryParams: { returnUrl } });
   }
 
-checkLogin() {
-  const cookieExists = document.cookie.indexOf('loginDetails') !== -1;
-  console.log(cookieExists , "cookies exists");
-
-  // cookieExists == true ? this.updateBoolean = false : this.updateBoolean = true;
-
-  if(!cookieExists){
-   this.redirectToLogin();
-  }else {
-    this.route.navigate(['/cart/billing']);
+  scrollToOrders() {
+    const orders = this.el.nativeElement.querySelector('#orders')
+    if (orders) {
+      orders.scrollIntoView(
+        {
+          block: 'start',
+          behavior: 'smooth'
+        });
+    }
   }
- }
+  checkLogin() {
+    const cookieExists = document.cookie.indexOf('loginDetails') !== -1;
+    console.log(cookieExists, "cookies exists");
+
+    // cookieExists == true ? this.updateBoolean = false : this.updateBoolean = true;
+
+    if (!cookieExists) {
+      this.redirectToLogin();
+    } else {
+      this.route.navigate(['/cart/billing']);
+    }
+  }
 
   @HostListener('window:scroll', []) onScroll() {
     if (window.scrollY > 80) {

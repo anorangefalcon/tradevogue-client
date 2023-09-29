@@ -5,17 +5,18 @@
             <span>{{cartCount}} item<span *ngIf="cartCount>1">s</span>
             </span>
         </div>
-        <router-outlet class="cartAndBilling"></router-outlet>
+        <router-outlet class="cartAndBilling" ></router-outlet>
     </div>
 
-    <div class="orderSummary" [class.active]="navbar_scroll_style == true" >
-        <div class="summary-container d-flex flex-column gap-10">
+    <div class="orderSummary"  [class.active]="navbar_scroll_style == true" >
+        <div class="summary-container d-flex flex-column gap-10" id="orders">
+            
             <h2 class="border-end text-center">Order Summary</h2>
             <div class="border-end items-container d-flex flex-column gap-10">
                 <div class="item" *ngFor="let item of cart.details">
                     <div class="itemname d-flex justify-content-md-between">
-                        <p>{{item.name}}</p>
-                        <p>₹{{item.price}}</p>
+                        <p class="item-name">{{item.name}}</p>
+                        <p class="item-price">₹{{item.price}}</p>
                     </div>
                     <div class="itemtype d-flex justify-content-md-between">
                         <p>{{item.description}}</p>
@@ -23,7 +24,13 @@
                     </div>
                 </div>
             </div>
-        
+            
+            <!-- <div>
+            <div class="Router-outlet">
+            <router-outlet class="cartAndBilling"></router-outlet>
+        </div> -->
+        <!-- </div> -->
+
             <div class="border-end subtotal d-flex justify-content-md-between">
                 <p>Subtotal</p>
                 <p>₹{{cart.amounts.subTotal}}</p>
@@ -46,6 +53,30 @@
         </div>
         
         
+        
+    </div>
+    <div class="fixed-checkout">
+        <div class="fix-total">
+            <p class="subtotal" >Subtotal : ₹{{cart.amounts.subTotal}}</p>
+            <p class="total fw-500">Total : ₹{{cart.amounts.total}}</p>
+        </div>
+        <div class="items">
+             <p>Items : <span>{{cartCount}}<span *ngIf="cartCount>1"></span>
+            </span></p>
+        </div>
+        <div class="next">
+            <button class="btn-primary" (click)="scrollToOrders()">Next</button>
+        </div>
+    </div>
+    <div class="fixed2">
+        <div class="itemstotal">
+            <p>Items : <span>{{cartCount}}<span *ngIf="cartCount>1"></span>
+            </span></p>
+            <p class="total">Total : ₹{{cart.amounts.total}}</p>
+        </div>
+        <div class="next2">
+            <button class="btn-primary" (click)="scrollToOrders()">Next</button>
+        </div>
     </div>
 </div>
 
@@ -58,9 +89,9 @@
 </div>
 
 <!-- when cart count is zero -->
-<div *ngIf="cartCount === 0" class="empty d-flex flex-column justify-content-center align-items-center">
+<!-- <div *ngIf="cartCount === 0" class="empty d-flex flex-column justify-content-center align-items-center">
     <h1 class="text-center">Your cart is empty</h1>
     <div class="text-center">
         <button [routerLink]="['/explore']" class="btn btn-primary">Continue Shopping</button>
     </div>
-</div>
+</div> -->

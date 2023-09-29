@@ -74,19 +74,17 @@ export class CartService {
         total: 0
       }
     }
-  const fields = ["name", "price", "oldPrice", "image", "orderQuantity"];
+    const fields = ["name", "price", "oldPrice", "image", "orderQuantity"];
     const localCart = localStorage.getItem("myCart");
     cartDetails.details = localCart ? JSON.parse(localCart) : null;
 
     if (cartDetails.details !== null) {
       this.fetchData.getData().subscribe((data) => {
-        // console.log("data inside cart is ",data);
-        
+
         for (let i = 0; i < cartDetails.details.length; i++) {
           const matchSku = (data.find((item: any) => {
             return item.sku == cartDetails.details[i].sku;
           }));
-
           Object.assign(cartDetails.details[i],
             Object.fromEntries(
               fields.map(field => [
@@ -94,30 +92,51 @@ export class CartService {
               ])
             )
           );
+              
+
+      // { temp until we connect db
+          if(!(cartDetails.details[i].color)){
+            cartDetails.details[i].color= (matchSku['colors'])[0]
+          }
+          if(!(cartDetails.details[i].price)){
+            cartDetails.details[i].price= (matchSku['price'])[0]
+          }
+          if(!(cartDetails.details[i].Quantity)){
+            cartDetails.details[i].Quantity= (matchSku['orderQuantity'])[0]
+          }
+          if(!(cartDetails.details[i].size)){
+            cartDetails.details[i].size= (matchSku['sizes'])[0]
+          }
+      // }
 
           //amounting payment:
           cartDetails.amounts.subTotal += (cartDetails.details[i].price * cartDetails.details[i].Quantity);
+          cartDetails.amounts.subTotal = (cartDetails.amounts.subTotal).toFixed(2);
+
           cartDetails.amounts.shipping += 50;
-
           cartDetails.amounts.total = cartDetails.amounts.subTotal + cartDetails.amounts.shipping;
-          cartDetails.amounts.savings += cartDetails.details[i].oldPrice * cartDetails.details[i].Quantity;
-        }
-        cartDetails.amounts.savings -= cartDetails.amounts.total;
-        cartDetails.amounts.savings = Math.floor(cartDetails.amounts.savings);
 
+          cartDetails.amounts.savings += cartDetails.details[i].oldPrice * cartDetails.details[i].Quantity;
+          cartDetails.amounts.savings -= cartDetails.amounts.total;
+          cartDetails.amounts.savings = (cartDetails.amounts.savings).toFixed(2);
+          cartDetails.amounts.total = (cartDetails.amounts.total).toFixed(2);
+        }
+        console.log(cartDetails.amounts.total);
+        
+        console.log(cartDetails.amounts.total);
 
       })
 
       this.cartSubject.next(cartDetails);
     }
   }
-  
+
   removeItem(sku: any) {
     const localStorageData = localStorage.getItem("myCart");
-    
+
     if (localStorageData) {
       this.cartStorage = JSON.parse(localStorageData);
-      
+
       this.cartStorage = this.cartStorage.filter((item) => {
         return item.sku !== sku;
       });
@@ -129,7 +148,7 @@ export class CartService {
   }
 
   fetchCart(what: string = ''): Observable<any> {
-   
+
     if (what === 'count') {
       return this.cart$.pipe(
         map(data => data.details.length)

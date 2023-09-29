@@ -51,7 +51,7 @@
     <div class="order-list d-flex flex-column gap-25">
         <div class="filters d-flex justify-content-md-between align-items-center">
             <h3>Order List</h3>
-            <div class="d-flex align-center gap-20">
+            <!-- <div class="d-flex align-center gap-20">
                 <span class="d-flex align-center gap-10">
                     <label for="todate">To: </label>
                     <input type="date" #todate>
@@ -60,37 +60,22 @@
                     <label for="fromdate">From: </label>
                     <input type="date" #fromdate>
                 </span>
-            </div>
+            </div> -->
             <div class="d-flex align-center gap-20">
-                <div class="customSelect">
-                    <select name="" id="">
-                        <option value="" disabled selected>Product Category</option>
-                        <option value="">Category 1</option>
-                        <option value="">Category 2</option>
-                        <option value="">Category 3</option>
-                        <option value="">Category 4</option>
-                    </select>
-                </div>
-                <div class="customSelect">
-                    <select name="" id="">
-                        <option value="" selected disabled>Order Status</option>
-                        <option value="">Delivered</option>
-                        <option value="">Confirmed</option>
-                        <option value="">Canceled</option>
-                        <option value="">In Route</option>
-                    </select>
-                </div>
+                <app-custom-select [options]="categoryOption" [selectedOption]="'Filter by Category'" (final_option)="updateFields($event, 'category')"></app-custom-select>
+                <app-custom-select [options]="orderStatus" [selectedOption]="'Filter by Order'" (final_option)="updateFields($event, 'order')"></app-custom-select>
             </div>
         </div>
         <div class="order-table">
             <table datatable class="row-border hover">
                 <thead>
                     <tr>
-                        <th class="order-items heading">#OrderID</th>
+                        <th class="order-items heading">Order ID</th>
                         <th class="order-items heading">Product</th>
                         <th class="order-items heading">Category</th>
                         <th class="order-items heading">Sizes</th>
                         <th class="order-items heading">Quantity</th>
+                        <th class="order-items heading">Amount</th>
                         <th class="order-items heading">Order Status</th>
                         <th class="order-items heading">Payment</th>
                         <th class="order-items heading">Track </th>
@@ -106,6 +91,7 @@
                         <td class="order-items">{{item.category}}</td>
                         <td class="order-items">{{item.size}}</td>
                         <td class="order-items">{{item.quantity}}</td>
+                        <td class="order-items">&#8377; {{item.amount}}</td>
                         <td class="order-items">
                             <span *ngIf="item.order_status == 'Confirmed'" style="color: rgb(var(--success));">Confirmed</span>
                             <span *ngIf="item.order_status == 'Shipping'" style="color: rgba(255, 85, 0, 0.992);">Shipping</span>
@@ -119,28 +105,8 @@
                             <span *ngIf="item.payment_status == 'Refunded'" style="color: rgb(var(--dash-blue-clr));">Refunded</span>
                             <span *ngIf="item.payment_status !== 'Confirmed' && item.payment_status !== 'Failed' && item.payment_status !== 'Refunded'" style="color: rgb(var(--dash-blue-clr));">{{item.payment_status}}</span>                          
                         </td>
-                        <!-- <td class="order-items">
-                            {{item.payment_status}} sadjhasjkdhasjkh
-                            {{item.payment_status == 'Confirmed'}}
-                            <span *ngIf="item.payment_status == 'Confirmed'; else notConfirmed" style="color: rgb(var(--success));">
-                                Completed
-                            </span>
-                            <ng-template #notConfirmed>
-                                fkjfkjsdklfjskldj
-                                {{item.payment_status == 'Failed'}}
-                                <span style="color: rgb(var(--danger));" *ngIf="item.payment_status == 'Failed'; else notFailed">
-                                    Failed</span>
-                                <ng-template #notFailed>
-                                    {{item.payment_status == 'Refunded'}}
-                                    <span *ngIf="item.payment_status == 'Refunded'; else notRefund" style="color: rgb(var(--dash-blue-clr));">Refunded</span>
-                                    <ng-template #notRefund>
-                                        <span style="color: rgb(var(--dash-blue-clr));">{{item.payment_status}}</span>
-                                    </ng-template>
-                                </ng-template>
-                            </ng-template>
-                        </td> -->
                         <td class="order-items">
-                            <a href="">
+                            <a [routerLink]="['/dashboard/orderDetails', item.orderId]">
                                 <span class="material-symbols-outlined">open_in_new</span>
                             </a>
                         </td>

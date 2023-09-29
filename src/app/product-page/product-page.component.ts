@@ -39,7 +39,9 @@ export class ProductPageComponent implements OnInit{
       
       
       this.fetchService.getData().subscribe((data: any[]) => {
-        this.data.productDetails = data.find((item) => {
+        console.log(data, "data pp");
+        
+        this.data.productDetails = data.find((item) => {        
           return item['sku'] === sku;
         });
         this.data.avgRating = 0;
@@ -51,6 +53,8 @@ export class ProductPageComponent implements OnInit{
           this.data.offerPercentage = Math.floor((this.data.productDetails.oldPrice - this.data.productDetails.price) / this.data.productDetails.oldPrice * 100);
         }
       });
+      console.log(this.data, "pd");
+      
     });
     
   }
@@ -151,6 +155,10 @@ export class ProductPageComponent implements OnInit{
       return [];
     }
     return Array(newTotal).fill(0);
+  }
+
+  updateSelectedField(e: any){
+    this.selectedQ = e;
   }
 
 }

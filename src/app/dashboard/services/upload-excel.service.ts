@@ -16,6 +16,8 @@ export class UploadExcelService {
     let file = event.target.files[0];
     const excelData: any = {};
 
+    console.log("File", file);
+
     let fileReader = new FileReader();
     fileReader.readAsBinaryString(file);
 
@@ -190,6 +192,7 @@ export class UploadExcelService {
 
   // now lets make same function as validate file but for files only containing one feild like brand
   validateSingleFeildFile(data: any, singleFeild: string) {
+    singleFeild = singleFeild.toLowerCase();
     const reqProductKeys: any = [singleFeild];
     this.errors = {};
     let reqData: any = [];
@@ -209,8 +212,8 @@ export class UploadExcelService {
         const allReqKeys = this.isCompleteSubset(Object.keys(obj), reqProductKeys);
         
         if(allReqKeys === true){
-          if(!reqData.includes(obj[singleFeild].trim())){
-            reqData.push(obj[singleFeild].trim());
+          if(!reqData.includes((obj[singleFeild].toString()).trim())){
+            reqData.push((obj[singleFeild].toString()).trim());
           }
         }
         else{
@@ -233,6 +236,7 @@ export class UploadExcelService {
     var keys = Object.keys(obj);
     var n = keys.length;
     var lowKeyObject: any = {};
+    
     while (n--) {
       var key = keys[n];
       lowKeyObject[key.toLowerCase().trim().split(" ").reduce((before, after) => {

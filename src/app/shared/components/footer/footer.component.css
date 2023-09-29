@@ -6,6 +6,9 @@ footer {
     .accordian {
         display: none;
     }
+    .responsive-links {
+        display: none;
+    }
     & .footer-content{
         padding-block: 80px;   
         width: 100%;
@@ -38,6 +41,7 @@ footer {
         font-size: 14px !important;
     }
     & ul li a {
+        display: flex;
         font-size: 14px;
         transition: 0.3s ease-in-out;
         color: rgb(var(--new-text-black));
@@ -114,7 +118,7 @@ footer {
     .footer-content {
         padding-block: 80px !important;
         flex-direction: column;
-        padding-inline: 100px;
+
     }
     .first-col {
         width: 100% !important;
@@ -132,6 +136,9 @@ footer {
     .second-col {
         display: none;
     }
+    .list {
+        flex-wrap: wrap;
+    }
     .accordian{
         margin-block-start: 30px;
         display: flex !important;
@@ -141,6 +148,25 @@ footer {
             /* transform: rotate(0); */
             transition: all 0.3s ease-in-out;
         }
+    }
+    .responsive-links {
+        margin-block-start: 30px;
+        display: flex !important;
+        flex-direction: column;
+    }
+    .subtitle {
+        font-weight: 600;
+        font-size: 15px;
+
+        
+    }
+    .list li:not(:last-child) a::after{
+        content: "|";
+        display: block;
+        /* padding-inline-start: 10px; */
+    }
+    .list li:not(:last-child) a {
+                gap: 10px;
     }
     .acc label{
         display: flex;
@@ -167,5 +193,18 @@ footer {
     .acc ul {
         margin-block-start: 15px;
         margin-block-end: 10px;
+    }
+}
+@media screen and (max-width: 490px){
+    .footer-content{
+        padding-block: 40px !important;
+    }
+    .section{
+        & .subtitle {
+            font-size: 14px !important;
+        }
+        & ul li a {
+            font-size: 12px !important;
+        }
     }
 }

@@ -16,7 +16,6 @@ import { FormsModule } from '@angular/forms';
 import { ProductFilterPipe } from './Pipe/product-filter.pipe';
 
 
-
 @NgModule({
   declarations: [
     NavbarComponent,

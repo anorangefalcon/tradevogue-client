@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { NgModel } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { DashboardRoutingModule } from './dashboard-routing.module';
@@ -12,6 +13,8 @@ import { AccountComponent } from './account/account.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AddproductfeaturesComponent } from './addproductfeatures/addproductfeatures.component';
 import { UploadExcelService } from './services/upload-excel.service';
+import { SalesAnalysisComponent } from './sales-analysis/sales-analysis.component';
+import { OrderPageComponent } from './order-page/order-page.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +25,9 @@ import { UploadExcelService } from './services/upload-excel.service';
     OrdersComponent,
     AddproductComponent,
     AccountComponent,
-    AddproductfeaturesComponent
+    AddproductfeaturesComponent,
+    SalesAnalysisComponent,
+    OrderPageComponent
   ],
   
   imports: [
@@ -34,7 +39,8 @@ import { UploadExcelService } from './services/upload-excel.service';
     FormsModule
   ],
   providers: [
-    UploadExcelService
+    UploadExcelService,
+    NgModel
   ],
 })
 export class DashboardModule { }

@@ -13,8 +13,6 @@ import { UserDataService } from '../user-data.service';
 export class LoginComponent {
 
   loginForm : FormGroup;
-
-
   passwordFieldType: string = 'password';
   showPassword: boolean = false;
   isFormSubmitted: boolean = false;
@@ -33,6 +31,8 @@ onLogin() {
   this.isFormSubmitted = !this.isFormSubmitted;
   const username = this.loginForm.get('username')?.value;
   const password = this.loginForm.get('password')?.value;
+  console.log(this.loginForm);
+  
   
   this.userData.login(username, password).subscribe((isLoggedIn: boolean) => {
     if (isLoggedIn) {
@@ -40,6 +40,7 @@ onLogin() {
       this.cookies.set("loginDetails", JSON.stringify(user));
 
       const returnUrl = this.route.snapshot.queryParamMap.get('returnUrl');
+      
       if (returnUrl) {
         this.router.navigateByUrl(returnUrl);
       } else {
@@ -69,7 +70,7 @@ onLogin() {
   togglePasswordVisibility() {
     this.showPassword = !this.showPassword;
     this.passwordFieldType = this.showPassword ? 'text' : 'password';
-    console.log("pass");
+
     
 }
 

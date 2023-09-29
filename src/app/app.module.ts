@@ -53,7 +53,9 @@ import { BreadcrumbComponent } from './layout/breadcrumb/breadcrumb.component';
     CheckoutModule,
     MatTabsModule,
     HttpClientModule,
-    MatExpansionModule
+    MatExpansionModule,
+    
+
   ],
   providers: [],
   bootstrap: [AppComponent]

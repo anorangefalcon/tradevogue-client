@@ -1,126 +1,273 @@
 <section>
     <div class="container d-flex">
-        <!--BUTTONS DIV -->
-        <div class="constant">
-            <button (click)="changeComponent('orders')">Orders</button>
-            <button (click)="changeComponent('profile')">Profile</button>
-            <!-- <button>Orders</button> -->
-        </div>
 
-        <!-- COMPONENT SHOW DIV -->
-        <div class="width-80">
-            <div class="profile" *ngIf="showData=='profile' ">
-            <div class="title">
-                <h2>Profile Details</h2>
-            </div>
-            <div class="content">
-               <div class="common">
 
-                <div class="d-flex justify-content-md-between">
-                    <p>Name</p>
-                    <input type="text" value="{{userData.FullName.firstName}} {{userData.FullName.lastName}}"  [readonly]="isReadOnly">
-                    
-                </div>
-               
-                <div class="d-flex justify-content-md-between">
-                    <p>username</p>
-                    <input type="text" value={{userData.username}} [readonly]="isReadOnly">
-                    
-                </div>
-    
-                <div class="d-flex justify-content-md-between">
-                    <p>useremail</p>
-                    <input type="email" value={{userData.email}} [readonly]="isReadOnly">
-                </div>
-    
-    
-                <div class="d-flex justify-content-md-between">
-                    <p>mobileNo</p>
-                    <input type="email" value={{userData.mobileNo}} [readonly]="isReadOnly">
-                </div>
-    
-                <div class="d-flex justify-content-md-between">
-                    <p>Gender</p>
-                    <!-- <p>{{userData.gender}}</p> -->
-                    
+        <nav class="navbar d-flex flex-column gap-25">
 
-                    <div class="d-flex gender-top">
+            <ul class="nav-items">
+                <li class="nav-links" [ngClass]="(this.showData === 'profile') ? 'nav-link-active' : ''"><a
+                        (click)="changeComponent('profile')">
+                        <span class="nav-icons material-symbols-outlined">
+                            person
+                        </span>
+                        <span class="nav-txt">Home</span>
+                    </a></li>
+                <li class="nav-links" [ngClass]="(this.showData === 'orders') ? 'nav-link-active' : ''"><a
+                        (click)="changeComponent('orders')">
+                        <span class="nav-icons material-symbols-outlined">
+                            favorite
+                        </span>
+                        <span class="nav-txt">Order</span>
+                    </a></li>
+                <li class="nav-links"><a href="#">
+                        <span class="nav-icons material-symbols-outlined">
+                            logout
+                        </span>
+                        <span class="nav-txt">Logout</span>
+                    </a></li>
+            </ul>
+        </nav>
 
-                    <div class="gender" *ngIf="userData.gender=='male' || !isReadOnly">
-                        <input type="radio" name="male" *ngIf="!isReadOnly"> 
-                        <label for="male">Male</label>
-                      
-                    </div>
+        <div class="profile" *ngIf="showData=='profile'">
 
-                    <div class="gender" *ngIf="userData.gender=='female' || !isReadOnly">
-                        <input type="radio" name="female" *ngIf="!isReadOnly">
-                        <label for="female">Female</label>
-                    </div>
-                </div>
-                </div>
-              
-                <div class="d-flex justify-content-md-between">
-                    <p>DOB</p>
-                    <input type="date" value={{userData.DOB}} [readonly]="isReadOnly" class="width-198">
-                </div>
-    
-                <div class="d-flex justify-content-md-between">
-                    <p>Address</p>
-                    <input type="text" value="{{userData.address}}"  [readonly]="isReadOnly">
-                    
-                </div>
-
-    
-               </div>
-              </div>
-    
-              <button class="btn-primary" (click)="editClick()" #myButton>Edit Details</button>
-            </div>
-     
-            <div  *ngIf="showData=='orders' " class="Allorders">
-
-                <div *ngFor="let order of userData.orders" class="order">
-                <div class="d-flex justify-content-md-between orderDetails" >
-                    <div class="common">
-                 <p><b> OrderId </b> : {{order.orderId}} </p>
-               <p><b> OrderDate : </b>{{order.orderDate}} </p>
-            </div>
 
             <div class="common">
-               <p><b>ShipTo :</b>{{order.shipTo}}</p>
-                <p><b>ProductCount :</b>{{order.products.length}}</p>
-            </div>
+                <h2>
 
-                <div class="d-flex align-center">
-                <p class="text-center"><b>OrderTotal : </b>{{order.orderTotal}}</p>
-                </div>
-                </div>
+                    Profile Details
 
 
-                <div class="productsList">
-                <div *ngFor="let product of order.products" class="d-flex  justify-content-md-between productItem">
 
+                </h2>
 
-                    <div class="d-flex gap-30">
-                    <img src="{{product.image}}" style="width: 100px; height: 100px;">
+                <span class="material-symbols-outlined edit-btn" *ngIf="isReadOnly" (click)="editClick()">
+                    edit
+                </span>
 
-                    <div class="d-flex flex-column justify-content-center gap-5">
-                    <h4>{{product.name}}</h4>
-                    <p>{{product.description}}</p>
-                    <p>Status:{{product.status}}</p>
-                </div>
-            </div>
-                    <p class="price d-flex align-center">{{product.price}}</p>
-                </div>
-
+                <button class="btn-primary saveBtn" *ngIf="!isReadOnly" (click)="editClick()" #myButton>Save</button>
 
             </div>
-            </div>
- 
-             </div>
+
+
+
+
+
+
+
+
+            <form [formGroup]="signupForm" class="d-flex gap-15 disableInput"
+                [ngClass]="isReadOnly === true ? 'disableInput' : 'enableInput'">
+                <div class="form__group relative d-flex flex-column">
+                    <label class="form__label">NAME<span>*</span></label>
+                    <span class="material-symbols-outlined form__icon absolute">person</span>
+                    <input type="text" id="name" formControlName="username" placeholder="Enter Your Name">
+
+                </div>
+
+
+
+
+
+
+                <div class="form__group relative d-flex flex-column">
+                    <label class="form__label">EMAIL<span>*</span></label>
+
+                    <span class="material-symbols-outlined form__icon absolute">mail</span>
+                    <input type="text" id="email" formControlName="email" placeholder="Enter Your Email">
+
+                </div>
+
+
+                <div class="form__group relative d-flex flex-column">
+                    <label class="form__label">MOBILENO<span>*</span></label>
+                    <span class="material-symbols-outlined form__icon absolute">call</span>
+                    <input type="text" id="mobileNo" formControlName="mobileNo" placeholder="Enter Your MobileNo">
+
+                </div>
+
+
+                <div class="form__group relative d-flex flex-column">
+                    <label class="form__label">GENDER<span>*</span></label>
+                    <div class="radios">
+                        <div class="genders">
+                            <div class="radiocustom">
+                                <input class="mradio" type="radio" id="male" name="gender" value="Male">
+                                <label for="male"><span class=" icon material-symbols-outlined">man</span></label>
+                                <span>Male</span>
+                            </div>
+                            <div class="radiocustom">
+                                <input class="mradio" type="radio" id="female" name="gender" value="Female">
+                                <label for="female"><span class=" icon material-symbols-outlined">woman</span></label>
+                                <span>Female</span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <div class="form__group relative d-flex flex-column">
+                    <label class="form__label">DOB<span>*</span></label>
+                    <span class="material-symbols-outlined form__icon absolute">person</span>
+                    <input type="date" id="dob" formControlName="dob" placeholder="Enter Your Username">
+
+                </div>
+
+                <div class="form__group relative d-flex flex-column">
+                    <label class="form__label">ADDRESS<span>*</span></label>
+                    <span class="material-symbols-outlined form__icon absolute">home</span>
+                    <input type="text" id="address" formControlName="address" placeholder="Enter Your Address">
+
+                </div>
+
+
+            </form>
+
+
+
+
+
         </div>
 
-       
+
+
+        <div class="Allorders" *ngIf="showData=='orders'">
+            <div *ngFor="let order of userData.orders" class="order">
+
+                <div class="d-flex justify-content-md-between orderDetails">
+
+
+
+                    <div class="orderDetailFirstColumn">
+                        <div>
+                            <p class="orderDetialsHeading"> Order Id</p>
+                            <p> {{order.orderId}}</p>
+                        </div>
+
+
+                        <div>
+                            <p class="orderDetialsHeading"> Order Date </p>
+                            <p> {{order.orderDate}}</p>
+                        </div>
+
+
+                        <div>
+                            <p class="orderDetialsHeading"> Total Amount </p>
+                            <p> {{order.orderTotal}}</p>
+                        </div>
+
+
+                    </div>
+
+                    <div class="orderDetailSecondColumn">
+                        <button (click)="ViewProduct(order)">View Order
+                            <span class="material-symbols-outlined" #expand>
+                                expand_more
+                            </span>
+                        </button>
+                        <button>View Invoice</button>
+                    </div>
+
+                </div>
+
+
+
+                <div class="productsList" [ngClass]="{ expanded2: order.expanded }">
+                    <div *ngFor="let product of order.products"
+                        class="d-flex flex-column gap-20 justify-content-md-between productItem">
+
+
+                        <div class="productItemFirstRow">
+                            <div class="d-flex gap-20">
+                                <img src="{{product.image}}" style="width: 100px; height: 100px;">
+
+                                <div class="product-detials">
+                                    <h3>{{product.name}}</h3>
+                                    <p>Size: {{product.size}}</p>
+                                    <p>Color: {{product.color}}</p>
+
+
+                                </div>
+
+
+                            </div>
+
+
+
+                            <div class="d-flex flex-column gap-15 justify-content-evenly">
+
+                                <div class="d-flex justify-content-md-between">
+                                    <div class="status relative">
+
+
+                                        <span class="absolute material-symbols-outlined pending"
+                                            *ngIf="product.status=='pending'">
+                                            local_shipping
+                                        </span>
+
+                                        <span class="absolute material-symbols-outlined done_logo"
+                                            *ngIf="product.status=='delivered'" cla>
+                                            done
+                                        </span>
+
+                                        <p>{{product.status}}</p>
+                                    </div>
+                                    <p class="price d-flex">₹{{product.price}}</p>
+                                </div>
+
+                                <div class="btns">
+                                    <button class="viewProduct">View Product</button>
+                                    <button>Buy Again</button>
+                                </div>
+
+
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- <div class="pagination">
+            <div class="d-flex" *ngIf="showData=='orders'">
+
+
+                <button (click)="PreviousPage()">Previous</button>
+        
+        
+        
+        
+        
+                <button *ngIf="CurrentPage!=1" (click)="Gotopage(1)">{{1}}</button>
+                <p *ngIf="CurrentPage>2"> ....</p>
+                <button *ngIf="CurrentPage>2" (click)="Gotopage(CurrentPage-1)">{{CurrentPage-1}}</button>
+        
+                <button class="blue">{{CurrentPage}}</button>
+        
+                <button (click)="Gotopage(CurrentPage+1)" *ngIf="CurrentPage!=TotalPages">{{CurrentPage+1}}</button>
+                <p *ngIf="CurrentPage!=TotalPages-1 && CurrentPage!=TotalPages "> ....</p>
+                <button (click)="Gotopage(TotalPages)"
+                    *ngIf="CurrentPage!=TotalPages && CurrentPage!=TotalPages-1">{{TotalPages}}</button>
+        
+        
+        
+                <button (click)="NextPage()">Next</button>
+            </div>
+        </div> -->
+        </div>
+
+
+
+
+
 
     </div>
+
+
+
+
+
 </section>

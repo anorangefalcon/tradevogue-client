@@ -13,7 +13,7 @@
         </div>
 
         <div class="sidebar">
-            <ul class="navlist">
+            <ul class="navlist mh100 relative">
                 <li class="nav-links" routerLink="/dashboard">
                     <a href=" javascript:void(0);" class="dropdown">
                         <div class="d-flex align-center">
@@ -22,7 +22,7 @@
                         </div>
                     </a>
                 </li>
-                    <li class="nav-links" routerLink="/dashboard">
+                    <li class="nav-links" routerLink="/dashboard/sales">
                     <a href=" javascript:void(0);" class="dropdown">
                         <div class="d-flex align-center">
                             <span class="icons material-symbols-outlined">bar_chart_4_bars</span>
@@ -60,13 +60,18 @@
                         </div>
                     </a>
                 </li>
-                <li class="nav-links"  routerLink="/dashboard/account">
-                    <a href=" javascript:void(0);" class="dropdown">
-                        <div class="d-flex align-center">
-                            <span class="icons material-symbols-outlined">settings</span>
-                            <span class="link-text">Setting</span>
-                        </div>
-                    </a>
+
+                <li class="nav-links profile d-flex align-items-center gap-10" routerLink="/dashboard/account">
+                    
+                    <div class="photo-section relative d-flex justify-content-center align-center">
+                        <img id="profile__photo" src="../../../assets/avatars/try.svg" alt="">
+                        <span class="account__icon absolute material-symbols-outlined">settings</span>               
+                    </div>
+
+                    <span class="profile-content">
+                        <h5 class="profile-title">Abhishek Rana</h5>
+                        <p class="profile-sub-title">Seller</p>
+                    </span>
                 </li>
             </ul>
         </div>

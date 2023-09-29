@@ -1,0 +1,55 @@
+<section id="productDetails">
+    <div class="heading">
+        <h1>Order Details</h1>
+        <h4>Order ID #8377</h4>
+    </div> 
+    <div class="product__content  grid gap-20">
+        <div class="grid__items customerInfo">
+            <h4>Delivery Details: </h4>
+            <span class="deliveryInfo">
+                <p>Customer Name: Abhishek Rana</p>
+                <p>Phone No.: 9874561230</p>
+                <p>Address: B-34/9090, BlueDart Corporation, Ludhiana, Punjab, 144001</p>
+            </span>
+        </div>
+        <div class="grid__items orderStatus">
+            <h4>Order Status</h4>
+            <div class="d-flex gap-30">
+                <span>Order Created</span>
+                <span>Dispacted</span>
+                <span>Shipping</span>
+                <span>....</span>
+                <span>Out for Delivery</span>
+                <span>Order Delivered</span>                
+            </div>
+        </div>
+        <table class="grid__items OrderItems">
+            <thead>
+                <th>Product</th>
+                <th>Color</th>
+                <th>Size</th>
+                <th>Qty</th>
+                <th>Price</th>
+                <th>Total Price</th>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of order;">
+                    <td>
+                        <div class="product_image">
+                            <img src="" alt="">
+                        </div>
+                        <div class="product_desc">
+                            <h4>{{item.product_name}}</h4>
+                            <p>{{item.category}}</p>
+                        </div>
+                    </td>
+                    <td>{{item.color}}</td>
+                    <td>{{item.size}}</td>
+                    <td>{{item.qty}}</td>
+                    <td>&#8377; {{item.price}}</td>
+                    <td>&#8377; {{item.price * item.qty}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</section>

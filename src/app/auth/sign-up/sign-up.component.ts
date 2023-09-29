@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Validators, FormBuilder } from '@angular/forms';
+import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { passwordStrengthValidator, matchPasswordValidator,usernameValidator } from '../validators'; // Adjust the path to the correct location
 import { CookieService } from 'ngx-cookie-service';
 import { UserDataService } from '../user-data.service';
@@ -12,11 +12,11 @@ import { UserDataService } from '../user-data.service';
 })
 export class SignUpComponent {
 
-signupForm:any;
+signupForm:FormGroup;
 users = [];
 isFormSubmitted: boolean = false;
 password:string='password';
-password2:string='password';
+confirmPassword:string='password';
 showPassword:boolean=false;
 showPassword2:boolean=false;
 constructor(private fb:FormBuilder, private cookie : CookieService, private userData:UserDataService){
@@ -62,10 +62,9 @@ onSubmit() {
       }
       signupDetailsArray.push(signupDetails);
       this.cookie.set('signupDetails', JSON.stringify(signupDetailsArray));
-      console.log("signupDetails", signupDetails);
+      // console.log("signupDetails", signupDetails);
     }
   }
-  console.log(this.signupForm);
 
   // Retrieve 
   const storedSignupDetails = this.cookie.get('signupDetails');
@@ -87,7 +86,7 @@ onSubmit() {
     }
    else{
     this.showPassword2=!this.showPassword2;
-    this.password2=this.showPassword2 ? 'text':'password';
+    this.confirmPassword=this.showPassword2 ? 'text':'password';
    }
 
   }

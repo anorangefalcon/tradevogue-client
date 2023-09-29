@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { AbstractControl, FormBuilder, ValidationErrors } from '@angular/forms';
+import { ElementRef, HostListener,  } from '@angular/core';
+
 
 @Component({
   selector: 'app-custom-select',
@@ -7,72 +8,60 @@ import { AbstractControl, FormBuilder, ValidationErrors } from '@angular/forms';
   styleUrls: ['./custom-select.component.css']
 })
 export class CustomSelectComponent {
-  @Input () options: string[] = [];
-  @Input () selectedOption: string = '';
+  @Input () options: any[] = [];
+  @Input () selectedOption: any = '';
+  @Input () type: string = ''; // multiSelect //select //searchSelect
   @Output () final_option = new EventEmitter<string>();
+  @Output () SelectedList = new EventEmitter<any>();
 
-  Form:any;
-  constructor(private fb:FormBuilder){
-
-
-    console.log('this selected form value is ',this.selectedOption);
-    
-
-    
-      
-    
-    }
-
-
-  ngOnInit(){
-    console.log('this selected form value  inside ngonoint is ',this.selectedOption);
-    this.Form= this.fb.group(
-  
-      
-      {
-        name:this.fb.control(this.selectedOption,[this.defaultValueValidator('Select Country')]),
-       
-        
-      }); 
-   
-  }
-
+  selected: any = '';
+  multiSelected: any[] = [];
   isactive:boolean = false;
+  clearbtn:boolean = true;
+  filter: string = '';
+
+  constructor(private elementRef: ElementRef){}
+
+  filterData(e: Event): any{
+    const element =  e.target  as HTMLInputElement
+    if(element.value.length == 0){
+      this.isactive = false;
+      this.filter = '';
+      return;
+    } 
+    this.isactive = true;
+    this.filter = element.value;
+
+  }
 
   toggleClass(){
     this.isactive  = !this.isactive;
   }
-
+  
   updateSelected(option: string){
-    this.selectedOption = option; 
-    this.Form.get('name').setValue(this.selectedOption);
-    this.final_option.emit(option);
+    this.selected = option;
     this.isactive = false;
-
+    this.final_option.emit(option);
+    this.clearbtn = true;
+    this.filter = '';
   }
 
+  updateMutliSelected(e: Event){
+    let element = <HTMLInputElement>e.target;
 
-  defaultValueValidator(defaultValue: any) {
-    return (control: AbstractControl): ValidationErrors | null => {
-      if (control.value === defaultValue) {
-        return { defaultValueError: true };
-      }
-      return null;
-
+    if(element.checked){
+      this.multiSelected.push(element.value);
+    }else{
+      this.multiSelected = this.multiSelected.filter((item)=>{
+        return item != element.value;
+      })
     }
-  };
-
-  onSubmit(){
-    console.log("form is ",this.Form);
-    console.log("selected option is ",this.selectedOption);
-    console.log("name values i s",this.Form.get('name').value);
-    
-    
-    
+    this.SelectedList.emit(this.multiSelected);
   }
 
-
-
-
-
+  @HostListener('document:click', ['$event']) onClick(e: Event){
+    if(!this.elementRef.nativeElement.contains(e.target)){
+      this.isactive = false;
+    }
+  }
 }

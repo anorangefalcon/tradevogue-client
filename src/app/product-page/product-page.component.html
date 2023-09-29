@@ -12,14 +12,12 @@
             </owl-carousel-o>
 
 
-         
+
             <div class="products-imgs-container row d-flex">
-                <div class="gal-img pointer" *ngFor="let image of data.productDetails.image; let i = index"
-                    [ngStyle]="{ 'background': 'url(' + image + ')', 'background-size': 'cover', 'background-position': 'center' }
-                     "
-                     (click) = "showZoomedCarousel(i)">
+                <div class="gal-img pointer" *ngFor="let image of data.productDetails.image; let i = index" [ngStyle]="{ 'background': 'url(' + image + ')', 'background-size': 'cover', 'background-position': 'center' }
+                     " (click)="showZoomedCarousel(i)">
                 </div>
-            </div> 
+            </div>
 
         </div>
         <div class="product-desc">
@@ -28,16 +26,17 @@
             <div class="prod-info d-flex flex-column gap-25">
                 <div class="d-flex align-items-center gap-10">
                     <h5 class="price">₹{{ data.productDetails.price }}</h5>
-    
+
                     <div class="offer d-flex gap-5 align-items-center">
-                        <p *ngIf="data.productDetails.oldPrice != (undefined || 0)" class="old-price">₹{{ data.productDetails.oldPrice }}
+                        <p *ngIf="data.productDetails.oldPrice != (undefined || 0)" class="old-price">₹{{
+                            data.productDetails.oldPrice }}
                         </p>
                         <p class="offer-percentage" *ngIf="data.offerPercentage !== 0">
                             ({{ data.offerPercentage }}% Off)</p>
                     </div>
                 </div>
-    
-    
+
+
                 <div class="reviews-avail d-flex align-items-center gap-10">
                     <div *ngIf="data.avgRating !== 0" class="rating d-flex align-items-center">
                         <span *ngFor="let i of createArrayToIterate(data.avgRating)"
@@ -46,16 +45,17 @@
                         <span *ngFor="let i of createArrayToIterate(5 - data.avgRating)"
                             class="material-symbols-outlined">star</span>
                     </div>
-                    <p>({{data.avgRating}}/5 · {{data.productDetails.reviews.length}} Reviews)</p>
+                    <p class="rate">({{data.avgRating}}/5 · {{data.productDetails.reviews.length}} Reviews)</p>
                     <!-- <div class="avail">
                         <p><strong>Available</strong> : 1000</p>
                     </div> -->
                 </div>
-                <div class="sizes d-flex align-items-center gap-20" id="sizes" >
+                <div class="sizes d-flex align-items-center gap-20" id="sizes">
                     <p>Size:</p>
                     <div class="sizes-opt d-flex gap-10">
                         <div *ngFor="let productSize of data.productDetails.sizes" class="sizes-radios">
-                            <input type="radio" name="size" [value]=productSize id="size_{{ productSize }}" [(ngModel)]="selectedSize">
+                            <input type="radio" name="size" [value]=productSize id="size_{{ productSize }}"
+                                [(ngModel)]="selectedSize">
                             <label for="size_{{ productSize }}">{{ productSize }}</label>
                         </div>
                     </div>
@@ -63,30 +63,30 @@
                 <div class="colors d-flex align-items-center gap-15">
                     <p>Color:</p>
                     <div class="colors-opt d-flex gap-10">
-                        <div class="colors-radios d-flex align-items-center" *ngFor="let color of data.productDetails.colors">
-                            <input type="radio" name="color" [value]=color [style.background-color]="color" [(ngModel)]="selectedColor">
+                        <div class="colors-radios d-flex align-items-center"
+                            *ngFor="let color of data.productDetails.colors">
+                            <input type="radio" name="color" [value]=color [style.background-color]="color"
+                                [(ngModel)]="selectedColor">
                         </div>
                     </div>
                 </div>
-    
+
                 <div class="d-flex gap-15 align-items-center">
-                    <p>Quantity:</p>
-    
-                    <select placeholder-text="Select Quantity" [(ngModel)]="selectedQ">
-                        <option value="" disabled selected>Select Quantity</option>
-                        <option *ngFor="let quantity of data.productDetails.orderQuantity" [value]="quantity">
-                            {{ quantity }}
-                        </option>
-                    </select>
+                    <p class="quan">Quantity:</p>
+
+                    <app-custom-select selectedOption="Select Quantity" (final_option)="updateSelectedField($event)"
+                        [options]="data.productDetails.orderQuantity">
+
+                    </app-custom-select>
                 </div>
-                
+
                 <div class="cart-div d-flex gap-10 align-items-center">
                     <button class="btn-primary wishlist-btn d-flex align-items-center">
                         <span class="material-symbols-outlined">
                             favorite
                         </span>
                     </button>
-                    <button class="btn-primary d-flex gap-10 align-items-center" (click)="addToCart()">
+                    <button class="btn-primary d-flex gap-10 align-items-center cart" (click)="addToCart()">
                         <span class="material-symbols-outlined">
                             shopping_cart
                         </span>
@@ -95,7 +95,7 @@
                 </div>
 
                 <div class="short-description">
-                    {{ data.productDetails.description }} 
+                    {{ data.productDetails.description }}
                     {{ data.productDetails.description }}
                     {{ data.productDetails.description }}
                     {{ data.productDetails.description }}
@@ -106,21 +106,21 @@
                     <a *ngFor="let tag of data.productDetails.info.tags">
                         {{ tag }}
                     </a>
-                   
+
                 </div>
                 <div class="sku d-flex gap-10">
                     <h4>SKU :</h4>
                     <p class="sku_id">{{ data.productDetails.sku }}</p>
                 </div>
             </div>
-            
+
         </div>
     </div>
     <div *ngIf="showCarousel === true" class="zoomed-carousel-outer">
-        <div class="zoom-close-btn" (click) = "showCarousel = false">
+        <div class="zoom-close-btn" (click)="showCarousel = false">
             <span class="material-symbols-outlined">close</span>
         </div>
-        <owl-carousel-o [options]="zoomCarouselOptions" [ngClass]="{crousel: true}" class = "zoomed-carousel" >
+        <owl-carousel-o [options]="zoomCarouselOptions" [ngClass]="{crousel: true}" class="zoomed-carousel">
             <ng-template carouselSlide *ngFor="let image of data.productDetails.image">
                 <div class="img-div d-flex justify-content-center align-items-center"
                     [ngStyle]="{ 'background': 'url(' + image + ')', 'background-size': 'cover' }">
@@ -135,13 +135,32 @@
 
 <div class="container">
 
-    <div class="section-switcher d-flex gap-30 justify-content-center">
+    <div class="section-switcher d-flex gap-30 justify-content-center text">
         <div (click)="selectedSection = 'description'" [class.active]="selectedSection === 'description'"
             class="section-item pointer">Description</div>
         <div (click)="selectedSection = 'information'" [class.active]="selectedSection === 'information'"
             class="section-item pointer">Information</div>
         <div (click)="selectedSection = 'reviews'" [class.active]="selectedSection === 'reviews'"
             class="section-item pointer">Reviews</div>
+    </div>
+    <div class="section-switcher d-flex gap-30 justify-content-center icons">
+        <div (click)="selectedSection = 'description'" [class.active]="selectedSection === 'description'"
+            class="section-item pointer">
+            <span class="material-symbols-outlined">
+                article
+            </span>
+        </div>
+        <div (click)="selectedSection = 'information'" [class.active]="selectedSection === 'information'"
+            class="section-item pointer">
+            <span class="material-symbols-outlined">
+                info
+            </span>
+        </div>
+        <div (click)="selectedSection = 'reviews'" [class.active]="selectedSection === 'reviews'"
+            class="section-item pointer">
+            <span class="material-symbols-outlined">
+                hotel_class
+            </span></div>
     </div>
 
     <div [ngSwitch]="selectedSection" class="prod-details">
@@ -199,16 +218,15 @@
                     </div>
                 </div>
 
-                <h3 class="d-flex gap-20 align-items-center">Add a Review</h3>
+                <h3 class="d-flex gap-20 align-items-center revi">Add a Review</h3>
                 <form class="d-flex flex-column gap-20">
                     <div class="edit-rating">
-                        <span *ngFor="let ok of createArrayToIterate(5); let i = index"  
-                        (click)="userRating = i"
-                        (mouseover)="tempUserRating = i" (mouseleave)="tempUserRating = -1"
-                        [ngClass]="i <= (userRating !== -1 ? userRating : tempUserRating) ? 'filled' : ''"
-                        class="material-symbols-outlined pointer">
-                    star
-                  </span>
+                        <span *ngFor="let ok of createArrayToIterate(5); let i = index" (click)="userRating = i"
+                            (mouseover)="tempUserRating = i" (mouseleave)="tempUserRating = -1"
+                            [ngClass]="i <= (userRating !== -1 ? userRating : tempUserRating) ? 'filled' : ''"
+                            class="material-symbols-outlined pointer">
+                            star
+                        </span>
                     </div>
                     <textarea rows="5" placeholder="Write your review here..."></textarea>
                     <div class="d-flex ">
@@ -227,12 +245,11 @@
 <!-- <app-product-details [data]="data"></app-product-details> -->
 
 <!-- explore more  -->
-<div style="margin-block: 60px;" class="grid gap-30">
-    <div class="container">
-        <h2 class="section-heading">Popular Products</h2>
-        <p class="section-sub-heading">
-            Explore our most popular products.
-        </p>
-    </div>
-    <app-product-card-carousel></app-product-card-carousel>
+
+<div class="container next">
+    <h2 class="section-heading">Popular Products</h2>
+    <p class="section-sub-heading">
+        Explore our most popular products.
+    </p>
 </div>
+<app-product-card-carousel></app-product-card-carousel>

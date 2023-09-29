@@ -1,7 +1,5 @@
 import { Component } from '@angular/core';
-import { ProductsFilterService } from '../shared/services/products-filter.service';
-
-import { DemoService } from '../demo.service';
+import { ProductsFilterService } from '../shared/services/products-filter.service'
 
 @Component({
   selector: 'app-explore',
@@ -12,19 +10,22 @@ import { DemoService } from '../demo.service';
 export class ExploreComponent {
 
   productData: any = [];
-
+  OriginalData:any=[];
   uniqueData: { [field: string]: any[] } = {};
   filters: any[] = [];
-  filterObj: any = {}
+
   FilterApplied: any = {};
 
+  filtersOpen: boolean = false;
 
 
-  constructor(private productFilter: ProductsFilterService, private demoService: DemoService) {}
+
+  constructor(private productFilter: ProductsFilterService) {}
 
   ngOnInit(): void {
-    this.productFilter.getData().then((data) => {
+    this.productFilter.getData().then((data:any) => {
       this.productData = data.originalData;
+      this.OriginalData=this.productData;
       this.uniqueData = data.filterObj;
     });
   }
@@ -39,11 +40,35 @@ export class ExploreComponent {
   onChecked(event: any, field: string) {
     if (event.target.checked) {
       if (Array.isArray(this.FilterApplied[field])) {
-        this.FilterApplied[field].push(event.target.value);
+        let value=event.target.value;
+        if(field=='price'){
+          
+          value=Number(event.target.value)
+          
+      
+        }
+        
+        
+        
+        this.FilterApplied[field].push(value);
+       
       }
       else {
+
+
+     
         this.FilterApplied[field] = []
-        this.FilterApplied[field].push(event.target.value);
+        let value=event.target.value;
+        if(field=='price'){
+          
+           value=Number(event.target.value)
+          
+         
+        }
+       
+        
+        
+        this.FilterApplied[field].push(value);
       }
     }
     else {
@@ -52,7 +77,7 @@ export class ExploreComponent {
 
     let result: any = []
 
-    result = this.productFilter.Filter2(this.FilterApplied, this.productData).then((data: any) => {
+    result = this.productFilter.Filter(this.FilterApplied, this.OriginalData).then((data: any) => {
       if (data.length == 0) {
         this.productData = this.productFilter.getData();
         this.productData = this.productData.originalData;
@@ -61,4 +86,5 @@ export class ExploreComponent {
       this.productData = data;
     });
   }
+ 
 }

@@ -1,32 +1,62 @@
 <div class="explore-container container d-flex">
-    <div  class="filters d-flex flex-column gap-10">
-        <div class="head">
+
+    <div class="phone-icons" [ngClass]="filtersOpen ? 'phone-icons-active' : ''">
+        <div class="filter-icon-div" (click)="filtersOpen = !filtersOpen">
+            <span *ngIf="!filtersOpen" class="material-symbols-outlined">
+                discover_tune
+                </span>
+                <span *ngIf="filtersOpen" class="material-symbols-outlined">
+                    close
+                </span>
+                <p>
+                    FILTER
+                </p>
+        </div>
+        <div class="sorting-icon-div">
+            <span class="filter-icon material-symbols-outlined">
+                swap_vert
+            </span>
+            <p>
+                SORT
+            </p>
+        </div>
+        
+    </div>
+
+    <div class="filters d-flex flex-column gap-10" [ngClass]="(filtersOpen === true) ? 'filter-mobile-active' : '' ">
+        <div class="head d-flex justify-content-md-between align-items-center">
             <h4>FILTERS</h4>
-           
+            <a href="#">Clear all</a>
         </div>
         <div *ngFor="let filter of uniqueData | keyvalue " class="types">
             <div class="category d-flex flex-column gap-10">
                 <h5 class="capital">{{ filter.key }} </h5>
 
                 <div *ngFor="let value of filter.value | slice:0:3; let i = index" class="d-flex gap-10">
-                    <input type="checkbox" [name]="filter.key" [value]="value" [id]="value" (change)="onChecked($event, filter.key)">
+                    <input type="checkbox" [name]="filter.key" [value]="value" [id]="value"
+                        (change)="onChecked($event, filter.key)">
                     <label [for]="value" class="capital">{{ value}}</label>
                 </div>
 
                 <div *ngIf="filter.value[-1]==true" class="d-flex flex-column gap-10">
                     <div *ngFor="let value of filter.value | slice:3:-1; let i = index" class="d-flex gap-10">
-                        <input type="checkbox" [name]="filter.key" [value]="value" [id]="value" (change)="onChecked($event, filter.key)">
+                        <input type="checkbox" [name]="filter.key" [value]="value" [id]="value"
+                            (change)="onChecked($event, filter.key)">
                         <label [for]="value" class="capital">{{ value}}</label>
                     </div>
                 </div>
 
-                <a class="show-btn" *ngIf="filter.value.length>3" (click)="toggleShowItems(filter.key,$event)">Show More</a>
+                <a class="show-btn" *ngIf="filter.value.length>3" (click)="toggleShowItems(filter.key,$event)">Show
+                    More</a>
             </div>
         </div>
     </div>
-    <div class="explore-cards grid">
-        <div *ngFor="let product of productData" class="idhar">
-            <app-card-template [product]="product"></app-card-template>
+
+    <div class="explore-cards">
+        <ng-container *ngFor="let product of productData">
+            <div class="card-temp">
+                <app-card-template class="d-flex justify-content-center" [product]="product"></app-card-template>
+            </div>
+        </ng-container>
         </div>
-    </div>
 </div>

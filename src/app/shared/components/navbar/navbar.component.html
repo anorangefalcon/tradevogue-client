@@ -9,7 +9,7 @@
                 <span></span>
             </div>
 
-            <a class="logo" [routerLink]="['/']">
+            <a class="logo" [routerLink]="['/']" (click)="hamburgerOpen = false">
                 <picture>
                     <source media="(min-width: 480px)" srcset="../../assets/logo.svg">
                     <img src="../../../../assets/logo-mobile.svg" alt="Trade Vogue Logo">
@@ -23,19 +23,19 @@
                     Home
                 </a>
             </li> -->
-            <li class="nav-links">
+            <li class="nav-links" (click)="hamburgerOpen = false">
                 <a href="" class=" d-flex flex-column gap-5" [routerLink]="['/explore']">
                     <!-- <span class="material-symbols-outlined">male</span> -->
                     Men
                 </a>
             </li>
-            <li class="nav-links">
+            <li class="nav-links" (click)="hamburgerOpen = false">
                 <a href="" class=" d-flex flex-column gap-5" [routerLink]="['/explore']">
                     <!-- <span class="material-symbols-outlined">female</span> -->
                     Women
                 </a>
             </li>
-            <li class="nav-links">
+            <li class="nav-links" (click)="hamburgerOpen = false">
                 <a href="" class=" d-flex flex-column gap-5" [routerLink]="['/explore']">
                     <!-- <span class="material-symbols-outlined">offer</span> -->
                     Offers
@@ -154,10 +154,10 @@
                         </div>
                     </li>
 
-                    <li class="sub-links d-flex flex-column justify-content-start">
+                    <!-- <li class="sub-links d-flex flex-column justify-content-start">
                         <a [routerLink]="['/help']">Contact Us</a>
                         <a [routerLink]="['/faq']">FAQ</a>
-                    </li>
+                    </li> -->
                 </ul>
             </li>
         </ul>

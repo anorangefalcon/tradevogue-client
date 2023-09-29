@@ -49,6 +49,7 @@
 
     & .hero-text-container{
         padding: 20px;
+        margin-block-end: 50px;
     }
 
 }

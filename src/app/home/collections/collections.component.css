@@ -1,6 +1,6 @@
 .grid-container{
   position: relative;
-  height: 500px;
+  height: 550px;
   grid-template-areas: 
     'women women men men'
     'women women men men'
@@ -23,7 +23,7 @@
   background: url(../../../assets/collections-component/women1.png), rgba(255, 192, 203, 0.2);
   background-size: cover;
   background-blend-mode: multiply;
-  background-position: center;
+  background-position: top;
   background-repeat: no-repeat; 
 }
 
@@ -32,17 +32,17 @@
   background: url(../../../assets/collections-component/men.png), rgba(var(--secondary));
   background-blend-mode: multiply;
   background-size: cover;
-  background-position: right top;
+  background-position: top;
   background-repeat: no-repeat;
-
 }
 
 .item3 {
   grid-area: kids;
   background: url(../../../assets/collections-component/trends.png), rgb(var(--secondary), 0.5);
   background-blend-mode: color;
-  background-size: contain;
-  background-position: right;
+  /* background-size: contain; */
+  background-size: cover;
+  background-position: 5%;
   background-repeat: no-repeat;
 }
 
@@ -50,8 +50,9 @@
   grid-area: gift;
   background: url(../../../assets/collections-component/explore.png), rgba(255, 255, 241);
   background-blend-mode: multiply;
-  background-size: contain;
-  background-position: right top;
+  /* background-size: contain; */
+  background-size: cover;
+  background-position: 10% top;
   background-repeat: no-repeat;
 }
 
@@ -141,25 +142,16 @@ p{
 
 @media (max-width: 767px) {
   .grid-container {
+    height: 650px;
     /* grid-template-areas:
       'men women gift kids'
       'men women gift kids'
       'men women gift kids'; */
-      grid-template-areas: 
-      'women women women women'
-      'women women women women'
-      'men men men kids'
-      'men men men gift';
+      grid-template-areas:
+      'women men' 
+      'women men'
+      'kids gift ';
   }
-  .item1 {
-    grid-area: women;
-    background: url(../../../assets/collections-component/women1.png), linear-gradient(to top, rgb(233, 233, 233) 10%, transparent);
-    background-size: cover;
-    background-position: left top;
-    background-repeat: no-repeat; 
-    /* scale: 0.8; */
-  }
-
 
   .overlay{
     padding: 10px;
