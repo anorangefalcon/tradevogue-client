@@ -33,7 +33,7 @@ export class AddproductComponent {
     private render: Renderer2,
     private fb: FormBuilder,
     private upload: ImageUploadService,
-    private excel: UploadExcelService) {
+    private excelService: UploadExcelService) {
     this.productsForm = this.fb.group({
 
 
@@ -207,7 +207,7 @@ export class AddproductComponent {
   // Handles Imgages
 
   uploadFile(event: Event) {
-    let data = this.excel.handleFileInput(event);
+    let data = this.excelService.handleFileInput(event);
     data.then((products) => {
       console.log(products);
 

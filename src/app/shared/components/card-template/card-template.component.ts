@@ -12,7 +12,7 @@ export class CardTemplateComponent {
   showPopup: boolean = false;
 
 
-  constructor(private localStorageService: CartService) { }
+  constructor(private cartService: CartService) { }
 
   avgRating: number = 0;
   offerPercentage: number = 0;
@@ -45,7 +45,7 @@ export class CardTemplateComponent {
       sku: this.product.sku,
     }
     
-    this.localStorageService.addToCart(cartItem);
+    this.cartService.addToCart(cartItem);
   }
 
 
