@@ -46,8 +46,7 @@ export class SettingsComponent  {
 
    
     this.getData();
-    routerlinkservice.showData$.subscribe((data)=>{
-      console.log('data is ',data);
+    this.routerlinkservice.showDataValue.subscribe((data:string)=>{
       this.showData=data;
     });
    

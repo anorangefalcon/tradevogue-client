@@ -26,9 +26,4 @@ export class FooterComponent {
     
   }
 
-  onPayment() {
-    console.log("hoja");
-    this.router.navigate(['/t&c#payment'])
- 
-  }
 }

@@ -5,13 +5,15 @@
         <nav class="navbar d-flex flex-column gap-25">
 
             <ul class="nav-items">
-                <li class="nav-links" [ngClass]="(this.showData === 'profile') ? 'nav-link-active' : ''"><a (click)="changeComponent('profile')">
+                <li class="nav-links" [ngClass]="(this.showData === 'profile') ? 'nav-link-active' : ''"><a
+                        (click)="changeComponent('profile')">
                         <span class="nav-icons material-symbols-outlined">
                             person
                         </span>
                         <span class="nav-txt">Home</span>
                     </a></li>
-                <li class="nav-links" [ngClass]="(this.showData === 'orders') ? 'nav-link-active' : ''"><a (click)="changeComponent('orders')">
+                <li class="nav-links" [ngClass]="(this.showData === 'orders') ? 'nav-link-active' : ''"><a
+                        (click)="changeComponent('orders')">
                         <span class="nav-icons material-symbols-outlined">
                             favorite
                         </span>
@@ -63,13 +65,13 @@
                 </div>
 
 
-             
+
 
 
 
                 <div class="form__group relative d-flex flex-column">
                     <label class="form__label">EMAIL<span>*</span></label>
-                
+
                     <span class="material-symbols-outlined form__icon absolute">mail</span>
                     <input type="text" id="email" formControlName="email" placeholder="Enter Your Email">
 
@@ -86,8 +88,20 @@
 
                 <div class="form__group relative d-flex flex-column">
                     <label class="form__label">GENDER<span>*</span></label>
-                    <span class="material-symbols-outlined form__icon absolute">person</span>
-                    <input type="text" id="gender" formControlName="gender" placeholder="Enter Your Username">
+                    <div class="radios">
+                        <div class="genders">
+                            <div class="radiocustom">
+                                <input class="mradio" type="radio" id="male" name="gender" value="Male">
+                                <label for="male"><span class=" icon material-symbols-outlined">man</span></label>
+                                <span>Male</span>
+                            </div>
+                            <div class="radiocustom">
+                                <input class="mradio" type="radio" id="female" name="gender" value="Female">
+                                <label for="female"><span class=" icon material-symbols-outlined">woman</span></label>
+                                <span>Female</span>
+                            </div>
+                        </div>
+                    </div>
 
                 </div>
 
@@ -95,7 +109,7 @@
                 <div class="form__group relative d-flex flex-column">
                     <label class="form__label">DOB<span>*</span></label>
                     <span class="material-symbols-outlined form__icon absolute">person</span>
-                    <input type="text" id="dob" formControlName="dob" placeholder="Enter Your Username">
+                    <input type="date" id="dob" formControlName="dob" placeholder="Enter Your Username">
 
                 </div>
 
@@ -119,7 +133,7 @@
 
         <div class="Allorders" *ngIf="showData=='orders'">
             <div *ngFor="let order of userData.orders" class="order">
-              
+
                 <div class="d-flex justify-content-md-between orderDetails">
 
 
@@ -157,7 +171,7 @@
                 </div>
 
 
-               
+
                 <div class="productsList" [ngClass]="{ expanded2: order.expanded }">
                     <div *ngFor="let product of order.products"
                         class="d-flex flex-column gap-20 justify-content-md-between productItem">
@@ -198,7 +212,7 @@
 
                                         <p>{{product.status}}</p>
                                     </div>
-                                    <p class="price d-flex">{{product.price}}</p>
+                                    <p class="price d-flex">₹{{product.price}}</p>
                                 </div>
 
                                 <div class="btns">
@@ -254,6 +268,6 @@
 
 
 
-   
+
 
 </section>

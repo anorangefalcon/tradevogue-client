@@ -1,7 +1,5 @@
 import { Component } from '@angular/core';
-import { ProductsFilterService } from '../shared/services/products-filter.service';
-
-import { DemoService } from '../demo.service';
+import { ProductsFilterService } from '../shared/services/products-filter.service'
 
 @Component({
   selector: 'app-explore',

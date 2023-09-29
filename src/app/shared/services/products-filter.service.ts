@@ -24,8 +24,8 @@ export class ProductsFilterService {
           tags: []
         };
     
-        originalData.map((data: any) => {
-          // console.log('data i s',data);
+        originalData.forEach((data: any) => {
+        
           
           
           for (let filter in (filterObj)) {

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -7,8 +7,8 @@ import { BehaviorSubject } from 'rxjs';
 export class RouterLinksService {
 
   constructor() { }
-  private showDataValue = new BehaviorSubject<string>('profile');
-  showData$ = this.showDataValue.asObservable();
+  showDataValue = new Subject<string>();
+  // showData$ = this.showDataValue();
 
   updateShowData(data: string) {
     this.showDataValue.next(data);

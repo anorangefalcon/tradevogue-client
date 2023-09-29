@@ -4,9 +4,74 @@
     gap: 51px;
 }
 
+.radios .genders{
+    display: flex;
+    gap: 30px;
+}
+
+.radiocustom {
+    display: flex; 
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 20px;
+    
+}
+
+input[type="radio"]{
+    display: none;
+}
+
+input[type="radio"] + label {
+
+    border: 1px solid rgb(var(--primary));
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 !important;
+
+    & span{
+        color: rgb(var(--primary));
+        /* display: flex;
+        justify-content: center;
+        align-items: center; */
+    }
+}
+
+input[type="radio"]:checked + label {
+
+    background-color: rgb(var(--primary));
+
+    & span{
+        color: #ffff !important;
+    }
+}
 
 
-
+/* .radios{
+    display: flex;
+    gap: 15px;
+}
+.genders{
+    padding-top: 10px;
+}
+input[type="radio"] + label {
+    position: relative;
+    margin-left: 50px;
+}
+.radiocustom {
+    display: flex; 
+    margin-bottom: 20px;
+    
+}
+.radiocustom label{
+    gap: 13px;
+}
+input[type="radio"]:checked + .icon {
+    background-color: gray;
+} */
 
 .active {
     border-right: 3px solid rgb(var(--primary)) !important;
