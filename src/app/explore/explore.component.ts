@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ProductsFilterService } from '../shared/services/products-filter.service'
+import { FetchDataService } from '../shared/services/fetch-data.service';
 
 @Component({
   selector: 'app-explore',
@@ -10,25 +11,43 @@ import { ProductsFilterService } from '../shared/services/products-filter.servic
 export class ExploreComponent {
 
   productData: any = [];
-  OriginalData:any=[];
+  OriginalData: any = [];
   uniqueData: { [field: string]: any[] } = {};
   filters: any[] = [];
-
   FilterApplied: any = {};
-
   filtersOpen: boolean = false;
 
-
-
-  constructor(private productFilter: ProductsFilterService) {}
+  constructor(private productFilter: ProductsFilterService, private fetchData: FetchDataService) { }
 
   ngOnInit(): void {
-    this.productFilter.getData().then((data:any) => {
+    this.productFilter.getData().then((data: any) => {
       this.productData = data.originalData;
-      this.OriginalData=this.productData;
+      this.OriginalData = this.productData;
       this.uniqueData = data.filterObj;
+      console.log('unique data is ',this.uniqueData);
+
     });
+
+
+
   }
+
+  clearAll() {
+    let checkboxes: any = document.querySelectorAll('.checkboxes');
+    //returns nodelist and type is object
+
+    console.log('checkbox is ', checkboxes, "type is ", typeof (checkboxes));
+    checkboxes = Array.from(checkboxes)
+
+    checkboxes.forEach(function (checkbox: any) {
+      checkbox.checked = false;
+    });
+
+    this.fetchData.getData().subscribe((data: any) => {
+      this.productData = data
+    })
+  }
+
 
   toggleShowItems(key: any, event: any) {
     let target = event.target.innerHTML;
@@ -39,35 +58,24 @@ export class ExploreComponent {
 
   onChecked(event: any, field: string) {
     if (event.target.checked) {
+
       if (Array.isArray(this.FilterApplied[field])) {
-        let value=event.target.value;
-        if(field=='price'){
-          
-          value=Number(event.target.value)
-          
-      
+        let value = event.target.value;
+        if (field == 'price') {
+
+          value = Number(event.target.value)
         }
-        
-        
-        
+
         this.FilterApplied[field].push(value);
-       
+
       }
       else {
-
-
-     
         this.FilterApplied[field] = []
-        let value=event.target.value;
-        if(field=='price'){
-          
-           value=Number(event.target.value)
-          
-         
+        let value = event.target.value;
+
+        if (field == 'price') {
+          value = Number(event.target.value)
         }
-       
-        
-        
         this.FilterApplied[field].push(value);
       }
     }
@@ -78,13 +86,13 @@ export class ExploreComponent {
     let result: any = []
 
     result = this.productFilter.Filter(this.FilterApplied, this.OriginalData).then((data: any) => {
-      if (data.length == 0) {
-        this.productData = this.productFilter.getData();
-        this.productData = this.productData.originalData;
-        return;
-      }
+      // if (data.length == 0) {
+      //   this.productData = this.productFilter.getData();
+      //   this.productData = this.productData.originalData;
+      //   return;
+      // }
       this.productData = data;
     });
   }
- 
+
 }

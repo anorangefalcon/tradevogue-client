@@ -110,6 +110,7 @@ export class ProductsComponent implements OnInit {
       }
     }
   }
+  
   // Delete Selected Enteries
   deleteItems() {
     if (this.deleteList.length != 0) {
