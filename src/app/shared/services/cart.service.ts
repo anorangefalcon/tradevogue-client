@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
 import { FetchDataService } from './fetch-data.service';
 import { BehaviorSubject, Observable, map } from 'rxjs';
+import { ToastService } from './toast.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CartService {
 
-  constructor(private fetchData: FetchDataService) {
+  constructor(private fetchData: FetchDataService, private toastService: ToastService) {
     this.fetchDetails();
   }
 
@@ -28,6 +29,9 @@ export class CartService {
         return item.sku === data.sku;
       });
       if (skuFound) {
+        this.toastService.errorToast({
+          title: 'Item already exists in cart',
+        })
         return;
       }
     }
@@ -35,6 +39,7 @@ export class CartService {
     this.cartStorage.push({ "sku": data.sku, "size": data.size, "color": data.color, "Quantity": data.quantity });
     const myCart = JSON.stringify(this.cartStorage);
     localStorage.setItem("myCart", myCart);
+    this.toastService.successToast();
 
     this.fetchDetails();
   }
