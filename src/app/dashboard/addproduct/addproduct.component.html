@@ -25,14 +25,16 @@
 
                 <div class="next_prev_btn d-flex align-items-center gap-15">
                     
-                    <button class="button add_form d-flex flex-center" (click)="addProductImageForm()">
-                        <span class="material-symbols-outlined">add</span>
+                    <button class="button add_form d-flex flex-center" 
+                    (click)="addProductImageForm()"
+                    [ngStyle]="{display: current_form != 'product_images'? 'none' : 'flex' }">
+                        <span class="add_form_icon material-symbols-outlined">add</span>
                     </button>
 
 
-                    <button class="button previous d-flex align-items-center gap-5" (click)="current_form = ''"
+                    <button class="button previous d-flex flex-center" (click)="current_form = ''"
                         [disabled]="current_form == ''" [ngStyle]="{display: current_form == ''? 'none' : 'flex' }">
-                        <span class="material-symbols-outlined">arrow_back_ios_new</span>
+                        <span class="back_icon material-symbols-outlined">arrow_back_ios_new</span>
                     </button>
                     <!-- <button class="button next d-flex align-items-center gap-5"
                         (click)="current_form = 'product_images'"
@@ -41,10 +43,10 @@
                         <span class="material-symbols-outlined">arrow_forward_ios</span>
                     </button> -->
 
-                    <button class="button next d-flex align-items-center gap-5"
+                    <button class="button next d-flex flex-center"
                         (click)="current_form = 'product_images'"
                         [ngStyle]="{display: current_form == 'product_images'? 'none' : 'flex' }">
-                        <span class="material-symbols-outlined">arrow_forward_ios</span>
+                        <span class="next_icon material-symbols-outlined">arrow_forward_ios</span>
                     </button>
                 </div>
             </div>

@@ -295,6 +295,8 @@ app-custom-select{
 
         & .next_prev_btn{
             & .button{
+                height: 35px;
+                width: 35px;
                 border: 1px solid rgba(var(--text-black), 0.1);
                 border-radius: 5px;
                 background: none;
@@ -304,32 +306,22 @@ app-custom-select{
                 transition: all 0.3s ease-in-out;
 
                 & span{
-                    font-size: 18px !important;
-                    transition: all 0.3s ease-in-out;
-                }
-            }
-            & .button:hover{
-                background-color: rgb(var(--text-black), 0.06);
-            }
-
-            & .add_form {
-                border: 1px solid rgba(var(--text-black), 0.1);
-                border-radius: 5px;
-                background: none;
-                padding: 7px;
-                cursor:auto;
-
-                & span {
-                    font-size: 24px !important;
                     font-weight: 300;
                     transition: transform 0.3s ease-in-out;
                     cursor: pointer;
-                    color: rgb(var(--blue-clr));
                     &:is(:hover) {
-                        transform: scale(1.2);
+                        transform: scale(1.1);
                     }
                 }
-            }           
+
+                & .add_form_icon{
+                    color: rgb(var(--blue-clr));
+                }
+
+                & .next_icon, .back_icon{
+                    font-size: 18px;
+                }
+            }          
         }
     }
 
