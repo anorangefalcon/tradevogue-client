@@ -44,7 +44,11 @@ export class AddproductComponent {
               Validators.required
             ]
           }],
-
+          stockQuantity: ['', {
+            validators: [
+              Validators.required
+            ]
+          }],
           productImages: [[], {
             validators: [
               Validators.required,
@@ -115,11 +119,6 @@ export class AddproductComponent {
           ]
         }],
         weight: ['', {
-          validators: [
-            Validators.required
-          ]
-        }],
-        stockQuantity: ['', {
           validators: [
             Validators.required
           ]

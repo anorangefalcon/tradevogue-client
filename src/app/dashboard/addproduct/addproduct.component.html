@@ -6,25 +6,30 @@
             <input type="file" id="sizes" maxlength="1" minlength="1" (change)="uploadFile($event)"
                 accept="image/CSV, application/vnd.ms-excel ,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" />
             <label for="sizes"><span class="material-symbols-outlined">upload_file</span></label>
-            <a class="downloadBtn" href="../../../assets/ExcelSampleFile/sampleFullData.xlsx" download><span class="material-symbols-outlined">download</span></a>
+            <a class="downloadBtn" href="../../../assets/ExcelSampleFile/sampleFullData.xlsx" download><span
+                    class="material-symbols-outlined">download</span></a>
         </div>
     </div>
 
     <div class="product_form">
 
-        <form action="" class="" [formGroup]="productsForm">
+        <form [formGroup]="productsForm">
 
             <div class="row row-1 d-flex justify-content-md-between">
                 <h2 *ngIf="current_form != 'product_images'; else title2">Basic Info</h2>
                 <ng-template #title2>
                     <span class="d-flex gap-15">
                         <h2>Product Images</h2>
-                        <a class="d-flex flex-center " (click)="addProductImageForm()"><span
-                                class="material-symbols-outlined">add_box</span></a>
                     </span>
                 </ng-template>
 
                 <div class="next_prev_btn d-flex align-items-center gap-15">
+                    
+                    <button class="button add_form d-flex flex-center" (click)="addProductImageForm()">
+                        <span class="material-symbols-outlined">add</span>
+                    </button>
+
+
                     <button class="button previous d-flex align-items-center gap-5" (click)="current_form = ''"
                         [disabled]="current_form == ''" [ngStyle]="{display: current_form == ''? 'none' : 'flex' }">
                         <span class="material-symbols-outlined">arrow_back_ios_new</span>
@@ -38,15 +43,8 @@
 
                     <button class="button next d-flex align-items-center gap-5"
                         (click)="current_form = 'product_images'"
-                        [ngStyle]="{display: current_form == 'product_images'? 'none' : 'flex' }" >
+                        [ngStyle]="{display: current_form == 'product_images'? 'none' : 'flex' }">
                         <span class="material-symbols-outlined">arrow_forward_ios</span>
-                    </button>
-
-                    <button class="add d-flex align-items-center gap-5" (click)="onsubmit()"
-                    [disabled]="productsForm.invalid"
-                    [ngStyle]="{display: current_form == ''? 'none' : 'flex' }">
-                        <a href="javascript:void(0);">Submit Product</a>
-                        <span class="material-symbols-outlined">upload</span>
                     </button>
                 </div>
             </div>
@@ -75,15 +73,29 @@
                                                 Required</small>
                                         </span>
                                     </div>
+
+                                    <div class="form__group">
+                                        <label for="quantity" class="input__label">Quantity in Stock<span
+                                                class="important">*</span></label>
+                                        <input type="number" placeholder="Quantity" id="quantity"
+                                            formControlName="stockQuantity" required />
+
+                                        <span class="error"
+                                            *ngIf="form.get('stockQuantity')?.invalid && (form.get('stockQuantity')?.dirty || form.get('stockQuantity')?.touched)">
+                                            <small *ngIf="form.get('stockQuantity')?.hasError('required')">*Field
+                                                Required</small>
+                                        </span>
+                                    </div>
+
                                     <div class="form__group">
                                         <label [for]="'productImages'+ i" class="input__label">Product Images :</label>
-                                        <div class="product-images">
+                                        <div class="product-images relative">
                                             <input type="file" [id]="'productImages'+ i"
                                                 accept="image/jpg, image/jpeg, image/png" maxlength="6" minlength="3"
                                                 (change)="onFileChange($event, i)" multiple />
-                                            <span class="image_instruction relative d-flex flex-column text-center flex-center gap-10">
+                                            <span
+                                                class="image_instruction absolute d-flex flex-column text-center flex-center gap-10">
                                                 <h3>Upload Product Images</h3>
-
                                                 <small>
                                                     Maximum 0f 6 images and minimum of 3 images need to be uploaded,make
                                                     sure the image size match the proper background
@@ -93,11 +105,49 @@
                                                     the image you need to wait
                                                     minimum of 24hrs.
                                                 </small>
-                                                <label [for]="'productImages'+ i" class="absolute d-flex flex-center gap-5">
-                                                    <span class="upload_icon material-symbols-outlined">add_a_photo</span>
-                                                    <!-- Upload File -->
-                                                </label>
                                             </span>
+                                            <span class="images_list">
+                                                <span>
+                                                    <img src="../../../assets/Gallery/Gallery1 (8).jpg" alt="">
+                                                    <span class="remove-btn" href="">
+                                                        <span class="material-symbols-outlined">close</span>
+                                                    </span>
+                                                </span>
+                                                <span>
+                                                    <img src="../../../assets/Gallery/Gallery1 (8).jpg" alt="">
+                                                    <span class="remove-btn" href="">
+                                                        <span class="material-symbols-outlined">close</span>
+                                                    </span>
+                                                </span>
+                                                <span>
+                                                    <img src="../../../assets/Gallery/Gallery1 (8).jpg" alt="">
+                                                    <span class="remove-btn" href="">
+                                                        <span class="material-symbols-outlined">close</span>
+                                                    </span>
+                                                </span>
+                                                <span>
+                                                    <img src="../../../assets/Gallery/Gallery1 (8).jpg" alt="">
+                                                    <span class="remove-btn" href="">
+                                                        <span class="material-symbols-outlined">close</span>
+                                                    </span>
+                                                </span>
+                                                <span>
+                                                    <img src="../../../assets/Gallery/Gallery1 (8).jpg" alt="">
+                                                    <span class="remove-btn" href="">
+                                                        <span class="material-symbols-outlined">close</span>
+                                                    </span>
+                                                </span>
+                                                <span>
+                                                    <img src="../../../assets/Gallery/Gallery1 (8).jpg" alt="">
+                                                    <span class="remove-btn" href="">
+                                                        <span class="material-symbols-outlined">close</span>
+                                                    </span>
+                                                </span>
+                                            </span>
+                                            <label [for]="'productImages'+ i" class="absolute d-flex flex-center gap-5">
+                                                <span class="upload_icon material-symbols-outlined">add_a_photo</span>
+                                                <!-- Upload File -->
+                                            </label>
                                         </div>
                                     </div>
                                 </div>
@@ -106,7 +156,7 @@
                     </div>
                 </div>
                 <div *ngSwitchDefault>
-                    <div formGroupName="basicinfo" class="form-1 row row-2 add_product d-flex gap-30">
+                    <div formGroupName="basicinfo" class="form-1 row-2 add_product d-flex gap-30">
                         <div class="col col-1">
                             <div class="form__group">
                                 <label for="name" class="input__label">Product Name<span
@@ -281,19 +331,6 @@
                                 </div>
 
                                 <div class="form__group">
-                                    <label for="quantity" class="input__label">Quantity in Stock<span
-                                            class="important">*</span></label>
-                                    <input type="number" placeholder="Quantity" id="quantity"
-                                        formControlName="stockQuantity" required />
-
-                                    <span class="error"
-                                        *ngIf="productSubForm('stockQuantity')?.invalid && (productSubForm('stockQuantity')?.dirty || productSubForm('stockQuantity')?.touched)">
-                                        <small *ngIf="productSubForm('stockQuantity')?.hasError('required')">*Field
-                                            Required</small>
-                                    </span>
-                                </div>
-
-                                <div class="form__group">
                                     <label for="" class="input__label">Order Quantity<span
                                             class="important">*</span></label>
                                     <app-custom-select [options]="orderQuantity" [type]="'multiSelect'"
@@ -311,7 +348,13 @@
                         </div>
                     </div>
                 </div>
-
+                <div class="submit_btn d-flex justify-content-end">
+                    <button class="add d-flex align-items-center gap-5" (click)="onsubmit()"
+                        [disabled]="productsForm.invalid" [ngStyle]="{display: current_form == ''? 'none' : 'flex' }">
+                        <a href="javascript:void(0);">Submit Product</a>
+                        <span class="material-symbols-outlined">upload</span>
+                    </button>
+                </div>
             </div>
         </form>
     </div>

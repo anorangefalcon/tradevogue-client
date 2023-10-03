@@ -1,4 +1,4 @@
-import { Component, ViewChild, ElementRef } from '@angular/core';
+import { Component} from '@angular/core';
 
 
 @Component({
@@ -7,35 +7,23 @@ import { Component, ViewChild, ElementRef } from '@angular/core';
   styleUrls: ['./home.component.css'],
 })
 export class DashboardComponent {
-  @ViewChild('nav-links') linkbtn!: ElementRef;
 
   isCollapse: boolean = false;
   isSalesBtnActive: boolean = false;
   isProductBtnActive: boolean = false;
+  title: string = ''; 
 
-  // toggleCheck(e: Event){
-  //   console.log("he", this.isCollapse);
-  //   if(this.isCollapse){
-  //     this.isCollapse = false;
-  //   }
-  // }
-  
   ngOnInit(){
     window.addEventListener("resize", ()=>{
-      let check = window.matchMedia("(max-width: 767px)");
+      let check = window.matchMedia("(max-width: 992px)");
+      // console.log(check.matches);
       if (check.matches){ 
         this.isCollapse = true;
+        console.log(this.isCollapse);
         return;
       }
       this.isCollapse = false;
     });
-  }
-
-    
-
-
-  toggle(){
-    this.isCollapse = !this.isCollapse;
   }
 
   sales_dropdown(){

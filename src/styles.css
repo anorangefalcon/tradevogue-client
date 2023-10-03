@@ -127,6 +127,12 @@ select {
     --text-gray: 111, 111, 111;
     --input-text-bg : #f5f5f5cf;
 
+    /* Dashboard */
+    --blue-clr: 24, 138, 226;
+    --yellow-clr: 249, 165, 80;
+    --green-clr: var(--success);
+    --red-clr: var(--danger);
+
     /* dark-purple */
     /* --text: #FFFFFF;
     --background: #0a0c10;
@@ -282,6 +288,9 @@ ul {
 .justify-content-start {
     justify-content: flex-start;
 }
+.justify-content-end {
+    justify-content: flex-end;
+}
 
 .justify-content-center {
     justify-content: center;
@@ -400,6 +409,31 @@ ul {
     position: fixed;
 }
 
+.sticky {
+    position: sticky;
+}
+
+.inset-inline-0{
+    inset-inline: 0;
+}
+.inset-inline-start-0{
+    inset-inline-start: 0;
+}
+.inset-inline-end-0{
+    inset-inline-end: 0;
+}
+
+.inset-block-0{
+    inset-block: 0;
+}
+.inset-block-start-0{
+    inset-block-start: 0;
+}
+.inset-block-end-0{
+    inset-block-start: 0;
+}
+
+
 .top-0 {
     top: 0;
 }
@@ -432,6 +466,10 @@ ul {
 
 .text-upper {
     text-transform: uppercase;
+}
+
+.transition{
+    transition: all 0.3s ease-in-out;
 }
 
 /* Buttons Style */

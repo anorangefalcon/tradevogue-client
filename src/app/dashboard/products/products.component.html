@@ -2,9 +2,9 @@
     <div class="product-table">
         <div class="row-1">
             <h1>Products Inventory</h1>
-            <span class="search-menu">
+            <!-- <span class="search-menu">
                 <app-search-bar [searchPlaceholder]="'Search Products...'"></app-search-bar>
-            </span>
+            </span> -->
         </div>
 
         <div class="row-2 d-flex flex-column gap-20">
@@ -117,10 +117,10 @@
                                 <div class="d-flex gap-5 align-items-center">
                                     <ng-container *ngFor="let star of rating">
                                         <span *ngIf="star <= item.rating">
-                                            <i class="fa-solid fa-star" style="color: rgb(var(--dash-blue-clr));"></i>
+                                            <i class="fa-solid fa-star" style="color: rgb(var(--blue-clr));"></i>
                                         </span>
                                         <span *ngIf="star > item.rating">
-                                            <i class="fa-regular fa-star" style="color: rgb(var(--dash-blue-clr));"></i>
+                                            <i class="fa-regular fa-star" style="color: rgb(var(--blue-clr));"></i>
                                         </span>
                                     </ng-container>
                                     &#40;{{item.rating}}&#41;
@@ -129,10 +129,10 @@
                             <td class="product-items">{{item.last_updated}}</td>
                             <td class="product-items">
                                 <div>
-                                    <a href="javascript:void(0);" style="color: rgb(var(--dash-blue-clr));">
+                                    <a href="javascript:void(0);" style="color: rgb(var(--blue-clr));">
                                         <i class="fa-icon fa-regular fa-pen-to-square"></i>
                                     </a>
-                                    <a href="javascript:void(0);" style="color: rgb(var(--dash-red-clr));"
+                                    <a href="javascript:void(0);" style="color: rgb(var(--red-clr));"
                                         (click)="deleteItem(item)">
                                         <i class="fa-icon fa-regular fa-trash-can"></i>
                                     </a>
