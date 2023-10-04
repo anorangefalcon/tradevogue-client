@@ -1,29 +1,25 @@
 <!-- Product Section -->
 <section *ngIf="data.productDetails !== {} " class="product">
 
-    <div class="container d-flex gap-65">
-        <div class="product-carousel">
-            <owl-carousel-o [options]="customOptions" [ngClass]="{crousel: true}">
+    <div class="container d-flex gap-30">
+        <div class="product-carousel d-flex  gap-10 justify-content-center">
+            <div class="products-imgs-container  d-flex flex-column  thumbnails">
+                <div class="gal-img pointer" *ngFor="let image of data.productDetails.image; let i = index" [ngStyle]="{ 'background': 'url(' + image + ')', 'background-size': 'cover', 'background-position': 'center' }
+                     " (click)="showZoomedCarousel(i)">
+                </div>
+            </div>
+            <owl-carousel-o [options]="customOptions" [ngClass]="{crousel: true}" class="bigcarousel">
                 <ng-template carouselSlide *ngFor="let image of data.productDetails.image">
                     <div class="img-div d-flex justify-content-center align-items-center"
                         [ngStyle]="{ 'background': 'url(' + image + ')', 'background-size': 'cover' }">
                     </div>
                 </ng-template>
             </owl-carousel-o>
-
-
-
-            <div class="products-imgs-container row d-flex">
-                <div class="gal-img pointer" *ngFor="let image of data.productDetails.image; let i = index" [ngStyle]="{ 'background': 'url(' + image + ')', 'background-size': 'cover', 'background-position': 'center' }
-                     " (click)="showZoomedCarousel(i)">
-                </div>
-            </div>
-
         </div>
         <div class="product-desc">
             <h2 class="prod-name">{{ data.productDetails.name }}</h2>
             <p class="subTitle">{{ data.productDetails.info['subTitle'] }}</p>
-            <div class="prod-info d-flex flex-column gap-25">
+            <div class="prod-info d-flex flex-column gap-20">
                 <div class="d-flex align-items-center gap-10">
                     <h5 class="price">₹{{ data.productDetails.price }}</h5>
 
@@ -81,42 +77,86 @@
                 </div>
 
                 <div class="cart-div d-flex gap-10 align-items-center">
-                    <button class="btn-primary wishlist-btn d-flex align-items-center">
+                    <button class="btn-secondary wishlist-btn d-flex align-items-center">
                         <span class="material-symbols-outlined">
                             favorite
                         </span>
                     </button>
-                    <button class="btn-primary d-flex gap-10 align-items-center cart" (click)="addToCart()">
-                        <span class="material-symbols-outlined">
+                    <button class="btn-primary d-flex gap-10 align-items-center cart cart-btn" (click)="addToCart()">
+                        <!-- <span class="material-symbols-outlined">
                             shopping_cart
-                        </span>
+                        </span> -->
                         <p>ADD TO CART</p>
                     </button>
                 </div>
 
-                <div class="short-description">
+                <!-- <div class="short-description">
                     {{ data.productDetails.description }}
                     {{ data.productDetails.description }}
                     {{ data.productDetails.description }}
                     {{ data.productDetails.description }}
+                </div> -->
+
+                <div class="d-flex flex-column">
+                    <div class="accordian">
+                        <input type="checkbox" name="accordian" id="desc">
+                        <label for="desc" class="d-flex align-items-center justify-content-md-between">Description
+                            <span class="material-symbols-outlined">
+                                expand_more
+                            </span>
+                        </label >
+                        <div class="content">
+                            {{ data.productDetails.description }}
+                            {{ data.productDetails.description }}
+                            {{ data.productDetails.description }}
+                            {{ data.productDetails.description }}
+                        </div>
+                    </div>
+    
+                    <div class="accordian">
+                        <input type="checkbox" name="accordian" id="info">
+                        <label for="info" class="d-flex align-items-center justify-content-md-between">Information
+                            <span class="material-symbols-outlined">
+                                expand_more
+                            </span>
+                        </label >
+                        <div class="content d-flex flex-column gap-10">
+                          <div class="info-content d-flex gap-10">
+                            <h5>Product Code :</h5>
+                            <p>{{ data.productDetails.info.productCode }}</p>
+                          </div>
+                          <div class="info-content d-flex gap-10">
+                            <h5>Brand :</h5>
+                            <p>{{ data.productDetails.info.brand }}</p>
+                          </div>
+                          <div class="info-content d-flex gap-10">
+                            <h5>Composition :</h5>
+                            <p>{{ data.productDetails.info.composition }}</p>
+                          </div>
+                          <div class="info-content d-flex gap-10">
+                            <h5>Weight :</h5>
+                            <p>{{ data.productDetails.info.weight }}</p>
+                          </div>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="tags d-flex gap-10 d-flex align-items-center">
-                    <h4>TAGS :</h4>
+                    <!-- <h4>TAGS :</h4> -->
                     <a *ngFor="let tag of data.productDetails.info.tags">
                         {{ tag }}
                     </a>
 
                 </div>
-                <div class="sku d-flex gap-10">
+                <!-- <div class="sku d-flex gap-10">
                     <h4>SKU :</h4>
                     <p class="sku_id">{{ data.productDetails.sku }}</p>
-                </div>
+                </div> -->
             </div>
 
         </div>
     </div>
-    <div *ngIf="showCarousel === true" class="zoomed-carousel-outer">
+    <!-- <div *ngIf="showCarousel === true" class="zoomed-carousel-outer">
         <div class="zoom-close-btn" (click)="showCarousel = false">
             <span class="material-symbols-outlined">close</span>
         </div>
@@ -127,119 +167,119 @@
                 </div>
             </ng-template>
         </owl-carousel-o>
-    </div>
-</section>
-
-
-<!-- Product Details -->
-
-<div class="container">
-
-    <div class="section-switcher d-flex gap-30 justify-content-center text">
-        <div (click)="selectedSection = 'description'" [class.active]="selectedSection === 'description'"
+    </div> -->
+    
+    
+    <!-- Product Details -->
+    
+    <!-- <div class="container"> -->
+        
+        <!-- <div class="section-switcher d-flex gap-30 justify-content-center text">
+            <div (click)="selectedSection = 'description'" [class.active]="selectedSection === 'description'"
             class="section-item pointer">Description</div>
-        <div (click)="selectedSection = 'information'" [class.active]="selectedSection === 'information'"
+            <div (click)="selectedSection = 'information'" [class.active]="selectedSection === 'information'"
             class="section-item pointer">Information</div>
-        <div (click)="selectedSection = 'reviews'" [class.active]="selectedSection === 'reviews'"
+            <div (click)="selectedSection = 'reviews'" [class.active]="selectedSection === 'reviews'"
             class="section-item pointer">Reviews</div>
-    </div>
-    <div class="section-switcher d-flex gap-30 justify-content-center icons">
-        <div (click)="selectedSection = 'description'" [class.active]="selectedSection === 'description'"
+        </div> -->
+        
+        <!-- <div class="section-switcher d-flex gap-30 justify-content-center icons">
+            <div (click)="selectedSection = 'description'" [class.active]="selectedSection === 'description'"
             class="section-item pointer">
             <span class="material-symbols-outlined">
                 article
             </span>
         </div>
         <div (click)="selectedSection = 'information'" [class.active]="selectedSection === 'information'"
-            class="section-item pointer">
-            <span class="material-symbols-outlined">
-                info
-            </span>
-        </div>
-        <div (click)="selectedSection = 'reviews'" [class.active]="selectedSection === 'reviews'"
-            class="section-item pointer">
-            <span class="material-symbols-outlined">
-                hotel_class
-            </span></div>
+        class="section-item pointer">
+        <span class="material-symbols-outlined">
+            info
+        </span>
     </div>
-
-    <div [ngSwitch]="selectedSection" class="prod-details">
-
-        <div *ngSwitchCase="'description'" class="description-section">
-            <p class="fs-14">
-                {{ data.productDetails.description }}
-                {{ data.productDetails.description }}
-                {{ data.productDetails.description }}
-                {{ data.productDetails.description }}
-                {{ data.productDetails.description }}
-                {{ data.productDetails.description }}
-            </p>
-        </div>
-
-        <div *ngSwitchCase="'information'" class="information-section">
-            <table class="fs-14">
-                <tr>
-                    <th class="fs-14">Product Code</th>
-                    <td>{{ data.productDetails.info.productCode }}</td>
-                </tr>
-                <tr>
-                    <th class="fs-14">Brand</th>
-                    <td>{{ data.productDetails.info.brand }}</td>
-                </tr>
-                <tr>
-                    <th class="fs-14">Composition</th>
-                    <td>{{ data.productDetails.info.composition }}</td>
-                </tr>
-                <tr>
-                    <th class="fs-14">Weight</th>
-                    <td>{{ data.productDetails.info.weight }}</td>
-                </tr>
-            </table>
-        </div>
-
-        <div *ngSwitchCase="'reviews'" class="reviews-section d-flex">
-            <div class="review-cards d-flex flex-column gap-20">
-                <div class="review-card d-flex flex-column gap-5" *ngFor="let review of data.productDetails.reviews">
-
-                    <div>
-                        <p class="rev">
-                            {{ review.comment }}
-                        </p>
-                    </div>
-                    <div class="person-info d-flex justify-content-md-between">
-                        <div *ngIf="data.avgRating !== 0" class="rating d-flex align-items-center">
-                            <span *ngFor="let i of createArrayToIterate(data.avgRating)"
-                                class="material-symbols-outlined filled">star</span>
-                            <span *ngIf="(data.avgRating % 1) !== 0" class="material-symbols-outlined">star_half</span>
-                            <span *ngFor="let i of createArrayToIterate(5 - data.avgRating)"
-                                class="material-symbols-outlined">star</span>
-                        </div>
-                        <p class="fw-600 ">{{ review.username }} · {{ review.date }}</p>
-                    </div>
-                </div>
-
-                <h3 class="d-flex gap-20 align-items-center revi">Add a Review</h3>
-                <form class="d-flex flex-column gap-20">
-                    <div class="edit-rating">
-                        <span *ngFor="let ok of createArrayToIterate(5); let i = index" (click)="userRating = i"
-                            (mouseover)="tempUserRating = i" (mouseleave)="tempUserRating = -1"
-                            [ngClass]="i <= (userRating !== -1 ? userRating : tempUserRating) ? 'filled' : ''"
-                            class="material-symbols-outlined pointer">
-                            star
-                        </span>
-                    </div>
-                    <textarea rows="5" placeholder="Write your review here..."></textarea>
-                    <div class="d-flex ">
-                        <button class="btn-primary ">Submit</button>
-                    </div>
-                </form>
-
-
-            </div>
-        </div>
-
-    </div>
+    <div (click)="selectedSection = 'reviews'" [class.active]="selectedSection === 'reviews'"
+    class="section-item pointer">
+    <span class="material-symbols-outlined">
+        hotel_class
+    </span>
 </div>
+</div> -->
+
+<!-- <div [ngSwitch]="selectedSection" class="prod-details"> -->
+    
+    <!-- <div *ngSwitchCase="'description'" class="description-section">
+        <p class="fs-14">
+            {{ data.productDetails.description }}
+            {{ data.productDetails.description }}
+            {{ data.productDetails.description }}
+            {{ data.productDetails.description }}
+            {{ data.productDetails.description }}
+            {{ data.productDetails.description }}
+        </p>
+    </div> -->
+    
+    <!-- <div *ngSwitchCase="'information'" class="information-section">
+        <table class="fs-14">
+            <tr>
+                <th class="fs-14">Product Code</th>
+                <td>{{ data.productDetails.info.productCode }}</td>
+            </tr>
+            <tr>
+                <th class="fs-14">Brand</th>
+                <td>{{ data.productDetails.info.brand }}</td>
+            </tr>
+            <tr>
+                <th class="fs-14">Composition</th>
+                <td>{{ data.productDetails.info.composition }}</td>
+            </tr>
+            <tr>
+                <th class="fs-14">Weight</th>
+                <td>{{ data.productDetails.info.weight }}</td>
+            </tr>
+        </table>
+    </div> -->
+    
+    <!-- <div *ngSwitchCase="'reviews'" class="reviews-section d-flex"> -->
+        <div class="review-cards d-flex flex-column gap-20 container">
+            <div class="review-card d-flex flex-column gap-5" *ngFor="let review of data.productDetails.reviews">
+                
+                <div>
+                    <p class="rev">
+                        {{ review.comment }}
+                    </p>
+                </div>
+                <div class="person-info d-flex justify-content-md-between">
+                    <div *ngIf="data.avgRating !== 0" class="rating d-flex align-items-center">
+                        <span *ngFor="let i of createArrayToIterate(data.avgRating)"
+                        class="material-symbols-outlined filled">star</span>
+                        <span *ngIf="(data.avgRating % 1) !== 0" class="material-symbols-outlined">star_half</span>
+                        <span *ngFor="let i of createArrayToIterate(5 - data.avgRating)"
+                        class="material-symbols-outlined">star</span>
+                    </div>
+                    <p class="fw-600 ">{{ review.username }} · {{ review.date }}</p>
+                </div>
+            </div>
+            
+            <h3 class="d-flex gap-20 align-items-center revi">Add a Review</h3>
+            <form class="d-flex flex-column gap-20">
+                <div class="edit-rating">
+                    <span *ngFor="let ok of createArrayToIterate(5); let i = index" (click)="userRating = i"
+                    (mouseover)="tempUserRating = i" (mouseleave)="tempUserRating = -1"
+                    [ngClass]="i <= (userRating !== -1 ? userRating : tempUserRating) ? 'filled' : ''"
+                    class="material-symbols-outlined pointer">
+                    star
+                </span>
+            </div>
+            <textarea rows="5" placeholder="Write your review here..."></textarea>
+            <div>
+                <button class="btn-primary">Submit</button>
+            </div>
+            </form> 
+        </div>
+</section>
+    <!-- </div> -->
+    
+    <!-- </div> -->
+<!-- </div> -->
 
 
 <!-- <app-product-details [data]="data"></app-product-details> -->
