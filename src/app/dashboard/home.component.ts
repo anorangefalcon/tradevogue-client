@@ -11,7 +11,7 @@ export class DashboardComponent {
   isCollapse: boolean = false;
   isSalesBtnActive: boolean = false;
   isProductBtnActive: boolean = false;
-  title: string = ''; 
+  title: string = 'Dashboard'; 
 
   ngOnInit(){
     window.addEventListener("resize", ()=>{

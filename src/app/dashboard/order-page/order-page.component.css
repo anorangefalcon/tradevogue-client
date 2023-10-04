@@ -6,12 +6,18 @@
         grid-template-columns: repeat(1fr, 250px);
     }
 
-    & .grid__items{
+    & .grid__items, .table__items{
         padding: 20px;
         box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
         border-radius: 10px;
         border: none;
-        background-color: rgb(var(--dash-card-clr));
+        background-color: rgb(var(--container-color));
+    }
+
+    & .grid__items{
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
     }
 
     & .customerInfo{
@@ -37,6 +43,42 @@
 
         & th{
             text-align: left;
+        }
+    }
+}
+
+.milestone{
+
+    & .milestone-row{
+        display: flex;
+        flex-direction: column;
+        gap: 10px;        
+
+        & .milestone-bar{
+            display: flex;
+            align-items: center;
+
+            & .milestone-check{
+                width: 15px;
+                height: 15px;
+                /* border-radius: 25px; */
+                border-radius: 50%;
+                background-color: rgb(var(--blue-clr));
+            }
+        }
+
+        & .status{
+            font-size: 14px;
+            font-weight: 500;
+            padding-inline-end: 20px;
+        }
+    }
+
+    & .milestone-row:not(:last-child){
+        & .milestone-line{
+            width: 90%;
+            height: 5px;
+            background-color: rgb(var(--blue-clr));
         }
     }
 }

@@ -1,7 +1,7 @@
 <section id="product-adding-section">
 
     <div class="heading d-flex justify-content-md-between align-center">
-        <h1>Add Product</h1>
+        <!-- <h1>Add Product</h1> -->
         <div class="file-section">
             <input type="file" id="sizes" maxlength="1" minlength="1" (change)="uploadFile($event)"
                 accept="image/CSV, application/vnd.ms-excel ,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" />
@@ -58,7 +58,7 @@
                     <div class="form-2">
                         <div class="product__image__container grid grid-cols-2 gap-20" formArrayName="productImages">
                             <ng-container *ngFor="let form of productImagesFormArray();let i=index">
-                                <div [formGroupName]="i">
+                                <div [formGroupName]="i" class="d-flex flex-column gap-10">
 
                                     <div class="form__group">
                                         <label for="colors" class="input__label">Colors<span
@@ -296,7 +296,7 @@
                                 </div>
 
 
-                                <div class="form__group">
+                                <!-- <div class="form__group">
                                     <label for="discount" class="input__label">Discount (%age)</label>
                                     <input type="number" (input)="calculateDiscount()" placeholder="Discount"
                                         id="discount" formControlName="discount" />
@@ -306,7 +306,7 @@
                                     <label for="discountprice" class="input__label">Discount Price</label>
                                     <input type="number" placeholder="Discount Price" id="discountprice" readonly
                                         formControlName="discountprice" />
-                                </div>
+                                </div> -->
 
                                 <div class="form__group">
                                     <label for="materialType" class="input__label">Material Type<span
