@@ -104,7 +104,6 @@ button.accordion2 {
   float: right;
   margin-left: 5px;
   transition: content 1s ease-out;
-
   font-size: 22px;
 }
 
@@ -191,7 +190,6 @@ button.accordion2 {
 
   .expanded2 {
     font-size: 12px;
-
   }
 
 }
