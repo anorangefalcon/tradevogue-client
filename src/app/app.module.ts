@@ -16,8 +16,6 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { TcComponent } from './tc/tc.component';
 import { CheckoutModule } from './checkout/checkout.module';
 import { ExploreComponent } from './explore/explore.component';
-import { MatTabsModule } from '@angular/material/tabs';
-import { MatExpansionModule } from '@angular/material/expansion';
 import { HttpClientModule } from '@angular/common/http';
 import { HelpPageComponent } from './help-page/help-page.component';
 import { SettingsComponent } from './settings/settings.component';
@@ -53,11 +51,7 @@ import { ToastComponent } from './toast/toast.component';
     ProductPageModule,
     FaqPageModule,
     CheckoutModule,
-    MatTabsModule,
-    HttpClientModule,
-    MatExpansionModule,
-    
-
+    HttpClientModule, 
   ],
   providers: [],
   bootstrap: [AppComponent]

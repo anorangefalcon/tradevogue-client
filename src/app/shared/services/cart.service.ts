@@ -30,7 +30,7 @@ export class CartService {
       });
       if (skuFound) {
         this.toastService.errorToast({
-          title: 'Item already exists in cart',
+          title: 'Item already exists in cart'
         })
         return;
       }
@@ -146,6 +146,9 @@ export class CartService {
       });
     }
 
+    this.toastService.notificationToast({
+      title: 'Item removed!'
+    })
     const myCart = JSON.stringify(this.cartStorage);
     localStorage.setItem("myCart", myCart);
     this.fetchDetails();

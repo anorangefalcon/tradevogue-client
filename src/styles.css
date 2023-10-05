@@ -9,7 +9,6 @@
     box-sizing: border-box;
 }
 
-
 @font-face {
     font-family: 'Apercu Movistar';
     src: url('../src/assets/Fonts/apercu-movistar-cdnfonts/apercumovistarbold.ttf');
@@ -656,12 +655,12 @@ button {
     cursor: pointer;
     border: none;
     transition: 0.3s ease-in-out;
-    /* padding-block: 16px; */
+    padding-block: 16px;
     padding-inline: 36px;
     border-radius: 4px;
     font-weight: bold;
     letter-spacing: 0.5px;
-    height: 50px;
+    /* height: 50px; */
 }
 
 .btn-primary {
