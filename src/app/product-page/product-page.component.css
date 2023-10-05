@@ -4,7 +4,6 @@
 
 .product {
 
-
     & .product-carousel {
         width: 50%;
         overflow: hidden;
@@ -18,9 +17,6 @@
         width: calc(100% - 100px) !important;
     }
 
-    /* .thumbnails {
-        width: 15% !important;
-    } */
     & .img-div {
         width: 100%;
         overflow: hidden;
@@ -153,7 +149,7 @@
 
     .sizes-radios input+label {
         cursor: pointer;
-        border-radius: 5px;
+        border-radius: 4px;
         padding: 5px 10px;
         border: 1px solid rgba(var(--text-black), 0.2);
         color: rgb(var(--text-black));
@@ -167,9 +163,10 @@
     }
 
     .sizes-radios input:checked+label {
-        /* border: 1px solid rgb(var(--text-black)); */
         color: rgb(var(--text-white));
         background-color: rgb(var(--primary));
+        border: 1px solid rgb(var(--primary));
+
     }
 
     .sizes-radios input::before {
@@ -178,7 +175,7 @@
     }
 
     .colors-radios {
-        border-radius: 3px;
+        border-radius: 4px;
         position: relative;
         width: fit-content;
     }
@@ -188,7 +185,7 @@
         height: 20px;
         appearance: none;
         cursor: pointer;
-        border-radius: 5px;
+        border-radius: 4px;
         border: 1px solid rgba(var(--text-black), 0.2);
         transition: all 0.1s;
     }
@@ -199,6 +196,19 @@
 
     .colors-radios input::before {
         text-align: center;
+    }
+
+    .colors-radios input:checked::after {
+        content: "\e5ca";
+        font-family: 'Material Symbols Outlined';
+        height: 10px;
+        width: 6px;
+        color: white;
+        position: absolute;
+        font-size: 18px;
+        font-weight: 300;
+        left: 1px;
+        top: -3px;
     }
 
     .cart-div {
@@ -269,7 +279,7 @@
             background-color: rgba(168, 168, 168, 0.232);
             backdrop-filter: blur(5px);
             padding: 5px 10px;
-            border-radius: 5px;
+            border-radius: 4px;
         }
     }
 
@@ -286,11 +296,14 @@
 .crousel {
     .owl-theme .owl-nav {
         display: flex;
-        justify-content: space-between;
+        gap: 15px;
+        justify-content: flex-end;
         width: 100%;
         position: absolute;
-        inset-block-start: 50%;
-        transform: translateY(-50%);
+        padding-inline-end: 25px;
+        /* inset-block-start: 50%; */
+        /* transform: translateY(-50%); */
+        inset-block-end: 25px;
         margin-top: 0 !important
     }
 
@@ -300,6 +313,8 @@
 
         & span {
             border-left: 50%;
+            font-size: 26px;
+            border-radius: 4px;
             background-color: rgb(var(--text-white), 0.7);
             backdrop-filter: blur(5px);
             transition: padding 0.2s ease-in-out;
@@ -429,7 +444,7 @@
     & form textarea,
     form input {
         margin-block-end: 15px;
-        border-radius: 8px;
+        border-radius: 4px;
         border: 1px solid transparent;
         background-color: var(--input-text-bg);
         padding: 7px;
@@ -486,7 +501,7 @@
 
     .review-cards {
         width: 100%;
-        border-radius: 8px;
+        border-radius: 4px;
         padding: 5px;
 
         & .rev {

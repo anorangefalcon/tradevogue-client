@@ -5,6 +5,34 @@
     margin-bottom: 60px;
 }
 
+input[type="checkbox"] {
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border: 1px solid black;
+}
+
+input[type="checkbox"]:checked {
+    background-color: rgb(var(--primary));
+    border-color: rgb(var(--primary));
+}
+input[type="checkbox"]:checked + label{
+    position: relative;
+}
+
+input[type="checkbox"]:checked + label::after {
+    content: "\e5ca";
+    font-family: 'Material Symbols Outlined';
+    height: 10px;
+    width: 6px;
+    color: white;
+    position: absolute;
+    font-size: 18px;
+    font-weight: 300;
+    left: -29px;
+    top: -3px;
+}
+
 .explore-cards {
     /* display: flex;
     flex-wrap: wrap; */
@@ -18,16 +46,18 @@
     /* justify-content: center; */
 
 }
-.head a{
+
+.head a {
     font-size: 12px;
 }
+
 .filters {
     position: sticky;
     inset-block-start: 0;
     inset-inline-start: 0;
     min-width: 15%;
 
-    & .head{
+    & .head {
         border-block-end: 1px solid rgb(var(--text-black), 0.2);
         padding-block-end: 10px;
 
@@ -157,20 +187,22 @@
         width: 100%;
         inset-inline: 0;
         overflow: scroll;
-    
+
         visibility: hidden;
         transform: translateY(100%);
         opacity: 0;
         transition: transform 0.4s ease-out, visibility 0.4s ease-out, opacity 0.4s ease-out;
     }
+
     .filter-mobile-active {
         visibility: visible;
         z-index: 97;
         transform: translateY(0%);
         opacity: 1;
     }
-    .filter-icon-div{
-        & span{
+
+    .filter-icon-div {
+        & span {
             animation: rotateAndScale 0.7s ease-in-out;
         }
     }
@@ -178,7 +210,8 @@
     .phone-icons {
         display: flex;
     }
-    .phone-icons-active{
+
+    .phone-icons-active {
         z-index: 98;
     }
 }
@@ -188,9 +221,11 @@
         transform: rotate(0deg) scale(1);
         opacity: 0.5;
     }
+
     50% {
         transform: rotate(180deg) scale(1.2);
     }
+
     100% {
         opacity: 1;
         transform: rotate(180deg) scale(1);
