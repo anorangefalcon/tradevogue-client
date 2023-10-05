@@ -1,6 +1,9 @@
 .container {
     max-width: 1170px;
 }
+.next{
+    padding-block: 50px;
+}
 
 .product {
 
@@ -15,6 +18,7 @@
 
     .bigcarousel {
         width: calc(100% - 100px) !important;
+        overflow: hidden;
     }
 
     & .img-div {
@@ -414,7 +418,9 @@
 
 
 .review-cards {
-
+    width: 100%;
+    border-radius: 8px;
+    padding: 5px;
     padding-block: 30px;
 
     .review-cards {
@@ -529,8 +535,8 @@
         }
 
 
+    
     }
-
     & .review-form {
 
 

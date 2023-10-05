@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { FetchDataService } from '../shared/services/fetch-data.service';
 import { CartService } from '../shared/services/cart.service';
 import { OwlOptions } from 'ngx-owl-carousel-o';
+import { BehaviorSubject, Subject } from 'rxjs';
 
 
 @Component({
@@ -37,9 +38,7 @@ export class ProductPageComponent implements OnInit{
     this.route.params.subscribe(params => {
       const sku = params['sku'];
       
-      
       this.fetchService.getData().subscribe((data: any[]) => {
-        console.log(data, "data pp");
         
         this.data.productDetails = data.find((item) => {        
           return item['sku'] === sku;
@@ -53,14 +52,8 @@ export class ProductPageComponent implements OnInit{
           this.data.offerPercentage = Math.floor((this.data.productDetails.oldPrice - this.data.productDetails.price) / this.data.productDetails.oldPrice * 100);
         }
       });
-      console.log(this.data, "pd");
-      
     });
-    
   }
-
-  showCarousel: boolean = false;
-
 
   addToCart() {
     const cartItem = {
@@ -73,8 +66,24 @@ export class ProductPageComponent implements OnInit{
     this.cartService.addToCart(cartItem);
   }
 
+  switchImage(image: number) {
+    console.log(image, 'hello');
+    console.log(this.customOptions);
+    
+    this.customOptions.startPosition = image;
+    console.log('new',this.customOptions);
+
+  }
+
+  // @HostListener('document:keyup', ['$event'])
+  // handleKeyboardEvent(event: KeyboardEvent) {
+  //   if (event.key === 'Escape' && this.showCarousel === true) {
+  //     this.showCarousel = false;
+  //   }
+  // }
 
   customOptions: OwlOptions = {
+    startPosition: 0,
     loop: true,
     mouseDrag: true,
     touchDrag: true,
@@ -99,47 +108,6 @@ export class ProductPageComponent implements OnInit{
       }
     },
   }
-
-  showZoomedCarousel(image: any) {
-    this.showCarousel = true;
-    this.zoomCarouselOptions.startPosition = image;
-  }
-  @HostListener('document:keyup', ['$event'])
-  handleKeyboardEvent(event: KeyboardEvent) {
-    if (event.key === 'Escape' && this.showCarousel === true) {
-      this.showCarousel = false;
-    }
-  }
-
-
-  zoomCarouselOptions: OwlOptions = {
-    loop: false,
-    rewind: true,
-    mouseDrag: true,
-    touchDrag: true,
-    pullDrag: true,
-    dots: false,
-    nav: true,
-    autoplay: false,
-    navText: ['<span class="material-symbols-outlined">chevron_left</span>', '<span class="material-symbols-outlined">chevron_right</span>'],
-    navSpeed: 600,
-    responsive: {
-      0: {
-        items: 1
-      },
-      400: {
-        items: 1
-      },
-      740: {
-        items: 1
-      },
-      940: {
-        items: 1
-      }
-    },
-  }
-
-
 
   // for Product Details:
 
