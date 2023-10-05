@@ -44,7 +44,11 @@ export class AddproductComponent {
               Validators.required
             ]
           }],
-
+          stockQuantity: ['', {
+            validators: [
+              Validators.required
+            ]
+          }],
           productImages: [[], {
             validators: [
               Validators.required,
@@ -107,19 +111,14 @@ export class AddproductComponent {
             Validators.required,
           ]
         }],
-        discount: [],
-        discountprice: [],
+        // discount: [],
+        // discountprice: [],
         materialType: ['', {
           validators: [
             Validators.required
           ]
         }],
         weight: ['', {
-          validators: [
-            Validators.required
-          ]
-        }],
-        stockQuantity: ['', {
           validators: [
             Validators.required
           ]
@@ -240,13 +239,13 @@ export class AddproductComponent {
   }
 
 
-  calculateDiscount() {
-    const price = this.productsForm.get('basicinfo')?.get('actualprice')?.value;
-    if (price) {
-      const discount = this.productsForm.get('basicinfo')?.get('discount')?.value;
-      this.productsForm.get('basicinfo')?.get('discountprice')?.patchValue(price - Math.floor(price * (discount/100)));
-    }
-  }
+  // calculateDiscount() {
+  //   const price = this.productsForm.get('basicinfo')?.get('actualprice')?.value;
+  //   if (price) {
+  //     const discount = this.productsForm.get('basicinfo')?.get('discount')?.value;
+  //     this.productsForm.get('basicinfo')?.get('discountprice')?.patchValue(price - Math.floor(price * (discount/100)));
+  //   }
+  // }
 
   textarea_letterCount: number = 0;
   letterCounter(e: Event, totalcount: number){

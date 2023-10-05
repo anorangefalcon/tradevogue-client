@@ -23,7 +23,7 @@
 
   <!-- Multi Select Option -->
   <div *ngSwitchCase="'multiSelect'" onClick>
-    <div class="custom-select d-flex flex-column flex-order" tabindex="0" (blur)="isactive = false">
+    <div class="custom-select d-flex flex-column flex-order" tabindex="0">
       <ul id="options__container" role="listbox" [class.active]="isactive == true">
         <li class="disabled__option">
           <label for="empty">{{selectedOption}}</label>

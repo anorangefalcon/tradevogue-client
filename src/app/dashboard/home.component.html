@@ -1,37 +1,67 @@
-<section id="dashboard-section" class="d-flex">
-    <div class="navbar" [class.active]="isCollapse == false" >
-        <div class="header d-flex align-items-center">
-            <div class="branding">
-                <a [routerLink]="['/']">
-                    <img src="../../../assets/logo.svg" alt="Logo" style="height: 40px;">
-                </a> 
+<section id="dashboard" class="relative">
+
+    <header class="header sticky inset-inline-0 inset-block-start-0 transition" [class.active]="isCollapse">
+        <div class="mh100 header_container d-flex align-items-center justify-content-md-between">
+            <div class="toogle-section d-flex gap-10 align-center">
+                <a (click)="isCollapse = !isCollapse" class="pointer mh100"><span
+                        class="material-symbols-outlined">menu</span></a>
+                <img class="brand-logo" src="../../assets/logo-mobile.svg" [class.active]="isCollapse" alt="Logo">
+                <h3>{{title}}</h3>
             </div>
+            <ul class="mh100 header_items d-flex align-center justify-content-end gap-20">
+                <li class="header_links mh100">
+                    <div class="search-option mh100 fs-14">
+                        <app-search-bar [searchPlaceholder]="'Search...'"></app-search-bar>
+                    </div>
+                </li>
+                <li class="header_links">
+                    <span class="mh100 message d-flex align-center relative">
+                        <span class="message_icons material-symbols-outlined">Message</span>
+                        <span class="count d-flex flex-center text-center absolute">{{0}}</span>
+                    </span>
+                </li>
+                <li class="header_links">
+                    <span class="mh100 notification d-flex align-center relative">
+                        <span class="notifications_icons material-symbols-outlined">notifications</span>
+                        <span class="count d-flex flex-center text-center absolute">{{0}}</span>
+                    </span>
+                </li>
+                <li class="header_links profile d-flex align-items-center gap-10" [routerLink]="['/dashboard/account']">
+                    <span class="photo-section relative d-flex justify-content-center align-center">
+                        <img id="profile__photo" src="../../../assets/avatars/try.svg" alt="">
+                        <!-- <span class="account__icon absolute material-symbols-outlined">settings</span>                -->
+                    </span>
 
-            <a href="javascript:void(0);" class="toggle-button" (click)="toggle()">
-                <span class="d-flex justify-content-center icons material-symbols-outlined mw100">menu</span>
-            </a>
+                    <span class="profile-content d-flex flex-column justify-content-center">
+                        <h5 class="profile-title">Abhishek Rana</h5>
+                        <p class="profile-sub-title">Seller</p>
+                    </span>
+                </li>
+            </ul>
         </div>
+    </header>
 
-        <div class="sidebar">
+    <div class="sidebar fixed inset-block-start-0 inset-inline-start-0 transition" [class.active]="isCollapse">
+        <span class="branding d-flex align-center">
+            <a [routerLink]="['/']">
+                <img class="brand-logo" src="../../assets/logo.svg" [class.active]="isCollapse" alt="Logo">
+                <img class="mobile-logo" src="../../assets/logo-mobile.svg" alt="Logo" alt="">
+            </a>
+        </span>
+
+        <nav class="navbar mh100">
             <ul class="navlist mh100 relative">
-                <li class="nav-links" routerLink="/dashboard">
+                <li class="nav-links" routerLink="/dashboard" (click)="title = 'Dashboard'">
                     <a href=" javascript:void(0);" class="dropdown">
                         <div class="d-flex align-center">
                             <span class="icons material-symbols-outlined">grid_view</span>
-                            <span class="link-text">Overview</span>
+                            <span class="link-text">Dashboard</span>
                         </div>
                     </a>
                 </li>
-                    <li class="nav-links" routerLink="/dashboard/sales">
-                    <a href=" javascript:void(0);" class="dropdown">
-                        <div class="d-flex align-center">
-                            <span class="icons material-symbols-outlined">bar_chart_4_bars</span>
-                            <span class="link-text">Sales</span>
-                        </div>
-                    </a>
-                </li>
-                <li class="nav-links" [class.active]="isProductBtnActive == true">
-                    <a href=" javascript:void(0);" class="dropdown d-flex justify-content-md-between" (click)="product_dropdown()">
+                <li class="nav-links relative" [class.active]="isProductBtnActive == true">
+                    <a style="cursor:default;" href=" javascript:void(0);"
+                        class="dropdown d-flex justify-content-md-between" (click)="product_dropdown()">
                         <div class="d-flex align-center">
                             <span class="icons material-symbols-outlined">inventory</span>
                             <span class="link-text">Products</span>
@@ -39,12 +69,16 @@
                         <span class="arrowbtn material-symbols-outlined">arrow_drop_down</span>
                     </a>
                     <ul class="sub-navlist">
-                        <li class="sub-links" routerLink="/dashboard/products" ><a href="javascript:void(0);">Product Managment</a></li>
-                        <li class="sub-links" routerLink="/dashboard/features"><a href="javascript:void(0);">Add Product Features</a></li>
-                        <li class="sub-links" routerLink="/dashboard/addproduct"><a href="javascript:void(0);">Add New Product</a></li>
+                        <li class="sub-links" routerLink="/dashboard/products" (click)="title = 'Product Overview'"><a href="javascript:void(0);">Product
+                                Managment</a></li>
+                        <li class="sub-links" routerLink="/dashboard/features" (click)="title = 'Add Features'"><a href="javascript:void(0);">Add Product
+                                Features</a></li>
+                        <li class="sub-links" routerLink="/dashboard/addproduct" (click)="title = 'Add Product'"><a href="javascript:void(0);">Add New
+                                Product</a></li>
                     </ul>
                 </li>
-                <li class="nav-links" routerLink="/dashboard/orders">
+
+                <li class="nav-links" routerLink="/dashboard/orders" (click)="title = 'Orders Overview'">
                     <a href=" javascript:void(0);" class="dropdown">
                         <div class="d-flex align-center">
                             <span class="icons material-symbols-outlined">shopping_cart</span>
@@ -61,22 +95,34 @@
                     </a>
                 </li>
 
-                <li class="nav-links profile d-flex align-items-center gap-10" routerLink="/dashboard/account">
-                    
-                    <div class="photo-section relative d-flex justify-content-center align-center">
-                        <img id="profile__photo" src="../../../assets/avatars/try.svg" alt="">
-                        <span class="account__icon absolute material-symbols-outlined">settings</span>               
-                    </div>
-
-                    <span class="profile-content">
-                        <h5 class="profile-title">Abhishek Rana</h5>
-                        <p class="profile-sub-title">Seller</p>
-                    </span>
+                <li class="nav-links">
+                    <a style="cursor:default;" href=" javascript:void(0);"
+                        class="dropdown d-flex justify-content-md-between" (click)="product_dropdown()">
+                        <div class="d-flex align-center">
+                            <span class="icons material-symbols-outlined">inventory</span>
+                            <span class="link-text">Marketing</span>
+                        </div>
+                        <span class="arrowbtn material-symbols-outlined">arrow_drop_down</span>
+                    </a>
+                    <ul class="sub-navlist">
+                        <li class="sub-links" routerLink="/dashboard/marketing/coupons"><a
+                                href="javascript:void(0);">Coupons</a></li>
+                    </ul>
                 </li>
+
+                <li class="nav-links logout">
+                    <a href=" javascript:void(0);" class="dropdown">
+                        <div class="d-flex align-center">
+                            <span class="icons material-symbols-outlined">logout</span>
+                            <span class="link-text">Logout</span>
+                        </div>
+                    </a>
+                </li>
+
             </ul>
-        </div>
+        </nav>
     </div>
-    <div class="content">
+    <main class="main transition">
         <router-outlet></router-outlet>
-    </div>
+    </main>
 </section>

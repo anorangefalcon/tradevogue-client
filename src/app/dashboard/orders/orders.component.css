@@ -1,4 +1,3 @@
-
 .search-option{
     height: 40px;
     width: 300px;
@@ -51,29 +50,29 @@
 
     & .col-1 {
         & .material-symbols-outlined {
-            color: rgb(var(--dash-blue-clr));
-            background: linear-gradient(327deg, rgb(var(--dash-blue-clr), 0.2), rgba(255, 255, 255, 0));
+            color: rgb(var(--blue-clr));
+            background: linear-gradient(327deg, rgb(var(--blue-clr), 0.2), rgba(255, 255, 255, 0));
         }
     }
 
     & .col-2 {
         & .material-symbols-outlined {
-            color: rgb(var(--dash-green-clr));
-            background: linear-gradient(327deg, rgb(var(--dash-green-clr), 0.2), rgba(255, 255, 255, 0));
+            color: rgb(var(--green-clr));
+            background: linear-gradient(327deg, rgb(var(--green-clr), 0.2), rgba(255, 255, 255, 0));
         }
     }
 
     & .col-3 {
         & .material-symbols-outlined {
-            color: rgb(var(--dash-red-clr));
-            background: linear-gradient(327deg, rgb(var(--dash-red-clr), 0.2), rgba(255, 255, 255, 0));
+            color: rgb(var(--red-clr));
+            background: linear-gradient(327deg, rgb(var(--red-clr), 0.2), rgba(255, 255, 255, 0));
         }
     }
 
     & .col-4 {
         & .material-symbols-outlined {
-            color: rgb(var(--dash-yellow-clr));
-            background: linear-gradient(327deg, rgb(var(--dash-yellow-clr), 0.2), rgba(255, 255, 255, 0));
+            color: rgb(var(--yellow-clr));
+            background: linear-gradient(327deg, rgb(var(--yellow-clr), 0.2), rgba(255, 255, 255, 0));
         }
     }
 

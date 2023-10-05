@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import Chart from 'chart.js/auto';
 import { FetchDataService } from 'src/app/shared/services/fetch-data.service';
 
@@ -12,14 +12,19 @@ export class StatisticsComponent implements OnInit {
   // lineChart: any;
   donutChart: any;
   table: any;
+  @Output () title = new EventEmitter<any>(); 
 
   isCustomerChange: boolean = true;
   isOrderChange: boolean = false;
   isRevenueChange: boolean = true;
 
-  constructor(private fetchdata: FetchDataService){}
+  constructor(private fetchdata: FetchDataService){
+  
+  }
 
   ngOnInit(): void {
+    this.title.emit("Dashboard");
+    
     this.createBarChart();
     this.createDonut();
 

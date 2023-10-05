@@ -23,7 +23,7 @@ export class CheckoutComponent implements OnInit {
       this.cartCount = data;
     });
     this.cartService.fetchCart().subscribe((data) => {
-      console.log(data);
+      // console.log(data, "cart data");
       this.cart = data;
     });
   }
@@ -52,9 +52,11 @@ export class CheckoutComponent implements OnInit {
     if (!cookieExists) {
       this.redirectToLogin();
     } else {
-      this.route.navigate(['/cart/billing']);
-    }
+      this.route.navigate(['/cart/billing']).then(() => {
+        window.location.reload();
+      });
   }
+}
 
   @HostListener('window:scroll', []) onScroll() {
     if (window.scrollY > 80) {

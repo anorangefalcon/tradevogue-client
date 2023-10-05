@@ -25,6 +25,7 @@ export class FetchDataService {
     return this.http.get(this.sellerUrl);
   }
 
+  
 
 
 }
