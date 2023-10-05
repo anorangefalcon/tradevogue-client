@@ -161,6 +161,7 @@
         </div>
      
         <div class="review-cards d-flex flex-column gap-20 ">
+            <h3 class="rate">Rate & Review</h3>
             <div class="review-card d-flex flex-column gap-5" *ngFor="let review of data.productDetails.reviews">
 
                 <div>
@@ -180,8 +181,8 @@
                 </div>
             </div>
 
-            <h3 class="d-flex gap-20 align-items-center revi">Add a Review</h3>
-            <form class="d-flex flex-column gap-20">
+            <h3 class="btn-secondary revi pointer" (click)="this.showReview = !this.showReview">Add a Review</h3>
+            <form class="d-flex flex-column gap-20" *ngIf="showReview == true">
                 <div class="edit-rating">
                     <span *ngFor="let ok of createArrayToIterate(5); let i = index" (click)="userRating = i"
                         (mouseover)="tempUserRating = i" (mouseleave)="tempUserRating = -1"

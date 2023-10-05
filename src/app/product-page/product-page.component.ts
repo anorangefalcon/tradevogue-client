@@ -23,6 +23,7 @@ export class ProductPageComponent implements OnInit{
   selectedSize: string = "";
   selectedColor: string = "";
   selectedQ: number = 0;
+  showReview : boolean = false;
 
   constructor(
     private route: ActivatedRoute,
