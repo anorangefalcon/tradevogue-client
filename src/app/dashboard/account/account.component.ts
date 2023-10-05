@@ -93,7 +93,7 @@ export class AccountComponent implements OnInit {
 
     this.postalCodeInput
       .pipe(
-        debounceTime(300),
+        debounceTime(500),
         distinctUntilChanged(),
         switchMap((value: string) => {
           if (value) {

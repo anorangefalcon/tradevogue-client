@@ -23,7 +23,7 @@ import { HelpPageComponent } from './help-page/help-page.component';
 import { SettingsComponent } from './settings/settings.component';
 import { FormsModule } from '@angular/forms';
 import { NoPageComponent } from './no-page/no-page.component';
-import { BreadcrumbComponent } from './layout/breadcrumb/breadcrumb.component';
+import { BreadcrumbComponent } from './shared/breadcrumb/breadcrumb.component';
 import { ToastComponent } from './toast/toast.component';
 
 @NgModule({

@@ -1,7 +1,6 @@
 <section id="product-adding-section">
 
-    <div class="heading d-flex justify-content-md-between align-center">
-        <!-- <h1>Add Product</h1> -->
+    <!-- <div class="heading d-flex justify-content-md-between align-center">
         <div class="file-section">
             <input type="file" id="sizes" maxlength="1" minlength="1" (change)="uploadFile($event)"
                 accept="image/CSV, application/vnd.ms-excel ,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" />
@@ -9,25 +8,40 @@
             <a class="downloadBtn" href="../../../assets/ExcelSampleFile/sampleFullData.xlsx" download><span
                     class="material-symbols-outlined">download</span></a>
         </div>
-    </div>
+    </div> -->
 
     <div class="product_form">
 
         <form [formGroup]="productsForm">
 
             <div class="row row-1 d-flex justify-content-md-between">
-                <h2 *ngIf="current_form != 'product_images'; else title2">Basic Info</h2>
-                <ng-template #title2>
-                    <span class="d-flex gap-15">
-                        <h2>Product Images</h2>
-                    </span>
-                </ng-template>
+                <span class="d-flex gap-15 align-center">
+                    <h2 *ngIf="current_form != 'product_images'; else title2">Basic Info</h2>
+                    <ng-template #title2>
+                        <span class="d-flex gap-15">
+                            <h2>Product Images</h2>
+                        </span>
+                    </ng-template>
+
+                    <div class="file-section d-flex align-center gap-5">
+                        <input type="file" id="sizes" maxlength="1" minlength="1" (change)="uploadFile($event)"
+                            accept="image/CSV, application/vnd.ms-excel ,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" />
+                        <label class="uploadbtn tooltip" for="sizes">
+                            <span class="material-symbols-outlined operation-icon">upload_file</span>
+                            <span class="tooltiptext">Upload Excel</span>
+                        </label>
+                        <a class="downloadBtn tooltip" href="../../../assets/ExcelSampleFile/sampleFullData.xlsx" download>
+                            <span class="material-symbols-outlined operation-icon">download</span>
+                            <span class="tooltiptext">Download Excel Sample</span>
+                        </a>
+                    </div>
+                </span>
+
 
                 <div class="next_prev_btn d-flex align-items-center gap-15">
-                    
-                    <button class="button add_form d-flex flex-center" 
-                    (click)="addProductImageForm()"
-                    [ngStyle]="{display: current_form != 'product_images'? 'none' : 'flex' }">
+
+                    <button class="button add_form d-flex flex-center" (click)="addProductImageForm()"
+                        [ngStyle]="{display: current_form != 'product_images'? 'none' : 'flex' }">
                         <span class="add_form_icon material-symbols-outlined">add</span>
                     </button>
 
@@ -43,8 +57,7 @@
                         <span class="material-symbols-outlined">arrow_forward_ios</span>
                     </button> -->
 
-                    <button class="button next d-flex flex-center"
-                        (click)="current_form = 'product_images'"
+                    <button class="button next d-flex flex-center" (click)="current_form = 'product_images'"
                         [ngStyle]="{display: current_form == 'product_images'? 'none' : 'flex' }">
                         <span class="next_icon material-symbols-outlined">arrow_forward_ios</span>
                     </button>

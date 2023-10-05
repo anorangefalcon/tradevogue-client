@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { ProductsFilterService } from '../shared/services/products-filter.service'
 import { FetchDataService } from '../shared/services/fetch-data.service';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 
 @Component({
   selector: 'app-explore',
@@ -17,7 +18,7 @@ export class ExploreComponent {
   FilterApplied: any = {};
   filtersOpen: boolean = false;
 
-  constructor(private productFilter: ProductsFilterService, private fetchData: FetchDataService) { }
+  constructor(private productFilter: ProductsFilterService, private fetchData: FetchDataService,private http:HttpClient) { }
 
   ngOnInit(): void {
     this.productFilter.getData().then((data: any) => {
@@ -28,6 +29,12 @@ export class ExploreComponent {
 
     });
 
+
+
+    this.http.post('http://localhost:8000/a', {message:"bhbh"}).subscribe(data=>{
+      console.log(data, "exploree");
+      
+    })
 
 
   }
@@ -94,5 +101,4 @@ export class ExploreComponent {
       this.productData = data;
     });
   }
-
 }

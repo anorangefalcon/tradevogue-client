@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
-import { BreadcrumbService } from '../breadcrumb.service';
+import { BreadcrumbService } from 'src/app/shared/services/breadcrumb.service';
 
 @Component({
   selector: 'app-breadcrumb',
@@ -21,6 +21,7 @@ export class BreadcrumbComponent implements OnInit {
           this.breadcrumbs = [];
         } else {
           this.breadcrumbs = this.createBreadcrumbs(this.activatedRoute.root);
+          console.log('this.breadcrumbs', this.breadcrumbs)
         }
         this.breadcrumbService.setBreadcrumbs(this.breadcrumbs);
         // console.log('Navigation has ended:', event.url);
@@ -41,7 +42,8 @@ export class BreadcrumbComponent implements OnInit {
     this.activeSku = route.snapshot.params['sku'];
     // console.log('activeSku', this.activeSku);
     
-    // console.log('snapshot', snapshot);
+    console.log('snapshot', snapshot);
+    console.log('children', route.children);
 
     const breadcrumbLabel: string = snapshot.data['breadcrumb'];
 

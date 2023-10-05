@@ -10,11 +10,6 @@
     & .row-1 {
         display: flex;
         justify-content: space-between;
-
-        & .search-bar {
-            height: 40px;
-            width: 300px;
-        }
     }
 
     .operational-buttons {
@@ -28,13 +23,13 @@
             cursor:auto;
         }
 
-        & span {
+        & .operational-buttons-delete, .operational-buttons-add {
             font-size: 24px;
             font-weight: 300;
             transition: transform 0.3s ease-in-out;
             cursor: pointer;
             &:is(:hover) {
-                transform: scale(1.2);
+                transform: scale(1.1);
             }
         }
 
@@ -82,9 +77,9 @@
         & td,
         th {
             font-weight: 600;
-            padding: 10px;
+            padding: 5px 10px;
             vertical-align: middle;
-            font-size: 13px;
+            font-size: 12px !important;
             white-space: nowrap;
         }
 
@@ -115,6 +110,10 @@
                 color: black;
                 font-weight: 300;
             }
+
+            & img{
+                object-fit: cover;
+            }
         }
 
 
@@ -143,7 +142,7 @@
         }
 
         & .product-items {
-            font-size: 14px;
+            font-size: 12px;
             text-align: left;
             border: 1px solid rgba(128, 128, 128, 0.152);
             letter-spacing: 0.26px;

@@ -183,7 +183,7 @@ h6 {
 
 body {
     font-family: 'Poppins', sans-serif;
-    font-size: 16px;
+    font-size: 13px;
     color: rgb(var(--text-black));
 }
 
@@ -200,7 +200,7 @@ h6 {
 }
 
 p {
-    font-size: 16px !important;
+    font-size: 14px !important;
 }
 /* input[type="text"], textarea{
     background-color: #f5f5f5cf !important;
@@ -475,6 +475,51 @@ ul {
     transition: all 0.3s ease-in-out;
 }
 
+
+/* Tool tip Styling */
+
+.tooltip{
+    position: relative;
+}
+
+.tooltiptext{
+    visibility: hidden;
+    opacity: 0;
+    transition: all 0.3s ease-in-out;
+    
+    position: absolute;
+    min-width: 100px;
+    background-color: rgb(var(--secondary)) !important;
+    color: rgb(var(--text-black)) !important;
+    font-size: 11px !important;
+    font-weight: 500;
+    padding: 5px 10px;
+    border-radius: 3px;
+    z-index: 1;
+    inset-block-start: 150%;
+    inset-inline-start: 50%;
+    transform: translateX(-50%);
+    box-shadow: 0px 0px 5 px rgba(151, 114, 114, 0.37);
+    text-align: center;
+}
+
+.tooltiptext::before{
+    content: "";
+    position: absolute;
+    inset-block-end: 100%;
+    inset-inline-start: 50%;
+    transform: translateX(-50%);
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent transparent rgb(var(--secondary)) transparent;
+}
+
+.tooltip:is(:hover, :active) .tooltiptext{
+    visibility: visible;
+    opacity: 1;
+}
+
 /* Buttons Style */
 
 .heading-button {
@@ -611,9 +656,12 @@ button {
     cursor: pointer;
     border: none;
     transition: 0.3s ease-in-out;
-    padding-block: 8px;
-    padding-inline: 20px;
-    border-radius: 5px;
+    /* padding-block: 16px; */
+    padding-inline: 36px;
+    border-radius: 4px;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+    height: 50px;
 }
 
 .btn-primary {
@@ -626,10 +674,11 @@ button {
     background-color: rgb(var(--primary), 0.9);
 }
 
-.btn-secondry {
-    background-color: rgb(204, 204, 204) !important;
-    color: rgb(var(--text-black)) !important;
-    font-weight: 600;
+.btn-secondary {
+    background-color: rgb(var(--container-color)) ;
+    border : 1px solid rgb(var(--primary));
+    color: rgb(var(--primary));
+    font-weight: 400;
     transition: all 0.3s ease-in-out;
 
     & :hover {
