@@ -11,7 +11,7 @@ export class ProductsComponent implements OnInit {
   stockStatus: any[] = ['Delivered', 'Pending'];
   categoryOption: any[] = ['Category 1', 'Category 2', 'Category 3', 'Category 4'];
   ratingOption: any[] = [5, 4, 3, 2];
-  pageSize: number = 7;
+  pageSize: number = 10;
   currentPage: number = 1;
   productList: any[] = [];
 
@@ -83,7 +83,7 @@ export class ProductsComponent implements OnInit {
   checkboxChild: any = null;
 
   changeDetection(e: Event) {
-    let element = (<HTMLInputElement>e.target)
+    let element = (<HTMLInputElement>e.target);
     let id: any = element.getAttribute('id');
 
     if (id == "all_product") {
@@ -101,9 +101,8 @@ export class ProductsComponent implements OnInit {
       }
 
     } else {
-      console.log('hello->child');
       if (element.checked) {
-        this.deleteList.push(Number(id));
+        this.deleteList.push(Number(id.split('_')[1]));
       } else {
         if (this.checkboxParent == true) this.checkboxParent = null;
         this.deleteList.splice(this.deleteList.indexOf(Number(id)), 1);

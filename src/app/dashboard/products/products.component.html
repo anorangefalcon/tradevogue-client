@@ -11,12 +11,14 @@
                     <h3>Products List</h3>
 
                     <span class="operational-buttons d-flex  flex-wrap">
-                        <button routerLink="/dashboard/addproduct" class="d-flex align-items-center gap-5">
+                        <button routerLink="/dashboard/addproduct" class="tooltip d-flex align-items-center gap-5">
                             <span class="material-symbols-outlined operational-buttons-add">add</span>
+                            <span class="tooltiptext">Add Product</span>
                         </button>
-                        <button class="d-flex align-items-center gap-5">
+                        <button class="tooltip d-flex align-items-center gap-5">
                             <span class="material-symbols-outlined operational-buttons-delete"
                                 (click)="deleteItems()">delete</span>
+                                <span class="tooltiptext">Delete Selected Products</span>
                         </button>
                     </span>
                 </div>
@@ -66,7 +68,7 @@
                         }; let i = index">
                             <td class="product-items">
                                 <div class="item-check d-flex justify-content-center">
-                                    <input [attr.checked]="checkboxChild" type="checkbox" id="itemId{{item.itemId}}">
+                                    <input [attr.checked]="checkboxChild" type="checkbox" id="itemId_{{item.itemId}}">
                                     <label for='itemId{{item.itemId}}'>
                                         <span class="material-symbols-outlined">done</span>
                                     </label>
@@ -76,7 +78,7 @@
                             <td class="product-items">
                                 <div class=" d-flex gap-10 align-center mh100">
                                     <div class="product-image">
-                                        <img src="{{item.image}}" alt="product.png">
+                                        <img src="{{item.image}}" alt="product.png" width="100%" height="100%">
                                     </div>
                                     <span>{{item.name}}</span>
                                 </div>
@@ -114,10 +116,10 @@
                                 <div class="d-flex gap-5 align-items-center">
                                     <ng-container *ngFor="let star of rating">
                                         <span *ngIf="star <= item.rating">
-                                            <i class="fa-solid fa-star" style="color: rgb(var(--blue-clr));"></i>
+                                            <i class="fa-solid fa-star" style="color: rgb(var(--primary));"></i>
                                         </span>
                                         <span *ngIf="star > item.rating">
-                                            <i class="fa-regular fa-star" style="color: rgb(var(--blue-clr));"></i>
+                                            <i class="fa-regular fa-star" style="color: rgb(var(--primary));"></i>
                                         </span>
                                     </ng-container>
                                     &#40;{{item.rating}}&#41;
