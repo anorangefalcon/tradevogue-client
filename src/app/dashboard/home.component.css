@@ -143,6 +143,11 @@
             background-color: rgb(var(--container-color), 0.2);
         }
 
+        & .navlist{
+            display: flex;
+            flex-direction: column;
+        }
+
         & .navlist li {
             position: relative;
             width: 100%;

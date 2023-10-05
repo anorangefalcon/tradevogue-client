@@ -7,13 +7,15 @@ import { CarouselModule } from 'ngx-owl-carousel-o';
 import { CardTemplateComponent } from './components/card-template/card-template.component';
 import { SearchBarComponent } from './components/search-bar/search-bar.component';
 import { SupportComponent } from './components/support/support.component';
-import { MatTabsModule } from '@angular/material/tabs';
+// import { MatTabsModule } from '@angular/material/tabs';
 import { RouterModule } from '@angular/router';
 import { FooterComponent } from './components/footer/footer.component';
 import { CustomSelectComponent } from './custom-select/custom-select.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
 import { ProductFilterPipe } from './Pipe/product-filter.pipe';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 
 @NgModule({
@@ -33,6 +35,7 @@ import { ProductFilterPipe } from './Pipe/product-filter.pipe';
     ReactiveFormsModule,
     CarouselModule,
     MatTabsModule,
+    MatExpansionModule,
     RouterModule,
     FormsModule,
 
