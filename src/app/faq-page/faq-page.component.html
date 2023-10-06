@@ -4,7 +4,7 @@
   </div>
 </div>
 
-<section class="faq-section">
+<section class="faq-section skeleton">
   <div *ngFor="let section of faqData" class="container accordion-wrapper main-panel">
     <button class="accordion main-acc" (click)="toggleSection(section)" [ngClass]="{ expanded2: section.expanded }">
       {{ section.title }}

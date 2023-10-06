@@ -57,6 +57,16 @@ header {
     }
 }
 
+.border {
+    border-block-end: 1px solid rgb(var(--text-black), 0.2);
+    padding-block: 5px !important;
+}
+
+
+.padding-top {
+    padding-block-start: 5px !important;
+}
+
 header.active {
     box-shadow: 0 5px 10px rgb(var(--text-black), 0.1);
     background-color: rgb(var(--text-white), 0.8);

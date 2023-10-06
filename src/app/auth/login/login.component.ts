@@ -42,7 +42,9 @@ onLogin() {
       const returnUrl = this.route.snapshot.queryParamMap.get('returnUrl');
       
       if (returnUrl) {
-        this.router.navigateByUrl(returnUrl);
+        this.router.navigateByUrl(returnUrl).then(() => {
+        window.location.reload();
+      });
       } else {
         this.router.navigate(['/']);
       }

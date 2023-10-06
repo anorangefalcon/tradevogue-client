@@ -193,3 +193,72 @@ button.accordion2 {
   }
 
 }
+
+
+
+
+
+
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #222;
+    padding: 0 1rem;
+}
+
+
+
+
+
+
+
+/* CARD */
+.card {
+    max-width: 400px;
+    box-shadow: 0 .5rem 2rem rgba(0, 0, 0, .1);
+    padding: 1.5rem;
+    border-radius: .5rem;
+}
+.card-image {
+    margin-bottom: 1rem;
+}
+.card-image img {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    border-radius: .25rem;
+}
+.card-title {
+    font-size: 1.25rem;
+    color: #222;
+    text-decoration: none;
+    font-weight: 600;
+    margin-bottom: .25rem;
+    display: inline-block;
+}
+.card-description {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+/* CARD */

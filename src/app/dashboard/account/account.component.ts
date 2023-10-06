@@ -14,7 +14,7 @@ export class AccountComponent implements OnInit {
   Check: boolean = false;
   changee: boolean = true;
   profileForm!: FormGroup;
-  AccountForm!: FormGroup; // Define AccountForm as a FormGroup
+  AccountForm!: FormGroup; 
   postalCode: string = '';
   country: string = '';
   state: string = '';

@@ -220,8 +220,6 @@ body {
   width: 100vw;
 }
 
-
-/* Example styles for custom payment form design */
 .custom-payment-form {
     background-color: #f0f0f0;
     padding: 20px;
@@ -247,8 +245,6 @@ body {
     border: 1px solid #ccc;
     border-radius: 5px;
 }
-
-/* Additional styles for Stripe Elements if needed */
 
 
 form {
@@ -278,7 +274,7 @@ form {
   margin-bottom: 24px;
 }
 
-/* Buttons and links */
+
 button {
   background: #5469d4;
   font-family: Arial, sans-serif;
@@ -302,7 +298,7 @@ button:disabled {
   cursor: default;
 }
 
-/* spinner/processing state, errors */
+
 .spinner,
 .spinner:before,
 .spinner:after {

@@ -1,14 +1,14 @@
-<div class="card-item-template card-template-structure ">
+<div class="card-item-template card-template-structure">
     <a routerLink='/product/{{product.sku}}' class="pointer d-flex flex-column gap-10">
-        <div class="card-item-header">
+        <div class="card-item-header skeleton">
             <img [src]=product.image?.[1] alt="Product Image">
             <img class="hover-img" [src]=product.image?.[0] alt="Product Image">
         </div>
 
         <div class="card-item-content d-flex flex-column align-items-center gap-5">
-            <h4>{{ product.name }}</h4>
+            <h4 class="skeleton">{{ product.name }}</h4>
 
-            <div *ngIf="avgRating !== 0" class="rating d-flex align-items-center">
+            <div *ngIf="avgRating !== 0" class="rating d-flex align-items-center skeleton">
                 <span *ngFor="let i of createArrayToIterate(avgRating)"
                     class="material-symbols-outlined filled">star</span>
                 <span *ngIf="(avgRating % 1) !== 0" class="material-symbols-outlined">star_half</span>
@@ -16,7 +16,7 @@
                     class="material-symbols-outlined">star</span>
             </div>
 
-            <div class="price d-flex gap-5 align-items-center">
+            <div class="price d-flex gap-5 align-items-center skeleton">
                 <p class="current-price">
                     ₹{{ product.price }}
                 </p>
