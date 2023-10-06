@@ -136,8 +136,20 @@
 
                     <li *ngIf="isUserLogin" class="sub-links">
                         <div class="header">
-                            <span>Welcome</span>
-                            <p>{{purchaser}}</p>
+                            <div class="d-flex justify-content-md-between align-items-center border" style="margin-bottom: 10px">
+                                <h4>Welcome {{purchaser}}</h4>
+                            </div>
+                            <ul class="pointer border">
+                                <li [routerLink]="['about']" style="margin-bottom: 10px;">About Us</li>
+                                 <li [routerLink]="['help']" style="margin-bottom: 10px;">Cotact Us</li>
+                                 <li [routerLink]="['faq']" style="margin-bottom: 10px;">Faq</li>
+                                 <li [routerLink]="['t&c']" style="margin-bottom: 10px;">Terms And Condition</li>
+                                 <li [routerLink]="['cart']" style="margin-bottom: 10px;">My Cart</li>
+                            </ul>
+                             <ul class="pointer ">
+                                <li class="padding-top" [routerLink]="['usersetting']" style="margin-bottom: 10px;">Profile</li>
+                                 <li [routerLink]="['help']" style="margin-bottom: 10px;">Logout</li>
+                            </ul>
                         </div>
                         <!-- <div class="d-flex justify-content-md-between gap-13">
                             <a [routerLink]="['/auth/login']" id="login">

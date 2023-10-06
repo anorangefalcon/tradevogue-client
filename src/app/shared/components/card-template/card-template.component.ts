@@ -30,6 +30,21 @@ export class CardTemplateComponent {
     if (this.product.oldPrice !== (undefined || 0)) {
       this.offerPercentage = Math.floor((this.product.oldPrice- this.product.price) / this.product.oldPrice * 100);
     }
+
+    const allSkeleton = document.querySelectorAll('.skeleton');
+
+    window.addEventListener('load', () => {
+      allSkeleton.forEach((item: Element) => {
+        item.classList.remove('skeleton');
+      });
+    });
+
+    window.addEventListener('scroll', () => {
+      allSkeleton.forEach((item: Element) => {
+        item.classList.remove('skeleton')
+      })
+    })
+
   }
 
   createArrayToIterate(num: number){

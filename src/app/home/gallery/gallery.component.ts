@@ -15,8 +15,8 @@ export class GalleryComponent {
   image_loaded: boolean = false;
 
   // we will expire this later and generate new to save securely.
-  accID: String = '17841462170148259' ;
-  access_token: String = 'IGQWROcXZAYQlRfOW95eWp0emVkY1pmYS1vWXA2bV9qZAGx5YW53N1UxQk1YTGJBMzByYl9Db2xydElWNXdaMlp4ZAUt3ekFQal81dzJ2aEJJbDBfbUhUcC1YdU9JaFJsQTVOd1BpY0hrWTBJRGltOU1tSF92U0IwRzQZD' ;
+  accID: String = '17841462170148259'+"skjfbsdfjs" ;
+  access_token: String = 'IGQWROcXZAYQlRfOW95eWp0emVkY1pmYS1vWXA2bV9qZAGx5YW53N1UxQk1YTGJBMzByYl9Db2xydElWNXdaMlp4ZAUt3ekFQal81dzJ2aEJJbDBfbUhUcC1YdU9JaFJsQTVOd1BpY0hrWTBJRGltOU1tSF92U0IwRzQZD'+"sdhfskd" ;
 
 
   ngOnInit() {

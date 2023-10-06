@@ -13,13 +13,27 @@ export class FaqPageComponent implements OnInit {
 
   ngOnInit(): void {
     this.faqDataService.getFaqData().subscribe((data) => {
-      this.faqData = data;
+      this.faqData = data.filter((section) => Object.keys(section).length > 0);
 
       this.faqData.forEach(section => {
         section.expanded = false;
         section.childrens.forEach((child: { expanded: boolean; }) => {
           child.expanded = false;
         });
+      });
+    });
+
+    const allSkeleton = document.querySelectorAll('.skeleton');
+
+    if(allSkeleton) {
+      allSkeleton.forEach((item: Element) => {
+        item.classList.remove('skeleton');
+      });
+    }
+
+   window.addEventListener('load', () => {
+      allSkeleton.forEach((item: Element) => {
+        item.classList.remove('skeleton');
       });
     });
   }
