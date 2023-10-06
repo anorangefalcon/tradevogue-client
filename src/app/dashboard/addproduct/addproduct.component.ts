@@ -3,6 +3,7 @@ import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@ang
 import { ImageUploadService } from 'src/app/shared/services/image-upload.service';
 import { imageSizeValidator, invalidformat } from 'src/app/shared/validators/imageValidators.validator';
 import { UploadExcelService } from '../services/upload-excel.service';
+import { ToastService } from 'src/app/shared/services/toast.service';
 
 @Component({
   selector: 'app-addproduct',
@@ -33,7 +34,8 @@ export class AddproductComponent {
     private render: Renderer2,
     private fb: FormBuilder,
     private upload: ImageUploadService,
-    private excelService: UploadExcelService) {
+    private excelService: UploadExcelService,
+    private toastService: ToastService) {
     this.productsForm = this.fb.group({
 
 
@@ -211,18 +213,26 @@ export class AddproductComponent {
       console.log(products);
 
       let product_keys = Object.keys(products['errors']);
+      this.toastService.errorToast({
+        title: 'Errors found in Excel',
+        body: ['In sheet First, Second']
+      })
+      
       product_keys.forEach((sheet) => {
         let sheets_keys = Object.keys(products['errors'][sheet]);
         // console.log(sheets_keys);
 
-        sheets_keys.forEach((errors) => {
-          let error_list = Object.keys(products['errors'][sheet][errors]);
+        // sheets_keys.forEach((errors) => {
+
+        //   let error_list = Object.keys(products['errors'][sheet][errors]);
+        //   console.log(error_list);
+          
           // console.log(error_list); 
 
-          error_list.forEach((detail) => {
-            console.log(detail);
-          })
-        })
+          // error_list.forEach((detail) => {
+          //   console.log(detail);
+          // })
+        // })
       })
     })
   }

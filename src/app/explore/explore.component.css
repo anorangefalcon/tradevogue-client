@@ -7,9 +7,9 @@
 
 input[type="checkbox"] {
     appearance: none;
-    width: 20px;
-    height: 20px;
-    border: 1px solid black;
+    width: 16px;
+    height: 16px;
+    border: 1px solid rgb(var(--text-black), 0.4);
 }
 
 input[type="checkbox"]:checked {
@@ -29,8 +29,8 @@ input[type="checkbox"]:checked + label::after {
     position: absolute;
     font-size: 18px;
     font-weight: 300;
-    left: -29px;
-    top: -3px;
+    left: -27px;
+    top: -4px;
 }
 
 .explore-cards {
@@ -42,7 +42,7 @@ input[type="checkbox"]:checked + label::after {
 
     display: grid;
     /* grid-template-columns: repeat(4, 1fr); */
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
     /* justify-content: center; */
 
 }

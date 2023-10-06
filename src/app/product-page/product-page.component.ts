@@ -3,7 +3,6 @@ import { ActivatedRoute } from '@angular/router';
 import { FetchDataService } from '../shared/services/fetch-data.service';
 import { CartService } from '../shared/services/cart.service';
 import { OwlOptions } from 'ngx-owl-carousel-o';
-import { BehaviorSubject, Subject } from 'rxjs';
 
 
 @Component({
@@ -24,6 +23,7 @@ export class ProductPageComponent implements OnInit{
   selectedColor: string = "";
   selectedQ: number = 0;
   showReview : boolean = false;
+  activeIndex: number = 0;
 
   constructor(
     private route: ActivatedRoute,
@@ -41,7 +41,8 @@ export class ProductPageComponent implements OnInit{
       
       this.fetchService.getData().subscribe((data: any[]) => {
         
-        this.data.productDetails = data.find((item) => {        
+        this.data.productDetails = data.find((item) => {   
+          this.activeIndex = 0;     
           return item['sku'] === sku;
         });
         this.data.avgRating = 0;
@@ -67,15 +68,6 @@ export class ProductPageComponent implements OnInit{
     this.cartService.addToCart(cartItem);
   }
 
-  switchImage(image: number) {
-    console.log(image, 'hello');
-    console.log(this.customOptions);
-    
-    this.customOptions.startPosition = image;
-    console.log('new',this.customOptions);
-
-  }
-
   // @HostListener('document:keyup', ['$event'])
   // handleKeyboardEvent(event: KeyboardEvent) {
   //   if (event.key === 'Escape' && this.showCarousel === true) {
@@ -91,7 +83,7 @@ export class ProductPageComponent implements OnInit{
     pullDrag: true,
     dots: false,
     nav: true,
-    autoplay: true,
+    autoplay: false,
     navText: ['<span class="material-symbols-outlined">chevron_left</span>', '<span class="material-symbols-outlined">chevron_right</span>'],
     navSpeed: 600,
     responsive: {
@@ -109,7 +101,16 @@ export class ProductPageComponent implements OnInit{
       }
     },
   }
+  carouselOption: OwlOptions = this.customOptions;
+  atDefault: boolean = true;
 
+  switchImage(image: number) {
+    this.activeIndex = image;
+    this.customOptions.startPosition = image;
+    this.carouselOption = JSON.parse(JSON.stringify(this.customOptions));
+    this.atDefault = !this.atDefault;
+  }
+  
   // for Product Details:
 
   addReview: boolean = false;
