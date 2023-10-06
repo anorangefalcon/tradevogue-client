@@ -32,14 +32,14 @@
             <div class="category d-flex flex-column gap-10" >
                 <h5 class="capital">{{ filter.key }} </h5>
 
-                <div *ngFor="let value of filter.value | slice:0:3; let i = index" class="d-flex gap-10">
+                <div *ngFor="let value of filter.value | slice:0:3; let i = index" class="d-flex gap-10 ">
                     <input type="checkbox" [name]="filter.key" [value]="value" [id]="value"
                         (change)="onChecked($event, filter.key)"  id="value" class="checkboxes"> 
                     <label [for]="value" class="capital">{{ value}}</label>
                 </div>
 
                 <div *ngIf="filter.value[-1]==true" class="d-flex flex-column gap-10">
-                    <div *ngFor="let value of filter.value | slice:3:-1; let i = index" class="d-flex gap-10">
+                    <div *ngFor="let value of filter.value | slice:3:-1; let i = index" class="d-flex gap-10 align-items-center">
                         <input type="checkbox" [name]="filter.key" [value]="value" [id]="value" class="checkboxes"
                             (change)="onChecked($event, filter.key)">
                         <label [for]="value" class="capital">{{ value}}</label>

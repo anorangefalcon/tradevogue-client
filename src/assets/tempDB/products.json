@@ -56,6 +56,14 @@
             }
         ]
     },
+
+    {
+        "sku": "SKU38P2",
+        "name": "Bro",
+        "price": 29.99,
+        "oldPrice": 39.99
+    },
+
     {
         "sku": "SKU38P2",
         "name": "Black Jumper",

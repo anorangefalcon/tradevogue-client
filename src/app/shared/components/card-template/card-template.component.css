@@ -9,7 +9,7 @@
     & h4 {
         /* margin-block: 0 3px; */
         white-space: nowrap;
-        max-width: 22ch;
+        max-width: 20ch;
         overflow: hidden;
         text-overflow: ellipsis;
     }
@@ -287,7 +287,7 @@
 } */
 
 .card-item-header {
-    max-height: 370px;
+    max-height: 280px;
 }
 
 

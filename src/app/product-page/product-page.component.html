@@ -2,18 +2,18 @@
 <section class="container">
     <div *ngIf="data.productDetails !== {} " class="product">
 
-        <div class=" d-flex gap-30">
+        <div class="d-flex gap-30">
             <div class="product-carousel d-flex  gap-10 justify-content-center">
-                <div class="products-imgs-container  d-flex flex-column  thumbnails">
+                <div class="products-imgs-container d-flex flex-column  thumbnails">
                     <div class="gal-img pointer" *ngFor="let image of data.productDetails.image; let i = index"
                         [ngStyle]="{ 'background': 'url(' + image + ')', 'background-size': 'cover', 'background-position': 'center' }
-                         " (click)="switchImage(i)">
+                         " (click)="switchImage(i)" [ngClass]="{ active: i === activeIndex }">
                     </div>
                 </div>
-                <owl-carousel-o [options]="customOptions" [ngClass]="{crousel: true}" class="bigcarousel">
+                <owl-carousel-o [options]="atDefault ? customOptions : carouselOption" [ngClass]="{crousel: true}" class="bigcarousel">
                     <ng-template carouselSlide *ngFor="let image of data.productDetails.image">
                         <div class="img-div d-flex justify-content-center align-items-center"
-                            [ngStyle]="{ 'background': 'url(' + image + ')', 'background-size': 'cover' }">
+                         [ngStyle]="{ 'background': 'url(' + image + ')', 'background-size': 'cover' }">
                         </div>
                     </ng-template>
                 </owl-carousel-o>

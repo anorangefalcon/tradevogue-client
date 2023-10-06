@@ -29,7 +29,6 @@ export class ExploreComponent {
 
     });
 
-
   }
 
   clearAll() {

@@ -32,6 +32,9 @@
     animation: slide-in 0.3s ease-in-out;
 
 }
+.toast:hover .loader{
+    animation-play-state: paused;
+}
 
 .toast-header {
     position: relative;

@@ -10,7 +10,7 @@ export class ToastComponent {
 
   display: string = '';
   timeout: any;
-  on_time: any;
+  start_time: any;
   timeoutVar: any;
 
   loadingWidth: number = 0;
@@ -25,25 +25,27 @@ export class ToastComponent {
       this.display = '';
       this.timeout = 5000;
       this.display = data.display;
+      this.timeoutVar = ''
       this.content.title = data.content?.title;
       this.content.body = data.content?.body;
 
-      this.showToast();
+      if(this.display){
+        this.showToast();
+      }
     })
   }
 
   showToast() {
-    this.on_time = Date.now();
-
+    this.start_time = Date.now();
+    
     this.timeoutVar = setTimeout(() => {
       this.display = '';
-      console.log(Date.now(), 'done');
     }, this.timeout);
   }
 
   hoverIn() {
+    this.timeout = 5000 - (Date.now() - this.start_time);
     clearTimeout(this.timeoutVar);
-    this.timeout = Date.now() - this.on_time;
   }
 
   hoverOut() {
