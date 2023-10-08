@@ -31,4 +31,19 @@ export class FetchDataService {
   getSellerData():Observable<any>{
     return this.http.get(this.sellerUrl);
   }
+
+
+  httpPost(url:any,body:any){
+    return new Promise((res,rej)=>{
+      
+      this.http.post(url,body).subscribe({next:(data)=>{
+        res(data);
+      },error:(error)=>{
+        console.log("erorr is ",error)
+        rej(error)
+      }})
+    })
+ 
+  }
+
 }

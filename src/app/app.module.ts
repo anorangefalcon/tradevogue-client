@@ -23,6 +23,8 @@ import { FormsModule } from '@angular/forms';
 import { NoPageComponent } from './no-page/no-page.component';
 import { BreadcrumbComponent } from './shared/breadcrumb/breadcrumb.component';
 import { ToastComponent } from './toast/toast.component';
+import { UtilsModule } from './utils/utils.module';
+
 
 @NgModule({
   declarations: [
@@ -35,10 +37,13 @@ import { ToastComponent } from './toast/toast.component';
     NoPageComponent,
     BreadcrumbComponent,
     ToastComponent,
+
+   
   ],
   imports: [
     BrowserModule,
     CommonModule,
+    
     NgxPaginationModule,
     BrowserAnimationsModule,
     AppRoutingModule,
@@ -52,8 +57,11 @@ import { ToastComponent } from './toast/toast.component';
     FaqPageModule,
     CheckoutModule,
     HttpClientModule, 
+     
   ],
-  providers: [],
+  providers: [
+    
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
