@@ -21,7 +21,7 @@
 
     & .form-container {
         padding-inline: 20px;
-        width: min(100%, 480px);
+        width: min(100%, 520px);
         /* max-height: 500px; */
 
         & h2 {
@@ -138,7 +138,9 @@
 }
 
 
-
+.Name{
+    gap:15px;
+}
 
 .red-text {
     & small {

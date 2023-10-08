@@ -21,4 +21,11 @@
 <body>
   <app-root></app-root>
 </body>
+
+<script>
+  function googleAuthCallback(res){
+    const event = new CustomEvent('authCredential', { detail: res });
+    window.dispatchEvent(event);
+  }
+</script>
 </html>
