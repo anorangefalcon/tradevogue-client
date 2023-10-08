@@ -29,7 +29,7 @@
   text-align: center;
   cursor: pointer;
   color: #ffffff;
-  background: rgb(var(--primary));
+  background: rgb(var(--primaryClr));
   width: 50px;
   height: 50px;
   float: right;
@@ -282,16 +282,16 @@ p {
     &::after{
       top:0;
       left: 0;
-      border-left: 1px solid rgb(var(--primary));
-      border-top: 1px solid rgb(var(--primary));
+      border-left: 1px solid rgb(var(--primaryClr));
+      border-top: 1px solid rgb(var(--primaryClr));
       transition: all 0.3s ease;
     }
     
     &::before{
       bottom:0;
       right: 0;
-      border-right: 1px solid rgb(var(--primary));
-      border-bottom: 1px solid rgb(var(--primary));
+      border-right: 1px solid rgb(var(--primaryClr));
+      border-bottom: 1px solid rgb(var(--primaryClr));
       transition: all 0.3s ease;
     }
     

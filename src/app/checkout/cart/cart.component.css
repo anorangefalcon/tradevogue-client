@@ -35,7 +35,7 @@
     width: 100%;
     display: flex;
     align-items: center;
-    border-block-end: 1px solid rgba(var(--text-black), 0.1);
+    border-block-end: 1px solid rgba(var(--textClr), 0.1);
     padding-block-end: 20px;
     position: relative;
 
@@ -65,8 +65,8 @@
             }
 
             & input[type="checkbox"]:checked+label .material-symbols-outlined {
-                background-color: rgb(var(--accent));
-                border-color: rgb(var(--accent));
+                background-color: rgb(var(--primaryClr));
+                border-color: rgb(var(--primaryClr));
             }
         }
     }
@@ -94,7 +94,7 @@
         padding-inline: 14px;
         background-color: white;
         height: 100%;
-        /* border-block: 1px solid rgb(var(--text-black), 0.05); */
+        /* border-block: 1px solid rgb(var(--textClr), 0.05); */
     }
 }
 
@@ -111,7 +111,7 @@
 }
 
 .quantity-btn {
-    background-color: rgb(var(--text-black), 0.05);
+    background-color: rgb(var(--textClr), 0.05);
     padding: 5px 10px;
     border: none;
     /* background: transparent; */
@@ -121,7 +121,7 @@
 
     & .material-symbols-outlined {
         font-size: 18px;
-        color: rgb(var(--text-black));
+        color: rgb(var(--textClr));
     }
 }
 
@@ -133,13 +133,13 @@
     position: absolute;
     inset-block-start: -5.5px;
     inset-inline-start: -2px;
-    background-color: rgb(var(--text-black));
+    background-color: rgb(var(--textClr));
     border-radius: 50%;
     transition: background-color 0.3s ease-in-out;
-    border: 2px solid rgb(var(--text-white));
+    border: 2px solid rgb(var(--whiteClr));
 
     & span {
-        color: rgb(var(--text-white));
+        color: rgb(var(--whiteClr));
         font-weight: 600;
         font-size: 16px;
     }
@@ -168,7 +168,7 @@
 }
 
 .colors-radios input:checked {
-    border: 1px solid rgb(var(--text-black));
+    border: 1px solid rgb(var(--textClr));
 
 }
 
@@ -205,15 +205,15 @@
     cursor: pointer;
     border-radius: 2px;
     padding: 1px 6px;
-    border: 1px solid rgba(var(--text-black), 0.2);
-    color: rgb(var(--text-black));
+    border: 1px solid rgba(var(--textClr), 0.2);
+    color: rgb(var(--textClr));
     font-size: 14px;
     transition: all 0.1s;
 }
 
 
 .sizes-radios input:checked+label {
-    border: 1px solid rgb(var(--text-black));
+    border: 1px solid rgb(var(--textClr));
 }
 
 .sizes-radios input::before {
@@ -329,7 +329,7 @@
 
         & .material-symbols-outlined {
             font-size: 18px;
-            color: rgb(var(--text-black));
+            color: rgb(var(--textClr));
         }
     }
 
@@ -347,7 +347,7 @@
 
         & .material-symbols-outlined {
             font-size: 12px;
-            color: rgb(var(--text-black));
+            color: rgb(var(--textClr));
         }
     }
 
@@ -478,7 +478,7 @@
     }
 
     .quantity-btn {
-        background-color: rgb(var(--text-black), 0.05);
+        background-color: rgb(var(--textClr), 0.05);
     }
 }
 
@@ -492,7 +492,7 @@
     .mobile-view p {
         padding: 2px 4px;
         border-radius: 5px;
-        background-color: rgb(var(--text-black), 0.05);
+        background-color: rgb(var(--textClr), 0.05);
     }
     .final-price{
         max-width: 4ch;

@@ -1,6 +1,6 @@
 <section class="signup-section d-flex flex-">
 
-  <div class="column left-column d-flex justify-content-center align-items-center">
+  <div class="column left-column d-flex justify-content-center align-item-center">
     <div class="form-container d-flex flex-column">
       <div class="header fixed">
         <a routerLink="/"><img src="../../assets/logo.svg" alt="logo"></a>
@@ -54,7 +54,7 @@
           <label class="form__label">Password<span>*</span></label>
           <span class="material-symbols-outlined key form__icon absolute">key</span>
           <input [type]="password" id="password" formControlName="password" placeholder="Enter Your Password">
-          <button class="eye-btn flex justify-content-center align-items-center" (click)="toggle_password('Password')"><span
+          <button class="eye-btn flex justify-content-center align-items-center" (click)="toggle_password(1)"><span
               class="material-symbols-outlined eye">{{showPassword? 'visibility' : 'visibility_off'}}</span></button>
         
 
@@ -123,7 +123,7 @@
           <span class="material-symbols-outlined key form__icon absolute">key</span>
           <input [type]="confirmPassword" id="confirmPassword" formControlName="confirmPassword"
             placeholder="Re-enter Your Password">
-          <button class="eye-btn flex justify-content-center align-items-center" (click)="toggle_password('confirmPassword')"><span
+          <button class="eye-btn flex justify-content-center align-items-center" (click)="toggle_password(2)"><span
               class="material-symbols-outlined eye">{{showPassword2? 'visibility' : 'visibility_off'}}</span></button>
 
 

@@ -8,32 +8,32 @@
             </div>
 
 
-            <div class="ProductINFO d-flex gap-15 flex-row align-items-center">
+            <div class="ProductINFO d-flex gap-15 flex-row align-item-center">
 
                 <div class="product-info d-flex flex-column justify-content-center gap-5">
                     <a routerLink="/product/{{item.sku}}">
                         <h4>{{item?.name}}</h4>
                     </a>
-                    <div class="sizes d-flex gap-10 align-items-center">
+                    <div class="sizes d-flex gap-10 align-item-center">
                         <p class="labels">Size:</p>
                         <p>{{item.size}}</p>
                     </div>
-                    <div class="colors d-flex gap-10 align-items-center">
+                    <div class="colors d-flex gap-10 align-item-center">
                         <p class="labels">Color:</p>
                         <div class="color-circle" [ngStyle]="{'background-color': item.color}"></div>
                     </div>
-                    <div class="mobile-view d-flex gap-10 align-items-center">
+                    <div class="mobile-view d-flex gap-10 align-item-center">
                         <p>{{item.size}}</p>
                         <div class="color-circle" [ngStyle]="{'background-color': item.color}"></div>
                     </div>
 
-                    <div class="d-flex align-items-center gap-10">
+                    <div class="d-flex align-item-center gap-10">
                         <p class="labels">Price: </p>
                         <p>₹{{item?.price}}</p>
                     </div>
                 </div>
 
-                <div class="d-flex gap-10 align-items-center common">
+                <div class="d-flex gap-10 align-item-center common">
                     
 
                     <div class="quantity-btn-outer">
@@ -43,7 +43,7 @@
                                     remove
                                 </span>
                             </button>
-                            <span class="quantity-value fs-14 d-flex align-items-center">
+                            <span class="quantity-value fs-14 d-flex align-item-center">
                                 {{item.Quantity}}
                             </span>
                             <button class="quantity-btn" (click)="changeQuantity('next', item.sku, item.Quantity)">
@@ -56,14 +56,14 @@
                        
                     </div>
 
-                    <div class="final-price d-flex align-items-center">
+                    <div class="final-price d-flex align-item-center">
                         <p>₹{{(item?.price * item?.Quantity) | number : '1.0-2'}}</p>
                     </div>
 
 
                 </div>
             </div>
-                <button class="remove-btn d-flex align-items-center" (click)="remove_item(item.sku)">
+                <button class="remove-btn d-flex align-item-center" (click)="remove_item(item.sku)">
                     <span class="material-symbols-outlined">
                         close
                     </span>

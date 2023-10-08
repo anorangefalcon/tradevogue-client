@@ -29,7 +29,7 @@ img {
 }
 
 .subtitle {
-  color: rgb(var(--primary));
+  color: rgb(var(--primaryClr));
   font-weight: 500;
 }
 
@@ -45,10 +45,10 @@ img {
   color: #fff;
   font-size: 14px;
   padding: 13px 20px;
-  background-color: rgb(var(--primary));
+  background-color: rgb(var(--primaryClr));
   text-transform: uppercase;
   font-weight: 600;
-  border: 1px solid rgb(var(--primary));
+  border: 1px solid rgb(var(--primaryClr));
   border-radius: 5px;
   letter-spacing: .5px;
   text-align: center;

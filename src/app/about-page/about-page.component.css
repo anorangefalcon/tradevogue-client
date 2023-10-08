@@ -1,6 +1,6 @@
 .about_title {
     min-height: 400px;
-    background-color: rgb(var(--accent), 0.1);
+    background-color: rgb(var(--primaryClr), 0.1);
     background-image: url(../../assets/deal-of-week-component/dealOfWeek-homeBg.png);
     background-repeat: no-repeat;
     background-size: cover;
@@ -97,7 +97,7 @@
             & h3 {
                 font-size: 18px !important;
                 line-height: 1;
-                color: rgba(var(--text-black), 0.7);
+                color: rgba(var(--textClr), 0.7);
                 font-weight: 600;
             }
 
@@ -108,7 +108,7 @@
                 font-weight: 400;
                 /* max-width: 600px; */
                 margin-bottom: 20px;
-                color: rgba(var(--text-black), 0.8);
+                color: rgba(var(--textClr), 0.8);
             }
 
 
@@ -118,7 +118,7 @@
                 /* margin: 0 0 37px; */
                 /* width:400px; */
                 /* max-width: 600px; */
-                color: rgba(var(--text-black), 0.7);
+                color: rgba(var(--textClr), 0.7);
                 margin-bottom: 35px;
             }
 
@@ -147,7 +147,7 @@
                         /* gap:10px; */
                         & h4 {
                             font-size: 18px;
-                            color: rgba(var(--text-black), 0.8);
+                            color: rgba(var(--textClr), 0.8);
                         }
 
                         & p {
@@ -173,7 +173,7 @@
     /* position: absolute;  */
     font-family: "Poppins", sans-serif;
     /* background-color: red; */
-    color: rgba(var(--text-black), 0.8);
+    color: rgba(var(--textClr), 0.8);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -206,7 +206,7 @@
             & h3 {
                 font-size: 18px !important;
                 line-height: 1;
-                color: rgba(var(--text-black), 0.8);
+                color: rgba(var(--textClr), 0.8);
                 font-weight: 600;
             }
 
@@ -218,7 +218,7 @@
                 font-family: 'Jost', sans-serif;
                 font-weight: 400;
 
-                color: rgba(var(--text-black), 0.8);
+                color: rgba(var(--textClr), 0.8);
             }
 
             & p {
@@ -244,7 +244,7 @@
                 & .second_content {
                     display: flex;
 
-                    color: rgba(var(--text-black), 0.8);
+                    color: rgba(var(--textClr), 0.8);
                     justify-content: space-between;
                     min-width: 100%;
                     margin-bottom: 8px;
@@ -261,7 +261,7 @@
                     position: relative;
                     border-radius: 10px;
                     display: flex;
-                    background-color: rgba(var(--text-black), 0.2);
+                    background-color: rgba(var(--textClr), 0.2);
 
                     /* background-color: red; */
                     &::before {
@@ -269,7 +269,7 @@
                         position: absolute;
                         border-radius: 10px;
                         height: 100%;
-                        background-color: rgba(var(--primary));
+                        background-color: rgba(var(--primaryClr));
                         width: 70%;
                         display: flex;
                         justify-content: center;
@@ -283,7 +283,7 @@
                     position: relative;
                     display: flex;
                     border-radius: 10px;
-                    background-color: rgba(var(--text-black), 0.2);
+                    background-color: rgba(var(--textClr), 0.2);
 
                     /* background-color: red; */
                     &::before {
@@ -291,7 +291,7 @@
                         position: absolute;
                         height: 100%;
                         border-radius: 10px;
-                        background-color: rgba(var(--primary));
+                        background-color: rgba(var(--primaryClr));
                         width: 90%;
                         display: flex;
                         justify-content: center;
@@ -305,7 +305,7 @@
                     position: relative;
                     border-radius: 10px;
                     display: flex;
-                    background-color: rgba(var(--text-black), 0.2);
+                    background-color: rgba(var(--textClr), 0.2);
 
                     /* background-color: red; */
                     &::before {
@@ -313,7 +313,7 @@
                         position: absolute;
                         border-radius: 10px;
                         height: 100%;
-                        background-color: rgba(var(--primary));
+                        background-color: rgba(var(--primaryClr));
                         /* background-color: yellowgreen; */
                         width: 60%;
                         /* background-color: var(--whiteClr); */
@@ -338,7 +338,7 @@
 .center_section {
     /* padding-block: ; */
     padding-block: 80px;
-    background-color: rgb(var(--accent), 0.1);
+    background-color: rgb(var(--primaryClr), 0.1);
     background-image: url(../../assets/deal-of-week-component/dealOfWeek-homeBg.png);
     background-repeat: no-repeat;
     background-size: cover;
@@ -361,7 +361,7 @@
             & h2 {
                 font-size: 60px;
                 line-height: 60px;
-                color: rgba(var(--text-black), 0.8);
+                color: rgba(var(--textClr), 0.8);
                 /* color: #FFblac kF; */
                 /* margin: 0 28px 0 0; */
                 /* position: relative; */
@@ -371,7 +371,7 @@
                 font-size: 21px;
                 line-height: 30px;
                 letter-spacing: 1.2px;
-                color: rgba(var(--text-black), 0.8);
+                color: rgba(var(--textClr), 0.8);
                 /* color: #FFF; */
                 /* margin: 0 */
             }
@@ -392,7 +392,7 @@ button {
 
 .team-members {
     padding-block: 50px;
-    background-color: rgb(var(--accent), 0.1);
+    background-color: rgb(var(--primaryClr), 0.1);
     background-image: url(../../assets/deal-of-week-component/dealOfWeek-homeBg.png);
     background-repeat: no-repeat;
     background-size: cover;
@@ -411,7 +411,7 @@ button {
             & h2 {
                 text-align: center;
                 line-height: 48px;
-                color: rgba(var(--text-black), 0.8);
+                color: rgba(var(--textClr), 0.8);
                 font-size: 36px !important;
                 margin-bottom: 6px;
             }

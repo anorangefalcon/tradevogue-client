@@ -9,7 +9,7 @@
 
 .border {
     padding-block: 10px;
-    border-block: 1px solid rgb(var(--text-black), 0.09);
+    border-block: 1px solid rgb(var(--textClr), 0.09);
 }
 
 .cart {
@@ -111,13 +111,13 @@
 
     & h2 {
         font-size: 24px;
-        color: rgb(var(--text-black));
+        color: rgb(var(--textClr));
     }
 
 
     & .border-end {
         padding-block-end: 10px;
-        border-block-end: 1px solid rgb(var(--text-black), 0.09);
+        border-block-end: 1px solid rgb(var(--textClr), 0.09);
     }
 
     & .item {
@@ -129,7 +129,7 @@
 
         & .itemtype p {
             font-size: 12px !important;
-            color: rgb(var(--text-black), 0.6);
+            color: rgb(var(--textClr), 0.6);
         }
     }
 
@@ -156,7 +156,7 @@
     & .btn-primary a {
         font-size: 14px !important;
         font-weight: 600;
-        color: rgb(var(--text-white));
+        color: rgb(var(--whiteClr));
     }
 
 

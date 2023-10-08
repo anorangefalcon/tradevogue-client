@@ -12,7 +12,6 @@ export class StatisticsComponent implements OnInit {
   // lineChart: any;
   donutChart: any;
   table: any;
-  @Output () title = new EventEmitter<any>(); 
 
   isCustomerChange: boolean = true;
   isOrderChange: boolean = false;
@@ -23,7 +22,6 @@ export class StatisticsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.title.emit("Dashboard");
     
     this.createBarChart();
     this.createDonut();
@@ -148,6 +146,7 @@ export class StatisticsComponent implements OnInit {
     this.fetchdata.getSellerData().subscribe((data: any)=>{
 
       let products = data[0]['products'][0];
+      console.log(products);
       this.productList = []; 
 
       products.forEach((item: any) => {

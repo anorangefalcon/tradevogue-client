@@ -8,7 +8,7 @@ import { FetchDataService } from 'src/app/shared/services/fetch-data.service';
 })
 export class ProductsComponent implements OnInit {
   rating: any[] = [1, 2, 3, 4, 5];
-  stockStatus: any[] = ['Delivered', 'Pending'];
+  stockStatus: any[] = ['Out of Stock', 'Low Inventory', 'In Stock'];
   categoryOption: any[] = ['Category 1', 'Category 2', 'Category 3', 'Category 4'];
   ratingOption: any[] = [5, 4, 3, 2];
   pageSize: number = 10;
@@ -21,6 +21,7 @@ export class ProductsComponent implements OnInit {
     this.fetchData();
   }
 
+  productTemplate = ['Product Name', 'Category', 'Price', 'Stock', 'Status', 'Published', 'Action'];
 
   fetchData() {
 
@@ -65,6 +66,12 @@ export class ProductsComponent implements OnInit {
       console.log("Product List::", this.productList);
     })
     return;
+  }
+
+  toggleClass(e: Event){
+    let element = <HTMLButtonElement>e.target;
+    element.classList.add('action');
+    console.log(element);
   }
 
 

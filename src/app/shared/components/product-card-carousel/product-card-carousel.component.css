@@ -15,7 +15,7 @@
         & span {
             font-size: 30px;
             font-weight: 300;
-            color: rgb(var(--text-black));
+            color: rgb(var(--textClr));
         }
 
         background-color: transparent;
@@ -31,10 +31,10 @@
             width: 100%;
             justify-content: space-between;
             transform: translateY(-50%) !important;
-            background-color: var((--text-white),0.6) !important; 
+            background-color: var((--whiteClr),0.6) !important; 
 
             & span {
-                color: rgb(var(--text-black));
+                color: rgb(var(--textClr));
                 font-size: 26px !important;
                 background-color: white!important; ;
             } 
@@ -48,7 +48,7 @@
             & span {
                 font-size: 30px;
                 font-weight: 300;
-                color: rgb(var(--text-black));
+                color: rgb(var(--textClr));
             }
 
         }
