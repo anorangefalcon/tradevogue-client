@@ -13,8 +13,8 @@ input[type="checkbox"] {
 }
 
 input[type="checkbox"]:checked {
-    background-color: rgb(var(--primary));
-    border-color: rgb(var(--primary));
+    background-color: rgb(var(--primaryClr));
+    border-color: rgb(var(--primaryClr));
 }
 input[type="checkbox"]:checked + label{
     position: relative;
@@ -58,7 +58,7 @@ input[type="checkbox"]:checked + label::after {
     min-width: 15%;
 
     & .head {
-        border-block-end: 1px solid rgb(var(--text-black), 0.2);
+        border-block-end: 1px solid rgb(var(--textClr), 0.2);
         padding-block-end: 10px;
 
         & button {
@@ -75,7 +75,7 @@ input[type="checkbox"]:checked + label::after {
 
     & .show-btn {
         font-size: 12px !important;
-        color: rgb(var(--accent));
+        color: rgb(var(--primaryClr));
         cursor: pointer;
     }
 
@@ -89,13 +89,13 @@ input[type="checkbox"]:checked + label::after {
 
     & label {
         font-size: 12px !important;
-        color: rgb(var(--text-black), 0.8);
+        color: rgb(var(--textClr), 0.8);
         white-space: nowrap;
         cursor: pointer;
     }
 
     & .types {
-        border-block-end: 1px solid rgb(var(--text-black), 0.2);
+        border-block-end: 1px solid rgb(var(--textClr), 0.2);
         padding-block-end: 10px;
     }
 
@@ -110,7 +110,7 @@ input[type="checkbox"]:checked + label::after {
         background-color: transparent;
         font-size: 12px !important;
         padding: 0;
-        color: rgb(var(--accent));
+        color: rgb(var(--primaryClr));
 
     }
 
@@ -121,7 +121,7 @@ input[type="checkbox"]:checked + label::after {
 }
 
 .filtersMenu {
-    background-color: rgb(var(--text-white), );
+    background-color: rgb(var(--whiteClr), );
     z-index: 94;
 }
 

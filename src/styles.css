@@ -105,19 +105,12 @@ select {
 
 /* Global CSS (main) */
 :root {
-
-    /* new purple */
-    --container-color: 255, 255, 255;
-    --container-black: 0, 0, 0;
-    --text-black: 7, 7, 7;
-    --text-white: 255, 255, 255;
-    --background: 255, 255, 255;
-    /* --primary: 89, 25, 79; */
-    --primary: 223, 65, 23;
-    --secondary: 241, 241, 241;
-    /* --accent: 88, 30, 129; */
-    --accent: 223, 106, 23;
-
+    --whiteClr: 255, 255, 255;
+    --blackClr: 0, 0, 0;
+    --textClr: 34, 34, 34;
+    --primaryClr: 223, 65, 23;
+    --secondary: 249, 250, 251;
+    
     --danger: 223, 22, 33;
     --success: 60, 167, 23;
     --warning: 183, 146, 2;
@@ -129,18 +122,11 @@ select {
     --text-gray: 111, 111, 111;
     --input-text-bg : #f5f5f5cf;
 
-    /* Dashboard */
     --blue-clr: 24, 138, 226;
     --yellow-clr: 249, 165, 80;
     --green-clr: var(--success);
     --red-clr: var(--danger);
 
-    /* dark-purple */
-    /* --text: #FFFFFF;
-    --background: #0a0c10;
-    --primary: #59194F;
-    --secondary: #252525;
-    --accent: #a65eda; */
 }
 
 h1 {
@@ -183,7 +169,7 @@ h6 {
 body {
     font-family: 'Poppins', sans-serif;
     font-size: 13px;
-    color: rgb(var(--text-black));
+    color: rgb(var(--textClr));
 }
 
 h3 {
@@ -228,7 +214,7 @@ p {
 
 a {
     text-decoration: none;
-    color: rgb(var(--text-black));
+    color: rgb(var(--textClr));
 }
 
 
@@ -250,6 +236,10 @@ ul {
 
 .fs-18 {
     font-size: 18px !important;
+}
+
+.fs-20 {
+    font-size: 20px !important;
 }
 
 .text-warp {
@@ -306,8 +296,7 @@ ul {
     justify-content: space-between;
 }
 
-.align-center,
-.align-items-center {
+.align-item-center{
     align-items: center;
 }
 
@@ -330,7 +319,7 @@ ul {
 
 
 
-/* Grid utilities */
+/* grid utilities */
 .grid {
     display: grid;
 }
@@ -488,8 +477,8 @@ ul {
     
     position: absolute;
     min-width: 100px;
-    background-color: rgb(var(--secondary)) !important;
-    color: rgb(var(--text-black)) !important;
+    background-color: rgb(var(--blackClr)) !important;
+    color: rgb(var(--whiteClr)) !important;
     font-size: 11px !important;
     font-weight: 500;
     padding: 5px 10px;
@@ -511,7 +500,7 @@ ul {
     margin-left: -5px;
     border-width: 5px;
     border-style: solid;
-    border-color: transparent transparent rgb(var(--secondary)) transparent;
+    border-color: transparent transparent rgb(var(--blackClr)) transparent;
 }
 
 .tooltip:is(:hover, :active) .tooltiptext{
@@ -555,16 +544,16 @@ ul {
     &::after {
         top: 0;
         left: 0;
-        border-left: 1px solid rgb(var(--primary));
-        border-top: 1px solid rgb(var(--primary));
+        border-left: 1px solid rgb(var(--primaryClr));
+        border-top: 1px solid rgb(var(--primaryClr));
         transition: all 0.3s ease;
     }
 
     &::before {
         bottom: 0;
         right: 0;
-        border-right: 1px solid rgb(var(--primary));
-        border-bottom: 1px solid rgb(var(--primary));
+        border-right: 1px solid rgb(var(--primaryClr));
+        border-bottom: 1px solid rgb(var(--primaryClr));
         transition: all 0.3s ease;
     }
 
@@ -601,7 +590,7 @@ ul {
         font-weight: 900;
 
         color: transparent;
-        background: linear-gradient(to top right, rgb(var(--accent)), rgb(var(--primary)), rgb(var(--accent)));
+        background: linear-gradient(to top right, rgb(var(--primaryClr)), rgb(var(--primaryClr)), rgb(var(--primaryClr)));
         -webkit-background-clip: text;
         background-clip: text;
 
@@ -651,6 +640,7 @@ ul {
     cursor: pointer;
 }
 
+
 button {
     cursor: pointer;
     border: none;
@@ -664,19 +654,19 @@ button {
 }
 
 .btn-primary {
-    background-color: rgb(var(--primary));
-    color: rgb(var(--text-white));
+    background-color: rgb(var(--primaryClr));
+    color: rgb(var(--whiteClr));
 
 }
 
 .btn-primary:hover {
-    background-color: rgb(var(--primary), 0.9);
+    background-color: rgb(var(--primaryClr), 0.9);
 }
 
 .btn-secondary {
-    background-color: rgb(var(--container-color)) ;
-    border : 1px solid rgb(var(--primary));
-    color: rgb(var(--primary));
+    background-color: rgb(var(--whiteClr)) ;
+    border : 1px solid rgb(var(--primaryClr));
+    color: rgb(var(--primaryClr));
     font-weight: 400;
     transition: all 0.3s ease-in-out;
 
@@ -686,8 +676,8 @@ button {
 }
 
 .btn-accent {
-    background-color: rgb(var(--accent), 0.7) !important;
-    color: rgb(var(--text-white));
+    background-color: rgb(var(--primaryClr), 0.7) !important;
+    color: rgb(var(--whiteClr));
     font-weight: 600;
 }
 
@@ -722,7 +712,7 @@ button {
     & span {
         font-size: 45px;
         font-weight: 300;
-        color: rgb(var(--text-black));
+        color: rgb(var(--textClr));
     }
 
     background-color: transparent !important;

@@ -1,4 +1,4 @@
-import { Component} from '@angular/core';
+import { Component } from '@angular/core';
 
 
 @Component({
@@ -11,13 +11,30 @@ export class DashboardComponent {
   isCollapse: boolean = false;
   isSalesBtnActive: boolean = false;
   isProductBtnActive: boolean = false;
-  title: string = 'Dashboard'; 
+  title: string = 'Dashboard';
 
-  ngOnInit(){
-    window.addEventListener("resize", ()=>{
+  navitems = [
+    { name: 'Dashbaord', icons: 'grid_view', route: '/dashboard' },
+    {
+      name: 'Products', icons: 'inventory', sublist: [
+        { name: 'Product Overview', route: '/dashboard/products' },
+        { name: 'Add Features', route: '/dashboard/features' },
+        { name: 'Add Product', route: '/dashboard/addproduct' },
+      ]
+    },
+    { name: 'Orders', icons: 'shopping_cart', route: '/dashboard/orders' },
+    { name: 'Reviews', icons: 'reviews', route: '' },
+    { name: 'Marketing', icons: 'inventory', sublist: [
+
+    ] },
+    { name: 'Logout', icons: 'logout', route: '' }
+  ]
+
+  ngOnInit() {
+    window.addEventListener("resize", () => {
       let check = window.matchMedia("(max-width: 992px)");
       // console.log(check.matches);
-      if (check.matches){ 
+      if (check.matches) {
         this.isCollapse = true;
         console.log(this.isCollapse);
         return;
@@ -26,11 +43,11 @@ export class DashboardComponent {
     });
   }
 
-  sales_dropdown(){
+  sales_dropdown() {
     this.isSalesBtnActive = !this.isSalesBtnActive;
   }
 
-  product_dropdown(){
+  product_dropdown() {
     this.isProductBtnActive = !this.isProductBtnActive;
   }
 }

@@ -23,14 +23,15 @@
                         </span>
                     </ng-template>
 
-                    <div class="file-section d-flex align-center gap-5">
+                    <div class="file-section d-flex align-item-centergap-5">
                         <input type="file" id="sizes" maxlength="1" minlength="1" (change)="uploadFile($event)"
                             accept="image/CSV, application/vnd.ms-excel ,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" />
                         <label class="uploadbtn tooltip" for="sizes">
                             <span class="material-symbols-outlined operation-icon">upload_file</span>
                             <span class="tooltiptext">Upload Excel</span>
                         </label>
-                        <a class="downloadBtn tooltip" href="../../../assets/ExcelSampleFile/sampleFullData.xlsx" download>
+                        <a class="downloadBtn tooltip" href="../../../assets/ExcelSampleFile/sampleFullData.xlsx"
+                            download>
                             <span class="material-symbols-outlined operation-icon">download</span>
                             <span class="tooltiptext">Download Excel Sample</span>
                         </a>
@@ -38,19 +39,18 @@
                 </span>
 
 
-                <div class="next_prev_btn d-flex align-items-center gap-15">
+                <div class="next_prev_btn d-flex align-item-center gap-15">
 
                     <button class="button add_form d-flex flex-center" (click)="addProductImageForm()"
                         [ngStyle]="{display: current_form != 'product_images'? 'none' : 'flex' }">
                         <span class="add_form_icon material-symbols-outlined">add</span>
                     </button>
 
-
                     <button class="button previous d-flex flex-center" (click)="current_form = ''"
                         [disabled]="current_form == ''" [ngStyle]="{display: current_form == ''? 'none' : 'flex' }">
                         <span class="back_icon material-symbols-outlined">arrow_back_ios_new</span>
                     </button>
-                    <!-- <button class="button next d-flex align-items-center gap-5"
+                    <!-- <button class="button next d-flex align-item-center gap-5"
                         (click)="current_form = 'product_images'"
                         [disabled]="productsForm.get('basicinfo')?.invalid || current_form == 'product_images'"
                         [ngStyle]="{display: current_form == 'product_images'? 'none' : 'flex' }" >
@@ -69,7 +69,7 @@
                 <div *ngSwitchCase="'product_images'">
 
                     <div class="form-2">
-                        <div class="product__image__container grid grid-cols-2 gap-20" formArrayName="productImages">
+                        <div class="product__image__container d-grid d-grid-cols-2 gap-20" formArrayName="productDesc">
                             <ng-container *ngFor="let form of productImagesFormArray();let i=index">
                                 <div [formGroupName]="i" class="d-flex flex-column gap-10">
 
@@ -107,56 +107,21 @@
                                         <div class="product-images relative">
                                             <input type="file" [id]="'productImages'+ i"
                                                 accept="image/jpg, image/jpeg, image/png" maxlength="6" minlength="3"
-                                                (change)="onFileChange($event, i)" multiple />
+                                                (change)="onImageUpload($event, i)" multiple />
                                             <span
                                                 class="image_instruction absolute d-flex flex-column text-center flex-center gap-10">
                                                 <h3>Upload Product Images</h3>
                                                 <small>
-                                                    Maximum 0f 6 images and minimum of 3 images need to be uploaded,make
+                                                    Maximum 0f 6 images and minimum of 2 images need to be uploaded,make
                                                     sure the image size match the proper background
                                                     size and all images should be uniformly maintained with width and
-                                                    height to the image
-                                                    container,image size should not exceed 5MB,once uploaded to change
-                                                    the image you need to wait
-                                                    minimum of 24hrs.
+                                                    height to the image container,image size should not exceed 2MB
                                                 </small>
                                             </span>
                                             <span class="images_list">
-                                                <span>
-                                                    <img src="../../../assets/Gallery/Gallery1 (8).jpg" alt="">
-                                                    <span class="remove-btn" href="">
-                                                        <span class="material-symbols-outlined">close</span>
-                                                    </span>
-                                                </span>
-                                                <span>
-                                                    <img src="../../../assets/Gallery/Gallery1 (8).jpg" alt="">
-                                                    <span class="remove-btn" href="">
-                                                        <span class="material-symbols-outlined">close</span>
-                                                    </span>
-                                                </span>
-                                                <span>
-                                                    <img src="../../../assets/Gallery/Gallery1 (8).jpg" alt="">
-                                                    <span class="remove-btn" href="">
-                                                        <span class="material-symbols-outlined">close</span>
-                                                    </span>
-                                                </span>
-                                                <span>
-                                                    <img src="../../../assets/Gallery/Gallery1 (8).jpg" alt="">
-                                                    <span class="remove-btn" href="">
-                                                        <span class="material-symbols-outlined">close</span>
-                                                    </span>
-                                                </span>
-                                                <span>
-                                                    <img src="../../../assets/Gallery/Gallery1 (8).jpg" alt="">
-                                                    <span class="remove-btn" href="">
-                                                        <span class="material-symbols-outlined">close</span>
-                                                    </span>
-                                                </span>
-                                                <span>
-                                                    <img src="../../../assets/Gallery/Gallery1 (8).jpg" alt="">
-                                                    <span class="remove-btn" href="">
-                                                        <span class="material-symbols-outlined">close</span>
-                                                    </span>
+                                                <span class="image relative" *ngFor="let item of imagesArray(i); let imagesIndex=index">
+                                                    <img [src]="item.image" alt="productImage.png" width="100" height="100">
+                                                    <i class="remove-btn absolute pointer transition d-flex flex-center material-symbols-outlined" (click)="deleteImage(imagesIndex, i)">close</i>
                                                 </span>
                                             </span>
                                             <label [for]="'productImages'+ i" class="absolute d-flex flex-center gap-5">
@@ -364,8 +329,7 @@
                     </div>
                 </div>
                 <div class="submit_btn d-flex justify-content-end">
-                    <button class="add d-flex align-items-center gap-5" (click)="onsubmit()"
-                        [disabled]="productsForm.invalid" [ngStyle]="{display: current_form == ''? 'none' : 'flex' }">
+                    <button class="add d-flex align-item-center gap-5" (click)="onsubmit()">
                         <a href="javascript:void(0);">Submit Product</a>
                         <span class="material-symbols-outlined">upload</span>
                     </button>
@@ -394,7 +358,7 @@
                 
                 <div *ngIf="productImagesD.length !== 0" class="images__container d-flex flex-column gap-5">
                     <span *ngFor="let image of productImagesD; let i=index"
-                    class="images d-flex justify-content-md-between align-items-center">
+                    class="images d-flex justify-content-md-between align-item-center">
                     <span>{{image.name}}</span>
                     <span class="material-symbols-outlined" (click)="deleteImage(image.name)">close</span>
                 </span>
@@ -412,7 +376,7 @@
             
                 <div *ngIf="errorFile.length !== 0" class="images__container d-flex flex-column gap-5">
                     <span *ngFor="let file of errorFile[0]"
-                        class="error_images images d-flex justify-content-md-between align-items-center">
+                        class="error_images images d-flex justify-content-md-between align-item-center">
                         <span>{{file.name}}</span>
                         <span class="material-symbols-outlined" (click)="deleteImage(file.name)">close</span>
                     </span>

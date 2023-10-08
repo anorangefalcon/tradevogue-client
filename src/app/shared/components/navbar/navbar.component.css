@@ -4,7 +4,7 @@
 
 header {
     position: fixed;
-    box-shadow: 0 2px 5px rgb(var(--text-black), 0.1);
+    box-shadow: 0 2px 5px rgb(var(--textClr), 0.1);
     letter-spacing: 1.2px;
     font-weight: 500;
     width: 100%;
@@ -52,7 +52,7 @@ header {
         }
 
         & li:hover a:is(:hover, :focus) {
-            color: rgb(var(--primary));
+            color: rgb(var(--primaryClr));
         }
     }
 }
@@ -68,8 +68,8 @@ header {
 }
 
 header.active {
-    box-shadow: 0 5px 10px rgb(var(--text-black), 0.1);
-    background-color: rgb(var(--text-white), 0.8);
+    box-shadow: 0 5px 10px rgb(var(--textClr), 0.1);
+    background-color: rgb(var(--whiteClr), 0.8);
     backdrop-filter: blur(10px);
     padding-block: 0;
 
@@ -123,7 +123,7 @@ header.active {
     }
 
     & li a:hover span.material-symbols-outlined {
-        color: rgb(var(--accent));
+        color: rgb(var(--primaryClr));
     }
 
     & li a {
@@ -138,8 +138,8 @@ header.active {
             font-size: 10px;
             height: 15px;
             width: 15px;
-            background-color: rgb(var(--accent), 1);
-            color: rgb(var(--text-white), 1);
+            background-color: rgb(var(--primaryClr), 1);
+            color: rgb(var(--whiteClr), 1);
             inset-inline-end: -5px;
             inset-block-start: -5px;
             border-radius: 100%;
@@ -212,9 +212,9 @@ header.active {
         align-items: center;
         gap: 8px;
         padding: 10px;
-        background-color: rgb(var(--accent), 0.1);
+        background-color: rgb(var(--primaryClr), 0.1);
         border-radius: 5px;
-        color: rgb(var(--primary), 1);
+        color: rgb(var(--primaryClr), 1);
         text-decoration: none;
         transition: background-color 0.3s, color 0.3s;
 
@@ -225,7 +225,7 @@ header.active {
 
     #login:hover,
     #register:hover {
-        background-color: rgb(var(--accent), 0.3);
+        background-color: rgb(var(--primaryClr), 0.3);
     }
 
     #login .material-symbols-outlined,
@@ -275,7 +275,7 @@ header.active {
             inset-inline-start: 0;
             z-index: 96;
             transition: all 0.5s ease-in-out;
-            background-color: rgb(var(--text-white), 0.98);
+            background-color: rgb(var(--whiteClr), 0.98);
             backdrop-filter: blur(10px);
 
             & .nav-links a {
@@ -303,7 +303,7 @@ header.active {
                 & span {
                     height: 2px;
                     width: 18px;
-                    background-color: rgb(var(--text-black));
+                    background-color: rgb(var(--textClr));
 
                     /* center line*/
                     &:nth-child(1) {
@@ -403,7 +403,7 @@ header.active {
             border-right: 0px;
             border-radius: 5px 0px 0px 5px;
             background-color: rgba(211, 211, 211, 0.24);
-            color: rgb(var(--text-black), 0.5);
+            color: rgb(var(--textClr), 0.5);
         }
 
         & .search-bar {
@@ -450,8 +450,8 @@ header.active {
                     font-size: 10px;
                     height: 14px;
                     width: 14px;
-                    background-color: rgb(var(--accent), 1);
-                    color: rgb(var(--text-white), 1);
+                    background-color: rgb(var(--primaryClr), 1);
+                    color: rgb(var(--whiteClr), 1);
                     inset-inline-end: -4px;
                     inset-block-start: -4px;
                     border-radius: 100%;

@@ -1,7 +1,7 @@
 
 .faq_title {
   min-height: 400px;
-  background-color: rgb(var(--accent), 0.1);
+  background-color: rgb(var(--primaryClr), 0.1);
   background-image: url(../../assets/deal-of-week-component/dealOfWeek-homeBg.png);
   background-repeat: no-repeat;
   background-size: cover;
@@ -79,7 +79,7 @@ button.accordion2 {
 }
 
 .panel p {
-  color: rgb(var(--text-black), 0.7);
+  color: rgb(var(--textClr), 0.7);
   /* padding: 10px 44px; */
 }
 

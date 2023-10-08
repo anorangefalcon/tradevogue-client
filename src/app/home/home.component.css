@@ -27,7 +27,7 @@
 
     & i,
     span {
-      color: rgb(var(--primary));
+      color: rgb(var(--primaryClr));
       font-size: 44px;
       font-weight: 500;
     }
@@ -62,7 +62,7 @@
   background: linear-gradient(#2222229c, #22222267), url(../../assets/newbg.jpeg);
   background-repeat: no-repeat;
   background-size: cover;
-  color: rgb(var(--text-white));
+  color: rgb(var(--whiteClr));
 
   & form {
     width: 100%;
@@ -80,7 +80,7 @@
     width: 42%;
     font-size: 14px;
     padding: 12px 15px;
-    background-color: rgb(var(--text-white));
+    background-color: rgb(var(--whiteClr));
     border: none;
     border-radius: 5px;
     outline: none;
@@ -88,7 +88,7 @@
 
   &::placeholder {
     letter-spacing: 0.7px;
-    color: rgb(var(--text-black), 0.4);
+    color: rgb(var(--textClr), 0.4);
   }
 
   & button {
@@ -106,12 +106,12 @@
 
     & i {
       font-size: 18px;
-      color: rgb(var(--text-white));
+      color: rgb(var(--whiteClr));
       transition: 0.3s ease-in-out;
     }
 
     & i:hover {
-      color: rgb(var(--accent));
+      color: rgb(var(--primaryClr));
     }
   }
 }

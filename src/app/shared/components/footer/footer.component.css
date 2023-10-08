@@ -50,12 +50,12 @@ footer {
     }
     & ul li a:hover{
         cursor: pointer;
-        color: rgb(var(--accent));
+        color: rgb(var(--primaryClr));
 
     }
 
     & .home span, .mobile span, .mail span {
-        color: rgb(var(--accent));
+        color: rgb(var(--primaryClr));
     }
 
     .second-col {
@@ -86,7 +86,7 @@ footer {
             width: 30px;
             height: 30px;
             border-radius: 50%;
-            border: 1px solid rgb(var(--text-black), 0.5);
+            border: 1px solid rgb(var(--textClr), 0.5);
             transition: 0.3s ease-in-out;
         }
         & i {
@@ -95,12 +95,12 @@ footer {
         }
 
         & .logo-circle:hover {
-            border: 1px solid rgb(var(--accent));
-            background-color: rgb(var(--accent));
+            border: 1px solid rgb(var(--primaryClr));
+            background-color: rgb(var(--primaryClr));
             cursor: pointer;
 
             & i {
-                color: rgb(var(--text-white));
+                color: rgb(var(--whiteClr));
             }
 
         }

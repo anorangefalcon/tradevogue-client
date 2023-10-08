@@ -18,8 +18,8 @@
 .toast {
     border-radius: 10px;
     z-index: 99;
-    border: 1px solid rgb(var(--text-black), 0.1);
-    background-color: rgb(var(--text-white));
+    border: 1px solid rgb(var(--textClr), 0.1);
+    background-color: rgb(var(--whiteClr));
     box-shadow: 5px 6px 16px 0px #60606021;
 
     position: fixed;
@@ -71,7 +71,7 @@
 
 
 .toast-body{
-    border-block-start: 1px solid rgb(var(--text-black), 0.1);
+    border-block-start: 1px solid rgb(var(--textClr), 0.1);
     padding: 10px;
 }
 

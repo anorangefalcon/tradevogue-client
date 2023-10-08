@@ -3,11 +3,12 @@ import { AbstractControl } from "@angular/forms";
 export function imageSizeValidator(control: AbstractControl): {[key: string]: any} | null {
     let imageList = control.value;
 
-    let files = imageList.filter((image: any)=>{
-        return image.size > 5242880; //5MB
-    });
-
-    if(files.length != 0) return { "exceedSize": true, "errorFiles": files}
+    if(imageList.length !=0 ){
+        let files = imageList.filter((image: any)=>{
+            return image.file.size > 2097152; //2MB
+        });
+        if (files.length != 0) return { "exceedSize": true, "errorFiles": files}
+    } 
 
     return null;
 }

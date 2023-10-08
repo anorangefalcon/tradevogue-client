@@ -14,7 +14,7 @@
     text-align: center !important;
 
     & h3 {
-      color: rgba(var(--text-black));
+      color: rgba(var(--textClr));
       font-size: 26px;
       font-weight: 400;
     }
@@ -44,7 +44,7 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        color: rgba(var(--text-white));
+        color: rgba(var(--whiteClr));
 
         opacity: 0;
         position: absolute;
@@ -52,7 +52,7 @@
         left: 0;
         width: 100%;
         height: 100%;
-        background-color: rgba(var(--text-black), 0.5);
+        background-color: rgba(var(--textClr), 0.5);
         backdrop-filter: blur(5px);
 
         transition: all 0.3s ease-in-out;

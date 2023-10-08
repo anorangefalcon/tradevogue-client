@@ -102,8 +102,8 @@ section {
                 }
 
                 & input[type="checkbox"]:checked+label .material-symbols-outlined {
-                    background-color: rgb(var(--accent));
-                    border-color: rgb(var(--accent));
+                    background-color: rgb(var(--primaryClr));
+                    border-color: rgb(var(--primaryClr));
                     /* background-color: red; */
                 }
             }
@@ -140,7 +140,7 @@ section {
 
     & input:focus,
     & select:focus {
-        border-color: rgb(var(--text-black), 0.4);
+        border-color: rgb(var(--textClr), 0.4);
     }
 
     & select {
@@ -151,7 +151,7 @@ section {
 
     & label {
         font-size: 14px;
-        color: rgb(var(--text-black), 0.9);
+        color: rgb(var(--textClr), 0.9);
         padding-bottom: 5px;
     }
 
@@ -167,11 +167,11 @@ section {
         inset-block-start: 40px;
         inset-inline-start: 0;
         background-color: transparent;
-        color: rgb(var(--text-black), 0.5);
+        color: rgb(var(--textClr), 0.5);
     }
 
     & ::placeholder {
-        color: rgb(var(--text-black), 0.3);
+        color: rgb(var(--textClr), 0.3);
     }
 
     & small {

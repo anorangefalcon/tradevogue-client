@@ -1,6 +1,6 @@
 <header [class.active]="(navbar_scroll_style == true) || (hamburgerOpen)">
-    <nav class="navbar container d-flex align-items-center justify-content-md-between relative">
-        <div class="branding d-flex gap-10 align-items-center">
+    <nav class="navbar container d-flex align-item-center justify-content-md-between relative">
+        <div class="branding d-flex gap-10 align-item-center">
 
             <div [ngClass]="hamburgerOpen ? 'dropdown-active' : ''"  class="dropdown pointer"
             (click)="hamburgerOpen = !hamburgerOpen">
@@ -42,7 +42,7 @@
                 </a>
             </li>
         </ul>
-        <ul class="navbar-features d-flex align-items-center gap-20 m-gap-15 s-gap-10">
+        <ul class="navbar-features d-flex align-item-center gap-20 m-gap-15 s-gap-10">
             
             <div class="search" [ngClass]="isSearching ? 'search-mobile' : ''">
                 <span (click)="isSearching = false" class="back material-symbols-outlined pointer">
@@ -69,7 +69,7 @@
                     </span>
                 </a>
                 <ul class="sub-items d-flex flex-column gap-15">
-                    <li class="d-flex align-items-center justify-content-md-between">
+                    <li class="d-flex align-item-center justify-content-md-between">
                         <h4>Notifications</h4>
                         <h6>0 Unread</h6>
                     </li>
@@ -79,8 +79,8 @@
                         </span>
                     </li>
                     <li>
-                        <button class="btn-primary d-flex align-items-center mw100"><a href=""
-                                style="color: rgb(var(--text-white));">View All</a></button>
+                        <button class="btn-primary d-flex align-item-center mw100"><a href=""
+                                style="color: rgb(var(--whiteClr));">View All</a></button>
                     </li>
                 </ul>
             </li>
@@ -92,7 +92,7 @@
                     </span>
                 </a>
                 <ul class="sub-items d-flex flex-column gap-15">
-                    <li class="d-flex align-items-center justify-content-md-between">
+                    <li class="d-flex align-item-center justify-content-md-between">
                         <h4>Cart</h4>
                         <h6>{{ cart_count }} items</h6>
                     </li>
@@ -102,8 +102,8 @@
                         </span>
                     </li>
                     <li>
-                        <button class="btn-primary d-flex align-items-center mw100"><a [routerLink]="['/cart']"
-                                style="color: rgb(var(--text-white));">Open Cart</a></button>
+                        <button class="btn-primary d-flex align-item-center mw100"><a [routerLink]="['/cart']"
+                                style="color: rgb(var(--whiteClr));">Open Cart</a></button>
                     </li>
                 </ul>
             </li>
@@ -136,7 +136,7 @@
 
                     <li *ngIf="isUserLogin" class="sub-links">
                         <div class="header">
-                            <div class="d-flex justify-content-md-between align-items-center border" style="margin-bottom: 10px">
+                            <div class="d-flex justify-content-md-between align-item-center border" style="margin-bottom: 10px">
                                 <h4>Welcome {{purchaser}}</h4>
                             </div>
                             <ul class="pointer border">
@@ -175,7 +175,7 @@
         </ul>
     </nav>
 
-    <!-- <nav class="container d-flex align-items-center justify-content-md-between">
+    <!-- <nav class="container d-flex align-item-center justify-content-md-between">
         <a [routerLink]="['/']">
             <img class="branding" src="../../assets/logo.svg" alt="Trade Vogue Logo">
         </a>
@@ -190,7 +190,7 @@
             <app-search-bar></app-search-bar>
         </div>
 
-        <ul class="account-actions d-flex align-items-center gap-20">
+        <ul class="account-actions d-flex align-item-center gap-20">
 
             <li class="cart relative">
                 <a [routerLink]="['/cart']">
