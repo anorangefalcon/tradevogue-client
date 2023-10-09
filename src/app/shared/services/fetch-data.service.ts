@@ -32,6 +32,15 @@ export class FetchDataService {
     return this.http.get(this.sellerUrl);
   }
 
+  
+  
+  HttpPostRequest(url:any,body:any){
+    return this.http.post(this.sellerUrl,body);
+  }
+
+  HttpGetRequest(url:any){
+    return this.http.get(this.sellerUrl);
+  }
 
   httpPost(url:any,body:any){
     return new Promise((res,rej)=>{
@@ -40,6 +49,19 @@ export class FetchDataService {
         res(data);
       },error:(error)=>{
         console.log("erorr is ",error)
+        rej(error)
+      }})
+    })
+ 
+  }
+
+  httpGet(url:any){
+
+    return new Promise((res,rej)=>{
+      this.http.get(url).subscribe({next:(data)=>{
+        res(data);
+        
+      },error:(error)=>{
         rej(error)
       }})
     })

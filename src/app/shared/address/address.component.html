@@ -1,0 +1,51 @@
+<section class="Address">
+    <div class="container d-flex flex-column gap-15">
+       <div class="specialcontent" [ngStyle]="{'display': display == true ? 'block' : 'none'}" *ngIf="display!=false">
+           <div class="form" [ngClass]="display ? 'addnew' : ''">
+            <button class="closebtn">
+            <span class="material-symbols-outlined" (click)="close()">
+                close
+                </span>
+    
+            </button>
+            <!-- <app-add-address-form (SendData)="AddressHandler($event)" [updateAddress]="UpdatingRequest"></app-add-address-form> -->
+           </div>
+        </div>
+    
+    
+        <h2>Your Addresses</h2>
+    
+    
+     
+        <div class="d-flex content gap-15">
+            <div class="addAddress">
+               
+                <button (click)="display=true">
+                    
+                    <span class="material-symbols-outlined">
+                        add
+                        </span>
+                    Add Address</button>
+        </div>
+        <div *ngFor="let address of AddressData; let i= index" class="ShowAddresses">
+    
+            <div>
+            <p class="name">{{address.firstname}} {{address.lastname}}</p>
+            <p>{{address.apartment}}</p>
+            <p>{{address.area}}</p>
+            <p>{{address.town_city}}</p>
+            <p>{{address.state}}</p>
+            <p>{{address.country}}</p>
+            <p>{{address.pincode}}</p>
+        </div>
+    
+        <div class="d-flex gap-15">
+            <button (click)="Edit(address,i)" class="edit_btn">Edit</button>
+        
+        </div>
+        </div>
+    
+    </div>
+    </div>
+    
+    </section>
