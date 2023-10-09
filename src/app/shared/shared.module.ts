@@ -16,6 +16,7 @@ import { FormsModule } from '@angular/forms';
 import { ProductFilterPipe } from './Pipe/product-filter.pipe';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { AddressComponent } from './address/address.component';
 
 
 @NgModule({
@@ -28,7 +29,8 @@ import { MatExpansionModule } from '@angular/material/expansion';
     SupportComponent,
     FooterComponent,
     CustomSelectComponent,
-    ProductFilterPipe
+    ProductFilterPipe,
+    AddressComponent
   ],
   imports: [
     CommonModule,
@@ -49,7 +51,8 @@ import { MatExpansionModule } from '@angular/material/expansion';
     SearchBarComponent,
     SupportComponent,
     ProductFilterPipe,
-    CustomSelectComponent
+    CustomSelectComponent,
+    AddressComponent
   ]
 })
 export class SharedModule { }

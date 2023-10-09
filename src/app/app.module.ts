@@ -59,9 +59,7 @@ import { UtilsModule } from './utils/utils.module';
     HttpClientModule, 
      
   ],
-  providers: [
-    
-  ],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
