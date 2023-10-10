@@ -1,5 +1,7 @@
 import { Component, OnInit, ElementRef, ChangeDetectorRef } from '@angular/core';
 import { FetchDataService } from 'src/app/shared/services/fetch-data.service';
+import { UploadExcelService } from '../services/upload-excel.service';
+import { ToastService } from 'src/app/shared/services/toast.service';
 
 @Component({
   selector: 'app-products',
@@ -15,7 +17,10 @@ export class ProductsComponent implements OnInit {
   currentPage: number = 1;
   productList: any[] = [];
 
-  constructor(private element: ElementRef, private fetchdata: FetchDataService) { }
+  constructor(private element: ElementRef,
+     private fetchdata: FetchDataService,
+     private excelService: UploadExcelService,
+     private toastService: ToastService) { }
 
   ngOnInit(): void {
     this.fetchData();
@@ -144,4 +149,36 @@ export class ProductsComponent implements OnInit {
   updateFields(e: any, field: string) {
     this.filters[field] = e;
   }
+
+
+    // Handles Excel File Uplaoded
+    uploadFile(event: Event) {
+      let data = this.excelService.handleFileInput(event);
+      data.then((products) => {
+        console.log(products);
+  
+        let product_keys = Object.keys(products['errors']);
+        this.toastService.errorToast({
+          title: 'Errors found in Excel',
+          body: ['In sheet First, Second']
+        })
+  
+        product_keys.forEach((sheet) => {
+          let sheets_keys = Object.keys(products['errors'][sheet]);
+          // console.log(sheets_keys);
+  
+          // sheets_keys.forEach((errors) => {
+  
+          //   let error_list = Object.keys(products['errors'][sheet][errors]);
+          //   console.log(error_list);
+  
+          // console.log(error_list); 
+  
+          // error_list.forEach((detail) => {
+          //   console.log(detail);
+          // })
+          // })
+        })
+      })
+    }
 }

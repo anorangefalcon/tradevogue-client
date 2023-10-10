@@ -2,15 +2,9 @@
 .form_container {
     gap: 20px;
     /* width: 100%; */
-    display: d-grid;
-    d-grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
 }
-
-/* 
-
-padding: 10px;
-background-color: #dbd6d633;
-border-radius: 5px; */
 
 .form__group {
     padding: 25px;
@@ -216,12 +210,12 @@ input[type="file"]+label:hover, .file-section span:hover {
 
 @media (max-width: 768px) {
     .form_container {
-        d-grid-template-columns: 2fr;
+        grid-template-columns: 2fr;
     }
 }
 
 @media (max-width: 480px) {
     .form_container {
-        d-grid-template-columns: 1fr;
+        grid-template-columns: 1fr;
     }
 }
