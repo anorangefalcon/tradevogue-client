@@ -23,7 +23,7 @@ export class CheckoutComponent implements OnInit {
       this.cartCount = data;
     });
     this.cartService.fetchCart().subscribe((data) => {
-      // console.log(data, "cart data");
+     
       this.cart = data;
     });
   }
@@ -45,14 +45,18 @@ export class CheckoutComponent implements OnInit {
   }
   checkLogin() {
     const cookieExists = document.cookie.indexOf('loginDetails') !== -1;
-    console.log(cookieExists, "cookies exists");
+    console.log(cookieExists);
 
     // cookieExists == true ? this.updateBoolean = false : this.updateBoolean = true;
 
     if (!cookieExists) {
       this.redirectToLogin();
     } else {
+      
       this.route.navigate(['/cart/billing']).then(() => {
+
+      
+        console.log("CART IS  ",this.cart)
         window.location.reload();
       });
   }

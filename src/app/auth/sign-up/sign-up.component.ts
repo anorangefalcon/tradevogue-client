@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component,Renderer2  } from '@angular/core';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { passwordStrengthValidator, matchPasswordValidator, usernameValidator } from '../validators'; // Adjust the path to the correct location
 import { CookieService } from 'ngx-cookie-service';
@@ -17,12 +17,20 @@ export class SignUpComponent {
 
   signupForm: FormGroup;
   users = [];
+  script: any;
   isFormSubmitted: boolean = false;
   password: string = 'password';
   confirmPassword: string = 'password';
   showPassword: boolean = false;
   showPassword2: boolean = false;
-  constructor(private fb: FormBuilder, private cookie: CookieService, private userData: UserDataService, private backendURLs: UtilsModule, private fetchDataService: FetchDataService) {
+  constructor(private fb: FormBuilder, private cookie: CookieService,private renderer: Renderer2, private userData: UserDataService, private backendURLs: UtilsModule, private fetchDataService: FetchDataService) {
+    
+    window.addEventListener('authCredential', (event: any) => {
+      console.log('G-Event', event.detail);
+    })
+
+
+
 
     this.userData.getData().subscribe((data: any) => {
 
@@ -47,7 +55,16 @@ export class SignUpComponent {
   }
 
 
-
+  ngOnInit(): void {
+       // new google auth
+       this.script = this.renderer.createElement('script');
+       this.script.src = 'https://accounts.google.com/gsi/client';
+       this.script.async = true;
+   
+       this.renderer.appendChild(document.body, this.script);
+   
+    
+  }
 
 
 
