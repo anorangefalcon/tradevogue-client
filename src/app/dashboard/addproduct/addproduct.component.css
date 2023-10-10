@@ -16,54 +16,10 @@ app-custom-select {
         background-color: #ffffff; */
     }
 
-    & .file-section {
-        & input[type="file"] {
-            display: none;
-        }
-
-        & .uploadbtn,
-        .downloadBtn {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-
-            height: 35px;
-            width: 35px;
-            border: 1px solid rgba(var(--textClr), 0.1);
-            border-radius: 5px;
-            background: none;
-            padding: 7px;
-            cursor: auto;
-
-        }
-
-        & .uploadbtn span {
-            color: rgb(var(--blue-clr), 0.5);
-        }
-
-        & .downloadBtn span {
-            color: rgb(var(--green-clr), 0.9);
-        }
-
-        & label span,
-        .downloadBtn span {
-            /* width: 40px; */
-            font-size: 24px;
-            font-weight: 300;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        & label .operation-icon:hover,
-        .downloadBtn .operation-icon:hover {
-            /* color: rgb(var(--primaryClr)); */
-            transform: scale(1.1);
-        }
-    }
-
     & .product_form {
         padding: 20px;
-        box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+        border: 1px solid rgb(var(--blackClr), 0.1);
+        /* box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); */
         border-radius: 10px;
         background-color: #ffffff;
     }
@@ -94,7 +50,7 @@ app-custom-select {
         }
     }
 
-    & .form__group {
+    & .form__group{
         position: relative;
         display: flex;
         flex-direction: column;
@@ -149,28 +105,30 @@ app-custom-select {
             inset-inline-start: 0;
         } */
 
+    }
+
+    
+    & .form__group.color_picker + .form__group{
+        flex-direction: row;
+        text-wrap: nowrap;
+        align-items: center;
+    }
+
+    & .form__group.color_picker{
+        flex-direction: row;
+
         & .form__input {
             position: relative;
-            /* width: 300px; */
-
-            & input[type="text"] {
-                padding-inline-end: 60px;
-            }
 
             & input[type="color"] {
-                position: absolute;
-                width: 50px;
-                height: 100%;
-                inset-inline-end: 0;
-                inset-block-end: 0;
+                width: 25px;
+                height: 25px;
                 padding: 0px 0px;
                 appearance: none;
                 background: none;
                 cursor: pointer;
-                overflow: hidden;
-                border-radius: 0;
                 border: none;
-
+                outline: none;
             }
 
             & input[type="color" i]::-webkit-color-swatch-wrapper {
@@ -178,15 +136,51 @@ app-custom-select {
             }
 
             & input[type="color" i]::-webkit-color-swatch {
-                border-radius: 0px 5px 5px 0px;
+                border-radius: 50%;
                 border: none;
             }
+
+            & .input__label, .picker__label{
+                width: 25px;
+                height: 25px;
+                border-radius: 50%;
+                background-color: transparent;
+            }
+
+            & .input__label{
+                position: relative;
+                border: 1px solid rgb(var(--blackClr), 0.2);
+            }
+
+            & .color_picker_icon{
+                color: rgb(255, 254, 254);
+                filter: brightness(75%);
+                font-weight: 300;
+                font-size: 22px;
+            }
+
+            
         }
 
+        & input[type="radio"] + label::before{
+            width: 22px;
+            height: 22px;
+            content: '';
+            display: flex;
+            border: 1px solid transparent;
+            position: absolute;
+            border-radius: 50%;  
+            filter: brightness(90%);
+            transition: 0.1s ease-in-out;
+        }        
+
+        & input[type="radio"]:checked + label::before{
+            border: 2px solid #fff;
+        }
     }
 
     & .product-images {
-        height: 240px;
+        height: 185px;
         border-radius: 10px;
         border: 1px dashed rgb(var(--textClr), 0.5);
         overflow: hidden;
@@ -200,13 +194,16 @@ app-custom-select {
         }
 
         & .image_instruction {
-            color: rgb(var(--textClr), 0.3);
+            color: rgb(var(--textClr), 0.5);
             width: 100%;
             height: 100%;
             padding: 20px;
-            /* background-color: aqua; */
             inset: 0;
             z-index: 0;
+
+            & small{
+                width: 55%;
+            }
         }
 
         & label {
@@ -241,7 +238,7 @@ app-custom-select {
             padding: 20px;
             display: grid;
             align-items: center;
-            grid-template-columns: repeat(auto-fit, minmax(50px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
 
             & .image {
                 width: 50px;

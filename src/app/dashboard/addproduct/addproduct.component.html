@@ -1,6 +1,6 @@
 <section id="product-adding-section">
 
-    <!-- <div class="heading d-flex justify-content-md-between align-center">
+    <!-- <div class="heading d-flex justify-content-md-between align-item-center">
         <div class="file-section">
             <input type="file" id="sizes" maxlength="1" minlength="1" (change)="uploadFile($event)"
                 accept="image/CSV, application/vnd.ms-excel ,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" />
@@ -15,27 +15,13 @@
         <form [formGroup]="productsForm">
 
             <div class="row row-1 d-flex justify-content-md-between">
-                <span class="d-flex gap-15 align-center">
+                <span class="d-flex gap-15 align-item-center">
                     <h2 *ngIf="current_form != 'product_images'; else title2">Basic Info</h2>
                     <ng-template #title2>
                         <span class="d-flex gap-15">
                             <h2>Product Images</h2>
                         </span>
                     </ng-template>
-
-                    <div class="file-section d-flex align-item-centergap-5">
-                        <input type="file" id="sizes" maxlength="1" minlength="1" (change)="uploadFile($event)"
-                            accept="image/CSV, application/vnd.ms-excel ,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" />
-                        <label class="uploadbtn tooltip" for="sizes">
-                            <span class="material-symbols-outlined operation-icon">upload_file</span>
-                            <span class="tooltiptext">Upload Excel</span>
-                        </label>
-                        <a class="downloadBtn tooltip" href="../../../assets/ExcelSampleFile/sampleFullData.xlsx"
-                            download>
-                            <span class="material-symbols-outlined operation-icon">download</span>
-                            <span class="tooltiptext">Download Excel Sample</span>
-                        </a>
-                    </div>
                 </span>
 
 
@@ -73,33 +59,41 @@
                             <ng-container *ngFor="let form of productImagesFormArray();let i=index">
                                 <div [formGroupName]="i" class="d-flex flex-column gap-10">
 
-                                    <div class="form__group">
-                                        <label for="colors" class="input__label">Colors<span
-                                                class="important">*</span></label>
+                                    <div class="d-flex align-item-center gap-20">
 
-                                        <span class="form__input">
-                                            <input type="text" id="color" placeholder="Choose/Enter your Color "
-                                                formControlName="color" required />
-                                            <input type="color" value="#188ae2" (input)="updateColor($event, i)">
-                                        </span>
-                                        <span class="error">
-                                            <small
-                                                *ngIf="form.get('colors')?.hasError('required') && form.get('colors')?.touched">*Field
-                                                Required</small>
-                                        </span>
-                                    </div>
-
-                                    <div class="form__group">
-                                        <label for="quantity" class="input__label">Quantity in Stock<span
-                                                class="important">*</span></label>
-                                        <input type="number" placeholder="Quantity" id="quantity"
-                                            formControlName="stockQuantity" required />
-
-                                        <span class="error"
-                                            *ngIf="form.get('stockQuantity')?.invalid && (form.get('stockQuantity')?.dirty || form.get('stockQuantity')?.touched)">
-                                            <small *ngIf="form.get('stockQuantity')?.hasError('required')">*Field
-                                                Required</small>
-                                        </span>
+                                        <div class="form__group color_picker d-flex align-item-center">
+                                            <label for="colors" class="input__label">Colors<span class="important">*</span></label>
+    
+                                            <span class="form__input" *ngFor="let c of common_colors; let x=index">
+                                                <input type="radio" name="color" [id]="'color_'+i+x" style="display: none;" [value]="c" formControlName="color" />
+                                                <label class="input__label pointer d-flex flex-center" [for]="'color_'+i+x" [style]="'background-color:'+c" ></label>
+                                            </span>
+    
+                                            <span class="form__input relative">
+                                                <input type="color" [id]="'color'+i+'p'" value="red" (input)="updateColor($event, i)">
+                                                <label [for]="'color'+i+'p'" class="inset-inline-start-0 inset-block-start-0 absolute pointer picker__label">
+                                                    <span class="material-symbols-outlined color_picker_icon d-flex flex-center mh100">add</span>
+                                                </label>
+                                            </span>
+                                            <span class="error">
+                                                <small
+                                                    *ngIf="form.get('colors')?.hasError('required') && form.get('colors')?.touched">*Field
+                                                    Required</small>
+                                            </span>
+                                        </div>
+    
+                                        <div class="form__group ">
+                                            <label for="quantity" class="input__label">Quantity Stock<span
+                                                    class="important">*</span></label>
+                                            <input type="number" placeholder="Quantity" id="quantity"
+                                                formControlName="stockQuantity" required />
+    
+                                            <span class="error"
+                                                *ngIf="form.get('stockQuantity')?.invalid && (form.get('stockQuantity')?.dirty || form.get('stockQuantity')?.touched)">
+                                                <small *ngIf="form.get('stockQuantity')?.hasError('required')">*Field
+                                                    Required</small>
+                                            </span>
+                                        </div>
                                     </div>
 
                                     <div class="form__group">
@@ -119,9 +113,12 @@
                                                 </small>
                                             </span>
                                             <span class="images_list">
-                                                <span class="image relative" *ngFor="let item of imagesArray(i); let imagesIndex=index">
-                                                    <img [src]="item.image" alt="productImage.png" width="100" height="100">
-                                                    <i class="remove-btn absolute pointer transition d-flex flex-center material-symbols-outlined" (click)="deleteImage(imagesIndex, i)">close</i>
+                                                <span class="image relative"
+                                                    *ngFor="let item of imagesArray(i); let imagesIndex=index">
+                                                    <img [src]="item.image" alt="productImage.png" width="100"
+                                                        height="100">
+                                                    <i class="remove-btn absolute pointer transition d-flex flex-center material-symbols-outlined"
+                                                        (click)="deleteImage(imagesIndex, i)">close</i>
                                                 </span>
                                             </span>
                                             <label [for]="'productImages'+ i" class="absolute d-flex flex-center gap-5">
@@ -179,7 +176,7 @@
                                 <textarea id="description" placeholder="Product Details..." cols="30" rows="9"
                                     formControlName="description" maxlength="800"
                                     (input)="letterCounter($event, 800)"></textarea>
-                                <small class="note d-flex justify-content-md-between align-center">
+                                <small class="note d-flex justify-content-md-between align-item-center">
                                     *Description should not exceed 800 letters
                                     <span>{{textarea_letterCount}} / 800</span>
                                 </small>
@@ -264,7 +261,7 @@
                                             class="important">*</span></label>
                                     <input type="number" placeholder="Actual Price" id="price"
                                         formControlName="actualprice" required
-                                        onKeyPress="if(this.value.length == 7) return false;" max="7" min="2" />
+                                        onKeyPress="if(this.value.length == 7) return false;" />
 
                                     <span class="error"
                                         *ngIf="productSubForm('actualprice')?.invalid && (productSubForm('actualprice')?.dirty || productSubForm('actualprice')?.touched)">

@@ -7,13 +7,15 @@
         border-radius: 10px;
     }
 
-    & .row-1 {
-        display: flex;
-        justify-content: space-between;
+    & .row {
+        padding: 20px;
+        background-color: rgb(var(--whiteClr));
+        border: 1px solid rgba(var(--blackClr), 0.1);
+        border-radius: 10px;
     }
 
     & .operational-buttons {
-        gap: 10px;
+        gap: 20px;
 
         & button {
             border: 1px solid rgba(var(--textClr), 0.1);
@@ -21,15 +23,17 @@
             background: none;
             padding: 4px;
             cursor: pointer;
+            padding: 10px 24px;
+            font-weight: 400;
         }
 
         & .operational-buttons-icons{
             font-size: 22px;
             font-weight: 300;
             transition: transform 0.3s ease-in-out;
-            &:is(:hover) {
+            /* &:is(:hover) {
                 transform: scale(1.1);
-            }
+            } */
         }
 
         & button:first-child .operational-buttons-icons {
@@ -41,46 +45,86 @@
         }
     }
 
-    & .filters > *{
+    & .file-section {
+        & input[type="file"] {
+            display: none;
+        }
+
+        & .uploadbtn,
+        .downloadBtn {
+            border: 1px solid rgba(var(--textClr), 0.1);
+            border-radius: 5px;
+            letter-spacing: 0.5px;
+            padding: 10px 24px;
+        }
+
+        & .operation-icon{
+            font-size: 22px;
+            font-weight: 300;
+            transition: transform 0.3s ease-in-out;
+            
+        }
+
+        & .uploadbtn span {
+            color: rgb(var(--blue-clr), 0.8);
+        }
+
+        & .downloadBtn span {
+            color: rgb(var(--green-clr), 0.9);
+        }
+    }
+
+    & .filters {
         /* min-width: 40%; */
-        max-width: 33.3%;
+        & .search-bar{
+            min-width: 40%;
+        }
+
+        & .options{
+            max-width: 24%;
+        }
     }
 
     & .row-2 {
-        padding: 20px;
         background-color: rgb(var(--whiteClr));
-        box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+        border: 1px solid rgba(var(--blackClr), 0.1);
         border-radius: 10px;
+        overflow: hidden;
 
         & .product-list{
             overflow: auto;
 
             &::-webkit-scrollbar{
                 width: 2px;
-            }
-            
-        }
-
-        & .product-header {
-            padding-block-end: 20px;
-            border-block-end: 1px solid rgb(var(--textClr), 0.1);
+            } 
         }
 
         & table {
-            width: 100%;
             border-collapse: collapse;
-            border-radius: 10px;
+            border-style: hidden;
         }
 
-
-        & td,
-        th {
+        & .product-items {
             font-weight: 600;
-            padding: 5px 10px;
+            padding: 8px 14px;
             vertical-align: middle;
-            font-size: 12px !important;
+            font-size: 12px;
             white-space: nowrap;
+            text-align: left;
+            letter-spacing: 0.26px;
+            border-bottom: 1px solid rgba(128, 128, 128, 0.152);
         }
+
+        & th{
+            padding: 12px 16px !important;
+            background-color: #f4f5f7;
+            color: rgb(var(--blackClr), 0.7);
+        }
+
+        & td.product-items {
+            font-weight: 400;
+        }
+
 
 
         /* BotherSome Checkbox */
@@ -96,19 +140,9 @@
         }
 
         & .product-image {
-            display: flex;
-            align-items: center;
-            justify-content: center;
             width: 30px;
             height: 30px;
             border-radius: 5px;
-            background-color: rgba(var(--blue-clr), 0.05);
-
-            & .icons {
-                font-size: 25px !important;
-                color: black;
-                font-weight: 300;
-            }
 
             & img{
                 object-fit: cover;
@@ -117,40 +151,28 @@
 
 
         & .item-check {
+
             & input[type="checkbox"] {
                 display: none;
             }
+
             & .material-symbols-outlined {
-                display: flex;
                 cursor: pointer;
-                justify-content: center;
-                align-items: center;
                 font-size: 16px;
                 font-weight: 400;
-                color: white;
+                color: transparent;
                 width: 15px;
                 height: 15px;
                 border-radius: 3px;
-                border: 1px solid rgba(128, 128, 128, 0.264);
+                border: 1px solid rgba(128, 128, 128, 0.527);
+                background-color: rgb(var(--whiteClr));
             }
 
             & input[type="checkbox"]:checked+label .material-symbols-outlined {
+                color: white;
                 background-color: rgb(var(--primaryClr));
                 border-color: rgb(var(--primaryClr));
             }
-        }
-
-        & .product-items {
-            font-size: 12px;
-            text-align: left;
-            border: 1px solid rgba(128, 128, 128, 0.152);
-            color: rgb(var(--textClr));
-
-            letter-spacing: 0.26px;
-        }
-
-        & td.product-items {
-            font-weight: 400;
         }
     
         & tbody tr{
@@ -176,6 +198,7 @@
     }
 
     & .table-controls{
+        padding-block-end: 20px;
         justify-content: flex-end;
     }
 

@@ -2,7 +2,6 @@ import { Component, ElementRef, HostListener, Renderer2, asNativeElements } from
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ImageUploadService } from 'src/app/shared/services/image-upload.service';
 import { imageSizeValidator, invalidformat } from 'src/app/shared/validators/imageValidators.validator';
-import { UploadExcelService } from '../services/upload-excel.service';
 import { ToastService } from 'src/app/shared/services/toast.service';
 
 @Component({
@@ -22,15 +21,15 @@ export class AddproductComponent {
   tags: string[] = ['tag 1', 'tag 2', 'tag 3', 'tag 4', 'tag 5', 'tag 6', 'tag 7'];
   orderQuantity: number[] = [100, 200, 300, 400, 500];
 
+  common_colors: string[] = ['#FFFFFF', '#000000', '#0000FF', '#808080', '#800080', '#00FF00', '#FFC0CB', '#ff0000'];
+
   productsForm: FormGroup;
   current_form: string = '';
 
   constructor(private elem_ref: ElementRef,
     private render: Renderer2,
     private fb: FormBuilder,
-    private upload: ImageUploadService,
-    private excelService: UploadExcelService,
-    private toastService: ToastService) {
+    private upload: ImageUploadService) {
 
     this.productsForm = this.fb.group({
       productDesc: this.fb.array([
@@ -224,37 +223,6 @@ export class AddproductComponent {
     let productImages = this.productsForm.get('productDesc')?.get(String(formId))?.get('images')?.value;  
     productImages.splice(imageIndex, 1)
     this.productsForm.get('productDesc')?.get(String(formId))?.get('images')?.patchValue(productImages);  
-  }
-
-  // Handles Excel File Uplaoded
-  uploadFile(event: Event) {
-    let data = this.excelService.handleFileInput(event);
-    data.then((products) => {
-      console.log(products);
-
-      let product_keys = Object.keys(products['errors']);
-      this.toastService.errorToast({
-        title: 'Errors found in Excel',
-        body: ['In sheet First, Second']
-      })
-
-      product_keys.forEach((sheet) => {
-        let sheets_keys = Object.keys(products['errors'][sheet]);
-        // console.log(sheets_keys);
-
-        // sheets_keys.forEach((errors) => {
-
-        //   let error_list = Object.keys(products['errors'][sheet][errors]);
-        //   console.log(error_list);
-
-        // console.log(error_list); 
-
-        // error_list.forEach((detail) => {
-        //   console.log(detail);
-        // })
-        // })
-      })
-    })
   }
 
   // update Form Control For Custom Select buttons
