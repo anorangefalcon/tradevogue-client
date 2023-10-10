@@ -27,7 +27,7 @@ export class BillingComponent{
   constructor(private cartService: CartService,
     private cookie: CookieService) {
     this.cartService.fetchCart().subscribe((data) => {
-      console.log(data, "cart data");
+  
       this.cartitems = data;
     });
     
