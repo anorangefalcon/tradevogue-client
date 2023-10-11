@@ -29,14 +29,6 @@ export class ExploreComponent {
 
     });
 
-
-
-    this.http.post('http://localhost:8000/a', {message:"bhbh"}).subscribe(data=>{
-      console.log(data, "exploree");
-      
-    })
-
-
   }
 
   clearAll() {

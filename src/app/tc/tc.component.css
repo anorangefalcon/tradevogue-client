@@ -7,12 +7,12 @@
         width: 100%;
         min-height: 400px;
         /* background-image: url(../../assets/tc-bg.jpg); */
-        background-color: rgb(var(--accent), 0.1);
+        background-color: rgb(var(--primaryClr), 0.1);
         background-image: url(../../assets/deal-of-week-component/dealOfWeek-homeBg.png);
         background-repeat: no-repeat;
         background-size: cover;
         background-position: bottom;
-        color: rgb(var(--text-black));
+        color: rgb(var(--textClr));
     }
 
     & .bg-img .container {
@@ -37,7 +37,7 @@
     }
 
     & .content {
-        background-color: rgb(var(--background), 0.4);
+        background-color: rgb(var(--whiteClr), 0.4);
         padding-block-end: 70px;
         padding-block-start: 30px;
         padding-inline: 20px;

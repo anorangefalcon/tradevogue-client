@@ -13,7 +13,7 @@
 
         & p {
             font-size: 18px !important;
-            color: rgb(var(--accent));
+            color: rgb(var(--primaryClr));
             font-weight: 500;
 
         }
@@ -30,7 +30,7 @@
             text-transform: uppercase;
             font-weight: 500;
             margin-bottom: 5px;
-            color: rgb(var(--primary));
+            color: rgb(var(--primaryClr));
         }
     }
 
@@ -54,7 +54,7 @@
         }
         & .icons {
             font-weight: 400;
-            /* color: rgb(var(--primary));  */
+            /* color: rgb(var(--primaryClr));  */
             transition: all 0.3s ease-in-out;
         }
 

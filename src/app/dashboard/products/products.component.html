@@ -1,64 +1,79 @@
 <section id="product-section">
     <div class="product-table">
-        <!-- <div class="row-1">
-            <h1>Products Inventory</h1>
-        </div> -->
+        <div class="row-1 d-flex justify-content-md-between">
+            <h3>Products Inventory</h3>
+        </div>
+
+        <div class="row d-flex gap-20 align-item-center justify-content-md-between">
+            <span class="file-section d-flex align-item-center gap-20">
+                <input type="file" id="sizes" maxlength="1" minlength="1" (change)="uploadFile($event)"
+                    accept="image/CSV, application/vnd.ms-excel ,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" />
+                <label class="uploadbtn d-flex flex-center pointer gap-5" for="sizes">
+                    <span class="material-symbols-outlined operation-icon">upload_file</span>
+                    Import
+                </label>
+                <a class="downloadBtn d-flex flex-center pointer gap-5"
+                    href="../../../assets/ExcelSampleFile/sampleFullData.xlsx" download>
+                    <span class="material-symbols-outlined operation-icon">download</span>
+                    Export Sample
+                </a>
+            </span>
+
+            <span class="operational-buttons d-flex  flex-wrap">
+                <button routerLink="/dashboard/addproduct" class=" d-flex align-item-center gap-5">
+                    <i class="material-symbols-outlined operational-buttons-icons">add</i>
+                    Add Product
+                    <!-- <span class="tooltiptext">Add Product</span> -->
+                </button>
+                <button class="d-flex align-item-center gap-5">
+                    <i class="material-symbols-outlined operational-buttons-icons" (click)="deleteItems()">delete</i>
+                    Delete
+                    <!-- <span class="tooltiptext">Delete Selected Products</span> -->
+                </button>
+            </span>
+
+        </div>
+
+        <div class="row d-flex flex-column">
+            <div class="product-header filters d-flex gap-15 align-item-center mh100 mw100">
+                <span class="search-bar mh100">
+                    <app-search-bar [searchPlaceholder]="'Search by Name...'"></app-search-bar>
+                </span>
+                <!-- Product Inventory -->
+                <app-custom-select class="options" [options]="stockStatus" [selectedOption]="'Filter by Stock Status'"
+                    (final_option)="updateFields($event, 'stockStatus')"></app-custom-select>
+
+                <!-- Product Category -->
+                <app-custom-select class="options" [options]="categoryOption" [selectedOption]="'Filter by Catgory'"
+                    (final_option)="updateFields($event, 'productCatgory')"></app-custom-select>
+
+                <!-- Rating -->
+                <app-custom-select class="options" [options]="ratingOption" [selectedOption]="'Filter by Rating'"
+                    (final_option)="updateFields($event, 'productRating')"></app-custom-select>
+
+            </div>
+        </div>
 
         <div class="row-2 d-flex flex-column gap-20">
-            <div class="product-header d-flex justify-content-md-between align-items-center">
-
-                <div class="d-flex align-center gap-20">
-                    <h3>Products List</h3>
-
-                    <span class="operational-buttons d-flex  flex-wrap">
-                        <button routerLink="/dashboard/addproduct" class="tooltip d-flex align-items-center gap-5">
-                            <span class="material-symbols-outlined operational-buttons-add">add</span>
-                            <span class="tooltiptext">Add Product</span>
-                        </button>
-                        <button class="tooltip d-flex align-items-center gap-5">
-                            <span class="material-symbols-outlined operational-buttons-delete"
-                                (click)="deleteItems()">delete</span>
-                                <span class="tooltiptext">Delete Selected Products</span>
-                        </button>
-                    </span>
-                </div>
-
-                <!-- Filters -->
-                <div class="filters d-flex gap-15">
-                    <!-- Product Inventory -->
-                    <app-custom-select [options]="stockStatus"  [selectedOption]="'Filter by Stock Status'"
-                        (final_option)="updateFields($event, 'stockStatus')"></app-custom-select>
-
-                    <!-- Product Category -->
-                    <app-custom-select [options]="categoryOption" [selectedOption]="'Filter by Catgory'"
-                        (final_option)="updateFields($event, 'productCatgory')"></app-custom-select>
-
-                    <!-- Rating -->
-                    <app-custom-select [options]="ratingOption" [selectedOption]="'Filter by Rating'"
-                        (final_option)="updateFields($event, 'productRating')"></app-custom-select>
-                </div>
-            </div>
             <div class="product-list">
-                <table id="datatable1" class="text-wrap" (change)="changeDetection($event)">
+                <table id="datatable1" class="text-wrap mh100 mw100" (change)="changeDetection($event)">
                     <thead>
                         <tr>
-                            <th class="product-items heading">
-                                <div class="item-check d-flex justify-content-center">
-                                    <input [attr.checked]="checkboxParent" [(ngModel)]="checkboxParent" type="checkbox"
-                                        id="all_product">
-                                    <label for='all_product'>
-                                        <span class="material-symbols-outlined">done</span>
-                                    </label>
-                                </div>
+                            <th class="product-items item-check ">
+                                <input [attr.checked]="checkboxParent" [(ngModel)]="checkboxParent" type="checkbox"
+                                    id="all_product">
+                                <label for='all_product' class="d-flex flex-center">
+                                    <span class="d-flex flex-center material-symbols-outlined">done</span>
+                                </label>
                             </th>
-                            <th class="product-items heading">Product Name</th>
-                            <th class="product-items heading">Category</th>
-                            <th class="product-items heading">Price</th>
-                            <th class="product-items heading">Unit Sold</th>
-                            <th class="product-items heading">In Stock</th>
-                            <th class="product-items heading">Rating</th>
-                            <th class="product-items heading">Last Modified</th>
-                            <th class="product-items heading">Action</th>
+                            <th class="product-items">Product Name</th>
+                            <th class="product-items">Category</th>
+                            <th class="product-items">Price</th>
+                            <th class="product-items">Unit Sold</th>
+                            <th class="product-items">In Stock</th>
+                            <th class="product-items">Rating</th>
+                            <th class="product-items">Last Modified</th>
+                            <th class="product-items">Action</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -66,18 +81,16 @@
                             itemsPerPage: pageSize,
                             currentPage: currentPage
                         }; let i = index">
-                            <td class="product-items">
-                                <div class="item-check d-flex justify-content-center">
-                                    <input [attr.checked]="checkboxChild" type="checkbox" id="itemId_{{item.itemId}}">
-                                    <label for='itemId{{item.itemId}}'>
-                                        <span class="material-symbols-outlined">done</span>
-                                    </label>
-                                </div>
+                            <td class="product-items item-check">
+                                <input [attr.checked]="checkboxChild" type="checkbox" id="itemId_{{item.itemId}}">
+                                <label class="d-flex flex-center" for='itemId_{{item.itemId}}'>
+                                    <span class="d-flex flex-center material-symbols-outlined">done</span>
+                                </label>
                             </td>
 
                             <td class="product-items">
-                                <div class=" d-flex gap-10 align-center mh100">
-                                    <div class="product-image">
+                                <div class=" d-flex gap-10 align-item-center mh100">
+                                    <div class="product-image d-flex flex-center">
                                         <img src="{{item.image}}" alt="product.png" width="100%" height="100%">
                                     </div>
                                     <span>{{item.name}}</span>
@@ -113,29 +126,49 @@
                             </td>
 
                             <td class="product-items">
-                                <div class="d-flex gap-5 align-items-center">
+                                <div class="d-flex gap-5 align-item-center">
                                     <ng-container *ngFor="let star of rating">
-                                        <span *ngIf="star <= item.rating">
-                                            <i class="fa-solid fa-star" style="color: rgb(var(--primary));"></i>
-                                        </span>
-                                        <span *ngIf="star > item.rating">
-                                            <i class="fa-regular fa-star" style="color: rgb(var(--primary));"></i>
-                                        </span>
+
+                                        <i *ngIf="item.rating % 1 === 0 && star <= item.rating; else halfStar"
+                                            class="fa-solid fa-star" style="color: rgb(var(--primaryClr));"></i>
+
+                                        <ng-template #halfStar>
+                                            <i *ngIf="star < item.rating " class="fa-solid fa-star"
+                                                style="color: rgb(var(--primaryClr));"></i>
+                                            <i *ngIf="star < item.rating && (star + 1) > item.rating; "
+                                                class="fa-solid fa-star-half-stroke"
+                                                style="color: rgb(var(--primaryClr));"></i>
+                                        </ng-template>
+
+                                        <ng-container *ngIf="star > item.rating">
+                                            <i class="fa-regular fa-star" style="color: rgb(var(--primaryClr));"></i>
+                                        </ng-container>
                                     </ng-container>
                                     &#40;{{item.rating}}&#41;
                                 </div>
                             </td>
                             <td class="product-items">{{item.last_updated}}</td>
                             <td class="product-items">
-                                <div>
-                                    <a href="javascript:void(0);" style="color: rgb(var(--blue-clr));">
+                                <span class=" d-flex align-item-center gap-10 transition">
+                                    <a href="javascript:void(0);" class="tooltip">
+                                        <i class="fs-20 fa-icon material-symbols-outlined">zoom_in</i>
+                                        <span class="tooltiptext">View</span>
+                                    </a>
+                                    <a href="javascript:void(0);" class="tooltip">
                                         <i class="fa-icon fa-regular fa-pen-to-square"></i>
+                                        <span class="tooltiptext">Edit</span>
                                     </a>
-                                    <a href="javascript:void(0);" style="color: rgb(var(--red-clr));"
-                                        (click)="deleteItem(item)">
+                                    <a href="javascript:void(0);" class="tooltip" (click)="deleteItem(item)">
                                         <i class="fa-icon fa-regular fa-trash-can"></i>
+                                        <span class="tooltiptext">Delete</span>
                                     </a>
-                                </div>
+                                </span>
+                                <!-- <span (click)="toggleClass($event)" class="pointer material-symbols-outlined">more_vert</span>
+                                <ul class="action_option d-flex flex-column absolute">
+                                    <li class="option pointer">View</li>
+                                    <li class="option pointer">Edit</li>
+                                    <li class="option pointer" (click)="deleteItem(item)">Delete</li>
+                                </ul> -->
                             </td>
                         </tr>
                     </tbody>

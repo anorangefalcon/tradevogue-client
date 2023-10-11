@@ -20,7 +20,7 @@
 
     .bg2 {
         /* background: url(../../../assets/hero-bg2.png); */
-        background-color: rgba(var(--accent), 0.1);
+        background-color: rgba(var(--primaryClr), 0.1);
         background-image: url(../../../assets/deal-of-week-component/dealOfWeek-homeBg.png);
         background-size: cover;
     }

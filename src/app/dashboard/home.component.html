@@ -1,32 +1,33 @@
 <section id="dashboard" class="relative">
 
     <header class="header sticky inset-inline-0 inset-block-start-0 transition" [class.active]="isCollapse">
-        <div class="mh100 header_container d-flex align-items-center justify-content-md-between">
+        <div class="mh100 header_container d-flex align-item-center justify-content-md-between">
             <div class="toogle-section d-flex gap-10 align-center">
                 <a (click)="isCollapse = !isCollapse" class="pointer mh100"><span
                         class="material-symbols-outlined">menu</span></a>
                 <img class="brand-logo" src="../../assets/logo-mobile.svg" [class.active]="isCollapse" alt="Logo">
-                <h3>{{title}}</h3>
+                <!-- <h3>{{title}}</h3> -->
             </div>
-            <ul class="mh100 header_items d-flex align-center justify-content-end gap-20">
-                <li class="header_links mh100">
+            <ul class="mh100 header_items d-flex align-item-center justify-content-end gap-20">
+                <!-- <li class="header_links mh100">
                     <div class="search-option mh100 fs-14">
                         <app-search-bar [searchPlaceholder]="'Search...'"></app-search-bar>
                     </div>
-                </li>
+                </li> -->
                 <li class="header_links">
-                    <span class="mh100 message d-flex align-center relative">
-                        <span class="message_icons material-symbols-outlined">Message</span>
+                    <span class="mh100 message d-flex align-item-center relative">
+                        <span class="pointer transition  icons material-symbols-outlined">Message</span>
                         <span class="count d-flex flex-center text-center absolute">{{0}}</span>
                     </span>
                 </li>
                 <li class="header_links">
-                    <span class="mh100 notification d-flex align-center relative">
-                        <span class="notifications_icons material-symbols-outlined">notifications</span>
+                    <span class="mh100 notification d-flex align-item-center relative">
+                        <span class="pointer transition icons material-symbols-outlined">notifications</span>
                         <span class="count d-flex flex-center text-center absolute">{{0}}</span>
                     </span>
                 </li>
-                <li class="header_links profile d-flex align-items-center gap-10" [routerLink]="['/dashboard/account']">
+                <li class="header_links profile d-flex align-item-center gap-10 pointer"
+                    [routerLink]="['/dashboard/account']">
                     <span class="photo-section relative d-flex justify-content-center align-center">
                         <img id="profile__photo" src="../../../assets/avatars/try.svg" alt="">
                         <!-- <span class="account__icon absolute material-symbols-outlined">settings</span>                -->
@@ -50,22 +51,27 @@
         </span>
 
         <nav class="navbar mh100">
-            <ul class="navlist mh100 relative">
-                <li class="nav-links" routerLink="/dashboard" (click)="title = 'Dashboard'">
-                    <a href=" javascript:void(0);" class="dropdown">
-                        <div class="d-flex align-center">
-                            <span class="icons material-symbols-outlined">grid_view</span>
-                            <span class="link-text">Dashboard</span>
-                        </div>
+            <ul class="navlist d-flex flex-column mh100 relative">
+                <li class="transition" (click)="title='Dashboard'" *ngFor="let item of navitems">
+
+                    <a routerLink={{item.route}} [class.dropdown]="item.sublist" [class.active]="isProductBtnActive == true"
+                        class="nav-links relative align-item-center d-flex gap-15 pointer">
+                        <i class="icons material-symbols-outlined">{{item.icons}}</i>
+                        <span class="nav-text">{{item.name}}</span>
                     </a>
+
+                    <ul class="sub-navlist" *ngIf="item.sublist">
+                        <li class="sub-links" *ngFor="let subitem of item.sublist" (click)="title = 'Product Overview'">
+                            <a routerLink={{subitem.route}}>{{subitem.name}}</a>
+                        </li>
+                    </ul>
                 </li>
-                <li class="nav-links relative" [class.active]="isProductBtnActive == true">
+                <!-- <li class="nav-links relative" [class.active]="isProductBtnActive == true">
                     <a style="cursor:default;" href=" javascript:void(0);"
-                        class="dropdown d-flex justify-content-md-between" (click)="product_dropdown()">
-                        <div class="d-flex align-center">
-                            <span class="icons material-symbols-outlined">inventory</span>
-                            <span class="link-text">Products</span>
-                        </div>
+                        class="dropdown d-flex align-center" (click)="product_dropdown()">
+                            <i class="icons material-symbols-outlined">inventory</i>
+                            <span class="nav-text">Products</span>
+                    
                         <span class="arrowbtn material-symbols-outlined">arrow_drop_down</span>
                     </a>
                     <ul class="sub-navlist">
@@ -117,7 +123,7 @@
                             <span class="link-text">Logout</span>
                         </div>
                     </a>
-                </li>
+                </li> -->
 
             </ul>
         </nav>

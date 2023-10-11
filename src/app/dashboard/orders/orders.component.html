@@ -9,7 +9,7 @@
         </div>
     </div> -->
 
-    <div class="order-info-cards grid gap-20">
+    <div class="order-info-cards d-grid gap-20">
         <div class="column col-2">
             <div class="card">
                 <span class="material-symbols-outlined">thumb_up</span>
@@ -49,19 +49,19 @@
     </div>
 
     <div class="order-list d-flex flex-column gap-25">
-        <div class="filters d-flex justify-content-md-between align-items-center">
+        <div class="filters d-flex justify-content-md-between align-item-center">
             <h3>Order List</h3>
-            <!-- <div class="d-flex align-center gap-20">
-                <span class="d-flex align-center gap-10">
+            <!-- <div class="d-flex align-item-centergap-20">
+                <span class="d-flex align-item-centergap-10">
                     <label for="todate">To: </label>
                     <input type="date" #todate>
                 </span>
-                <span class="d-flex align-center gap-10">
+                <span class="d-flex align-item-centergap-10">
                     <label for="fromdate">From: </label>
                     <input type="date" #fromdate>
                 </span>
             </div> -->
-            <div class="d-flex align-center gap-20">
+            <div class="d-flex align-item-centergap-20">
                 <app-custom-select [options]="categoryOption" [selectedOption]="'Filter by Category'" (final_option)="updateFields($event, 'category')"></app-custom-select>
                 <app-custom-select [options]="orderStatus" [selectedOption]="'Filter by Order'" (final_option)="updateFields($event, 'order')"></app-custom-select>
             </div>

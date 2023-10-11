@@ -102,8 +102,8 @@ section {
                 }
 
                 & input[type="checkbox"]:checked+label .material-symbols-outlined {
-                    background-color: rgb(var(--accent));
-                    border-color: rgb(var(--accent));
+                    background-color: rgb(var(--primaryClr));
+                    border-color: rgb(var(--primaryClr));
                     /* background-color: red; */
                 }
             }
@@ -140,7 +140,7 @@ section {
 
     & input:focus,
     & select:focus {
-        border-color: rgb(var(--text-black), 0.4);
+        border-color: rgb(var(--textClr), 0.4);
     }
 
     & select {
@@ -151,7 +151,7 @@ section {
 
     & label {
         font-size: 14px;
-        color: rgb(var(--text-black), 0.9);
+        color: rgb(var(--textClr), 0.9);
         padding-bottom: 5px;
     }
 
@@ -167,11 +167,11 @@ section {
         inset-block-start: 40px;
         inset-inline-start: 0;
         background-color: transparent;
-        color: rgb(var(--text-black), 0.5);
+        color: rgb(var(--textClr), 0.5);
     }
 
     & ::placeholder {
-        color: rgb(var(--text-black), 0.3);
+        color: rgb(var(--textClr), 0.3);
     }
 
     & small {
@@ -220,8 +220,6 @@ body {
   width: 100vw;
 }
 
-
-/* Example styles for custom payment form design */
 .custom-payment-form {
     background-color: #f0f0f0;
     padding: 20px;
@@ -247,8 +245,6 @@ body {
     border: 1px solid #ccc;
     border-radius: 5px;
 }
-
-/* Additional styles for Stripe Elements if needed */
 
 
 form {
@@ -278,7 +274,7 @@ form {
   margin-bottom: 24px;
 }
 
-/* Buttons and links */
+
 button {
   background: #5469d4;
   font-family: Arial, sans-serif;
@@ -302,7 +298,7 @@ button:disabled {
   cursor: default;
 }
 
-/* spinner/processing state, errors */
+
 .spinner,
 .spinner:before,
 .spinner:after {

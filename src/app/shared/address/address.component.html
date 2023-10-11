@@ -1,0 +1,167 @@
+<section class="Address">
+    <div class="container d-flex flex-column gap-15">
+       <div class="specialcontent" [ngStyle]="{'display': display == true ? 'block' : 'none'}" *ngIf="display!=false">
+           <div class="form" [ngClass]="display ? 'addnew' : ''">
+            <button class="closebtn">
+            <span class="material-symbols-outlined" (click)="close()">
+                close
+                </span>
+    
+            </button>
+            <!-- <app-add-address-form (SendData)="AddressHandler($event)" [updateAddress]="UpdatingRequest"></app-add-address-form> -->
+           </div>
+        </div>
+    
+    
+        <h2>Your Addresses</h2>
+    
+    
+     
+        <div class="d-flex content gap-15">
+            <div class="addAddress">
+               
+                <button (click)="display=true">
+                    
+                    <span class="material-symbols-outlined">
+                        add
+                        </span>
+                <h2>Add Address</h2>    
+                
+                </button>
+        </div>
+        <div *ngFor="let address of AddressData; let i= index" class="ShowAddresses">
+    
+            <div>
+            <p class="name">{{address.firstname}} {{address.lastname}}</p>
+            <p>{{address.apartment}}</p>
+            <p>{{address.area}}</p>
+            <p>{{address.town_city}}</p>
+            <p>{{address.state}}</p>
+            <p>{{address.country}}</p>
+            <p>{{address.pincode}}</p>
+        </div>
+    
+        <div class="d-flex gap-15">
+            <button (click)="Edit(address,i)" class="edit_btn">Edit</button>
+        
+        </div>
+        </div>
+    
+    </div>
+    </div>
+   
+    
+
+ <!-- ADD ADDRESS FORM -->
+    <div class="container addNew d-flex flex-column" *ngIf="display">
+        <h2 class="text-center">Shipping Details</h2>
+        <form [formGroup]="DetailsForm">
+            <div class="form__group d-flex flex-column width-50">
+                <label class="form__label">First Name<span>*</span></label>
+                <input type="text" placeholder="Enter Your First Name" class="form__input/" formControlName="firstname">
+                <small
+                *ngIf="DetailsForm.get('firstname')?.hasError('required') && DetailsForm.get('firstname')?.touched"
+                class="invalid">*FirstName is required.</small>
+                
+                
+            </div>
+
+            <div class="form__group d-flex flex-column width-50">
+                <label class="form__label">Last Name</label>
+             
+                <input type="text" placeholder="Enter Your Last Name" class="form__input/" formControlName="lastname">
+              
+            </div>
+            
+            <div class="form__group d-flex flex-column width-100">
+                <label class="form__label">Flat/House/Apartment No<span>*</span></label>
+             
+                <input type="text" placeholder="Enter Your Street Address" class="form__input/" formControlName="apartment">
+                <small
+                *ngIf="DetailsForm.get('apartment')?.hasError('required') && DetailsForm.get('apartment')?.touched"
+                class="invalid">*Flat/House/Apartment No is required.</small>
+            </div>
+
+
+
+            
+            <div class="form__group d-flex flex-column width-100">
+                <label class="form__label">Area,Street,Village <span>*</span></label>
+             
+                <input type="text" placeholder="" class="form__input/" formControlName="area">
+                <small
+                *ngIf="DetailsForm.get('area')?.hasError('required') && DetailsForm.get('area')?.touched"
+                class="invalid">*Area,Street,Village is required.</small>
+            </div>
+
+
+            <div class="width-100 d-flex">
+
+            <div class="form__group d-flex flex-column width-33">
+                <label class="form__label">LandMark <span>*</span></label>
+             
+                <input type="text" placeholder="" class="form__input/" formControlName="landmark">
+                <small
+                *ngIf="DetailsForm.get('landmark')?.hasError('required') && DetailsForm.get('landmark')?.touched"
+                class="invalid">*LandMark is required.</small>
+            </div>
+
+
+            <div class="form__group d-flex flex-column width-33">
+                <label class="form__label">Pincode <span>*</span></label>
+             
+                <input type="number" placeholder="" class="form__input/" formControlName="pincode">
+                <small
+                *ngIf="DetailsForm.get('pincode')?.hasError('required') && DetailsForm.get('pincode')?.touched"
+                class="invalid">*Pincode is required.</small>
+            </div>
+
+
+           
+
+
+            <div class="form__group d-flex flex-column width-33">
+                <label class="form__label">Town/City <span>*</span></label>
+             
+                <input type="text" placeholder="" class="form__input/" formControlName="town_city">
+                <small
+                *ngIf="DetailsForm.get('town_city')?.hasError('required') && DetailsForm.get('town_city')?.touched"
+                class="invalid">*Town/City is required.</small>
+            </div>
+        </div>
+
+            <div class="form__group d-flex flex-column width-100">
+                <label class="form__label">State <span>*</span></label>
+             
+                <input type="text" placeholder="" class="form__input/" formControlName="state">
+                <small
+                *ngIf="DetailsForm.get('state')?.hasError('required') && DetailsForm.get('state')?.touched"
+                class="invalid">*State is required.</small>
+             
+            </div>
+
+
+            <div class="form__group d-flex flex-column width-100">
+                <label class="form__label">Country <span>*</span></label>
+             
+                <div class="customSelect">
+                    <select id="country" name="country" class="form__input/" formControlName="country">
+                        <option value="India">India</option>
+                        <option value="Canada">Canada</option>
+                        <option value="United Kingdom">United Kingdom</option>
+                        <option value="Australia">Australia</option>
+                       
+                    </select>
+                </div>
+             
+            </div>
+
+
+            <div class="SaveDiv">
+            <button class="btn-primary registerbtn">Save</button>
+        </div>
+        </form>
+    </div>
+
+    
+    </section>

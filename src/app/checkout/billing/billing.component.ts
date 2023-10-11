@@ -1,4 +1,4 @@
-import { Component, Input, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { CartService } from 'src/app/shared/services/cart.service';
 import { CookieService } from 'ngx-cookie-service';
 @Component({
@@ -6,7 +6,7 @@ import { CookieService } from 'ngx-cookie-service';
   templateUrl: './billing.component.html',
   styleUrls: ['./billing.component.css']
 })
-export class BillingComponent {
+export class BillingComponent{
 
   checkoutHtml: string = '';
   checkoutCss: string = '';
@@ -14,13 +14,23 @@ export class BillingComponent {
   cartitems: any = {}
   total: any = {}
   quantity: any = {}
+
+
+    // ngOnInit():void {
+    // const script = this.renderer.createElement('script');
+    // script.type = 'text/javascript';
+    // script.src = 'http://localhost:5000/checkout.js';
+    // script.defer = true;
+    // this.renderer.appendChild(this.document.body, script);
+    // }
+
   constructor(private cartService: CartService,
     private cookie: CookieService) {
     this.cartService.fetchCart().subscribe((data) => {
-      console.log(data, "cart data");
+  
       this.cartitems = data;
     });
-
+    
     const checkSubTotal = () => {
       if (this.cartitems.amounts.subTotal !== 0) {
         this.total = this.cartitems.amounts.total;

@@ -16,6 +16,7 @@
 .product {
 
     & .product-carousel {
+        position: relative;
         width: 50%;
         overflow: hidden;
     }
@@ -40,7 +41,7 @@
     & .img-details {
         width: 230px;
         height: 230px;
-        background-color: rgba(var(--text-black), 0.2);
+        background-color: rgba(var(--textClr), 0.2);
 
     }
 
@@ -59,6 +60,16 @@
             width: 100%;
             height: 100px;
             object-fit: cover;
+            position: relative;
+        }
+        & .gal-img.active::after{
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-color: #00000047;
+            backdrop-filter: blur(1px);
+            z-index: 1;
         }
     }
 
@@ -94,8 +105,7 @@
 
     & .accordian label {
         padding-block: 15px;
-        font-size: 16px;
-        border-block-end: 0.5px solid rgba(var(--text-black), 0.5);
+        border-block-end: 0.5px solid rgba(var(--textClr), 0.5);
     }
 
     .accordian input {
@@ -164,8 +174,8 @@
         cursor: pointer;
         border-radius: 4px;
         padding: 5px 10px;
-        border: 1px solid rgba(var(--text-black), 0.2);
-        color: rgb(var(--text-black));
+        border: 1px solid rgba(var(--textClr), 0.2);
+        color: rgb(var(--textClr));
         font-size: 15px;
         font-family: sans-serif;
         transition: all 0.1s;
@@ -176,9 +186,9 @@
     }
 
     .sizes-radios input:checked+label {
-        color: rgb(var(--text-white));
-        background-color: rgb(var(--primary));
-        border: 1px solid rgb(var(--primary));
+        color: rgb(var(--whiteClr));
+        background-color: rgb(var(--primaryClr));
+        border: 1px solid rgb(var(--primaryClr));
 
     }
 
@@ -199,12 +209,12 @@
         appearance: none;
         cursor: pointer;
         border-radius: 4px;
-        border: 1px solid rgba(var(--text-black), 0.2);
+        border: 1px solid rgba(var(--textClr), 0.2);
         transition: all 0.1s;
     }
 
     .colors-radios input:checked {
-        border: 1px solid rgb(var(--text-black));
+        border: 1px solid rgb(var(--textClr));
     }
 
     .colors-radios input::before {
@@ -233,7 +243,7 @@
             border-radius: 50%;
 
             & span {
-                color: rgb(var(--primary));
+                color: rgb(var(--primaryClr));
                 font-size: 22px;
             }
         }
@@ -242,7 +252,7 @@
 
 
             & span {
-                color: rgb(var(--text-white));
+                color: rgb(var(--whiteClr));
                 font-size: 18px;
                 font-weight: 300;
             }
@@ -281,7 +291,7 @@
         font-size: 14px !important;
         width: 100%;
         padding-block: 15px;
-        border-block-end: 1px solid rgb(var(--text-black), 0.2);
+        border-block-end: 1px solid rgb(var(--textClr), 0.2);
         margin-block-end: 20px;
     }
 
@@ -300,7 +310,7 @@
 
     .tags a:hover,
     .sku a:hover {
-        color: rgb(var(--primary));
+        color: rgb(var(--primaryClr));
         cursor: pointer;
     }
 
@@ -329,7 +339,7 @@
             border-left: 50%;
             font-size: 26px;
             border-radius: 4px;
-            background-color: rgb(var(--text-white), 0.7);
+            background-color: rgb(var(--whiteClr), 0.7);
             backdrop-filter: blur(5px);
             transition: 0.4s ease-in-out;
 
@@ -413,13 +423,13 @@
 .information-section {
     & table {
         width: 100%;
-        border: 0.5px solid rgba(var(--text-black), 0.5);
+        border: 0.5px solid rgba(var(--textClr), 0.5);
         border-spacing: 0;
     }
 
     & th,
     td {
-        border: 0.5px solid rgba(var(--text-black), 0.8);
+        border: 0.5px solid rgba(var(--textClr), 0.8);
         padding: 15px;
 
     }
@@ -488,7 +498,7 @@
 
     & input:focus,
     textarea:focus {
-        border: 1px solid rgba(var(--text-black), 0.8);
+        border: 1px solid rgba(var(--textClr), 0.8);
     }
 
     .rating {
@@ -525,9 +535,9 @@
         }
 
         & .review-card {
-            /* background-color: rgb(var(--primary), 0.05); */
+            /* background-color: rgb(var(--primaryClr), 0.05); */
             border-radius: 0;
-            border-block-end: 1px solid rgba(var(--text-black), 0.2) !important;
+            border-block-end: 1px solid rgba(var(--textClr), 0.2) !important;
             /* padding : 10px; */
             padding-block-end: 20px;
 
@@ -579,7 +589,7 @@
 }
 
 .section-switcher {
-    border-block-start: 1px solid rgba(var(--text-black), 0.2);
+    border-block-start: 1px solid rgba(var(--textClr), 0.2);
     margin-block-start: 15px;
     padding-block: 15px;
 
@@ -599,7 +609,7 @@
         left: 0;
         width: 0;
         height: 2px;
-        background-color: rgb(var(--primary));
+        background-color: rgb(var(--primaryClr));
         transition: width 0.3s ease-in-out;
     }
 
@@ -609,7 +619,7 @@
     }
 
     & .section-item.active {
-        color: rgb(var(--primary));
+        color: rgb(var(--primaryClr));
     }
 
 }

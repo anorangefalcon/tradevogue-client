@@ -9,7 +9,7 @@
     & h4 {
         /* margin-block: 0 3px; */
         white-space: nowrap;
-        max-width: 22ch;
+        max-width: 20ch;
         overflow: hidden;
         text-overflow: ellipsis;
     }
@@ -25,7 +25,7 @@
 }
 
 .card-item-header {
-    background: linear-gradient(to bottom, rgba(var(--text-black), 0.1) 0%, rgba(var(--text-white), 0.2) 100%);
+    background: linear-gradient(to bottom, rgba(var(--textClr), 0.1) 0%, rgba(var(--whiteClr), 0.2) 100%);
     position: relative;
     overflow: hidden;
 
@@ -106,8 +106,8 @@
     justify-content: center;
     align-items: center;
     cursor: pointer;
-    color: rgb(var(--primary));
-    background-color: rgb(var(--text-white));
+    color: rgb(var(--primaryClr));
+    background-color: rgb(var(--whiteClr));
     border-radius: 50%;
     height: 40px;
     width: 40px;
@@ -120,8 +120,8 @@
     }
 
     &:hover {
-        background-color: rgb(var(--primary));
-        color: rgb(var(--text-white));
+        background-color: rgb(var(--primaryClr));
+        color: rgb(var(--whiteClr));
     }
 }
 
@@ -143,16 +143,16 @@
 
 @media screen and (max-width: 768px) {
     .card-item-template{
-        display: grid;
+        display: d-grid;
         gap: 5px;
     }
     .cart {
         display: flex;
         position: inherit;
         visibility: visible;
-        color: rgb(var(--primary));
-        background-color: rgb(var(--text-white));
-        border: 1px solid rgb(var(--primary), 0.2);
+        color: rgb(var(--primaryClr));
+        background-color: rgb(var(--whiteClr));
+        border: 1px solid rgb(var(--primaryClr), 0.2);
         border-radius: 50%;
         height: 35px;
         width: 35px;
@@ -264,7 +264,7 @@
 .subTitle {
     width: 100%;
     padding-block: 15px;
-    border-block-end: 1px solid rgb(var(--text-black), 0.2);
+    border-block-end: 1px solid rgb(var(--textClr), 0.2);
     margin-block-end: 20px;
 }
 
@@ -287,7 +287,7 @@
 } */
 
 .card-item-header {
-    max-height: 370px;
+    max-height: 280px;
 }
 
 
@@ -309,7 +309,7 @@
         cursor: pointer;
         & span{
             border-left: 50%;
-            background-color: rgb(var(--text-white), 0.7);
+            background-color: rgb(var(--whiteClr), 0.7);
             backdrop-filter: blur(5px);
             transition: padding 0.2s ease-in-out;
             font-size: 28px !important;
@@ -334,12 +334,12 @@
         cursor: pointer;
         border-radius: 50%;
         border: 1px solid transparent;
-        /* background-color: rgba(var(--text-black), 0.1); */
+        /* background-color: rgba(var(--textClr), 0.1); */
         transition: all 0.1s;
     }
 
     .colors-radios input:checked {
-        border: 1px solid rgb(var(--text-black));
+        border: 1px solid rgb(var(--textClr));
     }
 
     .colors-radios input::before {

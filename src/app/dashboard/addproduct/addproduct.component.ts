@@ -2,7 +2,7 @@ import { Component, ElementRef, HostListener, Renderer2, asNativeElements } from
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ImageUploadService } from 'src/app/shared/services/image-upload.service';
 import { imageSizeValidator, invalidformat } from 'src/app/shared/validators/imageValidators.validator';
-import { UploadExcelService } from '../services/upload-excel.service';
+import { ToastService } from 'src/app/shared/services/toast.service';
 
 @Component({
   selector: 'app-addproduct',
@@ -18,26 +18,21 @@ export class AddproductComponent {
   gender: string[] = ['Male', 'Female', 'All'];
   sizes: string[] = ['S', 'M', 'L', 'XL', 'XXL', 'XXXL'];
   colors: string[] = ['Color 1', 'Color 2', 'Color 3', 'Color 4'];
-  tags: string[] = ['tag 1', 'tag 2', 'tag 3', 'tag 4','tag 5','tag 6','tag 7'];
+  tags: string[] = ['tag 1', 'tag 2', 'tag 3', 'tag 4', 'tag 5', 'tag 6', 'tag 7'];
   orderQuantity: number[] = [100, 200, 300, 400, 500];
 
-  productsForm: FormGroup;
-  productImages: any = []; //Orginal File For Validation and storage
-  productImagesD: any = [];
-  productImageUrl: any = [];
-  errorFile: any = []; //Duplicate File For display Purposes
-  current_form: string = '';
+  common_colors: string[] = ['#FFFFFF', '#000000', '#0000FF', '#808080', '#800080', '#00FF00', '#FFC0CB', '#ff0000'];
 
+  productsForm: FormGroup;
+  current_form: string = '';
 
   constructor(private elem_ref: ElementRef,
     private render: Renderer2,
     private fb: FormBuilder,
-    private upload: ImageUploadService,
-    private excelService: UploadExcelService) {
+    private upload: ImageUploadService) {
+
     this.productsForm = this.fb.group({
-
-
-      productImages: this.fb.array([
+      productDesc: this.fb.array([
         this.fb.group({
           color: ['', {
             validators: [
@@ -49,7 +44,7 @@ export class AddproductComponent {
               Validators.required
             ]
           }],
-          productImages: [[], {
+          images: [[], {
             validators: [
               Validators.required,
               Validators.maxLength(6),
@@ -133,10 +128,10 @@ export class AddproductComponent {
   }
 
   productImagesFormArray() {
-    return (<FormArray>this.productsForm.get('productImages')).controls;
+    return (<FormArray>this.productsForm.get('productDesc')).controls;
   }
 
-  productSubForm(field: string){
+  productSubForm(field: string) {
     return this.productsForm.get('basicinfo')?.get(field);
   }
 
@@ -148,7 +143,13 @@ export class AddproductComponent {
         ]
       }],
 
-      productImages: [[], {
+      stockQuantity: ['', {
+        validators: [
+          Validators.required
+        ]
+      }],
+
+      images: [[], {
         validators: [
           Validators.required,
           Validators.maxLength(6),
@@ -156,106 +157,98 @@ export class AddproductComponent {
         ]
       }],
     });
-    (<FormArray>this.productsForm.get('productImages')).push(template);
+    (<FormArray>this.productsForm.get('productDesc')).push(template);
   }
 
-  // Handle Images when not added in collection
-  onFileChange(event: Event, index: number) {
+  async fileReader(file: any, image: any): Promise<any> {
 
-    let file = (<HTMLInputElement>event.target)?.files;
+    return new Promise(async (res, rej) => {
 
-    for (let j = 0; j < file!.length; j++) {
-      this.productImages.push(file![j]);
-    }
-    console.log(this.productImages);
-    // this.productsForm.get('productImages')?.setValue(this.productImages);
+      let productImages: any[] = image;
 
-    // // Check Validators Error
-    // // If true separate error files from accepted files
-    // this.errorFile = [];
-    // if (this.productsForm.get('productImages')?.hasError('errorFiles')) {
-    //   let data = this.productsForm.get('productImages')?.value;
+      for (let j = 0; j < file!.length; j++) {
 
-    //   // error section updated
-    //   this.errorFile.push(this.productsForm.get('productImages')?.getError('errorFiles'));
-    //   this.productImagesD = data.filter((file: any) => {
-    //     return !this.errorFile.filter((errorfile: any) => { return errorfile.name === file.name })
-    //   })
-    //   console.log(this.productImagesD);
+        const reader = new FileReader();
 
-    // } else {
-    //   this.productImagesD = this.productImages;
-    // }
+        let x = await new Promise((resolve, reject) => {
+          reader.onload = (e) => {
+            resolve({ image: e.target?.result, file: file[j] });
+          }
+          reader.readAsDataURL(file[j]);
+        });
 
-    // if (this.productsForm.get('productImages')?.hasError('maxlength')) {
-    //   this.productImagesD = this.productImages.slice(0, 6);
-    //   this.errorFile.push(this.productImages.slice(6, this.productImages.length));
-    //   console.log(this.errorFile);
-    // }
-  }
-
-  // Delete Image
-  deleteImage(image: any) {
-    console.log("Delete");
-    this.productImages = this.productImages.filter((img: any) => {
-      return img.name !== image;
-    });
-    this.productsForm.get('productImages')?.setValue(this.productImages);
-  }
-
-  // Handles Imgages
-
-  uploadFile(event: Event) {
-    let data = this.excelService.handleFileInput(event);
-    data.then((products) => {
-      console.log(products);
-
-      let product_keys = Object.keys(products['errors']);
-      product_keys.forEach((sheet) => {
-        let sheets_keys = Object.keys(products['errors'][sheet]);
-        // console.log(sheets_keys);
-
-        sheets_keys.forEach((errors) => {
-          let error_list = Object.keys(products['errors'][sheet][errors]);
-          // console.log(error_list); 
-
-          error_list.forEach((detail) => {
-            console.log(detail);
-          })
-        })
-      })
+        productImages.push(x);
+      }
+      res(productImages);
     })
   }
 
-  updateFormFields(e: any, field: string) {
-    console.log(e, ' :: ', field);
-    this.productsForm.get('basicinfo')?.get(field)?.patchValue(e);
-    console.log("Form :: ",this.productsForm.get('basicinfo')?.get(field)?.value);
+  //Function triggered when an image/Collection of images are uplaoded & handling it error (FileReader)
+  onImageUpload(event: Event, formId: number) {
+
+    let file = (<HTMLInputElement>event.target)?.files;
+    let formControl = this.productsForm.get('productDesc')?.get(String(formId))?.get('images');
+
+    // Reading Files using File Reader and displaying visual Data to user
+    this.fileReader(file, formControl?.value).then((res) => {
+      console.log(res);
+      
+      formControl?.patchValue(res);
+      let productImages = formControl?.value;
+
+      // Handling Image Exceeding the Length Limit of 6
+      if(formControl?.hasError('maxlength')) {
+        console.log("inside maxlength");
+        productImages = productImages.slice(0, 6);
+        formControl?.patchValue(productImages);
+      }
+
+      // Handling Image Exceeding the Size Limit of 2MB
+      if (formControl?.hasError('exceedSize')) {
+        console.log("Error::", formControl?.getError('errorFiles'), productImages);
+
+        let errorFile = formControl?.getError('errorFiles');
+
+        // Filtering Out Error Free Data
+        productImages = productImages.filter((file: any) => {
+          return !errorFile.includes(file);
+        });
+        formControl?.patchValue(productImages);
+      }
+    })
   }
 
-  updateColor(e: Event, index: number){
+  // Delete Image from Image List
+  deleteImage(imageIndex: any, formId: any) {
+    let productImages = this.productsForm.get('productDesc')?.get(String(formId))?.get('images')?.value;  
+    productImages.splice(imageIndex, 1)
+    this.productsForm.get('productDesc')?.get(String(formId))?.get('images')?.patchValue(productImages);  
+  }
+
+  // update Form Control For Custom Select buttons
+  updateFormFields(e: any, field: string) {
+    this.productsForm.get('basicinfo')?.get(field)?.patchValue(e);
+  }
+
+  updateColor(e: Event, index: number) {
     const color = (<HTMLInputElement>e.target).value;
     this.productsForm.get('productImages')?.get(String(index))?.get('color')?.patchValue(color);
   }
 
-
-  // calculateDiscount() {
-  //   const price = this.productsForm.get('basicinfo')?.get('actualprice')?.value;
-  //   if (price) {
-  //     const discount = this.productsForm.get('basicinfo')?.get('discount')?.value;
-  //     this.productsForm.get('basicinfo')?.get('discountprice')?.patchValue(price - Math.floor(price * (discount/100)));
-  //   }
-  // }
-
+  // Letter Counter for Paragraph
   textarea_letterCount: number = 0;
-  letterCounter(e: Event, totalcount: number){
+  letterCounter(e: Event, totalcount: number) {
     this.textarea_letterCount = (<HTMLTextAreaElement>e.target).value.length;
+  }
 
+  // For  purpose of ng For loop for Displaying Images
+  imagesArray(index: number) {
+    return this.productsForm.get('productDesc')?.get(String(index))?.get('images')?.value;
   }
 
 
   onsubmit() {
-    this.errorFile = [];
+
     console.log(this.productsForm);
     if (!this.productsForm.valid) {
 
@@ -276,6 +269,7 @@ export class AddproductComponent {
     }
 
   }
+
 }
 
 

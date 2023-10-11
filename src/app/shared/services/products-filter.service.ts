@@ -13,8 +13,7 @@ export class ProductsFilterService {
 
     let promise=new Promise(async (resolve,reject)=>{
       await this.fetchData.getData().subscribe((originalData)=>{
-       
-        
+     
         const filterObj: any = {
           sizes: [],
           colors: [],

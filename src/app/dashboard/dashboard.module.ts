@@ -15,6 +15,7 @@ import { AddproductfeaturesComponent } from './addproductfeatures/addproductfeat
 import { UploadExcelService } from './services/upload-excel.service';
 import { SalesAnalysisComponent } from './sales-analysis/sales-analysis.component';
 import { OrderPageComponent } from './order-page/order-page.component';
+import { TableListComponent } from './common-Components/table-list/table-list.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { OrderPageComponent } from './order-page/order-page.component';
     AccountComponent,
     AddproductfeaturesComponent,
     SalesAnalysisComponent,
-    OrderPageComponent
+    OrderPageComponent,
+    TableListComponent,
   ],
   
   imports: [

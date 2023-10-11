@@ -1,6 +1,6 @@
 <section class="signup-section d-flex flex-">
 
-  <div class="column left-column d-flex justify-content-center align-items-center">
+  <div class="column left-column d-flex justify-content-center align-item-center">
     <div class="form-container d-flex flex-column">
       <div class="header fixed">
         <a routerLink="/"><img src="../../assets/logo.svg" alt="logo"></a>
@@ -9,18 +9,29 @@
       <h2 class="register-title text-center">Hi there!</h2>
 
       <form [formGroup]="signupForm" class="d-flex flex-column gap-15">
+
+        <div class="d-flex Name">
         <div class="form__group relative d-flex flex-column">
-          <label class="form__label">Username<span>*</span></label>
+          <label class="form__label">FirstName<span>*</span></label>
           <span class="material-symbols-outlined form__icon absolute">person</span>
-          <input type="text" id="username" formControlName="username" placeholder="Enter Your Username">
+          <input type="text" id="firstname" formControlName="firstname" placeholder="Enter Your FirstName">
           
           <small
-            *ngIf="isFormSubmitted && signupForm.get('username')?.hasError('invalidUser') && !signupForm.get('username')?.hasError('required') && signupForm.get('username')?.touched"
-            class="invalid">*Username not available.</small>
+            *ngIf="signupForm.get('firstname')?.hasError('required') && signupForm.get('firstname')?.touched"
+            class="invalid">*FirstName is required.</small>
             
         </div>
-
-
+        <div class="form__group relative d-flex flex-column">
+          <label class="form__label">LastName<span>*</span></label>
+          <span class="material-symbols-outlined form__icon absolute">person</span>
+          <input type="text" id="lastname" formControlName="lastname" placeholder="Enter Your LastName">
+          
+          <small
+            *ngIf="signupForm.get('lastname')?.hasError('required') && signupForm.get('lastname')?.touched"
+            class="invalid">*LastName is required.</small>
+            
+        </div>
+      </div>
 
         <div class="form__group relative d-flex flex-column">
           <label class="form__label">Email<span>*</span></label>
@@ -28,7 +39,7 @@
           <input type="email" id="email" formControlName="email" placeholder="Enter Your Email">
         
           <small
-            *ngIf="isFormSubmitted && signupForm.get('email')?.hasError('email') && signupForm.get('email')?.touched"
+            *ngIf="signupForm.get('email')?.hasError('email') && signupForm.get('email')?.touched"
             class="invalid">
             *Please enter valid Email.
           </small>
@@ -59,16 +70,16 @@
                 </small>Minimum 8 characters
               </p>
 
-              <p [ngClass]="{'red-text': signupForm.get('password')?.hasError('uppercaseLetter') && !signupForm.get('password')?.hasError('required'),
-         'green-text': !signupForm.get('password')?.hasError('uppercaseLetter') && !signupForm.get('password')?.hasError('required')}"
+              <p [ngClass]="{'red-text': signupForm.get('password')?.hasError('uppercase') && !signupForm.get('password')?.hasError('required'),
+         'green-text': !signupForm.get('password')?.hasError('uppercase') && !signupForm.get('password')?.hasError('required')}"
                 *ngIf="!signupForm?.get('password')?.hasError('required')">
                 <small class="material-symbols-outlined">
                   check_circle
                 </small>One uppercase letter
               </p>
 
-              <p [ngClass]="{'red-text': signupForm.get('password')?.hasError('lowercaseLetter') && !signupForm.get('password')?.hasError('required'),
-   'green-text': !signupForm.get('password')?.hasError('lowercaseLetter') && !signupForm.get('password')?.hasError('required')}"
+              <p [ngClass]="{'red-text': signupForm.get('password')?.hasError('lowercase') && !signupForm.get('password')?.hasError('required'),
+   'green-text': !signupForm.get('password')?.hasError('lowercase') && !signupForm.get('password')?.hasError('required')}"
                 *ngIf="!signupForm?.get('password')?.hasError('required')">
                 <small class="material-symbols-outlined">
                   check_circle
@@ -116,20 +127,44 @@
               class="material-symbols-outlined eye">{{showPassword2? 'visibility' : 'visibility_off'}}</span></button>
 
 
-          <small *ngIf="isFormSubmitted && !signupForm.get('confirmPassword')?.hasError('required') && signupForm?.get('confirmPassword')?.invalid && signupForm.get('confirmPassword')?.touched"
+          <small *ngIf="!signupForm.get('confirmPassword')?.hasError('required') && signupForm?.get('confirmPassword')?.invalid && signupForm.get('confirmPassword')?.touched"
             class="invalid">
             *Your passwords and confirm password do not match.
           </small>
 
         </div>
 
-        <button class="btn-primary registerbtn" (click)="onSubmit()">Register</button>
+    
+
+        <button class="btn-primary registerbtn" [disabled]="signupForm.invalid" (click)="onSubmit()">Register</button>
         <p class="text-center acc-text">Already have an account?
           <a class="login-text" [routerLink]="['/auth/login']">Login</a>
         </p>
 
+      
+      
+
 
       </form>
+ 
+<div id="g_id_onload"
+data-client_id="772184715446-gek74bjj4p973rl3jtcbhmmrtsdp2dsl.apps.googleusercontent.com"
+data-context="signup"
+data-ux_mode="popup"
+data-callback="googleAuthCallback"
+data-itp_support="true">
+</div>
+
+<div class="g_id_signin"
+data-type="standard"
+data-shape="rectangular"
+data-theme="outline"
+data-text="signup_with"
+data-size="large"
+data-logo_alignment="left">
+</div>
+
+
     </div>
   </div>
 
@@ -138,5 +173,9 @@
   <div class="right-column column">
 
   </div>
+
+
+
+
 
 </section>
