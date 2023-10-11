@@ -13,12 +13,10 @@
     flex-direction: row-reverse;
 
     /* RIGHT SIDE */
-
     & .column {
         width: 50%;
         background-color: rgb(var(--whiteClr));
     }
-
     & .form-container {
         padding-inline: 20px;
         width: min(100%, 520px);
@@ -113,8 +111,7 @@
 
     & .helper-inside {
         width: 50%;
-        display: flex;
-        flex-direction: column;
+
         gap: 5px;
 
         & p,

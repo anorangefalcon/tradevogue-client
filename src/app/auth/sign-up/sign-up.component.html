@@ -58,7 +58,7 @@
           <div class="password-helper d-flex justify-content-md-between">
 
 
-            <div class="helper-inside ">
+            <div class="helper-inside d-flex flex-column ">
               <p [ngClass]="{'red-text': signupForm.get('password')?.hasError('minlength') && !signupForm.get('password')?.hasError('required'),
          'green-text': !signupForm.get('password')?.hasError('minlength') && !signupForm.get('password')?.hasError('required')}"
                 *ngIf="!signupForm?.get('password')?.hasError('required')">
@@ -84,7 +84,7 @@
               </p>
             </div>
 
-            <div class="helper-inside">
+            <div class="helper-inside d-flex flex-column ">
               <p [ngClass]="{'red-text': signupForm.get('password')?.hasError('digit') && !signupForm.get('password')?.hasError('required'),
    'green-text': !signupForm.get('password')?.hasError('digit') && !signupForm.get('password')?.hasError('required')}"
                 *ngIf="!signupForm?.get('password')?.hasError('required')">

@@ -7,23 +7,36 @@
             <ul class="nav-items">
                 <li class="nav-links" [ngClass]="(this.showData === 'profile') ? 'nav-link-active' : ''"><a
                         (click)="changeComponent('profile')">
-                        <span class="nav-icons material-symbols-outlined">
+                        <!-- <span class="nav-icons material-symbols-outlined">
                             person
-                        </span>
-                        <span class="nav-txt">Home</span>
+                        </span> -->
+                        <span class="nav-txt">Profile</span>
                     </a></li>
                 <li class="nav-links" [ngClass]="(this.showData === 'orders') ? 'nav-link-active' : ''"><a
                         (click)="changeComponent('orders')">
-                        <span class="nav-icons material-symbols-outlined">
-                            favorite
-                        </span>
-                        <span class="nav-txt">Order</span>
+                        
+                        <span class="nav-txt">My Order</span>
                     </a></li>
                 <li class="nav-links"><a href="#">
-                        <span class="nav-icons material-symbols-outlined">
+                        <!-- <span class="nav-icons material-symbols-outlined">
                             logout
-                        </span>
-                        <span class="nav-txt">Logout</span>
+                        </span> -->
+                        <span class="nav-txt">My Wishlist</span>
+                    </a></li>
+
+
+                    <li class="nav-links"><a href="#">
+                        <!-- <span class="nav-icons material-symbols-outlined">
+                            logout
+                        </span> -->
+                        <span class="nav-txt">Addresses</span>
+                    </a></li>
+
+                    <li class="nav-links"><a href="#">
+                        <!-- <span class="nav-icons material-symbols-outlined">
+                            logout
+                        </span> -->
+                        <span class="nav-txt">Change Password</span>
                     </a></li>
             </ul>
         </nav>
@@ -92,12 +105,12 @@
                         <div class="genders">
                             <div class="radiocustom">
                                 <input class="mradio" type="radio" id="male" name="gender" value="Male">
-                                <label for="male"><span class=" icon material-symbols-outlined">man</span></label>
+                                <label for="male"></label>
                                 <span>Male</span>
                             </div>
                             <div class="radiocustom">
                                 <input class="mradio" type="radio" id="female" name="gender" value="Female">
-                                <label for="female"><span class=" icon material-symbols-outlined">woman</span></label>
+                                <label for="female"></label>
                                 <span>Female</span>
                             </div>
                         </div>
@@ -265,6 +278,80 @@
 
 
     </div>
+
+
+
+
+
+    
+    <!-- <form [formGroup]="signupForm" class="d-flex gap-15 disableInput"
+    [ngClass]="isReadOnly === true ? 'disableInput' : 'enableInput'">
+    <div class="form__group relative d-flex flex-column">
+        <label class="form__label">NAME<span>*</span></label>
+        <span class="material-symbols-outlined form__icon absolute">person</span>
+        <input type="text" id="name" formControlName="username" placeholder="Enter Your Name">
+
+    </div>
+
+
+
+
+
+
+    <div class="form__group relative d-flex flex-column">
+        <label class="form__label">EMAIL<span>*</span></label>
+
+        <span class="material-symbols-outlined form__icon absolute">mail</span>
+        <input type="text" id="email" formControlName="email" placeholder="Enter Your Email">
+
+    </div>
+
+
+    <div class="form__group relative d-flex flex-column">
+        <label class="form__label">MOBILENO<span>*</span></label>
+        <span class="material-symbols-outlined form__icon absolute">call</span>
+        <input type="text" id="mobileNo" formControlName="mobileNo" placeholder="Enter Your MobileNo">
+
+    </div>
+
+
+    <div class="form__group relative d-flex flex-column">
+        <label class="form__label">GENDER<span>*</span></label>
+        <div class="radios">
+            <div class="genders">
+                <div class="radiocustom">
+                    <input class="mradio" type="radio" id="male" name="gender" value="Male">
+                    <label for="male"></label>
+                    <span>Male</span>
+                </div>
+                <div class="radiocustom">
+                    <input class="mradio" type="radio" id="female" name="gender" value="Female">
+                    <label for="female"></label>
+                    <span>Female</span>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+    <div class="form__group relative d-flex flex-column">
+        <label class="form__label">DOB<span>*</span></label>
+        <span class="material-symbols-outlined form__icon absolute">person</span>
+        <input type="date" id="dob" formControlName="dob" placeholder="Enter Your Username">
+
+    </div>
+
+    <div class="form__group relative d-flex flex-column">
+        <label class="form__label">ADDRESS<span>*</span></label>
+        <span class="material-symbols-outlined form__icon absolute">home</span>
+        <input type="text" id="address" formControlName="address" placeholder="Enter Your Address">
+
+    </div>
+
+
+</form> -->
+
 
 
 
