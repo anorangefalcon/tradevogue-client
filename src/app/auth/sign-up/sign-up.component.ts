@@ -5,6 +5,7 @@ import { CookieService } from 'ngx-cookie-service';
 import { UserDataService } from '../user-data.service';
 import { UtilsModule } from 'src/app/utils/utils.module';
 import { FetchDataService } from 'src/app/shared/services/fetch-data.service';
+import { Router } from '@angular/router';
 
 // import { UserDataService } from '../user-data.service';
 
@@ -23,12 +24,12 @@ export class SignUpComponent {
   confirmPassword: string = 'password';
   showPassword: boolean = false;
   showPassword2: boolean = false;
-  constructor(private fb: FormBuilder, private cookie: CookieService, private renderer: Renderer2, private userData: UserDataService, private backendURLs: UtilsModule, private fetchDataService: FetchDataService) {
+  constructor(private fb: FormBuilder, private router: Router,private cookies: CookieService, private renderer: Renderer2, private userData: UserDataService, private backendURLs: UtilsModule, private fetchDataService: FetchDataService) {
 
     // Google login
     window.addEventListener('authCredential', async (event: any) => {
       try {
-        const token = { credential: event.detail.credential }
+        const token = { clientId: event.detail.clientId, credential: event.detail.credential }
         const body = { token };
         let data = await this.fetchDataService.httpPost(this.backendURLs.URLs.signupUrl, body);
 
@@ -78,11 +79,12 @@ export class SignUpComponent {
         password: this.signupForm.get('password')?.value
       }
 
-      let data = await this.fetchDataService.httpPost(this.backendURLs.URLs.signupUrl, body);
-
+      let data:any = await this.fetchDataService.httpPost(this.backendURLs.URLs.signupUrl, body);
+      this.cookies.set('userToken', data.token)
+      this.router.navigate(['/']);
     }
     catch (error) {
-
+      console.log("ERROR IS  ",error);
     }
   }
 

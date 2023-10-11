@@ -38,20 +38,22 @@ export class AddressComponent {
     this.display=false;
   }
 
-  AddressHandler(event:any){
-    this.display=false;
-    if(!event._id){
+  // AddressHandler(event:any){
+  //   this.display=false;
+  //   if(!event._id){
 
-      this.AddressData.push(event);
-      return;
-    }
+  //     this.AddressData.push(event);
+  //     return;
+  //   }
 
-    this.AddressData[event.index]=event;
+  //   this.AddressData[event.index]=event;
 
     
+  // }
+
+  AddressHandler(){
+
   }
-
-
   Edit(el:any,index :any){
     el.index=index;
     this.UpdatingRequest=el;

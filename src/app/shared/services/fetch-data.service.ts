@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, filter, map, tap } from 'rxjs';
+import { ToastService } from './toast.service';
 
 @Injectable({
   providedIn: 'root',
@@ -10,7 +11,7 @@ export class FetchDataService {
   url = '../../../assets/tempDB/products.json';
   userUrl = '../../../assets/tempDB/usersData.json';
   sellerUrl = '../../../assets/tempDB/seller.json';
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient,private toastService:ToastService) { }
 
   productKeys: any = ['available', 'colors', 'description', 'image', 'info', 'name', 'price', 'oldPrice', 'orderQuantity', 'reviews', 'sizes', 'sku', 'stockQuantity'];
   getData(): Observable<any> {
@@ -47,10 +48,15 @@ export class FetchDataService {
 
       this.http.post(url, body).subscribe({
         next: (data) => {
+         
           res(data);
         }, error: (error) => {
-
           rej(error)
+          if(error.message){
+  
+            const data={title:error.error.message};
+              this.toastService.errorToast(data);
+          }
         }
       })
     })
@@ -64,7 +70,16 @@ export class FetchDataService {
         res(data);
         
       },error:(error)=>{
+        
         rej(error)
+        console.log("ERROR IS ",error);
+        if(error.message){
+
+          const data={title:error.message};
+            this.toastService.errorToast(data);
+        }
+       
+
       }})
     })
  

@@ -35,17 +35,18 @@ export class LoginComponent {
     this.forgetPasswordForm = fb.group({
       passwordEmail: fb.control('', [Validators.required, Validators.email])
     })
+    // Google login
     window.addEventListener('authCredential', async (event: any) => {
       try {
-        const token = { credential: event.detail.credential }
+        const token = { clientId: event.detail.clientId, credential: event.detail.credential }
         const body = { token };
-        let data = await this.fetchDataService.httpPost(this.backendUrls.URLs.login, body);
-
-       
+        console.log("BODY IS ",body);
+        let data = await this.fetchDataService.httpPost(this.backendUrls.URLs.loginUrl, body);
 
       } catch (error) {
 
       }
+
     })
   }
 
@@ -65,8 +66,6 @@ export class LoginComponent {
       console.log(this.loginForm);
 
       const data:any = await this.fetchDataService.httpPost(this.backendUrls.URLs.loginUrl, body)
-      console.log(data, "login data");
-      
       this.cookies.set('userToken', data.token)
       this.router.navigate(['/']);
 
@@ -88,6 +87,7 @@ export class LoginComponent {
     }
     catch (error) {
       console.log("Error in Reset Password: ", error);
+      
     }
   }
 

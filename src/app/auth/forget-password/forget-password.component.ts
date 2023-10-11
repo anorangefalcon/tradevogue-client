@@ -26,12 +26,28 @@ export class ForgetPasswordComponent {
     },
     {
       validators: this.passwordMatch
-    })
-  }
-  ngOnInit(){
-    this.token = this.router.url.split('/')[3];
-    console.log("token", this.token);
+    }
+    )
 
+
+
+
+  }
+  async ngOnInit(){
+
+    try {
+      this.token = this.router.url.split('/')[3];
+      
+      const body = {
+        tokenData : this.token
+      }
+      const data = await this.fetchDataService.httpPost(this.backendUrls.URLs.updatePasswordUrl, body);
+  
+    } catch (error) {
+        this.router.navigate(['/']);
+    }
+  
+  
   }
   passwordMatch(control: AbstractControl){
     const password = control.get('password')?.value;

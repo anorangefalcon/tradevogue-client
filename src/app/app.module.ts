@@ -16,7 +16,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { TcComponent } from './tc/tc.component';
 import { CheckoutModule } from './checkout/checkout.module';
 import { ExploreComponent } from './explore/explore.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { HelpPageComponent } from './help-page/help-page.component';
 import { SettingsComponent } from './settings/settings.component';
 import { FormsModule } from '@angular/forms';
@@ -24,6 +24,10 @@ import { NoPageComponent } from './no-page/no-page.component';
 import { BreadcrumbComponent } from './shared/breadcrumb/breadcrumb.component';
 import { ToastComponent } from './toast/toast.component';
 import { CookieService } from 'ngx-cookie-service';
+import { HeadersInterceptor } from './headers.interceptor';
+import { UtilsModule } from './utils/utils.module';
+
+
 
 @NgModule({
   declarations: [
@@ -55,7 +59,9 @@ import { CookieService } from 'ngx-cookie-service';
     HttpClientModule, 
      
   ],
-  providers: [CookieService],
+  providers: [CookieService,
+    {provide: HTTP_INTERCEPTORS, useClass:HeadersInterceptor, multi: true},],
+
   bootstrap: [AppComponent]
 })
 export class AppModule { }

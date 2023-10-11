@@ -52,8 +52,12 @@
    
     
 
- <!-- ADD ADDRESS FORM -->
-    <div class="container addNew d-flex flex-column" *ngIf="display">
+ 
+
+    
+    </section>
+
+    <div class="container addNew d-flex flex-column">
         <h2 class="text-center">Shipping Details</h2>
         <form [formGroup]="DetailsForm">
             <div class="form__group d-flex flex-column width-50">
@@ -158,10 +162,7 @@
 
 
             <div class="SaveDiv">
-            <button class="btn-primary registerbtn">Save</button>
+            <button class="btn-primary registerbtn"  (click)="AddressHandler()">Save</button>
         </div>
         </form>
     </div>
-
-    
-    </section>
