@@ -12,8 +12,8 @@ import { CommonModule } from '@angular/common';
 export class UtilsModule {
 
   URLs:any={
-    signupUrl:'http://localhost:1000/signup',
-    getAddress:'http://localhost:1000/getAddress'
+    signupUrl:'http://localhost:5000/user/signup',
+    getAddress:'http://localhost:5000/user/getAddress'
   }
 
  }

@@ -1,4 +1,4 @@
-import { Component,Renderer2  } from '@angular/core';
+import { Component, Renderer2 } from '@angular/core';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { passwordStrengthValidator, matchPasswordValidator, usernameValidator } from '../validators'; // Adjust the path to the correct location
 import { CookieService } from 'ngx-cookie-service';
@@ -23,25 +23,25 @@ export class SignUpComponent {
   confirmPassword: string = 'password';
   showPassword: boolean = false;
   showPassword2: boolean = false;
-  constructor(private fb: FormBuilder, private cookie: CookieService,private renderer: Renderer2, private userData: UserDataService, private backendURLs: UtilsModule, private fetchDataService: FetchDataService) {
-    
-    window.addEventListener('authCredential', (event: any) => {
-      console.log('G-Event', event.detail);
+  constructor(private fb: FormBuilder, private cookie: CookieService, private renderer: Renderer2, private userData: UserDataService, private backendURLs: UtilsModule, private fetchDataService: FetchDataService) {
+
+    // Google login
+    window.addEventListener('authCredential', async (event: any) => {
+      try {
+        const token = { clientId: event.detail.clientId, credential: event.detail.credential }
+        const body = { token };
+        let data = await this.fetchDataService.httpPost(this.backendURLs.URLs.signupUrl, body);
+
+      } catch (error) {
+
+      }
+
     })
 
 
 
 
-    this.userData.getData().subscribe((data: any) => {
-
-      this.users = data;
-      console.log(this.users);
-    });
-
-
     this.signupForm = fb.group(
-
-
       {
         firstname: fb.control('', [Validators.required]),
         lastname: fb.control('', [Validators.required]),
@@ -55,15 +55,14 @@ export class SignUpComponent {
   }
 
 
-  ngOnInit(): void {
-       // new google auth
-       this.script = this.renderer.createElement('script');
-       this.script.src = 'https://accounts.google.com/gsi/client';
-       this.script.async = true;
-   
-       this.renderer.appendChild(document.body, this.script);
-   
-    
+  ngOnInit() {
+    // new google auth
+    this.script = this.renderer.createElement('script');
+    this.script.src = 'https://accounts.google.com/gsi/client';
+    this.script.async = true;
+    this.renderer.appendChild(document.body, this.script);
+
+
   }
 
 
