@@ -6,18 +6,23 @@ import { SignUpComponent } from './sign-up/sign-up.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
 import { UtilsModule } from '../utils/utils.module';
+import { ForgetPasswordComponent } from './forget-password/forget-password.component';
+import { DialogComponent } from './dialog/dialog.component';
+
 
 @NgModule({
   declarations: [
     LoginComponent,
-    SignUpComponent
+    SignUpComponent,
+    ForgetPasswordComponent,
+    DialogComponent
   ],
   imports: [
     CommonModule,
     AuthRoutingModule,
     ReactiveFormsModule,
     FormsModule,
-    UtilsModule
+    UtilsModule,
   ]
 })
 export class AuthModule { }

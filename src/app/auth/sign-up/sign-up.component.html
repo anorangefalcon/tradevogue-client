@@ -5,42 +5,38 @@
       <div class="header fixed">
         <a routerLink="/"><img src="../../assets/logo.svg" alt="logo"></a>
       </div>
-      
+
       <h2 class="register-title text-center">Hi there!</h2>
 
       <form [formGroup]="signupForm" class="d-flex flex-column gap-15">
 
         <div class="d-flex Name">
-        <div class="form__group relative d-flex flex-column">
-          <label class="form__label">FirstName<span>*</span></label>
-          <span class="material-symbols-outlined form__icon absolute">person</span>
-          <input type="text" id="firstname" formControlName="firstname" placeholder="Enter Your FirstName">
-          
-          <small
-            *ngIf="signupForm.get('firstname')?.hasError('required') && signupForm.get('firstname')?.touched"
-            class="invalid">*FirstName is required.</small>
-            
+          <div class="form__group relative d-flex flex-column">
+            <label class="form__label">FirstName<span>*</span></label>
+            <span class="material-symbols-outlined form__icon absolute">person</span>
+            <input type="text" id="firstname" formControlName="firstname" placeholder="Enter Your FirstName">
+
+            <small *ngIf="signupForm.get('firstname')?.hasError('required') && signupForm.get('firstname')?.touched"
+              class="invalid">*FirstName is required.</small>
+
+          </div>
+          <div class="form__group relative d-flex flex-column">
+            <label class="form__label">LastName<span>*</span></label>
+            <span class="material-symbols-outlined form__icon absolute">person</span>
+            <input type="text" id="lastname" formControlName="lastname" placeholder="Enter Your LastName">
+
+            <small *ngIf="signupForm.get('lastname')?.hasError('required') && signupForm.get('lastname')?.touched"
+              class="invalid">*LastName is required.</small>
+
+          </div>
         </div>
-        <div class="form__group relative d-flex flex-column">
-          <label class="form__label">LastName<span>*</span></label>
-          <span class="material-symbols-outlined form__icon absolute">person</span>
-          <input type="text" id="lastname" formControlName="lastname" placeholder="Enter Your LastName">
-          
-          <small
-            *ngIf="signupForm.get('lastname')?.hasError('required') && signupForm.get('lastname')?.touched"
-            class="invalid">*LastName is required.</small>
-            
-        </div>
-      </div>
 
         <div class="form__group relative d-flex flex-column">
           <label class="form__label">Email<span>*</span></label>
           <span class="material-symbols-outlined form__icon absolute">mail</span>
           <input type="email" id="email" formControlName="email" placeholder="Enter Your Email">
-        
-          <small
-            *ngIf="signupForm.get('email')?.hasError('email') && signupForm.get('email')?.touched"
-            class="invalid">
+
+          <small *ngIf="signupForm.get('email')?.hasError('email') && signupForm.get('email')?.touched" class="invalid">
             *Please enter valid Email.
           </small>
 
@@ -54,9 +50,10 @@
           <label class="form__label">Password<span>*</span></label>
           <span class="material-symbols-outlined key form__icon absolute">key</span>
           <input [type]="password" id="password" formControlName="password" placeholder="Enter Your Password">
-          <button class="eye-btn flex justify-content-center align-items-center" (click)="toggle_password(1)"><span
+          <button class="eye-btn flex justify-content-center align-items-center"
+            (click)="showPassword = !showPassword ; password = showPassword ? 'text' : 'password';"><span
               class="material-symbols-outlined eye">{{showPassword? 'visibility' : 'visibility_off'}}</span></button>
-        
+
 
           <div class="password-helper d-flex justify-content-md-between">
 
@@ -113,28 +110,25 @@
 
         </div>
 
-
-
-
-
-
         <div class="form__group d-flex flex-column relative">
           <label class="form__label">Confirm Password<span>*</span></label>
           <span class="material-symbols-outlined key form__icon absolute">key</span>
           <input [type]="confirmPassword" id="confirmPassword" formControlName="confirmPassword"
             placeholder="Re-enter Your Password">
-          <button class="eye-btn flex justify-content-center align-items-center" (click)="toggle_password(2)"><span
+          <button class="eye-btn flex justify-content-center align-items-center"
+            (click)="showPassword2 = !showPassword2;  confirmPassword = showPassword2 ? 'text' : 'password';"><span
               class="material-symbols-outlined eye">{{showPassword2? 'visibility' : 'visibility_off'}}</span></button>
 
 
-          <small *ngIf="!signupForm.get('confirmPassword')?.hasError('required') && signupForm?.get('confirmPassword')?.invalid && signupForm.get('confirmPassword')?.touched"
+          <small
+            *ngIf="!signupForm.get('confirmPassword')?.hasError('required') && signupForm?.get('confirmPassword')?.invalid && signupForm.get('confirmPassword')?.touched"
             class="invalid">
             *Your passwords and confirm password do not match.
           </small>
 
         </div>
 
-    
+
 
         <button class="btn-primary registerbtn" [disabled]="signupForm.invalid" (click)="onSubmit()">Register</button>
         <p class="text-center acc-text">Already have an account?

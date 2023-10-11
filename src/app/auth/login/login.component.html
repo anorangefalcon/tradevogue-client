@@ -1,20 +1,27 @@
 <section class="login d-flex">
     <div class="column left-column d-flex justify-content-center align-item-center ">
-        <div class="form-container d-flex flex-column relative">
+        <div class="form-container d-flex flex-column relative" *ngIf="showPasswordForm==false">
             <div class="header fixed">
                 <a routerLink="/"><img src="../../assets/logo.svg" alt="logo"></a>
-              </div>
+            </div>
             <h2 class="login-title text-center">Welcome Back</h2>
             <form [formGroup]="loginForm" class="mw100 d-flex flex-column gap-15">
 
                 <!-- USERNAME INPUT  -->
                 <div class="form__group relative d-flex flex-column">
-                    <label class="form__label">Username<span>*</span></label>
+                    <label class="form__label">Email<span>*</span></label>
                     <span class="material-symbols-outlined person form__icon absolute">person</span>
-                    <input type="text" placeholder="Enter Your Username" formControlName="username">
-                    <small
+                    <input type="text" placeholder="Enter Your Username" formControlName="email">
+                    <!-- <small
                         *ngIf="isFormSubmitted && loginForm?.get('username')?.hasError('invalidUsername') && !loginForm?.get('username')?.hasError('required') && loginForm?.get('username')?.touched"
-                        class="invalid">*Please enter valid username.</small>
+                        class="invalid">*Please enter valid email.
+                    </small> -->
+
+                    <small *ngIf="loginForm.get('email')?.hasError('email') && loginForm.get('email')?.touched"
+                        class="invalid">
+                        *Please enter valid Email.
+                    </small>
+
                 </div>
 
                 <!-- PASSWORD INPUT  -->
@@ -30,17 +37,55 @@
                         <span class="material-symbols-outlined eye">{{ showPassword ? 'visibility' : 'visibility_off'
                             }}</span>
                     </button>
-                    <small *ngIf="isFormSubmitted && loginForm?.get('password')?.hasError('password-fail') && !loginForm?.get('password')?.hasError('required') && loginForm?.get('password')?.touched"
-                            class="invalid">*Please enter valid password.
+                    <small
+                        *ngIf="loginForm?.get('password')?.errors && loginForm?.get('password')?.touched && !loginForm.get('password')?.hasError('required')"
+                        class="invalid">*Please enter valid password.
                     </small>
                 </div>
 
-                <a class="forgot-pass" href="#">Forgot password?</a>
-                <button class="btn-primary loginbtn" (click)="onLogin()">Login</button>
+                <div class="forgot-pass">
+                    <a class="pointer sign-up-text" (click)="showPasswordForm=true">Forgot password?</a>
+                </div>
+                <button class="btn-primary loginbtn" [disabled]="loginForm.invalid" (click)="onLogin()">Login</button>
+                <div class="d-flex justify-content-center">
+                    <div id="g_id_onload"
+                        data-client_id="772184715446-gek74bjj4p973rl3jtcbhmmrtsdp2dsl.apps.googleusercontent.com"
+                        data-context="signin" data-ux_mode="popup" data-callback="googleAuthCallback"
+                        data-auto_prompt="false">
+                    </div>
+
+                    <div class="g_id_signin" data-type="standard" data-shape="rectangular" data-theme="outline"
+                        data-text="signin_with" data-size="large" data-logo_alignment="left">
+                    </div>
+                </div>
                 <p class="text-center acc-text">Don't have an account? <a class="sign-up-text"
                         [routerLink]="['/auth/signup']">Sign up</a></p>
             </form>
         </div>
+        <div class="form-container d-flex flex-column relative" *ngIf="showPasswordForm==true">
+            <div class="header fixed">
+                <a routerLink="/"><img src="../../assets/logo.svg" alt="logo"></a>
+            </div>
+            <h2 class="login-title text-center">Forgot Password</h2>
+            <form [formGroup]="forgetPasswordForm" class="mw100 d-flex flex-column gap-15">
+                <div class="form__group relative d-flex flex-column">
+                    <label class="form__label">Email<span>*</span></label>
+                    <span class="material-symbols-outlined person form__icon absolute">mail</span>
+                    <input type="text" placeholder="Enter Your Email" formControlName="passwordEmail">
+                    <small
+                        *ngIf="forgetPasswordForm.get('passwordEmail')?.hasError('email') && forgetPasswordForm.get('passwordEmail')?.touched"
+                        class="invalid">
+                        *Please enter valid Email.
+                    </small>
+                </div>
+                <a class="forgot-pass pointer" (click)="showPasswordForm=false">Go Back</a>
+                <button class="btn-primary loginbtn" [disabled]="forgetPasswordForm.invalid"
+                    (click)="onResetPassword();">Reset Password</button>
+            </form>
+        </div>
+        <app-dialog *ngIf="isactive" [type]="'confirmation'"
+            [ngStyle]="{'display': isactive ? 'flex': 'none'}"></app-dialog>
     </div>
+    {{isactive}}
     <div class="column right-column"></div>
 </section>

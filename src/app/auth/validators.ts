@@ -5,17 +5,16 @@ import { FormControl,FormGroup } from '@angular/forms';
 // PASSWORD VALIDATORS
 export function passwordStrengthValidator(control: FormControl): { [key: string]: boolean } | null {
     const value: string = control.value || '';
+
     if(value=='') return null;
     
     let errors :any={}; 
   
 
+
     if (!/[a-z]/.test(value)) {
-      errors['lowercase'] = true;
-     
-     
-     
-    }
+      errors['lowercase'] = true;  
+      }
 
     if (!/[A-Z]/.test(value)) {
       errors['uppercase'] = true;

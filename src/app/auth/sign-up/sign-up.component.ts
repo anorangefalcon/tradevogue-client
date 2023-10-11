@@ -28,7 +28,7 @@ export class SignUpComponent {
     // Google login
     window.addEventListener('authCredential', async (event: any) => {
       try {
-        const token = { clientId: event.detail.clientId, credential: event.detail.credential }
+        const token = { credential: event.detail.credential }
         const body = { token };
         let data = await this.fetchDataService.httpPost(this.backendURLs.URLs.signupUrl, body);
 
@@ -71,7 +71,6 @@ export class SignUpComponent {
 
   // ON SUBMIT METHOD
   async onSubmit() {
-    if (this.signupForm.invalid) return;
     try {
       const body = {
         name: { firstname: this.signupForm.get('firstname')?.value, lastname: this.signupForm.get('lastname')?.value },
@@ -80,28 +79,11 @@ export class SignUpComponent {
       }
 
       let data = await this.fetchDataService.httpPost(this.backendURLs.URLs.signupUrl, body);
-    }
 
+    }
     catch (error) {
 
     }
-
-
-
-
-  }
-
-
-  toggle_password(el: any) {
-    if (el == 'Password') {
-      this.showPassword = !this.showPassword;
-      this.password = this.showPassword ? 'text' : 'password';
-    }
-    else {
-      this.showPassword2 = !this.showPassword2;
-      this.confirmPassword = this.showPassword2 ? 'text' : 'password';
-    }
-
   }
 
 }

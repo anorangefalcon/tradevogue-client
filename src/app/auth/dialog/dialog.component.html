@@ -1,0 +1,9 @@
+<div class="popup dialogBox fixed mw100 mh100 flex-center inset-inline-start-0 inset-block-start-0" open>
+    
+    <div class="dialog__content d-flex flex-column gap-15
+    " #dialogBox onClick>
+        <h3>Mail Sent Successfully</h3>
+        <p>We have successfully sent the mail to you which includes a link to change your password that will expire after 3 minutes.</p>
+        <button #popupclose (click)="closeDialog()" >Close</button>
+    </div>
+</div>

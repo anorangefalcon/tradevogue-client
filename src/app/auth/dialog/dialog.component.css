@@ -1,0 +1,11 @@
+.popup{
+    display: flex;
+    /* visibility: visible; */
+    /* opacity: 1; */
+}
+.dialog__content {
+    & h3 {
+        font-size: 28px !important;
+        color: rgb(var(--primaryClr));
+    }
+}

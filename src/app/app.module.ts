@@ -23,8 +23,7 @@ import { FormsModule } from '@angular/forms';
 import { NoPageComponent } from './no-page/no-page.component';
 import { BreadcrumbComponent } from './shared/breadcrumb/breadcrumb.component';
 import { ToastComponent } from './toast/toast.component';
-import { UtilsModule } from './utils/utils.module';
-
+import { CookieService } from 'ngx-cookie-service';
 
 @NgModule({
   declarations: [
@@ -37,13 +36,10 @@ import { UtilsModule } from './utils/utils.module';
     NoPageComponent,
     BreadcrumbComponent,
     ToastComponent,
-
-   
   ],
   imports: [
     BrowserModule,
     CommonModule,
-    
     NgxPaginationModule,
     BrowserAnimationsModule,
     AppRoutingModule,
@@ -59,7 +55,7 @@ import { UtilsModule } from './utils/utils.module';
     HttpClientModule, 
      
   ],
-  providers: [],
+  providers: [CookieService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

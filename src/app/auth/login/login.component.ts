@@ -1,9 +1,12 @@
-import { Component } from '@angular/core';
+import { Component, Renderer2 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { passwordStrengthValidator, usernameValidator} from './validators';
+import { passwordStrengthValidator } from '../validators';
 import { CookieService } from 'ngx-cookie-service';
-import { Router , ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { UserDataService } from '../user-data.service';
+import { UtilsModule } from 'src/app/utils/utils.module';
+import { FetchDataService } from 'src/app/shared/services/fetch-data.service';
+
 
 @Component({
   selector: 'app-login',
@@ -12,68 +15,84 @@ import { UserDataService } from '../user-data.service';
 })
 export class LoginComponent {
 
-  loginForm : FormGroup;
+
+  loginForm: FormGroup;
+  forgetPasswordForm: FormGroup;
   passwordFieldType: string = 'password';
   showPassword: boolean = false;
-  isFormSubmitted: boolean = false;
+  showPasswordForm: boolean = false;
+  isactive: boolean = false;
+  script: any;
 
-  constructor(private fb:FormBuilder , private cookies :  CookieService , private router : Router , private userData : UserDataService, private route: ActivatedRoute){
+  constructor(private fb: FormBuilder, private cookies: CookieService, private router: Router, private userData: UserDataService, private route: ActivatedRoute, private backendUrls: UtilsModule, private fetchDataService: FetchDataService, private renderer: Renderer2) {
     this.loginForm = fb.group(
       {
-        username: fb.control('', [Validators.required, usernameValidator]), 
+        email: fb.control('', [Validators.required, Validators.email]),
         password: fb.control('', [Validators.required, passwordStrengthValidator])
       }
     )
+
+    this.forgetPasswordForm = fb.group({
+      passwordEmail: fb.control('', [Validators.required, Validators.email])
+    })
+    window.addEventListener('authCredential', async (event: any) => {
+      try {
+        const token = { credential: event.detail.credential }
+        const body = { token };
+        let data = await this.fetchDataService.httpPost(this.backendUrls.URLs.login, body);
+
+       
+
+      } catch (error) {
+
+      }
+    })
   }
 
+  ngOnInit() {
+    this.script = this.renderer.createElement('script');
+    this.script.src = 'https://accounts.google.com/gsi/client';
+    this.script.async = true;
 
-onLogin() {
-  this.isFormSubmitted = !this.isFormSubmitted;
-  const username = this.loginForm.get('username')?.value;
-  const password = this.loginForm.get('password')?.value;
-  console.log(this.loginForm);
-  
-  
-  this.userData.login(username, password).subscribe((isLoggedIn: boolean) => {
-    if (isLoggedIn) {
-      const user = { username: username, password: password };
-      this.cookies.set("loginDetails", JSON.stringify(user));
-
-      const returnUrl = this.route.snapshot.queryParamMap.get('returnUrl');
-      
-      if (returnUrl) {
-        this.router.navigateByUrl(returnUrl).then(() => {
-        window.location.reload();
-      });
-      } else {
-        this.router.navigate(['/']);
+    this.renderer.appendChild(document.body, this.script);
+  }
+  async onLogin() {
+    try {
+      const body = {
+        email: this.loginForm.get('email')?.value,
+        password: this.loginForm.get('password')?.value
       }
+      console.log(this.loginForm);
+
+      const data:any = await this.fetchDataService.httpPost(this.backendUrls.URLs.loginUrl, body)
+      console.log(data, "login data");
+      
+      this.cookies.set('userToken', data.token)
+      this.router.navigate(['/']);
+
     }
-  });
-}
+    catch (error) {
+      console.log("Error in Logging In: ", error);
+    }
+  }
 
+  async onResetPassword() {
+    try {
+      const body = {
+        email: this.forgetPasswordForm.get('passwordEmail')?.value
+      }
+      const data = await this.fetchDataService.httpPost(this.backendUrls.URLs.forgetPasswordUrl, body);
+      console.log(data, "forget password data");
+      this.isactive = true;
 
-
-
-  // onLogin(){
-    // this.isFormSubmitted = !this.isFormSubmitted;
-  //   if(this.isFormSubmitted){
-  //      if(this.loginForm.valid) {
-  //           this.cookies.set("loginDetails",JSON.stringify(this.loginForm.value));
-  //           console.log("loginDetails",this.loginForm.value);
-  //           this.router.navigate(['/']);
-  //      }
-  //   }
-  //   console.log("hello");
-  //   const data = this.loginForm;
-  //   console.log(data);
-  // }
+    }
+    catch (error) {
+      console.log("Error in Reset Password: ", error);
+    }
+  }
 
   togglePasswordVisibility() {
     this.showPassword = !this.showPassword;
     this.passwordFieldType = this.showPassword ? 'text' : 'password';
-
-    
-}
-
+  }
 }
