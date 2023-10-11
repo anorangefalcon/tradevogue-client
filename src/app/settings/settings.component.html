@@ -32,7 +32,7 @@
                         <span class="nav-txt">Addresses</span>
                     </a></li>
 
-                    <li class="nav-links"><a href="#">
+                    <li class="nav-links"   (click)="changeComponent('changePassword')"><a>
                         <!-- <span class="nav-icons material-symbols-outlined">
                             logout
                         </span> -->
@@ -53,9 +53,9 @@
 
                 </h2>
 
-                <span class="material-symbols-outlined edit-btn" *ngIf="isReadOnly" (click)="editClick()">
+                <!-- <span class="material-symbols-outlined edit-btn" *ngIf="isReadOnly" (click)="editClick()">
                     edit
-                </span>
+                </span> -->
 
                 <button class="btn-primary saveBtn" *ngIf="!isReadOnly" (click)="editClick()" #myButton>Save</button>
 
@@ -138,7 +138,7 @@
 
 
 
-
+            <button class="btn-primary width-160">Edit Details</button>
 
         </div>
 
@@ -273,7 +273,68 @@
         </div>
 
 
+        <!--  CAHNGE PASSWORD -->
 
+        <div class="changePassword"  *ngIf="showData=='changePassword'">
+            
+            <div class="common">
+                <h2>
+
+                    Change Password
+
+
+
+                </h2>
+
+                <!-- <span class="material-symbols-outlined edit-btn" *ngIf="isReadOnly" (click)="editClick()">
+                    edit
+                </span> -->
+
+                <!-- <button class="btn-primary saveBtn" *ngIf="!isReadOnly" (click)="editClick()" #myButton>Save</button> -->
+
+            </div>
+            <form [formGroup]="signupForm" class="d-flex flex-column">
+
+
+
+                <div class="form__group relative d-flex flex-column">
+                    <label class="form__label">change Password<span>*</span></label>
+                    <span class="material-symbols-outlined form__icon absolute">person</span>
+                    <input type="text" id="name" formControlName="username" placeholder="Enter Your Name">
+            
+                </div>
+            
+            
+            
+            
+            
+            
+                <div class="form__group relative d-flex flex-column">
+                    <label class="form__label">New Password<span>*</span></label>
+            
+                    <span class="material-symbols-outlined form__icon absolute">mail</span>
+                    <input type="text" id="email" formControlName="email" placeholder="Enter Your Email">
+            
+                </div>
+            
+            
+                <div class="form__group relative d-flex flex-column">
+                    <label class="form__label">Confirm Password<span>*</span></label>
+                    <span class="material-symbols-outlined form__icon absolute">call</span>
+                    <input type="text" id="mobileNo" formControlName="mobileNo" placeholder="Enter Your MobileNo">
+            
+                </div>
+            
+            
+            
+            
+            </form>
+
+
+            <button class="btn-primary width-160">Save</button>
+        </div>
+      
+        
 
 
 
@@ -284,73 +345,6 @@
 
 
     
-    <!-- <form [formGroup]="signupForm" class="d-flex gap-15 disableInput"
-    [ngClass]="isReadOnly === true ? 'disableInput' : 'enableInput'">
-    <div class="form__group relative d-flex flex-column">
-        <label class="form__label">NAME<span>*</span></label>
-        <span class="material-symbols-outlined form__icon absolute">person</span>
-        <input type="text" id="name" formControlName="username" placeholder="Enter Your Name">
-
-    </div>
-
-
-
-
-
-
-    <div class="form__group relative d-flex flex-column">
-        <label class="form__label">EMAIL<span>*</span></label>
-
-        <span class="material-symbols-outlined form__icon absolute">mail</span>
-        <input type="text" id="email" formControlName="email" placeholder="Enter Your Email">
-
-    </div>
-
-
-    <div class="form__group relative d-flex flex-column">
-        <label class="form__label">MOBILENO<span>*</span></label>
-        <span class="material-symbols-outlined form__icon absolute">call</span>
-        <input type="text" id="mobileNo" formControlName="mobileNo" placeholder="Enter Your MobileNo">
-
-    </div>
-
-
-    <div class="form__group relative d-flex flex-column">
-        <label class="form__label">GENDER<span>*</span></label>
-        <div class="radios">
-            <div class="genders">
-                <div class="radiocustom">
-                    <input class="mradio" type="radio" id="male" name="gender" value="Male">
-                    <label for="male"></label>
-                    <span>Male</span>
-                </div>
-                <div class="radiocustom">
-                    <input class="mradio" type="radio" id="female" name="gender" value="Female">
-                    <label for="female"></label>
-                    <span>Female</span>
-                </div>
-            </div>
-        </div>
-
-    </div>
-
-
-    <div class="form__group relative d-flex flex-column">
-        <label class="form__label">DOB<span>*</span></label>
-        <span class="material-symbols-outlined form__icon absolute">person</span>
-        <input type="date" id="dob" formControlName="dob" placeholder="Enter Your Username">
-
-    </div>
-
-    <div class="form__group relative d-flex flex-column">
-        <label class="form__label">ADDRESS<span>*</span></label>
-        <span class="material-symbols-outlined form__icon absolute">home</span>
-        <input type="text" id="address" formControlName="address" placeholder="Enter Your Address">
-
-    </div>
-
-
-</form> -->
 
 
 
