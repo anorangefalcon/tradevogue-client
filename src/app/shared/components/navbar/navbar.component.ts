@@ -1,6 +1,7 @@
 import { Component, HostListener, OnInit } from '@angular/core';
 import { CartService } from '../../services/cart.service';
 import { CookieService } from 'ngx-cookie-service';
+import { FetchDataService } from '../../services/fetch-data.service';
 
 @Component({
   selector: 'app-navbar',
@@ -16,13 +17,16 @@ export class NavbarComponent implements OnInit {
   cartArr: any[] = [];
   navbar_scroll_style: boolean = false;
 
-  constructor(private cartService: CartService , private cookie : CookieService) {
+  constructor(private cartService: CartService , private cookie : CookieService,private fetchDataService:FetchDataService) {
     const storedLoginDetails = this.cookie.get('loginDetails');
     if (storedLoginDetails) {
       this.isUserLogin = true;
       const storedLoginDetailsObj = JSON.parse(storedLoginDetails);
       this.purchaser = storedLoginDetailsObj.username;
     }
+
+    
+
    }
 
   ngOnInit() {

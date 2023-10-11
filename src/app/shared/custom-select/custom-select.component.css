@@ -5,7 +5,7 @@
 }
 
 #selected__container{
-    min-width: 160px;
+    /* min-width: 160px; */
     width: 100%;
     font-weight: 500;
     font-size: 13px;
@@ -13,10 +13,8 @@
     padding-block: 0px;
     border-radius: 5px;
     cursor:default;
-    background-color: #fff;
-    border: 1px solid #00000020;
-    overflow: hidden;
-
+    background-color: rbga(var(--whiteClr));
+/* 
     & input{
         padding-inline: 16px 35px;
         border: none;
@@ -24,17 +22,22 @@
         font-weight: 500;
         width: 100%;
         height: 100%;
-        outline: none;
-    }
+        outline: 1px solid rgb(var(--primary));
+    } */
 
-
-
-    & .arrow_icon{
+    &::after{
+        content: "\e5c5";
+        position: absolute;
         inset-block-start: 0%;
         inset-inline-end: 0%;
+        font-family: 'Material Symbols Outlined';
+        display: flex;
+        align-items: center;
+        justify-content: center;
         height: 100%;
         width: 35px;
         transition: transform ease-in-out 0.3s;
+        font-size: 20px;
     }
 
     & .clear_icon{
@@ -77,18 +80,13 @@
     }
 }
 
-input:focus{
-    border-color: rgb(var(--textClr), 0.2);
-}
-
-
 #options__container.active{
     max-height: 180px;
     visibility: visible;
     opacity: 1;
 }
 
-#options__container.active ~ #selected__container .arrow_icon{
+#options__container.active ~ #selected__container::after{
     transform: rotate(-180deg);
 }
 
@@ -98,7 +96,8 @@ input:focus{
     transition: all 0.3s ease;
 
     &:hover{
-        background-color: #f2f2f2;
+        background-color: rgb(var(--primaryClr));
+        color: white;
     }
     & input:checked + label{
         background-color: rgb(242, 242, 242);
@@ -114,6 +113,10 @@ input:focus{
         width: 100%;
         cursor: pointer;
         text-wrap: nowrap;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+
     }
 }
 
@@ -126,37 +129,29 @@ input:focus{
 
 .checkbox__options{
 
-    & label {
-        padding-inline: 0px !important;
-    }
-
     & input[type="checkbox"] {
         display: none;
     }
 
-    & input[type="checkbox"] + label {
-        width: 50px !important;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-
-    & .material-symbols-outlined {
+    & input[type="checkbox"] + label::before {
+        content: '\e5ca';
+        font-family: "Material Symbols Outlined";
+        width: 15px;
+        height: 15px;
         display: flex;
         cursor: pointer;
         justify-content: center;
         align-items: center;
+        border: 1px solid rgba(128, 128, 128, 0.264);
+        border-radius: 3px;
+        color: white;
         font-size: 16px;
         font-weight: 400;
-        color: white;
-        width: 15px;
-        height: 15px;
-        border-radius: 3px;
-        border: 1px solid rgba(128, 128, 128, 0.264);
+
     }
 
-    & input[type="checkbox"]:checked+label .material-symbols-outlined {
-        background-color: rgb(var(--accent));
-        border-color: rgb(var(--accent));
+    & input[type="checkbox"]:checked + label::before {
+        background-color: rgb(var(--primaryClr));
+        border: 1px solid rgb(var(--primaryClr));
     }
 }

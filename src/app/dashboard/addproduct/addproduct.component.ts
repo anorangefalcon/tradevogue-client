@@ -1,4 +1,4 @@
-import { Component, ElementRef, HostListener, Renderer2, asNativeElements } from '@angular/core';
+import { Component, ElementRef, HostListener, Renderer2, ViewEncapsulation, asNativeElements } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ImageUploadService } from 'src/app/shared/services/image-upload.service';
 import { imageSizeValidator, invalidformat } from 'src/app/shared/validators/imageValidators.validator';
@@ -7,7 +7,9 @@ import { ToastService } from 'src/app/shared/services/toast.service';
 @Component({
   selector: 'app-addproduct',
   templateUrl: './addproduct.component.html',
-  styleUrls: ['./addproduct.component.css']
+  styleUrls: ['./addproduct.component.css'],
+  encapsulation: ViewEncapsulation.None
+
 })
 export class AddproductComponent {
   isSubmitted: boolean = false;

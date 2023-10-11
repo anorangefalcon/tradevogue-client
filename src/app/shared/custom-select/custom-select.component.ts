@@ -1,11 +1,13 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ViewEncapsulation } from '@angular/core';
 import { ElementRef, HostListener,  } from '@angular/core';
 
 
 @Component({
   selector: 'app-custom-select',
   templateUrl: './custom-select.component.html',
-  styleUrls: ['./custom-select.component.css']
+  styleUrls: ['./custom-select.component.css'],
+  encapsulation: ViewEncapsulation.None
+
 })
 export class CustomSelectComponent {
   @Input () options: any[] = [];

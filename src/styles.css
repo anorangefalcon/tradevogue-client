@@ -9,25 +9,6 @@
     box-sizing: border-box;
 }
 
-@font-face {
-    font-family: 'Apercu Movistar';
-    src: url('../src/assets/Fonts/apercu-movistar-cdnfonts/apercumovistarbold.ttf');
-}
-
-@font-face {
-    font-family: 'Comfortaa';
-    src: url('../src/assets/Fonts/Comfortaa/Comfortaa-VariableFont_wght.ttf');
-}
-
-@font-face {
-    font-family: 'Montserrat';
-    src: url('../src/assets/Fonts/Montserrat/Montserrat-VariableFont_wght.ttf');
-}
-
-@font-face {
-    font-family: 'Montserrat Italic';
-    src: url('../src/assets/Fonts/Montserrat/Montserrat-Italic-VariableFont_wght.ttf');
-}
 
 /* Remove default margin */
 body,
@@ -582,11 +563,11 @@ ul {
     backdrop-filter: blur(2px);
     & .dialog__content{
         background-color: rgb(var(--whiteClr));
-        width: 40%;
+        max-width: 420px;
         min-height: 240px;
         border-radius: 5px;
         box-shadow: 0px 0px 10px rgb(var(--blackClr), 0.1);
-        padding: 15px;
+        padding: 30px;
         text-align: center;
 
     }

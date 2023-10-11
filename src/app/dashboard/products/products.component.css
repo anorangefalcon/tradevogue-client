@@ -74,17 +74,6 @@
         }
     }
 
-    & .filters {
-        /* min-width: 40%; */
-        & .search-bar{
-            min-width: 40%;
-        }
-
-        & .options{
-            max-width: 24%;
-        }
-    }
-
     & .row-2 {
         background-color: rgb(var(--whiteClr));
         border: 1px solid rgba(var(--blackClr), 0.1);

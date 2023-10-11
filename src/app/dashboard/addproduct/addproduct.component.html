@@ -64,7 +64,7 @@
                                         <div class="form__group color_picker d-flex align-item-center">
                                             <label for="colors" class="input__label">Colors<span class="important">*</span></label>
     
-                                            <span class="form__input" *ngFor="let c of common_colors; let x=index">
+                                            <span class="form__radio__input" *ngFor="let c of common_colors; let x=index">
                                                 <input type="radio" name="color" [id]="'color_'+i+x" style="display: none;" [value]="c" formControlName="color" />
                                                 <label class="input__label pointer d-flex flex-center" [for]="'color_'+i+x" [style]="'background-color:'+c" ></label>
                                             </span>
@@ -133,12 +133,12 @@
                     </div>
                 </div>
                 <div *ngSwitchDefault>
-                    <div formGroupName="basicinfo" class="form-1 row-2 add_product d-flex gap-30">
+                    <div formGroupName="basicinfo" class="form-1 row-2 add_product d-flex gap-20">
                         <div class="col col-1">
                             <div class="form__group">
                                 <label for="name" class="input__label">Product Name<span
                                         class="important">*</span></label>
-                                <input type="text" id="name" placeholder="Name" #productName formControlName="name">
+                                <input type="text" class="form__input" id="name" placeholder="Name" #productName formControlName="name">
 
                                 <span class="error d-flex gap-20 flex-wrap"
                                     *ngIf="productSubForm('name')?.invalid && (productSubForm('name')?.dirty || productSubForm('name')?.touched)">
@@ -151,7 +151,7 @@
                             <div class="form__group">
                                 <label for="code" class="input__label">Product Code<span
                                         class="important">*</span></label>
-                                <input type="text" id="code" placeholder="Product Code" formControlName="code">
+                                <input type="text" class="form__input" id="code" placeholder="Product Code" formControlName="code">
 
                                 <span class="error d-flex flex-wrap"
                                     *ngIf="productSubForm('code')?.invalid && (productSubForm('code')?.dirty || productSubForm('code')?.touched)">
@@ -162,7 +162,7 @@
                             <div class="form__group">
                                 <label for="subtitle" class="input__label">Subtitle<span
                                         class="important">*</span></label>
-                                <input type="text" id="subtitle" placeholder="Sub Title" formControlName="subtitle" />
+                                <input type="text" class="form__input" id="subtitle" placeholder="Sub Title" formControlName="subtitle" />
 
                                 <span class="error d-flex flex-wrap"
                                     *ngIf="productSubForm('subtitle')?.invalid && (productSubForm('subtitle')?.dirty || productSubForm('subtitle')?.touched)">
@@ -173,7 +173,7 @@
                             <div class="form__group">
                                 <label for="description" class="input__label">Product Description <span
                                         class="important">*</span></label>
-                                <textarea id="description" placeholder="Product Details..." cols="30" rows="9"
+                                <textarea  class="form__input form__textarea" id="description" placeholder="Product Details..." cols="30" rows="9"
                                     formControlName="description" maxlength="800"
                                     (input)="letterCounter($event, 800)"></textarea>
                                 <small class="note d-flex justify-content-md-between align-item-center">
@@ -259,7 +259,7 @@
                                 <div class="form__group">
                                     <label for="price" class="input__label">Actual Price<span
                                             class="important">*</span></label>
-                                    <input type="number" placeholder="Actual Price" id="price"
+                                    <input type="number" class="form__input" placeholder="Actual Price" id="price"
                                         formControlName="actualprice" required
                                         onKeyPress="if(this.value.length == 7) return false;" />
 
@@ -286,7 +286,7 @@
                                 <div class="form__group">
                                     <label for="materialType" class="input__label">Material Type<span
                                             class="important">*</span></label>
-                                    <input type="text" placeholder="Material Type" id="materialType"
+                                    <input type="text" class="form__input" placeholder="Material Type" id="materialType"
                                         formControlName="materialType" required />
                                     <span class="error"
                                         *ngIf="productSubForm('materialType')?.invalid && (productSubForm('materialType')?.dirty || productSubForm('materialType')?.touched)">
@@ -298,7 +298,7 @@
                                 <div class="form__group">
                                     <label for="itemWeight" class="input__label">Item Weight<span
                                             class="important">*</span></label>
-                                    <input type="number" placeholder="Weight in gms" id="itemWeight"
+                                    <input type="number" class="form__input" placeholder="Weight in gms" id="itemWeight"
                                         formControlName="weight" required />
                                     <span class="error"
                                         *ngIf="productSubForm('weight')?.invalid && (productSubForm('weight')?.dirty || productSubForm('weight')?.touched)">

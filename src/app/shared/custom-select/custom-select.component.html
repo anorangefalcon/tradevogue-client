@@ -1,36 +1,44 @@
-<div [ngSwitch]="type">
-
-  <div *ngSwitchCase="'searchSelect'" onClick>
-    <div class="custom-select d-flex flex-column flex-order">
-      <ul id="options__container" role="listbox" [class.active]="isactive == true">
-        <li class="disabled__option">
+<div class="custom-select d-flex flex-column flex-order" onClick [ngSwitch]="type">
+  <ul id="options__container" role="listbox" [class.active]="isactive == true">
+    <!-- <li class="disabled__option">
           <label for="empty">{{selectedOption}}</label>
-        </li>
+        </li> -->
+    <!-- <ng-container  *ngSwitchCase="'searchSelect'" >
         <li role="option" *ngFor="let option of options | productFilter: filter; let i=index" tabindex="{{i+2}}"
           (change)="updateSelected(option)">
           <input type="radio" name="options" [id]="option" />
           <label [for]="option">{{option}}</label>
         </li>
-      </ul>
-      <div id="selected__container" class="relative">
-        <input type="search" class="selected__text" (input)="filterData($event)" [value]="selected"
-          [placeholder]="selectedOption">
-        <span (click)="isactive = !isactive"
-          class="absolute d-flex flex-center arrow_icon material-symbols-outlined">arrow_drop_down</span>
-      </div>
+      </ng-container> -->
+    <ng-container>
+      <li class="checkbox__options" role="option" *ngFor="let option of options; let i=index" tabindex="{{i+2}}"
+        (change)="updateMutliSelected($event)">
+        <input type="checkbox" [value]="option" name="options" [id]="option" *ngSwitchCase="'multiSelect'" />
+        <label [for]="option">{{option}}</label>
+      </li>
+    </ng-container>
+    <ng-container *ngSwitchDefault>
+      <li role="option" *ngFor="let option of options | productFilter: filter; let i=index" tabindex="{{i+2}}"
+        (change)="updateSelected(option)">
+        <input type="radio" name="options" [id]="option" />
+        <label [for]="option">{{option}}</label>
+      </li>
+    </ng-container>
+  </ul>
+  <div id="selected__container" class="relative" (click)="isactive = !isactive">
+    <input type="search" class="form__input" readonly (input)="filterData($event)" [value]="selected"
+      [placeholder]="selectedOption">
     </div>
-  </div>
+</div>
 
-  <!-- Multi Select Option -->
-  <div *ngSwitchCase="'multiSelect'" onClick>
-    <div class="custom-select d-flex flex-column flex-order" tabindex="0">
+
+<!-- Multi Select Option -->
+<!-- <div class="custom-select d-flex flex-column flex-order" *ngSwitchCase="'multiSelect'" onClick tabindex="0">
       <ul id="options__container" role="listbox" [class.active]="isactive == true">
         <li class="disabled__option">
           <label for="empty">{{selectedOption}}</label>
         </li>
-        <!-- <li >
-          <input type="search" placeholder="Search ...." (input)="filterData($event)" id="search">
-        </li> -->
+     
         <li class="checkbox__options" role="option" *ngFor="let option of options; let i=index" tabindex="{{i+2}}"
           (change)="updateMutliSelected($event)">
           <input type="checkbox" [value]="option" name="options" [id]="option" />
@@ -43,11 +51,8 @@
         <span class="absolute d-flex flex-center arrow_icon material-symbols-outlined">arrow_drop_down</span>
       </div>
     </div>
-  </div>
 
-
-  <div *ngSwitchDefault>
-    <div class="custom-select d-flex flex-column flex-order" onClick>
+    <div *ngSwitchDefault class="custom-select d-flex flex-column flex-order" onClick>
       <ul id="options__container" role="listbox" [class.active]="isactive == true">
         <li class="disabled__option">
           <label for="empty">{{selectedOption}}</label>
@@ -63,6 +68,4 @@
           [value]="selected" [placeholder]="selectedOption" readonly>
         <span class="absolute d-flex flex-center arrow_icon material-symbols-outlined">arrow_drop_down</span>
       </div>
-    </div>
-  </div>
-</div>
+    </div> -->
