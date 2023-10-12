@@ -2,8 +2,8 @@
     <nav class="navbar container d-flex align-item-center justify-content-md-between relative">
         <div class="branding d-flex gap-10 align-item-center">
 
-            <div [ngClass]="hamburgerOpen ? 'dropdown-active' : ''"  class="dropdown pointer"
-            (click)="hamburgerOpen = !hamburgerOpen">
+            <div [ngClass]="hamburgerOpen ? 'dropdown-active' : ''" class="dropdown pointer"
+                (click)="hamburgerOpen = !hamburgerOpen">
                 <span></span>
                 <span></span>
                 <span></span>
@@ -43,14 +43,15 @@
             </li>
         </ul>
         <ul class="navbar-features d-flex align-item-center gap-20 m-gap-15 s-gap-10">
-            
+
             <div class="search" [ngClass]="isSearching ? 'search-mobile' : ''">
                 <span (click)="isSearching = false" class="back material-symbols-outlined pointer">
                     keyboard_backspace
                 </span>
                 <app-search-bar (click)="hamburgerOpen = false" class="search-bar"></app-search-bar>
             </div>
-            <span (click)="isSearching = !isSearching; hamburgerOpen = false" class="search-icon-mobile material-symbols-outlined">
+            <span (click)="isSearching = !isSearching; hamburgerOpen = false"
+                class="search-icon-mobile material-symbols-outlined">
                 search
             </span>
             <!-- <li>
@@ -136,19 +137,21 @@
 
                     <li *ngIf="isUserLogin" class="sub-links">
                         <div class="header">
-                            <div class="d-flex justify-content-md-between align-item-center border" style="margin-bottom: 10px">
+                            <div class="d-flex justify-content-md-between align-item-center border"
+                                style="margin-bottom: 10px">
                                 <h4>Welcome {{purchaser}}</h4>
                             </div>
-                            <ul class="pointer border">
-                                <li [routerLink]="['about']" style="margin-bottom: 10px;">About Us</li>
-                                 <li [routerLink]="['help']" style="margin-bottom: 10px;">Cotact Us</li>
-                                 <li [routerLink]="['faq']" style="margin-bottom: 10px;">Faq</li>
-                                 <li [routerLink]="['t&c']" style="margin-bottom: 10px;">Terms And Condition</li>
-                                 <li [routerLink]="['cart']" style="margin-bottom: 10px;">My Cart</li>
+                            <ul class="border">
+                                <!-- <li [routerLink]="['about']" style="margin-bottom: 10px;">About Us</li> -->
+                                <li [routerLink]="['help']" style="margin-bottom: 10px;">Cotact Us</li>
+                                <li [routerLink]="['faq']" style="margin-bottom: 10px;">Faq</li>
+                                <li [routerLink]="['t&c']" style="margin-bottom: 10px;">Terms And Condition</li>
+                                <!-- <li [routerLink]="['cart']" style="margin-bottom: 10px;">My Cart</li> -->
                             </ul>
-                             <ul class="pointer ">
-                                <li class="padding-top" [routerLink]="['usersetting']" style="margin-bottom: 10px;">Profile</li>
-                                 <li [routerLink]="['help']" style="margin-bottom: 10px;">Logout</li>
+                            <ul class="pointer ">
+                                <li class="padding-top" [routerLink]="['usersetting']" style="margin-bottom: 10px;">
+                                    Profile</li>
+                                <li [routerLink]="['help']" style="margin-bottom: 10px;">Logout</li>
                             </ul>
                         </div>
                         <!-- <div class="d-flex justify-content-md-between gap-13">

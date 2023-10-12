@@ -58,8 +58,12 @@ header {
 }
 
 .border {
-    border-block-end: 1px solid rgb(var(--text-black), 0.2);
+    border-block-end: 1px solid rgb(var(--blackClr), 0.1);
     padding-block: 5px !important;
+
+    & li{
+        color: rgb(var(--blackClr), 0.7);
+    }
 }
 
 
