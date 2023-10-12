@@ -26,9 +26,16 @@
     </ng-container>
   </ul>
   <div id="selected__container" class="relative" (click)="isactive = !isactive">
+    <input type="search" class="form__input" (input)="filterData($event)" [value]="selected"
+      [placeholder]="selectedOption" *ngSwitchCase="'searchSelect'">
+
+    <input type="text" class="form__input" [value]="multiSelected.join(' , ')" [placeholder]="selectedOption"
+      *ngSwitchCase="'multiSelect'">
+
     <input type="search" class="form__input" readonly (input)="filterData($event)" [value]="selected"
-      [placeholder]="selectedOption">
-    </div>
+      [placeholder]="selectedOption" *ngSwitchDefault>
+
+  </div>
 </div>
 
 

@@ -137,6 +137,10 @@ export class AddproductComponent {
     return this.productsForm.get('basicinfo')?.get(field);
   }
 
+  deleteFormGroup(index: number) {
+    (<FormArray>this.productsForm.get('productDesc')).removeAt(index);
+  }
+
   addProductImageForm() {
     const template = this.fb.group({
       color: ['', {

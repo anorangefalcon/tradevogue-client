@@ -41,6 +41,7 @@ export class CustomSelectComponent {
   }
   
   updateSelected(option: string){
+    console.log(option);
     this.selected = option;
     this.isactive = false;
     this.final_option.emit(option);
