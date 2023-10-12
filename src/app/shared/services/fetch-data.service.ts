@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ToastService } from './toast.service';
-import {  Observable, filter, map, tap } from 'rxjs';
+import { Observable, filter, map, tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -11,7 +11,7 @@ export class FetchDataService {
   url = '../../../assets/tempDB/products.json';
   userUrl = '../../../assets/tempDB/usersData.json';
   sellerUrl = '../../../assets/tempDB/seller.json';
-  constructor(private http: HttpClient,private toastService:ToastService) { }
+  constructor(private http: HttpClient, private toastService: ToastService) { }
 
   productKeys: any = ['available', 'colors', 'description', 'image', 'info', 'name', 'price', 'oldPrice', 'orderQuantity', 'reviews', 'sizes', 'sku', 'stockQuantity'];
   getData(): Observable<any> {
@@ -33,13 +33,13 @@ export class FetchDataService {
     return this.http.get(this.sellerUrl);
   }
 
-  
-  
-  HttpPostRequest(url:any,body:any){
-    return this.http.post(this.sellerUrl,body);
+
+
+  HttpPostRequest(url: any, body: any) {
+    return this.http.post(this.sellerUrl, body);
   }
 
-  HttpGetRequest(url:any){
+  HttpGetRequest(url: any) {
     return this.http.get(this.sellerUrl);
   }
 
@@ -48,14 +48,13 @@ export class FetchDataService {
 
       this.http.post(url, body).subscribe({
         next: (data) => {
-         
           res(data);
+          
         }, error: (error) => {
           rej(error)
-          if(error.message){
-  
-            const data={title:error.error.message};
-              this.toastService.errorToast(data);
+          if (error.message) {
+            const data = { title: error.error.message };
+            this.toastService.errorToast(data);
           }
         }
       })
@@ -63,26 +62,28 @@ export class FetchDataService {
 
   }
 
-  httpGet(url:any){
+  httpGet(url: any) {
 
-    return new Promise((res,rej)=>{
-      this.http.get(url).subscribe({next:(data)=>{
-        res(data);
+    return new Promise((res, rej) => {
+      this.http.get(url).subscribe({
+        next: (data) => {
         
-      },error:(error)=>{
-        
-        rej(error)
-        console.log("ERROR IS ",error);
-        if(error.message){
+          res(data);
 
-          const data={title:error.message};
+        }, error: (error) => {
+
+          rej(error)
+          if (error.message) {
+
+            const data = { title: error.message };
             this.toastService.errorToast(data);
-        }
-       
+          }
 
-      }})
+
+        }
+      })
     })
- 
+
   }
 
 

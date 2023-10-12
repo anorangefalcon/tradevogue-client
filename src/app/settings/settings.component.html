@@ -1,72 +1,40 @@
 <section>
     <div class="container d-flex">
 
-
-        <nav class="navbar d-flex flex-column gap-25">
-
+        <nav class="navbar d-flex flex-column align-item-center gap-25">
             <ul class="nav-items">
-                <li class="nav-links" [ngClass]="(this.showData === 'profile') ? 'nav-link-active' : ''"><a
+                <li class="nav-links" [ngClass]="{'nav-link-active': this.showData === 'profile'}"><a
                         (click)="changeComponent('profile')">
-                        <!-- <span class="nav-icons material-symbols-outlined">
-                            person
-                        </span> -->
                         <span class="nav-txt">Profile</span>
                     </a></li>
-                <li class="nav-links" [ngClass]="(this.showData === 'orders') ? 'nav-link-active' : ''"><a
-                        (click)="changeComponent('orders')">
-                        
+                <li class="nav-links" [ngClass]="{'nav-link-active': this.showData === 'orders'}"
+                    (click)="changeComponent('orders')">
+                    <a>
                         <span class="nav-txt">My Order</span>
-                    </a></li>
-                <li class="nav-links"><a href="#">
-                        <!-- <span class="nav-icons material-symbols-outlined">
-                            logout
-                        </span> -->
+                    </a>
+                </li>
+                <li class="nav-links" [ngClass]="{'nav-link-active': this.showData === 'wishlist'}"><a>
                         <span class="nav-txt">My Wishlist</span>
                     </a></li>
 
 
-                    <li class="nav-links"><a href="#">
-                        <!-- <span class="nav-icons material-symbols-outlined">
-                            logout
-                        </span> -->
+                <li class="nav-links" [ngClass]="{'nav-link-active': this.showData === 'addresses'}"><a>
                         <span class="nav-txt">Addresses</span>
                     </a></li>
 
-                    <li class="nav-links"   (click)="changeComponent('changePassword')"><a>
-                        <!-- <span class="nav-icons material-symbols-outlined">
-                            logout
-                        </span> -->
+                <li class="nav-links" [ngClass]="{'nav-link-active': this.showData === 'changePassword'}"
+                    (click)="changeComponent('changePassword')"><a>
+
                         <span class="nav-txt">Change Password</span>
                     </a></li>
             </ul>
         </nav>
 
-        <div class="profile" *ngIf="showData=='profile'">
+        <div class="profile d-flex flex-column gap-20" *ngIf="showData=='profile'">
 
-
-            <div class="common">
-                <h2>
-
-                    Profile Details
-
-
-
-                </h2>
-
-                <!-- <span class="material-symbols-outlined edit-btn" *ngIf="isReadOnly" (click)="editClick()">
-                    edit
-                </span> -->
-
-                <button class="btn-primary saveBtn" *ngIf="!isReadOnly" (click)="editClick()" #myButton>Save</button>
-
-            </div>
-
-
-
-
-
-
-
+            <h2>
+                Profile Details
+            </h2>
 
             <form [formGroup]="signupForm" class="d-flex gap-15 disableInput"
                 [ngClass]="isReadOnly === true ? 'disableInput' : 'enableInput'">
@@ -74,20 +42,12 @@
                     <label class="form__label">NAME<span>*</span></label>
                     <span class="material-symbols-outlined form__icon absolute">person</span>
                     <input type="text" id="name" formControlName="username" placeholder="Enter Your Name">
-
                 </div>
-
-
-
-
-
 
                 <div class="form__group relative d-flex flex-column">
                     <label class="form__label">EMAIL<span>*</span></label>
-
                     <span class="material-symbols-outlined form__icon absolute">mail</span>
                     <input type="text" id="email" formControlName="email" placeholder="Enter Your Email">
-
                 </div>
 
 
@@ -95,7 +55,6 @@
                     <label class="form__label">MOBILENO<span>*</span></label>
                     <span class="material-symbols-outlined form__icon absolute">call</span>
                     <input type="text" id="mobileNo" formControlName="mobileNo" placeholder="Enter Your MobileNo">
-
                 </div>
 
 
@@ -115,7 +74,6 @@
                             </div>
                         </div>
                     </div>
-
                 </div>
 
 
@@ -123,26 +81,24 @@
                     <label class="form__label">DOB<span>*</span></label>
                     <span class="material-symbols-outlined form__icon absolute">person</span>
                     <input type="date" id="dob" formControlName="dob" placeholder="Enter Your Username">
-
                 </div>
 
-                <div class="form__group relative d-flex flex-column">
+                <!-- <div class="form__group relative d-flex flex-column">
                     <label class="form__label">ADDRESS<span>*</span></label>
                     <span class="material-symbols-outlined form__icon absolute">home</span>
                     <input type="text" id="address" formControlName="address" placeholder="Enter Your Address">
-
-                </div>
-
+                </div> -->
 
             </form>
 
 
+            <div class="d-flex gap-15">
+                <button class="width-160 cancelbtn" (click)="editClick()" *ngIf="!isReadOnly">Cancel</button>
+                <button class="btn-primary width-160" #EditBtn (click)="editClick()">Edit Profile</button>
+            </div>
 
-            <button class="btn-primary width-160">Edit Details</button>
 
         </div>
-
-
 
         <div class="Allorders" *ngIf="showData=='orders'">
             <div *ngFor="let order of userData.orders" class="order">
@@ -272,69 +228,42 @@
         </div> -->
         </div>
 
+        <div class="changePassword" *ngIf="showData=='changePassword'">
+            <h2>
+                Change Password
+            </h2>
+            <form [formGroup]="ChangePasswordForm" class="d-flex flex-column flex-wrap">
 
-        <!--  CAHNGE PASSWORD -->
+                <div class="form__group relative d-flex flex-column">
+                    <label class="form__label">CURRENT PASSWORD<span>*</span></label>
+                    <span class="material-symbols-outlined key form__icon absolute">key</span>
+                    <input type="text" id="currentPassword" formControlName="currentPassword"
+                        placeholder="Enter current password">
 
-        <div class="changePassword"  *ngIf="showData=='changePassword'">
-            
-            <div class="common">
-                <h2>
+                </div>
 
-                    Change Password
-
-
-
-                </h2>
-
-                <!-- <span class="material-symbols-outlined edit-btn" *ngIf="isReadOnly" (click)="editClick()">
-                    edit
-                </span> -->
-
-                <!-- <button class="btn-primary saveBtn" *ngIf="!isReadOnly" (click)="editClick()" #myButton>Save</button> -->
-
-            </div>
-            <form [formGroup]="signupForm" class="d-flex flex-column">
-
+                <div class="form__group relative d-flex flex-column">
+                    <label class="form__label">NEW PASSWORD<span>*</span></label>
+                    <span class="material-symbols-outlined key form__icon absolute">key</span>
+                    <input type="text" id="newPassword" formControlName="newPassword" placeholder="Enter new password">
+                </div>
 
 
                 <div class="form__group relative d-flex flex-column">
-                    <label class="form__label">change Password<span>*</span></label>
-                    <span class="material-symbols-outlined form__icon absolute">person</span>
-                    <input type="text" id="name" formControlName="username" placeholder="Enter Your Name">
-            
+                    <label class="form__label">CONFIRM NEW PASSWORD<span>*</span></label>
+                    <span class="material-symbols-outlined key form__icon absolute">key</span>
+                    <input type="text" id="confirmPassword" formControlName="confirmPassword"
+                        placeholder="Retype new password">
+
                 </div>
-            
-            
-            
-            
-            
-            
-                <div class="form__group relative d-flex flex-column">
-                    <label class="form__label">New Password<span>*</span></label>
-            
-                    <span class="material-symbols-outlined form__icon absolute">mail</span>
-                    <input type="text" id="email" formControlName="email" placeholder="Enter Your Email">
-            
-                </div>
-            
-            
-                <div class="form__group relative d-flex flex-column">
-                    <label class="form__label">Confirm Password<span>*</span></label>
-                    <span class="material-symbols-outlined form__icon absolute">call</span>
-                    <input type="text" id="mobileNo" formControlName="mobileNo" placeholder="Enter Your MobileNo">
-            
-                </div>
-            
-            
-            
-            
+
             </form>
 
 
-            <button class="btn-primary width-160">Save</button>
+            <button class="btn-primary width-160" (click)="ChangePasswordHandler()">Save</button>
         </div>
-      
-        
+
+
 
 
 
@@ -344,7 +273,7 @@
 
 
 
-    
+
 
 
 

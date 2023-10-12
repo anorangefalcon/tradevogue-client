@@ -14,6 +14,7 @@ export class UtilsModule {
     loginUrl: 'http://localhost:1000/user/login',
     forgetPasswordUrl : 'http://localhost:1000/user/forget',
     updatePasswordUrl : 'http://localhost:1000/user/update',
+    getDetails:'http://localhost:1000/user/getDetails'
     // signupUrl:'http://localhost:5000/user/signup',
     // getAddress:'http://localhost:5000/user/getAddress'
   }

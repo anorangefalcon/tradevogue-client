@@ -2,6 +2,7 @@ import { Component, ElementRef, Renderer2, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FetchDataService } from '../shared/services/fetch-data.service';
 import { RouterLinksService } from '../shared/services/router-links.service';
+import { UtilsModule } from '../utils/utils.module';
 
 @Component({
   selector: 'app-settings',
@@ -20,12 +21,16 @@ export class SettingsComponent  {
   isReadOnly:boolean=true;
   
   signupForm:FormGroup;
-
+  ChangePasswordForm:FormGroup;
   userData:any='';
   CurrentPage:number=1;
   entriesCount:number=7;
   TotalPages:number=0;
-  constructor(private renderer: Renderer2,private routerlinkservice:RouterLinksService,private fb:FormBuilder,private el: ElementRef, private userService:FetchDataService){
+  
+
+  @ViewChild('EditBtn') EditBtn: ElementRef | undefined;
+ 
+  constructor(private renderer: Renderer2,private backendURLs:UtilsModule, private fetchDataService:FetchDataService,private routerlinkservice:RouterLinksService,private fb:FormBuilder,private el: ElementRef, private userService:FetchDataService){
    
    
    
@@ -44,7 +49,14 @@ export class SettingsComponent  {
      
       });   
 
-   
+      this.ChangePasswordForm= fb.group(
+        {
+          currentPassword:fb.control('',[Validators.required]),
+          newPassword:fb.control('',[Validators.required]),
+          confirmPassword:fb.control('',[Validators.required]),
+        });  
+
+
     this.getData();
     this.routerlinkservice.showDataValue.subscribe((data:string)=>{
       this.showData=data;
@@ -55,6 +67,18 @@ export class SettingsComponent  {
 
 
 
+  ChangePasswordHandler(){
+    
+  }
+
+ async ngOnInit(){
+  try {
+    const data=await this.fetchDataService.httpGet( this.backendURLs.URLs.getDetails);
+    console.log("data coming is ",data);
+  } catch (error) {
+    
+  }
+}
 
 async  getData(){
 
@@ -93,10 +117,17 @@ PageCount(){
   editClick(){
     
   this.isReadOnly=!this.isReadOnly;
+// const data=this.renderer.getProperty(this?.EditBtn?.nativeElement,'innerHTML');
+let CurrentContent:string = this?.EditBtn?.nativeElement.innerHTML; 
+if(CurrentContent=='Edit Profile'){
+  this.renderer.setProperty(this?.EditBtn?.nativeElement,'innerHTML',"Save")  
+}
+else{
+  this.renderer.setProperty(this?.EditBtn?.nativeElement,'innerHTML',"Edit Profile")  
+}
+}
 
-    }
-
-
+  
 
  
   

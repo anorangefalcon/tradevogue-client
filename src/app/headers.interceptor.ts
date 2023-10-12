@@ -17,6 +17,7 @@ export class HeadersInterceptor implements HttpInterceptor {
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
    
     let token = this.cookies.get('userToken');
+    console.log("Token is ",token);
     if (token) {
       request = request.clone({
         setHeaders: {
@@ -24,14 +25,15 @@ export class HeadersInterceptor implements HttpInterceptor {
         }
       });
     }
-    return next.handle(request).pipe(
-      map(event=>{
-        console.log('EVENT COMIGN ISNIE INTERCEPTOR  IS ',event);
+    return next.handle(request)
+    // .pipe(
+    //   map(event=>{
+    //     console.log('EVENT COMIGN ISNIE INTERCEPTOR  IS ',event);
         
 
-        return event;
-      })
-    );
+    //     return event;
+    //   })
+    // );
     
   }
 }
