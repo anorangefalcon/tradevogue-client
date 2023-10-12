@@ -88,23 +88,24 @@ export class ProductPageComponent implements OnInit{
     pullDrag: true,
     dots: false,
     nav: true,
-    autoplay: false,
+    items:1,
+    autoplay: true,
     navText: ['<span class="material-symbols-outlined">chevron_left</span>', '<span class="material-symbols-outlined">chevron_right</span>'],
     navSpeed: 600,
-    responsive: {
-      0: {
-        items: 1
-      },
-      400: {
-        items: 1
-      },
-      740: {
-        items: 1
-      },
-      940: {
-        items: 1
-      }
-    },
+    // responsive: {
+    //   0: {
+    //     items: 1
+    //   },
+    //   400: {
+    //     items: 1
+    //   },
+    //   740: {
+    //     items: 1
+    //   },
+    //   940: {
+    //     items: 1
+    //   }
+    // },
   }
   carouselOption: OwlOptions = this.customOptions;
   atDefault: boolean = true;

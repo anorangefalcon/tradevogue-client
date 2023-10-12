@@ -64,7 +64,7 @@
                     <span class="material-symbols-outlined form__icon absolute">call</span>
                     <input type="text" id="mobile" formControlName="mobile" placeholder="Enter Your MobileNo">
 
-                    <small *ngIf="ProfileForm.get('mobile')?.hasError('notvalid') && ProfileForm.get('mobile')?.touched"
+                    <small *ngIf="DetailsSubmitted && ProfileForm.get('mobile')?.hasError('notvalid') && ProfileForm.get('mobile')?.touched"
                     class="invalid">*Mobile No is invalid.</small>
       
                 </div>
@@ -129,7 +129,7 @@
             <div class="d-flex gap-15">
                 <button class="width-160 cancelbtn" (click)="editClick()" *ngIf="!isReadOnly">Cancel</button>
                 <button class="btn-primary width-160" #EditBtn (click)="editClick()" *ngIf="isReadOnly">Edit Profile</button>
-                <button class="btn-primary width-160" #EditBtn (click)="saveDetails()" [disabled]="!ProfileForm.valid"  *ngIf="!isReadOnly">Save</button>
+                <button class="btn-primary width-160" #EditBtn (click)="saveDetails()" *ngIf="!isReadOnly">Save</button>
             </div>
 
             <!-- <button class="btn-primary width-160" *ngIf="isReadOnly" (click)="editClick()">Edit Details</button>
@@ -275,7 +275,7 @@
                 <div class="form__group relative d-flex flex-column">
                     <label class="form__label">CURRENT PASSWORD<span>*</span></label>
                     <span class="material-symbols-outlined form__icon absolute key">key</span>
-                    <input type="text" id="name" formControlName="currentPassword" placeholder="Enter Current Password">
+                    <input type="password" id="name" formControlName="currentPassword" placeholder="Enter Current Password">
 
                 </div>
 
@@ -283,7 +283,7 @@
                     <label class="form__label">NEW PASSWORD<span>*</span></label>
 
                     <span class="material-symbols-outlined form__icon absolute key">key</span>
-                    <input type="text" id="email" formControlName="newPassword" placeholder="Enter New Password">
+                    <input type="password" id="email" formControlName="newPassword" placeholder="Enter New Password">
 
                     <div class="password-helper d-flex justify-content-md-between">
 
@@ -339,7 +339,7 @@
                 <div class="form__group relative d-flex flex-column">
                     <label class="form__label">CONFIRM NEW PASSWORD<span>*</span></label>
                     <span class="material-symbols-outlined key form__icon absolute">key</span>
-                    <input type="text" id="confirmPassword" formControlName="confirmPassword"
+                    <input type="password" id="confirmPassword" formControlName="confirmPassword"
                         placeholder="Retype new password">
 
                 </div>

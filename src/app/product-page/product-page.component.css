@@ -5,6 +5,7 @@
 
 .review-btn {
     width: fit-content !important;
+
     & span {
         font-size: 16px;
     }
@@ -23,7 +24,7 @@
     }
 
     .bigcarousel {
-        width: calc(100% - 100px) !important;
+        width: 100% !important;
         overflow: hidden;
     }
 
@@ -43,19 +44,18 @@
         inset-block-start: 14px;
         inset-inline-end: 14px;
         background-color: transparent;
-       
+
         & span {
             color: rgb(var(--whiteClr));
             font-size: 32px;
             font-variation-settings:
-                    'FILL' 1,
-                    'wght' 400,
-                    'GRAD' 0,
-                    'opsz' 24
-        
+                'FILL' 1,
+                'wght' 400,
+                'GRAD' 0,
+                'opsz' 24
         }
     }
-    
+
 
     & .img-details {
         width: 230px;
@@ -126,9 +126,10 @@
         }
     }
 
-    & .accordian:not(:last-child){
+    & .accordian:not(:last-child) {
         border-block-end: 1px solid rgb(var(--textClr), 0.2);
     }
+
     & .accordian__head {
         position: relative;
         padding-block: 10px;
@@ -518,9 +519,10 @@
         }
     }
 
-
-
-
+    .review-card:not(div:last-of-type) {
+        padding-block-end: 20px;
+        border-block-end: 1px solid rgb(var(--textClr), 0.2);
+    }
 
     .review-cards {
         width: 100%;
@@ -605,7 +607,10 @@
             'opsz' 48
     }
 }
+.bigcarousel {
+    width: 100% !important;
 
+}
 @media screen and (max-width: 1060px) {
     .prod-name {
         font-size: 48px !important;
@@ -621,6 +626,13 @@
 
     .rating span {
         font-size: 26px;
+    }
+    .product-carousel {
+        flex-direction: column-reverse;
+    }
+    .products-imgs-container {
+        flex-direction: row;
+        width: 100% !important;
     }
 }
 
@@ -645,10 +657,13 @@
     .rating span {
         font-size: 22px;
     }
+    .products-imgs-container {
+        display: none;
+    }
 }
 
 @media screen and (max-width: 760px) {
-    .product .container {
+    .main {
         flex-direction: column;
     }
 
@@ -702,15 +717,7 @@
         flex-direction: column-reverse;
     }
 
-    .products-imgs-container {
-        flex-direction: row;
-        width: 100% !important;
-    }
 
-    .bigcarousel {
-        width: 100% !important;
-
-    }
 
     & .gal-img {
         width: 80px !important;

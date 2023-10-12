@@ -16,7 +16,8 @@ export class UtilsModule {
     updatePasswordUrl : 'http://localhost:1000/user/update',
     getDetails:'http://localhost:1000/user/getDetails',
     updateDetails:'http://localhost:1000/user/updateDetails',
-    AdminTestURL:'http://localhost:1000/admin'
+    AdminTestURL:'http://localhost:1000/admin',
+    changePassword : 'http://localhost:1000/user/changePassword'
     // signupUrl:'http://localhost:5000/user/signup',
     // getAddress:'http://localhost:5000/user/getAddress'
   }

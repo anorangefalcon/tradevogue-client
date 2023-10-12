@@ -2,7 +2,7 @@ import { Component, ElementRef, Renderer2, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { FetchDataService } from '../shared/services/fetch-data.service';
 import { RouterLinksService } from '../shared/services/router-links.service';
-import { UtilsModule } from '../utils/utils.module';
+import { UtilsModule } from 'src/app/utils/utils.module';
 import { passwordStrengthValidator, matchPasswordValidator } from '../auth/validators';
 
 import {MobileNoValidator} from './validators';
@@ -64,6 +64,22 @@ export class SettingsComponent {
   };
 
  
+  async ngOnInit(){
+    try {
+      const data:any=await this.fetchDataService.httpGet(this.backendURLs.URLs.getDetails);
+      console.log("data is  comign is ",data);
+      data.firstname=data.name.firstname;
+      data.lastname=data.name.lastname;
+      data.gender=data.info.gender;
+      // console.log("date is ",;
+      data.dob=data.info.dob.split('T')[0];
+      this.ProfileForm.patchValue(data);
+
+
+    } catch (error) {
+      
+    }
+  }
 
   async onPasswordChange(){
     try {
@@ -71,8 +87,11 @@ export class SettingsComponent {
         oldPassword : this.changePasswordForm.get('currentPassword')?.value,
         newPassword : this.changePasswordForm.get('newPassword')?.value
       }
+      const data = await this.userService.httpPost(this.backendURLs.URLs.changePassword, body)
     }
-    catch {}
+    catch (error) {
+
+    }
 
   }
 
@@ -112,16 +131,22 @@ await this.userService.getUserData().subscribe((data:any)=>{
   this.isReadOnly=!this.isReadOnly;
 }
 
+
+DetailsSubmitted:Boolean=false;
 async saveDetails(){
+
+this.DetailsSubmitted=true;
+if(this.ProfileForm.invalid) return;
+
   let body={
-    name : {firstname:this.ProfileForm.get('firstname')?.value, lastname:this.ProfileForm.get('firstname')?.value},
+    name : {firstname:this.ProfileForm.get('firstname')?.value, lastname:this.ProfileForm.get('lastname')?.value},
     email : this.ProfileForm.get('email')?.value,
     mobile:this.ProfileForm.get('mobile')?.value,
     "info.gender":this.ProfileForm.get('gender')?.value,
     "info.dob":new Date(this.ProfileForm.get('dob')?.value)
   }
  let response= await this.fetchDataService.httpPost(this.backendURLs.URLs.updateDetails,body);
-
+this.isReadOnly=!this.isReadOnly;
 }
 
   

@@ -624,7 +624,7 @@ form {
     padding-block: 40px;
     height: 426px;
     position: sticky;
-    border-right: 2px solid rgba(var( --blackClr),0.2);
+    border-right: 1px solid rgba(var( --blackClr),0.2);
     & .nav-items {
         width:100%;
         & .nav-links {
@@ -731,14 +731,14 @@ label span {
     }
     & span::after{
        content: "";
-      height: 15px;
-      width: 15px;
+      height: 10px;
+      width: 10px;
       position:absolute;
       border: none;
       background-color: #fff;
       border-radius: 50%;
         align-items:center;
-        left:5px;
+        left:7px;
       justify-content:center;
     }
     
