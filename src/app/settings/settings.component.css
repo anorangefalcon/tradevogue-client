@@ -580,7 +580,7 @@ form {
         }
 
         & label span {
-            color: rgb(var(--danger));
+            /* color: rgb(var(--danger)); */
         }
 
         & .form__icon {
@@ -626,9 +626,11 @@ form {
     position: sticky;
     border-right: 2px solid rgba(var( --blackClr),0.2);
     & .nav-items {
+        width:100%;
         & .nav-links {
             width: 100%;
-            /* transition: all 0.3s ease-in; */
+
+            transition: all 0.3s ease-in;
         }
         gap: 18px;
         display: flex;
@@ -658,7 +660,8 @@ form {
 
 
 .nav-link-active {
-    border-left:2px solid #d63242;
+    border-left:3.5px solid #d63242;
+    
 }
 
 .nav-links a span:hover{
@@ -683,6 +686,65 @@ form {
         justify-content: space-between;
 
 }
+
+label span {
+    color: rgb(var(--danger));
+}
+
+/*  RADIO BUTTON CSS */
+.radio{
+    display: flex;
+    padding-block: 40px;
+& label{
+    display:flex;
+    width: 200px;
+   & span{
+    color:rgba(var( --blackClr),0.9);
+   }
+    cursor:pointer;
+     align-items:center;
+    & input{
+      display:none;
+      
+    }
+    
+    & input[type='radio']:checked + span::before{
+      background-color:rgba(var(--primaryClr));
+      border:none;
+    }
+    
+    & span{
+       display: flex;
+      gap:4px;
+      align-items:center;
+      position:relative;
+    }
+    & span::before{
+      content: "";
+      height: 25px;
+      transition:all 0.5s;
+      width: 25px;
+      border: none;
+      background-color: #fff;
+      border:1px solid black;
+      border-radius: 50%;  
+    }
+    & span::after{
+       content: "";
+      height: 15px;
+      width: 15px;
+      position:absolute;
+      border: none;
+      background-color: #fff;
+      border-radius: 50%;
+        align-items:center;
+        left:5px;
+      justify-content:center;
+    }
+    
+  }
+}
+/*  RADIO BUTTON CSS */
 
 
 /* MEDIA QUERY */

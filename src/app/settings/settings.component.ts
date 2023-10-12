@@ -1,10 +1,11 @@
 import { Component, ElementRef, Renderer2, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { FetchDataService } from '../shared/services/fetch-data.service';
 import { RouterLinksService } from '../shared/services/router-links.service';
 import { UtilsModule } from '../utils/utils.module';
 import { passwordStrengthValidator, matchPasswordValidator } from '../auth/validators';
 
+import {MobileNoValidator} from './validators';
 @Component({
   selector: 'app-settings',
   templateUrl: './settings.component.html',
@@ -21,8 +22,10 @@ export class SettingsComponent {
   @ViewChild('expand') ExpandBtn:ElementRef | undefined;
   isReadOnly:boolean=true;
   
-  signupForm:FormGroup;
+
   changePasswordForm:FormGroup;
+  ProfileForm:FormGroup;
+
   userData:any='';
   CurrentPage:number=1;
   entriesCount:number=7;
@@ -31,23 +34,26 @@ export class SettingsComponent {
 
   @ViewChild('EditBtn') EditBtn: ElementRef | undefined;
  
+  constructor(private renderer: Renderer2,private backendURLs:UtilsModule, private fetchDataService:FetchDataService,private routerlinkservice:RouterLinksService,private fb:FormBuilder,private el: ElementRef, private userService:FetchDataService){
+ 
+    this.ProfileForm= fb.group(
+      {
+        firstname:fb.control(''),
+        lastname:fb.control(''),
+        email:fb.control('',[Validators.email,Validators.required]),
+        mobile:fb.control('',[MobileNoValidator]),
+        gender:fb.control('',),
+        dob:fb.control(''),
+        
+     
+      });   
 
-  constructor(private renderer: Renderer2, private routerlinkservice: RouterLinksService, private fb: FormBuilder, private el: ElementRef, private userService: FetchDataService) {
-
-    this.signupForm = fb.group({
-        name: fb.control('', [Validators.required]),
-        username: fb.control('', [Validators.required]),
-        email: fb.control('', [Validators.email, Validators.required]),
-        mobileNo: fb.control('', [Validators.email, Validators.required]),
-        gender: fb.control('', [Validators.email, Validators.required]),
-        dob: fb.control('', [Validators.email, Validators.required]),
-        address: fb.control('', [Validators.email, Validators.required]),
-        });
+ 
 
     this.changePasswordForm = fb.group({
       currentPassword: fb.control('', [Validators.required]),
       newPassword: fb.control('', [Validators.required, Validators.minLength(8), passwordStrengthValidator]),
-      againNewPassword: fb.control('', [Validators.required, (control: any) => matchPasswordValidator(control, this.signupForm)])
+      againNewPassword: fb.control('', [Validators.required, (control: any) => matchPasswordValidator(control, this.changePasswordForm)])
     })
 
     this.getData();
@@ -71,6 +77,7 @@ export class SettingsComponent {
   }
 
  
+
 
 async  getData(){
 
@@ -103,14 +110,18 @@ await this.userService.getUserData().subscribe((data:any)=>{
   editClick(){
     
   this.isReadOnly=!this.isReadOnly;
-// const data=this.renderer.getProperty(this?.EditBtn?.nativeElement,'innerHTML');
-let CurrentContent:string = this?.EditBtn?.nativeElement.innerHTML; 
-if(CurrentContent=='Edit Profile'){
-  this.renderer.setProperty(this?.EditBtn?.nativeElement,'innerHTML',"Save")  
 }
-else{
-  this.renderer.setProperty(this?.EditBtn?.nativeElement,'innerHTML',"Edit Profile")  
-}
+
+async saveDetails(){
+  let body={
+    name : {firstname:this.ProfileForm.get('firstname')?.value, lastname:this.ProfileForm.get('firstname')?.value},
+    email : this.ProfileForm.get('email')?.value,
+    mobile:this.ProfileForm.get('mobile')?.value,
+    "info.gender":this.ProfileForm.get('gender')?.value,
+    "info.dob":new Date(this.ProfileForm.get('dob')?.value)
+  }
+ let response= await this.fetchDataService.httpPost(this.backendURLs.URLs.updateDetails,body);
+
 }
 
   

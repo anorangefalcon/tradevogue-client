@@ -36,28 +36,41 @@
                 Profile Details
             </h2>
 
-            <form [formGroup]="signupForm" class="d-flex gap-15 disableInput"
+            <form [formGroup]="ProfileForm" class="d-flex gap-15 disableInput"
                 [ngClass]="isReadOnly === true ? 'disableInput' : 'enableInput'">
                 <div class="form__group relative d-flex flex-column">
-                    <label class="form__label">NAME<span>*</span></label>
+                    <label class="form__label">FIRSTNAME<span>*</span></label>
                     <span class="material-symbols-outlined form__icon absolute">person</span>
-                    <input type="text" id="name" formControlName="username" placeholder="Enter Your Name">
+                    <input type="text" id="firstname" formControlName="firstname" placeholder="Enter Your First Name">
+                </div>
+
+                <div class="form__group relative d-flex flex-column">
+                    <label class="form__label">LASTNAME<span>*</span></label>
+                    <span class="material-symbols-outlined form__icon absolute">person</span>
+                    <input type="text" id="lastname" formControlName="lastname" placeholder="Enter Your Last Name">
                 </div>
                 <div class="form__group relative d-flex flex-column">
                     <label class="form__label">EMAIL<span>*</span></label>
                     <span class="material-symbols-outlined form__icon absolute">mail</span>
                     <input type="text" id="email" formControlName="email" placeholder="Enter Your Email">
+                    <small *ngIf="ProfileForm.get('email')?.hasError('email') && ProfileForm.get('email')?.touched" class="invalid">
+                        *Please enter valid Email.
+                      </small>
                 </div>
 
 
                 <div class="form__group relative d-flex flex-column">
                     <label class="form__label">MOBILENO<span>*</span></label>
                     <span class="material-symbols-outlined form__icon absolute">call</span>
-                    <input type="text" id="mobileNo" formControlName="mobileNo" placeholder="Enter Your MobileNo">
+                    <input type="text" id="mobile" formControlName="mobile" placeholder="Enter Your MobileNo">
+
+                    <small *ngIf="ProfileForm.get('mobile')?.hasError('notvalid') && ProfileForm.get('mobile')?.touched"
+                    class="invalid">*Mobile No is invalid.</small>
+      
                 </div>
 
 
-                <div class="form__group relative d-flex flex-column">
+                <!-- <div class="form__group relative d-flex flex-column">
                     <label class="form__label">GENDER<span>*</span></label>
                     <div class="radios">
                         <div class="genders">
@@ -73,7 +86,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> -->
 
 
                 <div class="form__group relative d-flex flex-column">
@@ -93,12 +106,30 @@
          
 
 
+                <div class="form__group relative radio d-flex" *ngIf="!isReadOnly">
+
+                    <label for="male">
+                        <input type="radio" id="male" name="gender" value="male" formControlName="gender" [attr.checked]="this?.ProfileForm?.get('gender')?.value=='male' ? true: null">
+                        <span>
+                            Male
+                        </span>
+                    </label>
+
+                    <label>
+                        <input type="radio" id="female" name="gender" formControlName="gender"  value="female" [attr.checked]="this?.ProfileForm?.get('gender')?.value=='female'  ? true : null">
+                        <span>
+                            female
+                        </span>
+                    </label>
+                </div>
+
             </form>
 
 
             <div class="d-flex gap-15">
                 <button class="width-160 cancelbtn" (click)="editClick()" *ngIf="!isReadOnly">Cancel</button>
-                <button class="btn-primary width-160" #EditBtn (click)="editClick()">Edit Profile</button>
+                <button class="btn-primary width-160" #EditBtn (click)="editClick()" *ngIf="isReadOnly">Edit Profile</button>
+                <button class="btn-primary width-160" #EditBtn (click)="saveDetails()" [disabled]="!ProfileForm.valid"  *ngIf="!isReadOnly">Save</button>
             </div>
 
             <!-- <button class="btn-primary width-160" *ngIf="isReadOnly" (click)="editClick()">Edit Details</button>
@@ -319,21 +350,6 @@
             <button class="btn-primary width-160" (click)="onPasswordChange()">Save</button>
         </div>
 
-
-
-
-
     </div>
-
-
-
-
-
-
-
-
-
-
-
 
 </section>

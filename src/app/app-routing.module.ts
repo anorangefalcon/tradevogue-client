@@ -13,6 +13,8 @@ import { ExploreComponent } from './explore/explore.component';
 import { HelpPageComponent } from './help-page/help-page.component';
 import { SettingsComponent } from './settings/settings.component';
 import { NoPageComponent } from './no-page/no-page.component';
+import { authGuard } from './auth.guard';
+
 const routes: Routes = [
 
   {
@@ -20,7 +22,7 @@ const routes: Routes = [
     children: [
       { path: '', component: HomeComponent, data: { breadcrumb: 'Home' } },
       {
-        path: 'usersetting', component: SettingsComponent, data: { breadcrumb: 'Setting' }
+        path: 'usersetting', component: SettingsComponent, data: { breadcrumb: 'Setting' },canActivate: [authGuard]
       },
       { path: 't&c', component: TcComponent, data: { breadcrumb: 'Term & Condition' } },
       { path: 'faq', component: FaqPageComponent, data: { breadcrumb: 'Faq' } },
@@ -44,10 +46,11 @@ const routes: Routes = [
     ]
   },
   {
-    path: 'auth', data: { breadcrumb: 'Auth' }, loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule)
+    path: 'auth', data: { breadcrumb: 'Auth' }, loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule),canActivate: [authGuard]
+    
   },
   {
-    path: 'dashboard', loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule)
+    path: 'dashboard', loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule),canActivate: [authGuard]
   },
   {
     path: '**', component: NoPageComponent, data: { breadcrumb: '404' } 
