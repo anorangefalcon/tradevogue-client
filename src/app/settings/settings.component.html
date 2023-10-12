@@ -43,7 +43,6 @@
                     <span class="material-symbols-outlined form__icon absolute">person</span>
                     <input type="text" id="name" formControlName="username" placeholder="Enter Your Name">
                 </div>
-
                 <div class="form__group relative d-flex flex-column">
                     <label class="form__label">EMAIL<span>*</span></label>
                     <span class="material-symbols-outlined form__icon absolute">mail</span>
@@ -88,6 +87,11 @@
                     <span class="material-symbols-outlined form__icon absolute">home</span>
                     <input type="text" id="address" formControlName="address" placeholder="Enter Your Address">
                 </div> -->
+                    <!-- <textarea id="address" formControlName="address" placeholder="Enter Your Address" rows="4"
+                        cols="50"></textarea> -->
+
+         
+
 
             </form>
 
@@ -97,6 +101,8 @@
                 <button class="btn-primary width-160" #EditBtn (click)="editClick()">Edit Profile</button>
             </div>
 
+            <!-- <button class="btn-primary width-160" *ngIf="isReadOnly" (click)="editClick()">Edit Details</button>
+            <button class="btn-primary  width-160" *ngIf="!isReadOnly" (click)="editClick()" #myButton>Save</button> -->
 
         </div>
 
@@ -232,20 +238,70 @@
             <h2>
                 Change Password
             </h2>
-            <form [formGroup]="ChangePasswordForm" class="d-flex flex-column flex-wrap">
+            <form [formGroup]="changePasswordForm" class="d-flex flex-column flex-wrap">
+
 
                 <div class="form__group relative d-flex flex-column">
                     <label class="form__label">CURRENT PASSWORD<span>*</span></label>
-                    <span class="material-symbols-outlined key form__icon absolute">key</span>
-                    <input type="text" id="currentPassword" formControlName="currentPassword"
-                        placeholder="Enter current password">
+                    <span class="material-symbols-outlined form__icon absolute key">key</span>
+                    <input type="text" id="name" formControlName="currentPassword" placeholder="Enter Current Password">
 
                 </div>
 
                 <div class="form__group relative d-flex flex-column">
                     <label class="form__label">NEW PASSWORD<span>*</span></label>
-                    <span class="material-symbols-outlined key form__icon absolute">key</span>
-                    <input type="text" id="newPassword" formControlName="newPassword" placeholder="Enter new password">
+
+                    <span class="material-symbols-outlined form__icon absolute key">key</span>
+                    <input type="text" id="email" formControlName="newPassword" placeholder="Enter New Password">
+
+                    <div class="password-helper d-flex justify-content-md-between">
+
+
+                        <div class="helper-inside d-flex flex-column ">
+                            <p [ngClass]="{'red-text': changePasswordForm.get('newPassword')?.hasError('minlength') && !changePasswordForm.get('newPassword')?.hasError('required'),
+                     'green-text': !changePasswordForm.get('newPassword')?.hasError('minlength') && !changePasswordForm.get('newPassword')?.hasError('required')}"
+                                *ngIf="!changePasswordForm.get('newPassword')?.hasError('required')">
+                                <small class="material-symbols-outlined">
+                                    check_circle
+                                </small>Minimum 8 characters
+                            </p>
+
+                            <p [ngClass]="{'red-text': changePasswordForm.get('newPassword')?.hasError('uppercase') && !changePasswordForm.get('newPassword')?.hasError('required'),
+                     'green-text': !changePasswordForm.get('newPassword')?.hasError('uppercase') && !changePasswordForm.get('newPassword')?.hasError('required')}"
+                                *ngIf="!changePasswordForm.get('newPassword')?.hasError('required')">
+                                <small class="material-symbols-outlined">
+                                    check_circle
+                                </small>One uppercase letter
+                            </p>
+
+                            <p [ngClass]="{'red-text': changePasswordForm.get('newPassword')?.hasError('lowercase') && !changePasswordForm.get('newPassword')?.hasError('required'),
+               'green-text': !changePasswordForm.get('newPassword')?.hasError('lowercase') && !changePasswordForm.get('newPassword')?.hasError('required')}"
+                                *ngIf="!changePasswordForm?.get('newPassword')?.hasError('required')">
+                                <small class="material-symbols-outlined">
+                                    check_circle
+                                </small>One lowercase letter
+                            </p>
+                        </div>
+
+                        <div class="helper-inside d-flex flex-column ">
+                            <p [ngClass]="{'red-text': changePasswordForm.get('newPassword')?.hasError('digit') && !changePasswordForm.get('newPassword')?.hasError('required'),
+               'green-text': !changePasswordForm.get('newPassword')?.hasError('digit') && !changePasswordForm.get('newPassword')?.hasError('required')}"
+                                *ngIf="!changePasswordForm?.get('newPassword')?.hasError('required')">
+                                <small class="material-symbols-outlined">
+                                    check_circle
+                                </small>One numeric character
+                            </p>
+
+                            <p [ngClass]="{'red-text': changePasswordForm.get('newPassword')?.hasError('specialCharacter') && !changePasswordForm.get('newPassword')?.hasError('required'),
+               'green-text': !changePasswordForm.get('newPassword')?.hasError('specialCharacter') && !changePasswordForm.get('newPassword')?.hasError('required')}"
+                                *ngIf="!changePasswordForm?.get('newPassword')?.hasError('required')">
+                                <small class="material-symbols-outlined">
+                                    check_circle
+                                </small>One special character
+                            </p>
+                        </div>
+                    </div>
+
                 </div>
 
 
@@ -260,7 +316,7 @@
             </form>
 
 
-            <button class="btn-primary width-160" (click)="ChangePasswordHandler()">Save</button>
+            <button class="btn-primary width-160" (click)="onPasswordChange()">Save</button>
         </div>
 
 

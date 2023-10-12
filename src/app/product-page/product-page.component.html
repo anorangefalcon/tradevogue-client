@@ -2,7 +2,7 @@
 <section class="container">
     <div *ngIf="data.productDetails !== {} " class="product">
 
-        <div class="d-flex gap-30">
+        <div class="d-flex gap-30 main">
             <div class="product-carousel d-flex  gap-10 justify-content-center">
                 <div class="products-imgs-container d-flex flex-column  thumbnails">
                     <div class="gal-img pointer" *ngFor="let image of data.productDetails.image; let i = index"
@@ -15,6 +15,11 @@
                         <div class="img-div d-flex justify-content-center align-item-center"
                             [ngStyle]="{ 'background': 'url(' + image + ')', 'background-size': 'cover' }">
                         </div>
+                        <button class=" wishlist-btn d-flex align-item-center">
+                            <span class="material-symbols-outlined">
+                                favorite
+                            </span>
+                        </button>
                     </ng-template>
                 </owl-carousel-o>
             </div>
@@ -44,16 +49,14 @@
                                 class="material-symbols-outlined">star</span>
                         </div>
                         <p class="rate">({{data.avgRating}}/5 · {{data.productDetails.reviews.length}} Reviews)</p>
-                        <!-- <div class="avail">
-                            <p><strong>Available</strong> : 1000</p>
-                        </div> -->
+                     
                     </div>
                     <div class="sizes d-flex align-item-center gap-20" id="sizes">
                         <p>Size:</p>
                         <div class="sizes-opt d-flex gap-10">
-                            <div *ngFor="let productSize of data.productDetails.sizes" class="sizes-radios">
+                            <div *ngFor="let productSize of data.productDetails.sizes; let i = index" class="sizes-radios">
                                 <input type="radio" name="size" [value]=productSize id="size_{{ productSize }}"
-                                    [(ngModel)]="selectedSize">
+                                    [(ngModel)]="selectedSize" [checked]="i == 0">
                                 <label for="size_{{ productSize }}">{{ productSize }}</label>
                             </div>
                         </div>
@@ -70,60 +73,42 @@
                     </div>
 
                     <div class="d-flex gap-15 align-item-center">
-                        <p class="quan">Quantity:</p>
-
-                        <app-custom-select selectedOption="Select Quantity" (final_option)="updateSelectedField($event)"
+        
+                        <app-custom-select [selectedOption] = data.productDetails.orderQuantity[0] (final_option)="updateSelectedField($event)"
                             [options]="data.productDetails.orderQuantity">
-
                         </app-custom-select>
+
+                        <div class="cart-div d-flex gap-10 align-item-center">
+                           
+                            <button class="btn-primary d-flex gap-10 align-item-center cart cart-btn"
+                                (click)="addToCart()">
+                                <!-- <span class="material-symbols-outlined">
+                                    shopping_cart
+                                </span> -->
+                                <p>ADD TO CART</p>
+                            </button>
+                        </div>
                     </div>
 
-                    <div class="cart-div d-flex gap-10 align-item-center">
-                        <button class="btn-secondary wishlist-btn d-flex align-item-center">
-                            <span class="material-symbols-outlined">
-                                favorite
-                            </span>
-                        </button>
-                        <button class="btn-primary d-flex gap-10 align-item-center cart cart-btn"
-                            (click)="addToCart()">
-                            <!-- <span class="material-symbols-outlined">
-                                shopping_cart
-                            </span> -->
-                            <p>ADD TO CART</p>
-                        </button>
-                    </div>
 
-                    <!-- <div class="short-description">
-                        {{ data.productDetails.description }}
-                        {{ data.productDetails.description }}
-                        {{ data.productDetails.description }}
-                        {{ data.productDetails.description }}
-                    </div> -->
-
+                
                     <div class="d-flex flex-column">
                         <div class="accordian">
-                            <input type="checkbox" name="accordian" id="desc">
-                            <label for="desc" class="d-flex align-item-center justify-content-md-between">Description
-                                <span class="material-symbols-outlined">
-                                    expand_more
-                                </span>
-                            </label>
-                            <div class="content">
+                            <h3 class="accordian__head" [ngClass]="accordianOpen ? 'active' : ''" (click)="accordianOpen = !accordianOpen">
+                                Description
+                            </h3>
+                            <div class="accordian__body">
                                 {{ data.productDetails.description }}
                                 {{ data.productDetails.description }}
                                 {{ data.productDetails.description }}
                                 {{ data.productDetails.description }}
                             </div>
                         </div>
-
                         <div class="accordian">
-                            <input type="checkbox" name="accordian" id="info">
-                            <label for="info" class="d-flex align-item-center justify-content-md-between">Information
-                                <span class="material-symbols-outlined">
-                                    expand_more
-                                </span>
-                            </label>
-                            <div class="content d-flex flex-column gap-10">
+                            <h3 class="accordian__head" [ngClass]="accordianOpen2 ? 'active' : ''" (click)="accordianOpen2 = !accordianOpen2">
+                                Information
+                            </h3>
+                            <div class="accordian__body d-flex flex-column gap-5">
                                 <div class="info-content d-flex gap-10">
                                     <h5>Product Code :</h5>
                                     <p>{{ data.productDetails.info.productCode }}</p>
@@ -142,6 +127,7 @@
                                 </div>
                             </div>
                         </div>
+
                     </div>
 
                     <div class="tags d-flex gap-10 d-flex align-item-center">
@@ -181,7 +167,12 @@
                 </div>
             </div>
 
-            <h3 class="btn-secondary revi pointer" (click)="this.showReview = !this.showReview">Add a Review</h3>
+            <button class="btn-primary review-btn pointer d-flex align-item-center gap-10" (click)="this.showReview = !this.showReview">
+                <span class="material-symbols-outlined">
+                    edit
+                    </span>
+                    Add a Review
+            </button>
             <form class="d-flex flex-column gap-20" *ngIf="showReview == true">
                 <div class="edit-rating">
                     <span *ngFor="let ok of createArrayToIterate(5); let i = index" (click)="userRating = i"
@@ -209,12 +200,3 @@
         <app-product-card-carousel></app-product-card-carousel>
     </div>
 </section>
-<!-- </div> -->
-
-<!-- </div> -->
-<!-- </div> -->
-
-
-<!-- <app-product-details [data]="data"></app-product-details> -->
-
-<!-- explore more  -->

@@ -33,9 +33,9 @@ footer {
         }
 
     }
-    & .letter-spacing {
+    /* & .letter-spacing {
         letter-spacing: 0.8px;
-    }
+    } */
     
     & p {
         font-size: 14px !important;

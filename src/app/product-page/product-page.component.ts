@@ -24,6 +24,8 @@ export class ProductPageComponent implements OnInit{
   selectedQ: number = 0;
   showReview : boolean = false;
   activeIndex: number = 0;
+  accordianOpen : boolean = false;
+  accordianOpen2 : boolean = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -53,6 +55,9 @@ export class ProductPageComponent implements OnInit{
         if (this.data.productDetails.oldPrice !== (undefined || 0)) {
           this.data.offerPercentage = Math.floor((this.data.productDetails.oldPrice - this.data.productDetails.price) / this.data.productDetails.oldPrice * 100);
         }
+
+        this.selectedSize = this.data?.productDetails?.sizes[0];
+        this.selectedColor = this.data?.productDetails?.colors[0];
       });
     });
   }
@@ -130,5 +135,7 @@ export class ProductPageComponent implements OnInit{
   updateSelectedField(e: any){
     this.selectedQ = e;
   }
+
+
 
 }

@@ -66,10 +66,7 @@ export class SignUpComponent {
 
   }
 
-
-
-
-
+ 
   // ON SUBMIT METHOD
   async onSubmit() {
     try {

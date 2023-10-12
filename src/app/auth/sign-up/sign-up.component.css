@@ -105,52 +105,14 @@
 
 }
 
-.password-helper {
-    padding-inline: 10px;
-    margin-block-start: 8px;
 
-    & .helper-inside {
-        width: 50%;
-
-        gap: 5px;
-
-        & p,
-        small {
-            font-size: 12px !important;
-
-        }
-
-        & small {
-            margin: 0;
-        }
-
-        & p {
-            color: rgb(var(--textClr), 0.6);
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-    }
-
-}
 
 
 .Name{
     gap:15px;
 }
 
-.red-text {
-    & small {
-        color: rgb(var(--danger));
 
-    }
-}
-
-.green-text {
-    & small {
-        color: rgb(var(--success));
-    }
-}
 
 
 .form__group {

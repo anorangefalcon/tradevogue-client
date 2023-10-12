@@ -11,33 +11,7 @@ height: 100vh;
 
     font-size: 13px !important;
 
-    & .form__input {
-        width: 100%;
-        height: 40px;
-        padding-inline: 15px;
-        border-radius: 4px;
-        outline: 1px solid rgba(var(--blackClr), 0.2);
-        font-size: 14px;
-        border: none;
-    
-        &:is(:focus, :hover, .active) {
-            border-color: rgb(var(--primaryClr));
-            outline-color: rgb(var(--primaryClr));
-        }
-    }
-    
-    & span.error{
-        position: absolute;
-        inset-block-start: calc(100% + 1px);
-        inset-inline-start: 0px;
-    }
-    
-    & .form__textarea{
-        height: 130px;
-        resize: none;
-        padding-block: 8px;
-    }
-
+   
     & .header {
         z-index: 1;
         height: 65px;

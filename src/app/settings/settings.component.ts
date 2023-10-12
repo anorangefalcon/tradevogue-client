@@ -3,25 +3,26 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FetchDataService } from '../shared/services/fetch-data.service';
 import { RouterLinksService } from '../shared/services/router-links.service';
 import { UtilsModule } from '../utils/utils.module';
+import { passwordStrengthValidator, matchPasswordValidator } from '../auth/validators';
 
 @Component({
   selector: 'app-settings',
   templateUrl: './settings.component.html',
   styleUrls: ['./settings.component.css']
 })
-export class SettingsComponent  {
-  showData : string = "profile";
-  OrderLength:number=0;
+export class SettingsComponent {
+  showData: string = "profile";
+  OrderLength: number = 0;
 
-  changeComponent(el:string){
-    this.showData=el;
+  changeComponent(el: string) {
+    this.showData = el;
   }
 
   @ViewChild('expand') ExpandBtn:ElementRef | undefined;
   isReadOnly:boolean=true;
   
   signupForm:FormGroup;
-  ChangePasswordForm:FormGroup;
+  changePasswordForm:FormGroup;
   userData:any='';
   CurrentPage:number=1;
   entriesCount:number=7;
@@ -30,55 +31,46 @@ export class SettingsComponent  {
 
   @ViewChild('EditBtn') EditBtn: ElementRef | undefined;
  
-  constructor(private renderer: Renderer2,private backendURLs:UtilsModule, private fetchDataService:FetchDataService,private routerlinkservice:RouterLinksService,private fb:FormBuilder,private el: ElementRef, private userService:FetchDataService){
-   
-   
-   
-    this.signupForm= fb.group(
-  
-      
-      {
-        name:fb.control('',[Validators.required]),
-        
-        username:fb.control('',[Validators.required]),
-        email:fb.control('',[Validators.email,Validators.required]),
-        mobileNo:fb.control('',[Validators.email,Validators.required]),
-        gender:fb.control('',[Validators.email,Validators.required]),
-        dob:fb.control('',[Validators.email,Validators.required]),
-        address:fb.control('',[Validators.email,Validators.required]),
-     
-      });   
 
-      this.ChangePasswordForm= fb.group(
-        {
-          currentPassword:fb.control('',[Validators.required]),
-          newPassword:fb.control('',[Validators.required]),
-          confirmPassword:fb.control('',[Validators.required]),
-        });  
+  constructor(private renderer: Renderer2, private routerlinkservice: RouterLinksService, private fb: FormBuilder, private el: ElementRef, private userService: FetchDataService) {
 
+    this.signupForm = fb.group({
+        name: fb.control('', [Validators.required]),
+        username: fb.control('', [Validators.required]),
+        email: fb.control('', [Validators.email, Validators.required]),
+        mobileNo: fb.control('', [Validators.email, Validators.required]),
+        gender: fb.control('', [Validators.email, Validators.required]),
+        dob: fb.control('', [Validators.email, Validators.required]),
+        address: fb.control('', [Validators.email, Validators.required]),
+        });
+
+    this.changePasswordForm = fb.group({
+      currentPassword: fb.control('', [Validators.required]),
+      newPassword: fb.control('', [Validators.required, Validators.minLength(8), passwordStrengthValidator]),
+      againNewPassword: fb.control('', [Validators.required, (control: any) => matchPasswordValidator(control, this.signupForm)])
+    })
 
     this.getData();
-    this.routerlinkservice.showDataValue.subscribe((data:string)=>{
-      this.showData=data;
+    this.routerlinkservice.showDataValue.subscribe((data: string) => {
+      this.showData = data;
     });
-   
+
   };
 
+ 
 
+  async onPasswordChange(){
+    try {
+      const body = {
+        oldPassword : this.changePasswordForm.get('currentPassword')?.value,
+        newPassword : this.changePasswordForm.get('newPassword')?.value
+      }
+    }
+    catch {}
 
-
-  ChangePasswordHandler(){
-    
   }
 
- async ngOnInit(){
-  try {
-    const data=await this.fetchDataService.httpGet( this.backendURLs.URLs.getDetails);
-    console.log("data coming is ",data);
-  } catch (error) {
-    
-  }
-}
+ 
 
 async  getData(){
 
@@ -95,24 +87,18 @@ await this.userService.getUserData().subscribe((data:any)=>{
 
 
 
-PageCount(){
-  
-  if(!(this.OrderLength/this.entriesCount)) return;
- 
-  if(this.OrderLength%this.entriesCount){
-    
-    
-    this.TotalPages=Math.ceil(this.OrderLength/this.entriesCount);
+
+  PageCount() {
+
+    if (!(this.OrderLength / this.entriesCount)) return;
+
+    if (this.OrderLength % this.entriesCount) {
+
+
+      this.TotalPages = Math.ceil(this.OrderLength / this.entriesCount);
+    }
+
   }
-
-  else{
-    this.TotalPages=(this.OrderLength/this.entriesCount);
-  }
-
- 
-}
-
-
 
   editClick(){
     
@@ -129,32 +115,38 @@ else{
 
   
 
- 
-  
-  ViewProduct(order:any){
-    order.expanded=!order.expanded;
-    if(order.expanded){
-      this.renderer.setProperty(this?.ExpandBtn?.nativeElement,'innerHTML',"expand_less")
+
+
+
+
+
+
+
+  ViewProduct(order: any) {
+    order.expanded = !order.expanded;
+    if (order.expanded) {
+      this.renderer.setProperty(this?.ExpandBtn?.nativeElement, 'innerHTML', "expand_less")
     }
-    else{
-      this.renderer.setProperty(this?.ExpandBtn?.nativeElement,'innerHTML',"expand_more")
+    else {
+      this.renderer.setProperty(this?.ExpandBtn?.nativeElement, 'innerHTML', "expand_more")
     }
-   
+
   }
 
 
-  PreviousPage(){
-    if(this.CurrentPage==1) return;
-    this.CurrentPage-=1;
+
+  PreviousPage() {
+    if (this.CurrentPage == 1) return;
+    this.CurrentPage -= 1;
   }
 
-  NextPage(){
-    if(this.CurrentPage>=this.TotalPages) return;
-    this.CurrentPage+=1;
+  NextPage() {
+    if (this.CurrentPage >= this.TotalPages) return;
+    this.CurrentPage += 1;
   }
 
-  Gotopage(el:number){
-    this.CurrentPage=el;
+  Gotopage(el: number) {
+    this.CurrentPage = el;
   }
 
-}
+  }
