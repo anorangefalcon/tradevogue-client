@@ -334,6 +334,20 @@
     animation: show-animation 0.5s ease-in-out;
 }
 
+.reviewSection {
+    display: none;
+    z-index: 90;
+    transform: translateY(0);
+    opacity : 0;
+    transition: transform 0.4s ease-out, visibility 0.4s ease-out, opacity 0.4s ease-out;
+
+}
+.showReviewSection {
+    display: flex;
+    /* z-index: 100;
+    transform: translateY(100%);*/
+    opacity: 1; 
+} 
 .crousel {
     .owl-theme .owl-nav {
         display: flex;

@@ -19,63 +19,63 @@ export class ForgetPasswordComponent {
   showPassword2: boolean = false;
   token: string = "";
 
-  constructor(private fb: FormBuilder, private router : Router, private backendUrls: UtilsModule, private fetchDataService: FetchDataService) {
+  constructor(private fb: FormBuilder, private router: Router, private backendUrls: UtilsModule, private fetchDataService: FetchDataService) {
     this.resetPasswordForm = fb.group({
       password: fb.control('', [Validators.required, passwordStrengthValidator]),
       confirmPassword: fb.control('', [Validators.required, passwordStrengthValidator])
     },
-    {
-      validators: this.passwordMatch
-    }
+      {
+        validators: this.passwordMatch
+      }
     )
 
 
 
 
   }
-  async ngOnInit(){
+  async ngOnInit() {
 
     try {
       this.token = this.router.url.split('/')[3];
-      
+
       const body = {
-        tokenData : this.token
+        tokenData: this.token
       }
       const data = await this.fetchDataService.httpPost(this.backendUrls.URLs.updatePasswordUrl, body);
-  
+
     } catch (error) {
-        this.router.navigate(['/']);
+      this.router.navigate(['/']);
     }
-  
-  
+
+
   }
-  passwordMatch(control: AbstractControl){
+  passwordMatch(control: AbstractControl) {
     const password = control.get('password')?.value;
     const confirmpassword = control.get('confirmPassword')?.value
 
     if (password === confirmpassword) {
-      return null; 
+      return null;
     } else {
-      return { passwordsNotMatch: true }; 
+      return { passwordsNotMatch: true };
     }
   }
-  async onReset(){
+  async onReset() {
     console.log(this.resetPasswordForm.value)
 
-   try {
-    const body = {
-      password : this.resetPasswordForm.get('password')?.value,
-      tokenData : this.token
+    try {
+      const body = {
+        password: this.resetPasswordForm.get('password')?.value,
+        tokenData: this.token
+      }
+      console.log(body, "update body");
+
+      const data = await this.fetchDataService.httpPost(this.backendUrls.URLs.updatePasswordUrl, body);
+      console.log(data, "update data");
     }
-    console.log(body, "update body");
-    
-    const data = await this.fetchDataService.httpPost(this.backendUrls.URLs.updatePasswordUrl, body);
-    console.log(data, "update data");
-   }
-  catch (error){
-    console.log("Error in Update Password: ", error);
-    
-  }
+    catch (error) {
+      console.log("Error in Update Password: ", error);
+
+    }
   }
 
 }

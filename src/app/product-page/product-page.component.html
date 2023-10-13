@@ -1,7 +1,5 @@
-<!-- Product Section -->
 <section class="container">
     <div *ngIf="data.productDetails !== {} " class="product">
-
         <div class="d-flex gap-30 main">
             <div class="product-carousel d-flex  gap-10 justify-content-center">
                 <div class="products-imgs-container d-flex flex-column  thumbnails">
@@ -82,10 +80,7 @@
                            
                             <button class="btn-primary d-flex gap-10 align-item-center cart cart-btn"
                                 (click)="addToCart()">
-                                <!-- <span class="material-symbols-outlined">
-                                    shopping_cart
-                                </span> -->
-                                <p>ADD TO CART</p>
+                                ADD TO CART
                             </button>
                         </div>
                     </div>
@@ -131,16 +126,10 @@
                     </div>
 
                     <div class="tags d-flex gap-10 d-flex align-item-center">
-                        <!-- <h4>TAGS :</h4> -->
                         <a *ngFor="let tag of data.productDetails.info.tags">
                             {{ tag }}
                         </a>
-
                     </div>
-                    <!-- <div class="sku d-flex gap-10">
-                        <h4>SKU :</h4>
-                        <p class="sku_id">{{ data.productDetails.sku }}</p>
-                    </div> -->
                 </div>
 
             </div>
@@ -173,7 +162,7 @@
                     </span>
                     Add a Review
             </button>
-            <form class="d-flex flex-column gap-20" *ngIf="showReview == true">
+            <form class="d-flex flex-column gap-20 reviewSection" [ngClass]="(this.showReview == true) ? 'showReviewSection' : ''">
                 <div class="edit-rating">
                     <span *ngFor="let ok of createArrayToIterate(5); let i = index" (click)="userRating = i"
                         (mouseover)="tempUserRating = i" (mouseleave)="tempUserRating = -1"
@@ -189,6 +178,7 @@
             </form>
         </div>
     </div>
+
     <div class="next">
         <h2 class="section-heading">Popular Products</h2>
         <p class="section-sub-heading">

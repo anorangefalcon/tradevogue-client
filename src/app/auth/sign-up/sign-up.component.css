@@ -43,35 +43,6 @@
 
         }
 
-        & .eye {
-            font-size: 15px;
-            color: rgb(var(--textClr), 0.3);
-            font-weight: 900;
-        }
-
-
-        & .eye-btn:is(:active, :hover) {
-            & .eye {
-
-                color: rgb(var(--primaryClr), 0.7);
-            }
-        }
-
-
-        & .eye-btn {
-
-            padding: 13px 5px;
-            border-radius: 10px;
-            border: none;
-
-            position: absolute;
-            inset-block-start: 30px;
-            inset-inline-end: 7px;
-            background-color: transparent;
-        }
-
-
-
         & .login-text {
             color: rgb(var(--primaryClr));
 

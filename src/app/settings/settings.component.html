@@ -53,9 +53,10 @@
                     <label class="form__label">EMAIL<span>*</span></label>
                     <span class="material-symbols-outlined form__icon absolute">mail</span>
                     <input type="text" id="email" formControlName="email" placeholder="Enter Your Email">
-                    <small *ngIf="ProfileForm.get('email')?.hasError('email') && ProfileForm.get('email')?.touched" class="invalid">
+                    <small *ngIf="ProfileForm.get('email')?.hasError('email') && ProfileForm.get('email')?.touched"
+                        class="invalid">
                         *Please enter valid Email.
-                      </small>
+                    </small>
                 </div>
 
 
@@ -64,9 +65,10 @@
                     <span class="material-symbols-outlined form__icon absolute">call</span>
                     <input type="text" id="mobile" formControlName="mobile" placeholder="Enter Your MobileNo">
 
-                    <small *ngIf="DetailsSubmitted && ProfileForm.get('mobile')?.hasError('notvalid') && ProfileForm.get('mobile')?.touched"
-                    class="invalid">*Mobile No is invalid.</small>
-      
+                    <small
+                        *ngIf="DetailsSubmitted && ProfileForm.get('mobile')?.hasError('notvalid') && ProfileForm.get('mobile')?.touched"
+                        class="invalid">*Mobile No is invalid.</small>
+
                 </div>
 
 
@@ -95,28 +97,19 @@
                     <input type="date" id="dob" formControlName="dob" placeholder="Enter Your Username">
                 </div>
 
-                <!-- <div class="form__group relative d-flex flex-column">
-                    <label class="form__label">ADDRESS<span>*</span></label>
-                    <span class="material-symbols-outlined form__icon absolute">home</span>
-                    <input type="text" id="address" formControlName="address" placeholder="Enter Your Address">
-                </div> -->
-                    <!-- <textarea id="address" formControlName="address" placeholder="Enter Your Address" rows="4"
-                        cols="50"></textarea> -->
-
-         
-
-
                 <div class="form__group relative radio d-flex" *ngIf="!isReadOnly">
 
                     <label for="male">
-                        <input type="radio" id="male" name="gender" value="male" formControlName="gender" [attr.checked]="this?.ProfileForm?.get('gender')?.value=='male' ? true: null">
+                        <input type="radio" id="male" name="gender" value="male" formControlName="gender"
+                            [attr.checked]="this?.ProfileForm?.get('gender')?.value=='male' ? true: null">
                         <span>
                             Male
                         </span>
                     </label>
 
                     <label>
-                        <input type="radio" id="female" name="gender" formControlName="gender"  value="female" [attr.checked]="this?.ProfileForm?.get('gender')?.value=='female'  ? true : null">
+                        <input type="radio" id="female" name="gender" formControlName="gender" value="female"
+                            [attr.checked]="this?.ProfileForm?.get('gender')?.value=='female'  ? true : null">
                         <span>
                             female
                         </span>
@@ -128,12 +121,12 @@
 
             <div class="d-flex gap-15">
                 <button class="width-160 cancelbtn" (click)="editClick()" *ngIf="!isReadOnly">Cancel</button>
-                <button class="btn-primary width-160" #EditBtn (click)="editClick()" *ngIf="isReadOnly">Edit Profile</button>
+                <button class="btn-primary width-160" #EditBtn (click)="editClick()" *ngIf="isReadOnly">Edit
+                    Profile</button>
                 <button class="btn-primary width-160" #EditBtn (click)="saveDetails()" *ngIf="!isReadOnly">Save</button>
             </div>
 
-            <!-- <button class="btn-primary width-160" *ngIf="isReadOnly" (click)="editClick()">Edit Details</button>
-            <button class="btn-primary  width-160" *ngIf="!isReadOnly" (click)="editClick()" #myButton>Save</button> -->
+
 
         </div>
 
@@ -275,16 +268,25 @@
                 <div class="form__group relative d-flex flex-column">
                     <label class="form__label">CURRENT PASSWORD<span>*</span></label>
                     <span class="material-symbols-outlined form__icon absolute key">key</span>
-                    <input type="password" id="name" formControlName="currentPassword" placeholder="Enter Current Password">
-
+                    <input [type]="password3" id="name" formControlName="currentPassword"
+                        placeholder="Enter Current Password">
+                        <button class="eye-btn flex justify-content-center align-items-center"
+                        (click)="showPassword3 = !showPassword3 ; password3 = showPassword3? 'text' : 'password';"><span
+                            class="material-symbols-outlined eye">{{showPassword3? 'visibility' :
+                            'visibility_off'}}</span>
+                    </button>
                 </div>
 
                 <div class="form__group relative d-flex flex-column">
                     <label class="form__label">NEW PASSWORD<span>*</span></label>
 
                     <span class="material-symbols-outlined form__icon absolute key">key</span>
-                    <input type="password" id="email" formControlName="newPassword" placeholder="Enter New Password">
-
+                    <input [type]="password2" id="email" formControlName="newPassword" placeholder="Enter New Password">
+                    <button class="eye-btn flex justify-content-center align-items-center"
+                    (click)="showPassword2 = !showPassword2 ; password2 = showPassword2 ? 'text' : 'password';"><span
+                        class="material-symbols-outlined eye">{{showPassword2? 'visibility' :
+                        'visibility_off'}}</span>
+                </button>
                     <div class="password-helper d-flex justify-content-md-between">
 
 
@@ -339,9 +341,13 @@
                 <div class="form__group relative d-flex flex-column">
                     <label class="form__label">CONFIRM NEW PASSWORD<span>*</span></label>
                     <span class="material-symbols-outlined key form__icon absolute">key</span>
-                    <input type="password" id="confirmPassword" formControlName="confirmPassword"
+                    <input [type]="password" id=" againNewPassword" formControlName="againNewPassword"
                         placeholder="Retype new password">
-
+                    <button class="eye-btn flex justify-content-center align-items-center"
+                        (click)="showPassword = !showPassword ; password = showPassword ? 'text' : 'password';"><span
+                            class="material-symbols-outlined eye">{{showPassword? 'visibility' :
+                            'visibility_off'}}</span>
+                    </button>
                 </div>
 
             </form>

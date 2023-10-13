@@ -175,7 +175,6 @@ input[type="checkbox"]:checked + label::after {
         width: 100%;
         inset-inline: 0;
         overflow: scroll;
-
         visibility: hidden;
         transform: translateY(100%);
         opacity: 0;
