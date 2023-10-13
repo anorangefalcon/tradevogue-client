@@ -1,0 +1,49 @@
+.popup{
+    display: flex;
+    /* visibility: visible; */
+    /* opacity: 1; */
+}
+.dialog__content {
+    & h3 {
+        font-size: 23px !important;
+        font-weight: 500;
+        color: rgb(var(--primaryClr));
+    }
+
+    & p{
+        margin-bottom: 20px;
+    }
+
+    & button{
+        padding: 8px 24px;
+    }
+}
+
+/* Dialog Box  */
+.dialogBox {
+    /* display: none; */
+    /* visibility: hidden; */
+    /* opacity: 0; */
+    z-index: 1;
+    background-color: transparent;
+    border: none;
+    backdrop-filter: blur(2px);
+
+    & .dialog__content {
+        background-color: rgb(var(--whiteClr));
+        max-width: 620px;
+        min-height: 260px;
+        border-radius: 5px;
+        box-shadow: 0px 0px 10px rgb(var(--blackClr), 0.1);
+        text-align: center;
+        padding: 15px;
+    }
+
+}
+.col{
+    width: 50%;
+}
+
+.col_left{
+    padding: 10px;
+}
