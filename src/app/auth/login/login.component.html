@@ -7,9 +7,8 @@
             <h2 class="login-title text-center">Welcome Back</h2>
             <form [formGroup]="loginForm" class="mw100 d-flex flex-column gap-15">
 
-                <!-- USERNAME INPUT  -->
                 <div class="form__group relative d-flex flex-column">
-                    <label class="form__label">Email<span>*</span></label>
+                    <label class="form__label">Email</label>
                     <span class="material-symbols-outlined person form__icon absolute">person</span>
                     <input type="text" placeholder="Enter Your Username" formControlName="email">
                     <!-- <small
@@ -17,10 +16,10 @@
                         class="invalid">*Please enter valid email.
                     </small> -->
 
-                    <small *ngIf="loginForm.get('email')?.hasError('email') && loginForm.get('email')?.touched"
+                    <!-- <small *ngIf="loginForm.get('email')?.hasError('email') && loginForm.get('email')?.touched"
                         class="invalid">
                         *Please enter valid Email.
-                    </small>
+                    </small> -->
 
                 </div>
 
@@ -29,35 +28,48 @@
 
                     <!-- [ngClass]="{'wrapper-invalid': (loginForm?.get('password')?.hasError('required') || loginForm?.get('password')?.hasError('password-fail')) && loginForm?.get('password')?.touched}"
                         [ngClass]="{'wrapper-valid': (!loginForm?.get('password')?.hasError('required') && !loginForm?.get('password')?.hasError('password-fail')) && loginForm?.get('password')?.touched}"> -->
-                    <label>Password<span>*</span></label>
+                    <label class="d-flex  password-label">Password</label>
                     <span class="material-symbols-outlined key  form__icon absolute">key</span>
                     <input [type]="passwordFieldType" placeholder="Enter Your Password" formControlName="password">
                     <button class="eye-btn flex justify-content-center align-item-center"
                         (click)="togglePasswordVisibility()">
-                        <span class="material-symbols-outlined eye">{{ showPassword ? 'visibility' : 'visibility_off'
-                            }}</span>
+                        <span class="material-symbols-outlined eye">{{ showPassword ? 'visibility' : 'visibility_off'}}</span>
                     </button>
-                    <small
+                    <div class="forgot-pass">
+                        <a class="pointer sign-up-text" (click)="showPasswordForm=true">Forgot password?</a>
+                    </div>
+                    <!-- <small
                         *ngIf="loginForm?.get('password')?.errors && loginForm?.get('password')?.touched && !loginForm.get('password')?.hasError('required')"
                         class="invalid">*Please enter valid password.
-                    </small>
+                    </small> -->
                 </div>
-
-                <div class="forgot-pass">
+                <!-- <div class="forgot-pass">
                     <a class="pointer sign-up-text" (click)="showPasswordForm=true">Forgot password?</a>
-                </div>
-                <button class="btn-primary loginbtn" [disabled]="loginForm.invalid" (click)="onLogin()">Login</button>
-                <div class="d-flex justify-content-center">
-                    <div id="g_id_onload"
-                        data-client_id="772184715446-gek74bjj4p973rl3jtcbhmmrtsdp2dsl.apps.googleusercontent.com"
-                        data-context="signin" data-ux_mode="popup" data-callback="googleAuthCallback"
-                        data-auto_prompt="false">
-                    </div>
+                </div> -->
 
-                    <div class="g_id_signin" data-type="standard" data-shape="rectangular" data-theme="outline"
-                        data-text="signin_with" data-size="large" data-logo_alignment="left">
-                    </div>
+                
+                <button class="btn-primary loginbtn" [disabled]="loginForm.invalid" (click)="onLogin()">Login</button>
+
+                <div class="or-div relative">
+                    <p class="absolute">or</p>
                 </div>
+
+                <button class="btn-secondary relative d-flex justify-content-center align-item-center google-btn-wrapper ">
+                    <img src="../../../assets/logos/google-logo.svg" width="50px" height="50px" alt="google"/>
+                    Sign in with Google
+                    <div class="google-btn ">
+                        <div id="g_id_onload"
+                            data-client_id="772184715446-gek74bjj4p973rl3jtcbhmmrtsdp2dsl.apps.googleusercontent.com"
+                            data-context="signin" data-ux_mode="popup" data-callback="googleAuthCallback"
+                            data-auto_prompt="false">
+                        </div>
+
+                        <div class="g_id_signin" data-type="standard" data-shape="rectangular" data-theme="outline"
+                            data-text="signin_with" data-size="large" data-logo_alignment="left">
+                        </div>
+                    </div>
+                </button>
+
                 <p class="text-center acc-text">Don't have an account? <a class="sign-up-text"
                         [routerLink]="['/auth/signup']">Sign up</a></p>
             </form>
@@ -69,7 +81,7 @@
             <h2 class="login-title text-center">Forgot Password</h2>
             <form [formGroup]="forgetPasswordForm" class="mw100 d-flex flex-column gap-15">
                 <div class="form__group relative d-flex flex-column">
-                    <label class="form__label">Email<span>*</span></label>
+                    <label class="form__label">Email</label>
                     <span class="material-symbols-outlined person form__icon absolute">mail</span>
                     <input type="text" placeholder="Enter Your Email" formControlName="passwordEmail">
                     <small
@@ -86,6 +98,5 @@
         <app-dialog *ngIf="isactive" [type]="'confirmation'"
             [ngStyle]="{'display': isactive ? 'flex': 'none'}"></app-dialog>
     </div>
-    {{isactive}}
     <div class="column right-column"></div>
 </section>

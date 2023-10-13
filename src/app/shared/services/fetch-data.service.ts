@@ -74,12 +74,9 @@ export class FetchDataService {
 
           rej(error)
           if (error.message) {
-
             const data = { title: error.message };
             this.toastService.errorToast(data);
           }
-
-
         }
       })
     })
