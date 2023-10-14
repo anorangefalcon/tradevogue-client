@@ -234,7 +234,7 @@ ul {
 }
 
 .mw100 {
-    min-width: 100%;
+    width: 100%;
 }
 
 
@@ -452,6 +452,10 @@ ul {
 
 .left-0 {
     left: 0;
+}
+
+.overflow-hidden {
+    overflow: hidden;
 }
 
 /* Other common styles */

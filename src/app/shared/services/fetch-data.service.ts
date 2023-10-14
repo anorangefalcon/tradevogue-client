@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ToastService } from './toast.service';
-import { Observable, filter, map, tap } from 'rxjs';
+import { Observable, Subject, filter, map, tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -11,6 +11,8 @@ export class FetchDataService {
   url = '../../../assets/tempDB/products.json';
   userUrl = '../../../assets/tempDB/usersData.json';
   sellerUrl = '../../../assets/tempDB/seller.json';
+  subject = new Subject()
+
   constructor(private http: HttpClient, private toastService: ToastService) { }
 
   productKeys: any = ['available', 'colors', 'description', 'image', 'info', 'name', 'price', 'oldPrice', 'orderQuantity', 'reviews', 'sizes', 'sku', 'stockQuantity'];
@@ -43,14 +45,24 @@ export class FetchDataService {
     return this.http.get(this.sellerUrl);
   }
 
-  httpPost(url: any, body: any) {
-    return new Promise((res, rej) => {
+  
 
+
+  httpPost(url: any, body: any) {
+    
+    return new Promise((res, rej) => {
+      console.log('POST MEETHOD CALLED ',url," BODY IS ",body);
+      
       this.http.post(url, body).subscribe({
         next: (data) => {
+          console.log('DATA INSIDE NE');
+          
           res(data);
+          console.log(data, "ervice data");
+          
           
         }, error: (error) => {
+        
           rej(error)
           if (error.message) {
             const data = { title: error.error.message };

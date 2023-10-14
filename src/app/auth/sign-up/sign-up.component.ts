@@ -27,15 +27,20 @@ export class SignUpComponent {
   constructor(private fb: FormBuilder, private router: Router,private cookies: CookieService, private renderer: Renderer2, private userData: UserDataService, private backendURLs: UtilsModule, private fetchDataService: FetchDataService) {
 
     // Google login
-    window.addEventListener('authCredential', async (event: any) => {
+    window.addEventListener('signupEvent', async (event: any) => {
       try {
+        console.log('LOG OF SIGNUP WINDOW DISPACHT----------------');
+        
         const token = { clientId: event.detail.clientId, credential: event.detail.credential }
         const body = { token };
-        let data = await this.fetchDataService.httpPost(this.backendURLs.URLs.signupUrl, body);
+        let data:any = await this.fetchDataService.httpPost(this.backendURLs.URLs.signupUrl, body);
+        // console.log("DATA COMING IS ",data);
+        this.cookies.set('userToken', data.token)
         this.router.navigate(['/']);
 
       } catch (error) {
-
+        console.log('ERROR INSIDE CATHC INSIDE SIGNUP-----', error);
+        
       }
 
     })

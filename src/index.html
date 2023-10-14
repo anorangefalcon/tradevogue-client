@@ -27,8 +27,13 @@
 </body>
 
 <script>
-  function googleAuthCallback(res){
-    const event = new CustomEvent('authCredential', { detail: res });
+  function LoginGoogleHandler(res){
+    const event = new CustomEvent('loginEvent', { detail: res });
+    window.dispatchEvent(event);
+  }
+
+  function SignupGoogleHandler(res){
+    const event = new CustomEvent('signupEvent', { detail: res });
     window.dispatchEvent(event);
   }
 </script>

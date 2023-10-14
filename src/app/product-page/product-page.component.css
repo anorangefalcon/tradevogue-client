@@ -5,7 +5,6 @@
 
 .review-btn {
     width: fit-content !important;
-
     & span {
         font-size: 16px;
     }
@@ -14,9 +13,7 @@
 .product {
 
     & .product-carousel {
-        position: relative;
         width: 50%;
-        overflow: hidden;
     }
 
     & .product-desc {
@@ -25,25 +22,21 @@
 
     .bigcarousel {
         width: 100% !important;
-        overflow: hidden;
     }
 
     & .img-div {
-        width: 100%;
-        overflow: hidden;
         min-height: 650px;
         background-size: contain;
         margin-block-end: 7px;
         border-radius: 4px;
-        position: relative;
     }
 
     & .wishlist-btn {
         padding: 0;
-        position: absolute;
         inset-block-start: 14px;
         inset-inline-end: 14px;
         background-color: transparent;
+        z-index: 1;
 
         & span {
             color: rgb(var(--whiteClr));
@@ -65,8 +58,6 @@
     }
 
     & .products-imgs-container {
-
-        gap: 10px;
         flex-wrap: nowrap;
         overflow-x: scroll;
         width: 100px;
@@ -76,10 +67,8 @@
         }
 
         & .gal-img {
-            width: 100%;
             height: 100px;
             object-fit: cover;
-            position: relative;
             border-radius: 3px;
         }
 
@@ -119,8 +108,6 @@
     }
 
     & .accordian {
-        width: 100%;
-
         & .content {
             font-size: 13px !important;
         }
@@ -131,9 +118,7 @@
     }
 
     & .accordian__head {
-        position: relative;
         padding-block: 10px;
-        cursor: pointer;
         font-size: 16px !important;
     }
 
@@ -197,7 +182,6 @@
 
     .sizes-radios {
         border-radius: 4px;
-        position: relative;
         width: fit-content;
     }
 
@@ -285,28 +269,8 @@
         }
     }
 
-    .customSelect {
-        flex-direction: row;
-
-    }
-
-    .customSelect .select-selected {
-        width: 155px;
-    }
-
-    .customSelect .options__container {
-        width: 155px;
-        transform: translateX(80px);
-
-        &::-webkit-scrollbar {
-            width: 0px;
-        }
-    }
-
-
     .subTitle {
         font-size: 14px !important;
-        width: 100%;
         padding-block: 15px;
         border-block-end: 1px solid rgb(var(--textClr), 0.2);
         margin-block-end: 20px;
@@ -344,8 +308,6 @@
 }
 .showReviewSection {
     display: flex;
-    /* z-index: 100;
-    transform: translateY(100%);*/
     opacity: 1; 
 } 
 .crousel {
@@ -466,7 +428,11 @@
     }
 }
 
-
+.customSelect > .custom-select{
+    border: 2px solid #000000;
+    height: 52px !important;
+    width: 100%;
+}
 
 .review-cards {
     width: 100%;

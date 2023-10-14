@@ -13,7 +13,7 @@ export class NavbarComponent implements OnInit {
   isSearching: boolean = false;
   isUserLogin: boolean = false;
   hamburgerOpen: boolean = false;
-  purchaser: string = "";
+  purchaser: any = "";
   cart_count: number = 0;
   cartArr: any[] = [];
   navbar_scroll_style: boolean = false;
@@ -30,6 +30,8 @@ export class NavbarComponent implements OnInit {
       this.isUserLogin = true;
     }
 
+
+
   }
 
   ngOnInit() {
@@ -38,7 +40,14 @@ export class NavbarComponent implements OnInit {
       this.cart_count = data.details.length;
       this.cartArr = data.details;
 
+      this?.fetchDataService?.subject?.subscribe((val)=>{
+        this.purchaser=val;
+        console.log(this.purchaser, "purchaser")
+        
+       })
     })
+
+    
   }
 
   onLogout() {

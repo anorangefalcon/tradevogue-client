@@ -36,13 +36,17 @@ export class LoginComponent {
       passwordEmail: fb.control('', [Validators.required, Validators.email])
     })
     // Google login
-    window.addEventListener('authCredential', async (event: any) => {
+    window.addEventListener('loginEvent', async (event: any) => {
       try {
         const token = { clientId: event.detail.clientId, credential: event.detail.credential }
         const body = { token };
+        
         let data: any = await this.fetchDataService.httpPost(this.backendUrls.URLs.loginUrl, body);
         
+        
+        
         this.cookies.set('userToken', data.token)
+       
         this.router.navigate(['/']);
 
       } catch (error) {
@@ -69,6 +73,9 @@ export class LoginComponent {
       console.log(this.loginForm);
 
       const data:any = await this.fetchDataService.httpPost(this.backendUrls.URLs.loginUrl, body)
+      console.log("login data", data);
+      
+      this.fetchDataService.subject.next(data.firstName);  
       this.cookies.set('userToken', data.token)
       this.router.navigate(['/']);
 

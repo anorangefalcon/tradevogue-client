@@ -15,9 +15,9 @@ export class HeadersInterceptor implements HttpInterceptor {
   constructor( private cookies: CookieService) {}
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
-   
+    
     let token = this.cookies.get('userToken');
-    console.log("Token is ",token);
+    // console.log("Token is ",token);
     if (token) {
       request = request.clone({
         setHeaders: {

@@ -1,29 +1,30 @@
 <section class="container">
     <div *ngIf="data.productDetails !== {} " class="product">
         <div class="d-flex gap-30 main">
-            <div class="product-carousel d-flex  gap-10 justify-content-center">
-                <div class="products-imgs-container d-flex flex-column  thumbnails">
-                    <div class="gal-img pointer" *ngFor="let image of data.productDetails.image; let i = index"
-                        [ngStyle]="{ 'background': 'url(' + image + ')', 'background-size': 'cover', 'background-position': 'center' }
+            <div class="product-carousel d-flex  gap-10 justify-content-center relative overflow-hidden">
+                <div class="products-imgs-container d-flex flex-column  thumbnails gap-10">
+                    <div class="gal-img pointer mw-100 relative"
+                        *ngFor="let image of data.productDetails.image; let i = index" [ngStyle]="{ 'background': 'url(' + image + ')', 'background-size': 'cover', 'background-position': 'center' }
                          " (click)="switchImage(i)" [ngClass]="{ active: i === activeIndex }">
                     </div>
                 </div>
-                <owl-carousel-o [options]="atDefault ? customOptions : carouselOption" [ngClass]="{crousel: true}" class="bigcarousel">
+                <owl-carousel-o [options]="atDefault ? customOptions : carouselOption" [ngClass]="{crousel: true}"
+                    class="bigcarousel overflow-hidden">
                     <ng-template carouselSlide *ngFor="let image of data.productDetails.image">
-                        <div class="img-div d-flex justify-content-center align-item-center"
+                        <div class="img-div d-flex justify-content-center align-item-center overflow-hidden mw-100"
                             [ngStyle]="{ 'background': 'url(' + image + ')', 'background-size': 'cover' }">
                         </div>
-                        <button class=" wishlist-btn d-flex align-item-center">
-                            <span class="material-symbols-outlined">
-                                favorite
-                            </span>
-                        </button>
                     </ng-template>
                 </owl-carousel-o>
+                <button class=" wishlist-btn d-flex align-item-center absolute">
+                    <span class="material-symbols-outlined">
+                        favorite
+                    </span>
+                </button>
             </div>
             <div class="product-desc">
                 <h2 class="prod-name">{{ data.productDetails.name }}</h2>
-                <p class="subTitle">{{ data.productDetails.info['subTitle'] }}</p>
+                <p class="subTitle mw-100">{{ data.productDetails.info['subTitle'] }}</p>
                 <div class="prod-info d-flex flex-column gap-20">
                     <div class="d-flex align-item-center gap-10">
                         <h5 class="price">₹{{ data.productDetails.price }}</h5>
@@ -47,12 +48,13 @@
                                 class="material-symbols-outlined">star</span>
                         </div>
                         <p class="rate">({{data.avgRating}}/5 · {{data.productDetails.reviews.length}} Reviews)</p>
-                     
+
                     </div>
                     <div class="sizes d-flex align-item-center gap-20" id="sizes">
                         <p>Size:</p>
                         <div class="sizes-opt d-flex gap-10">
-                            <div *ngFor="let productSize of data.productDetails.sizes; let i = index" class="sizes-radios">
+                            <div *ngFor="let productSize of data.productDetails.sizes; let i = index"
+                                class="sizes-radios relative">
                                 <input type="radio" name="size" [value]=productSize id="size_{{ productSize }}"
                                     [(ngModel)]="selectedSize" [checked]="i == 0">
                                 <label for="size_{{ productSize }}">{{ productSize }}</label>
@@ -71,13 +73,16 @@
                     </div>
 
                     <div class="d-flex gap-15 align-item-center">
-        
-                        <app-custom-select [selectedOption] = data.productDetails.orderQuantity[0] (final_option)="updateSelectedField($event)"
-                            [options]="data.productDetails.orderQuantity">
-                        </app-custom-select>
+
+                        <div class="customSelect">
+                            <app-custom-select [selectedOption]=data.productDetails.orderQuantity[0]
+                                (final_option)="updateSelectedField($event)"
+                                [options]="data.productDetails.orderQuantity" >
+                            </app-custom-select>
+                        </div>
 
                         <div class="cart-div d-flex gap-10 align-item-center">
-                           
+
                             <button class="btn-primary d-flex gap-10 align-item-center cart cart-btn"
                                 (click)="addToCart()">
                                 ADD TO CART
@@ -86,10 +91,11 @@
                     </div>
 
 
-                
+
                     <div class="d-flex flex-column">
-                        <div class="accordian">
-                            <h3 class="accordian__head" [ngClass]="accordianOpen ? 'active' : ''" (click)="accordianOpen = !accordianOpen">
+                        <div class="accordian mw-100">
+                            <h3 class="accordian__head relative pointer" [ngClass]="accordianOpen ? 'active' : ''"
+                                (click)="accordianOpen = !accordianOpen">
                                 Description
                             </h3>
                             <div class="accordian__body">
@@ -100,7 +106,8 @@
                             </div>
                         </div>
                         <div class="accordian">
-                            <h3 class="accordian__head" [ngClass]="accordianOpen2 ? 'active' : ''" (click)="accordianOpen2 = !accordianOpen2">
+                            <h3 class="accordian__head relative pointer" [ngClass]="accordianOpen2 ? 'active' : ''"
+                                (click)="accordianOpen2 = !accordianOpen2">
                                 Information
                             </h3>
                             <div class="accordian__body d-flex flex-column gap-5">
@@ -134,7 +141,7 @@
 
             </div>
         </div>
-     
+
         <div class="review-cards d-flex flex-column gap-20 ">
             <h3 class="rate">Rate & Review</h3>
             <div class="review-card d-flex flex-column gap-5" *ngFor="let review of data.productDetails.reviews">
@@ -156,13 +163,22 @@
                 </div>
             </div>
 
-            <button class="btn-primary review-btn pointer d-flex align-item-center gap-10" (click)="this.showReview = !this.showReview">
+            <button class="btn-primary review-btn pointer d-flex align-item-center gap-10" *ngIf="this.showReview!=true"
+                (click)="this.showReview = !this.showReview">
                 <span class="material-symbols-outlined">
                     edit
-                    </span>
-                    Add a Review
+                </span>
+                Add a Review
             </button>
-            <form class="d-flex flex-column gap-20 reviewSection" [ngClass]="(this.showReview == true) ? 'showReviewSection' : ''">
+            <button class="btn-primary review-btn pointer d-flex align-item-center gap-10" *ngIf="this.showReview==true"
+                (click)="this.showReview = !this.showReview">
+                <span class="material-symbols-outlined">
+                    close
+                </span>
+                Close
+            </button>
+            <form class="d-flex flex-column gap-20 reviewSection"
+                [ngClass]="(this.showReview == true) ? 'showReviewSection' : ''">
                 <div class="edit-rating">
                     <span *ngFor="let ok of createArrayToIterate(5); let i = index" (click)="userRating = i"
                         (mouseover)="tempUserRating = i" (mouseleave)="tempUserRating = -1"
