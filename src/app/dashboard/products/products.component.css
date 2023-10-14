@@ -27,7 +27,7 @@
             font-weight: 400;
         }
 
-        & .operational-buttons-icons{
+        & .operational-buttons-icons {
             font-size: 22px;
             font-weight: 300;
             transition: transform 0.3s ease-in-out;
@@ -58,11 +58,11 @@
             padding: 10px 24px;
         }
 
-        & .operation-icon{
+        & .operation-icon {
             font-size: 22px;
             font-weight: 300;
             transition: transform 0.3s ease-in-out;
-            
+
         }
 
         & .uploadbtn span {
@@ -80,51 +80,70 @@
         border-radius: 10px;
         overflow: hidden;
 
-        & .product-list{
+        & .product-list {
             overflow: auto;
 
-            &::-webkit-scrollbar{
+            &::-webkit-scrollbar {
                 width: 2px;
-            } 
+            }
         }
 
         & table {
             border-collapse: collapse;
             border-style: hidden;
-        }
 
-        & .product-items {
-            font-weight: 600;
-            padding: 8px 14px;
-            vertical-align: middle;
-            font-size: 12px;
-            white-space: nowrap;
-            text-align: left;
-            letter-spacing: 0.26px;
-            border-bottom: 1px solid rgba(128, 128, 128, 0.152);
-        }
+            & .items {
+                font-weight: 600;
+                padding: 8px 14px;
+                vertical-align: middle;
+                font-size: 12px;
+                white-space: nowrap;
+                text-align: left;
+                letter-spacing: 0.26px;
+                border-bottom: 1px solid rgba(128, 128, 128, 0.152);
+            }
 
-        & th{
-            padding: 12px 16px !important;
-            background-color: #f4f5f7;
-            color: rgb(var(--blackClr), 0.7);
-        }
-
-        & td.product-items {
-            font-weight: 400;
-        }
+            & th {
+                padding: 12px 16px !important;
+                background-color: #f4f5f7;
+                color: rgb(var(--blackClr), 0.7);
+            }
 
 
+            & td.items {
+                font-weight: 400;
+            }
 
-        /* BotherSome Checkbox */
-        & td .product-image + span{
-            width: 20ch;
-            overflow: auto;
-            text-overflow: ellipsis;
+            & td .product-image+span {
+                width: 20ch;
+                overflow: auto;
+                text-overflow: ellipsis;
 
-            &::-webkit-scrollbar{
-                width: 2px;
-                display: none;
+                &::-webkit-scrollbar {
+                    width: 2px;
+                    display: none;
+                }
+            }
+
+            & tbody tr {
+                transition: all 0.3s ease-in-out;
+    
+                &:hover {
+                    background-color: rgb(var(--secondary), 0.02);
+                }
+            }
+    
+            & td:last-child {
+                & .fa-icon {
+                    font-size: 14px;
+                    transition: all 0.1s ease-in-out;
+                    padding: 2px;
+                    color: rgb(var(--blackClr), 0.7);
+                }
+    
+                & a:hover i {
+                    color: rgb(var(--blue-clr));
+                }
             }
         }
 
@@ -133,7 +152,7 @@
             height: 30px;
             border-radius: 5px;
 
-            & img{
+            & img {
                 object-fit: cover;
             }
         }
@@ -163,30 +182,9 @@
                 border-color: rgb(var(--primaryClr));
             }
         }
-    
-        & tbody tr{
-            transition: all 0.3s ease-in-out;
-
-            &:hover{
-                background-color: rgb(var(--secondary), 0.02);
-            }
-        }
-
-        & td:last-child{
-            & .fa-icon {
-                font-size: 14px;
-                transition: all 0.1s ease-in-out;
-                padding: 2px;
-                color: rgb(var(--blackClr), 0.7);
-            }
-
-            & a:hover i{
-                color: rgb(var(--blue-clr));
-            }
-        }
     }
 
-    & .table-controls{
+    & .table-controls {
         padding-block-end: 20px;
         justify-content: flex-end;
     }

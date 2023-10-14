@@ -1,5 +1,43 @@
-<div class="form_container ">
+<div class="card-container mh100 ">
+
+    <div class="card__block mw100" *ngFor="let item of card_template; let i=index">
+
+        <div class="row row-1 d-flex align-item-center justify-content-md-between">
+            <h4>{{item.name}}</h4>
+
+            <div class="file-section d-flex flex-center gap-5">
+                <input type="file" [id]="'item'+i" minlength="1" (input)="uploadFile($event, item.type)" class="mh100 mw100"
+                    accept="image/CSV, application/vnd.ms-excel ,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+                    multiple />
+                <label [for]="'item'+i" class="d-flex flex-center pointer transition"><span class="material-symbols-outlined">upload_file</span></label>
+                <a class="d-flex flex-center" [href]="'../../../assets/ExcelSampleFile/'+ item.file_name + '.xlsx'" download>
+                    <span class=" transition material-symbols-outlined">download</span></a>
+            </div>
+        </div>
+        <div class="row row-2 card-data d-flex gap-10 flex-column">
+            <ng-container *ngIf="field_data">
+                <div class="data__field d-flex justify-content-md-between fs-14 transition " *ngFor="let option of field_data[item.type] | productFilter: filter[item.filter]; let j = index">
+                    <span>{{option}}</span>
+                    <span class="pointer d-flex flex-center transition material-symbols-outlined" (click)="deleteItem(item.type, j)">close</span>
+                </div>
+            </ng-container>
+        </div>
+        <div class="row row-3 relative mh100">
+            <input type="text" class="form__input" [placeholder]="'Add '+ item.name" [id]="item.type" [(ngModel)]='filter[item.filter]' />
+
+            <div class="button absolute inset-inline-end-0 inset-block-start-0">
+                <button class="btn-primary d-flex flex-center" type="submit" (click)="addItem(item.filter, item.type)">
+                    <span class="material-symbols-outlined">add</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+
+
+<!-- 
     <div class="form__group">
+
         <div class="card d-flex flex-column">
             <div class="row-1 d-flex align-item-center justify-content-md-between">
                 <h4>Category</h4>
@@ -15,37 +53,28 @@
             </div>
             <div class="row-2 d-flex flex-column">
                 <div class="column d-flex flex-column gap-10">
-                    <!-- <h6>Available</h6> -->
                     <div class="category d-flex gap-10 flex-column">
                         <div
                             *ngFor="let option of dataList.categoryList | productFilter: data['category']; let i = index">
                             <span>{{option}}</span>
-                            <span class="material-symbols-outlined" (click)="deleteItem('categoryList', i)">close</span>
+                            <span class="material-symbols-outlined" (click)="deleteItem('categoriesList', i)">close</span>
                         </div>
                     </div>
                 </div>
-                <div class="column d-flex gap-10 flex-column">
-                    <!-- <h6>Add new Category</h6> -->
-                    <div class="d-flex gap-5 flex-column relative">
-                        <input type="text" placeholder="Add Category" id="category" [(ngModel)]="data.category" />
+                <div class="column d-flex gap-10 flex-column relative">
+
+                        <input type="text" placeholder="Add Category" id="category" [(ngModel)]='data.category' />
 
                         <div class="button absolute">
-                            <button class="btn-primary" type="submit" (click)="addItem('category', 'categoryList')">
+                            <button class="btn-primary" type="submit" (click)="addItem('category', 'categoriesList')">
                                 <span class="material-symbols-outlined">add</span>
                             </button>
                         </div>
-                        <!-- <div class="error">
-                                <small
-                                    *ngIf="categories.get('category')?.hasError('required') && categories.get('category')?.touched &&  categories.get('category')?.invalid">Field
-                                    Required</small>
-                                <small *ngIf="categories.get('category')?.hasError('invalidName')">Invalid Name</small>
-                            </div> -->
-                    </div>
                 </div>
             </div>
         </div>
-    </div>
-
+    </div> -->
+<!-- 
     <div class="form__group">
         <div class="card d-flex flex-column">
             <div class="row-1 d-flex align-item-center justify-content-md-between">
@@ -61,7 +90,6 @@
             </div>
             <div class="row-2 d-flex flex-column">
                 <div class="column d-flex flex-column gap-10">
-                    <!-- <h6>Available</h6> -->
                     <div class="category d-flex gap-10 flex-column">
                         <div *ngFor="let option of dataList.brandsList | productFilter: data['brand']; let i = index">
                             <span>{{option}}</span>
@@ -70,7 +98,6 @@
                     </div>
                 </div>
                 <div class="column d-flex gap-10 flex-column">
-                    <!-- <h6>Add Brand</h6> -->
                     <div class="d-flex gap-5 flex-column relative">
                         <input type="text" placeholder="Add Brand" id="brand" [(ngModel)]="data.brand" />
                         <div class="button absolute">
@@ -78,22 +105,16 @@
                                 <span class="material-symbols-outlined">add</span>
                             </button>
                         </div>
-                        <!-- <div class="error">
-                                <small
-                                    *ngIf="brands.get('brand')?.hasError('required') && brands.get('brand')?.touched &&  brands.get('brand')?.invalid">Field
-                                    Required</small>
-                                <small *ngIf="brands.get('brand')?.hasError('invalidName')">Invalid Name</small>
-                            </div> -->
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
 
-    <div class="form__group d-flex flex-column">
+    <!-- <div class="form__group d-flex flex-column">
         <div class="card d-flex flex-column">
             <div class="row-1 d-flex align-item-center justify-content-md-between">
-                <h4>Quantity</h4>
+                <h4>Order Quantity</h4>
 
                 <div class="file-section">
                     <input type="file" id="quantity" maxlength="1" minlength="1"
@@ -106,7 +127,6 @@
             </div>
             <div class="row-2 d-flex flex-column">
                 <div class="column d-flex flex-column gap-10">
-                    <!-- <h6>Available</h6> -->
                     <div class="category d-flex gap-10 flex-column">
                         <div
                             *ngFor="let option of dataList.quantitiesList | productFilter: data['quantity']; let i = index">
@@ -117,27 +137,20 @@
                     </div>
                 </div>
                 <div class="column d-flex gap-10 flex-column">
-                    <!-- <h6>Add Quantity</h6> -->
                     <div class="d-flex gap-5 flex-column relative">
                         <input type="text" placeholder="Add Quantity" [(ngModel)]="data.quantity" id="quantity" />
                         <div class="button absolute">
-                            <button class="btn-primary" type="submit" (click)="addItem('quantity', 'quantitiesList')">
+                            <button class="btn-primary" type="submit" (click)="addItem('quantity', 'orderQuantityList')">
                                 <span class="material-symbols-outlined">add</span>
                             </button>
                         </div>
-                        <!-- <div class="error">
-                            <small
-                                *ngIf="orderQuantity.get('quantity')?.hasError('required') && orderQuantity.get('quantity')?.touched &&  orderQuantity.get('quantity')?.invalid">Field
-                                Required</small>
-                            <small *ngIf="orderQuantity.get('quantity')?.hasError('invalidName')">Invalid Name</small>
-                        </div> -->
-                    </div>
+                    </div> 
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
 
-    <div class="form__group">
+    <!-- <div class="form__group">
 
         <div class="card d-flex flex-column">
             <div class="row-1 d-flex align-item-center justify-content-md-between">
@@ -154,7 +167,6 @@
             </div>
             <div class="row-2 d-flex flex-column">
                 <div class="column d-flex flex-column gap-10">
-                    <!-- <h6>Available</h6> -->
                     <div class="category d-flex gap-10 flex-column">
                         <div *ngFor="let option of dataList.tagsList | productFilter: data['tags']; let i = index">
                             <span>{{option}}</span>
@@ -163,7 +175,6 @@
                     </div>
                 </div>
                 <div class="column d-flex gap-10 flex-column">
-                    <!-- <h6>Add Tag</h6> -->
                     <div class="d-flex gap-5 flex-column relative">
                         <input type="text" placeholder="Add Tag" id="tag" [(ngModel)]="data.tags" />
                         <div class="button absolute">
@@ -171,20 +182,14 @@
                                 <span class="material-symbols-outlined">add</span>
                             </button>
                         </div>
-                        <!-- <div class="error">
-                                <small
-                                    *ngIf="tags.get('tag')?.hasError('required') && tags.get('tag')?.touched &&  tags.get('tag')?.invalid">Field
-                                    Required</small>
-                                <small *ngIf="tags.get('tag')?.hasError('invalidName')">Invalid Name</small>
-                            </div> -->
                     </div>
                 </div>
             </div>
         </div>
 
-    </div>
+    </div> -->
 
-    <div class="form__group">
+    <!-- <div class="form__group">
 
         <div class="card d-flex flex-column">
             <div class="row-1 d-flex align-item-center justify-content-md-between">
@@ -201,7 +206,6 @@
             </div>
             <div class="row-2 d-flex flex-column">
                 <div class="column d-flex flex-column gap-10">
-                    <!-- <h6>Available</h6> -->
                     <div class="category d-flex gap-10 flex-column">
                         <div *ngFor="let option of dataList.sizesList | productFilter: data['sizes']; let i = index">
                             <span>{{option}}</span>
@@ -210,7 +214,6 @@
                     </div>
                 </div>
                 <div class="column d-flex gap-10 flex-column">
-                    <!-- <h6>Add Size</h6> -->
                     <div class="d-flex gap-5 flex-column relative">
                         <input type="text" placeholder="Add Size" id="size" [(ngModel)]="data.sizes" />
                         <div class="button absolute">
@@ -218,15 +221,9 @@
                                 <span class="material-symbols-outlined">add</span>
                             </button>
                         </div>
-                        <!-- <div class="error">
-                                <small
-                                    *ngIf="sizes.get('size')?.hasError('required') && sizes.get('size')?.touched &&  sizes.get('size')?.invalid">Field
-                                    Required</small>
-                                <small *ngIf="sizes.get('size')?.hasError('invalidName')">Invalid Name</small>
-                            </div> -->
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
 </div>

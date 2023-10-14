@@ -6,9 +6,9 @@ import { CommonModule } from '@angular/common';
     CommonModule
   ]
 })
+
 export class UtilsModule {
 
- 
   URLs: any = {
     signupUrl: 'http://localhost:1000/user/signup',
     loginUrl: 'http://localhost:1000/user/login',
@@ -16,10 +16,14 @@ export class UtilsModule {
     updatePasswordUrl : 'http://localhost:1000/user/update',
     getDetails:'http://localhost:1000/user/getDetails',
     updateDetails:'http://localhost:1000/user/updateDetails',
-    AdminTestURL:'http://localhost:1000/admin',
-    changePassword : 'http://localhost:1000/user/changePassword'
+    authorizeUrl:'http://localhost:1000/checkUser',
+    changePassword : 'http://localhost:1000/user/changePassword',
     // signupUrl:'http://localhost:5000/user/signup',
     // getAddress:'http://localhost:5000/user/getAddress'
+
+    // Dashboard
+    fetchFeatures: 'http://localhost:1000/admin/fetchProductFeatures',
+    updateFeatures: 'http://localhost:1000/admin/updateProductFeature'
   }
 
 }

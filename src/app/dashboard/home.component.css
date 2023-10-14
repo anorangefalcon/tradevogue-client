@@ -199,7 +199,12 @@ height: 100vh;
         background-color: rgba(var(--secondary), 1);
         margin-inline-start: 240px;
         padding: 30px;
-
+        height: 100%;
+        
+        & .content{
+            width: min(1400px, 100%);
+            margin-inline: auto;
+        }
     }
 
     @media screen and (min-width: 992px) {

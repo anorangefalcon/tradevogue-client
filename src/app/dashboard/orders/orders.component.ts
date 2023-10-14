@@ -20,17 +20,14 @@ export class OrdersComponent {
   }
 
   orders: any[] = [
-    {'orderId': '1234','product': 'Men Jeans','category': 'Jeans','amount': 20000, 'size': 'L, XL, XXL','quantity': 150,'order_status': 'Confirmed','payment_status': 'OnDelivery'},
-    {'orderId': '1234','product': 'Men Jeans','category': 'Jeans','amount': 20000, 'size': 'L','quantity': 200,'order_status': 'Canceled','payment_status': 'Refund'},
-    {'orderId': '1234','product': 'Men Jeans','category': 'Jeans','amount': 20000, 'size': 'L, XL, XXL','quantity': 300,'order_status': 'Canceled','payment_status': 'Failed'},
-    {'orderId': '1234','product': 'Men Jeans','category': 'Jeans','amount': 20000, 'size': 'L','quantity': 100,'order_status': 'Confirmed','payment_status': 'OnDelivery'},
-    {'orderId': '1234','product': 'Men Jeans','category': 'Jeans','amount': 20000, 'size': 'L, XL, XXL','quantity': 150,'order_status': 'Confirmed','payment_status': 'OnDelivery'},
-    {'orderId': '1234','product': 'Men Jeans','category': 'Jeans','amount': 20000, 'size': 'L, XL','quantity': 200,'order_status': 'Confirmed','payment_status': 'Awaiting'},
-    {'orderId': '1234','product': 'Men Jeans','category': 'Jeans','amount': 20000, 'size': 'L, XL','quantity': 150,'order_status': 'Shipping','payment_status': 'Confirmed'},
-    {'orderId': '1234','product': 'Men Jeans','category': 'Jeans','amount': 20000, 'size': 'L, XL, XXL','quantity': 200,'order_status': 'Confirmed','payment_status': 'Confirmed'},
-    {'orderId': '1234','product': 'Men Jeans','category': 'Jeans','amount': 20000, 'size': 'L, XL, XXL','quantity': 100,'order_status': 'In Route','payment_status': 'Confirmed'},
-    {'orderId': '1234','product': 'Men Jeans','category': 'Jeans','amount': 20000, 'size': 'XL, XXL','quantity': 300,'order_status': 'Confirmed','payment_status': 'OnDelivery'},
-    {'orderId': '1234','product': 'Men Jeans','category': 'Jeans','amount': 20000, 'size': 'XL, XXL','quantity': 200,'order_status': 'Confirmed','payment_status': 'OnDelivery'},
+    {'orderId': '1234', 'orderTime': '2020-12-02' ,'customer': 'Vijay Kumar' ,'amount': 20000, 'quantity': 150,'order_status': 'Confirmed'},
+    {'orderId': '1234', 'orderTime': '2020-12-03' ,'customer': 'Davinder Singh' ,'amount': 20000, 'quantity': 200,'order_status': 'Canceled'},
+    {'orderId': '1234', 'orderTime': '2020-12-04' ,'customer': 'Vijay Rajan' ,'amount': 20000, 'quantity': 300,'order_status': 'Canceled'},
+    {'orderId': '1234', 'orderTime': '2020-12-05' ,'customer': 'Vijay Sharma' ,'amount': 20000, 'quantity': 100,'order_status': 'Confirmed'},
+    {'orderId': '1234', 'orderTime': '2020-12-09' ,'customer': 'Vijay Rana' ,'amount': 20000, 'quantity': 150,'order_status': 'Confirmed'},
+    {'orderId': '1234', 'orderTime': '2020-12-01' ,'customer': 'Vikas Singh' ,'amount': 20000, 'quantity': 200,'order_status': 'Confirmed'},
+    {'orderId': '1234', 'orderTime': '2020-12-02' ,'customer': 'Arshdeep Singh' ,'amount': 20000, 'quantity': 150,'order_status': 'Shipping'},
+    {'orderId': '1234', 'orderTime': '2020-12-02' ,'customer': 'Abhishek Kumar' ,'amount': 20000, 'quantity': 200,'order_status': 'Confirmed'}
   ];
 
   pageSize:number = 8;

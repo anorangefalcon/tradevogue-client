@@ -59,21 +59,21 @@
                 <table id="datatable1" class="text-wrap mh100 mw100" (change)="changeDetection($event)">
                     <thead>
                         <tr>
-                            <th class="product-items item-check ">
+                            <th class="items item-check ">
                                 <input [attr.checked]="checkboxParent" [(ngModel)]="checkboxParent" type="checkbox"
                                     id="all_product">
                                 <label for='all_product' class="d-flex flex-center">
                                     <span class="d-flex flex-center material-symbols-outlined">done</span>
                                 </label>
                             </th>
-                            <th class="product-items">Product Name</th>
-                            <th class="product-items">Category</th>
-                            <th class="product-items">Price</th>
-                            <th class="product-items">Unit Sold</th>
-                            <th class="product-items">In Stock</th>
-                            <th class="product-items">Rating</th>
-                            <th class="product-items">Last Modified</th>
-                            <th class="product-items">Action</th>
+                            <th class="items">Product Name</th>
+                            <th class="items">Category</th>
+                            <th class="items">Price</th>
+                            <th class="items">Unit Sold</th>
+                            <th class="items">In Stock</th>
+                            <th class="items">Rating</th>
+                            <th class="items">Last Modified</th>
+                            <th class="items">Action</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -81,14 +81,14 @@
                             itemsPerPage: pageSize,
                             currentPage: currentPage
                         }; let i = index">
-                            <td class="product-items item-check">
+                            <td class="items item-check">
                                 <input [attr.checked]="checkboxChild" type="checkbox" id="itemId_{{item.itemId}}">
                                 <label class="d-flex flex-center" for='itemId_{{item.itemId}}'>
                                     <span class="d-flex flex-center material-symbols-outlined">done</span>
                                 </label>
                             </td>
 
-                            <td class="product-items">
+                            <td class="items">
                                 <div class=" d-flex gap-10 align-item-center mh100">
                                     <div class="product-image d-flex flex-center">
                                         <img src="{{item.image}}" alt="product.png" width="100%" height="100%">
@@ -97,13 +97,13 @@
                                 </div>
                             </td>
 
-                            <td class="product-items">{{item.category}}</td>
+                            <td class="items">{{item.category}}</td>
 
-                            <td class="product-items">&#8377; {{item.price}}</td>
+                            <td class="items">&#8377; {{item.price}}</td>
 
-                            <td class="product-items">{{item.unit_sold}}</td>
+                            <td class="items">{{item.unit_sold}}</td>
 
-                            <td class="product-items">
+                            <td class="items">
                                 <span *ngIf="item.product_inventory >= 20; else low_inventry" class="inventory good">
                                     In Stock &#40;{{ item.product_inventory }}&#41;
                                 </span>
@@ -125,7 +125,7 @@
 
                             </td>
 
-                            <td class="product-items">
+                            <td class="items">
                                 <div class="d-flex gap-5 align-item-center">
                                     <ng-container *ngFor="let star of rating">
 
@@ -147,8 +147,8 @@
                                     &#40;{{item.rating}}&#41;
                                 </div>
                             </td>
-                            <td class="product-items">{{item.last_updated}}</td>
-                            <td class="product-items">
+                            <td class="items">{{item.last_updated}}</td>
+                            <td class="items">
                                 <span class=" d-flex align-item-center gap-10 transition">
                                     <a href="javascript:void(0);" class="tooltip">
                                         <i class="fs-20 fa-icon material-symbols-outlined">zoom_in</i>

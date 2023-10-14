@@ -772,6 +772,17 @@ button {
     &::placeholder {
         font-size: 13px;
     }
+
+    &::-webkit-datetime-edit {
+        font-size: 12px;
+        color: rgba(var(--textClr)) !important;
+    }
+
+    &::-webkit-calendar-picker-indicator#picker {
+        background-color: transparent;
+        padding: 5px;
+        
+    }
 }
 
 & span.error{
@@ -784,6 +795,42 @@ button {
     height: 130px;
     resize: none;
     padding-block: 8px;
+}
+
+& .form__radio{
+
+    & input[type="radio"]{
+        display: none;
+    }
+
+    & label{
+        position: relative;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    & label::before{
+        content: '';
+        display: flex;
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        border: 1px solid rgb(var(--primaryClr));
+        background-color: rgb(var(--whiteClr));
+    }
+
+    & input[type="radio"]:checked + label::after{
+        content: '';
+        display: flex;
+        position: absolute;
+        width: 18px;
+        border-radius: 50%;
+        height: 18px;
+        background-color: rgb(var(--primaryClr));
+        inset-block: auto;
+        inset-inline-start: 3px;
+    }
 }
 
 /* Owl Crousel */

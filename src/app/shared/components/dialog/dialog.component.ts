@@ -1,4 +1,5 @@
-import { Component, ElementRef, HostListener, Input, ViewChild } from '@angular/core';
+import { Component, ElementRef, HostListener, ViewChild } from '@angular/core';
+
 
 @Component({
   selector: 'app-dialog',
@@ -7,11 +8,11 @@ import { Component, ElementRef, HostListener, Input, ViewChild } from '@angular/
 })
 
 export class DialogComponent {
-  @Input() type?: string;
+  // @Input() type?: string;
   @ViewChild('popupclose') close!: ElementRef<HTMLButtonElement>;
   @ViewChild('dialogBox') content!: ElementRef<HTMLDivElement>;
 
-
+  type!: string;
   constructor(elementRef: ElementRef){}
 
   @HostListener('document:click', ['$event']) onClick(e: Event){

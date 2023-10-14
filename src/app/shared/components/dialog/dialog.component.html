@@ -1,8 +1,7 @@
 <div class="popup dialogBox fixed mw100 mh100 flex-center inset-inline-start-0 inset-block-start-0" open>
 
     <div class="dialog__content d-flex gap-15" #dialogBox onClick>
-        <ng-container [ngSwitch]="type">
-
+        <!-- <ng-container [ngSwitch]="type">
             <ng-container *ngSwitchCase="'confirmation'">
 
                 <div class="text-center d-flex flex-column flex-center ">
@@ -15,13 +14,9 @@
                     </span>
                 </div>
 
-            </ng-container>
-
-            <!-- <ng-container *ngSwitchCase="'confirmation'">
-                
             </ng-container> -->
 
-            <ng-container *ngSwitchCase="'success'">
+            <!-- <ng-container *ngSwitchCase="'success'">
                 <img src="../../../../assets/mailSent.svg" alt="" class="col col_right" width="100" />
                 <div class="col col_left text-center d-flex flex-center flex-column gap-5">
                     <h3>Mail Sent Successfully</h3>
@@ -30,6 +25,6 @@
                 </div>
             </ng-container>
 
-        </ng-container>
+        </ng-container> -->
     </div>
 </div>

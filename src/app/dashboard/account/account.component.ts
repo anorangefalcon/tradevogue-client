@@ -15,6 +15,7 @@ export class AccountComponent implements OnInit {
   changee: boolean = true;
   profileForm!: FormGroup;
   AccountForm!: FormGroup; 
+  passwordForm!: FormGroup; 
   postalCode: string = '';
   country: string = '';
   state: string = '';
@@ -62,6 +63,8 @@ export class AccountComponent implements OnInit {
           ),
         ],
       ],
+      dob: ['', [Validators.required]],
+      gender: ['', [Validators.required]],
       mobile: [
         '',
         [Validators.required, Validators.pattern('[0-9]{10}')],
@@ -74,10 +77,11 @@ export class AccountComponent implements OnInit {
           Validators.pattern(/^(?=.*[A-Z])(?=.*[!@#$%^&*()_+{}\[\]:;<>,.?~\\-])/),
         ],
       ],
-      organization: [''],
       address: ['', [Validators.required]],
-      postalCode: ['', [Validators.required, Validators.pattern('[0-9]{6}')],
-      ],
+      postalCode: ['', [Validators.required, Validators.pattern('[0-9]{6}')]],
+      country: ['', [Validators.required]],
+      state: ['', [Validators.required]],
+      city: ['', [Validators.required]],
     });
 
     this.AccountForm = this.formBuilder.group({
@@ -88,6 +92,11 @@ export class AccountComponent implements OnInit {
       IFSC: ['', [Validators.required, Validators.maxLength(11)]],
       GST: ['', [Validators.required, Validators.maxLength(15)]],
     });
+
+    this.passwordForm = this.formBuilder.group({
+      currentPassword: ['', Validators.required],
+      newPassword: ['', Validators.required],
+    })
 
 
 
@@ -119,6 +128,10 @@ export class AccountComponent implements OnInit {
           this.county = '';
         }
       });
+
+
+      this.AccountForm.disable();
+      this.profileForm.disable();
   }
 
   onPostalCodeInputChange() {
@@ -141,7 +154,7 @@ export class AccountComponent implements OnInit {
     }
   }
 
-  updateInformation() {
+  updateDetails(form: string) {
 
   }
 
