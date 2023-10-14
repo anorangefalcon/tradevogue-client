@@ -40,8 +40,10 @@ export class LoginComponent {
       try {
         const token = { clientId: event.detail.clientId, credential: event.detail.credential }
         const body = { token };
-        console.log("BODY IS ",body);
-        let data = await this.fetchDataService.httpPost(this.backendUrls.URLs.loginUrl, body);
+        let data: any = await this.fetchDataService.httpPost(this.backendUrls.URLs.loginUrl, body);
+        
+        this.cookies.set('userToken', data.token)
+        this.router.navigate(['/']);
 
       } catch (error) {
 
@@ -57,6 +59,7 @@ export class LoginComponent {
 
     this.renderer.appendChild(document.body, this.script);
   }
+
   async onLogin() {
     try {
       const body = {

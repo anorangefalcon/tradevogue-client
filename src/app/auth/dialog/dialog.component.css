@@ -9,3 +9,11 @@
         color: rgb(var(--primaryClr));
     }
 }
+.mail-animate {
+    border: 1px solid rgb(var(--blackClr), 0.05);
+    width: 100px;
+    height: 100px;
+    margin: 0 auto;
+    border-radius: 50%;
+    margin-block-start: -80px;
+}

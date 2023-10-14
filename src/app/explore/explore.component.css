@@ -9,7 +9,7 @@ input[type="checkbox"] {
     appearance: none;
     width: 16px;
     height: 16px;
-    border: 1px solid rgb(var(--text-black), 0.4);
+    border: 1px solid rgb(var(--textClr), 0.4);
 }
 
 input[type="checkbox"]:checked {

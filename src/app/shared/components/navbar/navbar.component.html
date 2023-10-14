@@ -28,18 +28,36 @@
                     <!-- <span class="material-symbols-outlined">male</span> -->
                     Men
                 </a>
+                <ul class="sub-items sub-categories d-flex flex-column gap-15 align-item-center">
+                    <li>Shirt</li>
+                    <li>Plain Shirt</li>
+                    <li>Linen Shirt</li>  
+                </ul>
             </li>
             <li class="nav-links" (click)="hamburgerOpen = false">
                 <a href="" class=" d-flex flex-column gap-5" [routerLink]="['/explore']">
                     <!-- <span class="material-symbols-outlined">female</span> -->
                     Women
                 </a>
+                <ul class="sub-items sub-categories d-flex flex-column gap-15 align-item-center pointer">
+                    <li>Kurti</li>
+                    <li>Kurti 1</li>
+                    <li>Kurti 2</li>
+                    <li>Kurti 3</li>
+                    <li>Kurti 4</li>
+                    <li>Kurti 5</li>  
+                </ul>
             </li>
             <li class="nav-links" (click)="hamburgerOpen = false">
                 <a href="" class=" d-flex flex-column gap-5" [routerLink]="['/explore']">
                     <!-- <span class="material-symbols-outlined">offer</span> -->
                     Offers
                 </a>
+                <ul class="sub-items sub-categories d-flex flex-column gap-15 align-item-center">
+                    <li>Offer</li>
+                    <li>Offer1</li>
+                     
+                </ul>
             </li>
         </ul>
         <ul class="navbar-features d-flex align-item-center gap-20 m-gap-15 s-gap-10">
@@ -139,19 +157,22 @@
                         <div class="header">
                             <div class="d-flex justify-content-md-between align-item-center border"
                                 style="margin-bottom: 10px">
-                                <h4>Welcome {{purchaser}}</h4>
+                                <h4>Welcome 
+                                    <!-- {{purchaser}} -->
+                                    Jahnavi
+                                </h4>
                             </div>
                             <ul class="border">
                                 <!-- <li [routerLink]="['about']" style="margin-bottom: 10px;">About Us</li> -->
-                                <li [routerLink]="['help']" style="margin-bottom: 10px;">Cotact Us</li>
-                                <li [routerLink]="['faq']" style="margin-bottom: 10px;">Faq</li>
-                                <li [routerLink]="['t&c']" style="margin-bottom: 10px;">Terms And Condition</li>
+                                <li [routerLink]="['help']" style="margin-bottom: 10px;">Contact Us</li>
+                                <!-- <li [routerLink]="['faq']" style="margin-bottom: 10px;">Faq</li>
+                                <li [routerLink]="['t&c']" style="margin-bottom: 10px;">Terms And Condition</li> -->
                                 <!-- <li [routerLink]="['cart']" style="margin-bottom: 10px;">My Cart</li> -->
                             </ul>
                             <ul class="pointer ">
                                 <li class="padding-top" [routerLink]="['usersetting']" style="margin-bottom: 10px;">
                                     Profile</li>
-                                <li [routerLink]="['help']" style="margin-bottom: 10px;">Logout</li>
+                                <li style="margin-bottom: 10px;" (click)="onLogout()">Logout</li>
                             </ul>
                         </div>
                         <!-- <div class="d-flex justify-content-md-between gap-13">

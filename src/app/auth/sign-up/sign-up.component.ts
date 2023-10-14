@@ -32,6 +32,7 @@ export class SignUpComponent {
         const token = { clientId: event.detail.clientId, credential: event.detail.credential }
         const body = { token };
         let data = await this.fetchDataService.httpPost(this.backendURLs.URLs.signupUrl, body);
+        this.router.navigate(['/']);
 
       } catch (error) {
 
