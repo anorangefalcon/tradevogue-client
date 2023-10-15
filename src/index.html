@@ -28,6 +28,7 @@
 
 <script>
   function LoginGoogleHandler(res){
+    console.log(" --------------LOGIN GOOGLE HANDLEE INDEX ---------")
     const event = new CustomEvent('loginEvent', { detail: res });
     window.dispatchEvent(event);
   }
@@ -36,5 +37,7 @@
     const event = new CustomEvent('signupEvent', { detail: res });
     window.dispatchEvent(event);
   }
+
+
 </script>
 </html>

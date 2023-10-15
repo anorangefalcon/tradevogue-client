@@ -26,7 +26,7 @@ export class BreadcrumbComponent implements OnInit {
           // console.log('this.breadcrumbs', this.breadcrumbs)
         }
 
-        console.log('updated BreadCrumb', this.breadcrumbs)
+        // console.log('updated BreadCrumb', this.breadcrumbs)
         this.breadcrumbService.setBreadcrumbs(this.breadcrumbs);
         // console.log('Navigation has ended:', event.url);
       }
@@ -46,8 +46,8 @@ export class BreadcrumbComponent implements OnInit {
     this.activeSku = route.snapshot.params['sku'];
     // console.log('activeSku', this.activeSku);
     
-    console.log('snapshot', snapshot);
-    console.log('children', route.children);
+    // console.log('snapshot', snapshot);
+    // console.log('children', route.children);
 
     const breadcrumbLabel: string = snapshot.data['breadcrumb'];
 

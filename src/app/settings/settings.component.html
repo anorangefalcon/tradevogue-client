@@ -3,38 +3,71 @@
 
         <nav class="navbar d-flex flex-column align-item-center gap-25">
             <ul class="nav-items">
-                <li class="nav-links" [ngClass]="{'nav-link-active': this.showData === 'profile'}"><a
-                        (click)="changeComponent('profile')">
+                <li class="nav-links" [ngClass]="{'nav-link-active': this.showData === 'profile'}"
+                (click)="changeComponent('profile')"><a>
                         <span class="nav-txt">Profile</span>
-                    </a></li>
+                    </a>
+                    <span class="material-symbols-outlined right__icon">
+                        chevron_right
+                    </span>
+                </li>
                 <li class="nav-links" [ngClass]="{'nav-link-active': this.showData === 'orders'}"
                     (click)="changeComponent('orders')">
                     <a>
                         <span class="nav-txt">My Order</span>
                     </a>
+                    <span class="material-symbols-outlined right__icon">
+                        chevron_right
+                    </span>
                 </li>
                 <li class="nav-links" [ngClass]="{'nav-link-active': this.showData === 'wishlist'}"><a>
                         <span class="nav-txt">My Wishlist</span>
-                    </a></li>
+                    </a>
+                    <span class="material-symbols-outlined right__icon">
+                        chevron_right
+                    </span>
+                </li>
 
 
                 <li class="nav-links" [ngClass]="{'nav-link-active': this.showData === 'addresses'}"><a>
                         <span class="nav-txt">Addresses</span>
-                    </a></li>
+                    </a>
+                    <span class="material-symbols-outlined right__icon">
+                        chevron_right
+                    </span>
+                </li>
 
                 <li class="nav-links" [ngClass]="{'nav-link-active': this.showData === 'changePassword'}"
                     (click)="changeComponent('changePassword')"><a>
 
                         <span class="nav-txt">Change Password</span>
-                    </a></li>
+                    </a>
+                    <span class="material-symbols-outlined right__icon">
+                        chevron_right
+                    </span>
+                </li>
             </ul>
         </nav>
 
-        <div class="profile d-flex flex-column gap-20" *ngIf="showData=='profile'">
+        <!--  
+            'width_100':showData=='profile'
+        -->
 
+        <div class="content" [ngClass]="{'expand':TranslateData, }">
+        <div class="profile selected d-flex flex-column gap-20" *ngIf="showData=='profile'" 
+        >
+
+        <div class="d-flex align-item-center pointer h2_div" (click)="TranslateBack()">
+            <span class="material-symbols-outlined left__icon">
+                chevron_left
+            </span>
             <h2>
-                Profile Details
+                Profile Details  
             </h2>
+           
+
+        </div>
+            
 
             <form [formGroup]="ProfileForm" class="d-flex gap-15 disableInput"
                 [ngClass]="isReadOnly === true ? 'disableInput' : 'enableInput'">
@@ -258,10 +291,22 @@
         </div> -->
         </div>
 
+
+        <!-- 
+        'width_100':showData=='changePassword'
+        -->
         <div class="changePassword" *ngIf="showData=='changePassword'">
-            <h2>
-                Change Password
-            </h2>
+            <div class="d-flex align-item-center pointer h2_div" (click)="TranslateBack()">
+                <span class="material-symbols-outlined left__icon">
+                    chevron_left
+                </span>
+                <h2>
+                    Change Password  
+                </h2>
+               
+    
+            </div>
+                
             <form [formGroup]="changePasswordForm" class="d-flex flex-column flex-wrap">
 
 
@@ -270,7 +315,7 @@
                     <span class="material-symbols-outlined form__icon absolute key">key</span>
                     <input [type]="password3" id="name" formControlName="currentPassword"
                         placeholder="Enter Current Password">
-                        <button class="eye-btn flex justify-content-center align-items-center"
+                    <button class="eye-btn flex justify-content-center align-items-center"
                         (click)="showPassword3 = !showPassword3 ; password3 = showPassword3? 'text' : 'password';"><span
                             class="material-symbols-outlined eye">{{showPassword3? 'visibility' :
                             'visibility_off'}}</span>
@@ -283,10 +328,10 @@
                     <span class="material-symbols-outlined form__icon absolute key">key</span>
                     <input [type]="password2" id="email" formControlName="newPassword" placeholder="Enter New Password">
                     <button class="eye-btn flex justify-content-center align-items-center"
-                    (click)="showPassword2 = !showPassword2 ; password2 = showPassword2 ? 'text' : 'password';"><span
-                        class="material-symbols-outlined eye">{{showPassword2? 'visibility' :
-                        'visibility_off'}}</span>
-                </button>
+                        (click)="showPassword2 = !showPassword2 ; password2 = showPassword2 ? 'text' : 'password';"><span
+                            class="material-symbols-outlined eye">{{showPassword2? 'visibility' :
+                            'visibility_off'}}</span>
+                    </button>
                     <div class="password-helper d-flex justify-content-md-between">
 
 
@@ -356,6 +401,7 @@
             <button class="btn-primary width-160" (click)="onPasswordChange()">Save</button>
         </div>
 
+    </div>
     </div>
 
 </section>

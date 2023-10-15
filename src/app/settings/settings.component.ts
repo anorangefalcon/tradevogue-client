@@ -15,9 +15,11 @@ import { MobileNoValidator } from './validators';
 export class SettingsComponent {
   showData: string = "profile";
   OrderLength: number = 0;
-
+  TranslateData:boolean=false;
   changeComponent(el: string) {
+    console.log('CHANGE ELEMEMT CLICKED ',el);
     this.showData = el;
+    this.TranslateData = true;
   }
 
   @ViewChild('expand') ExpandBtn: ElementRef | undefined;
@@ -88,6 +90,9 @@ export class SettingsComponent {
     }
   }
 
+  TranslateBack(){
+    this.TranslateData=false;
+  }
   async onPasswordChange() {
     try {
       const body = {

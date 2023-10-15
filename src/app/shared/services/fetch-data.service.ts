@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ToastService } from './toast.service';
-import { Observable, Subject, filter, map, tap } from 'rxjs';
+import { BehaviorSubject, Observable, Subject, filter, map, tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -11,7 +11,8 @@ export class FetchDataService {
   url = '../../../assets/tempDB/products.json';
   userUrl = '../../../assets/tempDB/usersData.json';
   sellerUrl = '../../../assets/tempDB/seller.json';
-  subject = new Subject()
+  subject = new BehaviorSubject<any>('');
+  subOb$ = this.subject.asObservable();
 
   constructor(private http: HttpClient, private toastService: ToastService) { }
 
@@ -75,18 +76,18 @@ export class FetchDataService {
   }
 
   httpGet(url: any) {
-
+  
+    
     return new Promise((res, rej) => {
       this.http.get(url).subscribe({
         next: (data) => {
-        
           res(data);
 
         }, error: (error) => {
-
-          rej(error)
+          
+          rej(error)   
           if (error.message) {
-            const data = { title: error.message };
+            const data = { title: error.error.message };
             this.toastService.errorToast(data);
           }
         }
