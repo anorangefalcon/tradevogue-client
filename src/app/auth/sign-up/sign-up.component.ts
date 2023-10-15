@@ -86,6 +86,7 @@ export class SignUpComponent {
 
       let data:any = await this.fetchDataService.httpPost(this.backendURLs.URLs.signupUrl, body);
       this.cookies.set('userToken', data.token)
+      this.cookies.set('userName',data.firstName)
       this.router.navigate(['/']);
     }
     catch (error) {

@@ -14,7 +14,7 @@ export class NavbarComponent implements OnInit {
   isSearching: boolean = false;
   isUserLogin: boolean = false;
   hamburgerOpen: boolean = false;
-  purchaser: any = '';
+  purchaser: any = 'User';
   cart_count: number = 0;
  
   cartArr: any[] = [];

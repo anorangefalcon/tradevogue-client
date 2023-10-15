@@ -5,12 +5,14 @@ import { FetchDataService } from './shared/services/fetch-data.service';
 import { UtilsModule } from './utils/utils.module';
 
 export const authGuard: CanActivateFn = async (route, state) => {
+  return true;
   const currentRoutes = state.url.split('/')[1];
   console.log("CURRENT ROUTE IS ",currentRoutes," route is ",state.url.split('/')[1]);
   const service = inject(CookieService);
   const router = inject(Router);
 
   if (currentRoutes == 'auth' && service.get('userToken')) {
+    
     router.navigate(['/']);
     return false;
   }
