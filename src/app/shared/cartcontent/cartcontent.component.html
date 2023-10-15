@@ -1,3 +1,16 @@
+<div class="cart d-flex flex-column gap-10">
+    <div class="border d-flex justify-content-md-between">
+        <h4>Cart : </h4>
+        <span>{{cartCount}} item<span *ngIf="cartCount>1">s</span>
+        </span>
+    </div>
+    <!-- <router-outlet class="cartAndBilling" ></router-outlet> -->
+</div>
+
+<div *ngIf="cartCount === 0" class="empty d-flex flex-column justify-content-center align-item-center">
+    <h1 class="text-center fs-14">Your cart is empty</h1>
+</div>
+
 <div class="cart-container d-flex flex-wrap default-animation">
     <div class="cart-items d-flex" *ngFor="let item of cartArr">
         <div class="col d-flex">

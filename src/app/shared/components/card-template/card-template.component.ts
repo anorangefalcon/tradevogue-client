@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { CartService } from '../../services/cart.service';
 import { OwlOptions } from 'ngx-owl-carousel-o';
+import { SidecartService } from '../../services/sidecart.service';
 @Component({
   selector: 'app-card-template',
   templateUrl: './card-template.component.html',
@@ -12,7 +13,7 @@ export class CardTemplateComponent {
   showPopup: boolean = false;
 
 
-  constructor(private cartService: CartService) { }
+  constructor(private cartService: CartService, private sideCartService: SidecartService) { }
 
   avgRating: number = 0;
   offerPercentage: number = 0;
@@ -59,7 +60,7 @@ export class CardTemplateComponent {
     const cartItem = {
       sku: this.product.sku,
     }
-    
+    this.sideCartService.toggleSidecart(true); 
     this.cartService.addToCart(cartItem);
   }
 

@@ -26,7 +26,7 @@ import { ToastComponent } from './toast/toast.component';
 import { CookieService } from 'ngx-cookie-service';
 import { HeadersInterceptor } from './headers.interceptor';
 import { UtilsModule } from './utils/utils.module';
-
+import { SidecartComponent } from './shared/sidecart/sidecart.component';
 
 
 @NgModule({
@@ -40,6 +40,7 @@ import { UtilsModule } from './utils/utils.module';
     NoPageComponent,
     BreadcrumbComponent,
     ToastComponent,
+    SidecartComponent,
   ],
   imports: [
     BrowserModule,

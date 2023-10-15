@@ -17,7 +17,8 @@ import { ProductFilterPipe } from './Pipe/product-filter.pipe';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { AddressComponent } from './address/address.component';
-
+import { CartcontentComponent } from './cartcontent/cartcontent.component';
+import { CheckoutComponent } from '../checkout/checkout.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { AddressComponent } from './address/address.component';
     FooterComponent,
     CustomSelectComponent,
     ProductFilterPipe,
-    AddressComponent
+    AddressComponent,
+    CartcontentComponent,
   ],
   imports: [
     CommonModule,
@@ -52,7 +54,9 @@ import { AddressComponent } from './address/address.component';
     SupportComponent,
     ProductFilterPipe,
     CustomSelectComponent,
-    AddressComponent
+    AddressComponent,
+    CartcontentComponent
+
   ]
 })
 export class SharedModule { }
