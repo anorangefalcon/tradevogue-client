@@ -18,7 +18,7 @@ export class ForgetPasswordComponent {
   showPassword: boolean = false;
   showPassword2: boolean = false;
   token: string = "";
-
+  
   constructor(private fb: FormBuilder, private router: Router, private backendUrls: UtilsModule, private fetchDataService: FetchDataService) {
     this.resetPasswordForm = fb.group({
       password: fb.control('', [Validators.required, passwordStrengthValidator]),
