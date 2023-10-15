@@ -6,6 +6,7 @@ import { UtilsModule } from './utils/utils.module';
 
 export const authGuard: CanActivateFn = async (route, state) => {
   const currentRoutes = state.url.split('/')[1];
+  console.log("CURRENT ROUTE IS ",currentRoutes," route is ",state.url.split('/')[1]);
   const service = inject(CookieService);
   const router = inject(Router);
 
@@ -21,11 +22,12 @@ export const authGuard: CanActivateFn = async (route, state) => {
       const BackendUrl = inject(UtilsModule);
       const user: any = await FetchService.httpGet(BackendUrl.URLs.authorizeUrl);
       
-      if(user.role != 'admin') throw "Buyer";
       return true;
 
     } catch (error) {
+      
       console.log("error is ", error);
+
       router.navigate(['/']);
       return false;
 

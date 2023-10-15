@@ -25,7 +25,7 @@ export class ExploreComponent {
       this.productData = data.originalData;
       this.OriginalData = this.productData;
       this.uniqueData = data.filterObj;
-      console.log('unique data is ',this.uniqueData);
+      // console.log('unique data is ',this.uniqueData);
 
     });
 

@@ -30,6 +30,8 @@ export class SignUpComponent {
     window.addEventListener('signupEvent', async (event: any) => {
       try {
         
+        console.log(' SINGUP DISPACH ---------');
+        
         const token = { credential: event.detail.credential }
         const body = { token };
         let data:any = await this.fetchDataService.httpPost(this.backendURLs.URLs.signupUrl, body);

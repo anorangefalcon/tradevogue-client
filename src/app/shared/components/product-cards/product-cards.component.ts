@@ -14,7 +14,7 @@ export class ProductCardsComponent {
 
   constructor(public fetchProducts: FetchDataService){
     fetchProducts.getData().subscribe((data)=>{
-      console.log(data);
+      // console.log(data);
       this.products = data.slice(0,5);
       // for(let i=0; i<data.length; i++){
       //   this.products.push(data[i]);

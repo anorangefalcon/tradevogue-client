@@ -34,18 +34,18 @@ export class ForgetPasswordComponent {
 
   }
   async ngOnInit() {
+    this.token = this.router.url.split('/')[3];
+    // try {
+     
 
-    try {
-      this.token = this.router.url.split('/')[3];
+    //   const body = {
+    //     tokenData: this.token
+    //   }
+    //   // const data = await this.fetchDataService.httpPost(this.backendUrls.URLs.updatePasswordUrl, body);
 
-      const body = {
-        tokenData: this.token
-      }
-      const data = await this.fetchDataService.httpPost(this.backendUrls.URLs.updatePasswordUrl, body);
-
-    } catch (error) {
-      this.router.navigate(['/']);
-    }
+    // } catch (error) {
+    //   this.router.navigate(['/']);
+    // }
 
 
   }

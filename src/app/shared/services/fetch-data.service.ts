@@ -76,18 +76,18 @@ export class FetchDataService {
   }
 
   httpGet(url: any) {
-
+  
+    
     return new Promise((res, rej) => {
       this.http.get(url).subscribe({
         next: (data) => {
-        
           res(data);
 
         }, error: (error) => {
-
-          rej(error)
+          
+          rej(error)   
           if (error.message) {
-            const data = { title: error.message };
+            const data = { title: error.error.message };
             this.toastService.errorToast(data);
           }
         }

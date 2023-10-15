@@ -543,6 +543,10 @@ section {
 
 
 /*----------------------- NEW CSS---------------------------- */
+.content{
+    width:calc(100% - 260px);
+    /* transform: translateX(100%);  */
+}
 form {
     row-gap: 15px;
     flex-wrap: wrap;
@@ -669,8 +673,7 @@ form {
 }
 
 .profile, .changePassword {
-    width:calc(100% - 260px);
-    display: flex;
+   width: 100%;
     flex-direction: column;
     gap: 20px;
     padding-inline: 50px;
@@ -683,7 +686,7 @@ form {
             display: flex;
             align-items: center;
         }
-        justify-content: space-between;
+        /* justify-content: space-between; */
 
 }
 
@@ -746,9 +749,25 @@ label span {
 }
 /*  RADIO BUTTON CSS */
 
+.right__icon, .left__icon{
+    display: none;
+}
+
+
 
 /* MEDIA QUERY */
 @media (max-width:989px) {
+
+    .content{
+        transform: translateX(100%);
+    }
+    .container{
+        overflow: hidden;
+        position: relative;
+        padding-inline: 0px !important;
+        
+    }
+
     .navbar{
         border:none;
         min-width: 100%;
@@ -756,13 +775,63 @@ label span {
             width: 100%;
             & li{
                 border:1px solid rgba(var( --blackClr),0.2);
+                display: flex;
+                align-items: center;
+                cursor: pointer;
+                justify-content: space-between;
+                padding:12px 22px;
+                 & a{
+                    padding: 0 !important;
+                 }
+
+                 & span{
+                    display: flex;
+                 }
             }
         }
     }
-    .profile{
-        opacity: 0;
+    .profile, .changePassword{
+        opacity: 1 !important;
+        & .h2_div{
+            & span{
+                display: flex !important;
+            }
+            /* display: flex !important; */
+        }
+        width: 100% !important;
+        /* transform: translateX(100%); */
+        /* transition: transform 0.4s cubic-bezier(0, 0.59, 0.25, 1), -webkit-transform 0.4s cubic-bezier(0, 0.59, 0.25, 1); */
+        /* visibility: hidden; */
+      
+        /* position: fixed; */
+        
     }
     .nav-link-active {
         border:none;
     }
+
+    /* .selected{
+        width: 100%;
+        height: 100%;
+        opacity: 1 !important;
+        background-color: white;
+        transform: translateX(0%) !important;
+        transition: transform 0.4s cubic-bezier(0, 0.59, 0.25, 1), -webkit-transform 0.4s cubic-bezier(0, 0.59, 0.25, 1);
+        padding-inline: 20px !important;
+        position: absolute;
+        
+    } */
+
+    .expand{
+        position: absolute !important;
+        background-color: red;
+        height: 100%;
+        width: 100%;
+        transform: translateX(0%) !important;
+        transition: transform 0.4s cubic-bezier(0, 0.59, 0.25, 1), -webkit-transform 0.4s cubic-bezier(0, 0.59, 0.25, 1);
+        padding-inline: 20px !important;
+        /* position: absolute; */
+
+    }
+
 }

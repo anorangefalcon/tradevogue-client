@@ -3,18 +3,20 @@ import { CartService } from '../../services/cart.service';
 import { CookieService } from 'ngx-cookie-service';
 import { FetchDataService } from '../../services/fetch-data.service';
 import { Router } from '@angular/router';
-
+// declare var doSignout:any;
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent implements OnInit {
+
   isSearching: boolean = false;
   isUserLogin: boolean = false;
   hamburgerOpen: boolean = false;
   purchaser: any = '';
   cart_count: number = 0;
+ 
   cartArr: any[] = [];
   navbar_scroll_style: boolean = false;
 
@@ -45,7 +47,8 @@ export class NavbarComponent implements OnInit {
 
   onLogout() {
     this.cookie.delete('userToken');
-    this.cookie.delete('userName')
+    this.cookie.delete('userName');
+    // doSignout();
     this.router.navigate(['/']);
     this.isUserLogin = false;
   }

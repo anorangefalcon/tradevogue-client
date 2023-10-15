@@ -35,13 +35,14 @@ export class LoginComponent {
     this.forgetPasswordForm = fb.group({
       passwordEmail: fb.control('', [Validators.required, Validators.email])
     })
+  
     
     // Google login
     window.addEventListener('loginEvent', async (event: any) => {
       try {
         const token = { credential: event.detail.credential }
         const body = { token };
-        console.log("loginnnnn");
+        console.log("loginnnnn------------------");
         
         let data: any = await this.fetchDataService.httpPost(this.backendUrls.URLs.loginUrl, body);
         console.log(data,"dataaaa");
@@ -68,6 +69,8 @@ export class LoginComponent {
 
   async onLogin() {
     try {
+      console.log("loginnnnn itself------------------");
+        
       const body = {
         email: this.loginForm.get('email')?.value,
         password: this.loginForm.get('password')?.value
