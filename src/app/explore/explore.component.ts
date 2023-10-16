@@ -11,7 +11,7 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 
 export class ExploreComponent {
 
-  productData: any = [];
+  products: any = [];
   OriginalData: any = [];
   uniqueData: { [field: string]: any[] } = {};
   filters: any[] = [];
@@ -21,13 +21,18 @@ export class ExploreComponent {
   constructor(private productFilter: ProductsFilterService, private fetchData: FetchDataService,private http:HttpClient) { }
 
   ngOnInit(): void {
-    this.productFilter.getData().then((data: any) => {
-      this.productData = data.originalData;
-      this.OriginalData = this.productData;
-      this.uniqueData = data.filterObj;
-      // console.log('unique data is ',this.uniqueData);
-
+    this.fetchData.getProducts().subscribe((data:any)=>{
+      this.products = data.items
     });
+
+
+    // this.productFilter.getData().then((data: any) => {
+    //   this.productData = data.originalData;
+    //   this.OriginalData = this.productData;
+    //   this.uniqueData = data.filterObj;
+    //   console.log('unique data is ',this.uniqueData);
+
+    // });
 
   }
 
@@ -43,7 +48,7 @@ export class ExploreComponent {
     });
 
     this.fetchData.getData().subscribe((data: any) => {
-      this.productData = data
+      this.products = data
     })
   }
 
@@ -90,7 +95,7 @@ export class ExploreComponent {
       //   this.productData = this.productData.originalData;
       //   return;
       // }
-      this.productData = data;
+      this.products = data;
     });
   }
 }

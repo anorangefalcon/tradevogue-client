@@ -1,16 +1,16 @@
 <section class="container">
-    <div *ngIf="data.productDetails !== {} " class="product">
-        <div class="d-flex gap-30 main">
+    <div class="product" *ngIf="data" >
+        <div  class="d-flex gap-30 main">
             <div class="product-carousel d-flex  gap-10 justify-content-center relative overflow-hidden">
                 <div class="products-imgs-container d-flex flex-column  thumbnails gap-10">
-                    <div class="gal-img pointer mw-100 relative"
-                        *ngFor="let image of data.productDetails.image; let i = index" [ngStyle]="{ 'background': 'url(' + image + ')', 'background-size': 'cover', 'background-position': 'center' }
+                   
+                    <div class="gal-img pointer mw-100 relative" *ngFor="let image of data?.assets[assetIndex]?.photo; let i = index"
+                        [ngStyle]="{ 'background': 'url(' + image + ')', 'background-size': 'cover', 'background-position': 'center' }
                          " (click)="switchImage(i)" [ngClass]="{ active: i === activeIndex }">
                     </div>
                 </div>
-                <owl-carousel-o [options]="atDefault ? customOptions : carouselOption" [ngClass]="{crousel: true}"
-                    class="bigcarousel overflow-hidden">
-                    <ng-template carouselSlide *ngFor="let image of data.productDetails.image">
+                <owl-carousel-o [options]="atDefault ? customOptions : carouselOption" [ngClass]="{crousel: true}" class="bigcarousel overflow-hidden">
+                    <ng-template carouselSlide *ngFor="let image of data.assets[assetIndex].photo">
                         <div class="img-div d-flex justify-content-center align-item-center overflow-hidden mw-100"
                             [ngStyle]="{ 'background': 'url(' + image + ')', 'background-size': 'cover' }">
                         </div>
@@ -23,17 +23,17 @@
                 </button>
             </div>
             <div class="product-desc">
-                <h2 class="prod-name">{{ data.productDetails.name }}</h2>
-                <p class="subTitle mw-100">{{ data.productDetails.info['subTitle'] }}</p>
+                <h2 class="prod-name">{{ data.name }}</h2>
+                <p class="subTitle mw-100">{{ data.subTitle }}</p>
                 <div class="prod-info d-flex flex-column gap-20">
                     <div class="d-flex align-item-center gap-10">
-                        <h5 class="price">₹{{ data.productDetails.price }}</h5>
+                        <h5 class="price">₹{{ data.price }}</h5>
 
                         <div class="offer d-flex gap-5 align-item-center">
-                            <p *ngIf="data.productDetails.oldPrice != (undefined || 0)" class="old-price">₹{{
-                                data.productDetails.oldPrice }}
+                            <p *ngIf="data.oldPrice" class="old-price">₹{{
+                                data.oldPrice }}
                             </p>
-                            <p class="offer-percentage" *ngIf="data.offerPercentage !== 0">
+                            <p class="offer-percentage" *ngIf="data.offerPercentage">
                                 ({{ data.offerPercentage }}% Off)</p>
                         </div>
                     </div>
@@ -47,14 +47,13 @@
                             <span *ngFor="let i of createArrayToIterate(5 - data.avgRating)"
                                 class="material-symbols-outlined">star</span>
                         </div>
-                        <p class="rate">({{data.avgRating}}/5 · {{data.productDetails.reviews.length}} Reviews)</p>
-
+                        <p class="rate">({{data.avgRating}}/5 · {{data.reviews.length}} Reviews)</p>
+                     
                     </div>
                     <div class="sizes d-flex align-item-center gap-20" id="sizes">
                         <p>Size:</p>
                         <div class="sizes-opt d-flex gap-10">
-                            <div *ngFor="let productSize of data.productDetails.sizes; let i = index"
-                                class="sizes-radios relative">
+                            <div *ngFor="let productSize of data.info.size; let i = index" class="sizes-radios relative">
                                 <input type="radio" name="size" [value]=productSize id="size_{{ productSize }}"
                                     [(ngModel)]="selectedSize" [checked]="i == 0">
                                 <label for="size_{{ productSize }}">{{ productSize }}</label>
@@ -65,9 +64,9 @@
                         <p>Color:</p>
                         <div class="colors-opt d-flex gap-10">
                             <div class="colors-radios d-flex align-item-center"
-                                *ngFor="let color of data.productDetails.colors">
-                                <input type="radio" name="color" [value]=color [style.background-color]="color"
-                                    [(ngModel)]="selectedColor">
+                                *ngFor="let asset of data.assets; let i = index"> 
+                                <input type="radio" name="color" [value]=asset.color [style.background-color]="asset.color"
+                                    [(ngModel)]="selectedColor" (click)="assetIndex = i">
                             </div>
                         </div>
                     </div>
@@ -75,9 +74,9 @@
                     <div class="d-flex gap-15 align-item-center">
 
                         <div class="customSelect">
-                            <app-custom-select [selectedOption]=data.productDetails.orderQuantity[0]
+                            <app-custom-select [selectedOption]=data.info.orderQuantity[0]
                                 (final_option)="updateSelectedField($event)"
-                                [options]="data.productDetails.orderQuantity" >
+                                [options]="data.info.orderQuantity" >
                             </app-custom-select>
                         </div>
 
@@ -89,9 +88,7 @@
                             </button>
                         </div>
                     </div>
-
-
-
+                
                     <div class="d-flex flex-column">
                         <div class="accordian mw-100">
                             <h3 class="accordian__head relative pointer" [ngClass]="accordianOpen ? 'active' : ''"
@@ -99,10 +96,7 @@
                                 Description
                             </h3>
                             <div class="accordian__body">
-                                {{ data.productDetails.description }}
-                                {{ data.productDetails.description }}
-                                {{ data.productDetails.description }}
-                                {{ data.productDetails.description }}
+                                {{ data.description }}
                             </div>
                         </div>
                         <div class="accordian">
@@ -113,19 +107,19 @@
                             <div class="accordian__body d-flex flex-column gap-5">
                                 <div class="info-content d-flex gap-10">
                                     <h5>Product Code :</h5>
-                                    <p>{{ data.productDetails.info.productCode }}</p>
+                                    <p>{{ data.info.code }}</p>
                                 </div>
                                 <div class="info-content d-flex gap-10">
                                     <h5>Brand :</h5>
-                                    <p>{{ data.productDetails.info.brand }}</p>
+                                    <p>{{ data.info.brand }}</p>
                                 </div>
                                 <div class="info-content d-flex gap-10">
                                     <h5>Composition :</h5>
-                                    <p>{{ data.productDetails.info.composition }}</p>
+                                    <p>{{ data.info.composition }}</p>
                                 </div>
                                 <div class="info-content d-flex gap-10">
                                     <h5>Weight :</h5>
-                                    <p>{{ data.productDetails.info.weight }}</p>
+                                    <p>{{ data.info.weight }}</p>
                                 </div>
                             </div>
                         </div>
@@ -133,7 +127,7 @@
                     </div>
 
                     <div class="tags d-flex gap-10 d-flex align-item-center">
-                        <a *ngFor="let tag of data.productDetails.info.tags">
+                        <a *ngFor="let tag of data.info.tags">
                             {{ tag }}
                         </a>
                     </div>
@@ -141,10 +135,10 @@
 
             </div>
         </div>
-
-        <div class="review-cards d-flex flex-column gap-20 ">
+     
+        <div class="review-cards d-flex flex-column gap-20" >
             <h3 class="rate">Rate & Review</h3>
-            <div class="review-card d-flex flex-column gap-5" *ngFor="let review of data.productDetails.reviews">
+            <div class="review-card d-flex flex-column gap-5" *ngFor="let review of data.reviews">
 
                 <div>
                     <p class="rev">
@@ -159,7 +153,7 @@
                         <span *ngFor="let i of createArrayToIterate(5 - data.avgRating)"
                             class="material-symbols-outlined">star</span>
                     </div>
-                    <p class="fw-600 ">{{ review.username }} · {{ review.date }}</p>
+                    <p class="fw-600 ">{{ review.userId.name.firstname +' '+ review.userId.name.lastname }} · {{ review.date }}</p>
                 </div>
             </div>
 

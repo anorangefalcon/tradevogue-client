@@ -24,7 +24,7 @@
                 </a>
             </li> -->
             <li class="nav-links" (click)="hamburgerOpen = false">
-                <a href="" class=" d-flex flex-column gap-5" [routerLink]="['/explore']">
+                <a href="" class=" d-flex flex-column gap-5" [routerLink]="['/explore']" [queryParams]="{ gender: 'male' }">
                     <!-- <span class="material-symbols-outlined">male</span> -->
                     Men
                 </a>
@@ -35,7 +35,7 @@
                 </ul>
             </li>
             <li class="nav-links" (click)="hamburgerOpen = false">
-                <a href="" class=" d-flex flex-column gap-5" [routerLink]="['/explore']">
+                <a href="" class=" d-flex flex-column gap-5" [routerLink]="['/explore']" [queryParams]="{ gender: 'female' }">
                     <!-- <span class="material-symbols-outlined">female</span> -->
                     Women
                 </a>

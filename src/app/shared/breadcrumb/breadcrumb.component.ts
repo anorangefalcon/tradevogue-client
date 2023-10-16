@@ -17,18 +17,13 @@ export class BreadcrumbComponent implements OnInit {
   ) {
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
-        // console.log("event is : " ,event)
         if (this.router.url === '/' || this.router.url === '') {
           this.breadcrumbs = [];
         } else {
-          // console.log('this.activatedRoute.root : ', this.activatedRoute.root)
           this.breadcrumbs = this.createBreadcrumbs(this.activatedRoute.root);
-          // console.log('this.breadcrumbs', this.breadcrumbs)
         }
 
-        // console.log('updated BreadCrumb', this.breadcrumbs)
         this.breadcrumbService.setBreadcrumbs(this.breadcrumbs);
-        // console.log('Navigation has ended:', event.url);
       }
     });
   }
@@ -44,21 +39,18 @@ export class BreadcrumbComponent implements OnInit {
   ): Array<{ label: string; url: string }> {
     const snapshot = route.snapshot;
     this.activeSku = route.snapshot.params['sku'];
-    // console.log('activeSku', this.activeSku);
     
     // console.log('snapshot', snapshot);
     // console.log('children', route.children);
 
     const breadcrumbLabel: string = snapshot.data['breadcrumb'];
 
-    // console.log('breadcrumbLabel', breadcrumbLabel);
 
 
     const routeURL: string = snapshot.url.map((segment) => segment.path).join('/');
     if (routeURL !== '') {
       url += `/${routeURL}`;
     }
-    // console.log('routeURL', routeURL);
 
     if (breadcrumbLabel) {
       breadcrumbs.push({ label: breadcrumbLabel, url });

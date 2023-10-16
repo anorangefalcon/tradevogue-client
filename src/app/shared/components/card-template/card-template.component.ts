@@ -21,16 +21,13 @@ export class CardTemplateComponent {
 
   ngOnInit(): void {
 
-    // console.log("product is", this.product);
+    this.avgRating = this.product.avgRating;
     
-    for (let review of this.product.reviews) {
-      this.avgRating += review.rating;
-    // console.log('reviews are ',this.product.reviews[0].rating);
-    }
-    this.avgRating = this.avgRating / this.product.reviews.length;
-    if (this.product.oldPrice !== (undefined || 0)) {
-      this.offerPercentage = Math.floor((this.product.oldPrice- this.product.price) / this.product.oldPrice * 100);
-    }
+    this.product.oldPrice = 0; //temp
+    // this will be updated once coupon/discount backend is done
+    // if (this.product.oldPrice !== (undefined || 0)) {
+      // this.offerPercentage = Math.floor((this.product.oldPrice- this.product.price) / this.product.oldPrice * 100);
+    // }
 
     const allSkeleton = document.querySelectorAll('.skeleton');
 
@@ -63,7 +60,6 @@ export class CardTemplateComponent {
     this.sideCartService.toggleSidecart(true); 
     this.cartService.addToCart(cartItem);
   }
-
 
     customOptions: OwlOptions = {
     loop: true,
