@@ -2,7 +2,7 @@ import { Component, HostListener, OnInit } from '@angular/core';
 import { CartService } from '../../services/cart.service';
 import { CookieService } from 'ngx-cookie-service';
 import { FetchDataService } from '../../services/fetch-data.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 // declare var doSignout:any;
 @Component({
   selector: 'app-navbar',
@@ -19,6 +19,7 @@ export class NavbarComponent implements OnInit {
  
   cartArr: any[] = [];
   navbar_scroll_style: boolean = false;
+  shadowed: boolean = false;
 
   constructor(private cartService: CartService, private cookie: CookieService, private fetchDataService: FetchDataService, private router: Router) { }
 
@@ -36,7 +37,17 @@ export class NavbarComponent implements OnInit {
       this.cartArr = data.details;
     })
 
-    
+    this.router.events.subscribe((event)=>{
+      if (event instanceof NavigationEnd) {
+        if (this.router.url === '/' || this.router.url === '') {
+          this.shadowed = false;
+        }
+        else{
+          this.shadowed = true;
+        }
+      }
+    })
+
   }
 
   onLogout() {

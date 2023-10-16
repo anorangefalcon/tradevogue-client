@@ -43,6 +43,7 @@
 .search-bar{
     width: max(200px);
     margin-inline-end: auto;
+    background: transparent;
 }
 
 
@@ -50,4 +51,7 @@
     padding: 0;
     background: transparent;
     width: 50px;
+    & span{
+        opacity: 0.5;
+    }
 }

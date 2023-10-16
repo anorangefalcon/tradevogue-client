@@ -1,5 +1,5 @@
 <form action="" class="search relative">
-    <input type="text" class="form__input search-bar d-flex align-item-center" [placeholder]="searchPlaceholder">
+    <input type="text" class="form__input search-bar d-flex align-item-center" [placeholder]="searchPlaceholder" (keyup)="search($event)">
     <button class="mh100 d-flex flex-center absolute inset-block-0 inset-inline-end-0"><span class="default-animation material-symbols-outlined">
             search
         </span>

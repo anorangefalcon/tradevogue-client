@@ -47,6 +47,10 @@ export class FetchDataService {
     return this.http.get(this.sellerUrl);
   }
 
+  getUniqueProductFields(){
+    return this.http.get(this.backendUrls.URLs.getUniqueProductFields);
+  }
+
   getProductDetails(sku: any) {
     let params = new HttpParams();
     params = params.set("sku", sku);

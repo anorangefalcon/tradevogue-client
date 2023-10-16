@@ -34,7 +34,8 @@ export class UtilsModule {
 
     //products
     fetchProducts: 'http://localhost:1000/products/fetch',
-    fetchProductUrl: 'http://localhost:1000/products/fetchProduct'
+    fetchProductUrl: 'http://localhost:1000/products/fetchProduct',
+    uniqueProductFields: 'http://localhost:1000/products/uniqueFields'
   }
 
 }

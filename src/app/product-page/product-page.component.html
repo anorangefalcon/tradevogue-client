@@ -127,7 +127,7 @@
                     </div>
 
                     <div class="tags d-flex gap-10 d-flex align-item-center">
-                        <a *ngFor="let tag of data.info.tags">
+                        <a [routerLink]="['/explore']" [queryParams]="{ tags: tag }" *ngFor="let tag of data.info.tags">
                             {{ tag }}
                         </a>
                     </div>

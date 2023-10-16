@@ -4,7 +4,7 @@
 
 header {
     position: fixed;
-    box-shadow: 0 2px 5px rgb(var(--textClr), 0.1);
+
     font-weight: 500;
     width: 100%;
     transition: all 0.3s ease-in-out;
@@ -54,6 +54,11 @@ header {
             color: rgb(var(--primaryClr));
         }
     }
+}
+
+.header-shadowed{
+    box-shadow: 0 2px 5px rgb(var(--textClr), 0.1);
+    background-color: rgb(var(--whiteClr), 0.5);
 }
 
 .border {

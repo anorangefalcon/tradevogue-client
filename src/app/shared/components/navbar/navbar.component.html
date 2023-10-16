@@ -1,4 +1,4 @@
-<header [class.active]="(navbar_scroll_style == true) || (hamburgerOpen)">
+<header [ngClass]="shadowed ? 'header-shadowed' : ''" [class.active]="(navbar_scroll_style == true) || (hamburgerOpen)">
     <nav class="navbar container d-flex align-item-center justify-content-md-between relative">
         <div class="branding d-flex gap-10 align-item-center">
 
