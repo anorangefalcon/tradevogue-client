@@ -4,6 +4,9 @@ import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 import { ApiService } from '../services/api.service';
 import { Subject } from 'rxjs';
 import { ImageUploadService } from 'src/app/shared/services/image-upload.service';
+import { UtilsModule } from 'src/app/utils/utils.module';
+import { SellerFetchDataService } from 'src/app/shared/services/seller-fetch-data.service';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-account',
@@ -20,6 +23,7 @@ export class AccountComponent implements OnInit {
   country: string = '';
   state: string = '';
   county: string = '';
+  city: string = '';
   passwordVisible: boolean = false;
   pincodeFilled: boolean = false;
   userPhoto: string = '';  
@@ -30,11 +34,19 @@ export class AccountComponent implements OnInit {
   constructor(
     private postalCodeService: ApiService,
     private formBuilder: FormBuilder,
-    private imageUpload: ImageUploadService 
-  ) { }
+    private imageUpload: ImageUploadService,
+    private backendURLs: UtilsModule,
+    private sellerFetchDataService: SellerFetchDataService,
+    private cookieService: CookieService
+  ) {
+
+   }
 
 
   ngOnInit() {
+      // Use the patchValue method to update the profileForm with adminData
+  
+
     this.profileForm = this.formBuilder.group({
       firstName: [
         '',
@@ -84,6 +96,25 @@ export class AccountComponent implements OnInit {
       city: ['', [Validators.required]],
     });
 
+
+    var adminData = this.sellerFetchDataService.getSellerInfo().subscribe((data: any) => {
+      console.log(data, "data is coming");
+      this.profileForm.patchValue({
+        firstName: data[0].name.firstname,
+        lastName: data[0].name.lastname,
+        email: data[0].email,
+        dob: data[0].info.dob,
+        address: data[0].info.address[0].apartment,
+        postalCode: data[0].info.address[0].pincode,
+        country: data[0].info.address[0].country,
+        state: data[0].info.address[0].state,
+        city: data[0].info.address[0].city,
+        gender: data[0].info.gender
+      });
+    });
+
+    console.log(adminData, "admin data");
+
     this.AccountForm = this.formBuilder.group({
       // Create a FormGroup for AccountForm
       BankName: ['', Validators.required],
@@ -113,6 +144,7 @@ export class AccountComponent implements OnInit {
             this.country = '';
             this.state = '';
             this.county = '';
+            this.city = '';
             return [];
           }
         })
@@ -122,10 +154,12 @@ export class AccountComponent implements OnInit {
           this.country = data[0].COUNTRY;
           this.state = data[0].STATE;
           this.county = data[0].COUNTY;
+          this.city = data[0].CITY;
         } else {
           this.country = '';
           this.state = '';
           this.county = '';
+          this.city = '';
         }
       });
 
@@ -154,9 +188,56 @@ export class AccountComponent implements OnInit {
     }
   }
 
-  updateDetails(form: string) {
-
+  async updateDetails(form: {[key: string]: string}) {
+    console.log(form);
+    const body = {
+      "email": form['email'],
+      "name": {
+        "firstname": form['firstName'],
+        "lastname": form['lastName']
+      },
+      "info":{
+        "gender": form['gender'],
+        "dob": form['dob'],
+        "address": [
+          {
+              "firstname": form['firstName'],
+              "lastname": form['lastName'],
+              "apartment": form['address'],
+              "city": form['city'],
+              "town_city": form['county'],
+              "state": form['state'],
+              "pincode": form['postalCode'],
+              "country": form['country'],
+          },
+      ],
+      "token": this.cookieService.get('userToken')
+      }
+    }
+    
+    // let data: any = await this.fetchDataService.httpPost(this.backendUrls.URLs.loginUrl, body);
+    await this.sellerFetchDataService.sendSellerInfo(body);
   }
+
+  
+  
+  
+
+  // async saveDetails() {
+
+  //   this.DetailsSubmitted = true;
+  //   if (this.ProfileForm.invalid) return;
+
+  //   let body = {
+  //     name: { firstname: this.ProfileForm.get('firstname')?.value, lastname: this.ProfileForm.get('lastname')?.value },
+  //     email: this.ProfileForm.get('email')?.value,
+  //     mobile: this.ProfileForm.get('mobile')?.value,
+  //     "info.gender": this.ProfileForm.get('gender')?.value,
+  //     "info.dob": new Date(this.ProfileForm.get('dob')?.value)
+  //   }
+  //   let response = await this.fetchDataService.httpPost(this.backendURLs.URLs.updateDetails, body);
+  //   this.isReadOnly = !this.isReadOnly;
+  // }
 
   uploadImage(e: Event){
     const file = (e.target as HTMLInputElement).files![0];

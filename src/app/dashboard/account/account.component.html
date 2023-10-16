@@ -17,7 +17,7 @@
                     <div class="operation_button d-flex gap-10">
                         <button class="btn-primary" [ngStyle]="{'display': !profileForm.disabled? 'none': 'block'}" (click)="profileForm.enable()" >Edit</button>
                         <button class="btn-secondary" [ngStyle]="{'display': profileForm.disabled? 'none': 'block'}" (click)="profileForm.disable()" >Cancel</button>
-                        <button class="btn-primary" [ngStyle]="{'display': profileForm.disabled? 'none': 'block'}" (click)="updateDetails('profileForm')" >Update</button>
+                        <button class="btn-primary" [ngStyle]="{'display': profileForm.disabled? 'none': 'block'}" (click)="updateDetails(profileForm.value)" >Update</button>
                     </div>
                 </div>
 
@@ -46,23 +46,29 @@
                             <input type="text" class="form__input" id="firstName" formControlName="firstName"
                                 placeholder="First Name" required minlength="2" maxlength="50"
                                 (keypress)="validateNames($event)" />
-                            <span
-                                *ngIf="profileForm.get('firstName')?.invalid && (profileForm.get('firstName')?.dirty || profileForm.get('firstName')?.touched)"
-                                class="error">
-                                <small *ngIf="profileForm.get('firstName')?.hasError('required')">Field Required
-                                </small>
-                            </span>
+                                <div *ngIf="profileForm.get('firstName')?.invalid && (profileForm.get('firstName')?.dirty || profileForm.get('firstName')?.touched)"
+                                class="error-message">
+                                <div *ngIf="profileForm.get('firstName')?.hasError('required')">First Name is required.
+                                </div>
+                                <div *ngIf="profileForm.get('firstName')?.hasError('minlength')">First Name should have at
+                                    least 2 characters.</div>
+                                <div *ngIf="profileForm.get('firstName')?.hasError('maxlength')">First Name should have at
+                                    most 50 characters.</div>
+                            </div>
                         </div>
 
                         <div class="form__group">
                             <label class="form__title" for="lastName">Last Name</label>
                             <input type="text" class="form__input" id="lastName" formControlName="lastName"
                                 placeholder="Last Name" (keypress)="validateNames($event)" />
-                            <span
-                                *ngIf="profileForm.get('lastName')?.invalid && (profileForm.get('lastName')?.dirty || profileForm.get('lastName')?.touched)"
-                                class="error">
-                                <small *ngIf="profileForm.get('lastName')?.hasError('required')">Field Required</small>
-                            </span>
+                                <div *ngIf="profileForm.get('lastName')?.invalid && (profileForm.get('lastName')?.dirty || profileForm.get('lastName')?.touched)"
+                                class="error-message">
+                                <div *ngIf="profileForm.get('lastName')?.hasError('required')">Last Name is required.</div>
+                                <div *ngIf="profileForm.get('lastName')?.hasError('minlength')">Last Name should have at least 2
+                                    characters.</div>
+                                <div *ngIf="profileForm.get('lastName')?.hasError('maxlength')">Last Name should have at most 50
+                                    characters.</div>
+                            </div>
                         </div>
 
                         <div class="form__group">
@@ -103,27 +109,25 @@
                             <label class="form__title" for="email">Email</label>
                             <input type="email" class="form__input" id="email" required placeholder="Email"
                                 formControlName="email" />
-                            <span
-                                *ngIf="profileForm.get('email')?.invalid && (profileForm.get('email')?.dirty || profileForm.get('email')?.touched)"
-                                class="error">
-                                <small *ngIf="profileForm.get('email')?.hasError('required')">Field required.</small>
-                                <small *ngIf="profileForm.get('email')?.hasError('pattern')">Invalid Format.</small>
-                            </span>
+                                <div
+                                *ngIf="profileForm.controls['email'].invalid && (profileForm.controls['email'].dirty || profileForm.controls['email'].touched)">
+                                <div *ngIf="profileForm.controls['email'].errors?.['required']">Email is required.</div>
+                                <div *ngIf="profileForm.controls['email'].errors?.['required']">Invalid email format.</div>
+                            </div>
                         </div>
 
                         <div class="form__group">
                             <label class="form__title" for="mobile">Mobile</label>
                             <input type="number" class="form__input" id="mobile" formControlName="mobile" required
                                 minlength="10" placeholder="Mobile" pattern="[0-9]{10}" />
-                            <span
-                                *ngIf="profileForm.get('mobile')?.invalid && (profileForm.get('mobile')?.dirty || profileForm.get('mobile')?.touched)"
-                                class="error">
-                                <small *ngIf="profileForm.get('mobile')?.hasError('required')">Field Required</small>
-                                <small *ngIf="profileForm.get('mobile')?.hasError('pattern')">Mobile should be a
-                                    10-digit number</small>
-                            </span>
+                                <div
+                                *ngIf="profileForm.controls['mobile'].invalid && (profileForm.controls['mobile'].dirty || profileForm.controls['mobile'].touched)">
+                                <div *ngIf="profileForm.controls['mobile'].errors?.['required']">Mobile is required.</div>
+                                <div *ngIf="profileForm.controls['mobile'].errors?.['required']">Mobile should be a 10-digit number.
+                                </div>
+                            </div>
                         </div>
-
+<!-- 
                         <div class="form__group">
                             <label class="form__title" for="password">Password</label>
                             <div class="password__input__field relative">
@@ -144,7 +148,7 @@
                                 <small *ngIf="profileForm.get('password')?.hasError('pattern')">Must contain atleast one
                                     captial letter & one special character</small>
                             </span>
-                        </div>
+                        </div> -->
 
                         <div class="form__group">
                             <label class="form__title" for="address">Address</label>
@@ -178,8 +182,14 @@
 
                         <div class="form__group">
                             <label class="form__title" for="city">City</label>
-                            <input class="form__input" formControlName="city" type="text" id="city" [value]="county" required
+                            <input class="form__input" formControlName="county" type="text" id="city" [value]="county" required
                                 placeholder="City" [disabled]="!pincodeFilled" />
+                        </div>
+
+                        <div class="form__group">
+                            <label class="form__title" for="city">Area</label>
+                            <input class="form__input" formControlName="city" type="text" id="city" [value]="city" required
+                                placeholder="Area" [disabled]="!pincodeFilled" />
                         </div>
                 </form>
             </div>
@@ -196,7 +206,7 @@
                         <div class="operation_button d-flex gap-10">
                             <button class="btn-primary" [ngStyle]="{'display': !AccountForm.disabled? 'none': 'block'}" (click)="AccountForm.enable()" >Edit</button>
                             <button class="btn-secondary" [ngStyle]="{'display': AccountForm.disabled? 'none': 'block'}" (click)="AccountForm.disable()" >Cancel</button>
-                            <button class="btn-primary" [ngStyle]="{'display': AccountForm.disabled? 'none': 'block'}" (click)="updateDetails('AccountForm')" >Update</button>
+                            <button class="btn-primary" [ngStyle]="{'display': AccountForm.disabled? 'none': 'block'}" (click)="updateDetails(AccountForm.value)" >Update</button>
                         </div>
                     </div>
                 </div>
@@ -275,9 +285,16 @@
                                 <i class="fa" [class.fa-eye]="passwordVisible" [class.fa-eye-slash]="!passwordVisible"></i>
                             </span>
                         </div>
-                        <span *ngIf="profileForm.get('currentPassword')?.invalid && (profileForm.get('currentPassword')?.dirty || profileForm.get('currentPassword')?.touched)" class="error">
-                            <small *ngIf="profileForm.get('currentPassword')?.hasError('required')">Field Required</small>
-                        </span>
+                        <div *ngIf="passwordForm.controls['currentPassword'].invalid && (passwordForm.controls['currentPassword'].dirty || passwordForm.controls['currentPassword'].touched)"
+                        class="error-message">
+                        <div *ngIf="passwordForm.controls['currentPassword'].hasError('required')">Password is required.</div>
+                        <div *ngIf="passwordForm.controls['currentPassword'].hasError('minlength')">Password should have a
+                            minimum length of 8 characters.</div>
+                        <div *ngIf="passwordForm.controls['currentPassword'].hasError('pattern')">
+                            Password should contain at least one capital letter and at least one special
+                            character.
+                        </div>
+                    </div>
                     </div>
 
                     <div class="form__group relative">

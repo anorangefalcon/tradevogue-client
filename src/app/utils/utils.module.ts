@@ -24,9 +24,9 @@ export class UtilsModule {
     // Dashboard
     fetchFeatures: 'http://localhost:1000/admin/fetchProductFeatures',
     updateFeatures: 'http://localhost:1000/admin/updateProductFeature',
+    updateAccount: 'http://localhost:1000/admin/updateDetails',
+    getAccount: 'http://localhost:1000/admin/getadminDetails',
 
-    // stripe
-    stripePayment: 'http://localhost:1000/user/create-payment-intent',
   }
 
 }
