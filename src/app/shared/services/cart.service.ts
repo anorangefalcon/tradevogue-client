@@ -93,24 +93,24 @@ export class CartService {
           Object.assign(cartDetails.details[i],
             Object.fromEntries(
               fields.map(field => [
-                field, matchSku[field]
+                field, matchSku?.field
               ])
             )
           );
 
 
-          // { temp until we connect db
-          if (!(cartDetails.details[i].color)) {
-            cartDetails.details[i].color = (matchSku['colors'])[0]
+          // { temp until we connec!t db
+          if (!(cartDetails.details!.i.color)) {
+            cartDetails.details!.i.color = (matchSku['colors'])[0]
           }
-          if (!(cartDetails.details[i].price)) {
-            cartDetails.details[i].price = (matchSku['price'])[0]
+          if (!(cartDetails.details?.i.price)) {
+            cartDetails.details.i.price = (matchSku['price'])[0]
           }
-          if (!(cartDetails.details[i].Quantity)) {
-            cartDetails.details[i].Quantity = (matchSku['orderQuantity'])[0]
+          if (!(cartDetails.details?.i.Quantity)) {
+            cartDetails.details.i.Quantity = (matchSku['orderQuantity'])[0]
           }
-          if (!(cartDetails.details[i].size)) {
-            cartDetails.details[i].size = (matchSku['sizes'])[0]
+          if (!(cartDetails.details?.i.size)) {
+            cartDetails.details.i.size = (matchSku['sizes'])[0]
           }
           // }
 
@@ -158,17 +158,17 @@ export class CartService {
 
     if (what === 'count') {
       return this.cart$.pipe(
-        map(data => data.details.length)
+        map(data => data.details?.length)
       );
     }
     else if (what === 'details') {
       return this.cart$.pipe(
-        map(data => data.details)
+        map(data => data?.details)
       );
     }
     else if (what === ('amount' || 'amounts')) {
       return this.cart$.pipe(
-        map(data => data.amounts)
+        map(data => data?.amounts)
       );
     }
     return this.cart$;

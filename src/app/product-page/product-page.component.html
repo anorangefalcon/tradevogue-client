@@ -23,7 +23,7 @@
                 </button>
             </div>
             <div class="product-desc">
-                <h2 class="prod-name">{{ data.name }}</h2>
+                <h2 class="prod-name">{{ data?.name }}</h2>
                 <p class="subTitle mw-100">{{ data.subTitle }}</p>
                 <div class="prod-info d-flex flex-column gap-20">
                     <div class="d-flex align-item-center gap-10">
@@ -153,7 +153,7 @@
                         <span *ngFor="let i of createArrayToIterate(5 - data.avgRating)"
                             class="material-symbols-outlined">star</span>
                     </div>
-                    <p class="fw-600 ">{{ review.userId.name.firstname +' '+ review.userId.name.lastname }} · {{ review.date }}</p>
+                    <p class="fw-600 ">{{ review?.userId?.name.firstname +' '+ review?.userId?.name.lastname }} · {{ review.date }}</p>
                 </div>
             </div>
 

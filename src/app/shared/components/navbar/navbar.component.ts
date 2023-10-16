@@ -20,13 +20,7 @@ export class NavbarComponent implements OnInit {
   cartArr: any[] = [];
   navbar_scroll_style: boolean = false;
 
-  constructor(private cartService: CartService, private cookie: CookieService, private fetchDataService: FetchDataService, private router: Router) {
-   
-   
-    
-    
-
-  }
+  constructor(private cartService: CartService, private cookie: CookieService, private fetchDataService: FetchDataService, private router: Router) { }
 
   ngOnInit() {
 

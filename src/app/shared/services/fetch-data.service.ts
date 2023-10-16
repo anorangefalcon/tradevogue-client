@@ -55,13 +55,24 @@ export class FetchDataService {
     return this.http.get(this.backendUrls.URLs.fetchProductUrl, { params })
   }
 
-  getProducts() {
+  getProducts(data:any = '') {
     let params = new HttpParams();
-    this.route.queryParams.subscribe((data: any) => {
-      (Object.keys(data)).forEach(key => {
-        params = params.append(key, data[key]);
-      }); 
-    })
+    
+    (Object.keys(data)).forEach(key => {
+      
+      if(Array.isArray(data[key])){
+        console.log(data[key]);
+        data[key].forEach((element:any) => {
+          params = params.append(key, element);
+        });
+      }
+      else{
+        params = params.set(key, data[key]);
+      }
+    }); 
+
+    console.log(params, 'parmmm');
+    
     return this.http.get(this.backendUrls.URLs.fetchProducts, { params });
   }
 

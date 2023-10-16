@@ -16,14 +16,16 @@ export class ProductCardsComponent {
     fetchProducts.getData().subscribe((data)=>{
       // console.log(data);
       this.products = data.slice(0,5);
-      // for(let i=0; i<data.length; i++){
-      //   this.products.push(data[i]);
-      //   if(i>=3){
-      //     break;
-      //   }
-      // }    
+      
     });
   }
+
+  ngOnInit(){
+    this.fetchProducts.getProducts().subscribe((data:any)=>{
+      this.products = data.items.slice(0,5);
+    })
+  }
+
   customOptions: OwlOptions = {
     loop: false,
     rewind: true,

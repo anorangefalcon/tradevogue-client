@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { ProductsFilterService } from '../shared/services/products-filter.service'
 import { FetchDataService } from '../shared/services/fetch-data.service';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-explore',
@@ -18,12 +19,14 @@ export class ExploreComponent {
   FilterApplied: any = {};
   filtersOpen: boolean = false;
 
-  constructor(private productFilter: ProductsFilterService, private fetchData: FetchDataService,private http:HttpClient) { }
+  constructor(private productFilter: ProductsFilterService, private fetchData: FetchDataService,private http:HttpClient, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
-    this.fetchData.getProducts().subscribe((data:any)=>{
+    this.route.queryParams.subscribe((data: any) => {
+    this.fetchData.getProducts(data).subscribe((data:any)=>{
       this.products = data.items
     });
+  });
 
 
     // this.productFilter.getData().then((data: any) => {

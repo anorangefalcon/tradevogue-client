@@ -663,7 +663,6 @@ ul {
 /* Sub Section Heading, Subheading, Styling */
 .section-header {
     text-align: left;
-    margin-bottom: 30px;
 }
 
 .section-heading {
@@ -929,11 +928,6 @@ button {
             font-size: 65px !important;
             font-weight: 700 !important;
         }
-    }
-
-    .section-header {
-        text-align: left;
-        margin-bottom: 30px;
     }
 
     .section-heading {

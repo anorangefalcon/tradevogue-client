@@ -1,4 +1,4 @@
-import { Component, HostListener, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FetchDataService } from '../shared/services/fetch-data.service';
 import { CartService } from '../shared/services/cart.service';
@@ -36,6 +36,8 @@ export class ProductPageComponent implements OnInit {
       const sku = params['sku'];
       this.fetchService.getProductDetails(sku).subscribe((data: any) => {
         this.data = data;
+        console.log(data);
+        
         this.data.avgRating = data.avgRating;
         this.activeIndex = 0;
         this.selectedColor = data.assets[0].color;

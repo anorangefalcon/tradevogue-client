@@ -15,12 +15,12 @@ export class ProductCardCarouselComponent {
   i: number = -1;
   
   //will fetch ?queryParam according to whatToFetch (but a dummy which gets 10 data from a .json)
-  constructor(private fetchDataService: FetchDataService) {
-    this.fetchDataService.getData().subscribe(data => {
-      while(this.productArr.length < data.length){
-         this.productArr.push(data[this.i+=1]);
-      }
-    });
+  constructor(private fetchDataService: FetchDataService) {}
+
+  ngOnInit(){
+    this.fetchDataService.getProducts(this.whatToFetch).subscribe((data:any)=>{
+      this.productArr = data.items;
+    })
   }
 
   customOptions: OwlOptions = {
