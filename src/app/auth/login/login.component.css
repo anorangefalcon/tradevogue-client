@@ -1,7 +1,7 @@
 .header {
     inset-block-start: 50px;
     inset-inline-start: 50px;
-    z-index: 11;
+    z-index: 1;
 
     & img {
         width: 150px;

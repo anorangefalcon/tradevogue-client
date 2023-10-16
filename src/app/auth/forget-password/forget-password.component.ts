@@ -28,10 +28,6 @@ export class ForgetPasswordComponent {
         validators: this.passwordMatch
       }
     )
-
-
-
-
   }
   async ngOnInit() {
     this.token = this.router.url.split('/')[3];
