@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
+import { ReactiveFormsModule } from '@angular/forms';
 import { HomeRoutingModule } from './home-routing.module';
 import { SharedModule } from '../shared/shared.module';
 import { RouterModule, Routes } from '@angular/router';
@@ -33,6 +33,7 @@ const routes: Routes = [
     HomeRoutingModule,
     SharedModule,
     CarouselModule,
+    ReactiveFormsModule,
     RouterModule.forChild(routes),
   ]
 })

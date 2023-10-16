@@ -15,7 +15,7 @@ import { FetchDataService } from 'src/app/shared/services/fetch-data.service';
 })
 export class LoginComponent {
 
-
+  
   loginForm: FormGroup;
   forgetPasswordForm: FormGroup;
   passwordFieldType: string = 'password';
@@ -28,28 +28,28 @@ export class LoginComponent {
     this.loginForm = fb.group(
       {
         email: fb.control('', [Validators.required, Validators.email]),
-        password: fb.control('', [Validators.required, passwordStrengthValidator])
+        password: fb.control('', [Validators.required, Validators.minLength(6)])
       }
     )
 
     this.forgetPasswordForm = fb.group({
       passwordEmail: fb.control('', [Validators.required, Validators.email])
     })
-  
-    
+
+
     // Google login
     window.addEventListener('loginEvent', async (event: any) => {
       try {
         const token = { credential: event.detail.credential }
         const body = { token };
-        console.log("loginnnnn------------------");
-        
-        let data: any = await this.fetchDataService.httpPost(this.backendUrls.URLs.loginUrl, body);
-        console.log(data,"dataaaa");
-        
-        this.cookies.set('userToken', data.token)
-        this.cookies.set('userName',data.firstName)
        
+
+        let data: any = await this.fetchDataService.httpPost(this.backendUrls.URLs.loginUrl, body);
+  
+
+        this.cookies.set('userToken', data.token)
+        this.cookies.set('userName', data.firstName)
+
         this.router.navigate(['/']);
 
       } catch (error) {
@@ -69,20 +69,16 @@ export class LoginComponent {
 
   async onLogin() {
     try {
-      console.log("loginnnnn itself------------------");
-        
+
       const body = {
         email: this.loginForm.get('email')?.value,
         password: this.loginForm.get('password')?.value
       }
+      const data: any = await this.fetchDataService.httpPost(this.backendUrls.URLs.loginUrl, body)
 
-
-
-      const data:any = await this.fetchDataService.httpPost(this.backendUrls.URLs.loginUrl, body)
-      
-      this.fetchDataService.subject.next(data.firstName);  
+      this.fetchDataService.subject.next(data.firstName);
       this.cookies.set('userToken', data.token)
-      this.cookies.set('userName',data.firstName)
+      this.cookies.set('userName', data.firstName)
       this.router.navigate(['/']);
 
     }
@@ -103,7 +99,7 @@ export class LoginComponent {
     }
     catch (error) {
       console.log("Error in Reset Password: ", error);
-      
+
     }
   }
 

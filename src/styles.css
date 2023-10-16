@@ -1,3 +1,4 @@
+
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
 
 /* Box sizing rules */
@@ -965,3 +966,15 @@ button {
     }
 } */
 /* SKELETON */
+
+
+
+/*  DISABLED CLASS */
+
+.disabled{
+    background-color: rgb(var(--primaryClr), 0.5);
+    color: rgb(var(--blackClr));
+    cursor:no-drop;
+
+   
+}
