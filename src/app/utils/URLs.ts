@@ -2,8 +2,8 @@
 export class UtilsModule {
 
   URLs:any={
-      signUpUrl:'http://localhost:1000/signup',
-      AddressesUrl:'http://localhost:1000/getAddress'
+      signUpUrl:'http://localhost:5500/signup',
+      AddressesUrl:'http://localhost:5500/getAddress'
   }
  }
  

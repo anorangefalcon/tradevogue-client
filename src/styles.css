@@ -180,17 +180,17 @@ p {
 }
 
 .heading-1 {
-    letter-spacing: 1.8px;
+    /* letter-spacing: 1.8px; */
     font-size: 90px;
 }
 
 .heading-2 {
-    letter-spacing: 1.12px;
+    /* letter-spacing: 1.12px; */
     font-size: 56px;
 }
 
 .heading-3 {
-    letter-spacing: 0.48px;
+    /* letter-spacing: 0.48px; */
     font-size: 24px;
 }
 
@@ -615,7 +615,7 @@ ul {
 & .heading {
     font-size: 48px;
     font-weight: 400;
-    letter-spacing: 1.2px;
+    /* letter-spacing: 1.2px; */
     margin-bottom: 50px;
     font-weight: 500;
 
@@ -641,20 +641,20 @@ ul {
     font-size: 20px;
     font-weight: 600;
     color: rgb(var(--dash-title-clr));
-    letter-spacing: 0.8px;
+    /* letter-spacing: 0.8px; */
 }
 
 .sub-heading-1 {
     font-size: 24px !important;
     color: rgb(var(--dash-title-clr));
     font-weight: 500;
-    letter-spacing: 0.48px;
+    /* letter-spacing: 0.48px; */
 }
 
 .title {
     font-size: 16px !important;
     font-weight: 500;
-    letter-spacing: 0.32px;
+    /* letter-spacing: 0.32px; */
     line-height: 17.6px;
     color: rgb(var(--dash-title-clr));
     margin-bottom: 10px;
@@ -688,7 +688,7 @@ button {
     padding-inline: 36px;
     border-radius: 4px;
     font-weight: bold;
-    letter-spacing: 0.5px;
+    /* letter-spacing: 0.5px; */
     /* height: 50px; */
 }
 
@@ -916,7 +916,7 @@ button {
     .heading {
         font-size: 48px;
         font-weight: 400;
-        letter-spacing: 1.2px;
+        /* letter-spacing: 1.2px; */
         margin-bottom: 35px;
         font-weight: 500;
 

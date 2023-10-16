@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { ToastService } from './toast.service';
-import { BehaviorSubject, Observable, Subject, filter, map, tap } from 'rxjs';
+import { Observable, Subject, filter, map, tap, BehaviorSubject} from 'rxjs';
+import { UtilsModule } from 'src/app/utils/utils.module';
+import { ActivatedRoute } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
@@ -14,7 +16,7 @@ export class FetchDataService {
   subject = new BehaviorSubject<any>('');
   subOb$ = this.subject.asObservable();
 
-  constructor(private http: HttpClient, private toastService: ToastService) { }
+  constructor(private http: HttpClient, private toastService: ToastService, private backendUrls: UtilsModule, private route: ActivatedRoute) { }
 
   productKeys: any = ['available', 'colors', 'description', 'image', 'info', 'name', 'price', 'oldPrice', 'orderQuantity', 'reviews', 'sizes', 'sku', 'stockQuantity'];
   getData(): Observable<any> {
@@ -36,8 +38,6 @@ export class FetchDataService {
     return this.http.get(this.sellerUrl);
   }
 
-
-
   HttpPostRequest(url: any, body: any) {
     return this.http.post(this.sellerUrl, body);
   }
@@ -46,24 +46,39 @@ export class FetchDataService {
     return this.http.get(this.sellerUrl);
   }
 
-  
+  getProductDetails(sku: any) {
+    let params = new HttpParams();
+    params = params.set("sku", sku);
+    console.log(params);
 
+    return this.http.get(this.backendUrls.URLs.fetchProductUrl, { params })
+  }
+
+  getProducts() {
+    let params = new HttpParams();
+    this.route.queryParams.subscribe((data: any) => {
+      (Object.keys(data)).forEach(key => {
+        params = params.append(key, data[key]);
+      }); 
+    })
+    return this.http.get(this.backendUrls.URLs.fetchProducts, { params });
+  }
 
   httpPost(url: any, body: any) {
-    
+
     return new Promise((res, rej) => {
-      console.log('POST MEETHOD CALLED ',url," BODY IS ",body);
-      
+      console.log('POST MEETHOD CALLED ', url, " BODY IS ", body);
+
       this.http.post(url, body).subscribe({
         next: (data) => {
           console.log('DATA INSIDE NE');
-          
+
           res(data);
           console.log(data, "ervice data");
-          
-          
+
+
         }, error: (error) => {
-        
+
           rej(error)
           if (error.message) {
             const data = { title: error.error.message };

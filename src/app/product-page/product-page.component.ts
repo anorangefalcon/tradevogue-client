@@ -10,22 +10,18 @@ import { OwlOptions } from 'ngx-owl-carousel-o';
   templateUrl: './product-page.component.html',
   styleUrls: ['./product-page.component.css']
 })
-export class ProductPageComponent implements OnInit{
-  data: any = {
-    productDetails: {},
-    avgRating: 0,
-    checkSelect:false,
-    offerPercentage: 0
-  }
+export class ProductPageComponent implements OnInit {
+  data: any = null;
 
   cartStorage: any[] = [];
   selectedSize: string = "";
   selectedColor: string = "";
   selectedQ: number = 0;
-  showReview : boolean = false;
+  showReview: boolean = false;
   activeIndex: number = 0;
-  accordianOpen : boolean = false;
-  accordianOpen2 : boolean = false;
+  accordianOpen: boolean = false;
+  accordianOpen2: boolean = false;
+  assetIndex: any = 0;
 
   constructor(
     private route: ActivatedRoute,
@@ -33,38 +29,27 @@ export class ProductPageComponent implements OnInit{
     private cartService: CartService
   ) { }
 
-   breadcrumbs: { label: string; url: string }[] = [];
+  breadcrumbs: { label: string; url: string }[] = [];
 
   ngOnInit(): void {
-    this.data.productDetails.info = [];
-    this.data.productDetails.reviews = [];
     this.route.params.subscribe(params => {
       const sku = params['sku'];
-      
-      this.fetchService.getData().subscribe((data: any[]) => {
-        
-        this.data.productDetails = data.find((item) => {   
-          this.activeIndex = 0;     
-          return item['sku'] === sku;
-        });
-        this.data.avgRating = 0;
-        for (let i = 0; i < (this.data.productDetails.reviews).length; i++) {
-          this.data.avgRating += this.data.productDetails.reviews[i].rating;
-        }
-        this.data.avgRating = this.data.avgRating / this.data.productDetails.reviews.length;
-        if (this.data.productDetails.oldPrice !== (undefined || 0)) {
-          this.data.offerPercentage = Math.floor((this.data.productDetails.oldPrice - this.data.productDetails.price) / this.data.productDetails.oldPrice * 100);
-        }
+      this.fetchService.getProductDetails(sku).subscribe((data: any) => {
+        this.data = data;
+        this.data.avgRating = data.avgRating;
+        this.activeIndex = 0;
+        this.selectedColor = data.assets[0].color;
+        this.selectedSize = data.info.size[0];
 
-        this.selectedSize = this.data?.productDetails?.sizes[0];
-        this.selectedColor = this.data?.productDetails?.colors[0];
+        
       });
+
     });
   }
 
   addToCart() {
     const cartItem = {
-      sku: this.data.productDetails.sku,
+      sku: this.data.sku,
       size: this.selectedSize,
       color: this.selectedColor,
       quantity: this.selectedQ
@@ -87,10 +72,11 @@ export class ProductPageComponent implements OnInit{
     touchDrag: true,
     pullDrag: true,
     dots: false,
-    nav: true,
-    items:1,
-    autoplay: true,
-    navText: ['<span class="material-symbols-outlined">chevron_left</span>', '<span class="material-symbols-outlined">chevron_right</span>'],
+    nav: false,
+    items: 1,
+    autoplay: false,
+    // navText: ['<span class="material-symbols-outlined">chevron_left</span>', '<span class="material-symbols-outlined">chevron_right</span>'],
+    navText: ['', ''],
     navSpeed: 600,
     // responsive: {
     //   0: {
@@ -116,7 +102,7 @@ export class ProductPageComponent implements OnInit{
     this.carouselOption = JSON.parse(JSON.stringify(this.customOptions));
     this.atDefault = !this.atDefault;
   }
-  
+
   // for Product Details:
 
   addReview: boolean = false;
@@ -133,10 +119,8 @@ export class ProductPageComponent implements OnInit{
     return Array(newTotal).fill(0);
   }
 
-  updateSelectedField(e: any){
+  updateSelectedField(e: any) {
     this.selectedQ = e;
   }
-
-
 
 }

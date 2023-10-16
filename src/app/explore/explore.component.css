@@ -9,7 +9,7 @@ input[type="checkbox"] {
     appearance: none;
     width: 16px;
     height: 16px;
-    border: 1px solid rgb(var(--textClr), 0.4);
+    border: 1px solid rgb(var(--blackClr), 0.4);
 }
 
 input[type="checkbox"]:checked {
@@ -30,7 +30,7 @@ input[type="checkbox"]:checked + label::after {
     font-size: 18px;
     font-weight: 300;
     left: -27px;
-    top: -4px;
+    top: -5px;
 }
 
 .explore-cards {
@@ -103,6 +103,7 @@ input[type="checkbox"]:checked + label::after {
     & .clear-btn {
         background-color: transparent;
         font-size: 12px !important;
+        font-weight: 300;
         padding: 0;
         color: rgb(var(--primaryClr));
 
@@ -161,7 +162,7 @@ input[type="checkbox"]:checked + label::after {
     }
 }
 
-@media screen and (max-width: 640px) {
+@media screen and (max-width: 737px) {
     .filters {
         position: fixed;
         padding-inline: 25px;
@@ -215,8 +216,12 @@ input[type="checkbox"]:checked + label::after {
         grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
     }
 }
-
-
+@media screen and (max-width: 370px) {
+    .explore-cards {
+     gap: 10px !important;
+        grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+    }
+}
 
 @keyframes rotateAndScale {
     0% {
@@ -234,8 +239,3 @@ input[type="checkbox"]:checked + label::after {
     }
 }
 
-@media screen and (max-width: 380px) {
-   .explore-cards{
-    gap: 10px;
-   }
-}

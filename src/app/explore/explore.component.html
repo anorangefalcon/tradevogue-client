@@ -26,7 +26,7 @@
     <div class="filters d-flex flex-column gap-10" [ngClass]="(filtersOpen === true) ? 'filter-mobile-active' : '' ">
         <div class="head d-flex justify-content-md-between align-item-center">
             <h4>FILTERS</h4>
-            <button (click)="clearAll()" >Clear all</button>
+            <button class="clear-btn" (click)="clearAll()">Reset</button>
         </div>
         <div *ngFor="let filter of uniqueData | keyvalue " class="types">
             <div class="category d-flex flex-column gap-10" >
@@ -53,7 +53,7 @@
     </div>
 
     <div class="explore-cards">
-        <ng-container *ngFor="let product of productData">
+        <ng-container *ngFor="let product of products">
             <div class="card-temp">
                 <app-card-template class="d-flex justify-content-center" [product]="product"></app-card-template>
             </div>

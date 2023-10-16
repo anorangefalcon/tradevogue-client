@@ -41,7 +41,7 @@
 } */
 
 .search-bar{
-    width: max(200px, 100%);
+    width: max(200px);
     margin-inline-end: auto;
 }
 

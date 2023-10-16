@@ -1,8 +1,8 @@
 <div class="card-item-template card-template-structure">
     <a routerLink='/product/{{product.sku}}' class="pointer d-flex flex-column gap-10">
         <div class="card-item-header skeleton">
-            <img [src]=product.image?.[1] alt="Product Image">
-            <img class="hover-img" [src]=product.image?.[0] alt="Product Image">
+            <img [src]=product.assets?.[0]?.photo[1] alt="Product Image">
+            <img class="hover-img" [src]=product.assets?.[0]?.photo[0] alt="Product Image">
         </div>
 
         <div class="card-item-content d-flex flex-column align-item-center gap-5">
@@ -16,7 +16,7 @@
                     class="material-symbols-outlined">star</span>
             </div>
 
-            <div class="price d-flex gap-5 align-item-center skeleton">
+            <div class="price d-flex gap-5 align-item-center justify-content-center skeleton">
                 <p class="current-price">
                     ₹{{ product.price }}
                 </p>
@@ -31,17 +31,17 @@
         </div>
     </a>
     <div class="options d-flex justify-content-center gap-15">
-        <span class="cart cart-logo" (click)="addToCart()"><span class="material-symbols-outlined">
+        <span class="options-icon cart-logo" (click)="addToCart()"><span class="material-symbols-outlined">
                 add_shopping_cart
             </span>
         </span>
 
-        <a (click)="showPopup = true" class="cart eye-logo"><span class="material-symbols-outlined">
+        <a (click)="showPopup = true" class="options-icon eye-logo"><span class="material-symbols-outlined">
                 visibility
             </span>
         </a>
 
-        <a routerLink="/cart" class="cart wishlist-logo"><span class="material-symbols-outlined">
+        <a routerLink="/cart" class="options-icon wishlist-logo"><span class="material-symbols-outlined">
                 favorite
             </span>
         </a>
