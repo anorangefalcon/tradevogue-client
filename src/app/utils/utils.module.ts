@@ -27,15 +27,12 @@ export class UtilsModule {
     updateAccount: 'http://localhost:1000/admin/updateDetails',
     getAccount: 'http://localhost:1000/admin/getadminDetails',
 
-<<<<<<< HEAD
-=======
     // stripe
     stripePayment: 'http://localhost:1000/user/create-payment-intent',
 
     //products
     fetchProducts: 'http://localhost:1000/products/fetch',
     fetchProductUrl: 'http://localhost:1000/products/fetchProduct'
->>>>>>> refs/remotes/origin/dev
   }
 
 }
