@@ -26,6 +26,7 @@
     right: 0;
     bottom: 0;
     transition: all 0.3s cubic-bezier(0.77, 0.26, 0, 0.98);
+    box-shadow: -5px 0 10px rgba(0, 0, 0, 0.3);
 }
 
 .sidecart__overlay--hide {
@@ -52,7 +53,8 @@
 
 .sidecart__title-text {
     font-size: 17px;
-    font-weight: 500;
+    font-weight: 600;
+    color: black;
 }
 
 .sidecart__close {
@@ -95,19 +97,99 @@
 
 .bottom-fixed {
     position: absolute;
-    border-top: 1px solid #b0b0b0;
+    /* border-top: 1px solid #b0b0b0; */
     bottom: 0;
     left: 0;
     width: 100%;
-    /* background: white; Optional, set the background color as needed */
-    z-index: 999;
-    /* Optional, adjust the z-index if needed */
+    z-index: 9999;
     padding: 10px;
-    /* Optional, add padding to style the content */
     display: flex;
     justify-content: center;
+    cursor: pointer;
 
     & a {
         color: #fff;
     }
+}
+
+.close-hover:hover {
+    color: red !important;
+    cursor: pointer;
+}
+
+.my-3 {
+    margin-top: 0.75rem;
+    margin-bottom: 0.75rem;
+}
+
+.text-emerald-600 {
+    --tw-text-opacity: 1;
+    color: rgb(5 150 105/var(--tw-text-opacity));
+}
+
+.bg-emerald-500 {
+    --tw-bg-opacity: 1;
+    background-color: rgb(16 185 129/var(--tw-bg-opacity));
+}
+
+.font-bold {
+    font-weight: 700;
+}
+
+.py-2 {
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+}
+.px-3 {
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+}
+.bg-white {
+    --tw-bg-opacity: 1;
+    background-color: rgb(255 255 255/var(--tw-bg-opacity));
+}
+.rounded-lg {
+    border-radius: 0.5rem;
+}
+
+
+.px-3 {
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+}
+
+.py-3 {
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
+}
+.bg-emerald-500 {
+    --tw-bg-opacity: 1;
+    background-color: rgb(16 185 129/var(--tw-bg-opacity));
+}
+.rounded-lg {
+    border-radius: 0.5rem;
+}
+.justify-between {
+    justify-content: space-between;
+}
+.items-center {
+    align-items: center;
+}
+.w-full {
+    width: 100%;
+}
+.flex {
+    display: flex;
+}
+
+.text-white {
+    --tw-text-opacity: 1;
+    color: rgb(255 255 255/var(--tw-text-opacity));
+    font-weight: 500;
+    font-size: 1rem;
+}
+
+.hover\:bg-emerald-600:hover {
+    --tw-bg-opacity: 1;
+    background-color: rgb(5 150 105/var(--tw-bg-opacity));
 }

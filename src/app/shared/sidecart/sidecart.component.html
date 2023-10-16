@@ -1,16 +1,24 @@
 <div class="sidecart" [ngClass]="{'sidecart--close': isSidecartClosed}">
     <div class="sidecart__overlay" [ngClass]="{'sidecart__overlay--hide': isSidecartClosed}"></div>
-    <div class="sidecart__title d-flex flex-row gap-10" style="background-color: rgb(var(--primaryClr));
-    color: rgb(var(--whiteClr));">
-        <div>
-            <a class="sidecart__close" style="color: white;" (click)="toggleSidecart()">Close</a>
+    <div class="sidecart__title d-flex flex-row gap-10"
+        style="background-color: rgb(238 242 255);/* background-color: rgb(var(--primaryClr)); */color: rgb(var(--whiteClr));padding-left: 1.25rem;padding-right: 1.25rem;padding-top: 1rem;padding-bottom: 1rem;">
+        <div class="d-flex justify-content-center align-item-center pointer close-hover" style="gap: 2px">
+            <svg class="close-hover" style="color: rgb(107 114 128);" (click)="toggleSidecart()" stroke="currentColor"
+                fill="currentColor" stroke-width="0" viewBox="0 0 512 512" height="1em" width="1em"
+                xmlns="http://www.w3.org/2000/svg">
+                <path
+                    d="M289.94 256l95-95A24 24 0 00351 127l-95 95-95-95a24 24 0 00-34 34l95 95-95 95a24 24 0 1034 34l95-95 95 95a24 24 0 0034-34z">
+                </path>
+            </svg>
+
+            <a class="sidecart__close close-hover" style="color: rgb(107 114 128);" (click)="toggleSidecart()">Close</a>
         </div>
         <div style="
         display: flex;
         align-items: center;
         gap: 10px;">
-            <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 512 512" height="10em"
-                width="1.5em" xmlns="http://www.w3.org/2000/svg">
+            <svg style="color: black" stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 512 512"
+                height="10em" width="1.5em" xmlns="http://www.w3.org/2000/svg">
                 <path fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="32"
                     d="M320 264l-89.6 112-38.4-44.88"></path>
                 <path fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="32"
@@ -25,15 +33,23 @@
 
     <app-cartcontent></app-cartcontent>
 
-    <div class="cart d-flex flex-column gap-10 bottom-fixed" style="margin-bottom: 35px;">
+    <!-- <div class="cart d-flex flex-column gap-10 bottom-fixed" style="margin-bottom: 35px;">
         <div class="border d-flex justify-content-md-between">
             <h4>Total : </h4>
             <span style="font-size: 18px;">₹ {{cart.amounts.total}}<span *ngIf="cartCount>1"></span>
             </span>
         </div>
-        <!-- <router-outlet class="cartAndBilling" ></router-outlet> -->
-    </div>
-    <button routerLink="/cart/billing" (click)="proceedToCheckout()" class="btn-primary hide-the-content bottom-fixed">
+    </div> -->
+    <!-- <button routerLink="/cart/billing" (click)="proceedToCheckout()" class=" hide-the-content bottom-fixed">
         <a>Proceed To Checkout</a>
-    </button>
+    </button> -->
+
+    <div class=" my-3 bottom-fixed">
+        <button routerLink="/cart/billing" (click)="proceedToCheckout()"
+            class="w-full py-3 rounded-lg bg-emerald-500 hover:bg-emerald-600 flex items-center justify-between bg-heading text-sm sm:text-base text-white focus:outline-none transition duration-300"><span
+                class="align-middle font-medium font-serif" style="padding-right: 10px;">Proceed To
+                Checkout</span><span class="rounded-lg font-bold font-serif py-2 px-3 bg-white text-emerald-600">₹
+                {{cart.amounts.total}}</span>
+        </button>
+    </div>
 </div>

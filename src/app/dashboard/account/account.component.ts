@@ -109,11 +109,10 @@ export class AccountComponent implements OnInit {
         country: data[0].info.address[0].country,
         state: data[0].info.address[0].state,
         city: data[0].info.address[0].city,
-        gender: data[0].info.gender
+        gender: data[0].info.gender,
+        mobile: data[0].mobile,
       });
     });
-
-    console.log(adminData, "admin data");
 
     this.AccountForm = this.formBuilder.group({
       // Create a FormGroup for AccountForm
@@ -189,13 +188,14 @@ export class AccountComponent implements OnInit {
   }
 
   async updateDetails(form: {[key: string]: string}) {
-    console.log(form);
+    console.log(form, "form is coming");
     const body = {
       "email": form['email'],
       "name": {
         "firstname": form['firstName'],
         "lastname": form['lastName']
       },
+      "mobile" : form['mobile'],
       "info":{
         "gender": form['gender'],
         "dob": form['dob'],
@@ -205,7 +205,7 @@ export class AccountComponent implements OnInit {
               "lastname": form['lastName'],
               "apartment": form['address'],
               "city": form['city'],
-              "town_city": form['county'],
+              "area": form['county'],
               "state": form['state'],
               "pincode": form['postalCode'],
               "country": form['country'],
