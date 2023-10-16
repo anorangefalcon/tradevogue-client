@@ -5,6 +5,9 @@
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
 }
 
+.data-field__text{
+    text-transform: capitalize;
+}
 
 .card__block{
     padding: 25px;
@@ -15,6 +18,7 @@
     & .row-1 {
         border-bottom: 1px solid rgba(128, 128, 128, 0.1);
         padding-bottom: 5px;
+        margin-bottom: 10px;
 
         & h4 {
             font-size: 22px !important;

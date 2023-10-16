@@ -1,43 +1,55 @@
 <section id="product-adding-section" class="d-flex flex-column gap-20">
     <div class="row d-flex justify-content-md-between">
+
         <div class="d-flex gap-15 align-item-center">
+
             <h2 *ngIf="current_form != 'product_images'; else title2">Basic Info</h2>
             <ng-template #title2>
                 <span class="d-flex gap-15">
                     <h2>Product Images</h2>
                 </span>
             </ng-template>
+            <div class="next_prev_btn d-flex align-item-center gap-15">
+                <button class="button previous d-flex flex-center" (click)="current_form = ''"
+                    [disabled]="current_form == ''">
+                    <span class="back_icon material-symbols-outlined">arrow_back_ios_new</span>
+                </button>
+    
+                <button class="button next d-flex flex-center" (click)="current_form = 'product_images'"
+                    [disabled]="current_form == 'product_images'">
+                    <span class="next_icon material-symbols-outlined">arrow_forward_ios</span>
+                </button>
+            </div>
         </div>
-
 
         <div class="next_prev_btn d-flex align-item-center gap-15">
 
-            <button class="button add_form d-flex flex-center" (click)="addProductImageForm()"
+            <button class="btn-secondary d-flex flex-center gap-5" (click)="addProductImageForm()"
                 [ngStyle]="{display: current_form != 'product_images'? 'none' : 'flex' }">
-                <span class="add_form_icon material-symbols-outlined">add</span>
+                <span class="form_icon material-symbols-outlined">add</span>
+                Add Color Variant
             </button>
 
-            <button class="submit_btn d-flex align-item-center gap-5" (click)="onsubmit()"
+            <button class="btn-primary d-flex align-item-center" (click)="onsubmit()"
                 [ngStyle]="{display: current_form != 'product_images'? 'none' : 'flex' }">
                 Submit Product
-                <span class="material-symbols-outlined">upload</span>
             </button>
 
-            <button class="button previous d-flex flex-center" (click)="current_form = ''"
+            <!-- <button class="button previous d-flex flex-center" (click)="current_form = ''"
                 [disabled]="current_form == ''">
                 <span class="back_icon material-symbols-outlined">arrow_back_ios_new</span>
             </button>
-            <!-- <button class="button next d-flex align-item-center gap-5"
+            <button class="button next d-flex align-item-center gap-5"
                     (click)="current_form = 'product_images'"
                     [disabled]="productsForm.get('basicinfo')?.invalid || current_form == 'product_images'"
                     [ngStyle]="{display: current_form == 'product_images'? 'none' : 'flex' }" >
                     <span class="material-symbols-outlined">arrow_forward_ios</span>
-                </button> -->
+                </button>
 
             <button class="button next d-flex flex-center" (click)="current_form = 'product_images'"
                 [disabled]="current_form == 'product_images'">
                 <span class="next_icon material-symbols-outlined">arrow_forward_ios</span>
-            </button>
+            </button> -->
         </div>
     </div>
 

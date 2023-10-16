@@ -22,6 +22,7 @@ export class UtilsModule {
     // getAddress:'http://localhost:5000/user/getAddress'
 
     // Dashboard
+    addproduct: 'http://localhost:1000/admin/addProduct',
     fetchFeatures: 'http://localhost:1000/admin/fetchProductFeatures',
     updateFeatures: 'http://localhost:1000/admin/updateProductFeature',
     updateAccount: 'http://localhost:1000/admin/updateDetails',

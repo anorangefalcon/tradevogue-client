@@ -791,8 +791,8 @@ button {
 
 & span.error{
     position: absolute;
-    inset-block-start: calc(100% + 1px);
-    inset-inline-start: 0px;
+    inset-block-start: calc(100% + 2px);
+    inset-inline-start: 2px;
 }
 
 & .form__textarea{

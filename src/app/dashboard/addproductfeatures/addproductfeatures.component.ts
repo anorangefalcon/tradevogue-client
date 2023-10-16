@@ -38,7 +38,7 @@ export class AddproductfeaturesComponent {
     {name: 'Category', type: 'categories', filter: 'category', file_name: 'Categories_Sample'},
     {name: 'Brand', type: 'brands', filter: 'brand'},
     {name: 'Order Quantity', type: 'orderQuantity', filter: 'quantity'},
-    {name: 'Product Tags', type: 'categories', filter: 'tags'}
+    {name: 'Product Tags', type: 'tags', filter: 'tags'}
   ];
 
   constructor(private dataService: FetchDataService, private uploadExcel: UploadExcelService, private backendurls: UtilsModule){}

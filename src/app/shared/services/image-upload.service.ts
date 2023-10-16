@@ -18,27 +18,25 @@ export class ImageUploadService {
 
 
 
-  fileupload(productName: string, file: any) {
-    console.log("Inside Service", file);
+  fileupload(fileObject: any) {
 
-    // return new Promise(async (resolve, reject)=>{
-    //   console.log("Inside Promise");
-    //   await this.client.upload(file).then((response) => {
-    //     console.log("respons is ",response);
-        
-    //     resolve(response.url);
-    //   }).catch((error) => {
-    //     reject({"Error" : file.name});
-    //   })
-    // });
+    return new Promise(async (res, rej) => {
+      let imgUrl: any[] = [];
+      let errUrl: any[] = [];
 
-    Array.from(file).forEach((file:any)=>{
-      this.client.upload(file).then((response) => {
-        console.log(response);
-      }).catch((error) => {
-        console.log(error);
+      Array.from(fileObject).forEach(async (file: any) => {
+        try {
+          const uploadedFile = await this.client.upload(file.file);
+          imgUrl.push({
+            'image': uploadedFile.url,
+            'file': file.file
+          });
+          if (file == fileObject[fileObject.length - 1]) res(imgUrl);
+
+        } catch (err) {
+          console.log(err);
+        }
       })
-
-    }); 
+    });
   }
 }

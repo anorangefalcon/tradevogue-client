@@ -16,7 +16,7 @@
 }
 
 .toast {
-    border-radius: 10px;
+    border-radius: 5px;
     z-index: 99;
     border: 1px solid rgb(var(--textClr), 0.1);
     background-color: rgb(var(--whiteClr));
@@ -38,9 +38,8 @@
 
 .toast-header {
     position: relative;
-    height: 45px;
-    padding-inline-start: 5px;
-    padding-inline-end: 12px;
+    min-height: 45px;
+    padding: 5px 12px;
 }
 
 .success {

@@ -7,21 +7,10 @@
 
 
             <div class="logo">
-                <span *ngIf="display === 'success'" class="success material-symbols-outlined">
-                    done
-                </span>
-
-                <span *ngIf="display === 'error'" class="error material-symbols-outlined">
-                    error
-                </span>
-
-                <span *ngIf="display === 'warning'" class="warning material-symbols-outlined">
-                    warning
-                </span>
-
-                <span *ngIf="display === 'notification'" class="notification material-symbols-outlined">
-                    notifications
-                </span>
+                <i *ngIf="display === 'success'" class="success material-symbols-outlined">done</i>
+                <i *ngIf="display === 'error'" class="error material-symbols-outlined">error</i>
+                <i *ngIf="display === 'warning'" class="warning material-symbols-outlined">warning</i>
+                <i *ngIf="display === 'notification'" class="notification material-symbols-outlined">notifications</i>
             </div>
 
             <div class="text {{display}}">

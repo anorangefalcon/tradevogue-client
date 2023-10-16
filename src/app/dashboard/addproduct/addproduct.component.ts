@@ -3,6 +3,9 @@ import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@ang
 import { ImageUploadService } from 'src/app/shared/services/image-upload.service';
 import { imageSizeValidator, invalidformat } from 'src/app/shared/validators/imageValidators.validator';
 import { ToastService } from 'src/app/shared/services/toast.service';
+import { FetchDataService } from 'src/app/shared/services/fetch-data.service';
+import { UtilsModule } from 'src/app/utils/utils.module';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-addproduct',
@@ -15,23 +18,34 @@ export class AddproductComponent {
   isSubmitted: boolean = false;
 
   // Array for Various Selects
-  categories: string[] = ['Category 1', 'Category 2', 'Category 3', 'Category 4', 'Category 5', 'Category 6'];
-  brands: string[] = ['Brand 1', 'Brand 2', 'Brand 3', 'Brand 4'];
-  gender: string[] = ['Male', 'Female', 'All'];
-  sizes: string[] = ['S', 'M', 'L', 'XL', 'XXL', 'XXXL'];
-  colors: string[] = ['Color 1', 'Color 2', 'Color 3', 'Color 4'];
-  tags: string[] = ['tag 1', 'tag 2', 'tag 3', 'tag 4', 'tag 5', 'tag 6', 'tag 7'];
-  orderQuantity: number[] = [100, 200, 300, 400, 500];
+  categories!: string[];
+  brands!: string[];
+  gender: string[] = ['Male', 'Female', 'Others'];
+  sizes: string[] = ['XS', 'S', 'M', 'L', 'XL', 'XXL', 'XXXL'];
+  // colors: string[] = ['Color 1', 'Color 2', 'Color 3', 'Color 4'];
+  tags!: string[];
+  orderQuantity!: number[];
 
   common_colors: string[] = ['#FFFFFF', '#000000', '#0000FF', '#808080', '#800080', '#00FF00', '#FFC0CB', '#ff0000'];
 
   productsForm: FormGroup;
   current_form: string = '';
 
+
+  // Template for Toast
+  data_template: any = {
+    title: '',
+    body: []
+  }
+
   constructor(private elem_ref: ElementRef,
     private render: Renderer2,
     private fb: FormBuilder,
-    private upload: ImageUploadService) {
+    private dataService: FetchDataService,
+    private backendUrl: UtilsModule,
+    private toastservice: ToastService,
+    private upload: ImageUploadService,
+    private router: Router) {
 
     this.productsForm = this.fb.group({
       productDesc: this.fb.array([
@@ -46,7 +60,7 @@ export class AddproductComponent {
               Validators.required
             ]
           }],
-          images: [[], {
+          photo: [[], {
             validators: [
               Validators.required,
               Validators.maxLength(6),
@@ -129,6 +143,18 @@ export class AddproductComponent {
     });
   }
 
+  // box-shadow: inset 0px 0px 2px #0000004
+
+
+  async ngOnInit() {
+    const result: any = await this.dataService.httpGet(this.backendUrl.URLs.fetchFeatures);
+    this.categories = result.categories;
+    this.brands = result.brands;
+    this.tags = result.tags;
+    this.orderQuantity = result.orderQuantity;
+    this.sizes = result.sizes;
+  }
+
   productImagesFormArray() {
     return (<FormArray>this.productsForm.get('productDesc')).controls;
   }
@@ -155,7 +181,7 @@ export class AddproductComponent {
         ]
       }],
 
-      images: [[], {
+      photo: [[], {
         validators: [
           Validators.required,
           Validators.maxLength(6),
@@ -171,9 +197,7 @@ export class AddproductComponent {
     return new Promise(async (res, rej) => {
 
       let productImages: any[] = image;
-
       for (let j = 0; j < file!.length; j++) {
-
         const reader = new FileReader();
 
         let x = await new Promise((resolve, reject) => {
@@ -193,20 +217,24 @@ export class AddproductComponent {
   onImageUpload(event: Event, formId: number) {
 
     let file = (<HTMLInputElement>event.target)?.files;
-    let formControl = this.productsForm.get('productDesc')?.get(String(formId))?.get('images');
+    let formControl = this.productsForm.get('productDesc')?.get(String(formId))?.get('photo');
 
     // Reading Files using File Reader and displaying visual Data to user
     this.fileReader(file, formControl?.value).then((res) => {
       console.log(res);
-      
+
       formControl?.patchValue(res);
       let productImages = formControl?.value;
 
       // Handling Image Exceeding the Length Limit of 6
-      if(formControl?.hasError('maxlength')) {
+      if (formControl?.hasError('maxlength')) {
         console.log("inside maxlength");
         productImages = productImages.slice(0, 6);
         formControl?.patchValue(productImages);
+
+        // Warning Message
+        this.data_template.title = 'Maximum 6 Images Allowed';
+        this.toastservice.warningToast(this.data_template);
       }
 
       // Handling Image Exceeding the Size Limit of 2MB
@@ -220,15 +248,22 @@ export class AddproductComponent {
           return !errorFile.includes(file);
         });
         formControl?.patchValue(productImages);
+
+        // Warning Message
+        this.data_template.title = 'Maximum Image Size Exceeded (2MB)';
+        errorFile.forEach((err: any) => {
+          this.data_template.body.push(err.file.name);
+        });
+        this.toastservice.warningToast(this.data_template);
       }
     })
   }
 
   // Delete Image from Image List
   deleteImage(imageIndex: any, formId: any) {
-    let productImages = this.productsForm.get('productDesc')?.get(String(formId))?.get('images')?.value;  
-    productImages.splice(imageIndex, 1)
-    this.productsForm.get('productDesc')?.get(String(formId))?.get('images')?.patchValue(productImages);  
+    let productImages = this.productsForm.get('productDesc')?.get(String(formId))?.get('photo')?.value;
+    productImages.splice(imageIndex, 1);
+    this.productsForm.get('productDesc')?.get(String(formId))?.get('photo')?.patchValue(productImages);
   }
 
   // update Form Control For Custom Select buttons
@@ -249,33 +284,39 @@ export class AddproductComponent {
 
   // For  purpose of ng For loop for Displaying Images
   imagesArray(index: number) {
-    return this.productsForm.get('productDesc')?.get(String(index))?.get('images')?.value;
+    return this.productsForm.get('productDesc')?.get(String(index))?.get('photo')?.value;
   }
 
+  async onsubmit() {
 
-  onsubmit() {
+    console.log(this.productsForm.valid);
 
-    console.log(this.productsForm);
     if (!this.productsForm.valid) {
-
       this.productsForm.markAllAsTouched();
     } else {
-      // this.productImages.forEach(async () => {
 
-      //   await this.upload.fileupload(this.productsForm.get('productName')?.value, this.productsForm.get('productImages')?.value)
-      //     .then((response: any) => {
-      //       console.log(response);
-      //       this.productImageUrl.push(response);
-      //     })
-      //     .catch((error: any) => {
-      //       this.errorFile.push(error.Error);
-      //     })
-      //     console.log("Hello");
-      // })
+      const imageFormArray = this.productsForm.get('productDesc')?.value;
+
+      // Upload Images to fileStack and last upload the form data
+      imageFormArray.forEach((imageArray: any, index: number) => {
+        this.upload.fileupload(imageArray['photo']).then(async (res) => {
+          
+          this.productsForm.get('productDesc')?.get(String(index))?.get('photo')?.patchValue(res);
+
+          if (index == (imageFormArray.length - 1)) {
+            const data = {
+              type: 'single',
+              data: this.productsForm.value
+            };
+            this.dataService.httpPost(this.backendUrl.URLs.addproduct, data).then(()=>{
+              this.router.navigate(['/dashboard/products'])
+            }).catch((err)=>{
+              console.log(err);
+            })
+          }
+
+        });
+      });
     }
-
   }
-
 }
-
-
