@@ -4,6 +4,7 @@ import { passwordStrengthValidator } from '../validators';
 import { Router } from '@angular/router';
 import { UtilsModule } from 'src/app/utils/utils.module';
 import { FetchDataService } from 'src/app/shared/services/fetch-data.service';
+import { ToastService } from 'src/app/shared/services/toast.service';
 
 @Component({
   selector: 'app-forget-password',
@@ -19,7 +20,7 @@ export class ForgetPasswordComponent {
   showPassword2: boolean = false;
   token: string = "";
   
-  constructor(private fb: FormBuilder, private router: Router, private backendUrls: UtilsModule, private fetchDataService: FetchDataService) {
+  constructor(private fb: FormBuilder, private router: Router, private backendUrls: UtilsModule, private fetchDataService: FetchDataService, private toastservice : ToastService) {
     this.resetPasswordForm = fb.group({
       password: fb.control('', [Validators.required, passwordStrengthValidator]),
       confirmPassword: fb.control('', [Validators.required, passwordStrengthValidator])
@@ -65,8 +66,13 @@ export class ForgetPasswordComponent {
       }
       console.log(body, "update body");
 
-      const data = await this.fetchDataService.httpPost(this.backendUrls.URLs.updatePasswordUrl, body);
+      const data: any = await this.fetchDataService.httpPost(this.backendUrls.URLs.updatePasswordUrl, body);
       console.log(data, "update data");
+      const toastData = {
+        title : data.message
+      }
+      this.toastservice.successToast(toastData)
+      this.router.navigate(['/auth/login'])
     }
     catch (error) {
       console.log("Error in Update Password: ", error);

@@ -7,7 +7,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
 import { UtilsModule } from '../utils/utils.module';
 import { ForgetPasswordComponent } from './forget-password/forget-password.component';
-import { DialogComponent } from './dialog/dialog.component';
+import { DialogComponent } from '../shared/components/dialog/dialog.component';
 
 
 @NgModule({

@@ -74,7 +74,7 @@ export class FetchDataService {
           console.log('DATA INSIDE NE');
 
           res(data);
-          console.log(data, "ervice data");
+          
 
 
         }, error: (error) => {
