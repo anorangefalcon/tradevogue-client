@@ -7,6 +7,7 @@ import { UtilsModule } from './utils/utils.module';
 export const authGuard: CanActivateFn = async (route, state) => {
   return true;
   const currentRoutes = state.url.split('/')[1];
+  return true;
   console.log("CURRENT ROUTE IS ",currentRoutes," route is ",state.url.split('/')[1]);
   const service = inject(CookieService);
   const router = inject(Router);

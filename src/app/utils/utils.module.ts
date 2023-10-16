@@ -19,7 +19,8 @@ export class UtilsModule {
     authorizeUrl:'http://localhost:1000/checkUser',
     changePassword : 'http://localhost:1000/user/changePassword',
     // signupUrl:'http://localhost:5000/user/signup',
-    // getAddress:'http://localhost:5000/user/getAddress'
+    getAddress:'http://localhost:1000/user/getAddress',
+    addAddress:'http://localhost:1000/user/addAddress',
 
     // Dashboard
     addproduct: 'http://localhost:1000/admin/addProduct',

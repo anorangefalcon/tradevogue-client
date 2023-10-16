@@ -5,7 +5,6 @@ import { RouterLinksService } from '../shared/services/router-links.service';
 import { UtilsModule } from 'src/app/utils/utils.module';
 import { passwordStrengthValidator, matchPasswordValidator } from '../auth/validators';
 import { ToastService } from '../shared/services/toast.service';
-
 import { MobileNoValidator } from './validators';
 @Component({
   selector: 'app-settings',
@@ -13,13 +12,47 @@ import { MobileNoValidator } from './validators';
   styleUrls: ['./settings.component.css']
 })
 export class SettingsComponent {
-  showData: string = "profile";
+  showData: string = "addresses";
   OrderLength: number = 0;
+  VisibleAddress:boolean=false;
+  addnewAddress:boolean=false;
+  userAddresses:any;
+  closeAddress:boolean=false;
   TranslateData:boolean=false;
   changeComponent(el: string) {
-    console.log('CHANGE ELEMEMT CLICKED ',el);
     this.showData = el;
     this.TranslateData = true;
+  }
+
+  async getAddresses(){
+    this.showData='addresses';
+    this.TranslateData = true;
+  let data:any=await  this.fetchDataService.httpGet(this.backendURLs.URLs.getAddress);
+  console.log("data is ",data)
+  this.userAddresses=data.info.address;
+  console.log('USERADDRESS Is ',this.userAddresses);
+  
+  }
+
+  AddAddress(){
+    this.addnewAddress=true;
+    console.log(":show compone ti s ",this.showData," translate COMING IS  is ",this.TranslateData);
+    console.log('ADDD ADDREESS BECOME TRUE');
+    // this.fetchDataService.ShowAddress.emit()cpcp
+  }
+
+
+  CloseAddress(event:any){
+    this.addnewAddress=false;
+  }
+
+  RemoveAddressForm(){
+    this.addnewAddress=false;
+  }
+
+  NewAddressHandler(event:any){
+    // console.log("event coming is ",event);
+    this.userAddresses.push(event);
   }
 
   @ViewChild('expand') ExpandBtn: ElementRef | undefined;
@@ -126,6 +159,8 @@ export class SettingsComponent {
 
   }
 
+
+  
 
 
 

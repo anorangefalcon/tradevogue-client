@@ -5,31 +5,31 @@
 }
 
 
-.radios{
+.radios {
     display: flex;
     align-items: center;
     height: 52px;
 }
 
-.radios .genders{
+.radios .genders {
     display: flex;
     align-items: center;
     gap: 30px;
 }
 
 .radiocustom {
-    display: flex; 
+    display: flex;
     align-items: center;
     gap: 15px;
 
-    
+
 }
 
-input[type="radio"]{
+input[type="radio"] {
     display: none;
 }
 
-input[type="radio"] + label {
+input[type="radio"]+label {
 
     border: 1px solid rgb(var(--primaryClr));
     border-radius: 50%;
@@ -40,7 +40,7 @@ input[type="radio"] + label {
     align-items: center;
     padding: 0 !important;
 
-    & span{
+    & span {
         color: rgb(var(--primaryClr));
         /* display: flex;
         justify-content: center;
@@ -48,11 +48,11 @@ input[type="radio"] + label {
     }
 }
 
-input[type="radio"]:checked + label {
+input[type="radio"]:checked+label {
 
     background-color: rgb(var(--primaryClr));
 
-    & span{
+    & span {
         color: #ffff !important;
     }
 }
@@ -270,9 +270,10 @@ section {
 
 }
 
-.width-160{
+.width-160 {
     width: 160px;
 }
+
 .btns {
     & button {
         background: none;
@@ -543,15 +544,17 @@ section {
 
 
 /*----------------------- NEW CSS---------------------------- */
-.content{
-    width:calc(100% - 260px);
+.content {
+    width: calc(100% - 260px);
     /* transform: translateX(100%);  */
 }
+
 form {
     row-gap: 15px;
     flex-wrap: wrap;
     column-gap: 30px;
     width: 100%;
+
     & .form__group {
 
 
@@ -616,10 +619,10 @@ form {
 
 }
 
-.cancelbtn{
+.cancelbtn {
     background: transparent;
-    border: 1px solid rgba(var( --blackClr),0.2);
-    color:rgba(var(--primaryClr));
+    border: 1px solid rgba(var(--blackClr), 0.2);
+    color: rgba(var(--primaryClr));
 }
 
 
@@ -628,14 +631,17 @@ form {
     padding-block: 40px;
     height: 426px;
     position: sticky;
-    border-right: 1px solid rgba(var( --blackClr),0.2);
+    border-right: 1px solid rgba(var(--blackClr), 0.2);
+
     & .nav-items {
-        width:100%;
+        width: 100%;
+
         & .nav-links {
             width: 100%;
 
             transition: all 0.3s ease-in;
         }
+
         gap: 18px;
         display: flex;
         flex-direction: column;
@@ -643,13 +649,14 @@ form {
         height: 100%;
 
         & .nav-links a {
-            display: flex;  /*this look wrong */
+            display: flex;
+            /*this look wrong */
             cursor: pointer;
             align-items: center;
             padding-inline: 22px;
             padding-block: 12px;
 
-        
+
 
             & .nav-txt {
                 font-size: 14px;
@@ -664,29 +671,32 @@ form {
 
 
 .nav-link-active {
-    border-left:3.5px solid #d63242;
-    
+    border-left: 3.5px solid #d63242;
+
 }
 
-.nav-links a span:hover{
-    color:#d63242;
+.nav-links a span:hover {
+    color: #d63242;
 }
 
-.profile, .changePassword {
-   width: 100%;
+.profile,
+.changePassword,
+.address {
+    width: 100%;
     flex-direction: column;
     gap: 20px;
     padding-inline: 50px;
-        & h2 {
-            font-size: 24px;
-            font-weight: 600;
-        }
-        & .edit-btn {
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-        }
-        /* justify-content: space-between; */
+
+    & h2 {
+        font-size: 24px;
+        font-weight: 600;
+    }
+
+    & .edit-btn {
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+    }
 
 }
 
@@ -695,119 +705,194 @@ label span {
 }
 
 /*  RADIO BUTTON CSS */
-.radio{
+.radio {
     display: flex;
     padding-block: 40px;
-& label{
-    display:flex;
-    width: 200px;
-   & span{
-    color:rgba(var( --blackClr),0.9);
-   }
-    cursor:pointer;
-     align-items:center;
-    & input{
-      display:none;
-      
-    }
-    
-    & input[type='radio']:checked + span::before{
-      background-color:rgba(var(--primaryClr));
-      border:none;
-    }
-    
-    & span{
-       display: flex;
-      gap:4px;
-      align-items:center;
-      position:relative;
-    }
-    & span::before{
-      content: "";
-      height: 25px;
-      transition:all 0.5s;
-      width: 25px;
-      border: none;
-      background-color: #fff;
-      border:1px solid black;
-      border-radius: 50%;  
-    }
-    & span::after{
-       content: "";
-      height: 10px;
-      width: 10px;
-      position:absolute;
-      border: none;
-      background-color: #fff;
-      border-radius: 50%;
+
+    & label {
+        display: flex;
+        width: 200px;
+
+        & span {
+            color: rgba(var(--blackClr), 0.9);
+        }
+
+        cursor:pointer;
         align-items:center;
-        left:7px;
-      justify-content:center;
+
+        & input {
+            display: none;
+
+        }
+
+        & input[type='radio']:checked+span::before {
+            background-color: rgba(var(--primaryClr));
+            border: none;
+        }
+
+        & span {
+            display: flex;
+            gap: 4px;
+            align-items: center;
+            position: relative;
+        }
+
+        & span::before {
+            content: "";
+            height: 25px;
+            transition: all 0.5s;
+            width: 25px;
+            border: none;
+            background-color: #fff;
+            border: 1px solid black;
+            border-radius: 50%;
+        }
+
+        & span::after {
+            content: "";
+            height: 10px;
+            width: 10px;
+            position: absolute;
+            border: none;
+            background-color: #fff;
+            border-radius: 50%;
+            align-items: center;
+            left: 7px;
+            justify-content: center;
+        }
+
     }
-    
-  }
 }
+
 /*  RADIO BUTTON CSS */
 
-.right__icon, .left__icon{
+.right__icon,
+.left__icon {
     display: none;
 }
+
+
+.addAddress__div {
+    gap: 2px;
+
+    & span,
+    p {
+        color: rgba(var(--primaryClr), 0.8);
+    }
+}
+
+
+
+
+
+
+.address__firstdiv{
+   & p{
+        font-weight: 500;
+    }
+  
+    & button{
+        background: transparent;
+        padding: 0px 15px !important;
+        border-radius: 0;
+        
+
+    }
+
+    & .edit__btn{
+        border-right: 2px solid red;
+    }
+}
+
+
+.show{
+
+    & .addressForm{
+        opacity: 1;
+        visibility: initial;
+    }
+    & .addressFormContent{
+        top: 0px !important;
+        top:50% !important;
+        transform: translate(-50%, -50%) scale(1.1);
+        transition: transform 0.4s cubic-bezier(0, 0.59, 0.25, 1), -webkit-transform 0.4s cubic-bezier(0, 0.59, 0.25, 1);
+    }
+ } 
+
+
+
+
+
 
 
 
 /* MEDIA QUERY */
 @media (max-width:989px) {
 
-    .content{
+    .content {
         transform: translateX(100%);
     }
-    .container{
+
+    .container {
         overflow: hidden;
         position: relative;
         padding-inline: 0px !important;
-        
+
     }
 
-    .navbar{
-        border:none;
+    .navbar {
+        border: none;
         min-width: 100%;
-        & ul{
+        padding-inline: 10px !important;
+
+        & ul {
             width: 100%;
-            & li{
-                border:1px solid rgba(var( --blackClr),0.2);
+
+            & li {
+                border: 1px solid rgba(var(--blackClr), 0.2);
                 display: flex;
                 align-items: center;
                 cursor: pointer;
                 justify-content: space-between;
-                padding:12px 22px;
-                 & a{
-                    padding: 0 !important;
-                 }
+                padding: 12px 22px;
 
-                 & span{
+                & a {
+                    padding: 0 !important;
+                }
+
+                & span {
                     display: flex;
-                 }
+                }
             }
         }
     }
-    .profile, .changePassword{
+
+    .profile,
+    .changePassword ,.address{
         opacity: 1 !important;
-        & .h2_div{
-            & span{
+        padding: 0 !important;
+
+        & .h2_div {
+            & span {
                 display: flex !important;
+                transform: translateX(-8px);
+    opacity: 0.8;
             }
+
             /* display: flex !important; */
         }
+
         width: 100% !important;
         /* transform: translateX(100%); */
         /* transition: transform 0.4s cubic-bezier(0, 0.59, 0.25, 1), -webkit-transform 0.4s cubic-bezier(0, 0.59, 0.25, 1); */
         /* visibility: hidden; */
-      
+
         /* position: fixed; */
-        
+
     }
+
     .nav-link-active {
-        border:none;
+        border: none;
     }
 
     /* .selected{
@@ -822,16 +907,17 @@ label span {
         
     } */
 
-    .expand{
+    .expand {
         position: absolute !important;
-        background-color: red;
+        background-color: white;
         height: 100%;
         width: 100%;
         transform: translateX(0%) !important;
         transition: transform 0.4s cubic-bezier(0, 0.59, 0.25, 1), -webkit-transform 0.4s cubic-bezier(0, 0.59, 0.25, 1);
         padding-inline: 20px !important;
-        /* position: absolute; */
 
     }
+
+
 
 }

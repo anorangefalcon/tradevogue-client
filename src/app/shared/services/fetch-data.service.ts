@@ -15,7 +15,8 @@ export class FetchDataService {
   sellerUrl = '../../../assets/tempDB/seller.json';
   subject = new BehaviorSubject<any>('');
   subOb$ = this.subject.asObservable();
-
+  ShowAddress=new Subject();
+  
   constructor(private http: HttpClient, private toastService: ToastService, private backendUrls: UtilsModule, private route: ActivatedRoute) { }
 
   productKeys: any = ['available', 'colors', 'description', 'image', 'info', 'name', 'price', 'oldPrice', 'orderQuantity', 'reviews', 'sizes', 'sku', 'stockQuantity'];
@@ -74,9 +75,9 @@ export class FetchDataService {
           console.log('DATA INSIDE NE');
 
           res(data);
+          console.log(data, "ervice data");
+          this.toastService.successToast(data);
           
-
-
         }, error: (error) => {
 
           rej(error)

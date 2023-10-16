@@ -1,168 +1,106 @@
-<section class="Address">
-    <div class="container d-flex flex-column gap-15">
-       <div class="specialcontent" [ngStyle]="{'display': display == true ? 'block' : 'none'}" *ngIf="display!=false">
-           <div class="form" [ngClass]="display ? 'addnew' : ''">
-            <button class="closebtn">
-            <span class="material-symbols-outlined" (click)="close()">
-                close
-                </span>
-    
-            </button>
-            <!-- <app-add-address-form (SendData)="AddressHandler($event)" [updateAddress]="UpdatingRequest"></app-add-address-form> -->
-           </div>
-        </div>
-    
-    
-        <h2>Your Addresses</h2>
-    
-    
-     
-        <div class="d-flex content gap-15">
-            <div class="addAddress">
-               
-                <button (click)="display=true">
-                    
-                    <span class="material-symbols-outlined">
-                        add
-                        </span>
-                <h2>Add Address</h2>    
-                
-                </button>
-        </div>
-        <div *ngFor="let address of AddressData; let i= index" class="ShowAddresses">
-    
-            <div>
-            <p class="name">{{address.firstname}} {{address.lastname}}</p>
-            <p>{{address.apartment}}</p>
-            <p>{{address.area}}</p>
-            <p>{{address.town_city}}</p>
-            <p>{{address.state}}</p>
-            <p>{{address.country}}</p>
-            <p>{{address.pincode}}</p>
-        </div>
-    
-        <div class="d-flex gap-15">
-            <button (click)="Edit(address,i)" class="edit_btn">Edit</button>
-        
-        </div>
-        </div>
-    
-    </div>
-    </div>
+<div class="addressForm" [ngClass]="{'close_address':visibleClass==false,'show':visibleClass==true }"> <!-- [ngClass]="{'addressFormExpand':addnewAddress,'addressFormIntial':!addnewAddress}"-->
+    <div class="addressFormContent">
+        <span class="material-symbols-outlined close__icon" (click)="RemoveAddressForm()">
+            close
+            </span>
    
-    
 
- 
+<div class="d-flex flex-column gap-20">
 
-    
-    </section>
+<div>
+<h2>Add New Address
+</h2>
 
-    <div class="container addNew d-flex flex-column">
-        <h2 class="text-center">Shipping Details</h2>
-        <form [formGroup]="DetailsForm">
-            <div class="form__group d-flex flex-column width-50">
-                <label class="form__label">First Name<span>*</span></label>
-                <input type="text" placeholder="Enter Your First Name" class="form__input/" formControlName="firstname">
-                <small
-                *ngIf="DetailsForm.get('firstname')?.hasError('required') && DetailsForm.get('firstname')?.touched"
-                class="invalid">*FirstName is required.</small>
-                
-                
-            </div>
-
-            <div class="form__group d-flex flex-column width-50">
-                <label class="form__label">Last Name</label>
-             
-                <input type="text" placeholder="Enter Your Last Name" class="form__input/" formControlName="lastname">
-              
-            </div>
-            
-            <div class="form__group d-flex flex-column width-100">
-                <label class="form__label">Flat/House/Apartment No<span>*</span></label>
-             
-                <input type="text" placeholder="Enter Your Street Address" class="form__input/" formControlName="apartment">
-                <small
-                *ngIf="DetailsForm.get('apartment')?.hasError('required') && DetailsForm.get('apartment')?.touched"
-                class="invalid">*Flat/House/Apartment No is required.</small>
-            </div>
+</div>
 
 
+<form [formGroup]="DetailsForm" class="d-flex gap-15">
+<div class="form__group relative d-flex flex-column">
+    <label class="form__label">FIRSTNAME<span>*</span></label>
+    <span class="material-symbols-outlined form__icon absolute">person</span>
+    <input type="text" id="firstname" formControlName="firstname" placeholder="Enter Your First Name">
+</div>
 
-            
-            <div class="form__group d-flex flex-column width-100">
-                <label class="form__label">Area,Street,Village <span>*</span></label>
-             
-                <input type="text" placeholder="" class="form__input/" formControlName="area">
-                <small
-                *ngIf="DetailsForm.get('area')?.hasError('required') && DetailsForm.get('area')?.touched"
-                class="invalid">*Area,Street,Village is required.</small>
-            </div>
-
-
-            <div class="width-100 d-flex">
-
-            <div class="form__group d-flex flex-column width-33">
-                <label class="form__label">LandMark <span>*</span></label>
-             
-                <input type="text" placeholder="" class="form__input/" formControlName="landmark">
-                <small
-                *ngIf="DetailsForm.get('landmark')?.hasError('required') && DetailsForm.get('landmark')?.touched"
-                class="invalid">*LandMark is required.</small>
-            </div>
+<div class="form__group relative d-flex flex-column">
+    <label class="form__label">LASTNAME<span>*</span></label>
+    <span class="material-symbols-outlined form__icon absolute">person</span>
+    <input type="text" id="lastname" formControlName="lastname" placeholder="Enter Your Last Name">
+</div>
+<div class="form__group relative d-flex flex-column">
+    <label class="form__label">APARTMENT<span>*</span></label>
+    <span class="material-symbols-outlined form__icon absolute">mail</span>
+    <input type="text" id="apartment" formControlName="apartment" placeholder="Enter Your apartment no">
+</div>
 
 
-            <div class="form__group d-flex flex-column width-33">
-                <label class="form__label">Pincode <span>*</span></label>
-             
-                <input type="number" placeholder="" class="form__input/" formControlName="pincode">
-                <small
-                *ngIf="DetailsForm.get('pincode')?.hasError('required') && DetailsForm.get('pincode')?.touched"
-                class="invalid">*Pincode is required.</small>
-            </div>
+<div class="form__group relative d-flex flex-column">
+    <label class="form__label">AREA<span>*</span></label>
+    <span class="material-symbols-outlined form__icon absolute">call</span>
+    <input type="text" id="area" formControlName="area" placeholder="Enter Your MobileNo">
+<!-- 
+    <small
+        *ngIf="DetailsSubmitted && ProfileForm.get('mobile')?.hasError('notvalid') && ProfileForm.get('mobile')?.touched"
+        class="invalid">*Mobile No is invalid.</small> -->
+
+</div>
 
 
-           
 
 
-            <div class="form__group d-flex flex-column width-33">
-                <label class="form__label">Town/City <span>*</span></label>
-             
-                <input type="text" placeholder="" class="form__input/" formControlName="town_city">
-                <small
-                *ngIf="DetailsForm.get('town_city')?.hasError('required') && DetailsForm.get('town_city')?.touched"
-                class="invalid">*Town/City is required.</small>
-            </div>
-        </div>
+<div class="form__group relative d-flex flex-column">
+    <label class="form__label">LANDMARK<span>*</span></label>
+    <span class="material-symbols-outlined form__icon absolute">person</span>
+    <input type="text" id="landmark" formControlName="landmark" placeholder="Enter Your Username">
+</div>
 
-            <div class="form__group d-flex flex-column width-100">
-                <label class="form__label">State <span>*</span></label>
-             
-                <input type="text" placeholder="" class="form__input/" formControlName="state">
-                <small
-                *ngIf="DetailsForm.get('state')?.hasError('required') && DetailsForm.get('state')?.touched"
-                class="invalid">*State is required.</small>
-             
-            </div>
+<div class="form__group relative d-flex flex-column">
+    <label class="form__label">PINCODE<span>*</span></label>
+    <span class="material-symbols-outlined form__icon absolute">person</span>
+    <input type="text" id="pincode" formControlName="pincode" placeholder="Enter Your Username">
+</div>
 
 
-            <div class="form__group d-flex flex-column width-100">
-                <label class="form__label">Country <span>*</span></label>
-             
-                <div class="customSelect">
-                    <select id="country" name="country" class="form__input/" formControlName="country">
-                        <option value="India">India</option>
-                        <option value="Canada">Canada</option>
-                        <option value="United Kingdom">United Kingdom</option>
-                        <option value="Australia">Australia</option>
-                       
-                    </select>
-                </div>
-             
-            </div>
+<div class="form__group relative d-flex flex-column">
+    <label class="form__label">TOWN/CITY<span>*</span></label>
+    <span class="material-symbols-outlined form__icon absolute">person</span>
+    <input type="text" id="town_city" formControlName="town_city" placeholder="Enter Your Username">
+</div>
+
+<div class="form__group relative d-flex flex-column">
+    <label class="form__label">STATE<span>*</span></label>
+    <!-- <span class="material-symbols-outlined form__icon absolute">person</span> -->
+    <select for="state" formControlName="state">
+        <option value="sleect State:">Select State:</option>
+    <option value="punjab">Punjab</option>
+    <option value="delhi">Delhi</option>
+    <option value="chandigarh">Chandigarh</option>
+    </select>
+    <!-- <input type="text" id="town_city" formControlName="town_city" placeholder="Enter Your Username"> -->
+</div>
 
 
-            <div class="SaveDiv">
-            <button class="btn-primary registerbtn"  (click)="AddressHandler()">Save</button>
-        </div>
-        </form>
-    </div>
+
+<!-- <div class="form__group relative d-flex flex-column">
+    <label class="form__label">COUNTRY<span>*</span></label>
+   
+    <select id="country"formControlName="country">
+        <option value="0">Select country:</option>
+    <option value="1">Audi</option>
+    </select>
+   
+</div> -->
+
+</form>
+
+<div class="d-flex gap-15">
+    <button class="width-160 cancelbtn" (click)="AddressClose()">Cancel</button>
+    <button class="btn-primary width-160" #EditBtn (click)="AddnewAddress()">Save</button>
+</div>
+
+
+
+</div>
+
+</div>
+
+</div>
