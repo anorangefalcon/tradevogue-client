@@ -19,6 +19,8 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { AddressComponent } from './address/address.component';
 import { CartcontentComponent } from './cartcontent/cartcontent.component';
 import { CheckoutComponent } from '../checkout/checkout.component';
+import { DialogComponent } from './components/dialog/dialog.component';
+
 
 @NgModule({
   declarations: [
@@ -33,6 +35,7 @@ import { CheckoutComponent } from '../checkout/checkout.component';
     ProductFilterPipe,
     AddressComponent,
     CartcontentComponent,
+    DialogComponent
   ],
   imports: [
     CommonModule,
@@ -55,8 +58,8 @@ import { CheckoutComponent } from '../checkout/checkout.component';
     ProductFilterPipe,
     CustomSelectComponent,
     AddressComponent,
-    CartcontentComponent
-
+    CartcontentComponent,
+    DialogComponent
   ]
 })
 export class SharedModule { }

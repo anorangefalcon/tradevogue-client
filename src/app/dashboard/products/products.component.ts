@@ -2,6 +2,7 @@ import { Component, OnInit, ElementRef, ChangeDetectorRef } from '@angular/core'
 import { FetchDataService } from 'src/app/shared/services/fetch-data.service';
 import { UploadExcelService } from '../services/upload-excel.service';
 import { ToastService } from 'src/app/shared/services/toast.service';
+import { UtilsModule } from 'src/app/utils/utils.module';
 
 @Component({
   selector: 'app-products',
@@ -17,9 +18,20 @@ export class ProductsComponent implements OnInit {
   currentPage: number = 1;
   productList: any[] = [];
 
+  template: any = {
+    limit: this.pageSize,
+    page: this.currentPage,
+    filter: {
+      status: '',
+      caetgories: '',
+      rating: '',
+    }
+  }
+
   constructor(private element: ElementRef,
      private fetchdata: FetchDataService,
      private excelService: UploadExcelService,
+     private backendUrl: UtilsModule,
      private toastService: ToastService) { }
 
   ngOnInit(): void {
@@ -28,7 +40,10 @@ export class ProductsComponent implements OnInit {
 
   productTemplate = ['Product Name', 'Category', 'Price', 'Stock', 'Status', 'Published', 'Action'];
 
-  fetchData() {
+  async fetchData() {
+
+    const result = await this.fetchdata.httpPost(this.backendUrl.URLs.fetchproducts, this.template);
+    console.log(result);
 
     this.fetchdata.getSellerData().subscribe((data: any) => {
       let counter = 0

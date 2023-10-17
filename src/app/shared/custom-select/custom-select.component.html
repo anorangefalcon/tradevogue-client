@@ -12,16 +12,16 @@
     <ng-container *ngSwitchCase="'multiSelect'">
       <li class="checkbox__options" role="option" *ngFor="let option of options; let i=index" tabindex="{{i+2}}"
         (change)="updateMutliSelected($event)">
-        <input type="checkbox" [value]="option" name="options" [id]="option" *ngSwitchCase="'multiSelect'" />
-        <label [for]="option">{{option}}</label>
+        <input type="checkbox" [value]="option" name="options" [id]="option + type" *ngSwitchCase="'multiSelect'" [attr.checked]="multiSelected.includes(option)? true: null"/>
+        <label [for]="option + type">{{option}}</label>
       </li>
     </ng-container>
 
     <ng-container *ngIf="type != 'multiSelect';">
       <li role="option" *ngFor="let option of options ; let i=index" tabindex="{{i+2}}"
         (change)="updateSelected(option)">
-        <input type="radio" name="options" [id]="option" />
-        <label [for]="option">{{option}}</label>
+        <input type="radio" name="options" [id]="option + type" [attr.checked]="selected == option? true: null" />
+        <label [for]="option + type">{{option}}</label>
       </li>
     </ng-container>
   </ul>
@@ -29,8 +29,8 @@
     <input type="search" class="form__input" (input)="filterData($event)" [value]="selected"
       [placeholder]="selectedOption" *ngSwitchCase="'searchSelect'">
 
-    <input type="text" class="form__input" [value]="multiSelected.join(' , ')" [placeholder]="selectedOption"
-      *ngSwitchCase="'multiSelect'">
+    <input type="text" class="form__input" [value]="multiSelected.join(' , ')"  [placeholder]="selectedOption"
+      *ngSwitchCase="'multiSelect'" readonly>
 
     <input type="search" class="form__input" readonly (input)="filterData($event)" [value]="selected"
       [placeholder]="selectedOption" *ngSwitchDefault>

@@ -1,9 +1,8 @@
 import { Component } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { FetchDataService } from 'src/app/shared/services/fetch-data.service';
-import { invalidformat } from 'src/app/shared/validators/imageValidators.validator';
 import { UploadExcelService } from '../services/upload-excel.service';
 import { UtilsModule } from 'src/app/utils/utils.module';
+import { ToastService } from 'src/app/shared/services/toast.service';
 
 @Component({
   selector: 'app-addproductfeatures',
@@ -31,6 +30,12 @@ export class AddproductfeaturesComponent {
   }
 
   field_data: any;
+  popup: boolean = false;
+
+  deleteObject: any = {
+    field: '',
+    index: '',
+  }
   
 
   // Type Name should be same as that of backend (avoiding conflicts)
@@ -41,7 +46,11 @@ export class AddproductfeaturesComponent {
     {name: 'Product Tags', type: 'tags', filter: 'tags'}
   ];
 
-  constructor(private dataService: FetchDataService, private uploadExcel: UploadExcelService, private backendurls: UtilsModule){}
+  constructor(
+    private dataService: FetchDataService,
+    private uploadExcel: UploadExcelService, 
+    private toastService: ToastService,
+    private backendurls: UtilsModule){}
 
   async ngOnInit() {
     this.field_data =  await this.dataService.httpGet(this.backendurls.URLs.fetchFeatures);
@@ -67,29 +76,36 @@ export class AddproductfeaturesComponent {
     })
   }
 
+  async deleteItem(e: any){
+    this.popup = false;
+    if(e == true){
+      this.field_data[this.deleteObject.field].splice(this.deleteObject.index, 1);
+      const data = {
+        'field': this.deleteObject.field,
+        'data': this.field_data[this.deleteObject.field]
+      };
+      await this.dataService.httpPost(this.backendurls.URLs.updateFeatures, data);
+    }
+  }
+
   async addItem(item: any, field: string){
     if(!this.field_data[field].includes(this.filter[item])){
-      this.field_data[field].push(this.filter[item]);  
-      this.filter[item]='';
-
-      const data = {
-        'field': field,
-        'data': this.field_data[field]
-      };
-
-      await this.dataService.httpPost(this.backendurls.URLs.updateFeatures, data);
-
+        this.field_data[field].push(this.filter[item]);  
+        this.filter[item]='';
+  
+        const data = {
+          'field': field,
+          'data': this.field_data[field]
+        };
+        await this.dataService.httpPost(this.backendurls.URLs.updateFeatures, data);
+        return;
     }  
   }
-  
-  async deleteItem(field: string, index: number) {
-    this.field_data[field].splice(index, 1);
-    const data = {
-      'field': field,
-      'data': this.field_data[field]
-    };
 
-    await this.dataService.httpPost(this.backendurls.URLs.updateFeatures, data);
+  confirmation(field: string, index: number) {
+    this.popup = true;
+    this.deleteObject.field = field;
+    this.deleteObject.index = index;
   }
-  
+
 }

@@ -7,15 +7,13 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
 import { UtilsModule } from '../utils/utils.module';
 import { ForgetPasswordComponent } from './forget-password/forget-password.component';
-import { DialogComponent } from '../shared/components/dialog/dialog.component';
-
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   declarations: [
     LoginComponent,
     SignUpComponent,
     ForgetPasswordComponent,
-    DialogComponent
   ],
   imports: [
     CommonModule,
@@ -23,6 +21,7 @@ import { DialogComponent } from '../shared/components/dialog/dialog.component';
     ReactiveFormsModule,
     FormsModule,
     UtilsModule,
+    SharedModule
   ]
 })
 export class AuthModule { }

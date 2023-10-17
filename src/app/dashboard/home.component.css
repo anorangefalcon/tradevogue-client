@@ -4,14 +4,11 @@
     --whiteClr-clr: 238, 238, 238;
     --title-clr: 34, 40, 49;
     --sub-title-clr: 57, 62, 70;
-height: 100vh;
 
+    height: 100vh;
     font-family: 'Inter', sans-serif !important;
-/* font-family: 'Roboto', sans-serif !important; */
-
     font-size: 13px !important;
 
-   
     & .header {
         z-index: 1;
         height: 65px;
@@ -199,10 +196,11 @@ height: 100vh;
         background-color: rgba(var(--secondary), 1);
         margin-inline-start: 240px;
         padding: 30px;
-        height: 100%;
+        min-height: 100%;
         
         & .content{
             width: min(1400px, 100%);
+            min-height: 100%;
             margin-inline: auto;
         }
     }

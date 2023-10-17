@@ -24,6 +24,15 @@ export class CustomSelectComponent {
 
   constructor(private elementRef: ElementRef){}
 
+  ngOnInit(){
+    console.log(this.selectedOption);
+    if((typeof(this.selectedOption) == "string" && !this.selectedOption.split(' ').includes('Select'))){
+      this.selected = this.selectedOption;
+    }else if( Array.isArray(this.selectedOption)){
+      this.multiSelected = this.selectedOption;
+    }
+  }
+
   filterData(e: Event): any{
     const element =  e.target  as HTMLInputElement
     if(element.value.length == 0){
@@ -51,8 +60,9 @@ export class CustomSelectComponent {
 
   updateMutliSelected(e: Event){
     let element = <HTMLInputElement>e.target;
-
-    if(element.checked){
+    console.log(element.checked, this.multiSelected);
+    
+    if(element.checked && !this.multiSelected.includes(element)){
       this.multiSelected.push(element.value);
     }else{
       this.multiSelected = this.multiSelected.filter((item)=>{

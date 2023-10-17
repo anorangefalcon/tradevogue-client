@@ -588,29 +588,6 @@ ul {
     }
 }
 
-/* Dialog Box  */
-.dialogBox {
-    display: none;
-    /* visibility: hidden; */
-    /* opacity: 0; */
-    z-index: 1;
-    background-color: transparent;
-    border: none;
-
-    backdrop-filter: blur(2px);
-
-    & .dialog__content {
-        background-color: rgb(var(--whiteClr));
-        max-width: 420px;
-        min-height: 240px;
-        border-radius: 5px;
-        box-shadow: 0px 0px 10px rgb(var(--blackClr), 0.1);
-        padding: 30px;
-        text-align: center;
-
-    }
-}
-
 /* Hero Section Heading */
 
 & .heading {
@@ -633,8 +610,6 @@ ul {
         background: linear-gradient(to top right, rgb(var(--primaryClr)), rgb(var(--primaryClr)), rgb(var(--primaryClr)));
         -webkit-background-clip: text;
         background-clip: text;
-
-
     }
 }
 
@@ -693,12 +668,14 @@ button {
 }
 
 .btn-primary {
+    border: 1px solid rgb(var(--primaryClr));
     background-color: rgb(var(--primaryClr));
     color: rgb(var(--whiteClr));
+    transition: all 0.2s ease-in-out;
 }
 
 .btn-primary:hover {
-    background-color: rgb(var(--primaryClr), 0.9);
+    background-color: rgb(var(--primaryClr), 0.85);
 }
 
 .btn-secondary {
@@ -706,10 +683,11 @@ button {
     border: 1px solid rgb(var(--primaryClr));
     color: rgb(var(--primaryClr));
     font-weight: 400;
-    transition: all 0.3s ease-in-out;
+    transition: all 0.2s ease-in-out;
 
-    & :hover {
-        opacity: 0.8;
+    &:hover {
+        color: rgba(var(--textClr));
+        border: 1px solid rgba(var(--blackClr), 0.6);
     }
 }
 

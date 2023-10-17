@@ -22,15 +22,12 @@ export class AddproductComponent {
   brands!: string[];
   gender: string[] = ['Male', 'Female', 'Others'];
   sizes: string[] = ['XS', 'S', 'M', 'L', 'XL', 'XXL', 'XXXL'];
-  // colors: string[] = ['Color 1', 'Color 2', 'Color 3', 'Color 4'];
   tags!: string[];
   orderQuantity!: number[];
-
   common_colors: string[] = ['#FFFFFF', '#000000', '#0000FF', '#808080', '#800080', '#00FF00', '#FFC0CB', '#ff0000'];
 
   productsForm: FormGroup;
   current_form: string = '';
-
 
   // Template for Toast
   data_template: any = {
@@ -48,7 +45,7 @@ export class AddproductComponent {
     private router: Router) {
 
     this.productsForm = this.fb.group({
-      productDesc: this.fb.array([
+      assets: this.fb.array([
         this.fb.group({
           color: ['', {
             validators: [
@@ -63,8 +60,7 @@ export class AddproductComponent {
           photo: [[], {
             validators: [
               Validators.required,
-              Validators.maxLength(6),
-              imageSizeValidator
+              Validators.maxLength(6)
             ]
           }],
         })
@@ -77,12 +73,7 @@ export class AddproductComponent {
             invalidformat
           ]
         }],
-        code: ['', {
-          validators: [
-            Validators.required,
-          ]
-        }],
-        subtitle: ['', {
+        subTitle: ['', {
           validators: [
             Validators.required
           ]
@@ -92,60 +83,64 @@ export class AddproductComponent {
             Validators.required
           ]
         }],
-        category: ['', {
+        info: this.fb.group({
+          code: ['', {
+            validators: [
+              Validators.required,
+            ]
+          }],
+          category: ['', {
+            validators: [
+              Validators.required,
+            ]
+          }],
+          brand: ['', {
+            validators: [
+              Validators.required,
+            ]
+          }],
+          size: [[], {
+            validators: [
+              Validators.required
+            ]
+          }],
+          gender: ['', {
+            validators: [
+              Validators.required,
+            ]
+          }],
+          tags: [[], {
+            validators: [
+              Validators.required
+            ]
+          }],
+          composition: ['', {
+            validators: [
+              Validators.required
+            ]
+          }],
+          weight: ['', {
+            validators: [
+              Validators.required
+            ]
+          }],
+          orderQuantity: [[], {
+            validators: [
+              Validators.required
+            ]
+          }]
+        }),
+
+        price: [, {
           validators: [
             Validators.required,
           ]
         }],
-        brand: ['', {
-          validators: [
-            Validators.required,
-          ]
-        }],
-        sizes: [[], {
-          validators: [
-            Validators.required
-          ]
-        }],
-        gender: ['', {
-          validators: [
-            Validators.required,
-          ]
-        }],
-        tags: [[], {
-          validators: [
-            Validators.required
-          ]
-        }],
-        actualprice: [, {
-          validators: [
-            Validators.required,
-          ]
-        }],
-        // discount: [],
-        // discountprice: [],
-        materialType: ['', {
-          validators: [
-            Validators.required
-          ]
-        }],
-        weight: ['', {
-          validators: [
-            Validators.required
-          ]
-        }],
-        orderQuantity: [[], {
-          validators: [
-            Validators.required
-          ]
-        }]
       })
     });
   }
 
   // box-shadow: inset 0px 0px 2px #0000004
-
-
   async ngOnInit() {
     const result: any = await this.dataService.httpGet(this.backendUrl.URLs.fetchFeatures);
     this.categories = result.categories;
@@ -156,7 +151,7 @@ export class AddproductComponent {
   }
 
   productImagesFormArray() {
-    return (<FormArray>this.productsForm.get('productDesc')).controls;
+    return (<FormArray>this.productsForm.get('assets')).controls;
   }
 
   productSubForm(field: string) {
@@ -164,7 +159,7 @@ export class AddproductComponent {
   }
 
   deleteFormGroup(index: number) {
-    (<FormArray>this.productsForm.get('productDesc')).removeAt(index);
+    (<FormArray>this.productsForm.get('assets')).removeAt(index);
   }
 
   addProductImageForm() {
@@ -185,11 +180,10 @@ export class AddproductComponent {
         validators: [
           Validators.required,
           Validators.maxLength(6),
-          imageSizeValidator
         ]
       }],
     });
-    (<FormArray>this.productsForm.get('productDesc')).push(template);
+    (<FormArray>this.productsForm.get('assets')).push(template);
   }
 
   async fileReader(file: any, image: any): Promise<any> {
@@ -217,7 +211,7 @@ export class AddproductComponent {
   onImageUpload(event: Event, formId: number) {
 
     let file = (<HTMLInputElement>event.target)?.files;
-    let formControl = this.productsForm.get('productDesc')?.get(String(formId))?.get('photo');
+    let formControl = this.productsForm.get('assets')?.get(String(formId))?.get('photo');
 
     // Reading Files using File Reader and displaying visual Data to user
     this.fileReader(file, formControl?.value).then((res) => {
@@ -237,43 +231,80 @@ export class AddproductComponent {
         this.toastservice.warningToast(this.data_template);
       }
 
-      // Handling Image Exceeding the Size Limit of 2MB
-      if (formControl?.hasError('exceedSize')) {
-        console.log("Error::", formControl?.getError('errorFiles'), productImages);
+      const errorFiles = this.imageSizeValidator(formControl);
 
-        let errorFile = formControl?.getError('errorFiles');
-
+      if (errorFiles) {
         // Filtering Out Error Free Data
         productImages = productImages.filter((file: any) => {
-          return !errorFile.includes(file);
+          return !errorFiles.includes(file);
         });
         formControl?.patchValue(productImages);
 
         // Warning Message
         this.data_template.title = 'Maximum Image Size Exceeded (2MB)';
-        errorFile.forEach((err: any) => {
+        errorFiles.forEach((err: any) => {
           this.data_template.body.push(err.file.name);
         });
         this.toastservice.warningToast(this.data_template);
       }
+
+      // Handling Image Exceeding the Size Limit of 2MB
+      // if (formControl?.hasError('exceedSize')) {
+      //   console.log("Error::", formControl?.getError('errorFiles'), productImages);
+
+      //   let errorFile = formControl?.getError('errorFiles');
+
+      //   // Filtering Out Error Free Data
+      //   productImages = productImages.filter((file: any) => {
+      //     return !errorFile.includes(file);
+      //   });
+      //   formControl?.patchValue(productImages);
+
+      //   // Warning Message
+      //   this.data_template.title = 'Maximum Image Size Exceeded (2MB)';
+      //   errorFile.forEach((err: any) => {
+      //     this.data_template.body.push(err.file.name);
+      //   });
+      //   this.toastservice.warningToast(this.data_template);
+      // }
     })
   }
 
+  // imageSize Validator
+  imageSizeValidator(control: any) {
+    let imageList = control.value;
+
+    if (imageList.length != 0) {
+      let errorfiles = imageList.filter((image: any) => {
+        return image.file.size > 2097152; //2MB
+      });
+      if (errorfiles.length != 0) return errorfiles;
+    }
+
+    return null;
+  }
+
   // Delete Image from Image List
-  deleteImage(imageIndex: any, formId: any) {
-    let productImages = this.productsForm.get('productDesc')?.get(String(formId))?.get('photo')?.value;
-    productImages.splice(imageIndex, 1);
-    this.productsForm.get('productDesc')?.get(String(formId))?.get('photo')?.patchValue(productImages);
+  deleteImage(imageIndex: any, formId: any, type='') {
+    let productImages = this.productsForm.get('assets')?.get(String(formId))?.get('photo')?.value;
+    if(type != 'filestack'){
+      productImages.splice(imageIndex, 1);
+      this.productsForm.get('assets')?.get(String(formId))?.get('photo')?.patchValue(productImages);
+      return;
+    }
+    this.upload.delete(productImages[imageIndex]).subscribe((res)=>{
+      console.log(res);
+    })
   }
 
   // update Form Control For Custom Select buttons
   updateFormFields(e: any, field: string) {
     this.productsForm.get('basicinfo')?.get(field)?.patchValue(e);
+    console.log(this.productsForm.get('basicinfo')?.get(field)?.value, "data");
   }
 
   updateColor(e: Event, index: number) {
     const color = (<HTMLInputElement>e.target).value;
-    this.productsForm.get('productImages')?.get(String(index))?.get('color')?.patchValue(color);
   }
 
   // Letter Counter for Paragraph
@@ -284,7 +315,7 @@ export class AddproductComponent {
 
   // For  purpose of ng For loop for Displaying Images
   imagesArray(index: number) {
-    return this.productsForm.get('productDesc')?.get(String(index))?.get('photo')?.value;
+    return this.productsForm.get('assets')?.get(String(index))?.get('photo')?.value;
   }
 
   async onsubmit() {
@@ -295,22 +326,27 @@ export class AddproductComponent {
       this.productsForm.markAllAsTouched();
     } else {
 
-      const imageFormArray = this.productsForm.get('productDesc')?.value;
+      const imageFormArray = this.productsForm.get('assets')?.value;
 
       // Upload Images to fileStack and last upload the form data
       imageFormArray.forEach((imageArray: any, index: number) => {
         this.upload.fileupload(imageArray['photo']).then(async (res) => {
-          
-          this.productsForm.get('productDesc')?.get(String(index))?.get('photo')?.patchValue(res);
+
+          this.productsForm.get('assets')?.get(String(index))?.get('photo')?.patchValue(res);
 
           if (index == (imageFormArray.length - 1)) {
             const data = {
               type: 'single',
               data: this.productsForm.value
             };
-            this.dataService.httpPost(this.backendUrl.URLs.addproduct, data).then(()=>{
-              this.router.navigate(['/dashboard/products'])
-            }).catch((err)=>{
+
+            this.dataService.httpPost(this.backendUrl.URLs.addproduct, data).then((res: any) => {
+              //Success Message
+              this.data_template.title = 'Product Uploaded';
+              this.toastservice.successToast(this.data_template);
+              this.router.navigate(['/dashboard/products']);
+              
+            }).catch((err) => {
               console.log(err);
             })
           }

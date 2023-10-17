@@ -1,7 +1,10 @@
 <div class="card-container mh100 ">
+    
+    <div class="fixed" style="z-index: 2;" [ngStyle]="{display: popup? 'block': 'none'}">
+        <app-dialog [type]="'confirmation'" [name]="'Kurta'" (reply)="deleteItem($event)"></app-dialog>
+    </div>
 
     <div class="card__block mw100" *ngFor="let item of card_template; let i=index">
-
         <div class="row row-1 d-flex align-item-center justify-content-md-between">
             <h4>{{item.name}}</h4>
 
@@ -18,7 +21,7 @@
             <ng-container *ngIf="field_data">
                 <div class="data__field d-flex justify-content-md-between fs-14 transition " *ngFor="let option of field_data[item.type] | productFilter: filter[item.filter]; let j = index">
                     <span class="data-field__text">{{option}}</span>
-                    <span class="pointer d-flex flex-center transition material-symbols-outlined" (click)="deleteItem(item.type, j)">close</span>
+                    <span class="pointer d-flex flex-center transition material-symbols-outlined" (click)="confirmation(item.type, j)">close</span>
                 </div>
             </ng-container>
         </div>
@@ -32,198 +35,4 @@
             </div>
         </div>
     </div>
-
-
-
-<!-- 
-    <div class="form__group">
-
-        <div class="card d-flex flex-column">
-            <div class="row-1 d-flex align-item-center justify-content-md-between">
-                <h4>Category</h4>
-
-                <div class="file-section">
-                    <input type="file" id="category" minlength="1" (input)="uploadFile($event, 'category')"
-                        accept="image/CSV, application/vnd.ms-excel ,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-                        multiple />
-                    <label for="category"><span class="material-symbols-outlined">upload_file</span></label>
-                    <a href="../../../assets/ExcelSampleFile/Categories_Sample.xlsx" download><span
-                            class="material-symbols-outlined">download</span></a>
-                </div>
-            </div>
-            <div class="row-2 d-flex flex-column">
-                <div class="column d-flex flex-column gap-10">
-                    <div class="category d-flex gap-10 flex-column">
-                        <div
-                            *ngFor="let option of dataList.categoryList | productFilter: data['category']; let i = index">
-                            <span>{{option}}</span>
-                            <span class="material-symbols-outlined" (click)="deleteItem('categoriesList', i)">close</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="column d-flex gap-10 flex-column relative">
-
-                        <input type="text" placeholder="Add Category" id="category" [(ngModel)]='data.category' />
-
-                        <div class="button absolute">
-                            <button class="btn-primary" type="submit" (click)="addItem('category', 'categoriesList')">
-                                <span class="material-symbols-outlined">add</span>
-                            </button>
-                        </div>
-                </div>
-            </div>
-        </div>
-    </div> -->
-<!-- 
-    <div class="form__group">
-        <div class="card d-flex flex-column">
-            <div class="row-1 d-flex align-item-center justify-content-md-between">
-                <h4>Brand</h4>
-
-                <div class="file-section">
-                    <input type="file" id="brand" maxlength="1" minlength="1" (change)="uploadFile($event, 'brands')"
-                        accept="image/CSV, application/vnd.ms-excel ,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" />
-                    <label for="brand"><span class="material-symbols-outlined">upload_file</span></label>
-                    <a href="../../../assets/ExcelSampleFile/Brands_Sample.xlsx" download><span
-                            class="material-symbols-outlined">download</span></a>
-                </div>
-            </div>
-            <div class="row-2 d-flex flex-column">
-                <div class="column d-flex flex-column gap-10">
-                    <div class="category d-flex gap-10 flex-column">
-                        <div *ngFor="let option of dataList.brandsList | productFilter: data['brand']; let i = index">
-                            <span>{{option}}</span>
-                            <span class="material-symbols-outlined" (click)="deleteItem('brandsList', i)">close</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="column d-flex gap-10 flex-column">
-                    <div class="d-flex gap-5 flex-column relative">
-                        <input type="text" placeholder="Add Brand" id="brand" [(ngModel)]="data.brand" />
-                        <div class="button absolute">
-                            <button class="btn-primary" type="submit" (click)="addItem('brand', 'brandsList')">
-                                <span class="material-symbols-outlined">add</span>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div> -->
-
-    <!-- <div class="form__group d-flex flex-column">
-        <div class="card d-flex flex-column">
-            <div class="row-1 d-flex align-item-center justify-content-md-between">
-                <h4>Order Quantity</h4>
-
-                <div class="file-section">
-                    <input type="file" id="quantity" maxlength="1" minlength="1"
-                        accept="image/CSV, application/vnd.ms-excel ,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-                        (change)="uploadFile($event, 'quantities')" />
-                    <label for="quantity"><span class="material-symbols-outlined">upload_file</span></label>
-                    <a href="../../../assets/ExcelSampleFile/orderQuantity_Sample.xlsx" download><span
-                            class="material-symbols-outlined">download</span></a>
-                </div>
-            </div>
-            <div class="row-2 d-flex flex-column">
-                <div class="column d-flex flex-column gap-10">
-                    <div class="category d-flex gap-10 flex-column">
-                        <div
-                            *ngFor="let option of dataList.quantitiesList | productFilter: data['quantity']; let i = index">
-                            <span>{{option}}</span>
-                            <span class="material-symbols-outlined"
-                                (click)="deleteItem('quantitiesList', i)">close</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="column d-flex gap-10 flex-column">
-                    <div class="d-flex gap-5 flex-column relative">
-                        <input type="text" placeholder="Add Quantity" [(ngModel)]="data.quantity" id="quantity" />
-                        <div class="button absolute">
-                            <button class="btn-primary" type="submit" (click)="addItem('quantity', 'orderQuantityList')">
-                                <span class="material-symbols-outlined">add</span>
-                            </button>
-                        </div>
-                    </div> 
-                </div>
-            </div>
-        </div>
-    </div> -->
-
-    <!-- <div class="form__group">
-
-        <div class="card d-flex flex-column">
-            <div class="row-1 d-flex align-item-center justify-content-md-between">
-                <h4>Product Tags</h4>
-
-                <div class="file-section">
-                    <input type="file" id="tag" maxlength="1" minlength="1"
-                        accept="image/CSV, application/vnd.ms-excel ,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-                        (change)="uploadFile($event, 'Tags')" />
-                    <label for="tag"> <span class="material-symbols-outlined">upload_file</span></label>
-                    <a href="../../../assets/ExcelSampleFile/Tags_Sample.xlsx" download><span
-                            class="material-symbols-outlined">download</span></a>
-                </div>
-            </div>
-            <div class="row-2 d-flex flex-column">
-                <div class="column d-flex flex-column gap-10">
-                    <div class="category d-flex gap-10 flex-column">
-                        <div *ngFor="let option of dataList.tagsList | productFilter: data['tags']; let i = index">
-                            <span>{{option}}</span>
-                            <span class="material-symbols-outlined" (click)="deleteItem('tagsList', i)">close</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="column d-flex gap-10 flex-column">
-                    <div class="d-flex gap-5 flex-column relative">
-                        <input type="text" placeholder="Add Tag" id="tag" [(ngModel)]="data.tags" />
-                        <div class="button absolute">
-                            <button class="btn-primary" type="submit" (click)="addItem('tags', 'tagsList')">
-                                <span class="material-symbols-outlined">add</span>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-    </div> -->
-
-    <!-- <div class="form__group">
-
-        <div class="card d-flex flex-column">
-            <div class="row-1 d-flex align-item-center justify-content-md-between">
-                <h4>Product Sizes</h4>
-
-                <div class="file-section">
-                    <input type="file" id="sizes" maxlength="1" minlength="1"
-                        accept="image/CSV, application/vnd.ms-excel ,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-                        (change)="uploadFile($event, 'Sizes')" />
-                    <label for="sizes"><span class="material-symbols-outlined">upload_file</span></label>
-                    <a href="../../../assets/ExcelSampleFile/Sizes_Sample.xlsx" download><span
-                            class="material-symbols-outlined">download</span></a>
-                </div>
-            </div>
-            <div class="row-2 d-flex flex-column">
-                <div class="column d-flex flex-column gap-10">
-                    <div class="category d-flex gap-10 flex-column">
-                        <div *ngFor="let option of dataList.sizesList | productFilter: data['sizes']; let i = index">
-                            <span>{{option}}</span>
-                            <span class="material-symbols-outlined" (click)="deleteItem('sizesList', i)">close</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="column d-flex gap-10 flex-column">
-                    <div class="d-flex gap-5 flex-column relative">
-                        <input type="text" placeholder="Add Size" id="size" [(ngModel)]="data.sizes" />
-                        <div class="button absolute">
-                            <button class="btn-primary" type="submit" (click)="addItem('sizes', 'sizesList')">
-                                <span class="material-symbols-outlined">add</span>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div> -->
 </div>

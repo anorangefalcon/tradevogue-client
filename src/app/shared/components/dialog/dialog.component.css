@@ -1,8 +1,9 @@
 .popup{
-    display: flex;
-    /* visibility: visible; */
-    /* opacity: 1; */
+    display: flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
 }
+
 .dialog__content {
     & h3 {
         font-size: 23px !important;
@@ -34,13 +35,14 @@
 }
 /* Dialog Box  */
 .dialogBox {
-    /* display: none; */
-    /* visibility: hidden; */
-    /* opacity: 0; */
-    z-index: 1;
+    display: none;
+    visibility: hidden;
+    opacity: 0;
+    z-index: 3;
     background-color: transparent;
     border: none;
-    backdrop-filter: blur(2px);
+    background-color: rgb(var(--blackClr), 0.05);
+    backdrop-filter: blur(0.4px);
 
     & .dialog__content {
         background-color: rgb(var(--whiteClr));
@@ -58,4 +60,19 @@
 
 .col_left{
     padding: 10px;
+}
+
+.warning_icon{
+    display: flex; 
+    align-items: center;
+    justify-content: center;
+    background-color: rgb(var(--danger));
+    color: rgb(var(--whiteClr));
+    border: 1px solid rgb(var(--blackClr), 0.05);
+    width: 100px;
+    height: 100px;
+    margin: 0 auto;
+    border-radius: 50%;
+    margin-block-start: -65px;
+    font-size: 45px;
 }
