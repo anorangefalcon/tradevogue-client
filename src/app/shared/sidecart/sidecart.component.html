@@ -78,7 +78,7 @@
                     <div class="overflow-y-scroll flex-grow scrollbar-hide w-full max-h-full">
                         <div *ngFor="let item of cartArr"
                             class="group w-full h-auto flex justify-start items-center bg-white py-3 px-4 border-b hover:bg-gray-50 transition-all border-gray-100 relative last:border-b-0">
-                            <div
+                            <div routerLink="/product/{{item.sku}}"
                                 class="relative flex rounded-full border border-gray-100 shadow-sm overflow-hidden flex-shrink-0 cursor-pointer mr-4">
                                 <img [src]=item?.image?.[0] alt="Product Image" width="40"
                                     height="40" alt="Cerelac Cherry"></div>
@@ -97,7 +97,7 @@
                                                     xmlns="http://www.w3.org/2000/svg">
                                                     <line x1="5" y1="12" x2="19" y2="12"></line>
                                                 </svg></span></button>
-                                        <p class="text-sm font-semibold text-dark px-1">1</p><button (click)="changeQuantity('next', item.sku, item.Quantity)"><span
+                                        <p class="text-sm font-semibold text-dark px-1">{{item.Quantity}}</p><button (click)="changeQuantity('next', item.sku, item.Quantity)"><span
                                                 class="text-dark text-base"><svg stroke="currentColor" fill="none"
                                                     stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round"
                                                     stroke-linejoin="round" height="1em" width="1em"
