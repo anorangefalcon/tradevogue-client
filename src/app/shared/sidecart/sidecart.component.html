@@ -1,3 +1,4 @@
+
 <div [ngClass]="{'sidecart--close': isSidecartClosed}">
     <div tabindex="-1" class="drawer drawer-right drawer-open">
         <div class="drawer-mask"></div>
@@ -203,7 +204,7 @@
                     
 
                     <div class="mx-5 my-3"><span>
-                            <div><button routerLink="/cart/billing"
+                            <div><button (click)="toggleSidecart()" routerLink="/cart/billing"
                                     class="w-full py-3 px-3 rounded-lg bg-emerald-500 hover:bg-emerald-600 flex items-center justify-between bg-heading text-sm sm:text-base text-white focus:outline-none transition duration-300"><span
                                         class="align-middle font-medium font-serif">Proceed To Checkout</span><span
                                         class="rounded-lg font-bold font-serif py-2 px-3 bg-white text-emerald-600">₹ {{cart.amounts.total}}</span></button>

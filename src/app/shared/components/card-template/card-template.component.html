@@ -52,7 +52,7 @@
     <div class="popup-content popup-details" [ngClass]="{'fade-in': showPopup}">
         <div class="left-side">
             <owl-carousel-o [options]="customOptions" [ngClass]="{crousel: true}">
-                <ng-template carouselSlide *ngFor="let item of product.image">
+                <ng-template carouselSlide *ngFor="let item of productData.assets[0].photo">
                     <div>
                         <img class="image-carousel" [src]="item" alt="Product Image">
                     </div>
@@ -61,7 +61,7 @@
         </div>
         <div class="right-side">
             <h1 class="prod-name">{{ product.name }}</h1>
-            <h2 class="subTitle">{{product.info.subTitle}}
+            <h2 class="subTitle">{{productData.subTitle}}
 
                 <div *ngIf="avgRating !== 0" class="rating d-flex align-item-center">
                     <span *ngFor="let i of createArrayToIterate(avgRating)"
@@ -72,7 +72,7 @@
                 </div>
             </h2>
 
-            <p id="description">{{product.description}}</p>
+            <p id="description">{{productData.description}}</p>
             <div class="price">
                 <h1  id="number-discount">₹{{ product.price }}</h1>
                 <p id="number-full" *ngIf="product.oldPrice !== (undefined || 0)">₹{{product.oldPrice}}</p>
@@ -81,8 +81,8 @@
             <div class="colors d-flex align-item-center gap-15">
                 <p>Color:</p>
                 <div class="colors-opt d-flex gap-10">
-                    <div class="colors-radios d-flex align-item-center" *ngFor="let color of product.colors">
-                        <input type="radio" name="color" [value]="color" [style.background-color]="color"
+                    <div class="colors-radios d-flex align-item-center" *ngFor="let color of productData.assets">
+                        <input type="radio" name="color" [value]="color.color" [style.background-color]="color.color"
                             [(ngModel)]="selectedColor">
                     </div>
                 </div>
@@ -108,6 +108,5 @@
         </div>
     </div>
 </div>
-
 
 <!-- <app-product-section ></app-product-section> -->

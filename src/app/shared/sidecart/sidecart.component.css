@@ -200,6 +200,14 @@ drawer-left.drawer-open, .drawer-right.drawer-open {
 .drawer.drawer-open {
     transition: transform .3s cubic-bezier(.78,.14,.15,.86);
 }
+
+.drawer.drawer-right {
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.6);
+}
+
 .drawer-right {
     top: 0;
     right: 0;

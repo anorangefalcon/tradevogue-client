@@ -2,6 +2,8 @@ import { Component, Input } from '@angular/core';
 import { CartService } from '../../services/cart.service';
 import { OwlOptions } from 'ngx-owl-carousel-o';
 import { SidecartService } from '../../services/sidecart.service';
+import { FetchDataService } from '../../services/fetch-data.service';
+
 @Component({
   selector: 'app-card-template',
   templateUrl: './card-template.component.html',
@@ -13,15 +15,22 @@ export class CardTemplateComponent {
   showPopup: boolean = false;
 
 
-  constructor(private cartService: CartService, private sideCartService: SidecartService) { }
+  constructor(private cartService: CartService, private sideCartService: SidecartService, private fetchdata: FetchDataService) { }
 
   avgRating: number = 0;
+  productData: any = [];
   offerPercentage: number = 0;
-   selectedColor: string = "";
+  selectedColor: string = "";
 
   ngOnInit(): void {
 
     this.avgRating = this.product.avgRating;
+
+    const sku = this.product.sku;
+    this.fetchdata.getProductDetails(sku).subscribe((data: any) => {
+      this.productData = data;
+      console.log(this.productData);
+    })
     
     this.product.oldPrice = 0; //temp
     // this will be updated once coupon/discount backend is done
