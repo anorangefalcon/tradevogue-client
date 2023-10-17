@@ -20,7 +20,7 @@ export class FetchDataService {
   constructor(private http: HttpClient, private toastService: ToastService, private backendUrls: UtilsModule, private route: ActivatedRoute) { }
 
   productKeys: any = ['available', 'colors', 'description', 'image', 'info', 'name', 'price', 'oldPrice', 'orderQuantity', 'reviews', 'sizes', 'sku', 'stockQuantity'];
-  getData(): Observable<any> {
+   getData(): Observable<any> {
     return this.http.get(this.url).pipe(
       map((arrayData: any) => {
         return arrayData.filter((item: any) => {
@@ -48,7 +48,7 @@ export class FetchDataService {
   }
 
   getUniqueProductFields(){
-    return this.http.get(this.backendUrls.URLs.getUniqueProductFields);
+    return this.http.get('http://localhost:1000/products/uniqueFields');
   }
 
   getProductDetails(sku: any) {
@@ -74,8 +74,6 @@ export class FetchDataService {
         params = params.set(key, data[key]);
       }
     }); 
-
-    console.log(params, 'parmmm');
     
     return this.http.get(this.backendUrls.URLs.fetchProducts, { params });
   }

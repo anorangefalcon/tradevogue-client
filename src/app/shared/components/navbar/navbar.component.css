@@ -176,17 +176,22 @@ header.active {
         transition: all 0.3s ease-in-out;
 
         &::before {
-            z-index: 5;
+
             content: "";
+            z-index: 5;
             position: absolute;
             display: block;
             height: 0;
             width: 0;
-            border-block-end: 10px solid rgba(243, 243, 243, 0.9);
-            border-inline-start: 10px solid transparent;
-            border-inline-end: 10px solid transparent;
-            inset-block-start: -9px;
+            border-block-end: 10px solid rgba(255, 255, 255, 0.6);
+            
+            border-inline-start: 10px solid rgba(128, 128, 128, 0.02);
+            
+            border-inline-end: 10px solid rgb(128, 128, 128, 0.02);
+
+            inset-block-start: -10px;
             inset-inline-end: 4px;
+        
         }
 
         & .header p {

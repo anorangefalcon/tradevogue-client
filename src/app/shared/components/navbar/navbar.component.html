@@ -17,46 +17,49 @@
             </a>
         </div>
         <ul class="d-flex gap-30 nav-items" [class.active]="hamburgerOpen">
-            <!-- <li class="nav-links">
-                <a class="active d-flex flex-column gap-5" [routerLink]="['/']">
-                    <span class="material-symbols-outlined">home</span>
-                    Home
-                </a>
-            </li> -->
+        
             <li class="nav-links" (click)="hamburgerOpen = false">
-                <a href="" class=" d-flex flex-column gap-5" [routerLink]="['/explore']" [queryParams]="{ gender: 'male' }">
-                    <!-- <span class="material-symbols-outlined">male</span> -->
+                <a class="d-flex flex-column gap-5 pointer">
                     Men
                 </a>
                 <ul class="sub-items sub-categories d-flex flex-column gap-15 align-item-center">
-                    <li>Shirt</li>
-                    <li>Plain Shirt</li>
-                    <li>Linen Shirt</li>
+                    <li *ngFor="let category of categories?.men" class="pointer">
+                        <a [routerLink]="['/explore']" [queryParams]="{ gender: 'male', category: category }">
+                            {{ category }}
+                        </a>
+                    </li>
+                    <li class="pointer">
+                        <a [routerLink]="['/explore']" [queryParams]="{ gender: 'male'}">
+                            Explore All
+                        </a>
+                    </li>
                 </ul>
             </li>
             <li class="nav-links" (click)="hamburgerOpen = false">
-                <a href="" class=" d-flex flex-column gap-5" [routerLink]="['/explore']" [queryParams]="{ gender: 'female' }">
-                    <!-- <span class="material-symbols-outlined">female</span> -->
+                <a class="d-flex flex-column gap-5 pointer">
                     Women
                 </a>
                 <ul class="sub-items sub-categories d-flex flex-column gap-15 align-item-center pointer">
-                    <li>Kurti</li>
-                    <li>Kurti 1</li>
-                    <li>Kurti 2</li>
-                    <li>Kurti 3</li>
-                    <li>Kurti 4</li>
-                    <li>Kurti 5</li>
+
+                    <li *ngFor="let category of categories?.women" class="pointer">
+                        <a [routerLink]="['/explore']" [queryParams]="{ gender: 'female', category: category }">
+                            {{ category }}
+                        </a>
+                    </li>
+                    <li class="pointer">
+                        <a [routerLink]="['/explore']" [queryParams]="{ gender: 'female'}">
+                            Explore All
+                        </a>
+                    </li>
                 </ul>
             </li>
             <li class="nav-links" (click)="hamburgerOpen = false">
                 <a href="" class=" d-flex flex-column gap-5" [routerLink]="['/explore']">
-                    <!-- <span class="material-symbols-outlined">offer</span> -->
                     Offers
                 </a>
                 <ul class="sub-items sub-categories d-flex flex-column gap-15 align-item-center">
-                    <li>Offer</li>
-                    <li>Offer1</li>
-
+                    <li>Offer 1</li>
+                    <li>Offer 2</li>
                 </ul>
             </li>
         </ul>
@@ -157,7 +160,7 @@
                         <div class="header">
                             <div class="d-flex justify-content-md-between align-item-center border"
                                 style="margin-bottom: 10px">
-                                <h4  *ngIf="purchaser!=''">Welcome {{purchaser}} 
+                                <h4 *ngIf="purchaser!=''">Welcome {{purchaser}}
 
 
                                     <!-- Jahnavi -->

@@ -20,6 +20,10 @@ export class NavbarComponent implements OnInit {
   cartArr: any[] = [];
   navbar_scroll_style: boolean = false;
   shadowed: boolean = false;
+  categories:any = {
+    men: [],
+    women: []
+  }
 
   constructor(private cartService: CartService, private cookie: CookieService, private fetchDataService: FetchDataService, private router: Router) { }
 
@@ -46,6 +50,13 @@ export class NavbarComponent implements OnInit {
           this.shadowed = true;
         }
       }
+    })
+    
+    this.fetchDataService.getUniqueProductFields().subscribe((data:any)=>{
+      this.categories.men = data.male.category;
+      this.categories.women = data.female.category;  
+      console.log(this.categories);
+          
     })
 
   }

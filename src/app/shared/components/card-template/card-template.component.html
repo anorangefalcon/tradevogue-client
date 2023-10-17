@@ -6,7 +6,7 @@
         </div>
 
         <div class="card-item-content d-flex flex-column align-item-center gap-5">
-            <h4 class="skeleton">{{ product.name }}</h4>
+            <h4 class="skeleton">{{ product?.name }}</h4>
 
             <div *ngIf="avgRating !== 0" class="rating d-flex align-item-center skeleton">
                 <span *ngFor="let i of createArrayToIterate(avgRating)"
