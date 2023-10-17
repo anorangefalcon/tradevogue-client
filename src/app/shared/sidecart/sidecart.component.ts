@@ -37,6 +37,50 @@ export class SidecartComponent {
 
       this.cart = data;
     });
+    this.cartService.fetchCart("details").subscribe((data) => {
+      this.cartArr = data;
+    });
+    this.cartService.fetchCart("count").subscribe((data) => {
+      this.cartCount = data;
+    });
+    this.cartService.fetchCart().subscribe((data) => {
+     
+      this.cart = data;
+    });
+  }
+
+  remove_item(sku: any) {
+    this.cartService.removeItem(sku);
+  }
+
+  changeQuantity(what: string, sku: string, selectedQuantity: number) {    
+
+    const productIndex = this.cartArr.findIndex((item: any) => {
+      return item.sku === sku;
+    });
+
+    const quantityIndex = this.cartArr[productIndex].orderQuantity.findIndex((q: any) => {
+      return q == selectedQuantity;
+    });
+    
+    if (what === 'next' && quantityIndex < (this.cartArr[productIndex].orderQuantity.length - 1)) {
+      this.cartArr[productIndex].Quantity = this.cartArr[productIndex].orderQuantity[quantityIndex + 1];
+    }
+    else if (what === 'previous' && quantityIndex > 0){
+      this.cartArr[productIndex].Quantity = this.cartArr[productIndex].orderQuantity[quantityIndex - 1];
+    }
+    else{
+      return;
+    }
+
+    const cartItem = {
+      sku: this.cartArr[productIndex].sku,
+      size: this.cartArr[productIndex].size,
+      color: this.cartArr[productIndex].color,
+      quantity: this.cartArr[productIndex].Quantity
+    }
+
+    this.cartService.updateCart(cartItem);
   }
 
   toggleSidecart() {

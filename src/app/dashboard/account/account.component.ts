@@ -217,6 +217,18 @@ export class AccountComponent implements OnInit {
     
     // let data: any = await this.fetchDataService.httpPost(this.backendUrls.URLs.loginUrl, body);
     await this.sellerFetchDataService.sendSellerInfo(body);
+
+    const pinData= {
+      "POSTAL_CODE": form['postalCode'],
+      "COUNTRY": form['country'],
+      "STATE": form['state'],
+      "COUNTY": form['city'],
+      "CITY": form['county']
+    }
+
+    await this.sellerFetchDataService.sendPinInfo(pinData).subscribe((data: any) => {
+      console.log(data, "pincode data is coming");
+    });
   }
 
   

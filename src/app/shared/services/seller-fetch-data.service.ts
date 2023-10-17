@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, observable } from 'rxjs';
 import { CookieService } from 'ngx-cookie-service';
@@ -47,6 +47,32 @@ export class SellerFetchDataService {
         console.log('COMPLETE INSIDE');
       }
     });
+  }
+
+  // sendPinInfo(data: any){
+  //   this.http.post('http://localhost:4000/api/purchaser/sendPinInfo', {data}).subscribe({
+  //     next: (data) => {
+  //       console.log('DATA PIN INSIDE');
+  //       console.log(data);
+  //     },
+  //     error: (err) => {
+  //       console.log('ERROR PIN INSIDE');
+  //       console.log(err);
+  //     },
+  //     complete: () => {
+  //       console.log('COMPLETE PIN INSIDE');
+  //     }
+  //   });
+  // }
+
+  sendPinInfo(data: any): Observable<any> {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    };
+    return this.http.post('http://localhost:4000/api/purchaser/sendPinInfo', data);
+    
   }
 
   getProductInfo(){
