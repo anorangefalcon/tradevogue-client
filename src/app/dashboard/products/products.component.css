@@ -18,13 +18,18 @@
         gap: 20px;
 
         & button {
-            border: 1px solid rgba(var(--textClr), 0.1);
+            border: 1px solid rgba(var(--blackClr), 0.1);
             border-radius: 5px;
             background: none;
             padding: 4px;
             cursor: pointer;
             padding: 10px 24px;
             font-weight: 400;
+
+            &:hover{
+                border: 1px solid rgba(var(--blackClr), 0);
+                background-color: rgb(var(--blackClr), 0.02);
+            }
         }
 
         & .operational-buttons-icons {
@@ -56,6 +61,12 @@
             border-radius: 5px;
             letter-spacing: 0.5px;
             padding: 10px 24px;
+
+            
+            &:hover{
+                border: 1px solid rgba(var(--blackClr), 0);
+                background-color: rgb(var(--blackClr), 0.02);
+            }
         }
 
         & .operation-icon {
@@ -189,6 +200,12 @@
         justify-content: flex-end;
     }
 
+}
+
+.clear_btn {
+    height: 40px;
+    padding-block: 0;
+    padding-inline: 16px;
 }
 
 

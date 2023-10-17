@@ -27,6 +27,7 @@ import { CookieService } from 'ngx-cookie-service';
 import { HeadersInterceptor } from './headers.interceptor';
 import { UtilsModule } from './utils/utils.module';
 import { SidecartComponent } from './shared/sidecart/sidecart.component';
+import { DialogBoxComponent } from './dialog-box/dialog-box.component';
 
 
 @NgModule({
@@ -41,6 +42,7 @@ import { SidecartComponent } from './shared/sidecart/sidecart.component';
     BreadcrumbComponent,
     ToastComponent,
     SidecartComponent,
+    DialogBoxComponent,
   ],
   imports: [
     BrowserModule,
