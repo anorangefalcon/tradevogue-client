@@ -17,11 +17,12 @@ export class HomeComponent {
       email: fb.control('', [Validators.required, Validators.email]),
     })
   }
-  onSubscribe() {
+  async onSubscribe() {
     try {
       const body = {
         email: this.subscribeForm.get('email')?.value
       }
+    let data = await this.fetchDataService.httpPost(this.backendUrls.URLs.subscribeMail, body)
     }
     catch (error) {
       console.log("Error in sending Subscribe Mail", error);

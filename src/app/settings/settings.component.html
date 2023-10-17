@@ -318,13 +318,14 @@
                     </div>
 
                 </div>
-                <div *ngFor="let address of userAddresses">
+                <div *ngFor="let address of userAddresses; let ii=index">
                     <!-- {{address| json}} -->
                     <div class="d-flex justify-content-md-between align-item-center address__firstdiv">
                         <p>{{address.firstname}} {{address.lastname}}</p>
                         <div>
-                            <button class="edit__btn">Edit</button>
-                            <button>Remove</button>
+                            <button class="edit__btn" (click)="EditAddress(ii)">Edit</button>
+                            
+                        <button (click)="RemoveAddress(address,ii)">Remove</button>
                         </div>
                     </div>
                     <div>
@@ -463,7 +464,7 @@
             close
             </span> -->
 <div [ngClass]="{'show':addnewAddress==true,'close':closeAddress==true}">
-    <app-address (newAddress)="NewAddressHandler($event)"  (closeaddressed)="CloseAddress($event)"></app-address>
+    <app-address (newAddress)="NewAddressHandler($event)"  (closeaddressed)="CloseAddress($event)" [receiveData]="AddressSended"></app-address>
 </div>
 <!-- </div> -->
 

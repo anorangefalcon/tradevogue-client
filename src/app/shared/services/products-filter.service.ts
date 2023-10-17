@@ -25,29 +25,21 @@ export class ProductsFilterService {
     
         originalData.forEach((data: any) => {
         
-          
-          
           for (let filter in (filterObj)) {
-            // console.log('filter is ',filter,filter in data);
-            
+          
             const target = filter in data ? data : data.info;
         
             const value = target[filter];
       
             if (Array.isArray(value)) {
          
-              
               for (let v of value) {
           
-                
                 const arr = filterObj[filter];
                
                 if (!arr.includes(v)) {
                   arr.push(v);
                 }
-
-
-                // console.log("arr is ",arr, " vi s ",v )
               }
             }
             else {

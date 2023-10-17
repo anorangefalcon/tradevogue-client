@@ -20,7 +20,7 @@ export class ProductPageComponent implements OnInit {
   showReview: boolean = false;
   activeIndex: number = 0;
   accordianOpen: boolean = false;
-  accordianOpen2: boolean = false;
+  accordianOpen2: boolean = true;
   assetIndex: any = 0;
 
   constructor(

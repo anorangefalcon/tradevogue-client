@@ -64,15 +64,16 @@ export class ForgetPasswordComponent {
         password: this.resetPasswordForm.get('password')?.value,
         tokenData: this.token
       }
-      console.log(body, "update body");
-
+     
       const data: any = await this.fetchDataService.httpPost(this.backendUrls.URLs.updatePasswordUrl, body);
       console.log(data, "update data");
       const toastData = {
         title : data.message
       }
       this.toastservice.successToast(toastData)
-      this.router.navigate(['/auth/login'])
+      setTimeout(() => {
+        this.router.navigate(['/auth/login'])
+      }, 5000);
     }
     catch (error) {
       console.log("Error in Update Password: ", error);

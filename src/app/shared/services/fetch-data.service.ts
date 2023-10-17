@@ -50,22 +50,22 @@ export class FetchDataService {
   getUniqueProductFields(){
     return this.http.get('http://localhost:1000/products/uniqueFields');
   }
-
+ 
   getProductDetails(sku: any) {
     let params = new HttpParams();
     params = params.set("sku", sku);
-    console.log(params);
+    // console.log(params);
 
     return this.http.get(this.backendUrls.URLs.fetchProductUrl, { params })
   }
 
   getProducts(data:any = '') {
     let params = new HttpParams();
+    console.log(data, 'ts');
     
     (Object.keys(data)).forEach(key => {
       
       if(Array.isArray(data[key])){
-        console.log(data[key]);
         data[key].forEach((element:any) => {
           params = params.append(key, element);
         });
@@ -74,6 +74,7 @@ export class FetchDataService {
         params = params.set(key, data[key]);
       }
     }); 
+    // console.log(params);
     
     return this.http.get(this.backendUrls.URLs.fetchProducts, { params });
   }
@@ -81,15 +82,15 @@ export class FetchDataService {
   httpPost(url: any, body: any) {
 
     return new Promise((res, rej) => {
-      console.log('POST MEETHOD CALLED ', url, " BODY IS ", body);
+      // console.log('POST MEETHOD CALLED ', url, " BODY IS ", body);
 
       this.http.post(url, body).subscribe({
         next: (data) => {
-          console.log('DATA INSIDE NE');
+          // console.log('DATA INSIDE NE');
 
           res(data);
-          console.log(data, "ervice data");
-          this.toastService.successToast(data);
+          // console.log(data, "ervice data");
+
           
         }, error: (error) => {
 

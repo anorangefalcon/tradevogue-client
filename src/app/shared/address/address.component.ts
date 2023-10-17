@@ -11,6 +11,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 export class AddressComponent {
   display:boolean = false;
   addnewAddress:boolean=false;
+  @Input() receiveData:any
   
   @Input() visibleClass: boolean | undefined;
 
@@ -33,7 +34,19 @@ export class AddressComponent {
 
       console.log('VISIBLE CLASS IS ',this.visibleClass);
       
+      console.log('DATA COME pf address ',this.receiveData);
+      
+      
+  }
 
+
+
+  ngOnChanges(){
+    // console.log('');
+
+    console.log('DATA COME pf address ',this.receiveData.data);
+    this.DetailsForm.patchValue(this.receiveData.data);
+    
   }
 
   RemoveAddressForm(){
@@ -81,20 +94,38 @@ export class AddressComponent {
 
   @Output() newAddress: EventEmitter<any> =   new EventEmitter();
   @Output() closeaddressed: EventEmitter<any> =   new EventEmitter();
-  async AddnewAddress(){
-    console.log("addreess added to be ",this.DetailsForm.value);
-    try { 
-      let data:any= await this.fetchService.httpPost( this.backendURLs.URLs.addAddress,this.DetailsForm.value);
-      console.log('data coming is ',data);
+  // async AddnewAddress(){
+
+  
+    
+  //   if(this.receiveData){
+      
+      
+  //   }
+  //   console.log('addeess is ',this.DetailsForm);
+    
+  //   // console.log("addreess added to be ",this.DetailsForm.value);
+  //   try { 
+
+  //     let data;
+  //     if(this.receiveData){
+  //       data=await this.fetchService.HttpPostRequest()
+  //     }
+  //     else{
+  //       data= await this.fetchService.httpPost( this.backendURLs.URLs.addAddress,this.DetailsForm.value);
+  //     }
+
+       
+  //     console.log('data coming is ',data);
       
 
-      this.newAddress.emit(data);
+  //     this.newAddress.emit(data);
     
-    } catch (error) {
-        console.log('error coming is ',error);
+  //   } catch (error) {
+  //       console.log('error coming is ',error);
         
-    }
+  //   }
  
-  }
+  // }
 
 }

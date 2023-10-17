@@ -21,6 +21,7 @@ export class UtilsModule {
     // signupUrl:'http://localhost:5000/user/signup',
     getAddress:'http://localhost:1000/user/getAddress',
     addAddress:'http://localhost:1000/user/addAddress',
+    subscribeMail : 'http://localhost:1000/sendMail',
 
     // Dashboard
     addproduct: 'http://localhost:1000/admin/addProduct',
@@ -36,7 +37,8 @@ export class UtilsModule {
     //products
     fetchProducts: 'http://localhost:1000/products/fetch',
     fetchProductUrl: 'http://localhost:1000/products/fetchProduct',
-    uniqueProductFields: 'http://localhost:1000/products/uniqueFields'
+    uniqueProductFields: 'http://localhost:1000/products/uniqueFields',
+    deleteAddress:'http://localhost:1000/user/deleteAddress',
   }
 
 }

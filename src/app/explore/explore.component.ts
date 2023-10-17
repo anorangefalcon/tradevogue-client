@@ -16,29 +16,58 @@ export class ExploreComponent {
   OriginalData: any = [];
   uniqueData: { [field: string]: any[] } = {};
   filters: any[] = [];
-  FilterApplied: any = {};
+  filterApplied: any = {};
   filtersOpen: boolean = false;
+  filterKeys: any = {}
 
-  constructor(private productFilter: ProductsFilterService, private fetchData: FetchDataService,private http:HttpClient, private route: ActivatedRoute) { }
+  constructor(private productFilter: ProductsFilterService, private fetchData: FetchDataService, private http: HttpClient, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
     this.route.queryParams.subscribe((data: any) => {
-    this.fetchData.getProducts(data).subscribe((data:any)=>{
-      this.products = data.items
+      console.log(data, "paramsss");
+      
+      let actualParams = (Object.keys(this.filterApplied).length > 0) ? this.filterApplied : JSON.parse(JSON.stringify(data));
+      this.fetchData.getProducts(actualParams).subscribe((data: any) => {
+        // console.log('data', data);
+        this.products = data.items
+        console.log(this.products, "allll");
+        
+      });
     });
-  });
-
-
-    // this.productFilter.getData().then((data: any) => {
-    //   this.productData = data.originalData;
-    //   this.OriginalData = this.productData;
-    //   this.uniqueData = data.filterObj;
-    //   console.log('unique data is ',this.uniqueData);
-
-    // });
-
+    this.fetchData.getUniqueProductFields().subscribe((res: any) => {
+      this.uniqueData = res.data;
+    })
   }
 
+  onChecked(event: any, field: string) {
+
+    const value = field === 'price' ? Number(event.target.value) : event.target.value;
+
+    if (event.target.checked) {
+      if (this.filterApplied.hasOwnProperty(field)) {
+        if (Array.isArray(this.filterApplied[field])) {
+          this.filterApplied[field].push(value);
+        } else {
+          this.filterApplied[field] = [this.filterApplied[field], value];
+        }
+      } else {
+        this.filterApplied[field] = value;
+      }
+    }
+    else {
+      if (Array.isArray(this.filterApplied[field]))
+        this.filterApplied[field].splice(this.filterApplied[field].indexOf(value), 1)
+    }
+
+    this.fetchData.getProducts(this.filterApplied).subscribe((data: any) => {
+      console.log('data', data);
+
+      this.products = data.items
+
+    });
+
+    
+  }
   clearAll() {
     let checkboxes: any = document.querySelectorAll('.checkboxes');
     //returns nodelist and type is object
@@ -50,55 +79,26 @@ export class ExploreComponent {
       checkbox.checked = false;
     });
 
-    this.fetchData.getData().subscribe((data: any) => {
-      this.products = data
+    this.fetchData.getProducts({}).subscribe((data: any) => {
+      this.products = data.items;
+      console.log(this.products, "proooo");
+      
     })
   }
 
-
   toggleShowItems(key: any, event: any) {
     let target = event.target.innerHTML;
+
     event.target.innerHTML = (target === 'Show Less') ? 'Show More' : 'Show Less';
     this.uniqueData[key][-1] = !this.uniqueData[key][-1];
   }
 
 
-  onChecked(event: any, field: string) {
-    if (event.target.checked) {
+  removeEmptyKeys(filteredObject: any) {
+    for (const key in filteredObject) {
 
-      if (Array.isArray(this.FilterApplied[field])) {
-        let value = event.target.value;
-        if (field == 'price') {
-
-          value = Number(event.target.value)
-        }
-
-        this.FilterApplied[field].push(value);
-
-      }
-      else {
-        this.FilterApplied[field] = []
-        let value = event.target.value;
-
-        if (field == 'price') {
-          value = Number(event.target.value)
-        }
-        this.FilterApplied[field].push(value);
-      }
+      if (Array.isArray(filteredObject[key]) && filteredObject[key].length == 0) delete filteredObject[key];
     }
-    else {
-      this.FilterApplied[field]?.splice(this.FilterApplied[field].indexOf(event.target.value));
-    }
-
-    let result: any = []
-
-    result = this.productFilter.Filter(this.FilterApplied, this.OriginalData).then((data: any) => {
-      // if (data.length == 0) {
-      //   this.productData = this.productFilter.getData();
-      //   this.productData = this.productData.originalData;
-      //   return;
-      // }
-      this.products = data;
-    });
   }
+
 }

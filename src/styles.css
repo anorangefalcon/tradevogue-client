@@ -90,7 +90,20 @@ select {
     --whiteClr: 255, 255, 255;
     --blackClr: 0, 0, 0;
     --textClr: 34, 34, 34;
-    --primaryClr: 223, 65, 23;
+
+    /* orange */
+    /* --primaryClr: 223, 65, 23; */
+
+    /* teal light */
+    /* --primaryClr : 6, 177, 177; */
+
+    /* teal dark */
+    --primaryClr : 4, 118, 118;
+
+
+    /* --primaryClr: 9, 63, 126; */
+    /* --primaryClr: 10, 82, 131; */
+
     --secondary: 249, 250, 251;
 
     --danger: 223, 22, 33;
@@ -642,11 +655,11 @@ ul {
 }
 
 .section-heading {
-    font-size: 36px !important;
+    font-size: 32px !important;
 }
 
 .section-sub-heading {
-    font-size: 16px !important;
+    font-size: 15px !important;
     font-weight: 300 !important;
 }
 
@@ -950,9 +963,11 @@ button {
 /*  DISABLED CLASS */
 
 .disabled{
-    background-color: rgb(var(--primaryClr), 0.5);
-    color: rgb(var(--blackClr));
+    background-color: rgb(var(--primaryClr), 0.7);
+    color: rgb(var(--whiteClr));
     cursor:no-drop;
 
-   
+    &:hover{
+        background-color: rgb(var(--primaryClr), 0.7);
+    }
 }

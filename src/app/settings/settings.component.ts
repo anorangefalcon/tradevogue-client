@@ -1,4 +1,4 @@
-import { Component, ElementRef, Renderer2, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, Renderer2, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { FetchDataService } from '../shared/services/fetch-data.service';
 import { RouterLinksService } from '../shared/services/router-links.service';
@@ -12,7 +12,7 @@ import { MobileNoValidator } from './validators';
   styleUrls: ['./settings.component.css']
 })
 export class SettingsComponent {
-  showData: string = "addresses";
+  showData: string = "profile";
   OrderLength: number = 0;
   VisibleAddress:boolean=false;
   addnewAddress:boolean=false;
@@ -53,6 +53,32 @@ export class SettingsComponent {
   NewAddressHandler(event:any){
     // console.log("event coming is ",event);
     this.userAddresses.push(event);
+  }
+
+
+  async RemoveAddress(address:any,index:any){
+    try{
+      console.log('address is ',address);
+      const body={id:address._id}
+      let deleteAddress=await this.fetchDataService.httpPost(this.backendURLs.URLs.deleteAddress,body);
+      
+      this.userAddresses.splice(index);
+
+    }
+
+    catch(error){
+
+    }
+   
+    
+  }
+
+AddressSended:any;
+
+  EditAddress(index:any){
+    const data=this.userAddresses[index];
+    this.AddressSended={data,index};
+    this.addnewAddress=true;
   }
 
   @ViewChild('expand') ExpandBtn: ElementRef | undefined;
@@ -195,6 +221,10 @@ export class SettingsComponent {
       "info.gender": this.ProfileForm.get('gender')?.value,
       "info.dob": new Date(this.ProfileForm.get('dob')?.value)
     }
+
+
+
+
     let response = await this.fetchDataService.httpPost(this.backendURLs.URLs.updateDetails, body);
     this.isReadOnly = !this.isReadOnly;
   }

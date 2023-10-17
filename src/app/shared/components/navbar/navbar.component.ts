@@ -30,7 +30,6 @@ export class NavbarComponent implements OnInit {
   ngOnInit() {
 
     this.purchaser=this.cookie.get('userName');
-    // console.log("pURCAHNGESER IS ",this.purchaser);
     const isUser = this.cookie.get("userToken")
     if (isUser) {
       this.isUserLogin = true;
@@ -40,6 +39,7 @@ export class NavbarComponent implements OnInit {
       this.cart_count = data.details.length;
       this.cartArr = data.details;
     })
+
 
     this.router.events.subscribe((event)=>{
       if (event instanceof NavigationEnd) {
@@ -53,10 +53,12 @@ export class NavbarComponent implements OnInit {
     })
     
     this.fetchDataService.getUniqueProductFields().subscribe((data:any)=>{
+      console.log(data, "navbar");
+      
       this.categories.men = data.male.category;
       this.categories.women = data.female.category;  
       console.log(this.categories);
-          
+      
     })
 
   }
@@ -64,6 +66,8 @@ export class NavbarComponent implements OnInit {
   onLogout() {
     this.cookie.delete('userToken');
     this.cookie.delete('userName');
+  
+    
     // doSignout();
     this.router.navigate(['/']);
     this.isUserLogin = false;
