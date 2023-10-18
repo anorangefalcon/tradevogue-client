@@ -29,7 +29,7 @@ export class CardTemplateComponent {
     const sku = this.product.sku;
     this.fetchdata.getProductDetails(sku).subscribe((data: any) => {
       this.productData = data;
-      console.log(this.productData);
+      // console.log(this.productData);
     })
     
     this.product.oldPrice = 0; //temp

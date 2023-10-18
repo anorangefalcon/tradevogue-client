@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
 import { ProductsFilterService } from '../shared/services/products-filter.service'
 import { FetchDataService } from '../shared/services/fetch-data.service';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClient, HttpClientModule, HttpParams } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
+
 
 @Component({
   selector: 'app-explore',
@@ -63,6 +64,7 @@ export class ExploreComponent {
       console.log('data', data);
 
       this.products = data.items
+      
 
     });
 
