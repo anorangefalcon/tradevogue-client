@@ -24,9 +24,12 @@ export class DashboardComponent {
     },
     { name: 'Orders', icons: 'shopping_cart', route: '/dashboard/orders' },
     { name: 'Reviews', icons: 'reviews', route: '' },
-    { name: 'Marketing', icons: 'inventory', sublist: [
-
-    ] },
+    { name: 'Promo Code', icons: 'redeem' ,route: '/dashboard/coupons'},
+    {
+      name: 'Elements', icons: 'build', sublist: [
+        { name: 'FAQs', route: '/dashboard/faq' },
+      ]
+    },
     { name: 'Logout', icons: 'logout', route: '' }
   ]
 

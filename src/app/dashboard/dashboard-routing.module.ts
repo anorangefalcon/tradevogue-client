@@ -8,6 +8,7 @@ import { AddproductComponent } from './addproduct/addproduct.component';
 import { AccountComponent } from './account/account.component';
 import { AddproductfeaturesComponent } from './addproductfeatures/addproductfeatures.component';
 import { OrderPageComponent } from './orders/order-page/order-page.component';
+import { FaqsComponent } from './faqs/faqs.component';
 
 const routes: Routes = [
   {
@@ -19,7 +20,8 @@ const routes: Routes = [
       { path: 'addproduct', component: AddproductComponent },
       { path: 'account', component: AccountComponent },
       { path: 'features', component: AddproductfeaturesComponent},
-      { path: 'orderDetails/:orderId', component: OrderPageComponent}
+      { path: 'orderDetails/:orderId', component: OrderPageComponent},
+      {path: 'faq', component: FaqsComponent},
     ]
   },
 ];

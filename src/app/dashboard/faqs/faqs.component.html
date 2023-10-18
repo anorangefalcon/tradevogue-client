@@ -1,0 +1,53 @@
+<section id="faq-adding-section" class="d-flex flex-column gap-20">
+    <div class="row d-flex justify-content-md-between">
+        <div class="d-flex gap-15 align-item-center">
+            <h2>FAQs</h2>
+        </div>
+    </div>
+</section>
+
+<div class="custom-select" style="width:200px;">
+  <select [(ngModel)]="selectedOption" (change)="retrieveContent()">
+    <option *ngFor="let item of faqData">{{item.title}}</option>
+  </select>
+</div>
+
+<div *ngIf="selectedCategory" class="selected-category">
+    <h2 class="selected-title">{{selectedCategory.title}}</h2>
+  
+    <table class="selected-category">
+      <thead>
+        <tr>
+          <th>Serial Number</th>
+          <th>Title</th>
+          <th class="ellipsis">Content</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let child of selectedCategory.childrens; let i = index">
+          <td class="ellipsis">{{i+1}}</td>
+          <td class="ellipsis">{{child.title}}</td>
+          <td class="ellipsis">{{child.content}}</td>
+          <td>
+            <span class="material-symbols-outlined view-button material-icons">visibility</span>
+            <span class="material-symbols-outlined edit-button material-icons">edit</span>
+            <span class="material-symbols-outlined delete-button material-icons">delete</span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="pagination">
+    <span class="material-symbols-outlined previous-button material-icons">keyboard_arrow_left</span>
+    1
+    <span class="material-symbols-outlined next-button material-icons">keyboard_arrow_right</span>
+  </div>
+  
+  
+  
+
+  
+      
+      

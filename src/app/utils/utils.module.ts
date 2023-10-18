@@ -39,6 +39,9 @@ export class UtilsModule {
     fetchProductUrl: 'http://localhost:1000/products/fetchProduct',
     uniqueProductFields: 'http://localhost:1000/products/uniqueFields',
     deleteAddress:'http://localhost:1000/user/deleteAddress',
+
+    // FAQ
+    getFaqData: 'http://localhost:1000/user/getFaq',
   }
 
 }

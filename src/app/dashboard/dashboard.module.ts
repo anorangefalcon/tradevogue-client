@@ -14,6 +14,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AddproductfeaturesComponent } from './addproductfeatures/addproductfeatures.component';
 import { UploadExcelService } from './services/upload-excel.service';
 import { OrderPageComponent } from './orders/order-page/order-page.component';
+import { FaqsComponent } from './faqs/faqs.component';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import { OrderPageComponent } from './orders/order-page/order-page.component';
     AccountComponent,
     AddproductfeaturesComponent,
     OrderPageComponent,
+    FaqsComponent
   ],
   
   imports: [
@@ -33,8 +35,8 @@ import { OrderPageComponent } from './orders/order-page/order-page.component';
     DashboardRoutingModule,
     SharedModule,
     NgxPaginationModule,
-    ReactiveFormsModule, 
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [
     UploadExcelService,
