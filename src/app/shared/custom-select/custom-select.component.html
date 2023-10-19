@@ -6,7 +6,7 @@
       <li class="checkbox__options" role="option" *ngFor="let option of options; let i=index" tabindex="{{i+2}}"
         (change)="updateMutliSelected($event)">
         <input type="checkbox" [value]="option" name="options" [id]="_id ? (option + type + _id): (option + type)"
-          *ngSwitchCase="'multiSelect'" [checked]="multiSelected.includes(option)? true: null" />
+          *ngSwitchCase="'multiSelect'"  />
         <label [for]="_id ? (option + type + _id): (option + type)">{{option}}</label>
       </li>
     </ng-container>
@@ -14,8 +14,8 @@
     <ng-container *ngIf="type != 'multiSelect';">
       <li role="option" *ngFor="let option of options | productFilter: filter; let i=index" tabindex="{{i+2}}"
         (change)="updateSelected(option)">
-        <input type="radio" name="options" [id]="_id ? (option + type + _id): (option + type)"
-          [checked]="multiSelected.includes(option)? true: null" />
+        <input type="radio" [name]="'options'+_id" [id]="_id ? (option + type + _id): (option + type)"
+        [checked]="isChecked(option)" />
         <label [for]="_id ? (option + type + _id): (option + type)">{{option}}</label>
       </li>
     </ng-container>

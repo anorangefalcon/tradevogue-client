@@ -227,8 +227,10 @@ export class AddproductComponent {
 
   checkFormStatus() {
     
+    this.current_form = 'product_images';
+    return ;
+    
     if(this.productsForm.get('basicinfo')?.valid){
-      this.current_form = 'product_images';
       return;
     }
     this.productsForm.get('basicinfo')?.markAllAsTouched();

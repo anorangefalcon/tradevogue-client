@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output, ViewEncapsulation } from '@angular/core';
-import { ElementRef, HostListener,  } from '@angular/core';
+import { ElementRef, HostListener, } from '@angular/core';
 
 
 @Component({
@@ -10,67 +10,75 @@ import { ElementRef, HostListener,  } from '@angular/core';
 
 })
 export class CustomSelectComponent {
-  @Input () _id!: string;
-  @Input () options: any[] = [];
-  @Input () selectedOption: any;
-  @Input () type: string = ''; // multiSelect //select //searchSelect
-  @Output () final_option = new EventEmitter<string>();
-  @Output () SelectedList = new EventEmitter<any>();
+  @Input() _id!: string;
+  @Input() options: any[] = [];
+  @Input() selectedOption: any;
+  @Input() type: string = ''; // multiSelect //select //searchSelect
+  @Output() final_option = new EventEmitter<string>();
+  @Output() SelectedList = new EventEmitter<any>();
 
   selected: any = '';
   multiSelected: any[] = [];
   radioChecked: boolean = false;
-  isactive:boolean = false;
+  isactive: boolean = false;
   filter: string = '';
 
-  constructor(private elementRef: ElementRef){}
+  constructor(private elementRef: ElementRef) { }
 
-  ngOnInit(){
-    console.log(this.selectedOption);
-    if((typeof(this.selectedOption) == "string" && !this.selectedOption.split(' ').includes('Select'))){
-      this.selected = this.selectedOption;
-    }else if( Array.isArray(this.selectedOption)){
+  ngOnChanges() {
+    if (this.type == 'multiSelect' && Array.isArray(this.selectedOption)) {
       this.multiSelected = this.selectedOption;
+    }
+
+    if (this.options.find((option) => option == this.selectedOption)) {
+      this.selected = this.selectedOption;
     }
   }
 
-  filterData(e: Event): any{
-    const element =  e.target  as HTMLInputElement
-    if(element.value.length == 0){
+  isChecked(option: any){   
+    return this.selected == option;
+  }
+
+
+
+  filterData(e: Event): any {
+    const element = e.target as HTMLInputElement
+    if (element.value.length == 0) {
       this.isactive = false;
       this.filter = '';
       return;
-    } 
+    }
     this.isactive = true;
     this.filter = element.value;
   }
 
-  toggleClass(){
-    this.isactive  = !this.isactive;
+  toggleClass() {
+    this.isactive = !this.isactive;
   }
-  
-  updateSelected(option: string){
+
+  updateSelected(option: string) {
     this.selected = option;
     this.isactive = false;
     this.final_option.emit(option);
     this.filter = '';
   }
 
-  updateMutliSelected(e: Event){
+  updateMutliSelected(e: Event) {
     let element = <HTMLInputElement>e.target;
-    
-    if(element.checked && !this.multiSelected.includes(element.value)){
+
+    if (element.checked && !this.multiSelected.includes(element.value)) {
       this.multiSelected.push(element.value);
-    }else{
-      this.multiSelected = this.multiSelected.filter((item)=>{
+    } else {
+      this.multiSelected = this.multiSelected.filter((item) => {
         return item != element.value;
       })
     }
+    
     this.SelectedList.emit(this.multiSelected);
   }
 
-  @HostListener('document:click', ['$event']) onClick(e: Event){
-    if(!this.elementRef.nativeElement.contains(e.target)){
+  @HostListener('document:click', ['$event']) onClick(e: Event) {
+    if (!this.elementRef.nativeElement.contains(e.target)) {
       this.isactive = false;
     }
   }

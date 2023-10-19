@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ElementRef, ChangeDetectorRef, HostListener } from '@angular/core';
 import { FetchDataService } from 'src/app/shared/services/fetch-data.service';
 import { UploadExcelService } from '../services/upload-excel.service';
 import { ToastService } from 'src/app/shared/services/toast.service';
@@ -113,6 +113,10 @@ export class ProductsComponent implements OnInit {
     if(e){
       
     }
+  }
+
+  displayInfo(e: Event){
+    console.log(e.target);
   }
 
   // Handles Excel File Uplaoded

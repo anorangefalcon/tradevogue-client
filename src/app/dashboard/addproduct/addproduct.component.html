@@ -252,7 +252,7 @@
                             <div class="form__group" formGroupName="info">
                                 <label for="category" class="input__label">Category<span
                                         class="important">*</span></label>
-                                <app-custom-select [options]="categories" [type]="'searchSelect'"
+                                <app-custom-select [_id]="'category1'" [options]="categories" [type]="'searchSelect'"
                                     [selectedOption]="(productSubForm('info.category')?.value? productSubForm('info.category')?.value:'Select Category')"
                                     (final_option)="updateFormFields($event, 'info.category')"></app-custom-select>
                                 <span class="error"
@@ -264,7 +264,7 @@
 
                             <div class="form__group" formGroupName="info">
                                 <label for="brand" class="input__label">Brand<span class="important">*</span></label>
-                                <app-custom-select [options]="brands" [type]="'searchSelect'"
+                                <app-custom-select [_id]="'brand'" [options]="brands" [type]="'searchSelect'"
                                     [selectedOption]="(productSubForm('info.brand')?.value? productSubForm('info.brand')?.value : 'Select Brand')"
                                     (final_option)="updateFormFields($event, 'info.brand')"></app-custom-select>
                                 <span class="error"
@@ -276,7 +276,7 @@
 
                             <div class="form__group" formGroupName="info">
                                 <label for="gender" class="input__label">Gender<span class="important">*</span></label>
-                                <app-custom-select [options]="gender" [type]="'searchSelect'"
+                                <app-custom-select [_id]="'gender'" [options]="gender" [type]="'searchSelect'"
                                     [selectedOption]="(productSubForm('info.gender')?.value? productSubForm('info.gender')?.value : 'Select Gender')"
                                     (final_option)="updateFormFields($event, 'info.gender')"></app-custom-select>
 
@@ -340,9 +340,13 @@
                             <div class="form__group" formGroupName="info">
                                 <label for="" class="input__label">Order Quantity<span
                                         class="important">*</span></label>
+
+
                                 <app-custom-select [options]="orderQuantity" [type]="'multiSelect'"
                                     [selectedOption]="(productSubForm('info.orderQuantity')?.value.length ? productSubForm('info.orderQuantity')?.value : 'Select Order')"
-                                    (SelectedList)="updateFormFields($event, 'info.orderQuantity')"></app-custom-select>
+                                    (SelectedList)="productSubForm('info.orderQuantity')?.patchValue($event)" ></app-custom-select>
+
+
                                 <small class="note">*Order Quantity is various Unit to be Sold</small>
                                 <span class="error"
                                     *ngIf="productSubForm('info.orderQuantity')?.invalid && (productSubForm('info.orderQuantity')?.dirty || productSubForm('info.orderQuantity')?.touched)">
