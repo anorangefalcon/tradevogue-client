@@ -44,6 +44,7 @@ export class UtilsModule {
 
     // FAQ
     getFaqData: 'http://localhost:1000/user/getFaq',
+<<<<<<< Updated upstream
     // cart
     fetchCart: 'http://localhost:1000/cart/fetch',
     
@@ -54,6 +55,10 @@ export class UtilsModule {
     getProductPrice:'http://localhost:1000/admin/getProductPrice',
     deleteOffer:'http://localhost:1000/admin/deleteOffer'
    
+=======
+    updateFaqData: 'http://localhost:1000/admin/updateFaq',
+    deleteFaqData: 'http://localhost:1000/admin/deleteFaq',
+>>>>>>> Stashed changes
   }
 
 }

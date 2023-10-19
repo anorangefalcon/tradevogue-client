@@ -91,7 +91,7 @@ export class FetchDataService {
 
       this.http.post(url, body).subscribe({
         next: (data) => {
-          // console.log('DATA INSIDE NE');
+          console.log('DATA INSIDE NE', data);
 
           res(data);
           // console.log(data, "ervice data");

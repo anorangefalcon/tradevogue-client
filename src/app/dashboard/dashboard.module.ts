@@ -15,8 +15,12 @@ import { AddproductfeaturesComponent } from './addproductfeatures/addproductfeat
 import { UploadExcelService } from './services/upload-excel.service';
 import { OrderPageComponent } from './orders/order-page/order-page.component';
 import { FaqsComponent } from './faqs/faqs.component';
+<<<<<<< Updated upstream
 import { ProductOverviewComponent } from './products/product-overview/product-overview.component';
 import { CouponsComponent } from './coupons/coupons.component';
+=======
+import { PaginationService } from '../shared/services/pagination.service';
+>>>>>>> Stashed changes
 
 @NgModule({
   declarations: [
@@ -30,8 +34,11 @@ import { CouponsComponent } from './coupons/coupons.component';
     AddproductfeaturesComponent,
     OrderPageComponent,
     FaqsComponent,
+<<<<<<< Updated upstream
     ProductOverviewComponent,
     CouponsComponent,
+=======
+>>>>>>> Stashed changes
   ],
   
   imports: [
@@ -44,7 +51,8 @@ import { CouponsComponent } from './coupons/coupons.component';
   ],
   providers: [
     UploadExcelService,
-    NgModel
-  ],
+    NgModel,
+    PaginationService
+    ],
 })
 export class DashboardModule { }
