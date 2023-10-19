@@ -3,14 +3,21 @@
         <div class="d-flex gap-15 align-item-center">
             <h2>FAQs</h2>
         </div>
+
+        <div class="custom-select" style="width:200px;">
+          <select [(ngModel)]="selectedOption" (change)="retrieveContent()">
+            <option *ngFor="let item of faqData">{{item.title}}</option>
+          </select>
+        </div>
+
+        <div class="operational-buttons d-flex  flex-wrap">
+          <button routerLink="/dashboard/addproduct" class=" d-flex align-item-center gap-5">
+              <i class="material-symbols-outlined operational-buttons-icons">add</i>
+              Add New Category
+          </button>
+      </div>
     </div>
 </section>
-
-<div class="custom-select" style="width:200px;">
-  <select [(ngModel)]="selectedOption" (change)="retrieveContent()">
-    <option *ngFor="let item of faqData">{{item.title}}</option>
-  </select>
-</div>
 
 <div *ngIf="selectedCategory" class="selected-category">
     <h2 class="selected-title">{{selectedCategory.title}}</h2>
@@ -19,13 +26,16 @@
       <thead>
         <tr>
           <th>Serial Number</th>
-          <th>Title</th>
-          <th class="ellipsis">Content</th>
+          <th>Query</th>
+          <th class="ellipsis">Answer</th>
           <th>Actions</th>
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let child of selectedCategory.childrens; let i = index">
+        <tr *ngFor="let child of selectedCategory.childrens | paginate: {
+          itemsPerPage: pageSize,
+          currentPage: currentPage 
+        }; let i = index;">
           <td class="ellipsis">{{i+1}}</td>
           <td class="ellipsis">{{child.title}}</td>
           <td class="ellipsis">{{child.content}}</td>
@@ -44,10 +54,5 @@
     1
     <span class="material-symbols-outlined next-button material-icons">keyboard_arrow_right</span>
   </div>
-  
-  
-  
 
   
-      
-      

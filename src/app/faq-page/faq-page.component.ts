@@ -8,11 +8,13 @@ import { FaqDataService } from '../shared/services/faq-data.service';
 })
 export class FaqPageComponent implements OnInit {
   faqData: any[] = [];
+  page= 1;
+  limit = 100;
 
   constructor(private faqDataService: FaqDataService) {}
 
   ngOnInit(): void {
-    this.faqDataService.getFaqData().subscribe((data) => {
+    this.faqDataService.getFaqData(this.page , this.limit).subscribe((data) => {
       this.faqData = data.filter((section) => Object.keys(section).length > 0);
 
       this.faqData.forEach(section => {

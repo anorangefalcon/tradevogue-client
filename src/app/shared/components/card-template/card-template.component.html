@@ -61,6 +61,13 @@
         </div>
         <div class="right-side">
             <h1 class="prod-name">{{ product.name }}</h1>
+
+
+            <div class="relative"><span
+                    class="left-text bg-emerald-100 text-emerald-500 rounded-full inline-flex items-center justify-center px-2 py-0 text-xs font-semibold font-serif">Stock
+                    :<span class="text-red-500 dark:text-red-400 pl-1 font-bold right-text">250 </span></span></div>
+
+
             <h2 class="subTitle">{{productData.subTitle}}
 
                 <div *ngIf="avgRating !== 0" class="rating d-flex align-item-center">
@@ -74,7 +81,7 @@
 
             <p id="description">{{productData.description}}</p>
             <div class="price">
-                <h1  id="number-discount">₹{{ product.price }}</h1>
+                <h1 id="number-discount">₹{{ product.price }}</h1>
                 <p id="number-full" *ngIf="product.oldPrice !== (undefined || 0)">₹{{product.oldPrice}}</p>
             </div>
 
@@ -94,7 +101,7 @@
                     {{ tag }}
                 </a>
             </div>
-            <a class="close-thik" style="cursor: pointer;" (click)="showPopup = false"></a>
+            <!-- <a class="close-thik" style="cursor: pointer;" (click)="showPopup = false"></a> -->
 
             <div class="cart-div d-flex gap-10 align-item-center">
                 <button style=" padding-inline: 100px;" class="btn-primary d-flex gap-10 align-item-center"
@@ -107,6 +114,18 @@
             </div>
         </div>
     </div>
+
+
+    <div (click)="showPopup = false" class="absolute right-5 top-5"><button type="button"
+            class="inline-flex justify-center px-2 py-2 text-base font-medium text-red-500 bg-white border border-transparent rounded-full hover:bg-red-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500"><svg
+                stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 512 512" height="1em"
+                width="1em" xmlns="http://www.w3.org/2000/svg">
+                <path
+                    d="M289.94 256l95-95A24 24 0 00351 127l-95 95-95-95a24 24 0 00-34 34l95 95-95 95a24 24 0 1034 34l95-95 95 95a24 24 0 0034-34z">
+                </path>
+            </svg></button></div>
+
+
 </div>
 
 <!-- <app-product-section ></app-product-section> -->

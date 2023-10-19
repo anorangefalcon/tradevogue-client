@@ -203,6 +203,7 @@ drawer-left.drawer-open, .drawer-right.drawer-open {
 
 .drawer.drawer-right {
     position: fixed;
+    overflow: hidden;
     height: 100%;
     width: 100%;
     background: rgba(0, 0, 0, 0.6);

@@ -10,9 +10,13 @@ export class FaqsComponent {
   faqData: any = [];
   selectedOption: string = ''; 
   selectedCategory: any;
+  pageSize: any = 3;
+  currentPage: any = 1;
+
+  limit: number = 10;
 
   constructor(private faq: FaqDataService) {
-    this.faq.getFaqData().subscribe((data: any) => {
+    this.faq.getFaqData(this.currentPage , this.limit).subscribe((data: any) => {
       this.faqData = data;
       console.log(this.faqData);
     });
@@ -22,4 +26,7 @@ export class FaqsComponent {
     console.log(this.selectedOption); 
     this.selectedCategory = this.faqData.find((category: any) => category.title === this.selectedOption);
   }
+  
+
+
 }
