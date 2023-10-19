@@ -15,6 +15,13 @@ export class CartComponent implements OnInit {
   ngOnInit() {
     this.cartService.fetchCart("details").subscribe((data) => {
       this.cartArr = data;
+
+      this.cartArr = this.cartArr.map((item: any) => {
+        item.image = (item.assets).find((asset: any) => {
+          return (asset.color) === item.color;
+        }).photo[0];
+        return item;
+      });
     });
   }
 
@@ -22,31 +29,35 @@ export class CartComponent implements OnInit {
     this.cartService.removeItem(sku);
   }
 
-  changeQuantity(what: string, sku: string, selectedQuantity: number) {    
+  changeQuantity(what: string, sku: string, selectedQuantity: number) {
 
     const productIndex = this.cartArr.findIndex((item: any) => {
       return item.sku === sku;
     });
 
-    const quantityIndex = this.cartArr[productIndex].orderQuantity.findIndex((q: any) => {
+    const quantityIndex = this.cartArr[productIndex].info.orderQuantity.findIndex((q: any) => {
       return q == selectedQuantity;
     });
-    
-    if (what === 'next' && quantityIndex < (this.cartArr[productIndex].orderQuantity.length - 1)) {
-      this.cartArr[productIndex].Quantity = this.cartArr[productIndex].orderQuantity[quantityIndex + 1];
+
+    const stockLimit = this.cartArr[productIndex].assets.find((asset: any) => {
+      return asset.color === this.cartArr[productIndex].color;
+    }).stockQuantity.find((stock: any) => {
+      return stock.size === this.cartArr[productIndex].size;
+    }).quantity;
+
+    if (what === 'next' && quantityIndex < (this.cartArr[productIndex].info.orderQuantity.length - 1) && (this.cartArr[productIndex].info.orderQuantity[quantityIndex + 1] <= stockLimit)) {
+      this.cartArr[productIndex].info.quantity = this.cartArr[productIndex].info.orderQuantity[quantityIndex + 1];
     }
-    else if (what === 'previous' && quantityIndex > 0){
-      this.cartArr[productIndex].Quantity = this.cartArr[productIndex].orderQuantity[quantityIndex - 1];
+    else if (what === 'previous' && quantityIndex > 0) {
+      this.cartArr[productIndex].info.quantity = this.cartArr[productIndex].info.orderQuantity[quantityIndex - 1];
     }
-    else{
+    else {
       return;
     }
 
     const cartItem = {
       sku: this.cartArr[productIndex].sku,
-      size: this.cartArr[productIndex].size,
-      color: this.cartArr[productIndex].color,
-      quantity: this.cartArr[productIndex].Quantity
+      quantity: this.cartArr[productIndex].info.quantity
     }
 
     this.cartService.updateCart(cartItem);

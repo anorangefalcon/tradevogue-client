@@ -4,7 +4,6 @@ import { FetchDataService } from '../shared/services/fetch-data.service';
 import { CartService } from '../shared/services/cart.service';
 import { OwlOptions } from 'ngx-owl-carousel-o';
 
-
 @Component({
   selector: 'app-product-page',
   templateUrl: './product-page.component.html',
@@ -22,6 +21,8 @@ export class ProductPageComponent implements OnInit {
   accordianOpen: boolean = false;
   accordianOpen2: boolean = true;
   assetIndex: any = 0;
+  sizeIndex: any = 0;
+
 
   constructor(
     private route: ActivatedRoute,
@@ -37,13 +38,10 @@ export class ProductPageComponent implements OnInit {
       this.fetchService.getProductDetails(sku).subscribe((data: any) => {
         this.data = data;
         console.log(data);
-        
         this.data.avgRating = data.avgRating;
         this.activeIndex = 0;
         this.selectedColor = data.assets[0].color;
-        this.selectedSize = data.info.size[0];
-
-        
+        this.selectedSize = data.assets[this.assetIndex].stockQuantity[0].size;
       });
 
     });
@@ -124,5 +122,9 @@ export class ProductPageComponent implements OnInit {
   updateSelectedField(e: any) {
     this.selectedQ = e;
   }
+
+  updateSizeIndex(index: number){
+    this.sizeIndex = index;
+  } 
 
 }

@@ -20,6 +20,7 @@ import { AddressComponent } from './address/address.component';
 import { CartcontentComponent } from './cartcontent/cartcontent.component';
 import { CheckoutComponent } from '../checkout/checkout.component';
 import { DialogComponent } from './components/dialog/dialog.component';
+import { LessThanOrEqualPipe } from './Pipe/less-than-or-equal.pipe';
 
 
 @NgModule({
@@ -35,7 +36,8 @@ import { DialogComponent } from './components/dialog/dialog.component';
     ProductFilterPipe,
     AddressComponent,
     CartcontentComponent,
-    DialogComponent
+    DialogComponent,
+    LessThanOrEqualPipe
   ],
   imports: [
     CommonModule,
@@ -45,7 +47,6 @@ import { DialogComponent } from './components/dialog/dialog.component';
     MatExpansionModule,
     RouterModule,
     FormsModule,
-
   ],
   exports: [
     NavbarComponent,
@@ -59,7 +60,8 @@ import { DialogComponent } from './components/dialog/dialog.component';
     CustomSelectComponent,
     AddressComponent,
     CartcontentComponent,
-    DialogComponent
+    DialogComponent,
+    LessThanOrEqualPipe
   ]
 })
 export class SharedModule { }

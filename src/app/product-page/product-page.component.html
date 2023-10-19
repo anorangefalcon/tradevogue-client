@@ -1,15 +1,16 @@
 <section class="container">
-    <div class="product" *ngIf="data" >
-        <div  class="d-flex gap-30 main">
+    <div class="product" *ngIf="data">
+        <div class="d-flex gap-30 main">
             <div class="product-carousel d-flex  gap-10 justify-content-center relative overflow-hidden">
                 <div class="products-imgs-container d-flex flex-column  thumbnails gap-10">
-                   
-                    <div class="gal-img pointer mw-100 relative" *ngFor="let image of data?.assets[assetIndex]?.photo; let i = index"
-                        [ngStyle]="{ 'background': 'url(' + image + ')', 'background-size': 'cover', 'background-position': 'center' }
+
+                    <div class="gal-img pointer mw-100 relative"
+                        *ngFor="let image of data?.assets[assetIndex]?.photo; let i = index" [ngStyle]="{ 'background': 'url(' + image + ')', 'background-size': 'cover', 'background-position': 'center' }
                          " (click)="switchImage(i)" [ngClass]="{ active: i === activeIndex }">
                     </div>
                 </div>
-                <owl-carousel-o [options]="atDefault ? customOptions : carouselOption" [ngClass]="{crousel: true}" class="bigcarousel overflow-hidden">
+                <owl-carousel-o [options]="atDefault ? customOptions : carouselOption" [ngClass]="{crousel: true}"
+                    class="bigcarousel overflow-hidden">
                     <ng-template carouselSlide *ngFor="let image of data.assets[assetIndex].photo">
                         <div class="img-div d-flex justify-content-center align-item-center overflow-hidden mw-100"
                             [ngStyle]="{ 'background': 'url(' + image + ')', 'background-size': 'cover' }">
@@ -30,14 +31,13 @@
                         <h5 class="price">₹{{ data.price }}</h5>
 
                         <div class="offer d-flex gap-5 align-item-center">
-                            <p *ngIf="data.oldPrice" class="old-price">₹{{
-                                data.oldPrice }}
+                            <p *ngIf="data.oldPrice" class="old-price">
+                                ₹{{ data.oldPrice }}
                             </p>
                             <p class="offer-percentage" *ngIf="data.offerPercentage">
                                 ({{ data.offerPercentage }}% Off)</p>
                         </div>
                     </div>
-
 
                     <div class="reviews-avail d-flex align-item-center gap-10">
                         <div *ngIf="data.avgRating !== 0" class="rating d-flex align-item-center">
@@ -48,25 +48,28 @@
                                 class="material-symbols-outlined">star</span>
                         </div>
                         <p class="rate">({{data.avgRating}}/5 · {{data.reviews.length}} Reviews)</p>
-                     
                     </div>
-                    <div class="sizes d-flex align-item-center gap-20" id="sizes">
-                        <p>Size:</p>
-                        <div class="sizes-opt d-flex gap-10">
-                            <div *ngFor="let productSize of data.info.size; let i = index" class="sizes-radios relative">
-                                <input type="radio" name="size" [value]=productSize id="size_{{ productSize }}"
-                                    [(ngModel)]="selectedSize" [checked]="i == 0">
-                                <label for="size_{{ productSize }}">{{ productSize }}</label>
-                            </div>
-                        </div>
-                    </div>
+
                     <div class="colors d-flex align-item-center gap-15">
                         <p>Color:</p>
                         <div class="colors-opt d-flex gap-10">
                             <div class="colors-radios d-flex align-item-center"
-                                *ngFor="let asset of data.assets; let i = index"> 
-                                <input type="radio" name="color" [value]=asset.color [style.background-color]="asset.color"
-                                    [(ngModel)]="selectedColor" (click)="assetIndex = i">
+                                *ngFor="let asset of data.assets; let i = index">
+                                <input type="radio" name="color" [value]=asset.color
+                                    [style.background-color]="asset.color" [(ngModel)]="selectedColor"
+                                    (click)="assetIndex = i">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="sizes d-flex align-item-center gap-20" id="sizes">
+                        <p>Size:</p>
+                        <div class="sizes-opt d-flex gap-10">
+                            <div *ngFor="let stock of data.assets[assetIndex].stockQuantity; let i = index"
+                                class="sizes-radios relative">
+                                <input type="radio" name="size" [value]=stock.size id="size_{{ stock.size }}"
+                                    [(ngModel)]="selectedSize" [checked]="i == 0" (click)="updateSizeIndex(i)">
+                                <label for="size_{{ stock.size }}">{{ stock.size }}</label>
                             </div>
                         </div>
                     </div>
@@ -75,21 +78,20 @@
 
                         <div class="customSelect">
                             <app-custom-select [selectedOption]=data.info.orderQuantity[0]
-                                (final_option)="updateSelectedField($event)"
-                                [options]="data.info.orderQuantity" >
+                                (final_option)="updateSelectedField($event)" [options]="data.info.orderQuantity | lessThanOrEqual: data.assets[assetIndex].stockQuantity[sizeIndex].quantity">
                             </app-custom-select>
                         </div>
 
                         <div class="cart-div d-flex gap-10 align-item-center">
-
                             <button class="btn-primary d-flex gap-10 align-item-center cart cart-btn"
                                 (click)="addToCart()">
                                 ADD TO CART
                             </button>
                         </div>
                     </div>
-                
+
                     <div class="d-flex flex-column">
+                
                         <div class="accordian mw-100">
                             <h3 class="accordian__head relative pointer" [ngClass]="accordianOpen ? 'active' : ''"
                                 (click)="accordianOpen = !accordianOpen">
@@ -123,9 +125,15 @@
                                 </div>
                             </div>
                         </div>
-
+                        
+                        
                     </div>
 
+                    <div class="stockAvailable">
+                        <p>
+                            Stock : {{ data.assets[assetIndex].stockQuantity[sizeIndex].quantity }}
+                        </p>
+                    </div>
                     <div class="tags d-flex gap-10 d-flex align-item-center">
                         <a [routerLink]="['/explore']" [queryParams]="{ tags: tag }" *ngFor="let tag of data.info.tags">
                             {{ tag }}
@@ -135,8 +143,8 @@
 
             </div>
         </div>
-     
-        <div class="review-cards d-flex flex-column gap-20" >
+
+        <div class="review-cards d-flex flex-column gap-20">
             <h3 class="rate">Rate & Review</h3>
             <div class="review-card d-flex flex-column gap-5" *ngFor="let review of data.reviews">
 
@@ -153,7 +161,8 @@
                         <span *ngFor="let i of createArrayToIterate(5 - data.avgRating)"
                             class="material-symbols-outlined">star</span>
                     </div>
-                    <p class="fw-600 ">{{ review?.userId?.name.firstname +' '+ review?.userId?.name.lastname }} · {{ review.date }}</p>
+                    <p class="fw-600 ">{{ review?.userId?.name.firstname +' '+ review?.userId?.name.lastname }} · {{
+                        review.date }}</p>
                 </div>
             </div>
 

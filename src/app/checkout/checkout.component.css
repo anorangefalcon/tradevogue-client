@@ -107,7 +107,8 @@
     width: 100%;
     padding-block: 20px;
     padding-inline: 20px;
-    background-color: rgb(var(--secondary), 0.5);
+    background-color: rgb(var(--secondary), 1);
+    border-radius: 16px;
 
     & h2 {
         font-size: 24px;

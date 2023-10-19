@@ -251,8 +251,6 @@
     }
 
     .cart-div {
-        width: 100%;
-
 
         & .cart-btn {
 
@@ -283,8 +281,9 @@
         & a {
             background-color: rgba(168, 168, 168, 0.232);
             backdrop-filter: blur(5px);
-            padding: 5px;
-            border-radius: 4px;
+            padding-block: 5px;
+            padding-inline: 10px;
+            border-radius: 50px;
         }
     }
 
@@ -431,7 +430,7 @@
 .customSelect > .custom-select{
     border: 2px solid #000000;
     height: 52px !important;
-    width: 100%;
+    width: 120px;
 }
 
 .review-cards {
@@ -589,8 +588,21 @@
 }
 .bigcarousel {
     width: 100% !important;
-
 }
+
+.stockAvailable{
+    border: 1px solid rgb(var(--primaryClr));
+    padding-block: 5px;
+    padding-inline: 10px;
+    border-radius: 4px;
+    width: fit-content;
+
+    & p{
+        text-transform: uppercase;
+        color: rgb(var(--primaryClr));
+    }
+}
+
 @media screen and (max-width: 1060px) {
     .prod-name {
         font-size: 48px !important;

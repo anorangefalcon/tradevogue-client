@@ -36,7 +36,7 @@ export class CartService {
       }
     }
 
-    this.cartStorage.push({ "sku": data.sku, "size": data.size, "color": data.color, "Quantity": data.quantity });
+    this.cartStorage.push({ "sku": data.sku, "size": data.size, "color": data.color, "quantity": data.quantity });
     const myCart = JSON.stringify(this.cartStorage);
     localStorage.setItem("myCart", myCart);
     this.toastService.successToast();
@@ -45,7 +45,6 @@ export class CartService {
   }
 
 
-  // could be more optimised but cant due to cap Q in quantity
   updateCart(data: any) {
     const localStorageData = localStorage.getItem("myCart");
 
@@ -55,10 +54,12 @@ export class CartService {
       const skuFound = this.cartStorage.find((item: any) => {
         return item.sku === data.sku;
       });
+      delete data.sku;
+
       if (skuFound) {
-        skuFound.size = data.size;
-        skuFound.color = data.color;
-        skuFound.Quantity = data.quantity;
+        Object.keys(data).forEach((key:any) => {
+          skuFound[key] = data[key];
+        });
       }
     }
 
@@ -68,74 +69,17 @@ export class CartService {
     this.fetchDetails();
   }
 
-
   fetchDetails() {
-    const cartDetails: any = {
-      details: [],
-      amounts: {
-        subTotal: 0,
-        shipping: 0,
-        savings: 0,
-        total: 0
-      }
-    }
-    const fields = ["name", "price", "oldPrice", "image", "orderQuantity"];
-    const localCart = localStorage.getItem("myCart");
-    cartDetails.details = localCart ? JSON.parse(localCart) : null;
+    const localCart = localStorage.getItem('myCart');
+    let cartDetails = localCart ? JSON.parse(localCart) : null;
 
-    if (cartDetails.details !== null) {
-      this.fetchData.getData().subscribe((data) => {
-
-        for (let i = 0; i < cartDetails.details.length; i++) {
-          const matchSku = (data.find((item: any) => {
-            return item.sku == cartDetails.details[i].sku;
-          }));
-          Object.assign(cartDetails.details[i],
-            Object.fromEntries(
-              fields.map(field => [
-                field, matchSku?.field
-              ])
-            )
-          );
-
-
-          // { temp until we connec!t db
-          if (!(cartDetails.details!.i.color)) {
-            cartDetails.details!.i.color = (matchSku['colors'])[0]
-          }
-          if (!(cartDetails.details?.i.price)) {
-            cartDetails.details.i.price = (matchSku['price'])[0]
-          }
-          if (!(cartDetails.details?.i.Quantity)) {
-            cartDetails.details.i.Quantity = (matchSku['orderQuantity'])[0]
-          }
-          if (!(cartDetails.details?.i.size)) {
-            cartDetails.details.i.size = (matchSku['sizes'])[0]
-          }
-          // }
-
-          //amounting payment:
-          cartDetails.amounts.subTotal += (cartDetails.details[i].price * cartDetails.details[i].Quantity);
-
-          cartDetails.amounts.shipping += 50;
-
-          cartDetails.amounts.savings += cartDetails.details[i].oldPrice * cartDetails.details[i].Quantity;  
-        }
-        
-        cartDetails.amounts.savings -= cartDetails.amounts.subTotal;
-        cartDetails.amounts.savings = (Math.round((cartDetails.amounts.savings) * 100))/100;
-
-        cartDetails.amounts.subTotal = (Math.round((cartDetails.amounts.subTotal) * 100)/100);
-        
-        cartDetails.amounts.total = cartDetails.amounts.subTotal + cartDetails.amounts.shipping;
-
-      })
-
-      this.cartSubject.next(cartDetails);
-    }
+    this.fetchData.getCartData(cartDetails).subscribe((data: any) => {      
+      this.cartSubject.next(data);
+    });
   }
 
   removeItem(sku: any) {
+
     const localStorageData = localStorage.getItem("myCart");
 
     if (localStorageData) {

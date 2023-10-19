@@ -16,11 +16,11 @@
                 <div class="item" *ngFor="let item of cart.details">
                     <div class="itemname d-flex justify-content-md-between">
                         <p class="item-name">{{item.name}}</p>
-                        <p class="item-price">₹{{item.price}}</p>
+                        <p class="item-price">₹{{item.price | number : '1.0-2'}}</p>
                     </div>
                     <div class="itemtype d-flex justify-content-md-between">
-                        <p>{{item.description}}</p>
-                        <p>Qty: {{item.Quantity}}</p>
+                        <p>{{item.info.category}}</p>
+                        <p>Qty: {{item.quantity}}</p>
                     </div>
                 </div>
             </div>
@@ -33,7 +33,7 @@
 
             <div class="border-end subtotal d-flex justify-content-md-between">
                 <p>Subtotal</p>
-                <p>₹{{cart.amounts.subTotal}}</p>
+                <p>₹{{cart.amounts.subTotal | number : '1.0-2'}}</p>
             </div>
             <div class="border-end shipping d-flex justify-content-md-between">
                 <p>Shipping</p>
@@ -42,12 +42,12 @@
         
             <div class="border-end savings d-flex justify-content-md-between">
                 <p>Savings</p>
-                <p class="savings-amt">₹{{cart.amounts.savings}}</p>
+                <p class="savings-amt">₹{{cart.amounts.savings | number : '1.0-2'}}</p>
             </div>
         
             <div class="total d-flex justify-content-md-between">
                 <p>Total</p>
-                <p>₹{{cart.amounts.total}}</p>
+                <p>₹{{cart.amounts.total | number : '1.0-2'}}</p>
             </div>
             <button (click)="checkLogin()" class="btn-primary"><a>Proceed to Checkout</a></button>
         </div>

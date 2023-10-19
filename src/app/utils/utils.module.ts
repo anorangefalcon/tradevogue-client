@@ -34,7 +34,7 @@ export class UtilsModule {
     // stripe
     stripePayment: 'http://localhost:1000/user/create-payment-intent',
 
-    //products
+    // products
     fetchProducts: 'http://localhost:1000/products/fetch',
     fetchProductUrl: 'http://localhost:1000/products/fetchProduct',
     uniqueProductFields: 'http://localhost:1000/products/uniqueFields',
@@ -42,6 +42,8 @@ export class UtilsModule {
 
     // FAQ
     getFaqData: 'http://localhost:1000/user/getFaq',
+    // cart
+    fetchCart: 'http://localhost:1000/cart/fetch',
   }
 
 }

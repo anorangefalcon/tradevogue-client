@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { ToastService } from './toast.service';
-import { Observable, Subject, filter, map, tap, BehaviorSubject} from 'rxjs';
+import { Observable, Subject, filter, map, tap, BehaviorSubject } from 'rxjs';
 import { UtilsModule } from 'src/app/utils/utils.module';
 import { ActivatedRoute } from '@angular/router';
 
@@ -15,12 +15,12 @@ export class FetchDataService {
   sellerUrl = '../../../assets/tempDB/seller.json';
   subject = new BehaviorSubject<any>('');
   subOb$ = this.subject.asObservable();
-  ShowAddress=new Subject();
-  
+  ShowAddress = new Subject();
+
   constructor(private http: HttpClient, private toastService: ToastService, private backendUrls: UtilsModule, private route: ActivatedRoute) { }
 
   productKeys: any = ['available', 'colors', 'description', 'image', 'info', 'name', 'price', 'oldPrice', 'orderQuantity', 'reviews', 'sizes', 'sku', 'stockQuantity'];
-   getData(): Observable<any> {
+  getData(): Observable<any> {
     return this.http.get(this.url).pipe(
       map((arrayData: any) => {
         return arrayData.filter((item: any) => {
@@ -47,36 +47,41 @@ export class FetchDataService {
     return this.http.get(this.sellerUrl);
   }
 
-  getUniqueProductFields(){
+  getUniqueProductFields() {
     return this.http.get('http://localhost:1000/products/uniqueFields');
   }
- 
+
   getProductDetails(sku: any) {
     let params = new HttpParams();
     params = params.set("sku", sku);
-    // console.log(params);
 
     return this.http.get(this.backendUrls.URLs.fetchProductUrl, { params })
   }
 
-  getProducts(data:any = '') {
+  getProducts(data: any = '') {
     let params = new HttpParams();
     console.log(data, 'ts');
-    
+
     (Object.keys(data)).forEach(key => {
-      
-      if(Array.isArray(data[key])){
-        data[key].forEach((element:any) => {
+
+      if (Array.isArray(data[key])) {
+        data[key].forEach((element: any) => {
           params = params.append(key, element);
         });
       }
-      else{
+      else {
         params = params.set(key, data[key]);
       }
-    }); 
+    });
     // console.log(params);
-    
+
     return this.http.get(this.backendUrls.URLs.fetchProducts, { params });
+  }
+
+  getCartData(skuArr: any) {
+    console.log(skuArr);
+    
+    return this.http.post(this.backendUrls.URLs.fetchCart, skuArr);
   }
 
   httpPost(url: any, body: any) {
@@ -91,7 +96,7 @@ export class FetchDataService {
           res(data);
           // console.log(data, "ervice data");
 
-          
+
         }, error: (error) => {
 
           rej(error)
@@ -106,16 +111,16 @@ export class FetchDataService {
   }
 
   httpGet(url: any) {
-  
-    
+
+
     return new Promise((res, rej) => {
       this.http.get(url).subscribe({
         next: (data) => {
           res(data);
 
         }, error: (error) => {
-          
-          rej(error)   
+
+          rej(error)
           if (error.message) {
             const data = { title: error.error.message };
             this.toastService.errorToast(data);
