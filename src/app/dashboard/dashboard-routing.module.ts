@@ -10,6 +10,7 @@ import { AddproductfeaturesComponent } from './addproductfeatures/addproductfeat
 import { OrderPageComponent } from './orders/order-page/order-page.component';
 import { FaqsComponent } from './faqs/faqs.component';
 import { ProductOverviewComponent } from './products/product-overview/product-overview.component';
+import { CouponsComponent } from './coupons/coupons.component';
 
 const routes: Routes = [
   {
@@ -25,7 +26,8 @@ const routes: Routes = [
       { path: 'features', component: AddproductfeaturesComponent},
       { path: 'orderDetails/:orderId', component: OrderPageComponent},
       {path: 'faq', component: FaqsComponent},
-      { path: 'product-overview/:sku', component: ProductOverviewComponent}
+      { path: 'product-overview/:sku', component: ProductOverviewComponent},
+      {path:'coupons',component:CouponsComponent}
     ]
   },
 ];

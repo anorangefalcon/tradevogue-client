@@ -38,12 +38,22 @@ export class UtilsModule {
     fetchProducts: 'http://localhost:1000/products/fetch',
     fetchProductUrl: 'http://localhost:1000/products/fetchProduct',
     uniqueProductFields: 'http://localhost:1000/products/uniqueFields',
+    getOriginalProductPrice:'http://localhost:1000/products/getOriginalPrice',
+
     deleteAddress:'http://localhost:1000/user/deleteAddress',
 
     // FAQ
     getFaqData: 'http://localhost:1000/user/getFaq',
     // cart
     fetchCart: 'http://localhost:1000/cart/fetch',
+    
+    
+    // COUPONS
+    createCoupon:'http://localhost:1000/admin/createOffer',
+    getOffers:'http://localhost:1000/admin/getOffers',
+    getProductPrice:'http://localhost:1000/admin/getProductPrice',
+    deleteOffer:'http://localhost:1000/admin/deleteOffer'
+   
   }
 
 }

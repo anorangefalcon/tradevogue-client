@@ -5,7 +5,7 @@ import { FetchDataService } from './shared/services/fetch-data.service';
 import { UtilsModule } from './utils/utils.module';
 
 export const authGuard: CanActivateFn = async (route, state) => {
-  // return true;
+  return true;
   const currentRoutes = state.url.split('/')[1];
   // return true;
   console.log("CURRENT ROUTE IS ",currentRoutes," route is ",state.url.split('/')[1]);

@@ -26,6 +26,7 @@ export class CustomSelectComponent {
   constructor(private elementRef: ElementRef){}
 
   ngOnInit(){
+    console.log(this.selectedOption);
     if((typeof(this.selectedOption) == "string" && !this.selectedOption.split(' ').includes('Select'))){
       this.selected = this.selectedOption;
     }else if( Array.isArray(this.selectedOption)){

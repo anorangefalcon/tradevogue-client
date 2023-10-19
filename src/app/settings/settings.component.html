@@ -318,19 +318,20 @@
                     </div>
 
                 </div>
-                <div *ngFor="let address of userAddresses; let ii=index">
-                    <!-- {{address| json}} -->
-                    <div class="d-flex justify-content-md-between align-item-center address__firstdiv">
-                        <p>{{address.firstname}} {{address.lastname}}</p>
-                        <div>
-                            <button class="edit__btn" (click)="EditAddress(ii)">Edit</button>
-                            
-                        <button (click)="RemoveAddress(address,ii)">Remove</button>
+                <div class="d-flex flex-column gap-10">
+                    <div *ngFor="let address of userAddresses" class="addressDiv d-flex flex-column gap-15">
+                        <!-- {{address| json}} -->
+                        <div class="d-flex justify-content-md-between align-item-center address__firstdiv">
+                            <p class="name">{{address.firstname}} {{address.lastname}}</p>
+                            <div>
+                                <button class="edit__btn">Edit</button>
+                                <button class="remove">Remove</button>
+                            </div>
                         </div>
-                    </div>
-                    <div>
-                        <p>{{address.apartment}} {{address.area}} {{address.landmark}}, {{address.town_city}}</p>
-                        <p>{{address.state}}- {{address.pincode}}</p>
+                        <div>
+                            <p>{{address.apartment}} {{address.area}} {{address.landmark}}, {{address.town_city}}</p>
+                            <p>{{address.state}}- {{address.pincode}}</p>
+                        </div>
                     </div>
                 </div>
 

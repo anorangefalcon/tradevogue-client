@@ -1,0 +1,251 @@
+
+.container{
+    overflow: hidden;
+
+}
+
+.remove{
+    transform: translateX(500px);
+}
+
+
+
+.add{
+    transform: translateX(0px) !important;
+}
+
+.CouponDiv{
+    transform: translateX(500px);
+    justify-content: space-between;
+
+  padding: 10px 20px;
+
+  & .header__addOffer{
+    height: 100px;
+    top:0;
+  }
+
+  & .OfferForm{
+    
+    height: calc(100vh - 200px);
+    overflow: scroll;
+    padding: 20px;
+  }
+
+
+}
+
+
+.wrapper{
+    /* transform: translateX(120%); */
+    height: 100%;
+    position: fixed;
+
+    & .CouponDiv{
+        display: flex;
+      
+        transition: transform 0.4s cubic-bezier(0, 0.59, 0.25, 1), -webkit-transform 0.4s cubic-bezier(0, 0.59, 0.25, 1);
+    }
+    z-index: 3;
+    opacity: 0;
+    visibility: hidden;
+    /* flex-direction: fle; */
+    justify-content: flex-end;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.4); 
+    inset-block-start: 0;
+    inset-inline-start: 0;
+    
+}
+
+.translateBack{
+    /* transform: translateX(0%); */
+    opacity: 1;
+    visibility: initial;   
+    
+
+}
+
+
+
+
+.CouponDiv{
+    width: 550px;
+    display: flex;
+    background-color: white;
+    flex-direction: column;
+    gap: 25px;
+}
+
+
+.Extrainfo{
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+form {
+    row-gap: 15px;
+    width: 100%;
+
+    & .form__group {
+        align-items: center;
+        gap:20px;
+        & input, & .custom__select, & textarea {
+            width: calc(100% - 220px);
+        }
+
+
+        & .selectBox__div{
+            width: calc(100% - 220px);
+            cursor: pointer;
+            /* padding-inline-end: 10px; */
+        
+        }
+
+
+        & .custom__select{
+            & input{
+                width: 100% !important;
+            }
+        }
+
+        & .dropDown{
+            /* font */
+            right: 15px;
+            font-size: 30px;
+            width: auto !important;
+        
+        }
+
+
+        
+     
+        & input:focus {
+            border-color: rgb(var(--textClr), 0.4);
+        }
+
+        & label {
+            font-size: 14px;
+            width: 220px;
+            color: rgb(var(--textClr), 0.9);
+            /* padding-bottom: 5px; */
+        }
+
+        & label span {
+            color: rgb(var(--danger));
+        }
+/* 
+        & .form__icon {
+            display: flex;
+            align-items: center;
+            font-size: 23px;
+            justify-content: center;
+            width: 50px;
+            inset-block-start: 40px;
+            inset-inline-start: 0;
+            background-color: transparent;
+            color: rgb(var(--textClr), 0.5);
+        } */
+
+        & ::placeholder {
+            color: rgb(var(--textClr), 0.3);
+        }
+
+
+
+
+    }
+
+
+
+
+
+
+
+}
+
+.close_btn{
+    padding: 0px;
+    cursor: pointer;
+    & span{
+        color: rgba(var(--primaryClr), 1);
+    }
+    
+    background: transparent;
+    /* background-color: red; */
+    border-radius: 50% !important;
+}
+
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    /* border-collapse: collapse; */
+    border-style: hidden;
+}
+
+th, td {
+    padding: 8px;
+    text-align: left;
+    /* display: flex; */
+    /* align-items: center; */
+    /* border-bottom: 1px solid #ddd; */
+}
+
+th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+   
+}
+
+tr{
+    /* border:1px solid rgba(var(--blackClr),0.7); */
+    border-bottom: 1px solid rgba(128, 128, 128, 0.152);
+    /* align-items: ce; */
+    /* display: flex; */
+    /* align-items: center; */
+}
+
+tr:hover {
+
+    background-color: #f5f5f5; /* Highlight the row on hover */
+}
+
+
+.action__btns{
+    gap:4px;
+    & button{
+        padding: 0;
+        background: transparent;
+
+        & span{
+            font-size: 14px;
+            transition: all 0.1s ease-in-out;
+            padding: 2px;
+            color: rgb(var(--blackClr), 0.7);
+        
+        }
+    }
+}
+
+
+
+
+.validation__div{
+    width: calc(100% - 220px);
+    & input{
+        width: 100% !important;
+    }
+
+}
+
+
+
+.content{
+    background-color: rgb(var(--whiteClr));
+    border: 1px solid rgba(var(--blackClr), 0.1);
+    border-radius: 10px;
+    overflow: hidden;
+
+}
