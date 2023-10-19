@@ -9,6 +9,7 @@ import { AccountComponent } from './account/account.component';
 import { AddproductfeaturesComponent } from './addproductfeatures/addproductfeatures.component';
 import { OrderPageComponent } from './orders/order-page/order-page.component';
 import { FaqsComponent } from './faqs/faqs.component';
+import { ProductOverviewComponent } from './products/product-overview/product-overview.component';
 
 const routes: Routes = [
   {
@@ -18,10 +19,13 @@ const routes: Routes = [
       { path: 'products', component: ProductsComponent },
       { path: 'orders', component: OrdersComponent },
       { path: 'addproduct', component: AddproductComponent },
+      { path: 'addproduct/:sku', component: AddproductComponent },
+
       { path: 'account', component: AccountComponent },
       { path: 'features', component: AddproductfeaturesComponent},
       { path: 'orderDetails/:orderId', component: OrderPageComponent},
       {path: 'faq', component: FaqsComponent},
+      { path: 'product-overview/:sku', component: ProductOverviewComponent}
     ]
   },
 ];

@@ -99,7 +99,8 @@
         color: white;
     }
     & input:checked + label{
-        background-color: rgb(242, 242, 242);
+        background-color: rgb(var(--primaryClr));
+        color: rgb(var(--whiteClr));
     }
     & input:focus + label{
         background-color: rgb(242, 242, 242);
@@ -144,13 +145,14 @@
         border: 1px solid rgba(128, 128, 128, 0.264);
         border-radius: 3px;
         color: white;
+        background-color: white;
         font-size: 16px;
         font-weight: 400;
 
     }
 
     & input[type="checkbox"]:checked + label::before {
-        background-color: rgb(var(--primaryClr));
-        border: 1px solid rgb(var(--primaryClr));
+        color: rgb(var(--primaryClr));
+        border: 1px solid rgb(var(--whiteClr));
     }
 }

@@ -3,10 +3,10 @@
     & .product__content{ 
 
         gap: 20px;
-        d-grid-template-columns: repeat(1fr, 250px);
+        grid-template-columns: repeat(1fr, 250px);
     }
 
-    & .d-grid__items, .table__items{
+    & .grid__items, .table__items{
         padding: 20px;
         box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
         border-radius: 10px;
@@ -14,25 +14,25 @@
         background-color: rgb(var(--whiteClr));
     }
 
-    & .d-grid__items{
+    & .grid__items{
         display: flex;
         flex-direction: column;
         gap: 15px;
     }
 
     & .customerInfo{
-        d-grid-column-start: 1;
-        d-grid-column-end: 2;
+        grid-column-start: 1;
+        grid-column-end: 2;
     }
 
     & .orderStatus{
-        d-grid-column-start: 2;
-        d-grid-column-end: 5;
+        grid-column-start: 2;
+        grid-column-end: 5;
     }
 
     & .OrderItems{
-        d-grid-column-start: 1;
-        d-grid-column-end: 5;
+        grid-column-start: 1;
+        grid-column-end: 5;
     }
 
 

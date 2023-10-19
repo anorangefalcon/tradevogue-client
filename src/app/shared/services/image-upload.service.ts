@@ -24,23 +24,21 @@ export class ImageUploadService {
   fileupload(fileObject: any) {
 
     return new Promise(async (res, rej) => {
-      let imgUrl: any[] = [];
-      let errUrl: any[] = [];
 
-      Array.from(fileObject).forEach(async (file: any) => {
-        try {
+      let imgUrl: any[] = [];
+      // let x = Array.from(fileObject);
+
+      await Promise.all(fileObject.map(async (file: any) => {
           if (file.file) {
             const uploadedFile = await this.client.upload(file.file);
             imgUrl.push(uploadedFile.url);
           } else {
             imgUrl.push(file);
           }
-          if (file == fileObject[fileObject.length - 1]) res(imgUrl);
+          return file;
+      }));
 
-        } catch (err) {
-          console.log(err);
-        }
-      })
+      res(imgUrl)
     });
   }
 

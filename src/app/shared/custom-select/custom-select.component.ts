@@ -10,22 +10,22 @@ import { ElementRef, HostListener,  } from '@angular/core';
 
 })
 export class CustomSelectComponent {
+  @Input () _id!: string;
   @Input () options: any[] = [];
-  @Input () selectedOption: any = '';
+  @Input () selectedOption: any;
   @Input () type: string = ''; // multiSelect //select //searchSelect
   @Output () final_option = new EventEmitter<string>();
   @Output () SelectedList = new EventEmitter<any>();
 
   selected: any = '';
   multiSelected: any[] = [];
+  radioChecked: boolean = false;
   isactive:boolean = false;
-  clearbtn:boolean = true;
   filter: string = '';
 
   constructor(private elementRef: ElementRef){}
 
   ngOnInit(){
-    console.log(this.selectedOption);
     if((typeof(this.selectedOption) == "string" && !this.selectedOption.split(' ').includes('Select'))){
       this.selected = this.selectedOption;
     }else if( Array.isArray(this.selectedOption)){
@@ -42,7 +42,6 @@ export class CustomSelectComponent {
     } 
     this.isactive = true;
     this.filter = element.value;
-
   }
 
   toggleClass(){
@@ -50,19 +49,16 @@ export class CustomSelectComponent {
   }
   
   updateSelected(option: string){
-    console.log(option);
     this.selected = option;
     this.isactive = false;
     this.final_option.emit(option);
-    this.clearbtn = true;
     this.filter = '';
   }
 
   updateMutliSelected(e: Event){
     let element = <HTMLInputElement>e.target;
-    console.log(element.checked, this.multiSelected);
     
-    if(element.checked && !this.multiSelected.includes(element)){
+    if(element.checked && !this.multiSelected.includes(element.value)){
       this.multiSelected.push(element.value);
     }else{
       this.multiSelected = this.multiSelected.filter((item)=>{

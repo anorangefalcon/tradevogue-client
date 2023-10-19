@@ -16,8 +16,7 @@ export class ProductsComponent implements OnInit {
   ratingOption: any[] = ['Low to High', 'High to Low'];
   pageSize: number = 8;
   currentPage: number = 1;
-  productList: any[] = [];
-
+  
   selectAll: boolean = false;
 
   template: any = {
@@ -30,6 +29,11 @@ export class ProductsComponent implements OnInit {
       rating: '',
     }
   }
+
+  // Contains all details about the product Displayed
+  productArray: any = [];
+  deleteList: any = [];
+  productList: any[] = [];
 
   constructor(private element: ElementRef,
     private fetchdata: FetchDataService,
@@ -44,11 +48,12 @@ export class ProductsComponent implements OnInit {
 
   async fetchData() {
     try{
-      const result: any = await this.fetchdata.httpPost(this.backendUrl.URLs.fetchproducts, this.template);
+      this.productArray = await this.fetchdata.httpPost(this.backendUrl.URLs.fetchProductInventory, this.template);
+      console.log(this.productArray);
       this.productList = [];
   
-      result.forEach((product: any) => {
-        product = {
+      this.productArray.forEach((product: any) => {
+        let item = {
           itemId: product.sku,
           image: product.assets[0].photo[0],
           name: product.name,
@@ -61,15 +66,11 @@ export class ProductsComponent implements OnInit {
           last_updated: product.updatedAt.split('T')[0],
           checked: false
         }
-        this.productList.push(product);
+        this.productList.push(item);
       })
     }catch(err){
       console.log(err);
     }
-  }
-
-  displayPage(id: string){
-
   }
 
   toggleSelectAll(){
@@ -87,20 +88,12 @@ export class ProductsComponent implements OnInit {
     return this.productList.every((product: any)=>product.checked);
   }
 
-  deleteList: any = [];
-
   updateCheckList(){
     this.deleteList = [];
     this.productList.forEach((product: any)=>{
       if(product.checked) this.deleteList.push(product.itemId);
     });
     console.log(this.deleteList);
-  }
-
-  
-
-  pageChanged(event: any) {
-    this.currentPage = event;
   }
 
   // Delete Single Entry

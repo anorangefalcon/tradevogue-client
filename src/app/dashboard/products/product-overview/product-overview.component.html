@@ -1,0 +1,13 @@
+<section *ngIf="productDetails">
+
+    <ng-container *ngFor="let item of productDetails.assets">
+        Color: {{item.color}}
+        Unit Sold: {{item.unitSold}}
+        Remainig: {{item.stockQuantity-item.unitSold}} 
+        Images: 
+        <ng-container *ngFor="let image of item.photo">
+            <img [src]="image" alt="image">
+        </ng-container>
+    </ng-container>
+
+</section>

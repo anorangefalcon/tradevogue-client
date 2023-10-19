@@ -20,8 +20,7 @@
 
         <div class="d-flex align-item-center gap-15">
 
-            <button class="btn-primary d-flex flex-center gap-5" (click)="current_form = 'product_images'"
-                [disabled]="productsForm.get('basicinfo')?.invalid || current_form == 'product_images'"
+            <button class="btn-primary d-flex flex-center gap-5" (click)="checkFormStatus()"
                 [ngStyle]="{display: current_form == 'product_images'? 'none' : 'flex', 'background-color': productsForm.get('basicinfo')?.invalid? 'rgb(var(--primaryClr), 0.8)' : 'rgb(var(--primaryClr))'}">
                 Continue
                 <span class="next_icon material-symbols-outlined">arrow_forward_ios</span>
@@ -33,7 +32,7 @@
                 Add Color Variant
             </button>
 
-            <button class="btn-primary d-flex align-item-center" (click)="onsubmit()" [disabled]="productsForm.invalid"
+            <button class="btn-primary d-flex align-item-center" (click)="onsubmit()" 
                 [ngStyle]="{display: current_form != 'product_images'? 'none' : 'flex','background-color': productsForm.invalid? 'rgb(var(--primaryClr), 0.8)' : 'rgb(var(--primaryClr))'}">
                 Submit Product
             </button>
@@ -94,7 +93,7 @@
                                         <ng-template #URLpreview>
                                             <img [src]="item" alt="productImage.png" width="100" height="100">
                                             <i class="remove-btn absolute pointer transition d-flex flex-center material-symbols-outlined"
-                                                (click)="deleteImage(imagesIndex, i, 'filestack')">close</i>
+                                                (click)="deleteImage(imagesIndex, i)">close</i>
                                         </ng-template>
                                     </div>
                                 </div>
@@ -118,17 +117,70 @@
                                 </div>
                             </div>
 
-                            <div class="form__group ">
-                                <label for="quantity" class="input__label">Quantity Stock<span
-                                        class="important">*</span></label>
-                                <input type="number" class="form__input" placeholder="Quantity" id="quantity"
-                                    formControlName="stockQuantity" required />
+                            <div formArrayName="stockQuantity" class="d-flex flex-column gap-20">
 
-                                <span class="error"
-                                    *ngIf="form.get('stockQuantity')?.invalid && (form.get('stockQuantity')?.dirty || form.get('stockQuantity')?.touched)">
-                                    <small *ngIf="form.get('stockQuantity')?.hasError('required')">*Field
-                                        Required</small>
-                                </span>
+                                <table>
+                                    <thead>
+                                        <tr style="text-align: left;">
+                                            <th>Size<span class="important">*</span></th>
+                                            <th>Stock Quantity</th>
+                                            <th>
+                                                <div class="d-flex flex-column gap-10 ">
+                                                    <i (click)="addStockQuantityForm(i)"
+                                                        class="material-symbols-outlined options_icon delete__icon d-flex flex-center pointer transition">add</i>
+                                                </div>
+                                            </th>
+                                        </tr>
+                                    </thead>
+
+
+                                    <tbody>
+                                        <ng-container
+                                            *ngFor="let _form of productStockQuantityFormArray(i); let j=index">
+                                            <tr [formGroupName]="j">
+
+                                                <td>
+                                                    <div class="form__group">
+
+                                                        <app-custom-select [_id]=" '' + i + j" [options]="sizes"
+                                                            [selectedOption]="(_form.get('size')?.value ? _form.get('size')?.value : 'Select Size')"
+                                                            (final_option)="_form.get('size')?.patchValue($event)"></app-custom-select>
+
+                                                        <span class="error"
+                                                            *ngIf="_form.get('size')?.invalid && (_form.get('size')?.dirty || _form.get('size')?.touched)">
+                                                            <small
+                                                                *ngIf="_form.get('size')?.hasError('required')">*Field
+                                                                Required</small>
+                                                        </span>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="form__group ">
+                                                        <input type="number" class="form__input" placeholder="Quantity"
+                                                            [id]="'quantity'+ i + j " formControlName="quantity"
+                                                            required />
+
+                                                        <span class="error"
+                                                            *ngIf="_form.get('quantity')?.invalid && (_form.get('quantity')?.dirty || _form.get('quantity')?.touched)">
+                                                            <small
+                                                                *ngIf="_form.get('quantity')?.hasError('required')">*Field
+                                                                Required</small>
+                                                        </span>
+                                                    </div>
+                                                </td>
+
+                                                <td>
+                                                    <div class=" options d-flex flex-column gap-10 ">
+                                                        <i (click)="deleteStockQuantityForm(i, j)"
+                                                            [ngStyle]="{'display': j !=0 ? 'flex': 'none'}"
+                                                            class="material-symbols-outlined options_icon delete__icon d-flex flex-center pointer transition">close</i>
+                                                    </div>
+                                                </td>
+
+                                            </tr>
+                                        </ng-container>
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </ng-container>
@@ -200,8 +252,8 @@
                             <div class="form__group" formGroupName="info">
                                 <label for="category" class="input__label">Category<span
                                         class="important">*</span></label>
-                                <app-custom-select id="categories" [options]="categories" [type]="'searchSelect'"
-                                    [selectedOption]="'Select Category'"
+                                <app-custom-select [options]="categories" [type]="'searchSelect'"
+                                    [selectedOption]="(productSubForm('info.category')?.value? productSubForm('info.category')?.value:'Select Category')"
                                     (final_option)="updateFormFields($event, 'info.category')"></app-custom-select>
                                 <span class="error"
                                     *ngIf="productSubForm('info.category')?.invalid && (productSubForm('info.category')?.dirty || productSubForm('info.category')?.touched)">
@@ -212,8 +264,8 @@
 
                             <div class="form__group" formGroupName="info">
                                 <label for="brand" class="input__label">Brand<span class="important">*</span></label>
-                                <app-custom-select id="brand" [options]="brands" [type]="'searchSelect'"
-                                    [selectedOption]="'Select Brand'"
+                                <app-custom-select [options]="brands" [type]="'searchSelect'"
+                                    [selectedOption]="(productSubForm('info.brand')?.value? productSubForm('info.brand')?.value : 'Select Brand')"
                                     (final_option)="updateFormFields($event, 'info.brand')"></app-custom-select>
                                 <span class="error"
                                     *ngIf="productSubForm('info.brand')?.invalid && (productSubForm('info.brand')?.dirty || productSubForm('info.brand')?.touched)">
@@ -224,8 +276,8 @@
 
                             <div class="form__group" formGroupName="info">
                                 <label for="gender" class="input__label">Gender<span class="important">*</span></label>
-                                <app-custom-select id="gender" [options]="gender" [type]="'searchSelect'"
-                                    [selectedOption]="'Select Gender'"
+                                <app-custom-select [options]="gender" [type]="'searchSelect'"
+                                    [selectedOption]="(productSubForm('info.gender')?.value? productSubForm('info.gender')?.value : 'Select Gender')"
                                     (final_option)="updateFormFields($event, 'info.gender')"></app-custom-select>
 
                                 <span class="error"
@@ -236,21 +288,9 @@
                             </div>
 
                             <div class="form__group" formGroupName="info">
-                                <label for="sizes" class="input__label">Size<span class="important">*</span></label>
-                                <app-custom-select id="sizes" [options]="sizes" [type]="'multiSelect'"
-                                    [selectedOption]="'Select Sizes'"
-                                    (SelectedList)="updateFormFields($event, 'info.size')"></app-custom-select>
-                                <span class="error"
-                                    *ngIf="productSubForm('info.size')?.invalid && (productSubForm('info.size')?.dirty || productSubForm('info.size')?.touched)">
-                                    <small *ngIf="productSubForm('info.size')?.hasError('required')">*Field
-                                        Required</small>
-                                </span>
-                            </div>
-
-                            <div class="form__group" formGroupName="info">
                                 <label for="" class="input__label">Product Tags<span class="important">*</span></label>
                                 <app-custom-select [options]="tags" [type]="'multiSelect'"
-                                    [selectedOption]="'Select Tags'"
+                                    [selectedOption]=" (productSubForm('info.tags')?.value.length ? productSubForm('info.tags')?.value : 'Select Tags') "
                                     (SelectedList)="updateFormFields($event, 'info.tags')"></app-custom-select>
                                 <span class="error"
                                     *ngIf="productSubForm('info.tags')?.invalid && (productSubForm('info.tags')?.dirty || productSubForm('info.tags')?.touched)">
@@ -276,7 +316,7 @@
                             <div class="form__group" formGroupName="info">
                                 <label for="materialType" class="input__label">Material Type<span
                                         class="important">*</span></label>
-                                <input type="text" class="form__input" placeholder="Material Type" id="materialType"
+                                <input type="text" class="form__input" placeholder="Cotton, Wool...." id="materialType"
                                     formControlName="composition" required />
                                 <span class="error"
                                     *ngIf="productSubForm('info.composition')?.invalid && (productSubForm('info.composition')?.dirty || productSubForm('info.composition')?.touched)">
@@ -301,7 +341,7 @@
                                 <label for="" class="input__label">Order Quantity<span
                                         class="important">*</span></label>
                                 <app-custom-select [options]="orderQuantity" [type]="'multiSelect'"
-                                    [selectedOption]="'Select Order' || productSubForm('info.orderQuantity')?.value"
+                                    [selectedOption]="(productSubForm('info.orderQuantity')?.value.length ? productSubForm('info.orderQuantity')?.value : 'Select Order')"
                                     (SelectedList)="updateFormFields($event, 'info.orderQuantity')"></app-custom-select>
                                 <small class="note">*Order Quantity is various Unit to be Sold</small>
                                 <span class="error"

@@ -35,9 +35,7 @@ export class AddproductComponent {
     body: []
   }
 
-  constructor(private elem_ref: ElementRef,
-    private render: Renderer2,
-    private fb: FormBuilder,
+  constructor(private fb: FormBuilder,
     private dataService: FetchDataService,
     private backendUrl: UtilsModule,
     private toastservice: ToastService,
@@ -45,14 +43,12 @@ export class AddproductComponent {
     private router: Router) {
 
     this.productsForm = this.fb.group({
+
       assets: this.fb.array([
+
         this.fb.group({
+
           color: ['', {
-            validators: [
-              Validators.required
-            ]
-          }],
-          stockQuantity: ['', {
             validators: [
               Validators.required
             ]
@@ -63,6 +59,22 @@ export class AddproductComponent {
               Validators.maxLength(6)
             ]
           }],
+
+          stockQuantity: this.fb.array([
+            this.fb.group({
+              size: ['', {
+                validators: [
+                  Validators.required
+                ]
+              }],
+              quantity: ['', {
+                validators: [
+                  Validators.required
+                ]
+              }],
+            })
+          ]),
+
         })
       ]),
 
@@ -99,11 +111,6 @@ export class AddproductComponent {
               Validators.required,
             ]
           }],
-          size: [[], {
-            validators: [
-              Validators.required
-            ]
-          }],
           gender: ['', {
             validators: [
               Validators.required,
@@ -130,7 +137,6 @@ export class AddproductComponent {
             ]
           }]
         }),
-
         price: [, {
           validators: [
             Validators.required,
@@ -162,6 +168,30 @@ export class AddproductComponent {
     (<FormArray>this.productsForm.get('assets')).removeAt(index);
   }
 
+  addStockQuantityForm(index: number) {
+    const template = this.fb.group({
+      size: [[], {
+        validators: [
+          Validators.required
+        ]
+      }],
+      quantity: ['', {
+        validators: [
+          Validators.required
+        ]
+      }],
+    });
+    (<FormArray>this.productsForm.get('assets')?.get(String(index))?.get('stockQuantity'))?.push(template);
+  }
+
+  productStockQuantityFormArray(index: number) {
+    return (<FormArray>this.productsForm.get('assets')?.get(String(index))?.get('stockQuantity'))?.controls;
+  }
+
+  deleteStockQuantityForm(formId: number, index: number) {
+    (<FormArray>this.productsForm.get('assets')?.get(String(formId))?.get('stockQuantity'))?.removeAt(index);
+  }
+
   addProductImageForm() {
     const template = this.fb.group({
       color: ['', {
@@ -170,11 +200,20 @@ export class AddproductComponent {
         ]
       }],
 
-      stockQuantity: ['', {
-        validators: [
-          Validators.required
-        ]
-      }],
+      stockQuantity: this.fb.array([
+        this.fb.group({
+          size: ['', {
+            validators: [
+              Validators.required
+            ]
+          }],
+          quantity: ['', {
+            validators: [
+              Validators.required
+            ]
+          }],
+        })
+      ]),
 
       photo: [[], {
         validators: [
@@ -184,6 +223,15 @@ export class AddproductComponent {
       }],
     });
     (<FormArray>this.productsForm.get('assets')).push(template);
+  }
+
+  checkFormStatus() {
+    
+    if(this.productsForm.get('basicinfo')?.valid){
+      this.current_form = 'product_images';
+      return;
+    }
+    this.productsForm.get('basicinfo')?.markAllAsTouched();
   }
 
   async fileReader(file: any, image: any): Promise<any> {
@@ -276,7 +324,9 @@ export class AddproductComponent {
 
     if (imageList.length != 0) {
       let errorfiles = imageList.filter((image: any) => {
-        return image.file.size > 2097152; //2MB
+        if(image.file)
+          return image.file.size > 2097152; //2MB
+        return;
       });
       if (errorfiles.length != 0) return errorfiles;
     }
@@ -285,14 +335,14 @@ export class AddproductComponent {
   }
 
   // Delete Image from Image List
-  deleteImage(imageIndex: any, formId: any, type='') {
+  deleteImage(imageIndex: any, formId: any, type = '') {
     let productImages = this.productsForm.get('assets')?.get(String(formId))?.get('photo')?.value;
-    if(type != 'filestack'){
+    if (type != 'filestack') {
       productImages.splice(imageIndex, 1);
       this.productsForm.get('assets')?.get(String(formId))?.get('photo')?.patchValue(productImages);
       return;
     }
-    this.upload.delete(productImages[imageIndex]).subscribe((res)=>{
+    this.upload.delete(productImages[imageIndex]).subscribe((res) => {
       console.log(res);
     })
   }
@@ -300,7 +350,6 @@ export class AddproductComponent {
   // update Form Control For Custom Select buttons
   updateFormFields(e: any, field: string) {
     this.productsForm.get('basicinfo')?.get(field)?.patchValue(e);
-    console.log(this.productsForm.get('basicinfo')?.get(field)?.value, "data");
   }
 
   updateColor(e: Event, index: number) {
@@ -319,13 +368,9 @@ export class AddproductComponent {
   }
 
   async onsubmit() {
-
-    console.log(this.productsForm.valid);
-
     if (!this.productsForm.valid) {
       this.productsForm.markAllAsTouched();
     } else {
-
       const imageFormArray = this.productsForm.get('assets')?.value;
 
       // Upload Images to fileStack and last upload the form data
@@ -345,7 +390,7 @@ export class AddproductComponent {
               this.data_template.title = 'Product Uploaded';
               this.toastservice.successToast(this.data_template);
               this.router.navigate(['/dashboard/products']);
-              
+
             }).catch((err) => {
               console.log(err);
             })

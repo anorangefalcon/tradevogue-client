@@ -50,8 +50,8 @@ app-custom-select {
 
         & .error {
             position: absolute;
-            inset-block-end: -20px;
-            inset-inline-start: 0;
+            inset-block-start: calc(100% + 2px);
+            inset-inline-start: 0px;
         }
 
     }
@@ -88,32 +88,33 @@ app-custom-select {
             }
         }
 
-        & input[type="radio"]+label {
-            width: 25px;
-            height: 25px;
-            border-radius: 50%;
-            border: 1px solid rgb(var(--blackClr), 0.2);
-            cursor: pointer;
-        }
-
-        & input[type="radio"]+label::before {
-            width: 23px;
-            height: 23px;
-            content: '';
-            display: flex;
-            position: absolute;
-            border-radius: 50%;
-            filter: brightness(90%);
-            transition: 0.1s ease-in-out;
-        }
-
-        & input[type="radio"]:checked+label::before {
-            border: 3px solid #fff;
-        }
-
         & .color__picker {
             grid-template-columns: repeat(auto-fit, minmax(20px, 20px));
             min-height: 40px;
+
+
+            & input[type="radio"]+label {
+                width: 25px;
+                height: 25px;
+                border-radius: 50%;
+                border: 1px solid rgb(var(--blackClr), 0.2);
+                cursor: pointer;
+            }
+    
+            & input[type="radio"]+label::before {
+                width: 23px;
+                height: 23px;
+                content: '';
+                display: flex;
+                position: absolute;
+                border-radius: 50%;
+                filter: brightness(90%);
+                transition: 0.1s ease-in-out;
+            }
+    
+            & input[type="radio"]:checked+label::before {
+                border: 3px solid #fff;
+            }
         }
     }
 
