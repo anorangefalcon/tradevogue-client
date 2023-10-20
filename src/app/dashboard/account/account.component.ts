@@ -7,6 +7,7 @@ import { ImageUploadService } from 'src/app/shared/services/image-upload.service
 import { UtilsModule } from 'src/app/utils/utils.module';
 import { SellerFetchDataService } from 'src/app/shared/services/seller-fetch-data.service';
 import { CookieService } from 'ngx-cookie-service';
+import { PopupService } from 'src/app/shared/services/popup.service';
 
 @Component({
   selector: 'app-account',
@@ -28,7 +29,7 @@ export class AccountComponent implements OnInit {
   pincodeFilled: boolean = false;
   userPhoto: string = '';  
   private postalCodeInput = new Subject<string>();
-
+  showPopup = true;
 
 
   constructor(
@@ -37,7 +38,8 @@ export class AccountComponent implements OnInit {
     private imageUpload: ImageUploadService,
     private backendURLs: UtilsModule,
     private sellerFetchDataService: SellerFetchDataService,
-    private cookieService: CookieService
+    private cookieService: CookieService,
+    private popupService: PopupService
   ) {
 
    }
@@ -46,7 +48,6 @@ export class AccountComponent implements OnInit {
    
   ngOnInit() {
       // Use the patchValue method to update the profileForm with adminData
-  
 
     this.profileForm = this.formBuilder.group({
       firstName: [

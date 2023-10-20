@@ -15,13 +15,11 @@ import { AddproductfeaturesComponent } from './addproductfeatures/addproductfeat
 import { UploadExcelService } from './services/upload-excel.service';
 import { OrderPageComponent } from './orders/order-page/order-page.component';
 import { FaqsComponent } from './faqs/faqs.component';
-<<<<<<< Updated upstream
 import { ProductOverviewComponent } from './products/product-overview/product-overview.component';
 import { CouponsComponent } from './coupons/coupons.component';
-=======
 import { PaginationService } from '../shared/services/pagination.service';
->>>>>>> Stashed changes
-
+import { PopUpComponent } from '../shared/pop-up/pop-up.component';
+import { PopupService } from '../shared/services/popup.service';
 @NgModule({
   declarations: [
     DashboardComponent,
@@ -34,11 +32,8 @@ import { PaginationService } from '../shared/services/pagination.service';
     AddproductfeaturesComponent,
     OrderPageComponent,
     FaqsComponent,
-<<<<<<< Updated upstream
     ProductOverviewComponent,
     CouponsComponent,
-=======
->>>>>>> Stashed changes
   ],
   
   imports: [
@@ -47,12 +42,14 @@ import { PaginationService } from '../shared/services/pagination.service';
     SharedModule,
     NgxPaginationModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+
   ],
   providers: [
     UploadExcelService,
     NgModel,
-    PaginationService
+    PaginationService,
+    PopupService
     ],
 })
 export class DashboardModule { }

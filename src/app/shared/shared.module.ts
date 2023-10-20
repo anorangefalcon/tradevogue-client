@@ -21,6 +21,7 @@ import { CartcontentComponent } from './cartcontent/cartcontent.component';
 import { CheckoutComponent } from '../checkout/checkout.component';
 import { DialogComponent } from './components/dialog/dialog.component';
 import { LessThanOrEqualPipe } from './Pipe/less-than-or-equal.pipe';
+import { PopUpComponent } from './pop-up/pop-up.component';
 
 
 @NgModule({
@@ -37,7 +38,8 @@ import { LessThanOrEqualPipe } from './Pipe/less-than-or-equal.pipe';
     AddressComponent,
     CartcontentComponent,
     DialogComponent,
-    LessThanOrEqualPipe
+    LessThanOrEqualPipe,
+    PopUpComponent
   ],
   imports: [
     CommonModule,
@@ -61,7 +63,8 @@ import { LessThanOrEqualPipe } from './Pipe/less-than-or-equal.pipe';
     AddressComponent,
     CartcontentComponent,
     DialogComponent,
-    LessThanOrEqualPipe
+    LessThanOrEqualPipe,
+    PopUpComponent
   ]
 })
 export class SharedModule { }

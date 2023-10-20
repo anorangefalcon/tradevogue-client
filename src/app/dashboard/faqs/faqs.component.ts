@@ -1,10 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { FaqDataService } from 'src/app/shared/services/faq-data.service';
 import { PaginationService } from 'src/app/shared/services/pagination.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UtilsModule } from 'src/app/utils/utils.module';
 import { FetchDataService } from 'src/app/shared/services/fetch-data.service';
-
+import { PopupService } from 'src/app/shared/services/popup.service';
 @Component({
   selector: 'app-faqs',
   templateUrl: './faqs.component.html',
@@ -22,9 +22,10 @@ export class FaqsComponent {
   editItem: boolean = false;
   isSlideIn = false;
   selectedItem: any;
+  isMenuActive = false;
 
 
-  constructor(private faq: FaqDataService, public pagination: PaginationService, private formBuilder: FormBuilder,private bgURL: UtilsModule, private fetchDataService: FetchDataService) {
+  constructor(private faq: FaqDataService, public pagination: PaginationService, private formBuilder: FormBuilder,private bgURL: UtilsModule, private fetchDataService: FetchDataService, private popupService: PopupService) {
     this.pagination.setLimit(this.pageSize);
     this.loadData();
   }
@@ -78,7 +79,8 @@ export class FaqsComponent {
 
   showItemDetails(item: any) {
     this.selectedItem = item;
-    this.showPopup = true;
+    this.popupService.openPopup();
+    // this.showPopup = true;
   }
 
   showEdit(item: any) {
@@ -90,34 +92,53 @@ export class FaqsComponent {
     });
   }
 
- async updateDetails() {
+  async updateDetails() {
     if (this.selectedItem) {
-      const updatedData = {
-        _id: this.selectedItem._id, 
-        query: this.faqForm.get('query')?.value,
-        content: this.faqForm.get('content')?.value,
-      };
-      const data = await this.fetchDataService.httpPost(this.bgURL.URLs.updateFaqData, updatedData);
+      const updatedItem = { ...this.selectedItem };
+      
+      updatedItem.query = this.faqForm.get('query')?.value;
+      updatedItem.content = this.faqForm.get('content')?.value;
+  
+      const itemIndex = this.selectedCategory.childrens.findIndex((child: any) => child._id === updatedItem._id);
+      
+      if (itemIndex !== -1) {
+        this.selectedCategory.childrens[itemIndex] = updatedItem;
+      }
+  
+      try {
+        const data = await this.fetchDataService.httpPost(this.bgURL.URLs.updateFaqData, updatedItem);
+        console.log("Item updated successfully.", data);
+      } catch (error) {
+        console.error("Error updating item:", error);
+      }
     }
-}
+  }
+  
 
-deleteFaq(item: any) {
+async deleteFaq(item: any) {
   this.selectedItem = item;
   if (this.selectedItem) {
-    const updatedData = {
-      _id: this.selectedItem._id, 
-      query: this.faqForm.get('query')?.value,
-      content: this.faqForm.get('content')?.value,
-    };
-    console.log(updatedData, "delete data")
-    const data = this.fetchDataService.httpPost(this.bgURL.URLs.deleteFaqData, updatedData);
-    console.log(data, "delete data")
+    const itemId = item._id;
+
+    const itemIndex = this.selectedCategory.childrens.findIndex((child: any) => child._id === itemId);
+    if (itemIndex !== -1) {
+      this.selectedCategory.childrens.splice(itemIndex, 1);
+    }
+
+    try {
+      const data = await this.fetchDataService.httpPost(this.bgURL.URLs.deleteFaqData, { _id: itemId });
+      console.log("Item deleted successfully.", data);
+    } catch (error) {
+      console.error("Error deleting item:", error);
+    }
   }
 }
 
+  toggleMenu() {
+    this.isMenuActive = !this.isMenuActive;
+  }
 
 
-  
 }
 
 

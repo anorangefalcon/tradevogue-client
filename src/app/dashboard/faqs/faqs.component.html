@@ -3,6 +3,7 @@
     <div class="d-flex gap-15 align-item-center">
       <h2>FAQs</h2>
     </div>
+  
 
     <div class="custom-select" style="width:200px;">
       <select [(ngModel)]="selectedOption" (change)="retrieveContent()">
@@ -58,7 +59,17 @@
 </div>
 
 
-<div *ngIf="showPopup" class="popup-overlay relative">
+<app-pop-up>
+    <div *ngIf="selectedItem" class="details-container">
+      <p class="detail-item"><strong>Serial Number:</strong> {{ (currentPage - 1) * pageSize +
+        selectedCategory.childrens.indexOf(selectedItem) + 1 }}</p>
+      <p class="detail-item"><strong>Query:</strong> {{ selectedItem.title }}</p>
+      <p class="detail-item"><strong>Answer:</strong> {{ selectedItem.content }}</p>
+    </div>
+</app-pop-up>
+
+
+<!-- <div *ngIf="showPopup" class="popup-overlay relative">
   <div class="popup-content popup-details" [ngClass]="{'fade-in': showPopup}">
     <div *ngIf="selectedItem" class="details-container">
       <p class="detail-item"><strong>Serial Number:</strong> {{ (currentPage - 1) * pageSize +
@@ -79,7 +90,7 @@
       </svg>
     </button>
   </div>
-</div>
+</div> -->
 
 <div *ngIf="editItem" class="slider">
   <div *ngIf="selectedItem" class="details-container">
@@ -93,7 +104,7 @@
             <button class="btn-secondary" [ngStyle]="{'display': faqForm.disabled? 'none': 'block'}" (click)="faqForm.disable()" >Cancel</button>
             <button class="btn-primary" [ngStyle]="{'display': faqForm.disabled? 'none': 'block'}" (click)="updateDetails()" >Update</button>
         </div>
-    </div>
+      </div>
   
       <form [formGroup]="faqForm" class="d-flex flex-wrap gap-20">
         <div class="form__group">
@@ -145,3 +156,5 @@
     </button>
   </div>
 </div>
+
+
