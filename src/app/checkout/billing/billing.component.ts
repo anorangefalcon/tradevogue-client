@@ -1,6 +1,8 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { CartService } from 'src/app/shared/services/cart.service';
 import { CookieService } from 'ngx-cookie-service';
+import { FetchDataService } from 'src/app/shared/services/fetch-data.service';
+import { UtilsModule } from 'src/app/utils/utils.module';
 @Component({
   selector: 'app-billing',
   templateUrl: './billing.component.html',
@@ -25,7 +27,7 @@ export class BillingComponent{
     // }
 
   constructor(private cartService: CartService,
-    private cookie: CookieService) {
+    private cookie: CookieService,private fetchDataService:FetchDataService,private backendURLs:UtilsModule) {
     this.cartService.fetchCart().subscribe((data) => {
   
       this.cartitems = data;
@@ -83,6 +85,47 @@ export class BillingComponent{
   clicked() {
     console.log("my div is ", this.my_div);
     this.my_div?.nativeElement.classList.toggle('display_none');
+  }
+
+
+  // ADDRESS TS FILE---------
+  userAddresses:any;
+  async getAddresses(){
+    
+  let data:any=await  this.fetchDataService.httpGet(this.backendURLs.URLs.getAddress);
+  console.log("data is ",data)
+  this.userAddresses=data.info.address;
+  console.log('USERADDRESS Is ',this.userAddresses);
+  
+  }
+
+  AddressSended:any;
+  addnewAddress:boolean=false;
+  EditAddress(address:any,index:any){
+    const data=this.userAddresses[index];
+    this.AddressSended={data,index};
+    this.addnewAddress=true;
+  }
+
+  async RemoveAddress(address:any,index:any){
+    try{
+      console.log('address is ',address);
+      const body={id:address._id}
+      let deleteAddress=await this.fetchDataService.httpPost(this.backendURLs.URLs.deleteAddress,body);
+      
+      this.userAddresses.splice(index);
+
+    }
+
+    catch(error){
+
+    }
+   
+    
+  }
+
+  async ngOnInit(){
+    this.getAddresses();
   }
 
 }

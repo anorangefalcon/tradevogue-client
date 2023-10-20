@@ -666,6 +666,9 @@ ul {
 .pointer {
     cursor: pointer;
 }
+.pointer-none{
+    pointer-events: none;
+}
 
 
 button {

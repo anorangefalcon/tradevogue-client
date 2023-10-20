@@ -63,6 +63,8 @@
                 <div class="form__group d-flex" *ngIf="OfferForm.get('discountType')?.value=='percentage'">
                     <label class="form__label"> Discount Percentage Type<span>*</span></label>
                     <div class="custom__select">
+                        {{OfferForm.get('DiscountPercentageType')?.value}} abcdxyz
+
                         <app-custom-select [type]="''" [options]="DiscountPercentageType" [selectedOption]="(OfferForm.get('DiscountPercentageType')?.value ? OfferForm.get('DiscountPercentageType')?.value:'Select DiscountPercentageType')"
                             (final_option)="DiscountPercentageHandler($event)"></app-custom-select>
                     </div>
@@ -124,7 +126,7 @@
                     <div class="form__group d-flex">
                         <label class="form__label"> Coupon Type <span>*</span></label>
                         <div class="custom__select">
-                            <app-custom-select [type]="''" [options]="couponType" [selectedOption]="'Select Type'"
+                            <app-custom-select [type]="''" [options]="couponType" [selectedOption]="OfferForm.get('couponType')?.value?OfferForm.get('couponType')?.value:'Select Coupon Type'"
                                 (final_option)="CouponTypeHandler($event)"></app-custom-select>
                         </div>
                     </div>
@@ -157,7 +159,7 @@
                         <label class="form__label"> Categories</label>
                         <div class="custom__select">
                             <app-custom-select [type]="'multiSelect'" [options]="Categories"
-                                [selectedOption]="'Select Category'"
+                                [selectedOption]="OfferForm.get('ExtraInfo')?.get('categories')?.value?OfferForm.get('ExtraInfo')?.get('categories')?.value:'Select Category'"
                                 (SelectedList)="CategoriesHandler($event)"></app-custom-select>
                         </div>
 
@@ -169,7 +171,7 @@
                         <label class="form__label"> Brands</label>
                         <div class="custom__select">
                             <app-custom-select [type]="'multiSelect'" [options]="Brands"
-                                [selectedOption]="'Select Brand'"
+                                [selectedOption]="OfferForm.get('ExtraInfo')?.get('brands')?.value?OfferForm.get('ExtraInfo')?.get('brands')?.value:'Select Brand'"
                                 (SelectedList)="BrandsHandler($event)"></app-custom-select>
                         </div>
 
@@ -194,9 +196,15 @@
                     
                 -->
                 <button class="btn-primary" (click)="CouponSubmit()" [disabled]="OfferForm.invalid"
-                    [ngClass]="{disabled:OfferForm.invalid}">Add Coupon</button>
-            </div>
+                    [ngClass]="{disabled:OfferForm.invalid}">
 
+                    <span *ngIf="EditClicked else add">Save</span>
+                    <ng-template #add>
+                       Add Coupon
+                      </ng-template>
+                </button>
+            </div>
+ 
         </div>
     </div>
 

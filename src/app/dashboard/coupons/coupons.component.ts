@@ -77,6 +77,7 @@ CouponRequest:boolean=false;
 
   OfferTypeHandler(event:any){
 
+    console.log('OFFER HANDLER CALLED ',event);
     
     this.OfferForm.get('OfferType')?.patchValue(event);
     const controls :any= [
@@ -117,17 +118,19 @@ CouponRequest:boolean=false;
       controls.forEach((el:any)=>{
         this.OfferForm.removeControl(el.name);
       })
+      console.log('OFFERFORM AFTER HANDLER ',this.OfferForm);
 
     
       let ExtraInfo=this.fb.group({
-        category:[],
-        brand:[]
+        categories:[],
+        brands:[]
       });
 
       
     
       this.OfferForm.addControl('ExtraInfo',ExtraInfo);
-      this.OfferForm.addControl('DiscountPercentageType',['',Validators.required]);
+      // this.OfferForm.addControl('DiscountPercentageType',['',Validators.required]);
+      
     }
     
   }
@@ -170,7 +173,11 @@ this.CouponRequest=true;
 
 
   CategoriesHandler(event:any){
-   this.OfferForm.get('ExtraInfo')?.get('categories')?.patchValue(event);  
+    console.log('event is ',event);
+    
+   this.OfferForm.get('ExtraInfo')?.get('categories')?.patchValue(event); 
+   console.log('Offerform after category is ',this.OfferForm.value);
+    
   }
 
 
@@ -180,23 +187,41 @@ this.CouponRequest=true;
 
 
   DiscountTypeHandler(event:any){
-    console.log('this is called----------------');
-    
+    // console.log('this is called----------------');
    this.OfferForm.get('discountType')?.patchValue(event);
+   this.OfferForm.addControl('DiscountPercentageType', this.fb.control('', [Validators.required]));
    
   }
 
   DiscountPercentageHandler(event:any){
-    console.log('EVENT IS ',event);
+    
+    console.log('event is ',event);
+    
+    this.OfferForm.get('DiscountPercentageType')?.patchValue(event);
+
+    console.log('offer form after event is ',this.OfferForm);
+    
     
   }
 
   async CouponSubmit(){
+
+    let url;
     let body=this.OfferForm.value;
-    console.log('offefr form is ',this.OfferForm);
+    if(this.EditClicked){
+      url=this.BackendUrls.URLs.updateOffer;
+        body.id=this.EditRequest;
+      console.log('UPDATING COUPONSUBMIT ');
+      
+    }
+    else{
+      url=this.BackendUrls.URLs.createCoupon;
+    }
+
+
     
     try {
-      let response=await this.fetchDateService.httpPost(this.BackendUrls.URLs.createCoupon,body);
+      let response=await this.fetchDateService.httpPost(url,body);
       this.CouponRequest=false;
 
       this.allOffers.push(response);
@@ -204,8 +229,7 @@ this.CouponRequest=true;
       return;
       
     } catch (error) {
-        console.log('ERROR IS ',error);
-        
+   
     }
   }
 
@@ -222,11 +246,35 @@ this.CouponRequest=true;
   }
 
 
+  // function 
+
+
+  EditClicked:boolean=false;
+  EditRequest:any;
   async EditOffer(data:any){
+    this.EditClicked=true;
+    this.EditRequest=data._id;
+    // console.log('EditRequest is ',this.EditRequest);
+    
     data.startDate=data.startDate.split('T')[0];
+
     data.endDate=data.endDate.split('T')[0];
-    console.log('data is ',data.startDate);
+
+    
+    this.OfferTypeHandler(data.OfferType);
+    this.DiscountTypeHandler(data.discountType);
+    // // this.DiscountPercentageHandler(data.DiscountPercentageType );
+    
+    // if(data.OfferType=='coupon'){
+    // // this.CouponTypeHandler(data.couponType);
+    // }
+    
+    // if(data.OfferType=='discount'){
+
+    // }
+
     this.OfferForm.patchValue(data);
+    // console.log('OFferform is ',this.OfferForm.value);
     this.CouponRequest=true;
   }
 

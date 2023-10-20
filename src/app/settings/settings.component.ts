@@ -6,6 +6,7 @@ import { UtilsModule } from 'src/app/utils/utils.module';
 import { passwordStrengthValidator, matchPasswordValidator } from '../auth/validators';
 import { ToastService } from '../shared/services/toast.service';
 import { MobileNoValidator } from './validators';
+import { PopupService } from '../shared/services/popup.service';
 @Component({
   selector: 'app-settings',
   templateUrl: './settings.component.html',
@@ -36,6 +37,7 @@ export class SettingsComponent {
 
   AddAddress(){
     this.addnewAddress=true;
+    // this.popup.openPopup();
     console.log(":show compone ti s ",this.showData," translate COMING IS  is ",this.TranslateData);
     console.log('ADDD ADDREESS BECOME TRUE');
     // this.fetchDataService.ShowAddress.emit()cpcp
@@ -51,17 +53,14 @@ export class SettingsComponent {
   }
 
   NewAddressHandler(event:any){
-    // console.log("event coming is ",event);
-    this.userAddresses.push(event);
+    this.userAddresses=(event.info.address);
   }
 
 
   async RemoveAddress(address:any,index:any){
     try{
-      console.log('address is ',address);
       const body={id:address._id}
       let deleteAddress=await this.fetchDataService.httpPost(this.backendURLs.URLs.deleteAddress,body);
-      
       this.userAddresses.splice(index);
 
     }
@@ -75,7 +74,7 @@ export class SettingsComponent {
 
 AddressSended:any;
 
-  EditAddress(index:any){
+  EditAddress(address:any,index:any){
     const data=this.userAddresses[index];
     this.AddressSended={data,index};
     this.addnewAddress=true;
@@ -103,7 +102,7 @@ AddressSended:any;
 
   @ViewChild('EditBtn') EditBtn: ElementRef | undefined;
 
-  constructor(private renderer: Renderer2, private backendURLs: UtilsModule, private fetchDataService: FetchDataService, private routerlinkservice: RouterLinksService, private fb: FormBuilder, private el: ElementRef, private userService: FetchDataService, private toastService: ToastService) {
+  constructor(private renderer: Renderer2, private backendURLs: UtilsModule, private fetchDataService: FetchDataService, private routerlinkservice: RouterLinksService, private fb: FormBuilder, private el: ElementRef, private userService: FetchDataService, private toastService: ToastService, private popup: PopupService) {
 
     this.ProfileForm = fb.group(
       {

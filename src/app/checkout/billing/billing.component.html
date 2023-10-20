@@ -2,7 +2,7 @@
 <section>
     <form id="payment-form">
         <h3 style="align-items: center; text-align: center;">Place Your Order</h3>
-       <!-- gpay
+        <!-- gpay
         <div id="payment-request-button">
   A Stripe Element will be inserted here.
        </div> -->
@@ -186,15 +186,62 @@
 
 
 
+<!-- ----------------- ADDRESS HTML------------------- -->
 
 
 
+<div class="address">
+    <div class="d-flex  align-item-center justify-content-md-between pointer h2_div">
 
 
+        <div class="d-flex align-item-center pointer">
+            <h2>
+                SELECT DELIVERY ADDRESS
+            </h2>
 
 
+        </div>
+
+        <div class="d-flex align-item-center addAddress__div">
+            <span class="material-symbols-outlined">
+                add_circle
+            </span>
+            <p>ADD NEW ADDRESS</p>
+        </div>
+
+    </div>
+    <div class="d-flex flex-column gap-10">
+        <ng-container *ngFor="let address of userAddresses; let i=index" class="d-flex address__firstdiv ">
+            <!-- {{address| json}} -->
+            <div class="ok" style="display: none;">
+                <input type="radio" id="radio{{i}}" name="address" value="address" class="d-flex">
+            </div>
+
+            <label for="radio{{i}}" class="d-flex align-item-center pointer">
+              
+                
+                
+                <div class="d-flex gap-10 input mw100 flex-column">
+
+                    <div class="d-flex justify-content-md-between">
+                        <p class="name pointer-none">{{address.firstname}} {{address.lastname}}</p>
+                        <div class="d-flex">
+                            <button class="edit__btn btn" (click)="EditAddress(address,i)">Edit</button>
+                            <button class="remove__btn btn" (click)="RemoveAddress(address,i)">Remove</button>
+                        </div>
+                    </div>
+
+                    <div class="pointer-none">
+                        <p>{{address.apartment}} {{address.area}} {{address.landmark}}, {{address.town_city}}</p>
+                        <p>{{address.state}}- {{address.pincode}}</p>
+                    </div>
+
+                    <button class="btn-primary btn-deliver">DELIVER HERE</button>
+                </div>
+              
+            </label>
+        </ng-container>
+    </div>
 
 
-<app-address></app-address>
-
-
+</div>

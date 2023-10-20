@@ -49,7 +49,14 @@ export class CheckoutComponent implements OnInit {
     // cookieExists == true ? this.updateBoolean = false : this.updateBoolean = true;
 
     if (!cookieExists) {
-      this.redirectToLogin();
+      // this.redirectToLogin();
+      this.route.navigate(['/cart/billing']).then(() => {
+
+      
+        console.log("CART IS  ",this.cart)
+        window.location.reload();
+      });
+      
     } else {
       
       this.route.navigate(['/cart/billing']).then(() => {

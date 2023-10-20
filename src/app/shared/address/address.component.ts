@@ -32,15 +32,16 @@ export class AddressComponent {
         // country:fb.control('', [Validators.required, ]),
       });
 
-      console.log('VISIBLE CLASS IS ',this.visibleClass);
+      // console.log('VISIBLE CLASS IS ',this.visibleClass);
       
-      console.log('DATA COME pf address ',this.receiveData);
+      // console.log('DATA COME pf address ',this.receiveData);
       
       
   }
 
 
 
+  // AddressUpdateRequest:any;
   ngOnChanges(){
     // console.log('');
 
@@ -94,38 +95,44 @@ export class AddressComponent {
 
   @Output() newAddress: EventEmitter<any> =   new EventEmitter();
   @Output() closeaddressed: EventEmitter<any> =   new EventEmitter();
-  // async AddnewAddress(){
+  async AddnewAddress(){
 
   
     
-  //   if(this.receiveData){
+    if(this.receiveData){
       
-      
-  //   }
-  //   console.log('addeess is ',this.DetailsForm);
-    
-  //   // console.log("addreess added to be ",this.DetailsForm.value);
-  //   try { 
 
-  //     let data;
-  //     if(this.receiveData){
-  //       data=await this.fetchService.HttpPostRequest()
-  //     }
-  //     else{
-  //       data= await this.fetchService.httpPost( this.backendURLs.URLs.addAddress,this.DetailsForm.value);
-  //     }
+      
+    }
+    try { 
+
+      let data;
+      if(this.receiveData){
+        data= await this.fetchService.httpPost( this.backendURLs.URLs.updateAddress,this.receiveData.data);
+        // data=await this.fetchService.HttpPostRequest()
+      }
+      else{
+        data= await this.fetchService.httpPost( this.backendURLs.URLs.addAddress,this.DetailsForm.value);
+      }
 
        
-  //     console.log('data coming is ',data);
+      console.log('data coming is ',data);
       
 
-  //     this.newAddress.emit(data);
+      this.newAddress.emit(data);
+      this.AddressClose();
     
-  //   } catch (error) {
-  //       console.log('error coming is ',error);
+    } catch (error) {
+        console.log('error coming is ',error);
         
-  //   }
+    }
  
-  // }
+  }
 
+  StateHandler(event:any){
+    this.DetailsForm.get('state')?.setValue(event);
+  }
+  
+
+  StateOptions:any=['Punjab','Bihar','Delhi'];
 }

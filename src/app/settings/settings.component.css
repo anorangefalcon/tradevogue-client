@@ -25,13 +25,11 @@
 
 }
 
-input[type="radio"] {
-    display: none;
-}
+
 
 input[type="radio"]+label {
 
-    border: 1px solid rgb(var(--primaryClr));
+    border: 3px solid rgb(var(--primaryClr));
     border-radius: 50%;
     width: 15px;
     height: 15px;
@@ -695,6 +693,7 @@ form {
     & .edit-btn {
         cursor: pointer;
         display: flex;
+       
         align-items: center;
     }
 
@@ -801,6 +800,7 @@ label span {
 
     & .edit__btn{
         border-right: 2px solid red;
+        color: #96999b;
     }
 }
 

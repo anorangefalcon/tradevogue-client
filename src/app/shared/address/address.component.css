@@ -28,8 +28,17 @@
     transform: translateX(-50%);
     & .close__icon{
         position: absolute;
-        top: 0;
-        right: 0;
+        cursor: pointer;
+    /* display: flex; */
+    top: -7px;
+    /* align-items: center; */
+    right: -8px;
+    /* justify-content: center; */
+    background: white;
+    border-radius: 50%;
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+
 
     }
 } 

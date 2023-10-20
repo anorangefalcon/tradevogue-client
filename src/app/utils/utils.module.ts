@@ -22,6 +22,7 @@ export class UtilsModule {
     getAddress:'http://localhost:1000/user/getAddress',
     addAddress:'http://localhost:1000/user/addAddress',
     subscribeMail : 'http://localhost:1000/sendMail',
+    updateAddress:'http://localhost:1000/user/updateAdress',
 
     // Dashboard
     addproduct: 'http://localhost:1000/admin/addProduct',
@@ -53,6 +54,7 @@ export class UtilsModule {
     getOffers:'http://localhost:1000/admin/getOffers',
     getProductPrice:'http://localhost:1000/admin/getProductPrice',
     deleteOffer:'http://localhost:1000/admin/deleteOffer',
+    updateOffer:'http://localhost:1000/admin/updateOffer',
    
     // FAQS
     updateFaqData: 'http://localhost:1000/admin/updateFaq',
