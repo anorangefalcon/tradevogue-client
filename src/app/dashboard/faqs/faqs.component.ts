@@ -1,7 +1,7 @@
 import { Component, HostListener } from '@angular/core';
 import { FaqDataService } from 'src/app/shared/services/faq-data.service';
 import { PaginationService } from 'src/app/shared/services/pagination.service';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { UtilsModule } from 'src/app/utils/utils.module';
 import { FetchDataService } from 'src/app/shared/services/fetch-data.service';
 import { PopupService } from 'src/app/shared/services/popup.service';
@@ -23,15 +23,17 @@ export class FaqsComponent {
   isSlideIn = false;
   selectedItem: any;
   isMenuActive = false;
+  isDrawerOpen: boolean = false;
 
 
-  constructor(private faq: FaqDataService, public pagination: PaginationService, private formBuilder: FormBuilder,private bgURL: UtilsModule, private fetchDataService: FetchDataService, private popupService: PopupService) {
+  constructor(private faq: FaqDataService, public pagination: PaginationService, private formBuilder: FormBuilder, private bgURL: UtilsModule, private fetchDataService: FetchDataService, private popupService: PopupService, private fb: FormBuilder) {
     this.pagination.setLimit(this.pageSize);
     this.loadData();
   }
 
   ngOnInit(): void {
     this.faqForm = this.formBuilder.group({
+      selectedOption: ['', Validators.required],
       query: [
         '',
         [
@@ -54,7 +56,7 @@ export class FaqsComponent {
   loadData() {
     this.faq.getFaqData(this.currentPage, this.limit).subscribe((data: any) => {
       this.faqData = data;
-      console.log(this.faqData , "faq data");
+      console.log(this.faqData, "faq data");
     });
   }
 
@@ -69,6 +71,32 @@ export class FaqsComponent {
       this.loadData();
     }
   }
+
+  async addCategory() {
+    if (this.faqForm.valid) {
+      const selectedCategoryId = this.faqForm.get('selectedOption')?.value;
+      const query = this.faqForm.get('query')?.value;
+      const content = this.faqForm.get('content')?.value;
+
+      const dataToSend = {
+        title: selectedCategoryId, 
+        children: [
+          {
+            title: query, 
+            content: content, 
+            expanded: false,
+          },
+        ],
+      };
+
+     await this.fetchDataService.httpPost(this.bgURL.URLs.addFaqData, dataToSend)
+
+      console.log(selectedCategoryId, query, content);
+      this.faqForm.reset();
+    }
+  }
+
+  
 
   previousPage() {
     if (this.currentPage > 1) {
@@ -95,16 +123,17 @@ export class FaqsComponent {
   async updateDetails() {
     if (this.selectedItem) {
       const updatedItem = { ...this.selectedItem };
-      
+      console.log("updated items ", updatedItem)
+
       updatedItem.query = this.faqForm.get('query')?.value;
       updatedItem.content = this.faqForm.get('content')?.value;
-  
+
       const itemIndex = this.selectedCategory.childrens.findIndex((child: any) => child._id === updatedItem._id);
-      
+
       if (itemIndex !== -1) {
         this.selectedCategory.childrens[itemIndex] = updatedItem;
       }
-  
+
       try {
         const data = await this.fetchDataService.httpPost(this.bgURL.URLs.updateFaqData, updatedItem);
         console.log("Item updated successfully.", data);
@@ -113,26 +142,34 @@ export class FaqsComponent {
       }
     }
   }
-  
 
-async deleteFaq(item: any) {
-  this.selectedItem = item;
-  if (this.selectedItem) {
-    const itemId = item._id;
+  openDrawer() {
+    this.isDrawerOpen = true;
+  }
 
-    const itemIndex = this.selectedCategory.childrens.findIndex((child: any) => child._id === itemId);
-    if (itemIndex !== -1) {
-      this.selectedCategory.childrens.splice(itemIndex, 1);
-    }
+  closeDrawer() {
+    this.isDrawerOpen = false;
+  }
 
-    try {
-      const data = await this.fetchDataService.httpPost(this.bgURL.URLs.deleteFaqData, { _id: itemId });
-      console.log("Item deleted successfully.", data);
-    } catch (error) {
-      console.error("Error deleting item:", error);
+
+  async deleteFaq(item: any) {
+    this.selectedItem = item;
+    if (this.selectedItem) {
+      const itemId = item._id;
+
+      const itemIndex = this.selectedCategory.childrens.findIndex((child: any) => child._id === itemId);
+      if (itemIndex !== -1) {
+        this.selectedCategory.childrens.splice(itemIndex, 1);
+      }
+
+      try {
+        const data = await this.fetchDataService.httpPost(this.bgURL.URLs.deleteFaqData, { _id: itemId });
+        console.log("Item deleted successfully.", data);
+      } catch (error) {
+        console.error("Error deleting item:", error);
+      }
     }
   }
-}
 
   toggleMenu() {
     this.isMenuActive = !this.isMenuActive;

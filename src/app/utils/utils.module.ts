@@ -54,8 +54,10 @@ export class UtilsModule {
     getProductPrice:'http://localhost:1000/admin/getProductPrice',
     deleteOffer:'http://localhost:1000/admin/deleteOffer',
    
+    // FAQS
     updateFaqData: 'http://localhost:1000/admin/updateFaq',
     deleteFaqData: 'http://localhost:1000/admin/deleteFaq',
+    addFaqData: 'http://localhost:1000/admin/addFaq'
   }
 
 }

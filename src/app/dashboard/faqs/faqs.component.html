@@ -3,7 +3,54 @@
     <div class="d-flex gap-15 align-item-center">
       <h2>FAQs</h2>
     </div>
-  
+
+    <div class="drawer" [ngClass]="{ 'open': isDrawerOpen }">
+      <div (click)="closeDrawer()" class="absolute right-5 top-5">
+        <button type="button"
+          class="inline-flex justify-center px-2 py-2 text-base font-medium text-red-500 bg-white border border-transparent rounded-full hover:bg-red-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500">
+          <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 512 512" height="1em" width="1em"
+            xmlns="http://www.w3.org/2000/svg">
+            <path
+              d="M289.94 256l95-95A24 24 0 00351 127l-95 95-95-95a24 24 0 00-34 34l95 95-95 95a24 24 0 1034 34l95-95 95 95a24 24 0 0034-34z">
+            </path>
+          </svg>
+        </button>
+      </div>
+
+      <form [formGroup]="faqForm">
+        <div class="custom-select" style="width:200px;">
+          <select formControlName="selectedOption">
+            <option value="" disabled>Select a Category</option>
+            <option *ngFor="let item of faqData" [value]="item.title">{{item.title}}</option>
+          </select>
+        </div>
+        
+        <div class="form-group">
+          <label for="query">Query</label>
+          <input type="text" id="query" formControlName="query" required />
+          <div *ngIf="faqForm.get('query')?.invalid && faqForm.get('query')?.touched" class="error-message">
+            <!-- Error messages go here -->
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label for="content">Answer</label>
+          <input type="text" id="content" formControlName="content" required />
+          <div *ngIf="faqForm.get('content')?.invalid && faqForm.get('content')?.touched" class="error-message">
+            <!-- Error messages go here -->
+          </div>
+        </div>
+        
+        <button (click)="addCategory()" [disabled]="faqForm.invalid">Add Category</button>
+      </form>
+      
+      
+
+
+    </div>
+
+
+
 
     <div class="custom-select" style="width:200px;">
       <select [(ngModel)]="selectedOption" (change)="retrieveContent()">
@@ -12,7 +59,7 @@
     </div>
 
     <div class="operational-buttons d-flex  flex-wrap">
-      <button class=" d-flex align-item-center gap-5">
+      <button (click)="openDrawer()" class=" d-flex align-item-center gap-5">
         <i class="material-symbols-outlined operational-buttons-icons">add</i>
         Add New Category
       </button>
@@ -60,12 +107,12 @@
 
 
 <app-pop-up>
-    <div *ngIf="selectedItem" class="details-container">
-      <p class="detail-item"><strong>Serial Number:</strong> {{ (currentPage - 1) * pageSize +
-        selectedCategory.childrens.indexOf(selectedItem) + 1 }}</p>
-      <p class="detail-item"><strong>Query:</strong> {{ selectedItem.title }}</p>
-      <p class="detail-item"><strong>Answer:</strong> {{ selectedItem.content }}</p>
-    </div>
+  <div *ngIf="selectedItem" class="details-container">
+    <p class="detail-item"><strong>Serial Number:</strong> {{ (currentPage - 1) * pageSize +
+      selectedCategory.childrens.indexOf(selectedItem) + 1 }}</p>
+    <p class="detail-item"><strong>Query:</strong> {{ selectedItem.title }}</p>
+    <p class="detail-item"><strong>Answer:</strong> {{ selectedItem.content }}</p>
+  </div>
 </app-pop-up>
 
 
@@ -98,21 +145,23 @@
 
       <div class="d-flex justify-content-md-between align-item-center ">
         <h3>Info</h3>
-  
+
         <div class="operation_button d-flex gap-10">
-            <button class="btn-primary" [ngStyle]="{'display': !faqForm.disabled? 'none': 'block'}" (click)="faqForm.enable()" >Edit</button>
-            <button class="btn-secondary" [ngStyle]="{'display': faqForm.disabled? 'none': 'block'}" (click)="faqForm.disable()" >Cancel</button>
-            <button class="btn-primary" [ngStyle]="{'display': faqForm.disabled? 'none': 'block'}" (click)="updateDetails()" >Update</button>
+          <button class="btn-primary" [ngStyle]="{'display': !faqForm.disabled? 'none': 'block'}"
+            (click)="faqForm.enable()">Edit</button>
+          <button class="btn-secondary" [ngStyle]="{'display': faqForm.disabled? 'none': 'block'}"
+            (click)="faqForm.disable()">Cancel</button>
+          <button class="btn-primary" [ngStyle]="{'display': faqForm.disabled? 'none': 'block'}"
+            (click)="updateDetails()">Update</button>
         </div>
       </div>
-  
+
       <form [formGroup]="faqForm" class="d-flex flex-wrap gap-20">
         <div class="form__group">
           <label class="form__title" for="query">Query</label>
-          <input type="text" class="form__input" id="query" formControlName="query" 
-            required minlength="2" maxlength="50" />
-          <div
-            *ngIf="faqForm.get('query')?.invalid && (faqForm.get('query')?.dirty || faqForm.get('query')?.touched)"
+          <input type="text" class="form__input" id="query" formControlName="query" required minlength="2"
+            maxlength="50" />
+          <div *ngIf="faqForm.get('query')?.invalid && (faqForm.get('query')?.dirty || faqForm.get('query')?.touched)"
             class="error-message">
             <div *ngIf="faqForm.get('query')?.hasError('required')">query is required.
             </div>
@@ -122,12 +171,13 @@
               most 50 characters.</div>
           </div>
         </div>
-  
+
         <div class="form__group">
           <label class="form__title" for="content">Content</label>
-          <input type="text" class="form__input" id="content" formControlName="content" 
-            required minlength="2" maxlength="50" />
-          <div *ngIf="faqForm.get('content')?.invalid && (faqForm.get('content')?.dirty || faqForm.get('content')?.touched)"
+          <input type="text" class="form__input" id="content" formControlName="content" required minlength="2"
+            maxlength="50" />
+          <div
+            *ngIf="faqForm.get('content')?.invalid && (faqForm.get('content')?.dirty || faqForm.get('content')?.touched)"
             class="error-message">
             <div *ngIf="faqForm.get('content')?.hasError('required')">content is required.
             </div>
@@ -137,24 +187,10 @@
               most 50 characters.</div>
           </div>
         </div>
-  
+
       </form>
 
     </div>
 
   </div>
-
-  <div (click)="showPopup = false" class="absolute right-5 top-5">
-    <button type="button"
-      class="inline-flex justify-center px-2 py-2 text-base font-medium text-red-500 bg-white border border-transparent rounded-full hover:bg-red-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500">
-      <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 512 512" height="1em" width="1em"
-        xmlns="http://www.w3.org/2000/svg">
-        <path
-          d="M289.94 256l95-95A24 24 0 00351 127l-95 95-95-95a24 24 0 00-34 34l95 95-95 95a24 24 0 1034 34l95-95 95 95a24 24 0 0034-34z">
-        </path>
-      </svg>
-    </button>
-  </div>
 </div>
-
-

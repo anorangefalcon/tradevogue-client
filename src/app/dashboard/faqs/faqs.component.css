@@ -176,4 +176,23 @@ h2 {
 .detail-item {
   margin-bottom: 10px; 
 }
+
+
+
+.drawer {
+  position: fixed;
+  z-index: 10000000000;
+  top: 0;
+  right: -100%;
+  width: 500px;
+  height: 100%;
+  background-color: #fff;
+  transition: right 0.3s ease-in-out;
+  overflow: auto;
+}
+
+.drawer.open {
+  right: 0;
+}
+
   
