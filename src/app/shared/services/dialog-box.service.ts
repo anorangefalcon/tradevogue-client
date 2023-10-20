@@ -23,7 +23,7 @@ export class DialogBoxService {
 
   confirmationDialogBox(data: any = ''){
     this.template.type = 'confirmation';
-    this.template.content.title = data;
+    this.template.value = data;
     this.contentEmitter.next(this.template);
   }
 

@@ -19,7 +19,6 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { AddressComponent } from './address/address.component';
 import { CartcontentComponent } from './cartcontent/cartcontent.component';
 import { CheckoutComponent } from '../checkout/checkout.component';
-import { DialogComponent } from './components/dialog/dialog.component';
 import { LessThanOrEqualPipe } from './Pipe/less-than-or-equal.pipe';
 import { PopUpComponent } from './pop-up/pop-up.component';
 
@@ -37,9 +36,9 @@ import { PopUpComponent } from './pop-up/pop-up.component';
     ProductFilterPipe,
     AddressComponent,
     CartcontentComponent,
-    DialogComponent,
     LessThanOrEqualPipe,
-    PopUpComponent
+    PopUpComponent,
+    LessThanOrEqualPipe
   ],
   imports: [
     CommonModule,
@@ -62,9 +61,9 @@ import { PopUpComponent } from './pop-up/pop-up.component';
     CustomSelectComponent,
     AddressComponent,
     CartcontentComponent,
-    DialogComponent,
     LessThanOrEqualPipe,
-    PopUpComponent
+    PopUpComponent,
+    LessThanOrEqualPipe
   ]
 })
 export class SharedModule { }

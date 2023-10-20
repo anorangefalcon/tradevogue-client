@@ -3,6 +3,7 @@ import { FetchDataService } from 'src/app/shared/services/fetch-data.service';
 import { UploadExcelService } from '../services/upload-excel.service';
 import { ToastService } from 'src/app/shared/services/toast.service';
 import { UtilsModule } from 'src/app/utils/utils.module';
+import { DialogBoxService } from 'src/app/shared/services/dialog-box.service';
 
 @Component({
   selector: 'app-products',
@@ -10,14 +11,18 @@ import { UtilsModule } from 'src/app/utils/utils.module';
   styleUrls: ['./products.component.css'],
 })
 export class ProductsComponent implements OnInit {
-  rating: any[] = [1, 2, 3, 4, 5];
+
   stockStatus: any[] = ['Out of Stock', 'Low Inventory', 'In Stock'];
-  categoryOption: any[] = ['Category 1', 'Category 2', 'Category 3', 'Category 4'];
   ratingOption: any[] = ['Low to High', 'High to Low'];
   pageSize: number = 8;
   currentPage: number = 1;
-  
+  selectedColor: any = '';
   selectAll: boolean = false;
+
+  categoryOption!: any[];
+  dataField: string [] = ['categories'];
+  productTemplate = ['Product Name', 'Category', 'Brand' ,'Price', 'Stock', 'Status', 'Published', 'Action'];
+
 
   template: any = {
     search: '',
@@ -39,28 +44,31 @@ export class ProductsComponent implements OnInit {
     private fetchdata: FetchDataService,
     private excelService: UploadExcelService,
     private backendUrl: UtilsModule,
+    private dialogBoxService: DialogBoxService,
     private toastService: ToastService) { }
 
-  ngOnInit(): void {
+  async ngOnInit(){
+    const category: any = await this.fetchdata.httpPost(this.backendUrl.URLs.fetchFeatures, this.dataField);
+    this.categoryOption = category.categories;
     this.fetchData();
   }
-  productTemplate = ['Product Name', 'Category', 'Brand' ,'Price', 'Stock', 'Status', 'Published', 'Action'];
 
   async fetchData() {
     try{
-      this.productArray = await this.fetchdata.httpPost(this.backendUrl.URLs.fetchProductInventory, this.template);
-      console.log(this.productArray);
+      this.productArray = await this.fetchdata.httpPost(this.backendUrl.URLs.fetchProductInventory, this.template);      
       this.productList = [];
-  
       this.productArray.forEach((product: any) => {
         let item = {
+          _id : product._id,
           itemId: product.sku,
           image: product.assets[0].photo[0],
           name: product.name,
           price: product.price,
           category: product.info.category,
+          assets: product.assets,
           brand: product.info.brand,
           unit_sold: product.unitSold,
+          orderQuantity: product.info.orderQuantity,
           product_inventory: (product.totalStock - product.unitSold),
           rating: product.avgRating,
           last_updated: product.updatedAt.split('T')[0],
@@ -71,6 +79,10 @@ export class ProductsComponent implements OnInit {
     }catch(err){
       console.log(err);
     }
+  }
+
+  async deleteData(){
+    this.productArray = await this.fetchdata.httpPost(this.backendUrl.URLs.deleteProductInventory, this.template);
   }
 
   toggleSelectAll(){
@@ -91,14 +103,24 @@ export class ProductsComponent implements OnInit {
   updateCheckList(){
     this.deleteList = [];
     this.productList.forEach((product: any)=>{
-      if(product.checked) this.deleteList.push(product.itemId);
+      if(product.checked) this.deleteList.push(product._id);
     });
-    console.log(this.deleteList);
   }
 
   // Delete Single Entry
-  deleteItem(entry: any) {
-    this.productList.splice(entry, 1);
+  deleteItem(entry: any, name:string = '', type: string = 'single') {
+    this.dialogBoxService.confirmationDialogBox(name);
+    this.dialogBoxService.responseEmitter.subscribe(async (res: boolean)=>{
+
+        let data: any = {};
+
+        if(res == true){
+            data.type = type,
+            data.data = entry;
+            await this.fetchdata.httpPost(this.backendUrl.URLs.deleteproducts, data);
+            this.fetchData();
+        }
+    })
   }
 
   // Filter Handling function
@@ -108,15 +130,40 @@ export class ProductsComponent implements OnInit {
     this.fetchData();
   }
 
-  // DialogBox Response PRovided For Deletion
-  response(e: any){
-    if(e){
-      
+  isradioChecked(e: Event, color: string){
+    console.log((<HTMLInputElement>e.target).checked);
+    if((<HTMLInputElement>e.target).checked){
+      this.selectedColor = color;
     }
   }
 
+  fetchOrderQuantity(quantity: number, orderArray: any){
+    return orderArray.filter((amt: any)=>{
+        return amt <= quantity;
+    });
+  }
+
+  starRating(rating: any){
+    let ratingArray = [];
+
+    for(let i = 1; i <= 5; i++){
+      if(i <= Math.floor(rating)){
+        ratingArray.push('fa-solid fa-star');
+      }
+      else if(i > Math.floor(rating) && i <= Math.ceil(rating))
+        ratingArray.push('fa-solid fa-star-half-stroke');
+      else
+        ratingArray.push('fa-regular fa-star');
+    }
+
+    return ratingArray;
+  }
+
   displayInfo(e: Event){
-    console.log(e.target);
+    (<HTMLDivElement>(<HTMLDivElement>e.target)?.parentElement?.nextSibling)?.classList.add('active');
+  }
+  closeInfo(e: Event){
+    (<HTMLDivElement>(<HTMLSpanElement>e.target).parentElement).parentElement?.classList.remove('active');
   }
 
   // Handles Excel File Uplaoded

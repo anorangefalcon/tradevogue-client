@@ -1,32 +1,71 @@
-import { Component } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, HostListener, ViewChild } from '@angular/core';
 import { DialogBoxService } from '../shared/services/dialog-box.service';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 
 @Component({
   selector: 'app-dialog-box',
   templateUrl: './dialog-box.component.html',
-  styleUrls: ['./dialog-box.component.css']
+  styleUrls: ['./dialog-box.component.css'],
 })
-export class DialogBoxComponent {
-  
+export class DialogBoxComponent implements AfterViewInit {
+
+  @ViewChild('content') dialogBox!: ElementRef;
+
   value: string = '';
   type: string = '';
   open: boolean = false;
+  currentRoute: any;
 
-  constructor(private dialogService: DialogBoxService){
-    dialogService.contentEmitter.subscribe({
+
+  // @HostListener('document:click', ['$event']) onClick(e: Event) {
+
+  //   if (!this.dialogBox.nativeElement.contains(e.target as Node)) {
+  //     this.closeDialog();
+  //   }
+  // }
+
+  constructor(private dialogService: DialogBoxService, private activeRoute: Router) {}
+
+  ngAfterViewInit() {
+
+    this.dialogService.contentEmitter.subscribe({
       next: (data: any) => {
-        this.type = data.type;
-        this.value = data.value;
+        if (data) {
+          this.type = data.type;
+          this.value = data.value;
+          this.dialogBox.nativeElement.classList.add('open');
+          this.currentRoute = this.activeRoute.url;
+        }
       }
-    })
+    });
+
+    // Detect Changes in URL of Page 
+    this.activeRoute.events.subscribe((event)=>{
+      if (event instanceof NavigationEnd){
+        if(this.currentRoute != this.activeRoute.url){
+          this.cancel();
+        }
+      }
+    });
   }
 
-  closeDialog(){}
+  ngOnChanges(){
+    console.log(this.currentRoute, '   ' ,this.activeRoute.url);
+    if(this.currentRoute != this.activeRoute.url){
+      this.closeDialog();
+    }
+  }
 
-  delete(){
+  closeDialog() {
+    this.dialogBox.nativeElement.classList.remove('open');
+  }
+
+  delete() {
     this.dialogService.responseEmitter.next(true);
+    this.closeDialog();
   }
-  cancel(){
+  cancel() {
     this.dialogService.responseEmitter.next(false);
+    this.closeDialog();
   }
 }

@@ -1,4 +1,4 @@
-<div class="dialogBox fixed d-flex flex-center mw100 mh100 inset-block-start-0 inset-inline-start-0" [ngStyle]="{'display': open? 'flex': 'none' }">
+<div #content class="dialogBox fixed d-flex flex-center mw100 mh100 inset-block-start-0 inset-inline-start-0">
 
     <div class="dialog__container relative d-flex flex-column flex-center gap-10" *ngIf="type == 'confirmation'">
         <span class="warning_icon absolute d-flex flex-center material-symbols-outlined" >warning</span>
@@ -10,8 +10,7 @@
         </span>
     </div>
 
-
-    <div class="dialog__container relative d-flex flex-column flex-center gap-10" *ngIf="type == 'confirmation'">
+    <div class="dialog__container relative d-flex flex-column flex-center gap-10" *ngIf="type == 'success'">
         <img src="../../../assets/logos/mail-animation.gif" alt="mail" class="mail-animate">
         <h3>Mail Sent Successfully</h3>
         <p>We have successfully sent the mail to you which includes a link to change your password that will expire

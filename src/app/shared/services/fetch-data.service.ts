@@ -93,7 +93,7 @@ export class FetchDataService {
 
       this.http.post(url, body).subscribe({
         next: (data) => {
-          console.log('DATA INSIDE NE', data);
+          // console.log('DATA INSIDE NE', data);
 
           res(data);
           // console.log(data, "ervice data");
@@ -109,12 +109,9 @@ export class FetchDataService {
         }
       })
     })
-
   }
 
   httpGet(url: any) {
-
-
     return new Promise((res, rej) => {
       this.http.get(url).subscribe({
         next: (data) => {
@@ -132,8 +129,4 @@ export class FetchDataService {
     })
 
   }
-
-
-
-
 }

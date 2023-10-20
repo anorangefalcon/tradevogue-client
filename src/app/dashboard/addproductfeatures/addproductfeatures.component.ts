@@ -52,6 +52,8 @@ export class AddproductfeaturesComponent {
     { name: 'Product Tags', type: 'tags', filter: 'tags' }
   ];
 
+  dataField: string[] = ['categories', 'brands', 'orderQuantity', 'tags'];
+
   constructor(
     private dataService: FetchDataService,
     private uploadExcel: UploadExcelService,
@@ -59,9 +61,8 @@ export class AddproductfeaturesComponent {
     private backendurls: UtilsModule) { }
 
   async ngOnInit() {
-    this.field_data = await this.dataService.httpGet(this.backendurls.URLs.fetchFeatures);
+    this.field_data = await this.dataService.httpPost(this.backendurls.URLs.fetchFeatures, this.dataField);
   }
-
 
   uploadFile(event: Event, field: string) {
     const fieldList = field.toLowerCase() + 'List';

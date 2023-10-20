@@ -27,6 +27,8 @@ export class UtilsModule {
     // Dashboard
     addproduct: 'http://localhost:1000/admin/addProduct',
     fetchProductInventory: 'http://localhost:1000/admin/fetchProducts',
+    updateproduct: 'http://localhost:1000/admin/updateProduct',
+    deleteproducts: 'http://localhost:1000/admin/deleteProducts',
     fetchFeatures: 'http://localhost:1000/admin/fetchProductFeatures',
     updateFeatures: 'http://localhost:1000/admin/updateProductFeature',
     updateAccount: 'http://localhost:1000/admin/updateDetails',

@@ -92,12 +92,12 @@ app-custom-select {
             grid-template-columns: repeat(auto-fit, minmax(20px, 20px));
             min-height: 40px;
 
-
             & input[type="radio"]+label {
                 width: 25px;
                 height: 25px;
                 border-radius: 50%;
-                border: 1px solid rgb(var(--blackClr), 0.2);
+                border: 1px solid rgb(var(--blackClr), 0.3);
+                box-shadow: inset 0px 0px 2px rgb(var(--blackClr), 0.3);
                 cursor: pointer;
             }
     

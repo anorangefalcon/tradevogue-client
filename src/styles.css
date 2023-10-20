@@ -489,6 +489,9 @@ ul {
 .text-upper {
     text-transform: uppercase;
 }
+.text-capitalize {
+    text-transform: capitalize;
+}
 
 .transition {
     transition: all 0.3s ease-in-out;
@@ -760,7 +763,8 @@ button {
     padding-inline: 15px;
     border-radius: 4px;
     outline: 1px solid rgba(var(--blackClr), 0.2);
-    font-size: 14px;
+    font-size: 13px;
+    font-weight: 400;
     border: none;
 
     &:is(:focus, :hover, .active) {
@@ -936,7 +940,7 @@ button {
 }
 
 /* SKELETON */
-/* .skeleton {
+.skeleton {
     position: relative;
 }
 .skeleton::before {
@@ -947,9 +951,9 @@ button {
     width: 100%;
     height: 100%;
     z-index: 10;
-    background: linear-gradient(90deg, #eee, #f9f9f9, #eee);
+    background: linear-gradient(90deg, rgba(var(--blackClr), 0.05), #f9f9f9, rgba(var(--blackClr), 0.05));
     background-size: 200%;
-    animation: skeleton 1s infinite reverse;
+    animation: skeleton 2s infinite reverse;
 }
 @keyframes skeleton {
     0% {
@@ -958,7 +962,7 @@ button {
     100% {
         background-position: 100% 0;
     }
-} */
+}
 /* SKELETON */
 
 

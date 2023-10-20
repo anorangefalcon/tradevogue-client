@@ -26,28 +26,30 @@ export class CustomSelectComponent {
   constructor(private elementRef: ElementRef) { }
 
   ngOnChanges() {
+
     if (this.type == 'multiSelect' && Array.isArray(this.selectedOption)) {
       this.multiSelected = this.selectedOption;
     }
-
-    if (this.options.find((option) => option == this.selectedOption)) {
+    else if ( this.options.find((option: any) => option == this.selectedOption || option.toLowerCase() == this.selectedOption)) {
+      
       this.selected = this.selectedOption;
     }
   }
 
-  isChecked(option: any){   
+  isChecked(option: any, type='') {
+    if(type == 'multiSelect'){
+      return this.multiSelected.find((item: any) => option == item)? true: false;
+    }
     return this.selected == option;
   }
 
-
-
   filterData(e: Event): any {
     const element = e.target as HTMLInputElement
-    if (element.value.length == 0) {
-      this.isactive = false;
-      this.filter = '';
-      return;
-    }
+    // if (element.value.length == 0) {
+    //   this.isactive = false;
+    //   this.filter = '';
+    //   return;
+    // }
     this.isactive = true;
     this.filter = element.value;
   }
@@ -73,7 +75,6 @@ export class CustomSelectComponent {
         return item != element.value;
       })
     }
-    
     this.SelectedList.emit(this.multiSelected);
   }
 

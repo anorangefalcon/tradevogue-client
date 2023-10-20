@@ -5,7 +5,7 @@ import { imageSizeValidator, invalidformat } from 'src/app/shared/validators/ima
 import { ToastService } from 'src/app/shared/services/toast.service';
 import { FetchDataService } from 'src/app/shared/services/fetch-data.service';
 import { UtilsModule } from 'src/app/utils/utils.module';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-addproduct',
@@ -15,7 +15,9 @@ import { Router } from '@angular/router';
 
 })
 export class AddproductComponent {
-  isSubmitted: boolean = false;
+
+  reponseData!: any;
+  isUpdateRequest: boolean = false;
 
   // Array for Various Selects
   categories!: string[];
@@ -40,6 +42,7 @@ export class AddproductComponent {
     private backendUrl: UtilsModule,
     private toastservice: ToastService,
     private upload: ImageUploadService,
+    private activeRoute: ActivatedRoute,
     private router: Router) {
 
     this.productsForm = this.fb.group({
@@ -144,11 +147,40 @@ export class AddproductComponent {
         }],
       })
     });
-  }
 
-  // box-shadow: inset 0px 0px 2px #0000004
+    this.activeRoute.params.subscribe({
+      next: (data) => {
+        if (data['sku']) {
+          this.dataService.getProductDetails(data['sku']).subscribe({
+            next: (data: any) => {
+              data.basicinfo = {};
+              Object.keys(data).forEach((key: string) => {
+                if (key !== 'assets') {
+                  data.basicinfo[key] = data[key];
+                }
+              });
+
+              for (let i = 0; i < data.assets.length - 1; i++) {
+                this.addProductImageForm();
+                for (let j = 0; j < data.assets[i].stockQuantity.length - 1; j++) {
+                  this.addStockQuantityForm(i);
+                }
+              }
+              console.log(data);
+              this.productsForm.patchValue(data);
+              this.reponseData = data;
+              this.isUpdateRequest = true;
+            }
+          })
+        }
+      }
+    })
+  }
+  dataField: string[] = ['categories', 'brands', 'orderQuantity', 'tags'];
+
   async ngOnInit() {
-    const result: any = await this.dataService.httpGet(this.backendUrl.URLs.fetchFeatures);
+    const result: any = await this.dataService.httpPost(this.backendUrl.URLs.fetchFeatures, this.dataField);
+    console.log(result);
     this.categories = result.categories;
     this.brands = result.brands;
     this.tags = result.tags;
@@ -226,11 +258,8 @@ export class AddproductComponent {
   }
 
   checkFormStatus() {
-    
-    this.current_form = 'product_images';
-    return ;
-    
-    if(this.productsForm.get('basicinfo')?.valid){
+    if (this.productsForm.get('basicinfo')?.valid) {
+      this.current_form = 'product_images';
       return;
     }
     this.productsForm.get('basicinfo')?.markAllAsTouched();
@@ -326,7 +355,7 @@ export class AddproductComponent {
 
     if (imageList.length != 0) {
       let errorfiles = imageList.filter((image: any) => {
-        if(image.file)
+        if (image.file)
           return image.file.size > 2097152; //2MB
         return;
       });
@@ -382,12 +411,22 @@ export class AddproductComponent {
           this.productsForm.get('assets')?.get(String(index))?.get('photo')?.patchValue(res);
 
           if (index == (imageFormArray.length - 1)) {
-            const data = {
+            const formData = {
               type: 'single',
               data: this.productsForm.value
             };
 
-            this.dataService.httpPost(this.backendUrl.URLs.addproduct, data).then((res: any) => {
+            if(this.isUpdateRequest){
+              formData.data.sellerID = this.reponseData.sellerID;
+              formData.data.sku = this.reponseData.sku;
+              formData.data._id = this.reponseData._id;
+            }
+
+            console.log('sentData', formData);
+
+            let url = !this.isUpdateRequest?this.backendUrl.URLs.addproduct:this.backendUrl.URLs.updateproduct;
+            console.log(url);
+            this.dataService.httpPost(url, formData).then((res: any) => {
               //Success Message
               this.data_template.title = 'Product Uploaded';
               this.toastservice.successToast(this.data_template);

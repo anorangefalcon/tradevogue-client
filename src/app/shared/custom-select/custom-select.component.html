@@ -3,10 +3,13 @@
 
 
     <ng-container *ngSwitchCase="'multiSelect'">
-      <li class="checkbox__options" role="option" *ngFor="let option of options; let i=index" tabindex="{{i+2}}"
+      <li>
+        <input type="search" style="border-radius: 0;" class="form__input" (input)="filterData($event)" placeholder="Search">
+      </li>
+      <li class="checkbox__options" role="option" *ngFor="let option of options | productFilter: filter; let i=index" tabindex="{{i+2}}"
         (change)="updateMutliSelected($event)">
         <input type="checkbox" [value]="option" name="options" [id]="_id ? (option + type + _id): (option + type)"
-          *ngSwitchCase="'multiSelect'"  />
+          *ngSwitchCase="'multiSelect'" [checked]="isChecked(option, 'multiSelect')" />
         <label [for]="_id ? (option + type + _id): (option + type)">{{option}}</label>
       </li>
     </ng-container>

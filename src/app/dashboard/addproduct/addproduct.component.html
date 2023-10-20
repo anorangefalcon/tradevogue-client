@@ -34,7 +34,7 @@
 
             <button class="btn-primary d-flex align-item-center" (click)="onsubmit()" 
                 [ngStyle]="{display: current_form != 'product_images'? 'none' : 'flex','background-color': productsForm.invalid? 'rgb(var(--primaryClr), 0.8)' : 'rgb(var(--primaryClr))'}">
-                Submit Product
+                {{isUpdateRequest? 'Update Product':'Submit Product'}}
             </button>
         </div>
     </div>
@@ -104,7 +104,7 @@
                                 <label for="colors" class="input__label">Colors<span class="important">*</span></label>
                                 <div class="color__picker grid gap-10">
                                     <span *ngFor="let c of common_colors; let x=index">
-                                        <input type="radio" name="color" [id]="'color_'+i+x" style="display: none;"
+                                        <input type="radio" [name]="'color'" [id]="'color_'+i+x" style="display: none;"
                                             [value]="c" formControlName="color" />
                                         <label class="  pointer d-flex flex-center" [for]="'color_'+i+x"
                                             [style]="'background-color:'+c"></label>
