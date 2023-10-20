@@ -18,12 +18,44 @@
         </div>
         <ul class="d-flex gap-30 nav-items" [class.active]="hamburgerOpen">
         
-            <li class="nav-links" (click)="hamburgerOpen = false">
+            <li class="nav-links relative " (click)="hamburgerOpen = false">
                 <a class="d-flex flex-column gap-5 pointer">
                     Men
                 </a>
-                <ul class="sub-items sub-categories d-flex flex-column gap-15 align-item-center">
-                    <li *ngFor="let category of categories?.men" class="pointer">
+                <ul class="sub-categories">
+                    <!-- <li>
+                        <a href="javascript:void(0)">
+                        <img src="https://5.imimg.com/data5/ECOM/Default/2022/9/RF/WU/DA/153990963/whatsappimage2022-08-25at12-27-10pm-500x500.jpg" alt="">
+                        <span>Kurta</span>
+                      </a>
+        
+                    </li> -->
+                    <li>
+                        <a [routerLink]="['/explore']" [queryParams]="{ gender: 'male' , category: 'kurta'}">
+                            <img src="https://cdn.filestackcontent.com/BFrKaz6TLqbhVMAkf5a1">
+                            <span>Kurta</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a [routerLink]="['/explore']" [queryParams]="{ gender: 'male' , category: 'shirt'}">
+                            <img src="https://cdn.filestackcontent.com/3D8gDfb2SaGHF08zXkYl">
+                            <span>Shirt</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a [routerLink]="['/explore']" [queryParams]="{ gender: 'male' , category: 'tshirt'}" >
+                            <img src="https://cdn.filestackcontent.com/XyQdeUFxRBkXFpZxPZAY">
+                            <span>Tshirt</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a [routerLink]="['/explore']" [queryParams]="{ gender: 'male'}" >
+                            <img src="https://cdn.filestackcontent.com/DDNM5jchRomMoaNoEpUN">
+                            <span>Explore All</span>
+                        </a>
+                    </li>
+                    
+                    <!-- <li *ngFor="let category of categories?.men" class="pointer">
                         <a [routerLink]="['/explore']" [queryParams]="{ gender: 'male', category: category }">
                             {{ category }}
                         </a>
@@ -32,16 +64,39 @@
                         <a [routerLink]="['/explore']" [queryParams]="{ gender: 'male'}">
                             Explore All
                         </a>
-                    </li>
+                    </li> -->
                 </ul>
             </li>
-            <li class="nav-links" (click)="hamburgerOpen = false">
+            <li class="nav-links relative" (click)="hamburgerOpen = false">
                 <a class="d-flex flex-column gap-5 pointer">
                     Women
                 </a>
-                <ul class="sub-items sub-categories d-flex flex-column gap-15 align-item-center pointer">
-
-                    <li *ngFor="let category of categories?.women" class="pointer">
+                <ul class="sub-categories">
+                    <li>
+                        <a [routerLink]="['/explore']" [queryParams]="{ gender: 'female' , category: 'kurti'}">
+                            <img src="https://cdn.filestackcontent.com/sDXAYkXdQMS5IsTt4qm1">
+                            <span>Kurti</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a [routerLink]="['/explore']" [queryParams]="{ gender: 'female' , category: 'shirt'}">
+                            <img src="https://cdn.filestackcontent.com/mYK2amVpRhKq143MoPRW">
+                            <span>Shirt</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a [routerLink]="['/explore']" [queryParams]="{ gender: 'female' , category: 'tshirt'}">
+                            <img src="https://cdn.filestackcontent.com/7B1UonnWRyrC8dUyrJ8w">
+                            <span>T-Shirt</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a [routerLink]="['/explore']" [queryParams]="{ gender: 'female'}">
+                            <img src="https://cdn.filestackcontent.com/H47hbgxxTc6l5y3UCkQw">
+                            <span>Explore All</span>
+                        </a>
+                    </li>
+                    <!-- <li *ngFor="let category of categories?.women" class="pointer">
                         <a [routerLink]="['/explore']" [queryParams]="{ gender: 'female', category: category }">
                             {{ category }}
                         </a>
@@ -50,17 +105,17 @@
                         <a [routerLink]="['/explore']" [queryParams]="{ gender: 'female'}">
                             Explore All
                         </a>
-                    </li>
+                    </li> -->
                 </ul>
             </li>
             <li class="nav-links" (click)="hamburgerOpen = false">
                 <a href="" class=" d-flex flex-column gap-5" [routerLink]="['/explore']">
                     Offers
                 </a>
-                <ul class="sub-items sub-categories d-flex flex-column gap-15 align-item-center">
+                <!-- <ul class="sub-items sub-categories d-flex flex-column gap-15 align-item-center">
                     <li>Offer 1</li>
                     <li>Offer 2</li>
-                </ul>
+                </ul> -->
             </li>
         </ul>
         <ul class="navbar-features d-flex align-item-center gap-20 m-gap-15 s-gap-10">

@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
 })
 export class CartComponent implements OnInit {
 
+  showMore : boolean = false;
   constructor(private cartService: CartService) { }
   cartArr: any[] = [];
 

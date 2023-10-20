@@ -52,12 +52,18 @@ export class NavbarComponent implements OnInit {
       }
     })
     
-    this.fetchDataService.getUniqueProductFields().subscribe((data:any)=>{
-      console.log(data, "navbar");
+    const body = {
+      parameter : "mix"
+    }
+    // console.log("hi"
+    // );
+    
+    this.fetchDataService.getUniqueProductFields(body).subscribe((data:any)=>{
+      // console.log(data, "navbar");
       
-      this.categories.men = data.male.category;
-      this.categories.women = data.female.category;  
-      console.log(this.categories);
+      this.categories.men = data.data.male.category;
+      this.categories.women = data.data.female.category;  
+      // console.log(this.categories);
       
     })
 

@@ -227,6 +227,96 @@
     text-align: center;
 }
 
+.product-image {
+    width: 12%;
+}
+
+
+.ProductINFO {
+    width: 88%;
+    /* background-color: green !important; */
+    display: flex;
+    justify-content: space-between;
+}
+
+.coupons {
+    border: 1px solid black;
+    width: 540px;
+    padding-block: 40px;
+    padding-inline-start: 40px;
+    padding-inline-end: 80px;
+
+    & input {
+        width: 270px;
+        outline: none;
+        padding-inline: 30px;
+        border-radius: 8px;
+        border: 1px solid transparent;
+        background-color: #f5f5f5cf;
+        font-size: 14px;
+    }
+
+    & :is(:focus) {
+        border-color: rgb(var(--textClr), 0.4);
+    }
+
+    & ::placeholder {
+        color: rgb(var(--textClr), 0.3);
+    }
+
+    & .all-coupons {
+        margin-block: 30px;
+    }
+
+    & .coupon {
+        padding-block: 20px;
+    
+        & .coupon-name h2 {
+            padding: 5px;
+            display: inline-block;
+            border: 1px dashed rgb(var(--textClr), 0.7);
+            font-size: 16px;
+            font-weight: 500;
+            opacity: 0.8;
+        }
+
+        & .more-btn {
+            background-color: transparent;
+            padding: 0;
+            color: rgb(var(--primaryClr));
+            font-weight: 600;
+            gap: 3px;
+
+            & span {
+                font-size: 16px;
+            }
+
+            & p {
+                font-size: 12px !important;
+            }
+        }
+
+        & ul li {
+            list-style: disc;
+            margin-inline-start: 18px;
+            font-size: 12px;
+            opacity: 0.7;
+        }
+        & list {
+            transform: translateY(30px);
+        }
+
+        & small {
+            color: rgb(var(--danger));
+        }
+    }
+    & .coupon:not(:last-child) {
+        border-bottom: 1px solid rgb(var(--textClr), 0.15);
+    }
+}
+
+
+
 
 @media screen and (max-width: 1024px) {
 
@@ -365,23 +455,6 @@
 
 
 
-
-
-
-
-
-
-.product-image {
-    width: 12%;
-}
-
-
-.ProductINFO {
-    width: 88%;
-    /* background-color: green !important; */
-    display: flex;
-    justify-content: space-between;
-}
 
 @media screen and (max-width: 974px) {
     .col {

@@ -29,6 +29,7 @@ header {
         }
     }
 
+
     & .nav-links a,
     .navbar-features .icons {
         height: 100%;
@@ -56,7 +57,7 @@ header {
     }
 }
 
-.header-shadowed{
+.header-shadowed {
     box-shadow: 0 2px 5px rgb(var(--textClr), 0.1);
     background-color: rgb(var(--whiteClr), 0.5);
 }
@@ -184,14 +185,14 @@ header.active {
             height: 0;
             width: 0;
             border-block-end: 10px solid rgba(255, 255, 255, 0.6);
-            
+
             border-inline-start: 10px solid rgba(128, 128, 128, 0.02);
-            
+
             border-inline-end: 10px solid rgb(128, 128, 128, 0.02);
 
             inset-block-start: -10px;
             inset-inline-end: 4px;
-        
+
         }
 
         & .header p {
@@ -214,7 +215,27 @@ header.active {
         }
     }
 
-
+    .sub-categories {
+        display: grid;
+        position: absolute;
+        inset-block-start: 100%;
+        /* grid-template-columns: repeat(2); */
+        grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+        inset-inline: 0;
+        width: max(1120px, 100%);
+        background-color: rgb(var(--whiteClr), 0.6);
+        padding: 30px;
+        overflow: hidden;
+        gap: 30px;
+        margin-inline: auto;
+        opacity: 0;
+        inset-block-start: 200px;
+        transition: 0.5s ease-in-out;
+        z-index: 3;
+        inset-inline-start: 50%;
+        pointer-events: none;
+        transform: translateX(-50%);
+    }
 
     & .sub-categories::before {
         inset-inline-start: 50%;
@@ -222,11 +243,39 @@ header.active {
     }
 
 
-    & .sub-categories {
-        inset-inline-start: 50%;
-        transform: translateX(-50%);
+    .sub-categories a img {
+        width: 100%;
+        /* max-height: 150px; */
+        aspect-ratio: 1/1;
+        object-fit: cover;
+        object-position: top;
     }
 
+    .sub-categories a {
+
+        gap: 10px;
+        text-decoration: none;
+        font-size: 16px;
+        font-weight: 600;
+        color: #fff;
+    }
+
+    .sub-categories a span {
+        text-align: center;
+        position: absolute;
+        inset-inline: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(0, 0, 0, 0.6);
+        transition: 0.5s ease-in-out;
+        height: 35px;
+        inset-block-end: 0;
+    }
+
+    .sub-categories a:is(:hover, :focus, .active) span {
+        height: 100%;
+    }
 
     /* Content Display */
     & li:hover .sub-items {
@@ -234,13 +283,20 @@ header.active {
         visibility: visible;
     }
 
-    & .sub-categories {
-        width: 200px;
+    & li:hover .sub-categories {
+        inset-block-start: 70px;
+        opacity: 1;
+        pointer-events: all;
     }
 
-    & .sub-categories li:hover {
+    /* 
+    & .sub-categories {
+        width: fit-content;
+    } */
+
+    /* & .sub-categories li:hover {
         color: rgb(var(--primaryClr));
-    }
+    } */
 
     #login,
     #register {

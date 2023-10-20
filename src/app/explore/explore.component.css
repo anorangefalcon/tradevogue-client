@@ -11,7 +11,9 @@ input[type="checkbox"] {
     height: 16px;
     border: 1px solid rgb(var(--blackClr), 0.4);
 }
-
+.cards {
+    width: calc(100% - 180px);
+}
 input[type="checkbox"]:checked {
     background-color: rgb(var(--primaryClr));
     border-color: rgb(var(--primaryClr));
@@ -44,7 +46,19 @@ input[type="checkbox"]:checked + label::after {
 .head a {
     font-size: 12px;
 }
-
+.tags {
+    margin-block-end: 20px;
+    border: 1px solid rgb(var(--blackClr), 0.4);
+    border-radius: 20px;
+    padding: 5px 10px;
+    gap: 3px;
+    & p {
+        font-size: 10px !important;
+    }
+    & span {
+        font-size: 12px;
+    }
+}
 .filters {
     /* position: sticky; */
     inset-block-start: 0;

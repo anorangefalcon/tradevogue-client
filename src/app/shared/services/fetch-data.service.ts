@@ -47,8 +47,10 @@ export class FetchDataService {
     return this.http.get(this.sellerUrl);
   }
 
-  getUniqueProductFields() {
-    return this.http.get('http://localhost:1000/products/uniqueFields');
+  getUniqueProductFields(body : any){
+    // console.log('BODY IS ',body);
+   
+    return this.http.post('http://localhost:1000/products/uniqueFields', body);
   }
 
   getProductDetails(sku: any) {
@@ -72,14 +74,14 @@ export class FetchDataService {
       else {
         params = params.set(key, data[key]);
       }
-    });
-    // console.log(params);
-
+    }); 
+    // console.log(" param si ",params);
+    
     return this.http.get(this.backendUrls.URLs.fetchProducts, { params });
   }
 
   getCartData(skuArr: any) {
-    console.log(skuArr);
+    // console.log(skuArr);
     
     return this.http.post(this.backendUrls.URLs.fetchCart, skuArr);
   }
