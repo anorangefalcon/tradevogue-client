@@ -17,8 +17,7 @@ export class CartComponent implements OnInit {
   ngOnInit() {
     this.cartService.fetchCart("details").subscribe((data) => {
       this.cartArr = data;
-      console.log(this.cartArr);
-      
+
       this.cartArr = this.cartArr?.map((item: any) => {
         item.image = (item.assets).find((asset: any) => {
           return (asset.color) === item.color;
@@ -26,20 +25,10 @@ export class CartComponent implements OnInit {
         return item;
       });
     });
-    // this.cartService.fetchCart("details").subscribe((data) => {
-    //   this.cartArr = data;
-
-    //   this.cartArr = this.cartArr.map((item: any) => {
-    //     item.image = (item.assets).find((asset: any) => {
-    //       return (asset.color) === item.color;
-    //     }).photo[0];
-    //     return item;
-    //   });
-    // });
   }
 
-  remove_item(sku: any) {
-    // this.cartService.removeItem(sku);
+  remove_item(identifier: any) {
+    this.cartService.removeItem(identifier);
   }
 
   changeQuantity(what: string, productIndex: any, selectedQuantity: Number) {
@@ -52,7 +41,7 @@ export class CartComponent implements OnInit {
       return asset.color === this.cartArr[productIndex].color;
     }).stockQuantity.find((stock: any) => {
       return stock.size === this.cartArr[productIndex].size;
-    }).quantity;
+    }).quantity;    
 
     if (what === 'next' && quantityIndex < (this.cartArr[productIndex].info.orderQuantity.length - 1) && (this.cartArr[productIndex].info.orderQuantity[quantityIndex + 1] <= stockLimit)) {
       this.cartArr[productIndex].info.quantity = this.cartArr[productIndex].info.orderQuantity[quantityIndex + 1];
@@ -64,14 +53,15 @@ export class CartComponent implements OnInit {
       return;
     }
 
-    const cartItem = {
+    let cartItem = {
       index: productIndex,
       quantity: this.cartArr[productIndex].info.quantity
     }
 
-    // this.cartService.updateCart(cartItem);
+    if (this.userToken) {
+      cartItem.index = this.cartArr[productIndex]._id;
+    }
+
+    this.cartService.updateCart(cartItem);
   }
 }
-
-
-

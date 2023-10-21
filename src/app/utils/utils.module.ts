@@ -52,6 +52,8 @@ export class UtilsModule {
     fetchCart: 'http://localhost:1000/cart/fetch',
     addItemsToCart: 'http://localhost:1000/cart/add',
     removeItemFromCart: 'http://localhost:1000/cart/remove',
+    updateItemFromCart: 'http://localhost:1000/cart/update',
+    clearCart: 'http://localhost:1000/cart/clear',
 
     // COUPONS
     createCoupon:'http://localhost:1000/admin/createOffer',

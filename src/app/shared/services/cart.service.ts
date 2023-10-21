@@ -26,57 +26,82 @@ export class CartService {
     const cartObj = { "sku": data.sku, "size": data.size, "color": data.color, "quantity": data.quantity };
   
     const userToken = this.cookie.get("userToken");
-
     if (userToken) {
       this.http.post(this.backendUrls.URLs.addItemsToCart, [cartObj]).subscribe((message: any) => {
         console.log(message);
-        return;
+        this.fetchDetails();
       });
     }
-
-    const localStorageData = localStorage.getItem("myCart");
-
-    if (localStorageData) {
-      this.cartStorage = JSON.parse(localStorageData);
+    else{
+      const localStorageData = localStorage.getItem("myCart");
+  
+      if (localStorageData) {
+        this.cartStorage = JSON.parse(localStorageData);
+      }
+  
+      this.cartStorage.push(cartObj);
+      const myCart = JSON.stringify(this.cartStorage);
+      localStorage.setItem("myCart", myCart);
+  
+      this.fetchDetails();
     }
 
-    this.cartStorage.push(cartObj);
-    const myCart = JSON.stringify(this.cartStorage);
-    localStorage.setItem("myCart", myCart);
-
-    this.fetchDetails();
   }
-
 
   updateCart(data: any) {
-    const localStorageData = localStorage.getItem("myCart");
 
-    if (localStorageData) {
-      this.cartStorage = JSON.parse(localStorageData);
-      
-      const itemFound = this.cartStorage[data.index];
-      delete data.index;
-
-      if (itemFound) {
-        Object.keys(data).forEach((key: any) => {
-          itemFound[key] = data[key];
-        });
-      }
+    const userToken = this.cookie.get("userToken");
+    if (userToken) {
+      this.http.post(this.backendUrls.URLs.updateItemFromCart, data).subscribe((data: any) => {
+        if(data.updated){
+          this.fetchDetails();
+        }
+      });
     }
+    else{
+      const localStorageData = localStorage.getItem("myCart");
+  
+      if (localStorageData) {
+        this.cartStorage = JSON.parse(localStorageData);
+        
+        const itemFound = this.cartStorage[data.index];
+        delete data.index;
+  
+        if (itemFound) {
+          Object.keys(data).forEach((key: any) => {
+            itemFound[key] = data[key];
+          });
+        }
+      }
+  
+      const myCart = JSON.stringify(this.cartStorage);
+      localStorage.setItem("myCart", myCart);
 
-    const myCart = JSON.stringify(this.cartStorage);
-    localStorage.setItem("myCart", myCart);
 
     this.fetchDetails();
+      }
+
   }
 
-  fetchDetails() {
+  fetchDetails() {    
     const localCart = localStorage.getItem('myCart');
     let cartDetails = localCart ? JSON.parse(localCart) : null;
+    
+    const userToken = this.cookie.get("userToken");
+    if (localCart && userToken) {
+      this.http.post(this.backendUrls.URLs.addItemsToCart, cartDetails).subscribe((message: any) => {
+        this.clearCart('localOnly');
 
-    return this.http.post(this.backendUrls.URLs.fetchCart, cartDetails).subscribe((data: any) => {      
-      this.cartSubject?.next(data);
-    });
+        this.http.post(this.backendUrls.URLs.fetchCart, cartDetails).subscribe((data: any) => {                  
+          this.cartSubject?.next(data);
+        });
+      });
+    }
+    else{
+      this.http.post(this.backendUrls.URLs.fetchCart, cartDetails).subscribe((data: any) => {                  
+        this.cartSubject?.next(data);
+      });
+    }
   }
 
   removeItem(identifier: any) {
@@ -109,6 +134,10 @@ export class CartService {
     this.fetchDetails();
   }
 
+  refreshCart(){
+    
+  }
+
   // use this function to access cart data
   fetchCart(what: string = ''): Observable<any> {
 
@@ -128,6 +157,19 @@ export class CartService {
       );
     }
     return this.cart$;
+  }
+
+  clearCart(which: string = ''){
+
+    if (!which) {
+      const userToken = this.cookie.get("userToken");
+      if (userToken) {
+        this.http.get(this.backendUrls.URLs.clearCart).subscribe((message: any) => {
+          console.log(message);
+        });
+      }
+    }
+    localStorage.removeItem("myCart");
   }
 
 }

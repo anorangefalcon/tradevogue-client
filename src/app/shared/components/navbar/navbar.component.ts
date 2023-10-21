@@ -16,11 +16,11 @@ export class NavbarComponent implements OnInit {
   hamburgerOpen: boolean = false;
   purchaser: any = 'User';
   cart_count: number = 0;
- 
+
   cartArr: any[] = [];
   navbar_scroll_style: boolean = false;
   shadowed: boolean = false;
-  categories:any = {
+  categories: any = {
     men: [],
     women: []
   }
@@ -29,42 +29,51 @@ export class NavbarComponent implements OnInit {
 
   ngOnInit() {
 
-    this.purchaser=this.cookie.get('userName');
+    this.purchaser = this.cookie.get('userName');
     const isUser = this.cookie.get("userToken")
     if (isUser) {
       this.isUserLogin = true;
     }
 
-    this.cartService.fetchCart().subscribe((data) => {
+    // this.cartService.fetchCart().subscribe((data) => {
+    //   console.log('navbar fetch called');
+
+    //   this.cart_count = data.details.length;
+    //   this.cartArr = data.details;
+    // })
+    this.cartService.cart$.subscribe((data) => {
+      console.log('navbar fetch called', data);
       this.cart_count = data.details.length;
-      this.cartArr = data.details;
+      // this.cart_count = data.details.length;
+      // this.cartArr = data.details;
     })
 
 
-    this.router.events.subscribe((event)=>{
+
+    this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
         if (this.router.url === '/' || this.router.url === '') {
           this.shadowed = false;
         }
-        else{
+        else {
           this.shadowed = true;
         }
       }
     })
-    
+
     const body = {
-      parameter : "mix"
+      parameter: "mix"
     }
     // console.log("hi"
     // );
-    
-    this.fetchDataService.getUniqueProductFields(body).subscribe((data:any)=>{
+
+    this.fetchDataService.getUniqueProductFields(body).subscribe((data: any) => {
       // console.log(data, "navbar");
-      
+
       this.categories.men = data.data.male.category;
-      this.categories.women = data.data.female.category;  
+      this.categories.women = data.data.female.category;
       // console.log(this.categories);
-      
+
     })
 
   }
@@ -72,8 +81,8 @@ export class NavbarComponent implements OnInit {
   onLogout() {
     this.cookie.delete('userToken');
     this.cookie.delete('userName');
-  
-    
+
+
     // doSignout();
     this.router.navigate(['/']);
     this.isUserLogin = false;
