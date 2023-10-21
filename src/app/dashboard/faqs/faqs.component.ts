@@ -20,7 +20,7 @@ export class FaqsComponent {
   selectedItem: any;
   isMenuActive = false;
   isDrawerOpen: boolean = false;
-  pageSize: number = 3;
+  pageSize: number = 5;
   currentPage: number = 1;
 
 
@@ -67,12 +67,11 @@ export class FaqsComponent {
   }
 
   nextPage() {
-    if (this.currentPage * this.pageSize <= this.faqData.length) {
+    if (this.selectedCategory && (this.currentPage * this.pageSize) < this.selectedCategory.childrens.length) {
       this.currentPage++;
-      this.loadData();
     }
   }
-
+  
   previousPage() {
     if (this.currentPage > 1) {
       this.currentPage--;

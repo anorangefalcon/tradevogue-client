@@ -26,10 +26,20 @@ export class CartComponent implements OnInit {
         return item;
       });
     });
+    // this.cartService.fetchCart("details").subscribe((data) => {
+    //   this.cartArr = data;
+
+    //   this.cartArr = this.cartArr.map((item: any) => {
+    //     item.image = (item.assets).find((asset: any) => {
+    //       return (asset.color) === item.color;
+    //     }).photo[0];
+    //     return item;
+    //   });
+    // });
   }
 
   remove_item(sku: any) {
-    this.cartService.removeItem(sku);
+    // this.cartService.removeItem(sku);
   }
 
   changeQuantity(what: string, productIndex: any, selectedQuantity: Number) {
@@ -59,7 +69,7 @@ export class CartComponent implements OnInit {
       quantity: this.cartArr[productIndex].info.quantity
     }
 
-    this.cartService.updateCart(cartItem);
+    // this.cartService.updateCart(cartItem);
   }
 }
 
