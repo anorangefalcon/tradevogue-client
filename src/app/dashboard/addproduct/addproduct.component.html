@@ -1,6 +1,5 @@
 <section id="product-adding-section" class="d-flex flex-column gap-20">
     <div class="row d-flex justify-content-md-between">
-
         <div class="d-flex gap-15 align-item-center">
 
             <button class="previous d-flex flex-center pointer transition" (click)="current_form = ''"
@@ -41,7 +40,6 @@
 
 
     <form [formGroup]="productsForm">
-
         <ng-container [ngSwitch]="current_form">
 
             <ng-container *ngSwitchCase="'product_images'">
@@ -116,7 +114,6 @@
                                     </span>
                                 </div>
                             </div>
-
                             <div formArrayName="stockQuantity" class="d-flex flex-column gap-20">
 
                                 <table>
@@ -142,7 +139,9 @@
                                                 <td>
                                                     <div class="form__group">
 
-                                                        <app-custom-select [_id]=" '' + i + j" [options]="sizes"
+                                                        
+                                                        
+                                                        <app-custom-select [_id]=" '' + i + j" [options]="sizes ? sizes: []" [type]="''"
                                                             [selectedOption]="(_form.get('size')?.value ? _form.get('size')?.value : 'Select Size')"
                                                             (final_option)="_form.get('size')?.patchValue($event)"></app-custom-select>
 
@@ -252,7 +251,7 @@
                             <div class="form__group" formGroupName="info">
                                 <label for="category" class="input__label">Category<span
                                         class="important">*</span></label>
-                                <app-custom-select [_id]="'category1'" [options]="categories" [type]="'searchSelect'"
+                                <app-custom-select [_id]="'category1'" [options]="categories?categories:[]" [type]="'searchSelect'"
                                     [selectedOption]="(productSubForm('info.category')?.value? productSubForm('info.category')?.value:'Select Category')"
                                     (final_option)="updateFormFields($event, 'info.category')"></app-custom-select>
                                 <span class="error"
@@ -264,7 +263,7 @@
 
                             <div class="form__group" formGroupName="info">
                                 <label for="brand" class="input__label">Brand<span class="important">*</span></label>
-                                <app-custom-select [_id]="'brand'" [options]="brands" [type]="'searchSelect'"
+                                <app-custom-select [_id]="'brand'" [options]="brands?brands:[]" [type]="'searchSelect'"
                                     [selectedOption]="(productSubForm('info.brand')?.value? productSubForm('info.brand')?.value : 'Select Brand')"
                                     (final_option)="updateFormFields($event, 'info.brand')"></app-custom-select>
                                 <span class="error"
@@ -276,7 +275,7 @@
 
                             <div class="form__group" formGroupName="info">
                                 <label for="gender" class="input__label">Gender<span class="important">*</span></label>
-                                <app-custom-select [_id]="'gender'" [options]="gender" [type]="'searchSelect'"
+                                <app-custom-select [_id]="'gender'" [options]="gender?gender:[]" [type]="'searchSelect'"
                                     [selectedOption]="(productSubForm('info.gender')?.value? productSubForm('info.gender')?.value : 'Select Gender')"
                                     (final_option)="updateFormFields($event, 'info.gender')"></app-custom-select>
 
@@ -289,7 +288,7 @@
 
                             <div class="form__group" formGroupName="info">
                                 <label for="" class="input__label">Product Tags<span class="important">*</span></label>
-                                <app-custom-select [options]="tags" [type]="'multiSelect'"
+                                <app-custom-select [options]="tags?tags:[]" [type]="'multiSelect'"
                                     [selectedOption]=" (productSubForm('info.tags')?.value.length ? productSubForm('info.tags')?.value : 'Select Tags') "
                                     (SelectedList)="updateFormFields($event, 'info.tags')"></app-custom-select>
                                 <span class="error"
@@ -342,7 +341,7 @@
                                         class="important">*</span></label>
 
 
-                                <app-custom-select [options]="orderQuantity" [type]="'multiSelect'"
+                                <app-custom-select [options]="orderQuantity?orderQuantity:[]" [type]="'multiSelect'"
                                     [selectedOption]="(productSubForm('info.orderQuantity')?.value.length ? productSubForm('info.orderQuantity')?.value : 'Select Order')"
                                     (SelectedList)="productSubForm('info.orderQuantity')?.patchValue($event)" ></app-custom-select>
 

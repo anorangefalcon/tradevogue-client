@@ -30,8 +30,7 @@ export class CustomSelectComponent {
     if (this.type == 'multiSelect' && Array.isArray(this.selectedOption)) {
       this.multiSelected = this.selectedOption;
     }
-    else if ( this.options.find((option: any) => option == this.selectedOption || option.toLowerCase() == this.selectedOption)) {
-      
+    else if ( this.options.find((option: any) => option.toLowerCase() == this.selectedOption.toLowerCase()) ) {
       this.selected = this.selectedOption;
     }
   }

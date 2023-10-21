@@ -1,0 +1,10 @@
+.img_container img{
+    object-fit: cover;
+    object-fit: top;
+}
+
+.color_{
+    width: 15px ;
+    height: 15px;
+    border-radius: 50%;
+}

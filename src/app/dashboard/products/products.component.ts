@@ -4,6 +4,8 @@ import { UploadExcelService } from '../services/upload-excel.service';
 import { ToastService } from 'src/app/shared/services/toast.service';
 import { UtilsModule } from 'src/app/utils/utils.module';
 import { DialogBoxService } from 'src/app/shared/services/dialog-box.service';
+import { PopupService } from 'src/app/shared/services/popup.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-products',
@@ -40,12 +42,14 @@ export class ProductsComponent implements OnInit {
   deleteList: any = [];
   productList: any[] = [];
 
+  private resSubscribe!: Subscription;
+
   constructor(private element: ElementRef,
     private fetchdata: FetchDataService,
     private excelService: UploadExcelService,
     private backendUrl: UtilsModule,
     private dialogBoxService: DialogBoxService,
-    private toastService: ToastService) { }
+    private toastService: ToastService,) { }
 
   async ngOnInit(){
     const category: any = await this.fetchdata.httpPost(this.backendUrl.URLs.fetchFeatures, this.dataField);
@@ -110,7 +114,12 @@ export class ProductsComponent implements OnInit {
   // Delete Single Entry
   deleteItem(entry: any, name:string = '', type: string = 'single') {
     this.dialogBoxService.confirmationDialogBox(name);
-    this.dialogBoxService.responseEmitter.subscribe(async (res: boolean)=>{
+    
+    // if(this.resSubscribe){
+    //   this.dialogBoxService.responseEmitter.unsubscribe();
+    // }
+
+    this.resSubscribe = this.dialogBoxService.responseEmitter.subscribe(async (res: boolean)=>{
 
         let data: any = {};
 
@@ -120,7 +129,12 @@ export class ProductsComponent implements OnInit {
             await this.fetchdata.httpPost(this.backendUrl.URLs.deleteproducts, data);
             this.fetchData();
         }
+
     })
+  }
+
+  ngOnDestroy(){
+    this.dialogBoxService.responseEmitter.unsubscribe();
   }
 
   // Filter Handling function

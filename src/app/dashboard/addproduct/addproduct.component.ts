@@ -75,6 +75,7 @@ export class AddproductComponent {
                   Validators.required
                 ]
               }],
+              unitSold: [0]
             })
           ]),
 
@@ -160,13 +161,13 @@ export class AddproductComponent {
                 }
               });
 
-              for (let i = 0; i < data.assets.length - 1; i++) {
+              this.deleteFormGroup(0);
+              for (let i = 0; i < data.assets.length; i++) {
                 this.addProductImageForm();
                 for (let j = 0; j < data.assets[i].stockQuantity.length - 1; j++) {
                   this.addStockQuantityForm(i);
                 }
               }
-              console.log(data);
               this.productsForm.patchValue(data);
               this.reponseData = data;
               this.isUpdateRequest = true;
@@ -176,16 +177,18 @@ export class AddproductComponent {
       }
     })
   }
+
+  // sizes(){
+  //   return this.sizes;
+  // }
   dataField: string[] = ['categories', 'brands', 'orderQuantity', 'tags'];
 
   async ngOnInit() {
     const result: any = await this.dataService.httpPost(this.backendUrl.URLs.fetchFeatures, this.dataField);
-    console.log(result);
     this.categories = result.categories;
     this.brands = result.brands;
     this.tags = result.tags;
     this.orderQuantity = result.orderQuantity;
-    this.sizes = result.sizes;
   }
 
   productImagesFormArray() {
@@ -212,6 +215,7 @@ export class AddproductComponent {
           Validators.required
         ]
       }],
+      unitSold: [0]
     });
     (<FormArray>this.productsForm.get('assets')?.get(String(index))?.get('stockQuantity'))?.push(template);
   }
@@ -244,6 +248,7 @@ export class AddproductComponent {
               Validators.required
             ]
           }],
+          unitSold: [0]
         })
       ]),
 
@@ -404,41 +409,37 @@ export class AddproductComponent {
     } else {
       const imageFormArray = this.productsForm.get('assets')?.value;
 
-      // Upload Images to fileStack and last upload the form data
-      imageFormArray.forEach((imageArray: any, index: number) => {
-        this.upload.fileupload(imageArray['photo']).then(async (res) => {
+      // Iterate through Image Array
+      imageFormArray.forEach(async (imageArray: any, index: number) => {
+        // Wait for Image Upload
+        let res = await this.upload.fileupload(imageArray['photo'])
+        this.productsForm.get('assets')?.get(String(index))?.get('photo')?.patchValue(res);
+      })
 
-          this.productsForm.get('assets')?.get(String(index))?.get('photo')?.patchValue(res);
+      console.log(this.productsForm.get('assets')?.value);
 
-          if (index == (imageFormArray.length - 1)) {
-            const formData = {
-              type: 'single',
-              data: this.productsForm.value
-            };
+      const formData = {
+        type: 'single',
+        data: this.productsForm.value
+      };
 
-            if(this.isUpdateRequest){
-              formData.data.sellerID = this.reponseData.sellerID;
-              formData.data.sku = this.reponseData.sku;
-              formData.data._id = this.reponseData._id;
-            }
+      if (this.isUpdateRequest) {
+        formData.data.sellerID = this.reponseData.sellerID;
+        formData.data.sku = this.reponseData.sku;
+        formData.data._id = this.reponseData._id; 
+      }
 
-            console.log('sentData', formData);
+      let url = !this.isUpdateRequest ? this.backendUrl.URLs.addproduct : this.backendUrl.URLs.updateproduct;
+      console.log(url);
+      this.dataService.httpPost(url, formData).then((res: any) => {
+        //Success Message
+        this.data_template.title = 'Product Uploaded';
+        this.toastservice.successToast(this.data_template);
+        this.router.navigate(['/dashboard/products']);
 
-            let url = !this.isUpdateRequest?this.backendUrl.URLs.addproduct:this.backendUrl.URLs.updateproduct;
-            console.log(url);
-            this.dataService.httpPost(url, formData).then((res: any) => {
-              //Success Message
-              this.data_template.title = 'Product Uploaded';
-              this.toastservice.successToast(this.data_template);
-              this.router.navigate(['/dashboard/products']);
-
-            }).catch((err) => {
-              console.log(err);
-            })
-          }
-
-        });
-      });
+      }).catch((err) => {
+        console.log(err);
+      })
     }
   }
 }
