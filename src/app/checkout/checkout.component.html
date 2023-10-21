@@ -19,7 +19,7 @@
                         <p class="item-price">₹{{item.price | number : '1.0-2'}}</p>
                     </div>
                     <div class="itemtype d-flex justify-content-md-between">
-                        <p>{{item.info.category}}</p>
+                        <p>{{item.info?.category}}</p>
                         <p>Qty: {{item.quantity}}</p>
                     </div>
                 </div>

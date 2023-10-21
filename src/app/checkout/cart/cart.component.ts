@@ -1,23 +1,25 @@
 import { Component, OnInit } from '@angular/core';
+import { CookieService } from 'ngx-cookie-service';
 import { CartService } from 'src/app/shared/services/cart.service';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-cart',
   templateUrl: './cart.component.html',
   styleUrls: ['./cart.component.css']
 })
+
 export class CartComponent implements OnInit {
 
-  showMore : boolean = false;
-  constructor(private cartService: CartService) { }
+  constructor(private cartService: CartService, private cookie: CookieService) { }
   cartArr: any[] = [];
+  userToken: any = this.cookie.get("userToken");
 
   ngOnInit() {
     this.cartService.fetchCart("details").subscribe((data) => {
       this.cartArr = data;
-
-      this.cartArr = this.cartArr.map((item: any) => {
+      console.log(this.cartArr);
+      
+      this.cartArr = this.cartArr?.map((item: any) => {
         item.image = (item.assets).find((asset: any) => {
           return (asset.color) === item.color;
         }).photo[0];
@@ -30,11 +32,7 @@ export class CartComponent implements OnInit {
     this.cartService.removeItem(sku);
   }
 
-  changeQuantity(what: string, sku: string, selectedQuantity: number) {
-
-    const productIndex = this.cartArr.findIndex((item: any) => {
-      return item.sku === sku;
-    });
+  changeQuantity(what: string, productIndex: any, selectedQuantity: Number) {
 
     const quantityIndex = this.cartArr[productIndex].info.orderQuantity.findIndex((q: any) => {
       return q == selectedQuantity;
@@ -57,7 +55,7 @@ export class CartComponent implements OnInit {
     }
 
     const cartItem = {
-      sku: this.cartArr[productIndex].sku,
+      index: productIndex,
       quantity: this.cartArr[productIndex].info.quantity
     }
 

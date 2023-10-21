@@ -2,13 +2,16 @@ import { Injectable } from '@angular/core';
 import { FetchDataService } from './fetch-data.service';
 import { BehaviorSubject, Observable, map } from 'rxjs';
 import { ToastService } from './toast.service';
+import { HttpClient } from '@angular/common/http';
+import { UtilsModule } from 'src/app/utils/utils.module';
+import { CookieService } from 'ngx-cookie-service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CartService {
 
-  constructor(private fetchData: FetchDataService, private toastService: ToastService) {
+  constructor(private fetchData: FetchDataService, private toastService: ToastService, private cookie: CookieService, private http: HttpClient, private backendUrls: UtilsModule) {
     this.fetchDetails();
   }
 
@@ -20,26 +23,26 @@ export class CartService {
   cart$ = this.cartSubject.asObservable();
 
   addToCart(data: any) {
+    const cartObj = { "sku": data.sku, "size": data.size, "color": data.color, "quantity": data.quantity };
+  
+    const userToken = this.cookie.get("userToken");
+
+    if (userToken) {
+      this.http.post(this.backendUrls.URLs.addItemsToCart, [cartObj]).subscribe((message: any) => {
+        console.log(message);
+        return;
+      });
+    }
+
     const localStorageData = localStorage.getItem("myCart");
 
     if (localStorageData) {
       this.cartStorage = JSON.parse(localStorageData);
-
-      const skuFound = this.cartStorage.find((item: any) => {
-        return item.sku === data.sku;
-      });
-      if (skuFound) {
-        this.toastService.errorToast({
-          title: 'Item already exists in cart'
-        })
-        return;
-      }
     }
 
-    this.cartStorage.push({ "sku": data.sku, "size": data.size, "color": data.color, "quantity": data.quantity });
+    this.cartStorage.push(cartObj);
     const myCart = JSON.stringify(this.cartStorage);
     localStorage.setItem("myCart", myCart);
-    this.toastService.successToast();
 
     this.fetchDetails();
   }
@@ -50,15 +53,13 @@ export class CartService {
 
     if (localStorageData) {
       this.cartStorage = JSON.parse(localStorageData);
+      
+      const itemFound = this.cartStorage[data.index];
+      delete data.index;
 
-      const skuFound = this.cartStorage.find((item: any) => {
-        return item.sku === data.sku;
-      });
-      delete data.sku;
-
-      if (skuFound) {
-        Object.keys(data).forEach((key:any) => {
-          skuFound[key] = data[key];
+      if (itemFound) {
+        Object.keys(data).forEach((key: any) => {
+          itemFound[key] = data[key];
         });
       }
     }
@@ -73,31 +74,42 @@ export class CartService {
     const localCart = localStorage.getItem('myCart');
     let cartDetails = localCart ? JSON.parse(localCart) : null;
 
-    this.fetchData.getCartData(cartDetails).subscribe((data: any) => {      
-      this.cartSubject.next(data);
+    return this.http.post(this.backendUrls.URLs.fetchCart, cartDetails).subscribe((data: any) => {      
+      this.cartSubject?.next(data);
     });
   }
 
-  removeItem(sku: any) {
+  removeItem(identifier: any) {
 
-    const localStorageData = localStorage.getItem("myCart");
-
-    if (localStorageData) {
-      this.cartStorage = JSON.parse(localStorageData);
-
-      this.cartStorage = this.cartStorage.filter((item) => {
-        return item.sku !== sku;
+    const userToken = this.cookie.get("userToken");
+    if (userToken) {
+      this.http.post(this.backendUrls.URLs.removeItemFromCart, {itemId: identifier}).subscribe((message: any) => {
+        console.log(message);
       });
     }
+    else{
+      const localStorageData = localStorage.getItem("myCart");
+  
+      if (localStorageData) {
+        this.cartStorage = JSON.parse(localStorageData);
+        console.log(identifier, this.cartStorage);
+        
+        this.cartStorage.splice(identifier, 1);
+      }
+
+      const myCart = JSON.stringify(this.cartStorage);
+    localStorage.setItem("myCart", myCart);
+    }
+
 
     this.toastService.notificationToast({
       title: 'Item removed!'
     })
-    const myCart = JSON.stringify(this.cartStorage);
-    localStorage.setItem("myCart", myCart);
+    
     this.fetchDetails();
   }
 
+  // use this function to access cart data
   fetchCart(what: string = ''): Observable<any> {
 
     if (what === 'count') {

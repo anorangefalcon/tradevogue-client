@@ -1,6 +1,6 @@
 <div class="wrappers">
 <div class="cart-container d-flex flex-wrap default-animation">
-    <div class="cart-items d-flex" *ngFor="let item of cartArr">
+    <div class="cart-items d-flex" *ngFor="let item of cartArr; let i = index">
         <div class="col d-flex">
             <div class="product-image d-flex gap-30">
                 <a routerLink="/product/{{item.sku}}" class="product-img">
@@ -37,7 +37,7 @@
                 <div class="d-flex gap-10 align-item-center common">
                     <div class="quantity-btn-outer">
                         <div class="quantity">
-                            <button class="quantity-btn" (click)="changeQuantity('previous', item.sku, item.quantity)">
+                            <button class="quantity-btn" (click)="changeQuantity('previous', i, item.quantity)">
                                 <span class="material-symbols-outlined">
                                     remove
                                 </span>
@@ -45,7 +45,7 @@
                             <span class="quantity-value fs-14 d-flex align-item-center">
                                 {{item.quantity}}
                             </span>
-                            <button class="quantity-btn" (click)="changeQuantity('next', item.sku, item.quantity)">
+                            <button class="quantity-btn" (click)="changeQuantity('next', i, item.quantity)">
                                 <span class="material-symbols-outlined">
                                     add
                                 </span>
@@ -62,7 +62,7 @@
 
                 </div>
             </div>
-            <button class="remove-btn d-flex align-item-center" (click)="remove_item(item.sku)">
+            <button class="remove-btn d-flex align-item-center" (click)="remove_item(userToken ? item._id : i)">
                 <span class="material-symbols-outlined">
                     close
                 </span>
@@ -70,88 +70,4 @@
         </div>
     </div>
 </div>
-<div>
-    <div class="coupons d-flex flex-column gap-15">
-        <span class="material-symbols-outlined">
-            close
-        </span>
-        <div class="d-flex gap-15">
-            <input type="text" placeholder="Enter coupon code">
-            <button class="btn-primary">APPLY</button>
-        </div>
-        <div class="all-coupons">
-            <div class="coupon d-flex flex-column gap-10">
-                <div class="coupon-name">
-                    <h2>COUPON CODE</h2>
-                </div>
-                <!-- coupon title -->
-                <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quidem unde ab laudantium nulla rem consequatur ipsam eveniet consequuntur earum! Minima.</p>
-                <!-- coupon desription -->
-                <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Architecto, nostrum.</p>
-                <button class="d-flex align-item-center more-btn pointer" (click)="showMore=!showMore" *ngIf="showMore==false">
-                    <span class="material-symbols-outlined">
-                        add
-                    </span>
-                    <p>MORE</p>
-                </button>
-                <ul class="d-flex gap-10 flex-column list" *ngIf="showMore==true">
-                    <li>
-                        Lorem ipsum dolor sit amet.
-                    </li>
-                    <li>
-                        Lorem ipsum dolor sit amet.
-                    </li>
-                    <li>
-                        Lorem ipsum dolor sit amet.
-                    </li>
-                    <li>
-                        Lorem ipsum dolor sit amet.
-                    </li>
-                    <li>
-                        Lorem ipsum dolor sit amet.
-                    </li>
-                </ul>
-                <small>Lorem ipsum, dolor sit amet consectetur adipisicing elit.</small>
-
-            </div>
-            <div class="coupon d-flex flex-column gap-10">
-                <div class="coupon-name">
-                    <h2>COUPON CODE</h2>
-                </div>
-                <!-- coupon title -->
-                <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quidem unde ab laudantium nulla rem consequatur ipsam eveniet consequuntur earum! Minima.</p>
-                <!-- coupon desription -->
-                <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Architecto, nostrum.</p>
-                <button class="d-flex align-item-center more-btn pointer" (click)="showMore=!showMore" *ngIf="showMore==false">
-                    <span class="material-symbols-outlined">
-                        add
-                    </span>
-                    <p>MORE</p>
-                </button>
-                <ul class="d-flex gap-10 flex-column list" *ngIf="showMore==true">
-                    <li>
-                        Lorem ipsum dolor sit amet.
-                    </li>
-                    <li>
-                        Lorem ipsum dolor sit amet.
-                    </li>
-                    <li>
-                        Lorem ipsum dolor sit amet.
-                    </li>
-                    <li>
-                        Lorem ipsum dolor sit amet.
-                    </li>
-                    <li>
-                        Lorem ipsum dolor sit amet.
-                    </li>
-                </ul>
-                <small>Lorem ipsum, dolor sit amet consectetur adipisicing elit.</small>
-
-            </div>
-        </div>
-        
-
-    </div>
-</div>
-
 </div>

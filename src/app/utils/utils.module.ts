@@ -47,10 +47,12 @@ export class UtilsModule {
 
     // FAQ
     getFaqData: 'http://localhost:1000/user/getFaq',
-    // cart
+
+    // CART
     fetchCart: 'http://localhost:1000/cart/fetch',
-    
-    
+    addItemsToCart: 'http://localhost:1000/cart/add',
+    removeItemFromCart: 'http://localhost:1000/cart/remove',
+
     // COUPONS
     createCoupon:'http://localhost:1000/admin/createOffer',
     getOffers:'http://localhost:1000/admin/getOffers',

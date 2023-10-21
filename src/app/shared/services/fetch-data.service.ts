@@ -80,12 +80,6 @@ export class FetchDataService {
     return this.http.get(this.backendUrls.URLs.fetchProducts, { params });
   }
 
-  getCartData(skuArr: any) {
-    // console.log(skuArr);
-    
-    return this.http.post(this.backendUrls.URLs.fetchCart, skuArr);
-  }
-
   httpPost(url: any, body: any) {
 
     return new Promise((res, rej) => {
