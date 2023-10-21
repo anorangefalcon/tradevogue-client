@@ -81,8 +81,8 @@
                             class="group w-full h-auto flex justify-start items-center bg-white py-3 px-4 border-b hover:bg-gray-50 transition-all border-gray-100 relative last:border-b-0">
                             <div routerLink="/product/{{item.sku}}"
                                 class="relative flex rounded-full border border-gray-100 shadow-sm overflow-hidden flex-shrink-0 cursor-pointer mr-4">
-                                <img [src]=item?.image?.[0] alt="Product Image" width="40"
-                                    height="40" alt="Cerelac Cherry"></div>
+                                <img [src]=item[0]?.assets[0]?.photo[0] alt="Product Image" width="40"
+                                    height="40" alt="Trade Vogue"></div>
                             <div class="flex flex-col w-full overflow-hidden"><a
                                     class="truncate text-sm font-medium text-gray-700 text-heading line-clamp-1"
                                     routerLink="/product/{{item.sku}}">{{item?.name}}</a><span

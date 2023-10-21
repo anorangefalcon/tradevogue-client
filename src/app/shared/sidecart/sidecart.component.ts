@@ -39,6 +39,7 @@ export class SidecartComponent {
     });
     this.cartService.fetchCart("details").subscribe((data) => {
       this.cartArr = data;
+      console.log(this.cartArr[0].assets[0].photo[0], "cartArr Data is" )
     });
     this.cartService.fetchCart("count").subscribe((data) => {
       this.cartCount = data;

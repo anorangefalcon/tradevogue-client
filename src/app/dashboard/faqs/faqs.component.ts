@@ -1,5 +1,4 @@
-import { Component, HostListener } from '@angular/core';
-import { FaqDataService } from 'src/app/shared/services/faq-data.service';
+import { Component, HostListener, provideZoneChangeDetection } from '@angular/core';
 import { PaginationService } from 'src/app/shared/services/pagination.service';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { UtilsModule } from 'src/app/utils/utils.module';
@@ -15,19 +14,17 @@ export class FaqsComponent {
   selectedOption: string = '';
   faqForm!: FormGroup;
   selectedCategory: any;
-  pageSize: number = 3;
-  currentPage: number = 1;
-  limit: number = 10;
   showPopup: boolean = false;
   editItem: boolean = false;
   isSlideIn = false;
   selectedItem: any;
   isMenuActive = false;
   isDrawerOpen: boolean = false;
+  pageSize: number = 3;
+  currentPage: number = 1;
 
 
-  constructor(private faq: FaqDataService, public pagination: PaginationService, private formBuilder: FormBuilder, private bgURL: UtilsModule, private fetchDataService: FetchDataService, private popupService: PopupService, private fb: FormBuilder) {
-    this.pagination.setLimit(this.pageSize);
+  constructor(public pagination: PaginationService, private formBuilder: FormBuilder, private bgURL: UtilsModule, private fetchDataService: FetchDataService, private popupService: PopupService, private fb: FormBuilder) {
     this.loadData();
   }
 
@@ -54,10 +51,14 @@ export class FaqsComponent {
   }
 
   loadData() {
-    this.faq.getFaqData(this.currentPage, this.limit).subscribe((data: any) => {
+    this.pagination.paginateBackend(`${this.bgURL.URLs.getPaginatedData}/faq`, this.currentPage, this.pageSize).subscribe((data) => {
       this.faqData = data;
-      console.log(this.faqData, "faq data");
     });
+    this.paginateData();
+  }
+
+  paginateData() {
+    this.pagination.paginateFrontend(this.faqData, this.currentPage, this.pageSize);
   }
 
   retrieveContent() {
@@ -66,8 +67,15 @@ export class FaqsComponent {
   }
 
   nextPage() {
-    if (this.currentPage * this.pageSize < this.faqData.length) {
+    if (this.currentPage * this.pageSize <= this.faqData.length) {
       this.currentPage++;
+      this.loadData();
+    }
+  }
+
+  previousPage() {
+    if (this.currentPage > 1) {
+      this.currentPage--;
       this.loadData();
     }
   }
@@ -79,29 +87,20 @@ export class FaqsComponent {
       const content = this.faqForm.get('content')?.value;
 
       const dataToSend = {
-        title: selectedCategoryId, 
+        title: selectedCategoryId,
         children: [
           {
-            title: query, 
-            content: content, 
+            title: query,
+            content: content,
             expanded: false,
           },
         ],
       };
 
-     await this.fetchDataService.httpPost(this.bgURL.URLs.addFaqData, dataToSend)
+      await this.fetchDataService.httpPost(this.bgURL.URLs.addFaqData, dataToSend)
 
       console.log(selectedCategoryId, query, content);
       this.faqForm.reset();
-    }
-  }
-
-  
-
-  previousPage() {
-    if (this.currentPage > 1) {
-      this.currentPage--;
-      this.loadData();
     }
   }
 
@@ -174,8 +173,6 @@ export class FaqsComponent {
   toggleMenu() {
     this.isMenuActive = !this.isMenuActive;
   }
-
-
 }
 
 

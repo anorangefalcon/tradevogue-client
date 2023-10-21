@@ -61,7 +61,10 @@ export class UtilsModule {
     // FAQS
     updateFaqData: 'http://localhost:1000/admin/updateFaq',
     deleteFaqData: 'http://localhost:1000/admin/deleteFaq',
-    addFaqData: 'http://localhost:1000/admin/addFaq'
+    addFaqData: 'http://localhost:1000/admin/addFaq',
+
+    // pagination common
+    getPaginatedData: 'http://localhost:1000/user/getPaginatedData',
   }
 
 }

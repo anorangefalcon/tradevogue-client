@@ -24,7 +24,7 @@
             <option *ngFor="let item of faqData" [value]="item.title">{{item.title}}</option>
           </select>
         </div>
-        
+
         <div class="form-group">
           <label for="query">Query</label>
           <input type="text" id="query" formControlName="query" required />
@@ -32,7 +32,7 @@
             <!-- Error messages go here -->
           </div>
         </div>
-        
+
         <div class="form-group">
           <label for="content">Answer</label>
           <input type="text" id="content" formControlName="content" required />
@@ -40,17 +40,10 @@
             <!-- Error messages go here -->
           </div>
         </div>
-        
+
         <button (click)="addCategory()" [disabled]="faqForm.invalid">Add Category</button>
       </form>
-      
-      
-
-
     </div>
-
-
-
 
     <div class="custom-select" style="width:200px;">
       <select [(ngModel)]="selectedOption" (change)="retrieveContent()">
