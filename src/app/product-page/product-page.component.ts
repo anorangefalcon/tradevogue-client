@@ -3,6 +3,11 @@ import { ActivatedRoute } from '@angular/router';
 import { FetchDataService } from '../shared/services/fetch-data.service';
 import { CartService } from '../shared/services/cart.service';
 import { OwlOptions } from 'ngx-owl-carousel-o';
+import { CookieService } from 'ngx-cookie-service';
+import { Router } from '@angular/router';
+import { Location } from '@angular/common';
+import { WishlistService } from '../shared/services/wishlist.service';
+import { UtilsModule } from '../utils/utils.module';
 
 @Component({
   selector: 'app-product-page',
@@ -11,7 +16,6 @@ import { OwlOptions } from 'ngx-owl-carousel-o';
 })
 export class ProductPageComponent implements OnInit {
   data: any = null;
-
   cartStorage: any[] = [];
   selectedSize: string = "";
   selectedColor: string = "";
@@ -22,20 +26,28 @@ export class ProductPageComponent implements OnInit {
   accordianOpen2: boolean = true;
   assetIndex: any = 0;
   sizeIndex: any = 0;
+  isWishlisted: boolean = false;
+  isLogin : boolean = false;
+  sku : any = ""
 
 
   constructor(
     private route: ActivatedRoute,
     private fetchService: FetchDataService,
-    private cartService: CartService
+    private cartService: CartService,
+    private cookie: CookieService,
+    private router : Router,
+    private location: Location,
+    private wishlist : WishlistService,
+    private backendUrls : UtilsModule
   ) { }
 
   breadcrumbs: { label: string; url: string }[] = [];
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
-      const sku = params['sku'];
-      this.fetchService.getProductDetails(sku).subscribe((data: any) => {
+      this.sku = params['sku'];
+      this.fetchService.getProductDetails(this.sku).subscribe((data: any) => {
         this.data = data;
         console.log(data);
         this.data.avgRating = data.avgRating;
@@ -65,6 +77,16 @@ export class ProductPageComponent implements OnInit {
   //   }
   // }
 
+  async addToWishlist(){
+ 
+    this.wishlist.showWishlist();
+    
+  }
+
+  LabelClicked(event:any){
+    console.log('event is ',event.target.value);
+    
+  }
   customOptions: OwlOptions = {
     startPosition: 0,
     loop: true,
@@ -103,6 +125,7 @@ export class ProductPageComponent implements OnInit {
     this.atDefault = !this.atDefault;
   }
 
+  
   // for Product Details:
 
   addReview: boolean = false;

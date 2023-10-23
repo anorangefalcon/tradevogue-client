@@ -69,6 +69,8 @@ export class UtilsModule {
 
     // pagination common
     getPaginatedData: 'http://localhost:1000/user/getPaginatedData',
+    //wishlists
+    showWishlist : 'http://localhost:1000/wishlist/showWishlist'
   }
 
 }

@@ -17,7 +17,8 @@
                         </div>
                     </ng-template>
                 </owl-carousel-o>
-                <button class=" wishlist-btn d-flex align-item-center absolute">
+                <button class=" wishlist-btn d-flex align-item-center absolute" (click)="addToWishlist()"
+                    [ngClass]="{'wishlisted' : isWishlisted}">
                     <span class="material-symbols-outlined">
                         favorite
                     </span>
@@ -78,7 +79,8 @@
 
                         <div class="customSelect">
                             <app-custom-select [selectedOption]=data.info.orderQuantity[0]
-                                (final_option)="updateSelectedField($event)" [options]="data.info.orderQuantity | lessThanOrEqual: data.assets[assetIndex].stockQuantity[sizeIndex].quantity">
+                                (final_option)="updateSelectedField($event)"
+                                [options]="data.info.orderQuantity | lessThanOrEqual: data.assets[assetIndex].stockQuantity[sizeIndex].quantity">
                             </app-custom-select>
                         </div>
 
@@ -91,7 +93,7 @@
                     </div>
 
                     <div class="d-flex flex-column">
-                
+
                         <div class="accordian mw-100">
                             <h3 class="accordian__head relative pointer" [ngClass]="accordianOpen ? 'active' : ''"
                                 (click)="accordianOpen = !accordianOpen">
@@ -125,8 +127,8 @@
                                 </div>
                             </div>
                         </div>
-                        
-                        
+
+
                     </div>
 
                     <div class="stockAvailable">
@@ -209,3 +211,30 @@
         <app-product-card-carousel></app-product-card-carousel>
     </div>
 </section>
+<!-- <div class="wishlist-list d-flex flex-column gap-20">
+    <div class="d-flex justify-content-md-between align-item-center">
+        <h3>Create a new list</h3>
+        <span class="material-symbols-outlined">
+            close
+        </span>
+    </div>
+    <div class="myLists d-flex flex-column gap-10">
+        <label class="d-flex gap-20 justify-content-md-between">
+            <input type="radio" name="default" id="default">
+            <p class="wishlist-name relative" style="padding-inline-start: 20px;">My Wishlist</p>
+        </label>
+        <div class="d-flex justify-content-md-between">
+            <p>
+                New Wishlist
+            </p>
+            <button>
+                <span class="material-symbols-outlined">
+                    add
+                </span>
+            </button>
+        </div>
+
+    </div>
+
+
+</div> -->

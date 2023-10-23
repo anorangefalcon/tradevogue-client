@@ -741,7 +741,7 @@ label span {
             height: 25px;
             transition: all 0.5s;
             width: 25px;
-            border: none;
+            /* border: none; */
             background-color: #fff;
             border: 1px solid black;
             border-radius: 50%;

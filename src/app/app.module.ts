@@ -25,9 +25,9 @@ import { BreadcrumbComponent } from './shared/breadcrumb/breadcrumb.component';
 import { ToastComponent } from './toast/toast.component';
 import { CookieService } from 'ngx-cookie-service';
 import { HeadersInterceptor } from './headers.interceptor';
-import { UtilsModule } from './utils/utils.module';
 import { SidecartComponent } from './shared/sidecart/sidecart.component';
 import { DialogBoxComponent } from './dialog-box/dialog-box.component';
+import { WishlistComponent } from './wishlist/wishlist.component';
 
 
 @NgModule({
@@ -43,6 +43,7 @@ import { DialogBoxComponent } from './dialog-box/dialog-box.component';
     ToastComponent,
     SidecartComponent,
     DialogBoxComponent,
+    WishlistComponent, 
   ],
   imports: [
     BrowserModule,
