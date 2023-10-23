@@ -9,6 +9,6 @@ export class SidecartService {
   isSidecartOpen$: Observable<boolean> = this.isSidecartOpenSubject.asObservable();
 
   toggleSidecart(isOpen: boolean): void {
-    this.isSidecartOpenSubject.next(isOpen);
+    // this.isSidecartOpenSubject.next(isOpen);
   }
 }

@@ -23,6 +23,7 @@ export class UtilsModule {
     addAddress:'http://localhost:1000/user/addAddress',
     subscribeMail : 'http://localhost:1000/sendMail',
     updateAddress:'http://localhost:1000/user/updateAdress',
+    deleteAddress:'http://localhost:1000/user/deleteAddress',
 
     // Dashboard
     addproduct: 'http://localhost:1000/admin/addProduct',
@@ -43,7 +44,9 @@ export class UtilsModule {
     uniqueProductFields: 'http://localhost:1000/products/uniqueFields',
     getOriginalProductPrice:'http://localhost:1000/products/getOriginalPrice',
 
-    deleteAddress:'http://localhost:1000/user/deleteAddress',
+   // product reviews
+   addReview: 'http://localhost:1000/reviews/add',
+   deleteReview: 'http://localhost:1000/reviews/delete',   
 
     // FAQ
     getFaqData: 'http://localhost:1000/user/getFaq',

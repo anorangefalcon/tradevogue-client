@@ -4,7 +4,8 @@ import { ProductPageComponent } from './product-page.component';
 import { SharedModule } from '../shared/shared.module';
 import { RouterModule, Routes } from '@angular/router';
 import { CarouselModule } from 'ngx-owl-carousel-o';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ReviewService } from './services/review.service';
 
 const routes: Routes = [
   { path: '', component: ProductPageComponent },
@@ -12,7 +13,10 @@ const routes: Routes = [
 
 @NgModule({
   declarations: [
-    ProductPageComponent
+    ProductPageComponent,
+  ],
+  providers: [
+    ReviewService
   ],
   imports: [
     CommonModule,
@@ -20,6 +24,7 @@ const routes: Routes = [
     SharedModule,
     RouterModule.forChild(routes),
     CarouselModule,
+    ReactiveFormsModule
   ],
   exports: [
   ]

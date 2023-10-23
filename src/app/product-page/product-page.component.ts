@@ -8,6 +8,8 @@ import { Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { WishlistService } from '../shared/services/wishlist.service';
 import { UtilsModule } from '../utils/utils.module';
+import { ReviewService } from './services/review.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-product-page',
@@ -27,20 +29,29 @@ export class ProductPageComponent implements OnInit {
   assetIndex: any = 0;
   sizeIndex: any = 0;
   isWishlisted: boolean = false;
-  isLogin : boolean = false;
-  sku : any = ""
+  isLogin: boolean = false;
+  sku: any = ""
 
+  ratingForm!: FormGroup;
 
   constructor(
     private route: ActivatedRoute,
     private fetchService: FetchDataService,
     private cartService: CartService,
     private cookie: CookieService,
-    private router : Router,
+    private router: Router,
     private location: Location,
-    private wishlist : WishlistService,
-    private backendUrls : UtilsModule
-  ) { }
+    private wishlist: WishlistService,
+    private backendUrls: UtilsModule,
+    private reviewService: ReviewService,
+    private fb: FormBuilder) {
+
+    this.ratingForm = this.fb.group({
+      rating: ['', Validators.required],
+      review: ['', Validators.required]
+    })
+
+  }
 
   breadcrumbs: { label: string; url: string }[] = [];
 
@@ -49,7 +60,6 @@ export class ProductPageComponent implements OnInit {
       this.sku = params['sku'];
       this.fetchService.getProductDetails(this.sku).subscribe((data: any) => {
         this.data = data;
-        console.log(data);
         this.data.avgRating = data.avgRating;
         this.activeIndex = 0;
         this.selectedColor = data.assets[0].color;
@@ -77,15 +87,15 @@ export class ProductPageComponent implements OnInit {
   //   }
   // }
 
-  async addToWishlist(){
- 
+  async addToWishlist() {
+
     this.wishlist.showWishlist();
-    
+
   }
 
-  LabelClicked(event:any){
-    console.log('event is ',event.target.value);
-    
+  LabelClicked(event: any) {
+    console.log('event is ', event.target.value);
+
   }
   customOptions: OwlOptions = {
     startPosition: 0,
@@ -125,14 +135,26 @@ export class ProductPageComponent implements OnInit {
     this.atDefault = !this.atDefault;
   }
 
-  
-  // for Product Details:
-
-  addReview: boolean = false;
-  selectedSection = 'description';
 
   tempUserRating: number = -1;
   userRating: number = -1;
+
+  RatingUpdated() {
+    this.ratingForm.controls['rating'].setValue(this.userRating + 1);
+  }
+
+  addReview() {
+    let review = {
+      productId: this.data._id,
+      rating: this.ratingForm.controls['rating'].value,
+      comment: this.ratingForm.controls['review'].value
+    }
+    console.log(review, 'pl--------', this.data);
+
+    this.reviewService.addReview(review).subscribe((data: any) => {
+      console.log('done', data);
+    },);
+  }
 
   createArrayToIterate(num: number) {
     const newTotal = Math.floor(num);
@@ -146,8 +168,8 @@ export class ProductPageComponent implements OnInit {
     this.selectedQ = e;
   }
 
-  updateSizeIndex(index: number){
+  updateSizeIndex(index: number) {
     this.sizeIndex = index;
-  } 
+  }
 
 }

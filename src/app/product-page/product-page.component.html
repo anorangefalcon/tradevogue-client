@@ -156,15 +156,15 @@
                     </p>
                 </div>
                 <div class="person-info d-flex justify-content-md-between">
-                    <div *ngIf="data.avgRating !== 0" class="rating d-flex align-item-center">
-                        <span *ngFor="let i of createArrayToIterate(data.avgRating)"
+                    <div *ngIf="review.rating !== 0" class="rating d-flex align-item-center">
+                        <span *ngFor="let i of createArrayToIterate(review.rating)"
                             class="material-symbols-outlined filled">star</span>
-                        <span *ngIf="(data.avgRating % 1) !== 0" class="material-symbols-outlined">star_half</span>
-                        <span *ngFor="let i of createArrayToIterate(5 - data.avgRating)"
+                        <span *ngIf="(review.rating % 1) !== 0" class="material-symbols-outlined">star_half</span>
+                        <span *ngFor="let i of createArrayToIterate(5 - review.rating)"
                             class="material-symbols-outlined">star</span>
                     </div>
                     <p class="fw-600 ">{{ review?.userId?.name.firstname +' '+ review?.userId?.name.lastname }} · {{
-                        review.date }}</p>
+                        review.date | date: 'dd/MM/yyyy' }}</p>
                 </div>
             </div>
 
@@ -182,25 +182,25 @@
                 </span>
                 Close
             </button>
-            <form class="d-flex flex-column gap-20 reviewSection"
+            <form [formGroup]="ratingForm" class="d-flex flex-column gap-20 reviewSection"
                 [ngClass]="(this.showReview == true) ? 'showReviewSection' : ''">
-                <div class="edit-rating">
-                    <span *ngFor="let ok of createArrayToIterate(5); let i = index" (click)="userRating = i"
+                <div formControlName="rating" class="edit-rating">
+                    <span *ngFor="let ok of createArrayToIterate(5); let i = index" (click)="userRating = i; RatingUpdated()"
                         (mouseover)="tempUserRating = i" (mouseleave)="tempUserRating = -1"
                         [ngClass]="i <= (userRating !== -1 ? userRating : tempUserRating) ? 'filled' : ''"
-                        class="material-symbols-outlined pointer">
+                        class="material-symbols-outlined pointer" >
                         star
                     </span>
                 </div>
-                <textarea rows="5" placeholder="Write your review here..."></textarea>
+                <textarea formControlName="review" rows="5" placeholder="Write your review here..."></textarea>
                 <div>
-                    <button class="btn-primary">Submit</button>
+                    <button class="btn-primary" [ngClass]="ratingForm.invalid ? 'disabled': ''" [disabled]="ratingForm.invalid" (click)="addReview()">Submit</button>
                 </div>
             </form>
         </div>
     </div>
 
-    <div class="next">
+    <!-- <div class="next">
         <h2 class="section-heading">Popular Products</h2>
         <p class="section-sub-heading">
             Explore our most popular products.
@@ -209,9 +209,10 @@
 
     <div style="padding-block-end: 50px;">
         <app-product-card-carousel></app-product-card-carousel>
-    </div>
-</section>
-<!-- <div class="wishlist-list d-flex flex-column gap-20">
+    </div> -->
+</section> 
+<!-- 
+ <div class="wishlist-list d-flex flex-column gap-20">
     <div class="d-flex justify-content-md-between align-item-center">
         <h3>Create a new list</h3>
         <span class="material-symbols-outlined">
@@ -235,6 +236,5 @@
         </div>
 
     </div>
+</div>  -->
 
-
-</div> -->

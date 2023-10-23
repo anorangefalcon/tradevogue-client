@@ -43,7 +43,7 @@ export class CartService {
       const myCart = JSON.stringify(this.cartStorage);
       localStorage.setItem("myCart", myCart);
   
-      this.fetchDetails();
+      this.fetchDetails();      
     }
 
   }
