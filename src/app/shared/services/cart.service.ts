@@ -97,7 +97,10 @@ export class CartService {
         });
       });
     }
-    else{
+    else {
+      if(!cartDetails){
+        cartDetails = [];
+      }
       this.http.post(this.backendUrls.URLs.fetchCart, cartDetails).subscribe((data: any) => {                  
         this.cartSubject?.next(data);
       });

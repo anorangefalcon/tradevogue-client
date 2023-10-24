@@ -35,20 +35,9 @@ export class NavbarComponent implements OnInit {
       this.isUserLogin = true;
     }
 
-    // this.cartService.fetchCart().subscribe((data) => {
-    //   console.log('navbar fetch called');
-
-    //   this.cart_count = data.details.length;
-    //   this.cartArr = data.details;
-    // })
-    this.cartService.cart$.subscribe((data) => {
-      console.log('navbar fetch called', data);
-      this.cart_count = data.details.length;
-      // this.cart_count = data.details.length;
-      // this.cartArr = data.details;
+    this.cartService.fetchCart('count').subscribe((item_count: any) => {
+      this.cart_count = item_count;
     })
-
-
 
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
@@ -68,10 +57,10 @@ export class NavbarComponent implements OnInit {
     // );
 
     this.fetchDataService.getUniqueProductFields(body).subscribe((data: any) => {
-      // console.log(data, "navbar");
+      console.log(data, "uniqe data navbar");
 
-      this.categories.men = data.data.male.category;
-      this.categories.women = data.data.female.category;
+      // this.categories.men = data.data.male.category;
+      // this.categories.women = data.data.female.category;
       // console.log(this.categories);
 
     })

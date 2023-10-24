@@ -25,12 +25,19 @@ export class CustomSelectComponent {
 
   constructor(private elementRef: ElementRef) { }
 
-  ngOnChanges() {
-
+  ngOnChanges() {    
     if (this.type == 'multiSelect' && Array.isArray(this.selectedOption)) {
       this.multiSelected = this.selectedOption;
     }
-    else if ( this.options.find((option: any) => option.toLowerCase() == this.selectedOption.toLowerCase()) ) {
+    const isOptionValid = this.options.some(option => {
+      if (typeof option === 'string' || option instanceof String) {
+        return option.toString().toLowerCase() === this.selectedOption.toString().toLowerCase();
+      } else {
+        return option === this.selectedOption;
+      }
+    });
+    
+    if (isOptionValid) {
       this.selected = this.selectedOption;
     }
   }

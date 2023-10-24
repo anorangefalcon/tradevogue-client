@@ -33,16 +33,13 @@ export class ProductPageComponent implements OnInit {
   sku: any = ""
 
   ratingForm!: FormGroup;
+  userReview: any;
 
   constructor(
     private route: ActivatedRoute,
     private fetchService: FetchDataService,
     private cartService: CartService,
-    private cookie: CookieService,
-    private router: Router,
-    private location: Location,
     private wishlist: WishlistService,
-    private backendUrls: UtilsModule,
     private reviewService: ReviewService,
     private fb: FormBuilder) {
 
@@ -64,6 +61,17 @@ export class ProductPageComponent implements OnInit {
         this.activeIndex = 0;
         this.selectedColor = data.assets[0].color;
         this.selectedSize = data.assets[this.assetIndex].stockQuantity[0].size;
+
+        // if this user has already reviewed:
+        console.log(data);
+        if(data.userReview){
+          this.userReview = data.userReview;
+          this.userRating = data.userReview.rating - 1;
+          this.ratingForm.setValue({
+            rating: data.userReview.rating, 
+            review: data.userReview.comment
+          })
+        }
       });
 
     });
@@ -80,13 +88,6 @@ export class ProductPageComponent implements OnInit {
     this.cartService.addToCart(cartItem);
   }
 
-  // @HostListener('document:keyup', ['$event'])
-  // handleKeyboardEvent(event: KeyboardEvent) {
-  //   if (event.key === 'Escape' && this.showCarousel === true) {
-  //     this.showCarousel = false;
-  //   }
-  // }
-
   async addToWishlist() {
     this.wishlist.showWishlist();
   }
@@ -94,7 +95,47 @@ export class ProductPageComponent implements OnInit {
   LabelClicked(event:any){
     console.log('event is ',event.target.value); 
   }
-  
+
+  selectedSection = 'description';
+  tempUserRating: number = -1;
+  userRating: number = -1;
+
+  RatingUpdated() {
+    this.ratingForm.controls['rating'].setValue(this.userRating + 1);
+  }
+
+  addReview() {
+    let review = {
+      productId: this.data._id,
+      rating: this.ratingForm.controls['rating'].value,
+      comment: this.ratingForm.controls['review'].value
+    }
+
+    this.reviewService.addReview(review).subscribe((data: any) => {
+      console.log('done', data);
+    },);
+  }
+
+  deleteReview(){
+    
+  }
+
+  createArrayToIterate(num: number) {
+    const newTotal = Math.floor(num);
+    if (newTotal <= 0) {
+      return [];
+    }
+    return Array(newTotal).fill(0);
+  }
+
+  updateSelectedField(e: any) {
+    this.selectedQ = e;
+  }
+
+  updateSizeIndex(index: number) {
+    this.sizeIndex = index;    
+  }
+
   customOptions: OwlOptions = {
     startPosition: 0,
     loop: true,
@@ -133,46 +174,10 @@ export class ProductPageComponent implements OnInit {
     this.atDefault = !this.atDefault;
   }
 
-  
-  // for Product Details:
-
-
-  selectedSection = 'description';
-
-  tempUserRating: number = -1;
-  userRating: number = -1;
-
-  RatingUpdated() {
-    this.ratingForm.controls['rating'].setValue(this.userRating + 1);
-  }
-
-  addReview() {
-    let review = {
-      productId: this.data._id,
-      rating: this.ratingForm.controls['rating'].value,
-      comment: this.ratingForm.controls['review'].value
-    }
-    console.log(review, 'pl--------', this.data);
-
-    this.reviewService.addReview(review).subscribe((data: any) => {
-      console.log('done', data);
-    },);
-  }
-
-  createArrayToIterate(num: number) {
-    const newTotal = Math.floor(num);
-    if (newTotal <= 0) {
-      return [];
-    }
-    return Array(newTotal).fill(0);
-  }
-
-  updateSelectedField(e: any) {
-    this.selectedQ = e;
-  }
-
-  updateSizeIndex(index: number) {
-    this.sizeIndex = index;
-  }
-
+    // @HostListener('document:keyup', ['$event'])
+  // handleKeyboardEvent(event: KeyboardEvent) {
+  //   if (event.key === 'Escape' && this.showCarousel === true) {
+  //     this.showCarousel = false;
+  //   }
+  // }
 }

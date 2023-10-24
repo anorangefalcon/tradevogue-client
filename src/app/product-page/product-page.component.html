@@ -48,7 +48,9 @@
                             <span *ngFor="let i of createArrayToIterate(5 - data.avgRating)"
                                 class="material-symbols-outlined">star</span>
                         </div>
-                        <p class="rate">({{data.avgRating}}/5 · {{data.reviews.length}} Reviews)</p>
+                        <p *ngIf="data.avgRating > 0" class="rate">({{data.avgRating}}/5 · {{ userReview ?
+                            data.reviews.length + 1 : data.reviews.length}} Reviews)</p>
+                        <p *ngIf="data.avgRating === 0" class="rate">No Reviews yet</p>
                     </div>
 
                     <div class="colors d-flex align-item-center gap-15">
@@ -76,7 +78,6 @@
                     </div>
 
                     <div class="d-flex gap-15 align-item-center">
-
                         <div class="customSelect">
                             <app-custom-select [selectedOption]=data.info.orderQuantity[0]
                                 (final_option)="updateSelectedField($event)"
@@ -147,9 +148,29 @@
         </div>
 
         <div class="review-cards d-flex flex-column gap-20">
-            <h3 class="rate">Rate & Review</h3>
-            <div class="review-card d-flex flex-column gap-5" *ngFor="let review of data.reviews">
+            <h3 class="rate">Customer Reviews</h3>
 
+            <div *ngIf="userReview">
+                <div>
+                    <p class="rev">
+                        {{ userReview.comment }}
+                    </p>
+                </div>
+                <div class="person-info d-flex justify-content-md-between">
+                    <div *ngIf="userReview.rating !== 0" class="rating d-flex align-item-center">
+                        <span *ngFor="let i of createArrayToIterate(userReview.rating)"
+                            class="material-symbols-outlined filled">star</span>
+                        <span *ngIf="(userReview.rating % 1) !== 0" class="material-symbols-outlined">star_half</span>
+                        <span *ngFor="let i of createArrayToIterate(5 - userReview.rating)"
+                            class="material-symbols-outlined">star</span>
+                    </div>
+                    <p class="fw-600 "> <span>You</span> {{ userReview?.userId?.name.firstname +' '+ userReview?.userId?.name.lastname }}
+                        · {{
+                        userReview.date | date: 'dd/MM/yyyy' }}
+                    </p>
+                </div>
+            </div>
+            <div class="review-card d-flex flex-column gap-5" *ngFor="let review of data.reviews">
                 <div>
                     <p class="rev">
                         {{ review.comment }}
@@ -168,13 +189,15 @@
                 </div>
             </div>
 
-            <button class="btn-primary review-btn pointer d-flex align-item-center gap-10" *ngIf="this.showReview!=true"
-                (click)="this.showReview = !this.showReview">
-                <span class="material-symbols-outlined">
-                    edit
-                </span>
-                Add a Review
-            </button>
+            <div *ngIf="!userReview">
+                <button class="btn-primary review-btn pointer d-flex align-item-center gap-10"
+                    *ngIf="this.showReview!=true" (click)="this.showReview = !this.showReview">
+                    <span class="material-symbols-outlined">
+                        edit
+                    </span>
+                    Add a Review
+                </button>
+            </div>
             <button class="btn-primary review-btn pointer d-flex align-item-center gap-10" *ngIf="this.showReview==true"
                 (click)="this.showReview = !this.showReview">
                 <span class="material-symbols-outlined">
@@ -184,20 +207,23 @@
             </button>
             <form [formGroup]="ratingForm" class="d-flex flex-column gap-20 reviewSection"
                 [ngClass]="(this.showReview == true) ? 'showReviewSection' : ''">
-                <div formControlName="rating" class="edit-rating">
-                    <span *ngFor="let ok of createArrayToIterate(5); let i = index" (click)="userRating = i; RatingUpdated()"
-                        (mouseover)="tempUserRating = i" (mouseleave)="tempUserRating = -1"
+                <div class="edit-rating">
+                    <span *ngFor="let ok of createArrayToIterate(5); let i = index"
+                        (click)="userRating = i; RatingUpdated()" (mouseover)="tempUserRating = i"
+                        (mouseleave)="tempUserRating = -1"
                         [ngClass]="i <= (userRating !== -1 ? userRating : tempUserRating) ? 'filled' : ''"
-                        class="material-symbols-outlined pointer" >
+                        class="material-symbols-outlined pointer">
                         star
                     </span>
                 </div>
                 <textarea formControlName="review" rows="5" placeholder="Write your review here..."></textarea>
                 <div>
-                    <button class="btn-primary" [ngClass]="ratingForm.invalid ? 'disabled': ''" [disabled]="ratingForm.invalid" (click)="addReview()">Submit</button>
+                    <button class="btn-primary" [ngClass]="ratingForm.invalid ? 'disabled': ''"
+                        [disabled]="ratingForm.invalid" (click)="addReview()">Submit</button>
                 </div>
             </form>
         </div>
+
     </div>
 
     <!-- <div class="next">
@@ -210,7 +236,7 @@
     <div style="padding-block-end: 50px;">
         <app-product-card-carousel></app-product-card-carousel>
     </div> -->
-</section> 
+</section>
 <!-- 
  <div class="wishlist-list d-flex flex-column gap-20">
     <div class="d-flex justify-content-md-between align-item-center">
@@ -237,4 +263,3 @@
 
     </div>
 </div>  -->
-

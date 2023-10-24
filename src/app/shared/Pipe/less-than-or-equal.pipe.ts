@@ -5,20 +5,13 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class LessThanOrEqualPipe implements PipeTransform {
 
-  transform(array: number[], limit: number): number[] {
-    let limitCheck = false;
-    return array.map((item: any) => {
+  transform(array: any[], limit: number): number[] {    
+    let filteredArray = array.filter(item => item <= limit);
 
-      if ((item > limit)) {
-        if (!limitCheck) {
-          limitCheck = true;
-          return limit;
-        }
-        return;
-      }
-      return item;
-
-    });
+    if( !(filteredArray.includes(limit)) && (array.pop() > limit) ) {      
+      filteredArray.push(limit);
+    }
+    
+    return filteredArray;
   }
-
 }

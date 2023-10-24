@@ -45,7 +45,7 @@ export class UtilsModule {
     getOriginalProductPrice:'http://localhost:1000/products/getOriginalPrice',
 
    // product reviews
-   addReview: 'http://localhost:1000/reviews/add',
+   addOrUpdateReview: 'http://localhost:1000/reviews/addOrUpdate',
    deleteReview: 'http://localhost:1000/reviews/delete',   
 
     // FAQ
