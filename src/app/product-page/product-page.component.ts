@@ -88,15 +88,13 @@ export class ProductPageComponent implements OnInit {
   // }
 
   async addToWishlist() {
-
     this.wishlist.showWishlist();
-
   }
 
-  LabelClicked(event: any) {
-    console.log('event is ', event.target.value);
-
+  LabelClicked(event:any){
+    console.log('event is ',event.target.value); 
   }
+  
   customOptions: OwlOptions = {
     startPosition: 0,
     loop: true,
@@ -135,6 +133,11 @@ export class ProductPageComponent implements OnInit {
     this.atDefault = !this.atDefault;
   }
 
+  
+  // for Product Details:
+
+
+  selectedSection = 'description';
 
   tempUserRating: number = -1;
   userRating: number = -1;

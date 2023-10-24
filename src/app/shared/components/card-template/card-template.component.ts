@@ -4,6 +4,7 @@ import { OwlOptions } from 'ngx-owl-carousel-o';
 import { SidecartService } from '../../services/sidecart.service';
 import { FetchDataService } from '../../services/fetch-data.service';
 import { PopupService } from '../../services/popup.service';
+import { WishlistService } from '../../services/wishlist.service';
 
 @Component({
   selector: 'app-card-template',
@@ -16,7 +17,7 @@ export class CardTemplateComponent {
   showPopup: boolean = false;
 
 
-  constructor(private cartService: CartService, private sideCartService: SidecartService, private fetchdata: FetchDataService, private popupService: PopupService) { }
+  constructor(private cartService: CartService, private sideCartService: SidecartService, private fetchdata: FetchDataService, private popupService: PopupService, private wishlist : WishlistService) { }
 
   avgRating: number = 0;
   productData: any = [];
@@ -62,7 +63,11 @@ export class CardTemplateComponent {
     }
     return Array(newTotal).fill(0);
   }
-    
+
+  async addToWishlist() {
+    this.wishlist.showWishlist();
+  }
+  
   addToCart(){
     const cartItem = {
       sku: this.product.sku,
