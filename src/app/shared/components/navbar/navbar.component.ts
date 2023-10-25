@@ -67,11 +67,14 @@ export class NavbarComponent implements OnInit {
 
   }
 
+  searchExplore(query: string){
+    this.router.navigateByUrl(`/explore?search=${query}`);
+  }
+
   onLogout() {
     this.cookie.delete('userToken');
     this.cookie.delete('userName');
-
-
+    
     // doSignout();
     this.router.navigate(['/']);
     this.isUserLogin = false;

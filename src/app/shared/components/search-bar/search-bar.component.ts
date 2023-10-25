@@ -1,6 +1,5 @@
-import { Component, Input, ViewEncapsulation } from '@angular/core';
-import { FetchDataService } from '../../services/fetch-data.service';
-import { Router } from '@angular/router';
+import { Component, Input, Output, EventEmitter, ViewEncapsulation } from '@angular/core';
+import { Observable, Subject, debounceTime, distinctUntilChanged } from 'rxjs';
 
 @Component({
   selector: 'app-search-bar',
@@ -11,22 +10,24 @@ import { Router } from '@angular/router';
 export class SearchBarComponent {
 
   @Input() searchPlaceholder: string = 'Search...';
-  @Input() searchWhat: any = 'products';
+  @Output() searchQuery$ = new EventEmitter <string>();
 
+  private searchText$ = new Subject<string>();
 
-  constructor(private fetchData: FetchDataService, private router: Router) { }
+  constructor() {
+    this.searchText$
+      .pipe(
+        debounceTime(500),
+        distinctUntilChanged()
+      )
+      .subscribe((searchText: string) => {
+        this.searchQuery$.emit(searchText);
+      });
+   }
 
-  search(e: Event) {
+  typed(e: Event) {
     let searchText = (<HTMLInputElement>e.target).value;
-    if (this.searchWhat === 'products') {
-      searchText = searchText.trim()
-      if (searchText === '') {
-        this.router.navigateByUrl('/');
-        
-      }
-      else {
-        this.router.navigateByUrl(`/explore?search=${searchText}`);
-      }
-    }
+    searchText = searchText.trim();
+    this.searchText$.next(searchText);
   }
 }

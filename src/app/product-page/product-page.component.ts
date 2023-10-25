@@ -3,11 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { FetchDataService } from '../shared/services/fetch-data.service';
 import { CartService } from '../shared/services/cart.service';
 import { OwlOptions } from 'ngx-owl-carousel-o';
-import { CookieService } from 'ngx-cookie-service';
-import { Router } from '@angular/router';
-import { Location } from '@angular/common';
 import { WishlistService } from '../shared/services/wishlist.service';
-import { UtilsModule } from '../utils/utils.module';
 import { ReviewService } from './services/review.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToastService } from '../shared/services/toast.service';
@@ -120,7 +116,7 @@ export class ProductPageComponent implements OnInit {
       this.fetchProductData();
       this.showReview = false;
       this.toastService.successToast({
-        title: 'Review successfully posted'
+        title: 'Review successfully ' + (this.userReview ? 'updated' : 'posted')
       });
     });
   }

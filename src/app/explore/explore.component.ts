@@ -39,8 +39,7 @@ export class ExploreComponent {
   
       this.fetchData.getProducts(actualParams).subscribe((data: any) => {
         this.products = data.items
-        console.log("filtered products" , this.products); //2 
-        
+        console.log("filtered products" , this.products); //2
       });
     });
 
