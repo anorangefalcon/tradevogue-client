@@ -147,10 +147,10 @@
             </div>
         </div>
 
-        <div class="review-cards d-flex flex-column gap-20">
+        <div #reviews class="review-cards d-flex flex-column">
             <h3 class="rate">Customer Reviews</h3>
 
-            <div *ngIf="userReview">
+            <div *ngIf="userReview" class="review-card d-flex flex-column gap-10" [ngClass]="showReview ? 'hide' : ''">
                 <div>
                     <p class="rev">
                         {{ userReview.comment }}
@@ -163,14 +163,31 @@
                         <span *ngIf="(userReview.rating % 1) !== 0" class="material-symbols-outlined">star_half</span>
                         <span *ngFor="let i of createArrayToIterate(5 - userReview.rating)"
                             class="material-symbols-outlined">star</span>
+                        <div class="your-review-edit-button opacity-70 d-flex justify-content-center 
+                        align-item-center gap-5 pointer" (click)="showReview = !showReview; scroll(addReview)"
+                            [ngClass]="showReview ? 'active' : ''">
+                            <i class="material-symbols-outlined">
+                                edit
+                            </i>
+                            edit
+                        </div>
+
+                        <div class="your-review-delete-button opacity-70 d-flex justify-content-center 
+                        align-item-center gap-5 pointer" (click)="deleteReview()"
+                            [ngClass]="showReview ? 'active' : ''">
+                            <i class="material-symbols-outlined">
+                                delete
+                            </i>
+                        </div>
                     </div>
-                    <p class="fw-600 "> <span>You</span> {{ userReview?.userId?.name.firstname +' '+ userReview?.userId?.name.lastname }}
+                    <p class="fw-600 opacity-70">
+                        {{ userReview?.userId?.name.firstname +' '+ userReview?.userId?.name.lastname }}
                         · {{
                         userReview.date | date: 'dd/MM/yyyy' }}
                     </p>
                 </div>
             </div>
-            <div class="review-card d-flex flex-column gap-5" *ngFor="let review of data.reviews">
+            <div class="review-card d-flex flex-column gap-10" *ngFor="let review of data.reviews">
                 <div>
                     <p class="rev">
                         {{ review.comment }}
@@ -184,28 +201,28 @@
                         <span *ngFor="let i of createArrayToIterate(5 - review.rating)"
                             class="material-symbols-outlined">star</span>
                     </div>
-                    <p class="fw-600 ">{{ review?.userId?.name.firstname +' '+ review?.userId?.name.lastname }} · {{
+                    <p class="fw-600 opacity-70">{{ review?.userId?.name.firstname +' '+ review?.userId?.name.lastname
+                        }} · {{
                         review.date | date: 'dd/MM/yyyy' }}</p>
                 </div>
             </div>
 
-            <div *ngIf="!userReview">
-                <button class="btn-primary review-btn pointer d-flex align-item-center gap-10"
-                    *ngIf="this.showReview!=true" (click)="this.showReview = !this.showReview">
-                    <span class="material-symbols-outlined">
-                        edit
-                    </span>
-                    Add a Review
-                </button>
-            </div>
-            <button class="btn-primary review-btn pointer d-flex align-item-center gap-10" *ngIf="this.showReview==true"
-                (click)="this.showReview = !this.showReview">
+        </div>
+        <div class="add-review-btn" *ngIf="!userReview" >
+            <button class="btn-primary review-btn pointer d-flex align-item-center gap-10"
+                *ngIf="this.showReview!=true" (click)="showReview = true; scroll(addReview)">
                 <span class="material-symbols-outlined">
-                    close
+                    add
                 </span>
-                Close
+                Add a Review
             </button>
-            <form [formGroup]="ratingForm" class="d-flex flex-column gap-20 reviewSection"
+        </div>
+        <div #addReview class="review-form review-cards" [ngClass]="this.showReview ? 'active' : ''">
+            <h3 
+                *ngIf="this.showReview==true" (click)="this.showReview = !this.showReview">
+                {{ userReview ? 'Update your Review' : 'Review this Product' }}
+            </h3>
+            <form [formGroup]="ratingForm" class="d-flex flex-column gap-15 reviewSection"
                 [ngClass]="(this.showReview == true) ? 'showReviewSection' : ''">
                 <div class="edit-rating">
                     <span *ngFor="let ok of createArrayToIterate(5); let i = index"
@@ -217,16 +234,24 @@
                     </span>
                 </div>
                 <textarea formControlName="review" rows="5" placeholder="Write your review here..."></textarea>
-                <div>
+                <div class="d-flex gap-10">
                     <button class="btn-primary" [ngClass]="ratingForm.invalid ? 'disabled': ''"
-                        [disabled]="ratingForm.invalid" (click)="addReview()">Submit</button>
+                        [disabled]="ratingForm.invalid" (click)="addOrUpdateReview(); scroll(reviews)">
+                            {{ userReview ? 'Update' : 'Submit' }}
+                    </button>
+
+                    <button class="btn-secondary review-btn pointer d-flex align-item-center gap-10"
+                        *ngIf="this.showReview==true" (click)="this.showReview = !this.showReview; scroll(reviews)">
+                        Cancel
+                    </button>
+            
                 </div>
+
             </form>
         </div>
-
     </div>
 
-    <!-- <div class="next">
+    <div class="next">
         <h2 class="section-heading">Popular Products</h2>
         <p class="section-sub-heading">
             Explore our most popular products.
@@ -235,31 +260,5 @@
 
     <div style="padding-block-end: 50px;">
         <app-product-card-carousel></app-product-card-carousel>
-    </div> -->
+    </div>
 </section>
-<!-- 
- <div class="wishlist-list d-flex flex-column gap-20">
-    <div class="d-flex justify-content-md-between align-item-center">
-        <h3>Create a new list</h3>
-        <span class="material-symbols-outlined">
-            close
-        </span>
-    </div>
-    <div class="myLists d-flex flex-column gap-10">
-        <label class="d-flex gap-20 justify-content-md-between">
-            <input type="radio" name="default" id="default">
-            <p class="wishlist-name relative" style="padding-inline-start: 20px;">My Wishlist</p>
-        </label>
-        <div class="d-flex justify-content-md-between">
-            <p>
-                New Wishlist
-            </p>
-            <button>
-                <span class="material-symbols-outlined">
-                    add
-                </span>
-            </button>
-        </div>
-
-    </div>
-</div>  -->

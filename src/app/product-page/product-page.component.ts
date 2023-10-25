@@ -10,6 +10,7 @@ import { WishlistService } from '../shared/services/wishlist.service';
 import { UtilsModule } from '../utils/utils.module';
 import { ReviewService } from './services/review.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ToastService } from '../shared/services/toast.service';
 
 @Component({
   selector: 'app-product-page',
@@ -41,7 +42,8 @@ export class ProductPageComponent implements OnInit {
     private cartService: CartService,
     private wishlist: WishlistService,
     private reviewService: ReviewService,
-    private fb: FormBuilder) {
+    private fb: FormBuilder,
+    private toastService: ToastService) {
 
     this.ratingForm = this.fb.group({
       rating: ['', Validators.required],
@@ -53,6 +55,10 @@ export class ProductPageComponent implements OnInit {
   breadcrumbs: { label: string; url: string }[] = [];
 
   ngOnInit(): void {
+    this.fetchProductData();
+  }
+
+  fetchProductData() {
     this.route.params.subscribe(params => {
       this.sku = params['sku'];
       this.fetchService.getProductDetails(this.sku).subscribe((data: any) => {
@@ -63,12 +69,11 @@ export class ProductPageComponent implements OnInit {
         this.selectedSize = data.assets[this.assetIndex].stockQuantity[0].size;
 
         // if this user has already reviewed:
-        console.log(data);
-        if(data.userReview){
+        if (data.userReview) {
           this.userReview = data.userReview;
           this.userRating = data.userReview.rating - 1;
           this.ratingForm.setValue({
-            rating: data.userReview.rating, 
+            rating: data.userReview.rating,
             review: data.userReview.comment
           })
         }
@@ -92,8 +97,8 @@ export class ProductPageComponent implements OnInit {
     this.wishlist.showWishlist();
   }
 
-  LabelClicked(event:any){
-    console.log('event is ',event.target.value); 
+  LabelClicked(event: any) {
+    console.log('event is ', event.target.value);
   }
 
   selectedSection = 'description';
@@ -104,7 +109,7 @@ export class ProductPageComponent implements OnInit {
     this.ratingForm.controls['rating'].setValue(this.userRating + 1);
   }
 
-  addReview() {
+  addOrUpdateReview() {
     let review = {
       productId: this.data._id,
       rating: this.ratingForm.controls['rating'].value,
@@ -112,13 +117,35 @@ export class ProductPageComponent implements OnInit {
     }
 
     this.reviewService.addReview(review).subscribe((data: any) => {
-      console.log('done', data);
-    },);
+      this.fetchProductData();
+      this.showReview = false;
+      this.toastService.successToast({
+        title: 'Review successfully posted'
+      });
+    });
   }
 
-  deleteReview(){
-    
+  deleteReview() {
+    this.reviewService.deleteReview(this.data._id).subscribe((data: any)=>{
+      console.log(data.message);
+      this.userReview = '';
+      this.fetchProductData();
+      this.toastService.notificationToast({
+        title: 'Review deleted successfully'
+      });
+    });
   }
+
+  scroll(element: HTMLElement){
+    var headerOffset = 250;
+    var elementPosition = element.getBoundingClientRect().top;
+    var offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+  
+    window.scrollTo({
+         top: offsetPosition,
+         behavior: "smooth"
+    });
+}
 
   createArrayToIterate(num: number) {
     const newTotal = Math.floor(num);
@@ -133,7 +160,7 @@ export class ProductPageComponent implements OnInit {
   }
 
   updateSizeIndex(index: number) {
-    this.sizeIndex = index;    
+    this.sizeIndex = index;
   }
 
   customOptions: OwlOptions = {
@@ -174,7 +201,7 @@ export class ProductPageComponent implements OnInit {
     this.atDefault = !this.atDefault;
   }
 
-    // @HostListener('document:keyup', ['$event'])
+  // @HostListener('document:keyup', ['$event'])
   // handleKeyboardEvent(event: KeyboardEvent) {
   //   if (event.key === 'Escape' && this.showCarousel === true) {
   //     this.showCarousel = false;
