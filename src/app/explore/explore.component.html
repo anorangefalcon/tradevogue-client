@@ -32,26 +32,23 @@
             </div>
 
             <div *ngFor="let filter of uniqueData | keyvalue " class="types">
-                <div class="category d-flex flex-column gap-10">
+                <div class="d-flex flex-column gap-10">
                     <p>{{filter.key | titlecase}}</p>
 
 
-<!--    [checked]="isValueSelected(value,filterApplied[filter.key])" -->
+                    <!--    [checked]="isValueSelected(value,filterApplied[filter.key])" -->
                     <div *ngFor="let value of filter.value | slice:0:3; let i = index" class="d-flex gap-10 ">
-                        
+
                         <input type="checkbox" [name]="filter.key" [value]="value"
                             (change)="onChecked($event, filter.key)" id={{value}} class="checkboxes"
-                          
-                            [checked]="isValueSelected(value,filterApplied[filter.key])"
-                            >
+                            [checked]="isValueSelected(value,filterApplied[filter.key])">
                         <label [for]="value" class="capital">{{ value}}</label>
                     </div>
-                  
+
                     <div *ngIf="filter.value[-1]==true" class="d-flex flex-column gap-10">
                         <div *ngFor="let value of filter.value | slice:3; let i = index"
                             class="d-flex gap-10 align-item-center">
                             <input type="checkbox" [name]="filter.key" [value]="value" id={{value}} class="checkboxes"
-                                
                                 (change)="onChecked($event, filter.key)">
                             <label [for]="value" class="capital">{{ value}}</label>
                         </div>
@@ -61,26 +58,74 @@
                         More</a>
                 </div>
             </div>
+           
+            <div class="types">
+                <div class="category d-flex flex-column gap-10 justify-content-center">
+                    <p>Price</p>
+                    <div class="d-flex flex-column gap-5 price">
+                        <div class="d-flex gap-20 ranges">
+                            <p>Min. Range</p>
+                            <p>Max. Range</p>
+                        </div>
+                        <div class="d-flex gap-10">
+                            <div class="form__group relative">
+                                <span class="material-symbols-outlined key  form__icon absolute">currency_rupee</span>
+                                <input type="number" class="form__input" >
+                            </div>
+                            <div class="form__group relative">
+                                <span class="material-symbols-outlined key  form__icon absolute">currency_rupee</span>
+                                <input type="number" class="form__input" >
+                            </div>
+                            <button class="d-flex justify-content-center align-item-center">
+                                <span class="material-symbols-outlined">
+                                search
+                                </span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="types">
+                <div class="category d-flex flex-column gap-10">
+                    <p>Colors</p>
+                    <div class="colors-opt d-flex gap-10">
+                        <div class="colors-radios d-flex align-item-center"
+                            *ngFor="let color of colors">
+                            <input type="radio" name="color" [value]=color
+                                [style.background-color]="color">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="types">
+                <div class="category d-flex flex-column gap-10">
+                    <p>Size</p>
+                    <div *ngFor="let size of sizes" class="d-flex gap-10 ">
+                        <input type="checkbox" [name]="size" [value]="size" id={{size}} class="checkboxes">
+                        <label [for]="size" class="capital">{{size}}</label>
+                    </div>
+                </div>
+            </div>
         </div>
+
+
         <div class="d-flex flex-column cards">
             <span class="d-flex gap-10" *ngFor="let filter of filterApplied | keyvalue">
-                <!-- {{filter|json}}  -->
-                
-                <!-- {{typeof(fil)}} -->
+
 
                 <div *ngIf="isString(filter.value)">
                     <!-- {{val}} -->
-                    <div class="d-flex tags align-item-center justify-content-center " >
-                    <p>{{filter.value}}</p>
-                    <a class="d-flex justify-content-center align-item-center">
-                        <span class="material-symbols-outlined pointer" (click)="onRemove($event, filter.key)">
-                            close
-                        </span>
-                    </a>
+                    <div class="d-flex tags align-item-center justify-content-center ">
+                        <p>{{filter.value}}</p>
+                        <a class="d-flex justify-content-center align-item-center">
+                            <span class="material-symbols-outlined pointer" (click)="onRemove($event, filter.key)">
+                                close
+                            </span>
+                        </a>
                     </div>
                 </div>
 
-                
+
 
                 <div class="d-flex tags align-item-center justify-content-center " *ngFor="let val of filter.value  ">
                     <!-- {{val}} -->

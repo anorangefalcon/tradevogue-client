@@ -7,9 +7,9 @@ import { WishlistService } from '../shared/services/wishlist.service';
   styleUrls: ['./wishlist.component.css']
 })
 
-export class WishlistComponent implements OnInit {
+export class WishlistComponent {
 
-  wishlistsArray : any[] = []
+  wishlistsArray : any 
   list : any = []
   name = "jahnavi"
 
@@ -19,7 +19,7 @@ export class WishlistComponent implements OnInit {
     this.wishlistService.send$.subscribe((data)=>{    
       this.wishlistsArray = data
       console.log(this.wishlistsArray, "array");
-      this.list = this.wishlistsArray.map(item => item['wishlistName']);
+      this.list = this.wishlistsArray.map((item:any) => item['wishlistName']);
       console.log(this.list, "list"); 
 
     })

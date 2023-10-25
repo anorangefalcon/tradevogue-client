@@ -18,8 +18,8 @@
         </div>
         <ul class="d-flex gap-30 nav-items" [class.active]="hamburgerOpen">
         
-            <li class="nav-links relative " (click)="hamburgerOpen = false">
-                <a class="d-flex flex-column gap-5 pointer">
+            <li class="nav-links relative " (click)="hamburgerOpen = false" >
+                <a class="d-flex flex-column gap-5 pointer" [routerLink]="['/explore']" [queryParams]="{ gender: 'male'}">
                     Men
                 </a>
                 <ul class="sub-categories">
@@ -32,25 +32,25 @@
                     </li> -->
                     <li>
                         <a [routerLink]="['/explore']" [queryParams]="{ gender: 'male' , category: 'kurta'}">
-                            <img src="https://cdn.filestackcontent.com/BFrKaz6TLqbhVMAkf5a1">
+                            <img src="http://drive.google.com/uc?export=view&id=1y9Y0C7C5blrO-iHTPksIlizLGAhzfy06">
                             <span>Kurta</span>
                         </a>
                     </li>
                     <li>
                         <a [routerLink]="['/explore']" [queryParams]="{ gender: 'male' , category: 'shirt'}">
-                            <img src="https://cdn.filestackcontent.com/3D8gDfb2SaGHF08zXkYl">
+                            <img src="http://drive.google.com/uc?export=view&id=1hUIIpJV-fz4R0B59tjl9_LLVPoax6wLr">
                             <span>Shirt</span>
                         </a>
                     </li>
                     <li>
                         <a [routerLink]="['/explore']" [queryParams]="{ gender: 'male' , category: 'tshirt'}" >
-                            <img src="https://cdn.filestackcontent.com/XyQdeUFxRBkXFpZxPZAY">
+                            <img src="http://drive.google.com/uc?export=view&id=1yBMcAJKcREDpDlNxNPS1Kdy61LgyGKIj">
                             <span>Tshirt</span>
                         </a>
                     </li>
                     <li>
                         <a [routerLink]="['/explore']" [queryParams]="{ gender: 'male'}" >
-                            <img src="https://cdn.filestackcontent.com/DDNM5jchRomMoaNoEpUN">
+                            <img src="http://drive.google.com/uc?export=view&id=1N0WCb1MgxZ9YOOq-thJ_dEqy8PvtiXPH">
                             <span>Explore All</span>
                         </a>
                     </li>
@@ -67,8 +67,8 @@
                     </li> -->
                 </ul>
             </li>
-            <li class="nav-links relative" (click)="hamburgerOpen = false">
-                <a class="d-flex flex-column gap-5 pointer">
+            <li class="nav-links relative" (click)="hamburgerOpen = false" >
+                <a class="d-flex flex-column gap-5 pointer" [routerLink]="['/explore']" [queryParams]="{ gender: 'female'}">
                     Women
                 </a>
                 <ul class="sub-categories">
@@ -80,19 +80,19 @@
                     </li>
                     <li>
                         <a [routerLink]="['/explore']" [queryParams]="{ gender: 'female' , category: 'shirt'}">
-                            <img src="https://cdn.filestackcontent.com/mYK2amVpRhKq143MoPRW">
+                            <img src="http://drive.google.com/uc?export=view&id=1GHYUCJT1Ee97ucIGDtZ6-2HWKHgsE9XT">
                             <span>Shirt</span>
                         </a>
                     </li>
                     <li>
                         <a [routerLink]="['/explore']" [queryParams]="{ gender: 'female' , category: 'tshirt'}">
-                            <img src="https://cdn.filestackcontent.com/7B1UonnWRyrC8dUyrJ8w">
+                            <img src="http://drive.google.com/uc?export=view&id=1xTshBiSZh-plrIFcYNV-Xg0ENO7qi4Lh">
                             <span>T-Shirt</span>
                         </a>
                     </li>
                     <li>
                         <a [routerLink]="['/explore']" [queryParams]="{ gender: 'female'}">
-                            <img src="https://cdn.filestackcontent.com/H47hbgxxTc6l5y3UCkQw">
+                            <img src="http://drive.google.com/uc?export=view&id=189fp7hK8OAdzTqiXI2cIJgnrgEiH8VL2">
                             <span>Explore All</span>
                         </a>
                     </li>

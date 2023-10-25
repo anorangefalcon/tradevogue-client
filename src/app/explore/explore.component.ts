@@ -24,6 +24,9 @@ export class ExploreComponent {
   filtersOpen: boolean = false;
   filterKeys: any = {}
   data: any;
+  sizes : string[] = ['XS', 'S', 'M', 'L', 'XL', 'XXL', 'XXXL'];
+  colors : string[] = ['Black', 'White', 'Red', 'Blue', 'Green', 'Purple']
+  
   constructor(private productFilter: ProductsFilterService, private fetchData: FetchDataService, private http: HttpClient, private route: ActivatedRoute, private location: Location, private backendUrls: UtilsModule, private fetchDataService: FetchDataService) { }
 
   ngOnInit() {
@@ -48,6 +51,8 @@ export class ExploreComponent {
     this.fetchData.getUniqueProductFields(body).subscribe((res: any) => {
   
       this.uniqueData = res.data;
+      console.log(this.uniqueData, "unique");
+      
     })
   }
 

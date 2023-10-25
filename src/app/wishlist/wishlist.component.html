@@ -1,31 +1,25 @@
 <div class="wishlist-outer ">
     <div class="wishlist-list d-flex flex-column gap-10 absolute">
         <div class="d-flex justify-content-md-between align-item-center header">
-            <h3>New Wishlist</h3>
+            <h3 *ngIf="name">New Wishlist</h3>
             <button class="d-flex align-item-center">
                 <span class="material-symbols-outlined">
                     add
                 </span>
             </button>
         </div>
-        {{name}}
         <div class="d-flex flex-column gap-5">
             <button (click)="Close()" class="absolute close-btn">
                 <span class="material-symbols-outlined close">
                     close
                 </span>
             </button>
-            {{list}}dhxnjhsnxhjmzhm
-            <p>jhsknx {{list}}</p>
-            <p>{{name}}</p>
-            <ng-container *ngIf="list && list.length>0">
                 <div *ngFor="let item of list; let i = index">
                     <label class="d-flex gap-20 justify-content-md-between" for="{{i}}">
                         <input type="radio" name="{{item}}" id="{{i}}" value="{{item}}">
                         <p class="wishlist-name relative">{{item}}</p>
                     </label>
                 </div>
-            </ng-container>
          </div>
     </div>
 </div>

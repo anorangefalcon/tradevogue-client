@@ -46,6 +46,7 @@ input[type="checkbox"]:checked + label::after {
 .head a {
     font-size: 12px;
 }
+
 .tags {
     margin-block-end: 20px;
     border: 1px solid rgb(var(--blackClr), 0.4);
@@ -59,6 +60,7 @@ input[type="checkbox"]:checked + label::after {
         font-size: 12px;
     }
 }
+
 .filters {
     /* position: sticky; */
     inset-block-start: 0;
@@ -167,8 +169,81 @@ input[type="checkbox"]:checked + label::after {
         font-weight: 300;
     }
 }
+.colors-radios {
+    border-radius: 4px;
+    position: relative;
+    width: fit-content;
+}
 
+.colors-radios input {
+    width: 20px;
+    height: 20px;
+    appearance: none;
+    cursor: pointer;
+    border-radius: 4px;
+    border: 1px solid rgba(var(--textClr), 0.2);
+    transition: all 0.1s;
+}
 
+.colors-radios input:checked {
+    border: 1px solid rgb(var(--textClr));
+}
+
+.colors-radios input::before {
+    text-align: center;
+}
+
+.colors-radios input:checked::after {
+    content: "\e5ca";
+    font-family: 'Material Symbols Outlined';
+    height: 10px;
+    text-shadow: 0px 0px 2px #000000;
+    width: 6px;
+    color: white;
+    position: absolute;
+    font-size: 18px;
+    font-weight: 300;
+    left: 1px;
+    top: -3px;
+}
+input[type="number"] {
+    width: 65px;
+    height: 30px;
+    padding-inline: 10px;
+    padding-inline-start: 20px;
+    font-size: 14px;
+}
+.form__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    font-size: 16px;
+    inset-block-start: 7px;
+    inset-inline-start: 0;
+    background-color: transparent;
+    color: rgb(var(--textClr), 0.5);
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.price button {
+    background-color: rgb(var(--gray));
+    padding: 5px;
+    border: 0.5px solid black;
+    height: 30px;
+
+    & span {
+        font-size: 20px;
+    }
+}
+.ranges p {
+    font-size: 10px !important;
+}
 @media screen and (max-width: 974px) {
     .explore-cards {
         /* width: 100%; */
