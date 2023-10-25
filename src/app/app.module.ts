@@ -1,4 +1,4 @@
-import { NgModule, isDevMode } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CommonModule } from '@angular/common';
@@ -37,6 +37,24 @@ import { environment } from 'src/environments/environment';
 // initializeApp(environment.firebase);
 import { WishlistComponent } from './wishlist/wishlist.component';
 // import { DrawerComponent } from './drawer/drawer.component';
+import { initializeApp } from 'firebase/app';
+import { provideFirebaseApp } from '@angular/fire/app';
+import { AngularFireModule } from '@angular/fire/compat';
+import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
+import { AngularFireAuthModule } from '@angular/fire/compat/auth';
+import { FcmPushService } from './shared/services/fcm-push/fcm-push.service';
+import { FirebaseAuthService } from './shared/services/firebase-auth/firebase-auth.service';
+initializeApp(environment.firebase);
+
+export const firebaseConfig = {
+  apiKey: "AIzaSyDL6i90M0cXcKX9B-Rq3wIKLidsaaMz86g",
+  authDomain: "tradevogue.firebaseapp.com",
+  projectId: "tradevogue",
+  storageBucket: "tradevogue.appspot.com",
+  messagingSenderId: "271891465540",
+  appId: "1:271891465540:web:674972c835685b5b5ac311",
+}
+
 
 
 @NgModule({
@@ -72,9 +90,14 @@ import { WishlistComponent } from './wishlist/wishlist.component';
     CheckoutModule,
     HttpClientModule,
     UtilsModule,
+    AngularFireDatabaseModule,
+    AngularFireAuthModule,
+    AngularFireModule.initializeApp(firebaseConfig),
+    
   ],
   providers: [
     CookieService,
+    FirebaseAuthService,
     { provide: HTTP_INTERCEPTORS, useClass: HeadersInterceptor, multi: true },
   ],
   bootstrap: [AppComponent],
