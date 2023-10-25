@@ -24,65 +24,65 @@ export class SidecartComponent {
 
 
   constructor(private cartService: CartService,private sidecartService: SidecartService,private cookie: CookieService, private route: Router, private el: ElementRef) {
-    // this.sidecartService.isSidecartOpen$.subscribe((isOpen) => {
-    //   this.isSidecartClosed = !isOpen;
-    // });
+    this.sidecartService.isSidecartOpen$.subscribe((isOpen) => {
+      this.isSidecartClosed = !isOpen;
+    });
   }
 
   ngOnInit() {
-    // this.cartService.fetchCart("count").subscribe((data) => {
-    //   this.cartCount = data;
-    // });
-    // this.cartService.fetchCart().subscribe((data) => {
+    this.cartService.fetchCart("count").subscribe((data) => {
+      this.cartCount = data;
+    });
+    this.cartService.fetchCart().subscribe((data) => {
 
-    //   this.cart = data;
-    // });
-    // this.cartService.fetchCart("details").subscribe((data) => {
-    //   this.cartArr = data;
-    //   console.log(this.cartArr[0].assets[0].photo[0], "cartArr Data is" )
-    // });
-    // this.cartService.fetchCart("count").subscribe((data) => {
-    //   this.cartCount = data;
-    // });
-    // this.cartService.fetchCart().subscribe((data) => {
+      this.cart = data;
+    });
+    this.cartService.fetchCart("details").subscribe((data) => {
+      this.cartArr = data;
+      console.log(this.cartArr[0].assets[0].photo[0], "cartArr Data is" )
+    });
+    this.cartService.fetchCart("count").subscribe((data) => {
+      this.cartCount = data;
+    });
+    this.cartService.fetchCart().subscribe((data) => {
      
-    //   this.cart = data;
-    // });
+      this.cart = data;
+    });
   }
 
-  // remove_item(sku: any) {
-  //   this.cartService.removeItem(sku);
-  // }
+  remove_item(sku: any) {
+    this.cartService.removeItem(sku);
+  }
 
-  // changeQuantity(what: string, sku: string, selectedQuantity: number) {    
+  changeQuantity(what: string, sku: string, selectedQuantity: number) {    
 
-  //   const productIndex = this.cartArr.findIndex((item: any) => {
-  //     return item.sku === sku;
-  //   });
+    const productIndex = this.cartArr.findIndex((item: any) => {
+      return item.sku === sku;
+    });
 
-  //   const quantityIndex = this.cartArr[productIndex].orderQuantity.findIndex((q: any) => {
-  //     return q == selectedQuantity;
-  //   });
+    const quantityIndex = this.cartArr[productIndex].orderQuantity.findIndex((q: any) => {
+      return q == selectedQuantity;
+    });
     
-  //   if (what === 'next' && quantityIndex < (this.cartArr[productIndex].orderQuantity.length - 1)) {
-  //     this.cartArr[productIndex].Quantity = this.cartArr[productIndex].orderQuantity[quantityIndex + 1];
-  //   }
-  //   else if (what === 'previous' && quantityIndex > 0){
-  //     this.cartArr[productIndex].Quantity = this.cartArr[productIndex].orderQuantity[quantityIndex - 1];
-  //   }
-  //   else{
-  //     return;
-  //   }
+    if (what === 'next' && quantityIndex < (this.cartArr[productIndex].orderQuantity.length - 1)) {
+      this.cartArr[productIndex].Quantity = this.cartArr[productIndex].orderQuantity[quantityIndex + 1];
+    }
+    else if (what === 'previous' && quantityIndex > 0){
+      this.cartArr[productIndex].Quantity = this.cartArr[productIndex].orderQuantity[quantityIndex - 1];
+    }
+    else{
+      return;
+    }
 
-  //   const cartItem = {
-  //     sku: this.cartArr[productIndex].sku,
-  //     size: this.cartArr[productIndex].size,
-  //     color: this.cartArr[productIndex].color,
-  //     quantity: this.cartArr[productIndex].Quantity
-  //   }
+    const cartItem = {
+      sku: this.cartArr[productIndex].sku,
+      size: this.cartArr[productIndex].size,
+      color: this.cartArr[productIndex].color,
+      quantity: this.cartArr[productIndex].Quantity
+    }
 
-  //   this.cartService.updateCart(cartItem);
-  // }
+    this.cartService.updateCart(cartItem);
+  }
 
   toggleSidecart() {
     // this.isSidecartClosed = !this.isSidecartClosed;

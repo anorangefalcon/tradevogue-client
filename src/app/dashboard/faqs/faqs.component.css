@@ -196,3 +196,8 @@ h2 {
 }
 
   
+.pagination-wrapper {
+  padding-top: 10px;
+  display: flex;
+  justify-content: center;
+}

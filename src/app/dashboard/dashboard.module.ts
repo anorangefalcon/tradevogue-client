@@ -20,6 +20,9 @@ import { CouponsComponent } from './coupons/coupons.component';
 import { PaginationService } from '../shared/services/pagination.service';
 import { PopUpComponent } from '../shared/pop-up/pop-up.component';
 import { PopupService } from '../shared/services/popup.service';
+import { SupportComponent } from './support/support.component';
+import { TicketsComponent } from './tickets/tickets.component';
+import { DateDisplayPipe } from '../shared/Pipe/date-display.pipe';
 @NgModule({
   declarations: [
     DashboardComponent,
@@ -34,6 +37,9 @@ import { PopupService } from '../shared/services/popup.service';
     FaqsComponent,
     ProductOverviewComponent,
     CouponsComponent,
+    SupportComponent,
+    TicketsComponent,
+    DateDisplayPipe
   ],
   
   imports: [

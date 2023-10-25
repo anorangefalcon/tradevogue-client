@@ -1,0 +1,49 @@
+.operational-buttons {
+    gap: 20px;
+  
+    & button {
+        border: 1px solid rgba(var(--blackClr), 0.1);
+        border-radius: 5px;
+        background: none;
+        cursor: pointer;
+        font-weight: 400;
+  
+        &:hover{
+            border: 1px solid rgba(var(--blackClr), 0);
+            background-color: rgb(var(--blackClr), 0.02);
+        }
+    }
+  
+    & .operational-buttons-icons {
+        font-size: 22px;
+        font-weight: 300;
+        transition: transform 0.3s ease-in-out;
+        /* &:is(:hover) {
+            transform: scale(1.1);
+        } */
+    }
+  
+    & button:first-child .operational-buttons-icons {
+        color: rgb(var(--blue-clr));
+    }
+  
+    & button:last-child .operational-buttons-icons {
+        color: rgb(var(--red-clr));
+    }
+  }
+
+  .drawer {
+    position: fixed;
+    z-index: 10000000000;
+    top: 0;
+    right: -100%;
+    width: 500px;
+    height: 100%;
+    background-color: #fff;
+    transition: right 0.3s ease-in-out;
+    overflow: auto;
+  }
+
+  .drawer.open {
+    right: 0;
+  }

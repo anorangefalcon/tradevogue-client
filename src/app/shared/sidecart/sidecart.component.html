@@ -30,7 +30,7 @@
 
                     <app-cartcontent></app-cartcontent> -->
 
-                    <!-- <div class="overflow-y-scroll flex-grow scrollbar-hide w-full max-h-full">
+                    <div class="overflow-y-scroll flex-grow scrollbar-hide w-full max-h-full">
                         <div
                             class="group w-full h-auto flex justify-start items-center bg-white py-3 px-4 border-b hover:bg-gray-50 transition-all border-gray-100 relative last:border-b-0">
                             <div
@@ -74,7 +74,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div> -->
+                    </div> 
 
                     <!-- <div class="overflow-y-scroll flex-grow scrollbar-hide w-full max-h-full">
                         <div *ngFor="let item of cartArr"
@@ -86,7 +86,9 @@
                             <div class="flex flex-col w-full overflow-hidden"><a
                                     class="truncate text-sm font-medium text-gray-700 text-heading line-clamp-1"
                                     routerLink="/product/{{item.sku}}">{{item?.name}}</a><span
-                                    class="text-xs text-gray-400 mb-1">Item Price ₹{{item?.price}}</span>
+                                    class="text-xs text-gray-400 mb-1">Item Price ₹12</span>
+
+                                     ₹{{item?.price}}
                                 <div class="flex items-center justify-between">
                                     <div class="font-bold text-sm md:text-base text-heading leading-5">
                                         <span>₹{{item?.price}}</span></div>
@@ -207,14 +209,15 @@
                             <div><button (click)="toggleSidecart()" routerLink="/cart/billing"
                                     class="w-full py-3 px-3 rounded-lg bg-emerald-500 hover:bg-emerald-600 flex items-center justify-between bg-heading text-sm sm:text-base text-white focus:outline-none transition duration-300"><span
                                         class="align-middle font-medium font-serif">Proceed To Checkout</span><span
-                                        class="rounded-lg font-bold font-serif py-2 px-3 bg-white text-emerald-600">₹ {{cart.amounts.total}}</span></button>
-                            </div>
-                        </span></div>
-                </div>
-            </div>
-            <div class="drawer-handle"><i class="drawer-handle-icon"></i></div>
+                                        class="rounded-lg font-bold font-serif py-2 px-3 bg-white text-emerald-600">₹ 12</span></button>
+                                         {{cart.amounts.total}} -->
+                            <!-- </div> -->
+                        <!-- </span></div> -->
+                <!-- </div> -->
+            <!-- </div> -->
+            <!-- <div class="drawer-handle"><i class="drawer-handle-icon"></i></div>
         </div>
     </div>
-</div> -->
+</div>  -->
 
 

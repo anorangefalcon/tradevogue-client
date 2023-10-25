@@ -11,6 +11,8 @@ import { OrderPageComponent } from './orders/order-page/order-page.component';
 import { FaqsComponent } from './faqs/faqs.component';
 import { ProductOverviewComponent } from './products/product-overview/product-overview.component';
 import { CouponsComponent } from './coupons/coupons.component';
+import { SupportComponent } from './support/support.component';
+import { TicketsComponent } from './tickets/tickets.component';
 
 const routes: Routes = [
   {
@@ -27,7 +29,9 @@ const routes: Routes = [
       { path: 'orderDetails/:orderId', component: OrderPageComponent},
       {path: 'faq', component: FaqsComponent},
       { path: 'product-overview/:sku', component: ProductOverviewComponent},
-      {path:'coupons',component:CouponsComponent}
+      {path:'coupons',component:CouponsComponent},
+      {path: 'support', component: SupportComponent},
+      {path: 'tickets', component: TicketsComponent}
     ]
   },
 ];

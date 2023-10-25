@@ -73,10 +73,11 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let child of selectedCategory.childrens | paginate: {
-        itemsPerPage: pageSize,
-        currentPage: currentPage
-      }; let i = index;">
+      <!-- use the slice part -->
+      <tr *ngFor="let child of selectedCategory.childrens | slice
+      : (pagination.currentPage - 1) * pagination.pageSize
+      : pagination.currentPage * pagination.pageSize;
+ let i = index;">
         <td class="ellipsis">{{(currentPage - 1) * pageSize + i + 1}}</td>
         <td class="ellipsis">{{child.title}}</td>
         <td class="ellipsis">{{child.content}}</td>
@@ -89,14 +90,22 @@
       </tr>
     </tbody>
   </table>
+  <!-- use this my dear friends for pagination -->
+  <app-pagination
+  #pagination
+  [collectionSize]="selectedCategory.childrens.length"
+  [pageSize]="5"
+  [firstLastButtons]="true"
+  [maxSize]="2"
+></app-pagination>
 </div>
 
-<div class="pagination">
+<!-- <div class="pagination">
   <span (click)="previousPage()"
     class="material-symbols-outlined previous-button material-icons">keyboard_arrow_left</span>
   {{currentPage}}
   <span (click)="nextPage()" class="material-symbols-outlined next-button material-icons">keyboard_arrow_right</span>
-</div>
+</div> -->
 
 
 <app-pop-up>

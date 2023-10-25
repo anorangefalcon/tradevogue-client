@@ -73,8 +73,19 @@ export class UtilsModule {
     // pagination common
     getPaginatedData: 'http://localhost:1000/user/getPaginatedData',
     //wishlists
-    showWishlist : 'http://localhost:1000/wishlist/showWishlist'
-  }
+    showWishlist : 'http://localhost:1000/wishlist/showWishlist',
 
+    // support chat
+    getTicketTitle: 'http://localhost:1000/user/getTicketTitle',
+    updateTicketTitle: 'http://localhost:1000/admin/updateTicketTitle',
+    addTitleToTicketType: 'http://localhost:1000/admin/addTitleToTicketType',
+    deleteTicketTitle: 'http://localhost:1000/admin/deleteTicketTitle',
+    getTicketType: 'http://localhost:1000/user/getTicketTitle',
+    addTicket: 'http://localhost:1000/user/sendTicket',
+    getAllTickets: 'http://localhost:1000/admin/getAllTicket',
+    updateTicketStatus: 'http://localhost:1000/admin/updateTicketStatus',
+    deleteSupportTicket: 'http://localhost:1000/admin/deleteSupportTicket',
+    ticketMail: 'http://localhost:1000/ticketStatus',
+  }
 }
 

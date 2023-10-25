@@ -30,6 +30,12 @@ export class DashboardComponent {
         { name: 'FAQs', route: '/dashboard/faq' },
       ]
     },
+    {
+      name: 'Support Tickets', icons: 'chat_bubble', sublist: [
+        { name: 'Ticket Types', route: '/dashboard/support' },
+        { name: 'Tickets' , route: '/dashboard/tickets'}
+      ]
+    },
     { name: 'Logout', icons: 'logout', route: '' }
   ]
 

@@ -13,7 +13,7 @@ export class FaqsComponent {
   faqData: any[] = [];
   selectedOption: string = '';
   faqForm!: FormGroup;
-  selectedCategory: any;
+  selectedCategory: { title: string; childrens: any[] } = { title: '', childrens: []};
   showPopup: boolean = false;
   editItem: boolean = false;
   isSlideIn = false;
@@ -23,12 +23,12 @@ export class FaqsComponent {
   pageSize: number = 5;
   currentPage: number = 1;
 
-
   constructor(public pagination: PaginationService, private formBuilder: FormBuilder, private bgURL: UtilsModule, private fetchDataService: FetchDataService, private popupService: PopupService, private fb: FormBuilder) {
     this.loadData();
   }
 
   ngOnInit(): void {
+
     this.faqForm = this.formBuilder.group({
       selectedOption: ['', Validators.required],
       query: [
@@ -66,18 +66,18 @@ export class FaqsComponent {
     this.selectedCategory = this.faqData.find((category: any) => category.title === this.selectedOption);
   }
 
-  nextPage() {
-    if (this.selectedCategory && (this.currentPage * this.pageSize) < this.selectedCategory.childrens.length) {
-      this.currentPage++;
-    }
-  }
+  // nextPage() {
+  //   if (this.selectedCategory && (this.currentPage * this.pageSize) < this.selectedCategory.childrens.length) {
+  //     this.currentPage++;
+  //   }
+  // }
   
-  previousPage() {
-    if (this.currentPage > 1) {
-      this.currentPage--;
-      this.loadData();
-    }
-  }
+  // previousPage() {
+  //   if (this.currentPage > 1) {
+  //     this.currentPage--;
+  //     this.loadData();
+  //   }
+  // }
 
   async addCategory() {
     if (this.faqForm.valid) {
