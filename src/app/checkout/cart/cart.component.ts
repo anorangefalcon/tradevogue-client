@@ -22,6 +22,7 @@ export class CartComponent implements OnInit {
         item.image = (item.assets).find((asset: any) => {
           return (asset.color) === item.color;
         }).photo[0];
+
         return item;
       });
     });

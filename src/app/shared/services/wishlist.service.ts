@@ -28,7 +28,8 @@ export class WishlistService {
 
       if (IsLogin){
         let data: any = await this.fetchService.httpGet(this.backendUrls.URLs.showWishlist)
-        console.log(data, "data in wishlist service");
+        // console.log(data, "data in wishlist service");
+        // console.log('data is ',data);
         
         this.sendWishlists.next(data);
         this.showWishlistsDialog.next(true);

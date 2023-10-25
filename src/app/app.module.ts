@@ -33,8 +33,12 @@ import { ToastComponent } from './toast/toast.component';
 import { SidecartComponent } from './shared/sidecart/sidecart.component';
 import { DialogBoxComponent } from './dialog-box/dialog-box.component';
 import { environment } from 'src/environments/environment';
-import { initializeApp } from 'firebase/app';
-initializeApp(environment.firebase);
+// import { initializeApp } from 'firebase/app';
+// initializeApp(environment.firebase);
+import { WishlistComponent } from './wishlist/wishlist.component';
+// import { DrawerComponent } from './drawer/drawer.component';
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -48,6 +52,8 @@ initializeApp(environment.firebase);
     ToastComponent,
     SidecartComponent,
     DialogBoxComponent,
+    WishlistComponent,
+    // DrawerComponent, 
   ],
   imports: [
     BrowserModule,

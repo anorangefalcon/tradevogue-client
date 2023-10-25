@@ -1,14 +1,14 @@
 <div class="container">
-
     <h2>Coupon</h2>
-
+    
     <button (click)="AddCoupon()">Add Coupon</button>
-
-
+    
+    
     <div class="wrapper d-flex" [ngClass]="{'translateBack':CouponRequest,}">
         <div class="CouponDiv d-flex flex-column" [ngClass]="{'add':CouponRequest,'remove':!CouponRequest}">
             <div class="d-flex align-item-center justify-content-md-between header__addOffer">
                 <div>
+                    {{OfferForm.get('OfferType')?.value}}
                     <h3> Add Coupon</h3>
                     <p>Add your coupon and necessary information from here
                     </p>
@@ -28,7 +28,9 @@
                 <div class="form__group d-flex">
                     <label class="form__label"> Offer Type <span>*</span></label>
                     <div class="custom__select">
-                        <app-custom-select [type]="''"  [options]="OfferType" [selectedOption]="(OfferForm.get('OfferType')?.value ? OfferForm.get('OfferType')?.value:'Select Type')"
+
+                        {{OfferForm.get('OfferType')?.value }}  acnbehfehnfjn
+                        <app-custom-select [type]="''"  [options]="OfferType" [selectedOption]="((OfferForm.get('OfferType')?.value) ? (OfferForm.get('OfferType')?.value) : 'Select Type')"
                             (final_option)="OfferTypeHandler($event)"></app-custom-select>
                     </div>
                 </div>
@@ -209,39 +211,39 @@
     </div>
 
 
-    <div class="content">
+    <div class="table-list">
         <table>
             <tr>
-                <th>Discount Title / Coupon Code</th>
-                <th>OfferType</th>
+                <th class="items">Discount Title / Coupon Code</th>
+                <th class="items">OfferType</th>
                 <!-- <th>Coupon Type</th> -->
-                <th>Discount Type</th>
-                <th>Discount Amount</th>
-                <th>Start Date</th>
-                <th>End Date</th>
-                <th>Status</th>
+                <th class="items">Discount Type</th>
+                <th class="items">Discount Amount</th>
+                <th class="items">Start Date</th>
+                <th class="items">End Date</th>
+                <th class="items">Status</th>
                 <!-- <th>Coupon User Limit</th> -->
-                <th>Actions</th>
+                <th class="items">Actions</th>
             </tr>
 
             <tr *ngFor="let data of allOffers; let i=index">
                 <!-- {{data|json}} -->
                 <ng-container *ngIf="!data.status.deleted">
-                    <td>
+                    <td class="items">
                         <p *ngIf="!data.couponcode">{{data.Title}}</p>
                         <p *ngIf="data.couponcode">{{data.couponcode}}</p>
                     </td>
 
-                    <td>{{data.OfferType}}</td>
-                    <td>{{data.discountType}}</td>
-                    <td>{{data.discountAmount}}</td>
+                    <td class="items">{{data.OfferType}}</td>
+                    <td class="items">{{data.discountType}}</td>
+                    <td class="items">{{data.discountAmount}}</td>
                     <!-- <td>{{data.startDate}}</td> -->
-                    <td>{{(data.startDate.split('T')[0])}}</td>
-                    <td>{{data.endDate.split('T')[0]}}</td>
-                    <td>{{data.status.active}}</td>
+                    <td class="items">{{(data.startDate.split('T')[0])}}</td>
+                    <td class="items">{{data.endDate.split('T')[0]}}</td>
+                    <td class="items">{{data.status.active}}</td>
                     <!-- <td>{{data.couponUsersLimit}}</td> -->
 
-                    <td>
+                    <td class="items">
 
 
                         <div class="d-flex action__btns align-item-center">
@@ -268,3 +270,10 @@
 
 
 </div>
+
+
+<app-drawer [direction]="direction" [show]="show" (showChange)="ChangeHanlder($event)">
+  
+</app-drawer>
+
+<button (click)="ShowDrawer()">Show drawer</button>

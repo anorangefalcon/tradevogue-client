@@ -27,11 +27,12 @@ export class CardTemplateComponent {
   ngOnInit(): void {
 
     this.avgRating = this.product.avgRating;
-
+    // console.log('ngOnInit is-----------> ',this.product);
+    
     const sku = this.product.sku;
     this.fetchdata.getProductDetails(sku).subscribe((data: any) => {
       this.productData = data;
-      // console.log(this.productData);
+ 
     })
     
     this.product.oldPrice = 0; //temp

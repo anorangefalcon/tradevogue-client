@@ -2,9 +2,9 @@
     <div class="container d-flex">
 
         <nav class="navbar d-flex flex-column align-item-center gap-25">
-            <ul class="nav-items">
+            <ul class="nav-items d-flex flex-column align-item-center">
                 <li class="nav-links" [ngClass]="{'nav-link-active': this.showData === 'profile'}"
-                    (click)="changeComponent('profile')"><a>
+                    (click)="changeComponent('profile')"><a class="d-flex">
                         <span class="nav-txt">Profile</span>
                     </a>
                     <span class="material-symbols-outlined right__icon">
@@ -54,7 +54,7 @@
             'width_100':showData=='profile'
         -->
 
-        <div class="content" [ngClass]="{'expand':TranslateData, 'expandBack':!TranslateData}">
+        <div class="content" [ngClass]="{'expand':TranslateData}">
             <div class="profile selected d-flex flex-column gap-20" *ngIf="showData=='profile'">
 
                 <div class="d-flex align-item-center pointer h2_div" (click)="TranslateBack()">
@@ -69,7 +69,7 @@
                 </div>
 
 
-                <form [formGroup]="ProfileForm" class="d-flex gap-15 disableInput"
+                <form [formGroup]="ProfileForm" class="d-flex gap-15 disableInput flex-wrap"
                     [ngClass]="isReadOnly === true ? 'disableInput' : 'enableInput'">
                     <div class="form__group relative d-flex flex-column">
                         <label class="form__label">FIRSTNAME<span>*</span></label>
@@ -106,25 +106,7 @@
                     </div>
 
 
-                    <!-- <div class="form__group relative d-flex flex-column">
-                    <label class="form__label">GENDER<span>*</span></label>
-                    <div class="radios">
-                        <div class="genders">
-                            <div class="radiocustom">
-                                <input class="mradio" type="radio" id="male" name="gender" value="Male">
-                                <label for="male"></label>
-                                <span>Male</span>
-                            </div>
-                            <div class="radiocustom">
-                                <input class="mradio" type="radio" id="female" name="gender" value="Female">
-                                <label for="female"></label>
-                                <span>Female</span>
-                            </div>
-                        </div>
-                    </div>
-                </div> -->
-
-
+               
                     <div class="form__group relative d-flex flex-column">
                         <label class="form__label">DOB<span>*</span></label>
                         <span class="material-symbols-outlined form__icon absolute">person</span>
@@ -133,7 +115,7 @@
 
                     <div class="form__group relative radio d-flex" *ngIf="!isReadOnly">
 
-                        <label for="male">
+                        <label for="male" class="d-flex align-item-center">
                             <input type="radio" id="male" name="gender" value="male" formControlName="gender"
                                 [attr.checked]="this?.ProfileForm?.get('gender')?.value=='male' ? true: null">
                             <span>
@@ -165,7 +147,7 @@
 
             </div>
 
-            <div class="Allorders" *ngIf="showData=='orders'">
+            <!-- <div class="Allorders" *ngIf="showData=='orders'">
                 <div *ngFor="let order of userData.orders" class="order">
 
                     <div class="d-flex justify-content-md-between orderDetails">
@@ -264,34 +246,7 @@
 
                     </div>
                 </div>
-
-                <!-- <div class="pagination">
-            <div class="d-flex" *ngIf="showData=='orders'">
-
-
-                <button (click)="PreviousPage()">Previous</button>
-        
-        
-        
-        
-        
-                <button *ngIf="CurrentPage!=1" (click)="Gotopage(1)">{{1}}</button>
-                <p *ngIf="CurrentPage>2"> ....</p>
-                <button *ngIf="CurrentPage>2" (click)="Gotopage(CurrentPage-1)">{{CurrentPage-1}}</button>
-        
-                <button class="blue">{{CurrentPage}}</button>
-        
-                <button (click)="Gotopage(CurrentPage+1)" *ngIf="CurrentPage!=TotalPages">{{CurrentPage+1}}</button>
-                <p *ngIf="CurrentPage!=TotalPages-1 && CurrentPage!=TotalPages "> ....</p>
-                <button (click)="Gotopage(TotalPages)"
-                    *ngIf="CurrentPage!=TotalPages && CurrentPage!=TotalPages-1">{{TotalPages}}</button>
-        
-        
-        
-                <button (click)="NextPage()">Next</button>
-            </div>
-        </div> -->
-            </div>
+            </div> -->
 
 
             <div *ngIf="showData=='addresses'" class="address">
@@ -319,13 +274,16 @@
 
                 </div>
                 <div class="d-flex flex-column gap-10">
-                    <div *ngFor="let address of userAddresses" class="addressDiv d-flex flex-column gap-15">
-                        <!-- {{address| json}} -->
+                    <div *ngFor="let address of userAddresses;let i=index" class="addressDiv d-flex flex-column gap-15">
                         <div class="d-flex justify-content-md-between align-item-center address__firstdiv">
-                            <p class="name">{{address.firstname}} {{address.lastname}}</p>
-                            <div>
-                                <button class="edit__btn">Edit</button>
-                                <button class="remove">Remove</button>
+                            <p class="name text-capitalize">{{address.firstname}} {{address.lastname}}</p>
+                            <div class="d-flex">
+                                <!-- <button></button> -->
+                                <span *ngIf="address.defaultAddress">Default Address</span>
+                                <button class="btn default__btn" (click)="MakeDefault(address,i)" *ngIf="!address.defaultAddress">Make this  Defult</button>
+                       
+                                <button class="edit__btn d-flex align-item-center" (click)="EditAddress(address,i)">Edit</button>
+                                <button class="remove" (click)="RemoveAddress(address,i)">Remove</button>
                             </div>
                         </div>
                         <div>
@@ -457,16 +415,6 @@
 
 
 
-<!-- ADDRESS FORM -->
-<!-- <div class="addressForm"[ngClass]="{'addressFormExpand':addnewAddress,'addressFormIntial':!addnewAddress}"> -->
-
-<!-- <div class="addressFormContent"> -->
-<!-- <span class="material-symbols-outlined close__icon" (click)="RemoveAddressForm()">
-            close
-            </span> -->
-<div [ngClass]="{'show':addnewAddress==true,'close':closeAddress==true}">
-    <app-address (newAddress)="NewAddressHandler($event)"  (closeaddressed)="CloseAddress($event)" [receiveData]="AddressSended"></app-address>
+<div [ngClass]="{'show':addnewAddress==true}">
+    <app-address (newAddress)="NewAddressHandler($event)"  [ShowComponent]="ShowComponent"  (closeaddressed)="CloseAddress()" [receiveData]="AddressSended"></app-address>
 </div>
-<!-- </div> -->
-
-<!-- </div> -->

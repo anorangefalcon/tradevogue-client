@@ -47,16 +47,33 @@
         
             <div class="total d-flex justify-content-md-between">
                 <p>Total</p>
-                <p>₹{{cart.amounts.total | number : '1.0-2'}}</p>
+                <p>₹{{cart.amounts.total-cart.amounts.savings | number : '1.0-2'}}</p>
             </div>
-            <button (click)="checkLogin()" class="btn-primary"><a>Proceed to Checkout</a></button>
+            <button  *ngIf="!CouponApplied" class="btn-primary apply__coupon d-flex align-item-center justify-content-center" (click)="CouponOpener()">
+              
+                Apply Coupons
+                <span class="material-symbols-outlined">
+                    chevron_right
+                    </span>
+               
+            </button>
+
+            <button *ngIf="CouponApplied" class="d-flex justify-content-md-between">
+                <span>
+                {{CouponApplied.couponcode}}
+            </span>
+                <span (click)="RemoveAppliedCoupon()">Remove</span>
+            </button>
+            <!-- (click)="CreateOrder()" -->
+            <button class="btn-primary"><a>Proceed to Checkout</a></button>
         </div>
     </div>
     
     <div class="fixed-checkout">
         <div class="fix-total">
             <p class="subtotal" >Subtotal : ₹{{cart.amounts.subTotal}}</p>
-            <p class="total fw-500">Total : ₹{{cart.amounts.total}}</p>
+            
+            <p class="total fw-500">Total : ₹{{(cart.amounts.total)-(cart.amounts.savings)}}</p>
         </div>
         <div class="items">
              <p>Items : <span>{{cartCount}}<span *ngIf="cartCount>1"></span>
@@ -83,5 +100,122 @@
     <h1 class="text-center">Your cart is empty</h1>
     <div class="text-center">
         <button [routerLink]="['/explore']" class="btn btn-primary">Continue Shopping</button>
+    </div>
+</div>
+
+<!-- when cart count is zero -->
+<!-- <div *ngIf="cartCount === 0" class="empty d-flex flex-column justify-content-center align-item-center">
+    <h1 class="text-center">Your cart is empty</h1>
+    <div class="text-center">
+        <button [routerLink]="['/explore']" class="btn btn-primary">Continue Shopping</button>
+    </div>
+</div> -->
+
+
+<!-- COUPONS  -->
+<div class="wrapper d-flex" [ngClass]="{'open_Coupon':OpenCoupon}">
+    <div class="coupons d-flex flex-column gap-15">
+        <span class="material-symbols-outlined pointer" (click)="CloseCouponDialog()">
+            close
+        </span>
+        <div class="d-flex gap-15">
+            <input type="text" placeholder="Enter coupon code"  #CouponCode oninput="this.value = this.value.toUpperCase()" (input)="InputChange()">
+           
+            <button class="btn-primary" (click)="ApplyCoupon(null,$event)" [disabled]="CouponValid=='invalid'" [ngClass]="{'disabled':CouponValid=='invalid'}">APPLY</button>
+            <span *ngIf="CouponValid=='invalid'">Coupon is not valid</span>
+        </div>
+        <div class="all-coupons" *ngFor="let coupon of AllCoupons">
+           
+            <div class="coupon d-flex flex-column gap-10">
+                <div class="coupon-name">
+                    <h2>{{coupon.couponcode}}</h2>
+                </div>
+                
+
+                <div class="description">
+                    <ng-container *ngIf="coupon.discountType=='flat'">
+                        <p>get Flat {{coupon.discountAmount}}</p>
+                    </ng-container>
+
+                    <ng-container *ngIf="coupon.discountType=='percentage'">
+                        <p *ngIf="coupon.DiscountPercentageType=='fixed'">Get 
+                            <span *ngIf="coupon.DiscountPercentageType=='variable'">Upto</span>
+                            {{coupon.discountAmount}}% off</p>
+                    
+                    </ng-container> 
+
+            
+                    <p>User Code {{coupon.couponcode}}  &   
+                        <ng-container *ngIf="coupon.discountType=='flat'">
+                            <span>get Flat {{coupon.discountAmount}}</span>
+                        </ng-container>
+    
+                        <ng-container *ngIf="coupon.discountType=='percentage'">
+                            <span *ngIf="coupon.DiscountPercentageType=='fixed'">Get 
+                                <span *ngIf="coupon.DiscountPercentageType=='variable'">Upto</span>
+                                {{coupon.discountAmount}}% off</span>
+                          
+                        </ng-container> 
+                        
+                    </p>
+
+                    <p>Terms and Conditions:</p>
+                   <ul>
+                    <li>Minimum Order value of {{coupon.minimumPurchaseAmount}}</li>
+                    <li>Coupon Can be valid only once per user</li>
+                    <li>Coupon is valid till {{DateParser(coupon.endDate)}}
+                    </li>
+                   </ul>
+                </div>
+
+                <!-- <button class="d-flex align-item-center more-btn pointer" (click)="showMore=!showMore" *ngIf="showMore==false">
+                    <span class="material-symbols-outlined">
+                        add
+                    </span>
+                    <p>MORE</p>
+                </button>
+                <ul class="d-flex gap-10 flex-column list" *ngIf="showMore==true">
+                    
+                </ul>
+                <small>Lorem ipsum, dolor sit amet consectetur adipisicing elit.</small> -->
+                <button (click)="ApplyCoupon(coupon)">Apply Coupon</button>
+            </div>
+            <!-- <div class="coupon d-flex flex-column gap-10">
+                <div class="coupon-name">
+                    <h2>COUPON CODE</h2>
+                </div>
+               
+                <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quidem unde ab laudantium nulla rem consequatur ipsam eveniet consequuntur earum! Minima.</p>
+            
+                <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Architecto, nostrum.</p>
+                <button class="d-flex align-item-center more-btn pointer" (click)="showMore=!showMore" *ngIf="showMore==false">
+                    <span class="material-symbols-outlined">
+                        add
+                    </span>
+                    <p>MORE</p>
+                </button>
+                <ul class="d-flex gap-10 flex-column list" *ngIf="showMore==true">
+                    <li>
+                        Lorem ipsum dolor sit amet.
+                    </li>
+                    <li>
+                        Lorem ipsum dolor sit amet.
+                    </li>
+                    <li>
+                        Lorem ipsum dolor sit amet.
+                    </li>
+                    <li>
+                        Lorem ipsum dolor sit amet.
+                    </li>
+                    <li>
+                        Lorem ipsum dolor sit amet.
+                    </li>
+                </ul>
+                <small>Lorem ipsum, dolor sit amet consectetur adipisicing elit.</small>
+
+            </div> -->
+        </div>
+        
+
     </div>
 </div>

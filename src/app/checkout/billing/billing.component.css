@@ -386,7 +386,7 @@ button:disabled {
 
 
 
-/* NEW CSS FOR ADDRESS PAGE ---------- */
+/* NEW CSS FOR ADDRESS PAGE --------------------- */
 .address {
   padding-block: 30px;
   flex-direction: column;
@@ -453,7 +453,8 @@ input {
 }
 
 .btn-deliver {
-  width: 250px;
+  width: 148px;
+  padding-inline: 0px;
 }
 .ok:has(> input[type="radio"]:checked)+label::before {
   background-color: rgba(var(--primaryClr));
@@ -465,7 +466,7 @@ label {
   box-shadow: 0 2px 17px -4px rgba(0, 0, 0, 0.11);
   padding-block: 20px;
   padding-inline-end: 20px;
-  padding-inline-start: 40px;
+  padding-inline-start: 60px;
 
   & .name {
     text-transform: capitalize;
@@ -479,16 +480,32 @@ label {
   &::before {
     content: "";
     position: absolute;
-    height: 12px;
+    height: 20px;
     transition: all 0.5s;
-    width: 12px;
+    width: 20px;
     border: none;
     background-color: #fff;
     border: 1px solid black;
     border-radius: 50%;
     display: flex;
-    left: 20px;
-    top: 24px;
+    left: 30px;
+    top: 22px;
+  }
+
+
+  &::after{
+    content: "";
+    position: absolute;
+    height: 10px;
+    transition: all 0.5s;
+    width: 10px;
+    border: none;
+    background-color: #fff;
+    /* border: 1px solid black; */
+    border-radius: 50%;
+    display: flex;
+    left: 35px;
+    top: 27px;
   }
 
   & .btn {
@@ -504,17 +521,37 @@ label {
     box-shadow: none;
   }
 
-  /* 
-    &::after {
-      content: "";
-      height: 10px;
-      width: 10px;
-      position: absolute;
-      border: none;
-      background-color: #fff;
-      border-radius: 50%;
-      align-items: center;
-      left: 7px;
-      justify-content: center;
-    } */
+
+}
+
+
+.show{
+
+  & .addressForm{
+      opacity: 1;
+      visibility: initial;
+  }
+  & .addressFormContent{
+      top: 0px !important;
+      /* left:0px; */
+      top:50% !important;
+      transform: translate(-50%, -50%) scale(1.1);
+      transition: transform 0.4s cubic-bezier(0, 0.59, 0.25, 1), -webkit-transform 0.4s cubic-bezier(0, 0.59, 0.25, 1);
+  }
+} 
+
+
+.changeaddress__btn{
+  color: rgba(var(--danger));
+  font-weight: normal;
+  background-color: transparent;
+  padding: 0px;
+  text-transform: uppercase;
+}
+
+
+.default__btn{
+  text-transform: uppercase;
+  border-radius: 20px;
+  color: #DF1621;
 }

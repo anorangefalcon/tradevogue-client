@@ -10,11 +10,25 @@ import { UtilsModule } from 'src/app/utils/utils.module';
 })
 export class CouponsComponent {
 OfferForm:FormGroup;
+
+direction: string='top';
+
+show:boolean=false;
+
+ShowDrawer(){
+  this.show=true;
+}
+
+ChangeHanlder(event:any){
+this.show=event;  
+}
+
 OfferType=['coupon','discount'];
 discountType=['percentage','flat'];
 DiscountPercentageType=['fixed','variable'];
 couponType=['global', 'custom','new'];
 Brands:any;
+
 allOffers:any;
 Categories:any;
 Filters=['categories','brands'];
@@ -81,7 +95,7 @@ CouponRequest:boolean=false;
     
     this.OfferForm.get('OfferType')?.patchValue(event);
     const controls :any= [
-      { name: 'couponcode', validator:this.CouponCodeValidator},
+      { name: 'couponcode'},
       { name: 'couponType', },
       { name: 'couponUsersLimit' },
       { name: 'minimumPurchaseAmount' },
@@ -146,14 +160,15 @@ CouponRequest:boolean=false;
 
 async ngOnInit(){
   try {
-    const data:any=await this.fetchDateService.httpGet(this.BackendUrls.URLs.fetchFeatures) 
-    this.Categories=data.categories;
-    this.Brands=data.brands;
+    // const data:any=await this.fetchDateService.httpGet(this.BackendUrls.URLs.fetchFeatures) 
+    // this.Categories=data.categories;
+    // this.Brands=data.brands;
     this.allOffers=await this.fetchDateService.httpGet(this.BackendUrls.URLs.getOffers);
     // console.log('ALL OFFERS IS  ',typeof(allOffers[0].startDate))
-    ;
+
+    
     // this.allOffers=allOffers;
-    const productPrice=await this.fetchDateService.httpGet(this.BackendUrls.URLs.getOriginalProductPrice);
+    // const productPrice=await this.fetchDateService.httpGet(this.BackendUrls.URLs.getOriginalProductPrice);
     // console.log('PRODICT PRICE SI ',productPrice);
     
   } catch (error) {
@@ -164,6 +179,9 @@ async ngOnInit(){
 
 
   AddCoupon(){
+    this.OfferForm.reset();
+    console.log('offerform is ',this.OfferForm.value);
+    
 this.CouponRequest=true;
   }
 

@@ -24,6 +24,8 @@ export class UtilsModule {
     subscribeMail : 'http://localhost:1000/sendMail',
     updateAddress:'http://localhost:1000/user/updateAdress',
     deleteAddress:'http://localhost:1000/user/deleteAddress',
+    setDefaultAddress:'http://localhost:1000/user/setDefault',
+    getCoupons:'http://localhost:1000/user/coupons',
 
     // Dashboard
     addproduct: 'http://localhost:1000/admin/addProduct',
@@ -74,6 +76,9 @@ export class UtilsModule {
     getPaginatedData: 'http://localhost:1000/user/getPaginatedData',
     //wishlists
     showWishlist : 'http://localhost:1000/wishlist/showWishlist',
+
+    // ORDERS
+    createOrder:'http://localhost:1000/orders/create',
 
     // support chat
     getTicketTitle: 'http://localhost:1000/user/getTicketTitle',

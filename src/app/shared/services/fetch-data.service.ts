@@ -96,6 +96,8 @@ export class FetchDataService {
         }, error: (error) => {
 
           rej(error)
+          console.log('ERROR IS ',error);
+          
           if (error.message) {
             const data = { title: error.error.message };
             this.toastService.errorToast(data);

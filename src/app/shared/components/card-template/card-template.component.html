@@ -1,14 +1,14 @@
 <div class="card-item-template card-template-structure">
     <a routerLink='/product/{{product.sku}}' class="pointer d-flex flex-column gap-10">
-        <div class="card-item-header skeleton">
+        <div class="card-item-header skeleton-deactivated">
             <img [src]=product.assets?.[0]?.photo[1] alt="Product Image">
             <img class="hover-img" [src]=product.assets?.[0]?.photo[0] alt="Product Image">
         </div>
 
         <div class="card-item-content d-flex flex-column align-item-center gap-5">
-            <h4 class="skeleton">{{ product?.name }}</h4>
+            <h4 class="skeleton-deactivated">{{ product?.name }}</h4>
 
-            <div *ngIf="avgRating !== 0" class="rating d-flex align-item-center skeleton">
+            <div *ngIf="avgRating !== 0" class="rating d-flex align-item-center skeleton-deactivated">
                 <span *ngFor="let i of createArrayToIterate(avgRating)"
                     class="material-symbols-outlined filled">star</span>
                 <span *ngIf="(avgRating % 1) !== 0" class="material-symbols-outlined">star_half</span>
@@ -16,16 +16,28 @@
                     class="material-symbols-outlined">star</span>
             </div>
 
-            <div class="price d-flex gap-5 align-item-center justify-content-center skeleton">
+            <div class="price d-flex gap-5 align-item-center justify-content-center skeleton-deactivated">
                 <p class="current-price">
-                    ₹{{ product.price }}
+                    <span *ngIf="product.discount">
+                        ₹{{ product.price - product.discount}}
+                    </span>
+                    
+                    <span *ngIf="!product.discount">
+                        ₹{{ product.price}}
+                    </span>
+                    
                 </p>
-                <p class="old-price" *ngIf="product.oldPrice !== (undefined || 0)">
-                    ₹{{ product.oldPrice }}
+                <p class="old-price" *ngIf="product?.discount">
+
+                    <!-- {{product.discount}} abcdisibsd  -->
+                    ₹{{ product.price }} 
                 </p>
-                <p *ngIf="offerPercentage !== 0" class="offer-percentage">
-                    ({{ offerPercentage }}% off)
+                <p *ngIf="product.discountType!== 0" class="offer-percentage">
+                    <span *ngIf="product.discountPercentage"> ({{ product.discountPercentage }}% off)</span>
+                    <span *ngIf="!product.discountPercentage && product.discountAmount"> ({{ product.discount }} Flat off)</span>
+                   
                 </p>
+               
             </div>
 
         </div>
@@ -81,8 +93,10 @@
 
             <p id="description">{{productData.description}}</p>
             <div class="price">
-                <h1 id="number-discount">₹{{ product.price }}</h1>
-                <p id="number-full" *ngIf="product.oldPrice !== (undefined || 0)">₹{{product.oldPrice}}</p>
+
+                {{product.price}} abcd si   
+                <h1 id="number-discount">₹{{ product.price - product.discount }}</h1>
+                <p id="number-full" *ngIf="product.price !== (undefined || 0)">₹{{product.price}}</p>
             </div>
 
             <div class="colors d-flex align-item-center gap-15">

@@ -1,8 +1,9 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FetchDataService } from '../services/fetch-data.service';
 import { UtilsModule } from 'src/app/utils/utils.module';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-
+import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { UserServiceService } from '../services/user-service.service';
+// import { MobileNoValidator } from '';
 @Component({
   selector: 'app-address',
   templateUrl: './address.component.html',
@@ -10,15 +11,21 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class AddressComponent {
   display:boolean = false;
-  addnewAddress:boolean=false;
-  @Input() receiveData:any
-  
-  @Input() visibleClass: boolean | undefined;
+  direction:string='right';
+// direction: string='top';
 
-  closeAddress:boolean=false;
+show:boolean=false;
+  // direction:string='right';
+  addnewAddress:boolean=false;
+  StateOptions:any=['Punjab','Bihar','Delhi'];
+  @Input() receiveData:any;
+  @Input() ShowComponent:any;
+  // @Input() visibleClass: boolean | undefined;
+  states:any[]=['Punjab','Delhi','UP'];
+  // closeAddress:boolean=false;
 
   DetailsForm: FormGroup;
-  constructor(private fetchService:FetchDataService, private backendURLs: UtilsModule,private fb: FormBuilder){
+  constructor(private fetchService:FetchDataService, private userService:UserServiceService, private backendURLs: UtilsModule,private fb: FormBuilder){
     this.DetailsForm = fb.group(
       {
         firstname: fb.control('', [Validators.required]),
@@ -29,103 +36,114 @@ export class AddressComponent {
         pincode: fb.control('', [Validators.required, ]),
         town_city:fb.control('', [Validators.required, ]),
         state:fb.control('', [Validators.required, ]),
-        // country:fb.control('', [Validators.required, ]),
+        // mobile:fb.control('', [Validators.required,this.PhoneNumberValidator ]),
+       
       });
 
-      // console.log('VISIBLE CLASS IS ',this.visibleClass);
-      
-      // console.log('DATA COME pf address ',this.receiveData);
-      
+
       
   }
 
 
+ 
 
-  // AddressUpdateRequest:any;
+  ShowDrawer(){
+    this.show=true;
+  }
+  
+  ChangeHanlder(event:any){
+  this.show=event;  
+  }
+
+  PhoneNumberValidator(control:FormControl):boolean{
+    const expression=/^\+?[1-9][0-9]{7,14}$/;
+    return expression.test(control.value);
+  }
+  // async ngOnInit() {
+  //   // this.AddressData=await this.fetchService.httpGet(this.backendURLs.URLs.getAddress);
+  //   // this.AddressData=this.AddressData.info.address;
+  // }
+
   ngOnChanges(){
-    // console.log('');
-
-    console.log('DATA COME pf address ',this.receiveData.data);
+    // this.ShowComponent=true;
+    if(this.ShowComponent==true){
+      this.show=true;
+    }
     this.DetailsForm.patchValue(this.receiveData.data);
-    
   }
 
-  RemoveAddressForm(){
-    this.addnewAddress=false;
-  }
-  AddressData:any=[];
+  // RemoveAddressForm(){
+  //   this.addnewAddress=false;
+  // }
+
+  // AddressData:any=[];
   UpdatingRequest:any
 
   AddressClose(){
-    // this.closeAddress=true;
-    // this.visibleClass=false;
+    this.DetailsForm.reset(); 
     this.closeaddressed.emit(false);
-  }
-  async ngOnInit() {
-    this.AddressData=await this.fetchService.httpGet(this.backendURLs.URLs.getAddress);
-    this.AddressData=this.AddressData.info.address;
   
   }
 
-  close(){
-    this.display=false;
-  }
 
-  // AddressHandler(event:any){
+  // close(){
   //   this.display=false;
-  //   if(!event._id){
-
-  //     this.AddressData.push(event);
-  //     return;
-  //   }
-
-  //   this.AddressData[event.index]=event;
-
-    
   // }
 
-  AddressHandler(){
+  // // AddressHandler(event:any){
+  // //   this.display=false;
+  // //   if(!event._id){
 
-  }
-  Edit(el:any,index :any){
-    el.index=index;
-    this.UpdatingRequest=el;
-    this.display=true;
-  }
+  // //     this.AddressData.push(event);
+  // //     return;
+  // //   }
+
+  // //   this.AddressData[event.index]=event;
+
+    
+  // // }
+
+  // AddressHandler(){
+
+  // }
+  // Edit(el:any,index :any){
+  //   el.index=index;
+  //   this.UpdatingRequest=el;
+  //   this.display=true;
+  // }
 
   @Output() newAddress: EventEmitter<any> =   new EventEmitter();
   @Output() closeaddressed: EventEmitter<any> =   new EventEmitter();
   async AddnewAddress(){
-
-  
-    
-    if(this.receiveData){
-      
-
-      
-    }
     try { 
-
-      let data;
+      let result;
       if(this.receiveData){
-        data= await this.fetchService.httpPost( this.backendURLs.URLs.updateAddress,this.receiveData.data);
-        // data=await this.fetchService.HttpPostRequest()
+       const body=JSON.parse(JSON.stringify(this.DetailsForm.value));
+        body._id=this.receiveData.data._id; 
+        result= await this.fetchService.httpPost( this.backendURLs.URLs.updateAddress,body);
+        result=JSON.parse(JSON.stringify(result));
+        result.index=this.receiveData.index;
       }
       else{
-        data= await this.fetchService.httpPost( this.backendURLs.URLs.addAddress,this.DetailsForm.value);
+        result= await this.fetchService.httpPost( this.backendURLs.URLs.addAddress,this.DetailsForm.value);
       }
-
-       
-      console.log('data coming is ',data);
-      
-
-      this.newAddress.emit(data);
-      this.AddressClose();
     
-    } catch (error) {
-        console.log('error coming is ',error);
-        
+     let addresses:any = await this.userService.SubscribingValue('userAddresses');
+     if(addresses){
+      addresses.push(result);
+     await this.userService.emittingValue('userAddresses',addresses);
+     }
+     else{
+       await this.userService.emittingValue('userAddresses',[result]);
+     }
+     
+      // this.newAddress.emit(result);
+      this.DetailsForm.reset();
+     
+    } 
+    catch (error) {    
     }
+    this.AddressClose();
  
   }
 
@@ -134,5 +152,5 @@ export class AddressComponent {
   }
   
 
-  StateOptions:any=['Punjab','Bihar','Delhi'];
+  
 }

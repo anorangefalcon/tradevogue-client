@@ -22,6 +22,7 @@ import { CheckoutComponent } from '../checkout/checkout.component';
 import { LessThanOrEqualPipe } from './Pipe/less-than-or-equal.pipe';
 import { PopUpComponent } from './pop-up/pop-up.component';
 import { PaginationComponent } from './pagination/pagination.component';
+import { DrawerComponent } from './components/drawer/drawer.component';
 
 
 @NgModule({
@@ -40,7 +41,8 @@ import { PaginationComponent } from './pagination/pagination.component';
     LessThanOrEqualPipe,
     PopUpComponent,
     LessThanOrEqualPipe,
-    PaginationComponent
+    PaginationComponent,
+    DrawerComponent
   ],
   imports: [
     CommonModule,
@@ -67,6 +69,7 @@ import { PaginationComponent } from './pagination/pagination.component';
     PopUpComponent,
     LessThanOrEqualPipe,
     PaginationComponent,
+    DrawerComponent
   ]
 })
 export class SharedModule { }

@@ -192,9 +192,9 @@
 
 
 <div class="address">
-    <div class="d-flex  align-item-center justify-content-md-between pointer h2_div">
+    <div class="d-flex flex-column gap-10">
 
-
+        <div class="d-flex justify-content-md-between align-item-center pointer h2_div" [ngClass]="{'h2_div':!DeliveredAddress}">
         <div class="d-flex align-item-center pointer">
             <h2>
                 SELECT DELIVERY ADDRESS
@@ -203,15 +203,34 @@
 
         </div>
 
-        <div class="d-flex align-item-center addAddress__div">
+        <div class="d-flex align-item-center addAddress__div" *ngIf="!DeliveredAddress" (click)="AddAddress()">
             <span class="material-symbols-outlined">
                 add_circle
             </span>
             <p>ADD NEW ADDRESS</p>
         </div>
 
+        <button *ngIf="DeliveredAddress" class="changeaddress__btn" (click)="ChangeAddress()">
+                
+                Change Address
+         
+        </button>
+
+        </div>
+
+        <div *ngIf="DeliveredAddress">
+            <p>
+            {{DeliveredAddress.apartment}}
+            {{DeliveredAddress.area}},
+            {{DeliveredAddress.landmark}}
+                {{DeliveredAddress.town_city}}
+                {{DeliveredAddress.country}}
+            </p> 
+            </div>
+        
+
     </div>
-    <div class="d-flex flex-column gap-10">
+    <div class="d-flex flex-column gap-10" *ngIf="!DeliveredAddress">
         <ng-container *ngFor="let address of userAddresses; let i=index" class="d-flex address__firstdiv ">
             <!-- {{address| json}} -->
             <div class="ok" style="display: none;">
@@ -227,6 +246,7 @@
                     <div class="d-flex justify-content-md-between">
                         <p class="name pointer-none">{{address.firstname}} {{address.lastname}}</p>
                         <div class="d-flex">
+                            <button class="btn default__btn" (click)="MakeDefault(address,i)" *ngIf="!address.defaultAddress">Make this  Defult</button>
                             <button class="edit__btn btn" (click)="EditAddress(address,i)">Edit</button>
                             <button class="remove__btn btn" (click)="RemoveAddress(address,i)">Remove</button>
                         </div>
@@ -237,12 +257,17 @@
                         <p>{{address.state}}- {{address.pincode}}</p>
                     </div>
 
-                    <button class="btn-primary btn-deliver">DELIVER HERE</button>
+                    <button class="btn-primary btn-deliver" (click)="SelectAddress(address)">DELIVER HERE</button>
                 </div>
               
             </label>
         </ng-container>
     </div>
 
+  
+</div>
 
+
+<div [ngClass]="{'show':addnewAddress==true}">
+    <app-address (newAddress)="NewAddressHandler($event)"  (closeaddressed)="CloseAddress()" [receiveData]="AddressSended"></app-address>
 </div>

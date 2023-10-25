@@ -3,6 +3,7 @@ import { CartService } from 'src/app/shared/services/cart.service';
 import { CookieService } from 'ngx-cookie-service';
 import { FetchDataService } from 'src/app/shared/services/fetch-data.service';
 import { UtilsModule } from 'src/app/utils/utils.module';
+import { UserServiceService } from 'src/app/shared/services/user-service.service';
 @Component({
   selector: 'app-billing',
   templateUrl: './billing.component.html',
@@ -27,7 +28,7 @@ export class BillingComponent{
     // }
 
   constructor(private cartService: CartService,
-    private cookie: CookieService,private fetchDataService:FetchDataService,private backendURLs:UtilsModule) {
+    private cookie: CookieService,private fetchDataService:FetchDataService,private userService:UserServiceService,private backendURLs:UtilsModule) {
     this.cartService.fetchCart().subscribe((data) => {
   
       this.cartitems = data;
@@ -57,6 +58,7 @@ export class BillingComponent{
 
     checkSubTotal();
 
+    this.getAddresses();
     // this.checkoutService.sendPayload(this.item).subscribe((data) => {
     //   this.checkoutHtml = data;
     // });
@@ -88,15 +90,12 @@ export class BillingComponent{
   }
 
 
-  // ADDRESS TS FILE---------
+  // ADDRESS TS FILE---------------------
   userAddresses:any;
+  DeliveredAddress:any;
   async getAddresses(){
-    
   let data:any=await  this.fetchDataService.httpGet(this.backendURLs.URLs.getAddress);
-  console.log("data is ",data)
-  this.userAddresses=data.info.address;
-  console.log('USERADDRESS Is ',this.userAddresses);
-  
+  this.userAddresses=data.info.address;  
   }
 
   AddressSended:any;
@@ -109,12 +108,9 @@ export class BillingComponent{
 
   async RemoveAddress(address:any,index:any){
     try{
-      console.log('address is ',address);
       const body={id:address._id}
       let deleteAddress=await this.fetchDataService.httpPost(this.backendURLs.URLs.deleteAddress,body);
-      
       this.userAddresses.splice(index);
-
     }
 
     catch(error){
@@ -124,8 +120,46 @@ export class BillingComponent{
     
   }
 
-  async ngOnInit(){
-    this.getAddresses();
+
+  NewAddressHandler(event:any){
+    if(event.hasOwnProperty("index")){
+      this.userAddresses[event.index]=event;      
+     return;
+   }
+     this.userAddresses.push(event);
   }
+
+  CloseAddress(){
+    this.addnewAddress=false;
+  }
+
+  AddAddress(){
+    this.addnewAddress=true;
+  }
+
+  SelectAddress(address:any){
+    this.DeliveredAddress=address;
+    // this.userService.UserAddress.next(this.DeliveredAddress);
+    console.log('emitting value done');
+
+  }
+
+  ChangeAddress(){
+    this.DeliveredAddress=false;
+  }
+
+  async MakeDefault(address:any,i:any){
+    try {
+      console.log('adress is ',address," i is ",i);
+      const body={address_id:address._id};
+      const update:any=await this.fetchDataService.httpPost(this.backendURLs.URLs.setDefaultAddress,body);
+      console.log('UPDATE  is ',update[0].info.address);
+        this.userAddresses=update[0].info.address;
+      
+    } catch (error) {
+      
+    }
+  }
+  
 
 }

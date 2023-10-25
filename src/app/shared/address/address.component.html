@@ -1,106 +1,102 @@
-<div class="addressForm" [ngClass]="{'close_address':visibleClass==false,'show':visibleClass==true }"> <!-- [ngClass]="{'addressFormExpand':addnewAddress,'addressFormIntial':!addnewAddress}"-->
-    <div class="addressFormContent">
-        <span class="material-symbols-outlined close__icon" (click)="RemoveAddressForm()">
-            close
-            </span>
-   
-
-<div class="d-flex flex-column gap-20">
-
-<div>
-<h2>Add New Address
-</h2>
-
-</div>
-
-
-<form [formGroup]="DetailsForm" class="d-flex gap-15">
-<div class="form__group relative d-flex flex-column">
-    <label class="form__label">FIRSTNAME<span>*</span></label>
-    <span class="material-symbols-outlined form__icon absolute">person</span>
-    <input type="text" id="firstname" formControlName="firstname" placeholder="Enter Your First Name">
-</div>
-
-<div class="form__group relative d-flex flex-column">
-    <label class="form__label">LASTNAME<span>*</span></label>
-    <span class="material-symbols-outlined form__icon absolute">person</span>
-    <input type="text" id="lastname" formControlName="lastname" placeholder="Enter Your Last Name">
-</div>
-<div class="form__group relative d-flex flex-column">
-    <label class="form__label">APARTMENT<span>*</span></label>
-    <span class="material-symbols-outlined form__icon absolute">mail</span>
-    <input type="text" id="apartment" formControlName="apartment" placeholder="Enter Your apartment no">
-</div>
-
-
-<div class="form__group relative d-flex flex-column">
-    <label class="form__label">AREA<span>*</span></label>
-    <span class="material-symbols-outlined form__icon absolute">call</span>
-    <input type="text" id="area" formControlName="area" placeholder="Enter Your MobileNo">
-<!-- 
-    <small
-        *ngIf="DetailsSubmitted && ProfileForm.get('mobile')?.hasError('notvalid') && ProfileForm.get('mobile')?.touched"
-        class="invalid">*Mobile No is invalid.</small> -->
-
-</div>
+<!-- [ngClass]="{'close_address':visibleClass==false,'show':visibleClass==true }" -->
 
 
 
+    
+<app-drawer [direction]="direction" [show]="show" (showChange)="ChangeHanlder($event)">
+    <!-- <div class="addressForm">  -->
+        <div class="addressFormContent">
+            <span class="material-symbols-outlined close__icon" (click)="AddressClose()">
+                close
+                </span>
+       
+    <div class="d-flex flex-column gap-20">
+    <div>
+    <h2>Add New Address
+    </h2>
+    </div>
+    
+    
+    <form [formGroup]="DetailsForm" class="d-flex gap-15">
+    <div class="form__group relative d-flex flex-column">
+        <label class="form__label">FIRSTNAME<span>*</span></label>
+        <span class="material-symbols-outlined form__icon absolute">person</span>
+        <input type="text" id="firstname" formControlName="firstname" placeholder="Enter Your First Name">
+    </div>
+    
+    <div class="form__group relative d-flex flex-column">
+        <label class="form__label">LASTNAME<span>*</span></label>
+        <span class="material-symbols-outlined form__icon absolute">person</span>
+        <input type="text" id="lastname" formControlName="lastname" placeholder="Enter Your Last Name">
+    </div>
+    <div class="form__group relative d-flex flex-column">
+        <label class="form__label">APARTMENT<span>*</span></label>
+        <span class="material-symbols-outlined form__icon absolute">mail</span>
+        <input type="text" id="apartment" formControlName="apartment" placeholder="Enter Your apartment no">
+    </div>
+    
+    
+    <div class="form__group relative d-flex flex-column">
+        <label class="form__label">AREA<span>*</span></label>
+        <span class="material-symbols-outlined form__icon absolute">call</span>
+        <input type="text" id="area" formControlName="area" placeholder="Enter Your MobileNo">
+    </div>
+    
+    
+    
+    
+    <div class="form__group relative d-flex flex-column">
+        <label class="form__label">LANDMARK<span>*</span></label>
+        <span class="material-symbols-outlined form__icon absolute">person</span>
+        <input type="text" id="landmark" formControlName="landmark" placeholder="Enter Your Username">
+    </div>
+    
+    <div class="form__group relative d-flex flex-column">
+        <label class="form__label">PINCODE<span>*</span></label>
+        <span class="material-symbols-outlined form__icon absolute">person</span>
+        <input type="text" id="pincode" formControlName="pincode" placeholder="Enter Your Username">
+    </div>
+    
+    
+    <div class="form__group relative d-flex flex-column">
+        <label class="form__label">TOWN/CITY<span>*</span></label>
+        <span class="material-symbols-outlined form__icon absolute">person</span>
+        <input type="text" id="town_city" formControlName="town_city" placeholder="Enter Your Username">
+    </div>
+    
+    <div class="form__group relative d-flex flex-column">
+        <label class="form__label">STATE<span>*</span></label>
+    
+        <app-custom-select [type]="''"  [options]="states" [selectedOption]="((DetailsForm.get('state')?.value) ? (DetailsForm.get('state')?.value) : 'Select State')"
+        (final_option)="StateHandler($event)"></app-custom-select>
+    
+    </div>
+    
+    <div class="form__group relative d-flex flex-column">
+        <label class="form__label">MOBILE NO</label>
+        <span class="material-symbols-outlined form__icon absolute">person</span>
+        <input type="text" id="town_city" formControlName="mobile" placeholder="Enter Your Phone Number">
+    </div>
+    
+    
+    </form>
+    
+    <div class="d-flex gap-15">
+        <button class="width-160 cancelbtn" (click)="AddressClose()">Cancel</button>
+        <button class="btn-primary width-160" #EditBtn (click)="AddnewAddress()" [disabled]="DetailsForm.invalid">
+            
+            <span *ngIf="receiveData">Update</span>
+            <span *ngIf="!receiveData">Save</span>
+        </button>
+    </div>
+    
+    
+    
+    </div>
+    
+    </div>
+    
+    <!-- </div> -->
+    
+</app-drawer>
 
-<div class="form__group relative d-flex flex-column">
-    <label class="form__label">LANDMARK<span>*</span></label>
-    <span class="material-symbols-outlined form__icon absolute">person</span>
-    <input type="text" id="landmark" formControlName="landmark" placeholder="Enter Your Username">
-</div>
-
-<div class="form__group relative d-flex flex-column">
-    <label class="form__label">PINCODE<span>*</span></label>
-    <span class="material-symbols-outlined form__icon absolute">person</span>
-    <input type="text" id="pincode" formControlName="pincode" placeholder="Enter Your Username">
-</div>
-
-
-<div class="form__group relative d-flex flex-column">
-    <label class="form__label">TOWN/CITY<span>*</span></label>
-    <span class="material-symbols-outlined form__icon absolute">person</span>
-    <input type="text" id="town_city" formControlName="town_city" placeholder="Enter Your Username">
-</div>
-
-<div class="form__group relative d-flex flex-column">
-    <label class="form__label">STATE<span>*</span></label>
-    <!-- <span class="material-symbols-outlined form__icon absolute">person</span> -->
-    <select for="state" formControlName="state">
-        <option value="sleect State:">Select State:</option>
-    <option value="punjab">Punjab</option>
-    <option value="delhi">Delhi</option>
-    <option value="chandigarh">Chandigarh</option>
-    </select>
-    <!-- <input type="text" id="town_city" formControlName="town_city" placeholder="Enter Your Username"> -->
-</div>
-
-
-
-<!-- <div class="form__group relative d-flex flex-column">
-    <label class="form__label">COUNTRY<span>*</span></label>
-   
-    <select id="country"formControlName="country">
-        <option value="0">Select country:</option>
-    <option value="1">Audi</option>
-    </select>
-   
-</div> -->
-
-</form>
-
-<div class="d-flex gap-15">
-    <button class="width-160 cancelbtn" (click)="AddressClose()">Cancel</button>
-    <button class="btn-primary width-160" #EditBtn (click)="AddnewAddress()">ZSave</button>
-</div>
-
-
-
-</div>
-
-</div>
-
-</div>
