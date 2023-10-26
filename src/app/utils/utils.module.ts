@@ -91,6 +91,7 @@ export class UtilsModule {
     updateTicketStatus: 'http://localhost:1000/admin/updateTicketStatus',
     deleteSupportTicket: 'http://localhost:1000/admin/deleteSupportTicket',
     ticketMail: 'http://localhost:1000/ticketStatus',
+    webPushDetail: 'http://localhost:1000/user/webPushDetails',
   }
 }
 

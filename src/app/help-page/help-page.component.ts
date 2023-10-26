@@ -3,6 +3,7 @@ import { FetchDataService } from '../shared/services/fetch-data.service';
 import { UtilsModule } from '../utils/utils.module';
 import { HttpClient } from '@angular/common/http';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-help-page',
@@ -17,7 +18,8 @@ export class HelpPageComponent {
     private fetchDataService: FetchDataService,
     private utils: UtilsModule,
     private http: HttpClient,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private cookie: CookieService
   ) {
     const url = this.utils.URLs.getTicketType;
     this.http.get(url).toPromise()
@@ -62,6 +64,13 @@ export class HelpPageComponent {
         .catch((error: any) => {
           console.log('Error adding ticket.', error);
         });
+
+        this.fetchDataService.httpPost(this.utils.URLs.webPushDetail, {token: this.cookie.get('fcmToken'), email: this.contactForm.get('email')?.value}).then((response: any) => {
+          if (response) {
+            console.log('Token added successfully.');
+          }
+        });
+        
 
       this.contactForm.reset();
 
