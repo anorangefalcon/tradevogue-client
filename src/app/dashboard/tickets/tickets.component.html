@@ -1,83 +1,106 @@
 <table class="selected-category">
-    <thead>
-      <tr>
-        <th>Serial Number</th>
-        <th>Ticket Title</th>
-        <th>User Name</th>
-        <th>User Email</th>
-        <th>Status</th>
-        <th>Date Created</th>
-        <th>Actions</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let item of ticketData; let i = index;">
-        <td class="ellipsis">{{i+1}}</td>
-        <td>{{ item.ticketTitle }}</td>
-        <td>{{ item.userName }}</td>
-        <td>{{ item.userEmail }}</td>
-        <td>{{ item.status }}</td>
-        <td>{{ item.dateCreated | date: 'dd/MM/yyyy' }}</td>
-        <td>
-          <span class="material-symbols-outlined edit-button material-icons" (click)="showItemDetails(item)">edit</span>
-          <span class="material-symbols-outlined delete-button material-icons">message</span>
-          <span class="material-symbols-outlined delete-button material-icons" (click)="deleteTicketTitle(item)">delete</span>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+  <thead>
+    <tr>
+      <th>Serial Number</th>
+      <th>Ticket Title</th>
+      <th>User Name</th>
+      <th>User Email</th>
+      <th>Status</th>
+      <th>Date Created</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let item of ticketData; let i = index;">
+      <td class="ellipsis">{{i+1}}</td>
+      <td>{{ item.ticketTitle }}</td>
+      <td>{{ item.userName }}</td>
+      <td>{{ item.userEmail }}</td>
+      <td>{{ item.status }}</td>
+      <td>{{ item.dateCreated | date: 'dd/MM/yyyy' }}</td>
+      <td>
+        <span class="material-symbols-outlined edit-button material-icons" (click)="showItemDetails(item)">edit</span>
+        <span class="material-symbols-outlined delete-button material-icons" (click)="webPush(item)">notifications</span>
+        <span class="material-symbols-outlined delete-button material-icons" (click)="deleteTicketTitle(item)">delete</span>
+      </td>
+    </tr>
+  </tbody>
+</table>
 
-  <div class="operational-buttons d-flex  flex-wrap">
-    <button (click)="openDrawer()" class=" d-flex align-item-center gap-5">
-      <i class="material-symbols-outlined operational-buttons-icons">add</i>
-      Add New Title
+<div class="operational-buttons d-flex  flex-wrap">
+  <button (click)="openDrawer()" class=" d-flex align-item-center gap-5">
+    <i class="material-symbols-outlined operational-buttons-icons">add</i>
+    Add New Title
+  </button>
+</div>
+
+<div class="drawer" [ngClass]="{ 'open': isDrawerOpen }">
+  <div (click)="closeDrawer()" class="absolute right-5 top-5">
+    <button type="button"
+      class="inline-flex justify-center px-2 py-2 text-base font-medium text-red-500 bg-white border border-transparent rounded-full hover:bg-red-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500">
+      <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 512 512" height="1em" width="1em"
+        xmlns="http://www.w3.org/2000/svg">
+        <path
+          d="M289.94 256l95-95A24 24 0 00351 127l-95 95-95-95a24 24 0 00-34 34l95 95-95 95a24 24 0 1034 34l95-95 95 95a24 24 0 0034-34z">
+        </path>
+      </svg>
     </button>
   </div>
 
-  <div class="drawer" [ngClass]="{ 'open': isDrawerOpen }">
-    <div (click)="closeDrawer()" class="absolute right-5 top-5">
-      <button type="button"
-        class="inline-flex justify-center px-2 py-2 text-base font-medium text-red-500 bg-white border border-transparent rounded-full hover:bg-red-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500">
-        <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 512 512" height="1em" width="1em"
-          xmlns="http://www.w3.org/2000/svg">
-          <path
-            d="M289.94 256l95-95A24 24 0 00351 127l-95 95-95-95a24 24 0 00-34 34l95 95-95 95a24 24 0 1034 34l95-95 95 95a24 24 0 0034-34z">
-          </path>
-        </svg>
-      </button>
-    </div>
-
-    <div>
-        <h2>Add New Title</h2>
-        <div>
-            <strong>Title:</strong>
-        </div>
-        <input type="text" [(ngModel)]="updatedItem">
-        <button (click)="pushItem()">Add</button>
-        <button (click)="closeDrawer()">Cancel</button>
-    </div>
-  </div>
-
-
-
-  <app-pop-up *ngIf="selectedItem">
-    <div class="details-container">
-      <h2>Update Ticket Status</h2>
-      <p><strong>Email:</strong> {{ selectedItem.userEmail }}</p>
-      <p><strong>User Query: </strong> {{ selectedItem.ticketTitle }}</p>
-      <div class="custom-select" style="width:200px;">
-        <select [(ngModel)]="selectedItem.status">
-          <option value="" disabled>Select a Status</option>
-          <ng-container *ngFor="let status of uniqueStatusValues">
-            <option [value]="status">{{ status }}</option>
-          </ng-container>
-        </select>
-    
-        <textarea [(ngModel)]="messageInput" placeholder="Enter your message"></textarea>
+  <div>
+      <h2>Add New Title</h2>
+      <div>
+          <strong>Title:</strong>
       </div>
-      
-      
-      <button (click)="updateItem()">Update</button>
-      <button (click)="cancelUpdate()">Cancel</button>
+      <input type="text" [(ngModel)]="updatedItem">
+      <button (click)="pushItem()">Add</button>
+      <button (click)="closeDrawer()">Cancel</button>
+  </div>
+</div>
+
+
+
+<!-- <app-pop-up *ngIf="selectedItem">
+  <div class="details-container">
+    <h2>Update Ticket Status</h2>
+    <p><strong>Email:</strong> {{ selectedItem.userEmail }}</p>
+    <p><strong>User Query: </strong> {{ selectedItem.ticketTitle }}</p>
+    <div class="custom-select" style="width:200px;">
+      <select [(ngModel)]="selectedItem.status">
+        <option value="" disabled>Select a Status</option>
+        <ng-container *ngFor="let status of uniqueStatusValues">
+          <option [value]="status">{{ status }}</option>
+        </ng-container>
+      </select>
+  
+      <textarea [(ngModel)]="messageInput" placeholder="Enter your message"></textarea>
     </div>
-  </app-pop-up>
+    
+    
+    <button (click)="updateItem()">Update</button>
+    <button (click)="cancelUpdate()">Cancel</button>
+  </div>
+</app-pop-up> -->
+
+<app-pop-up *ngIf="selectedTicket">
+  <h2>Create Notification</h2>
+  <form [formGroup]="notificationForm" (ngSubmit)="sendNotification()">
+    <h5>User Token: {{ token }}</h5>
+    <div class="form-group">
+      <label for="title">Title:</label>
+      <input type="text" id="title" formControlName="title" [(ngModel)]="selectedTicket.title" required>
+    </div>
+
+    <div class="form-group">
+      <label for="body">Body:</label>
+      <textarea id="body" formControlName="body" [(ngModel)]="selectedTicket.body" required></textarea>
+    </div>
+
+    <div class="form-group">
+      <label for="icon">Icon URL:</label>
+      <input type="text" id="icon" formControlName="icon" [(ngModel)]="selectedTicket.icon" required>
+    </div>
+
+    <button type="submit">Send</button>
+  </form>
+</app-pop-up>

@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { CommonModule } from '@angular/common';
+import { AsyncPipe, CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
@@ -42,18 +42,9 @@ import { provideFirebaseApp } from '@angular/fire/app';
 import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
 import { AngularFireAuthModule } from '@angular/fire/compat/auth';
-import { FcmPushService } from './shared/services/fcm-push/fcm-push.service';
-import { FirebaseAuthService } from './shared/services/firebase-auth/firebase-auth.service';
+import { AngularFireMessagingModule } from '@angular/fire/compat/messaging';
+import { MessagingService } from './shared/services/messaging-service';
 initializeApp(environment.firebase);
-
-export const firebaseConfig = {
-  apiKey: "AIzaSyDL6i90M0cXcKX9B-Rq3wIKLidsaaMz86g",
-  authDomain: "tradevogue.firebaseapp.com",
-  projectId: "tradevogue",
-  storageBucket: "tradevogue.appspot.com",
-  messagingSenderId: "271891465540",
-  appId: "1:271891465540:web:674972c835685b5b5ac311",
-}
 
 
 
@@ -92,12 +83,12 @@ export const firebaseConfig = {
     UtilsModule,
     AngularFireDatabaseModule,
     AngularFireAuthModule,
-    AngularFireModule.initializeApp(firebaseConfig),
-    
+    AngularFireMessagingModule,
+    AngularFireModule.initializeApp(environment.firebase),
   ],
   providers: [
     CookieService,
-    FirebaseAuthService,
+    MessagingService, AsyncPipe,
     { provide: HTTP_INTERCEPTORS, useClass: HeadersInterceptor, multi: true },
   ],
   bootstrap: [AppComponent],

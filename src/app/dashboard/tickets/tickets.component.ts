@@ -1,9 +1,11 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { UtilsModule } from 'src/app/utils/utils.module';
 import { PopupService } from 'src/app/shared/services/popup.service';
 import { FetchDataService } from 'src/app/shared/services/fetch-data.service';
 import { catchError, forkJoin } from 'rxjs';
+import { FormBuilder, Validators } from '@angular/forms';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-tickets',
@@ -13,14 +15,28 @@ import { catchError, forkJoin } from 'rxjs';
 export class TicketsComponent {
   ticketData: any[] = [];
   selectedItem: any;
+  selectedTicket: any = {
+    title: '',
+    body: '',
+    icon: ''
+  };
   updatedItem: string = '';
   ticketTypeId: string = '';
   isDrawerOpen: boolean = false;
   uniqueStatusValues: string[] = [];
+  notificationForm: any;
   messageInput: string = '';
+  token: any;
 
-  constructor(private utils: UtilsModule, private http: HttpClient, private popupService: PopupService, private fetchDataService: FetchDataService) {
+  constructor(private utils: UtilsModule, private http: HttpClient, private popupService: PopupService, private fetchDataService: FetchDataService, private formBuilder: FormBuilder, private cookie: CookieService) {
     this.loadData();
+
+
+    this.notificationForm = this.formBuilder.group({
+      title: ['', Validators.required],
+      body: ['', Validators.required],
+      icon: ['', Validators.required]
+    });
   }
   
   loadData() {
@@ -48,12 +64,34 @@ export class TicketsComponent {
       action: item.action,
       statusChangeable: [...new Set(item.ticketType[0]?.title.status || [])].map(String),
       ticketType: item.ticketType,
+      notificationDetails: item.notificationDetails,
       dateCreated: new Date(item.dateCreated),
+      userToken: this.findUserToken(item.userEmail),
     }));
-  
+    
     this.uniqueStatusValues = this.extractUniqueStatusValues(this.ticketData);
     this.ticketTypeId = data[0]._id;
   }
+
+  findUserToken(userEmail: string): string | undefined {
+    for (const item of this.ticketData) {
+      if (item.notificationDetails?.tokenDetail) {
+        const user = item.notificationDetails.tokenDetail.find((user: any) => user.email === userEmail);
+        if (user) {
+          const userToken = user.token;
+          console.log(`Found token for email ${userEmail}: ${userToken}`);
+          return userToken;
+        }
+      }
+    }
+  
+    console.log(`Token not found for email ${userEmail}`);
+    return undefined;
+  }
+
+
+
+
   
   private extractUniqueStatusValues(ticketData: any[]): string[] {
     return Array.from(
@@ -70,6 +108,15 @@ export class TicketsComponent {
     console.log(item)
     this.selectedItem = item;
     this.ticketTypeId = item._id;
+    this.popupService.openPopup();
+  }
+
+
+  webPush(item: any) {
+    console.log(item);
+    this.selectedTicket = item;
+    this.ticketTypeId = item._id;
+    this.token = this.findUserToken(item.userEmail);
     this.popupService.openPopup();
   }
 
@@ -109,6 +156,36 @@ export class TicketsComponent {
         }
       );
       this.loadData()
+  }
+
+  sendNotification() {
+
+    
+    if (this.notificationForm.valid) {
+      // Create the data object with the desired structure
+      const data = {
+          title: this.notificationForm.value.title,
+          body: this.notificationForm.value.body,
+          icon: this.notificationForm.value.icon,
+          token: this.cookie.get('fcmToken'),
+      };
+      this.cookie.set('fcmToken', this.token)
+      const fcmToken = this.token;
+  
+      const apiUrl = 'http://localhost:1000/send-notification';
+  
+      this.http.post(apiUrl, data).subscribe(
+        (response) => {
+          console.log('Notification sent successfully:', response);
+          // Reset the form and close the popup
+          this.notificationForm.reset();
+          this.selectedTicket = {};
+        },
+        (error) => {
+          console.error('Error sending notification:', error);
+        }
+      );
+    }
   }
 
   
