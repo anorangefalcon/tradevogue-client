@@ -8,7 +8,7 @@ import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
 export class PaginationComponent implements OnInit {
   /** The total number of records */
   @Input()
-  collectionSize = 0;
+  collectionSize = 100;
 
   /** The number of records to display */
   @Input()

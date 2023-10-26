@@ -11,8 +11,8 @@ import { ElementRef, HostListener, } from '@angular/core';
 })
 export class CustomSelectComponent {
   @Input() _id!: string;
-  @Input() options: any[] = [];
-  @Input() selectedOption: any;
+  @Input() options!: any[];
+  @Input() selectedOption!: any;
   @Input() type: string = ''; // multiSelect //select //searchSelect
   @Output() final_option = new EventEmitter<string>();
   @Output() SelectedList = new EventEmitter<any>();
@@ -46,7 +46,7 @@ export class CustomSelectComponent {
     if(type == 'multiSelect'){
       return this.multiSelected.find((item: any) => option == item)? true: false;
     }
-    return this.selected == option;
+    return this.selected.toString().toLowerCase() == option.toString().toLowerCase();
   }
 
   filterData(e: Event): any {

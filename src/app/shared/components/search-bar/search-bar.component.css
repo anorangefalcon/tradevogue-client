@@ -41,9 +41,13 @@
 } */
 
 .search-bar{
-    width: max(200px);
+    width: max(200px, 100%);
     margin-inline-end: auto;
     background: transparent;
+}
+
+.form__input{
+    padding-inline: 15px 50px;
 }
 
 

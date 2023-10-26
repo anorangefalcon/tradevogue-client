@@ -1,3 +1,11 @@
+.search-bar{
+    width: auto    
+}
+
+button:disabled{
+    background-color: antiquewhite;
+}
+
 #product-section {
 
     & .product-table {
@@ -26,9 +34,9 @@
             padding: 10px 24px;
             font-weight: 400;
 
-            &:hover {
+            &:not(:disabled):hover {
                 border: 1px solid rgba(var(--blackClr), 0);
-                background-color: rgb(var(--blackClr), 0.02);
+                background-color: rgb(var(--blackClr), 0.03);
             }
         }
 
@@ -47,6 +55,9 @@
 
         & button:last-child .operational-buttons-icons {
             color: rgb(var(--red-clr));
+        }
+        & button:disabled:last-child .operational-buttons-icons {
+            color: rgb(var(--red-clr), 0.5);
         }
     }
 
@@ -93,63 +104,158 @@
     }
 }
 
-.info__icon{
-    font-size: 13px;
-    color: rgb(var(--blue-clr));
-    pointer-events: none;
+.items.displayInfo:hover > .popup {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: all;
+    display: flex;
 }
 
-.popup{
-    visibility: none;
-    opacity: 0;
+.popup {
+    display: none;
+    position: absolute;
+    inset-inline-start: 50%;
+    transform: translateX(-50%);
+    z-index: 3;
+    visibility: hidden;
     pointer-events: none;
-    background-color: rgb(var(--blackClr), 0.1);
+    opacity: 0;
+    transition: all 0.3s ease-in-out;
+    background-color: rgb(var(--whiteClr));
+    margin-top: 12px;
 
-    & .close__icon{
-        inset-block-start: -5px;
-        inset-inline-end: -5px;
-        font-size: 20px;
-        width: 20px;
-        height: 20px;
-        background-color: rgb(var(--whiteClr));
-        border: 1px solid  rgb(var(--blackClr), 0.3);
-        border-radius: 50%;
+    &::before {
+        position: absolute;
+        inset-block-start: -32px;
+        inset-inline-start: 50%;
+        transform: translateX(-50%);
+        content: '\e5c7';
+        display: flex;
+        font-size: 40px;
+        font-family: 'Material Symbols Outlined';
+        color: rgb(var(--whiteClr));
+        z-index: 2;
     }
 
-    & .popup_content{
-        background-color: rgb(var(--whiteClr));
-        box-shadow: 0px 0px 2px rgb(var(--blackClr), 0.1);
-        padding: 20px;
-        border-radius: 4px;
+    &::after {
+        position: absolute;
+        inset-block-start: -37px;
+        inset-inline-start: 50%;
+        transform: translateX(-50%);
+        content: '\e5c7';
+        display: flex;
+        font-size: 45px;
+        font-family: 'Material Symbols Outlined';
+        color: rgb(var(--blackClr), 0.2);
+        z-index: 1;
     }
 
-    & input[type="radio"]{
+    & .close__icon {
         display: none;
     }
 
-    & input[type="radio"] + label{
-        width: 20px;
-        height: 20px;
-        border-radius: 50%;
-        box-shadow: 0px 0px 3px rgb(var(--blackClr), 0.3);
+    & .pop__title {
+        font-size: 12px !important;
     }
 
-    & input[type="radio"]:checked + label{
-        border: 2px solid aqua;
+    & .popup_content {
+        background-color: rgb(var(--whiteClr));
+        border: 1px solid rgba(var(--blackClr), 0.2);
+        padding: 8px;
+        border-radius: 4px;
+
     }
+
+    & input[type="radio"] {
+        display: none;
+    }
+
+    & input[type="radio"]+label {
+        width: 15px;
+        height: 15px;
+        border-radius: 50%;
+        border: 1px solid rgb(var(--blackClr), 0.4);
+    }
+
+    & input[type="radio"]+label:after {
+        content: '';
+        display: flex;
+        position: absolute;
+        width: 5px;
+        height: 5px;
+        border-radius: 50%;
+        background-color: transparent;
+        transition: all 0.3 ease-in-out;
+    }
+
+    & input[type="radio"]:checked+label:after {
+        background-color: rgb(var(--whiteClr));
+    }
+
+    & .items{
+        padding: 5px 10px !important;
+        font-size: 10px !important;
+    }
+
 }
 
-.popup.active{
-    z-index: 3;
-    pointer-events: all;
-    visibility: visible;
-    opacity: 1;
+.info__icon {
+    font-size: 13px;
+    color: rgb(var(--blue-clr));
+    pointer-events: none;
 }
 
 .clear_btn {
     height: 40px;
     padding-block: 0;
     padding-inline: 16px;
+}
+
+@media screen and (max-width: 780px) {
+
+    .popup {
+        position: fixed;
+        height: 100vh;
+        width: 100vw;
+        inset-inline-start: 0;
+        inset-block-start: 0;
+        visibility: hidden;
+        transform: translateX(0%);
+        opacity: 0;
+        pointer-events: none;
+        background-color: rgb(var(--blackClr), 0.1);
+        margin-top: 0;
+
+        &::before{
+            display: none;
+        }
+
+        & .close__icon {
+            display: block;
+            inset-block-start: -5px;
+            inset-inline-end: -5px;
+            font-size: 20px;
+            width: 20px;
+            height: 20px;
+            background-color: rgb(var(--whiteClr));
+            border: 1px solid rgb(var(--blackClr), 0.3);
+            border-radius: 50%;
+        }
+
+        & .popup_content {
+            background-color: rgb(var(--whiteClr));
+            box-shadow: 0px 0px 2px rgb(var(--blackClr), 0.1);
+            padding: 20px;
+            border-radius: 4px;
+        }
+    }
+
+    .popup.active {
+        z-index: 3;
+        pointer-events: all;
+        visibility: visible;
+        opacity: 1;
+    }
 }
 
 

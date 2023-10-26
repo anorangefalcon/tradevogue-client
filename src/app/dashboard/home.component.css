@@ -371,7 +371,7 @@
 
     & .inventory {
         font-weight: 500;
-        font-size: 12px;
+        font-size: 10px;
     }
 
     & .inventory.good {
@@ -389,7 +389,6 @@
 
 /* Table CSS */
 main {
-    
     .table-list {
         overflow: auto;
         background-color: rgb(var(--whiteClr));
@@ -465,7 +464,7 @@ main {
                 font-weight: 400;
             }
 
-            & td .product-image+span {
+            & td .table__item-image + span {
                 width: 20ch;
                 overflow: auto;
                 text-overflow: ellipsis;

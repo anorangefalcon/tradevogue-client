@@ -1,10 +1,20 @@
-.img_container img{
+.img_container img {
     object-fit: cover;
     object-fit: top;
 }
 
-.color_{
-    width: 15px ;
-    height: 15px;
-    border-radius: 50%;
+.card-preview{
+    padding: 20px;
+    background-color: rgb(var(--whiteClr));
+    border: 1px solid rgba(var(--blackClr), 0.1);
+    border-radius: 10px;
+}
+
+.table-title_ {
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.btn-primary {
+    padding: 8px 16px;
 }

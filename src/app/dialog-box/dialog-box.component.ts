@@ -50,10 +50,13 @@ export class DialogBoxComponent implements AfterViewInit {
   }
 
   ngOnChanges(){
-    console.log(this.currentRoute, '   ' ,this.activeRoute.url);
     if(this.currentRoute != this.activeRoute.url){
       this.closeDialog();
     }
+  }
+
+  ngOnDestroy(){
+    this.dialogService.contentEmitter.unsubscribe();
   }
 
   closeDialog() {
@@ -64,6 +67,7 @@ export class DialogBoxComponent implements AfterViewInit {
     this.dialogService.responseEmitter.next(true);
     this.closeDialog();
   }
+
   cancel() {
     this.dialogService.responseEmitter.next(false);
     this.closeDialog();

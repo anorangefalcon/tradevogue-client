@@ -10,10 +10,12 @@ import { UtilsModule } from 'src/app/utils/utils.module';
 })
 export class ProductOverviewComponent {
   productDetails!: any;
+  skuId!: string;
 
   constructor(private activeRoute: ActivatedRoute, private backendUrl: UtilsModule, private fetchService: FetchDataService){
     activeRoute.params.subscribe({
       next: (data)=>{
+        this.skuId = data['sku'];
         this.fetchService.getProductDetails(data['sku']).subscribe({
           next: (data)=>{
             console.log(data, "Data");

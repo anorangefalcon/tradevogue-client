@@ -4,8 +4,6 @@ import { UploadExcelService } from '../services/upload-excel.service';
 import { ToastService } from 'src/app/shared/services/toast.service';
 import { UtilsModule } from 'src/app/utils/utils.module';
 import { DialogBoxService } from 'src/app/shared/services/dialog-box.service';
-import { PopupService } from 'src/app/shared/services/popup.service';
-import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-products',
@@ -18,7 +16,7 @@ export class ProductsComponent implements OnInit {
   ratingOption: any[] = ['Low to High', 'High to Low'];
   pageSize: number = 8;
   currentPage: number = 1;
-  selectedColor: any = '';
+  selectedColor: any = 0;
   selectAll: boolean = false;
 
   categoryOption!: any[];
@@ -41,9 +39,6 @@ export class ProductsComponent implements OnInit {
   productArray: any = [];
   deleteList: any = [];
   productList: any[] = [];
-
-  private resSubscribe!: Subscription;
-
   constructor(private element: ElementRef,
     private fetchdata: FetchDataService,
     private excelService: UploadExcelService,
@@ -53,7 +48,7 @@ export class ProductsComponent implements OnInit {
 
   async ngOnInit(){
     const category: any = await this.fetchdata.httpPost(this.backendUrl.URLs.fetchFeatures, this.dataField);
-    this.categoryOption = category.categories;
+    this.categoryOption = category?.categories;
     this.fetchData();
   }
 
@@ -111,15 +106,11 @@ export class ProductsComponent implements OnInit {
     });
   }
 
-  // Delete Single Entry
+  // Delete Entry
   deleteItem(entry: any, name:string = '', type: string = 'single') {
     this.dialogBoxService.confirmationDialogBox(name);
-    
-    // if(this.resSubscribe){
-    //   this.dialogBoxService.responseEmitter.unsubscribe();
-    // }
 
-    this.resSubscribe = this.dialogBoxService.responseEmitter.subscribe(async (res: boolean)=>{
+    this.dialogBoxService.responseEmitter.subscribe(async (res: boolean)=>{
 
         let data: any = {};
 
@@ -128,14 +119,14 @@ export class ProductsComponent implements OnInit {
             data.data = entry;
             await this.fetchdata.httpPost(this.backendUrl.URLs.deleteproducts, data);
             this.fetchData();
+            this.dialogBoxService.responseEmitter.next(false);
         }
-
     })
   }
 
-  ngOnDestroy(){
-    this.dialogBoxService.responseEmitter.unsubscribe();
-  }
+  // ngOnDestroy(){
+  //   this.dialogBoxService.responseEmitter.unsubscribe();
+  // }
 
   // Filter Handling function
   updateFields(e: any, field: string) {
@@ -144,10 +135,9 @@ export class ProductsComponent implements OnInit {
     this.fetchData();
   }
 
-  isradioChecked(e: Event, color: string){
-    console.log((<HTMLInputElement>e.target).checked);
+  isradioChecked(e: Event, color_index: number){
     if((<HTMLInputElement>e.target).checked){
-      this.selectedColor = color;
+      this.selectedColor = color_index;
     }
   }
 
@@ -173,10 +163,19 @@ export class ProductsComponent implements OnInit {
     return ratingArray;
   }
 
+  filterData(array: any, limit: any){
+    let filteredArray = array.filter((item: any) => item <= limit);
+    // console.log(array, "   --  ", limit, " --> ", filteredArray);
+
+    return filteredArray;
+  }
+
   displayInfo(e: Event){
+    console.log(<HTMLDivElement>(<HTMLDivElement>e.target));
     (<HTMLDivElement>(<HTMLDivElement>e.target)?.parentElement?.nextSibling)?.classList.add('active');
   }
   closeInfo(e: Event){
+    console.log(<HTMLDivElement>(<HTMLSpanElement>e.target).parentElement);
     (<HTMLDivElement>(<HTMLSpanElement>e.target).parentElement).parentElement?.classList.remove('active');
   }
 

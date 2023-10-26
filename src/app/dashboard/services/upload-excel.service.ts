@@ -10,7 +10,7 @@ export class UploadExcelService {
   errors: any = {};
 
   // handles inputed files
-  handleFileInput(event: any, singleFeild: string = ''): Promise<any> {
+  handleFileInput(event: any, singleField: string = ''): Promise<any> {
 
     let dataAndErrors: any = {};
     let file = event.target.files[0];
@@ -38,9 +38,10 @@ export class UploadExcelService {
             element['row'] = element['__rowNum__'];
           });
         }
+        console.log("Excel", excelData);
         // console.log("excel-> ", excelData);
-        if (singleFeild !== '') {
-          dataAndErrors = this.validateSingleFeildFile(excelData, singleFeild);
+        if (singleField !== '') {
+          dataAndErrors = this.validateSingleFeildFile(excelData, singleField);
         }
         else{
           dataAndErrors = this.validateFile(excelData);
@@ -127,6 +128,7 @@ export class UploadExcelService {
         const allReqKeys = this.isCompleteSubset(Object.keys(obj), reqProductKeys);
 
         if (allReqKeys === true) {
+          
           for (let key of Object.keys(obj)) {
             // not letting user set important keys explicitly
             if (key !== 'reviews' && key !== 'available' && key !== 'sku' && key !== 'row') {
