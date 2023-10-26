@@ -8,17 +8,23 @@
     background-color: rgba(0, 0, 0, 0.4); 
     transition: background-color 0.3s; 
     top: 0;
+    
     left:0;
 
 }
 
+
+
 .content-drawer{
-    position: absolute;    
+     position: absolute;
     height: 100%;
+    padding: 24px;
     width: 100%;
     transition: 0.3s ease-in-out;
-      margin: 0 !important;
-    background: #fafafa;
+    overflow-y: auto;
+      /* margin: 0 !important; */
+    /* background: #fafafa; */
+    background-color: white;
 }
 
 .show{
@@ -38,7 +44,7 @@
 }
 
 .right{ 
-    right:0;
+    right:0;    
     width: 500px !important;
     transform: translate(100%,0);
 
@@ -71,8 +77,12 @@ transform: translate(calc(100% - 500px),0);
     transform: translate(0,0);
  }
     
-
-
+.close__icon{
+    cursor: pointer;
+    position: absolute;
+    top: 30px;
+    right: 24px;
+}
 
 
 

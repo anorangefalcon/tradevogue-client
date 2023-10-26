@@ -1,7 +1,11 @@
 <div class="wrapper" [ngClass]="{'show':show}">
+
+
     <div class="content-drawer" [style]="translate"  [style]="direction" [ngClass]="{'top':direction=='top','bottom':direction=='bottom','right':direction=='right', 'left':direction=='left','top_show':translate=='translateTop', 'bottom_show':translate=='translateBottom','right_show':translate=='translateRight','left_show':translate=='translateLeft'}">
+      <span class="material-symbols-outlined close__icon" (click)="CloseWrapper()">
+        close
+        </span>
       <ng-content></ng-content>
-        <button (click)="CloseWrapper()">Close icon</button>
     </div>
 
     

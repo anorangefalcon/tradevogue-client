@@ -113,20 +113,19 @@
 
 
 <!-- COUPONS  -->
-<div class="wrapper d-flex" [ngClass]="{'open_Coupon':OpenCoupon}">
+<!-- <div class="wrapper d-flex" [ngClass]="{'open_Coupon':OpenCoupon}"> -->
+    <app-drawer [direction]="direction" [show]="show" (showChange)="ChangeHanlder($event)">
     <div class="coupons d-flex flex-column gap-15">
-        <span class="material-symbols-outlined pointer" (click)="CloseCouponDialog()">
-            close
-        </span>
-        <div class="d-flex gap-15">
+        <h2>Coupons Available</h2>
+        <div class="d-flex justify-content-md-between">
             <input type="text" placeholder="Enter coupon code"  #CouponCode oninput="this.value = this.value.toUpperCase()" (input)="InputChange()">
            
-            <button class="btn-primary" (click)="ApplyCoupon(null,$event)" [disabled]="CouponValid=='invalid'" [ngClass]="{'disabled':CouponValid=='invalid'}">APPLY</button>
+            <button class="btn-primary apply__btn" (click)="ApplyCoupon(null,$event)" [disabled]="CouponValid=='invalid'" [ngClass]="{'disabled':CouponValid=='invalid'}">APPLY</button>
             <span *ngIf="CouponValid=='invalid'">Coupon is not valid</span>
         </div>
-        <div class="all-coupons" *ngFor="let coupon of AllCoupons">
+        <div class="all-coupons" >
            
-            <div class="coupon d-flex flex-column gap-10">
+            <div class="coupon d-flex flex-column gap-10" *ngFor="let coupon of AllCoupons">
                 <div class="coupon-name">
                     <h2>{{coupon.couponcode}}</h2>
                 </div>
@@ -178,7 +177,7 @@
                     
                 </ul>
                 <small>Lorem ipsum, dolor sit amet consectetur adipisicing elit.</small> -->
-                <button (click)="ApplyCoupon(coupon)">Apply Coupon</button>
+                <button (click)="ApplyCoupon(coupon)" class="coupon__btns">Apply Coupon</button>
             </div>
             <!-- <div class="coupon d-flex flex-column gap-10">
                 <div class="coupon-name">
@@ -218,4 +217,5 @@
         
 
     </div>
-</div>
+</app-drawer>
+<!-- </div> -->

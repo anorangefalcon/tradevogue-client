@@ -4,7 +4,7 @@ import { FetchDataService } from '../shared/services/fetch-data.service';
 import { RouterLinksService } from '../shared/services/router-links.service';
 import { UtilsModule } from 'src/app/utils/utils.module';
 import { passwordStrengthValidator, matchPasswordValidator } from '../auth/validators';
-import { ToastService } from '../shared/services/toast.service';
+// import { ToastService } from '../shared/services/toast.service';
 import { MobileNoValidator } from './validators';
 import { PopupService } from '../shared/services/popup.service';
 import { Subject } from 'rxjs';
@@ -26,13 +26,16 @@ export class SettingsComponent {
   password : string = "password";
   password2 : string = "password";
   password3 : string = "password";
-  AddressSended:any;
+  AddressSended:boolean=false;
+  receiveData:any;
 
-  addnewAddress:boolean=false;
+  // addnewAddress:boolean=false;
   userAddresses!:any;
   TranslateData:boolean=false;
 
-  constructor( private backendURLs: UtilsModule, private userService:UserServiceService,  private fetchDataService: FetchDataService, private fb: FormBuilder ,private toastService: ToastService) {
+
+// private toastService: ToastService
+  constructor( private backendURLs: UtilsModule, private userService:UserServiceService,  private fetchDataService: FetchDataService, private fb: FormBuilder ) {
 
     this.ProfileForm = fb.group(
       {
@@ -94,24 +97,33 @@ export class SettingsComponent {
     let Addresses=await this.userService.SubscribingValue('userAddresses');
     if(!Addresses){
       let data:any=await  this.fetchDataService.httpGet(this.backendURLs.URLs.getAddress);
-      this.userAddresses=data.info.address;
-    await this.userService.emittingValue('userAddresses',[this.userAddresses]);
-    return;
+      data=data.info.address;
+      if(data.length!=0){
+        await this.userService.emittingValue('userAddresses',data);
+        this.userAddresses=data;  
+      } 
     }
-  this.userAddresses=Addresses;    
 
+    else{
+      this.userAddresses=Addresses;
+    }
   }
 
   AddAddress(){
-    this.addnewAddress=true;
+    // this.addnewAddress=true;
     this.ShowComponent=true;
   }
 
 
-  CloseAddress(){
-    this.addnewAddress=false;
-  }
+  // CloseAddress(){
+  //   // this.addnewAddress=false;
+  // }
 
+
+  AddresscloseHandler(event:any){
+    this.ShowComponent=event;
+    this.receiveData='';
+  }
 
   NewAddressHandler(event:any){
     if(event.hasOwnProperty("index")){
@@ -125,7 +137,7 @@ export class SettingsComponent {
 
   async RemoveAddress(address:any,index:any){
     try{
-      const body={id:address._id}
+      const body={address_id:address._id}
       let deleteAddress=await this.fetchDataService.httpPost(this.backendURLs.URLs.deleteAddress,body);
       this.userAddresses.splice(index);
     }
@@ -138,8 +150,14 @@ export class SettingsComponent {
 
   EditAddress(address:any,index:any){
     const data=this.userAddresses[index];
-    this.AddressSended={data,index};
-    this.addnewAddress=true;
+    console.log('data and is ',data);
+    
+    // this.AddressSended={ data: data, index: index };
+    // console.log('AddresseSedned is ',this.AddressSended);
+    // this.AddressSended=true;
+    this.receiveData={data,index};
+    this.ShowComponent=true;
+    // this.addnewAddress=true;
   }
 
 
@@ -157,7 +175,7 @@ export class SettingsComponent {
       }
       const data: any = await this.fetchDataService.httpPost(this.backendURLs.URLs.changePassword, body)
 
-      this.toastService.successToast({ title: data.message })
+      // this.toastService.successToast({ title: data.message })
     }
     catch (error) {
   
@@ -169,15 +187,12 @@ export class SettingsComponent {
 
 
   editClick() {
-
     this.isReadOnly = !this.isReadOnly;
   }
 
 
   DetailsSubmitted: Boolean = false;
-  async saveDetails() {
-    console.log('profile form is ',this.ProfileForm.value);
-    
+  async saveDetails() { 
     this.DetailsSubmitted = true;
     if (this.ProfileForm.invalid) return;
 
@@ -190,17 +205,13 @@ export class SettingsComponent {
     }
 
     let response = await this.fetchDataService.httpPost(this.backendURLs.URLs.updateDetails, body);
-    console.log('responise is ',response);
-    
     this.isReadOnly = !this.isReadOnly;
   }
 
   async MakeDefault(address:any,i:any){
     try {
-      // console.log('adress is ',address," i is ",i);
       const body={address_id:address._id};
       const update:any=await this.fetchDataService.httpPost(this.backendURLs.URLs.setDefaultAddress,body);
-      // console.log('UPDATE  is ',update[0].info.address);
         this.userAddresses=update[0].info.address;
       
     } catch (error) {

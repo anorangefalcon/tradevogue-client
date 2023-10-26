@@ -264,7 +264,7 @@ label span {
 }
 
 
-.show{
+/* .show{
 
     & .addressForm{
         opacity: 1;
@@ -276,7 +276,7 @@ label span {
         transform: translate(-50%, -50%) scale(1.1);
         transition: transform 0.4s cubic-bezier(0, 0.59, 0.25, 1), -webkit-transform 0.4s cubic-bezier(0, 0.59, 0.25, 1);
     }
- } 
+ }  */
 
 
 

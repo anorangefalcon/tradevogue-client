@@ -280,7 +280,7 @@
                             <div class="d-flex">
                                 <!-- <button></button> -->
                                 <span *ngIf="address.defaultAddress">Default Address</span>
-                                <button class="btn default__btn" (click)="MakeDefault(address,i)" *ngIf="!address.defaultAddress">Make this  Defult</button>
+                                <button class="btn default__btn" (click)="MakeDefault(address,i)" *ngIf="i!=0">Make this  Defult</button>
                        
                                 <button class="edit__btn d-flex align-item-center" (click)="EditAddress(address,i)">Edit</button>
                                 <button class="remove" (click)="RemoveAddress(address,i)">Remove</button>
@@ -415,6 +415,5 @@
 
 
 
-<div [ngClass]="{'show':addnewAddress==true}">
-    <app-address (newAddress)="NewAddressHandler($event)"  [ShowComponent]="ShowComponent"  (closeaddressed)="CloseAddress()" [receiveData]="AddressSended"></app-address>
-</div>
+    <app-address (newAddress)="NewAddressHandler($event)"[ShowComponent]="ShowComponent" [receiveData]="receiveData"  (AddressClosed)="AddresscloseHandler($event)"> (closeaddressed)="CloseAddress()" ></app-address>
+

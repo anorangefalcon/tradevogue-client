@@ -11,7 +11,7 @@ import { UtilsModule } from 'src/app/utils/utils.module';
 export class CouponsComponent {
 OfferForm:FormGroup;
 
-direction: string='top';
+direction: string='right';
 
 show:boolean=false;
 
@@ -180,6 +180,7 @@ async ngOnInit(){
 
   AddCoupon(){
     this.OfferForm.reset();
+    this.show=true;
     console.log('offerform is ',this.OfferForm.value);
     
 this.CouponRequest=true;

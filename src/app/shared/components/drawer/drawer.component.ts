@@ -11,13 +11,19 @@ export class DrawerComponent {
   @Output() showChange: EventEmitter<any> =   new EventEmitter();
   CloseWrapper(){
     this.translate='';
-    this.showChange.emit(false);
+    setTimeout(()=>{
+      this.showChange.emit(false);
+      
+    },300);
     
 }
 
 translate!:string;
 
 ngOnChanges(){
+  console.log('show is ',this.show);
+  
+  if(this.show==false){ this.CloseWrapper();  return;}
   if(this.show == true){
 
     if(this.direction == 'top' ){

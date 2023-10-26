@@ -12,14 +12,14 @@ import { UserServiceService } from '../services/user-service.service';
 export class AddressComponent {
   display:boolean = false;
   direction:string='right';
-// direction: string='top';
-
-show:boolean=false;
-  // direction:string='right';
+  show:boolean=false;
   addnewAddress:boolean=false;
   StateOptions:any=['Punjab','Bihar','Delhi'];
   @Input() receiveData:any;
   @Input() ShowComponent:any;
+  @Output() AddressClosed: EventEmitter<any> =   new EventEmitter();
+  @Output() newAddress: EventEmitter<any> =   new EventEmitter();
+  @Output() closeaddressed: EventEmitter<any> =   new EventEmitter();
   // @Input() visibleClass: boolean | undefined;
   states:any[]=['Punjab','Delhi','UP'];
   // closeAddress:boolean=false;
@@ -47,29 +47,37 @@ show:boolean=false;
 
  
 
-  ShowDrawer(){
-    this.show=true;
-  }
+  // ShowDrawer(){
+  //   this.show=true;
+  // }
   
   ChangeHanlder(event:any){
-  this.show=event;  
+    this.show=event; 
+    this.AddressClosed.emit(false);
+  //   setTimeout(()=>{
+
+  //  },300) 
+  this.DetailsForm.reset();
   }
 
   PhoneNumberValidator(control:FormControl):boolean{
     const expression=/^\+?[1-9][0-9]{7,14}$/;
     return expression.test(control.value);
   }
-  // async ngOnInit() {
-  //   // this.AddressData=await this.fetchService.httpGet(this.backendURLs.URLs.getAddress);
-  //   // this.AddressData=this.AddressData.info.address;
-  // }
+
 
   ngOnChanges(){
-    // this.ShowComponent=true;
+
     if(this.ShowComponent==true){
+      console.log('changing refreced');
+      
       this.show=true;
     }
-    this.DetailsForm.patchValue(this.receiveData.data);
+    
+    if(this.receiveData){
+      this.DetailsForm.patchValue(this.receiveData.data);
+    }
+    
   }
 
   // RemoveAddressForm(){
@@ -79,11 +87,8 @@ show:boolean=false;
   // AddressData:any=[];
   UpdatingRequest:any
 
-  AddressClose(){
-    this.DetailsForm.reset(); 
-    this.closeaddressed.emit(false);
-  
-  }
+  clickCount=1;
+ 
 
 
   // close(){
@@ -112,8 +117,7 @@ show:boolean=false;
   //   this.display=true;
   // }
 
-  @Output() newAddress: EventEmitter<any> =   new EventEmitter();
-  @Output() closeaddressed: EventEmitter<any> =   new EventEmitter();
+
   async AddnewAddress(){
     try { 
       let result;
@@ -136,14 +140,12 @@ show:boolean=false;
      else{
        await this.userService.emittingValue('userAddresses',[result]);
      }
-     
-      // this.newAddress.emit(result);
       this.DetailsForm.reset();
      
     } 
     catch (error) {    
     }
-    this.AddressClose();
+    this.show=(false);
  
   }
 

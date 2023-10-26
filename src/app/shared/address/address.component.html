@@ -1,45 +1,38 @@
-<!-- [ngClass]="{'close_address':visibleClass==false,'show':visibleClass==true }" -->
-
-
-
     
 <app-drawer [direction]="direction" [show]="show" (showChange)="ChangeHanlder($event)">
-    <!-- <div class="addressForm">  -->
         <div class="addressFormContent">
-            <span class="material-symbols-outlined close__icon" (click)="AddressClose()">
-                close
-                </span>
+     
        
     <div class="d-flex flex-column gap-20">
-    <div>
+
     <h2>Add New Address
     </h2>
-    </div>
+
     
     
     <form [formGroup]="DetailsForm" class="d-flex gap-15">
     <div class="form__group relative d-flex flex-column">
         <label class="form__label">FIRSTNAME<span>*</span></label>
-        <span class="material-symbols-outlined form__icon absolute">person</span>
+        <!-- <span class="material-symbols-outlined form__icon absolute">person</span> -->
         <input type="text" id="firstname" formControlName="firstname" placeholder="Enter Your First Name">
     </div>
     
     <div class="form__group relative d-flex flex-column">
         <label class="form__label">LASTNAME<span>*</span></label>
-        <span class="material-symbols-outlined form__icon absolute">person</span>
+        <!-- <span class="material-symbols-outlined form__icon absolute">person</span> -->
         <input type="text" id="lastname" formControlName="lastname" placeholder="Enter Your Last Name">
     </div>
     <div class="form__group relative d-flex flex-column">
         <label class="form__label">APARTMENT<span>*</span></label>
-        <span class="material-symbols-outlined form__icon absolute">mail</span>
+        <!-- <span class="material-symbols-outlined form__icon absolute">mail</span> -->
         <input type="text" id="apartment" formControlName="apartment" placeholder="Enter Your apartment no">
     </div>
     
     
     <div class="form__group relative d-flex flex-column">
         <label class="form__label">AREA<span>*</span></label>
-        <span class="material-symbols-outlined form__icon absolute">call</span>
-        <input type="text" id="area" formControlName="area" placeholder="Enter Your MobileNo">
+        <!-- <span class="material-symbols-outlined form__icon absolute">call</span> -->
+        <input type="text" id="area" formControlName="area" placeholder="Enter Your area">
     </div>
     
     
@@ -47,21 +40,21 @@
     
     <div class="form__group relative d-flex flex-column">
         <label class="form__label">LANDMARK<span>*</span></label>
-        <span class="material-symbols-outlined form__icon absolute">person</span>
-        <input type="text" id="landmark" formControlName="landmark" placeholder="Enter Your Username">
+        <!-- <span class="material-symbols-outlined form__icon absolute">person</span> -->
+        <input type="text" id="landmark" formControlName="landmark" placeholder="Enter Your landmark">
     </div>
     
     <div class="form__group relative d-flex flex-column">
         <label class="form__label">PINCODE<span>*</span></label>
-        <span class="material-symbols-outlined form__icon absolute">person</span>
+        <!-- <span class="material-symbols-outlined form__icon absolute">person</span> -->
         <input type="text" id="pincode" formControlName="pincode" placeholder="Enter Your Username">
     </div>
     
     
     <div class="form__group relative d-flex flex-column">
         <label class="form__label">TOWN/CITY<span>*</span></label>
-        <span class="material-symbols-outlined form__icon absolute">person</span>
-        <input type="text" id="town_city" formControlName="town_city" placeholder="Enter Your Username">
+        <!-- <span class="material-symbols-outlined form__icon absolute">person</span> -->
+        <input type="text" id="town_city" formControlName="town_city" placeholder="Enter Your Town/City">
     </div>
     
     <div class="form__group relative d-flex flex-column">
@@ -74,7 +67,7 @@
     
     <div class="form__group relative d-flex flex-column">
         <label class="form__label">MOBILE NO</label>
-        <span class="material-symbols-outlined form__icon absolute">person</span>
+        <!-- <span class="material-symbols-outlined form__icon absolute">person</span> -->
         <input type="text" id="town_city" formControlName="mobile" placeholder="Enter Your Phone Number">
     </div>
     
@@ -82,7 +75,8 @@
     </form>
     
     <div class="d-flex gap-15">
-        <button class="width-160 cancelbtn" (click)="AddressClose()">Cancel</button>
+        <!--  (click)="AddressClose()" -->
+        <button class="width-160 cancelbtn">Cancel</button>
         <button class="btn-primary width-160" #EditBtn (click)="AddnewAddress()" [disabled]="DetailsForm.invalid">
             
             <span *ngIf="receiveData">Update</span>
@@ -95,8 +89,6 @@
     </div>
     
     </div>
-    
-    <!-- </div> -->
-    
+     
 </app-drawer>
 

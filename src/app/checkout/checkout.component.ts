@@ -24,6 +24,9 @@ export class CheckoutComponent implements OnInit {
   updateBoolean: boolean = false;
   cart: any = {};
 
+  direction:string='right';
+  show:boolean=false;
+
   @ViewChild('CouponCode') CouponCode:any; 
   constructor(private cartService: CartService,private userService:UserServiceService,private toastService:ToastService,private BackendUrl:UtilsModule,private fetchService:FetchDataService, private cookie: CookieService, private route: Router, private el: ElementRef) { }
 
@@ -36,9 +39,15 @@ export class CheckoutComponent implements OnInit {
     });
 
     this.AllCoupons=await this.fetchService.httpGet(this.BackendUrl.URLs.getCoupons);
-    // console.log('data is-------------- ',this.AllCoupons);
-    
+  }
 
+  ChangeHanlder(event:any){
+    this.show=event; 
+  //   this.AddressClosed.emit(false);
+  // //   setTimeout(()=>{
+
+  // //  },300) 
+  // this.DetailsForm.reset();
   }
 
 
@@ -188,7 +197,7 @@ export class CheckoutComponent implements OnInit {
 
 
   CouponOpener(){
-    this.OpenCoupon=true;
+    this.show=true;
   }
   
 
