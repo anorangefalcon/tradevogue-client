@@ -15,6 +15,7 @@ export class WishlistService {
   
   sendWishlists = new BehaviorSubject<any>('');
   send$ = this.sendWishlists.asObservable();
+  WishlistOpened:any=false;
 
   constructor(private cookie: CookieService,
     private fetchService: FetchDataService,
@@ -28,11 +29,12 @@ export class WishlistService {
 
       if (IsLogin){
         let data: any = await this.fetchService.httpGet(this.backendUrls.URLs.showWishlist)
-        // console.log(data, "data in wishlist service");
-        // console.log('data is ',data);
+
         
         this.sendWishlists.next(data);
         this.showWishlistsDialog.next(true);
+        console.log('emitted -----');
+        
       }
       else {
         this.router.navigate(['auth/login'])

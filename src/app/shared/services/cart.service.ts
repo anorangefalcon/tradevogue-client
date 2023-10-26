@@ -3,7 +3,7 @@ import { FetchDataService } from './fetch-data.service';
 import { BehaviorSubject, Observable, map } from 'rxjs';
 import { ToastService } from './toast.service';
 import { HttpClient } from '@angular/common/http';
-import { UtilsModule } from 'src/app/utils/utils.module';
+import { UtilsModule } from './../../utils/utils.module';
 import { CookieService } from 'ngx-cookie-service';
 
 @Injectable({

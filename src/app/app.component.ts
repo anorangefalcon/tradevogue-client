@@ -8,11 +8,7 @@ import { environment } from 'src/environments/environment';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
 })
-export class AppComponent implements OnInit{
-
-  ngOnInit(): void {
-    throw new Error('Method not implemented.');
-  }
+export class AppComponent{
 
     title = 'eCommerce-frontend';
     showWishlistsDialog : boolean = false;
@@ -32,10 +28,10 @@ export class AppComponent implements OnInit{
         });
     }
 
-    constructor(private wishlistService:WishlistService){
-      this.wishlistService.display$.subscribe((data)=>{
-        console.log('data is -----------',data);
-        this.showWishlistsDialog=data;
-      })
-    }
+    // constructor(private wishlistService:WishlistService){
+    //   this.wishlistService.display$.subscribe((data)=>{
+    //     console.log('data is -----------',data);
+    //     this.showWishlistsDialog=data;
+    //   })
+    // }
    }

@@ -21,7 +21,7 @@ export class DrawerComponent {
 translate!:string;
 
 ngOnChanges(){
-  console.log('show is ',this.show);
+  console.log('show is-----------> ',this.show);
   
   if(this.show==false){ this.CloseWrapper();  return;}
   if(this.show == true){

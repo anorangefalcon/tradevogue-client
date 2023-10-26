@@ -23,13 +23,6 @@
                     Men
                 </a>
                 <ul class="sub-categories">
-                    <!-- <li>
-                        <a href="javascript:void(0)">
-                        <img src="https://5.imimg.com/data5/ECOM/Default/2022/9/RF/WU/DA/153990963/whatsappimage2022-08-25at12-27-10pm-500x500.jpg" alt="">
-                        <span>Kurta</span>
-                      </a>
-        
-                    </li> -->
                     <li>
                         <a [routerLink]="['/explore']" [queryParams]="{ gender: 'male' , category: 'kurta'}">
                             <img src="http://drive.google.com/uc?export=view&id=1y9Y0C7C5blrO-iHTPksIlizLGAhzfy06">
@@ -54,17 +47,6 @@
                             <span>Explore All</span>
                         </a>
                     </li>
-                    
-                    <!-- <li *ngFor="let category of categories?.men" class="pointer">
-                        <a [routerLink]="['/explore']" [queryParams]="{ gender: 'male', category: category }">
-                            {{ category }}
-                        </a>
-                    </li>
-                    <li class="pointer">
-                        <a [routerLink]="['/explore']" [queryParams]="{ gender: 'male'}">
-                            Explore All
-                        </a>
-                    </li> -->
                 </ul>
             </li>
             <li class="nav-links relative" (click)="hamburgerOpen = false" >
@@ -96,26 +78,14 @@
                             <span>Explore All</span>
                         </a>
                     </li>
-                    <!-- <li *ngFor="let category of categories?.women" class="pointer">
-                        <a [routerLink]="['/explore']" [queryParams]="{ gender: 'female', category: category }">
-                            {{ category }}
-                        </a>
-                    </li>
-                    <li class="pointer">
-                        <a [routerLink]="['/explore']" [queryParams]="{ gender: 'female'}">
-                            Explore All
-                        </a>
-                    </li> -->
+                   
                 </ul>
             </li>
             <li class="nav-links" (click)="hamburgerOpen = false">
                 <a href="" class=" d-flex flex-column gap-5" [routerLink]="['/explore']">
                     Offers
                 </a>
-                <!-- <ul class="sub-items sub-categories d-flex flex-column gap-15 align-item-center">
-                    <li>Offer 1</li>
-                    <li>Offer 2</li>
-                </ul> -->
+             
             </li>
         </ul>
         <ul class="navbar-features d-flex align-item-center gap-20 m-gap-15 s-gap-10">
@@ -130,14 +100,14 @@
                 class="search-icon-mobile material-symbols-outlined">
                 search
             </span>
-            <!-- <li>
+            <li>
                 <a class="icons" href="javscript:void(0);">
                     <span class="wishlist_count material-symbols-outlined">
                         favorite
                         <span class="count" id="wishList">0</span>
                     </span>
                 </a>
-            </li> -->
+            </li>
             <li>
                 <a class="icons" href="javscript:void(0);">
                     <span class="material-symbols-outlined">

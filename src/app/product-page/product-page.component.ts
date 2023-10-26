@@ -55,9 +55,13 @@ export class ProductPageComponent implements OnInit {
   }
 
   fetchProductData() {
+
+    
     this.route.params.subscribe(params => {
       this.sku = params['sku'];
       this.fetchService.getProductDetails(this.sku).subscribe((data: any) => {
+        // console.log('data comes is -------->',data);
+        
         this.data = data;
         this.data.avgRating = data.avgRating;
         this.activeIndex = 0;

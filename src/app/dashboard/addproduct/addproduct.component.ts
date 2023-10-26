@@ -45,6 +45,8 @@ export class AddproductComponent {
     private activeRoute: ActivatedRoute,
     private router: Router) {
 
+      // console.log('ADDPRDOUCT CALLEC-------->');
+      
     this.productsForm = this.fb.group({
 
       assets: this.fb.array([

@@ -30,10 +30,7 @@ export class CardTemplateComponent {
     // console.log('ngOnInit is-----------> ',this.product);
     
     const sku = this.product.sku;
-    this.fetchdata.getProductDetails(sku).subscribe((data: any) => {
-      this.productData = data;
- 
-    })
+
     
     this.product.oldPrice = 0; //temp
     // this will be updated once coupon/discount backend is done

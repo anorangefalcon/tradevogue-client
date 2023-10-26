@@ -18,7 +18,11 @@ export class ProductCardCarouselComponent {
   constructor(private fetchDataService: FetchDataService) {}
 
   ngOnInit(){
+
+    
     this.fetchDataService.getProducts(this.whatToFetch).subscribe((data:any)=>{
+
+      
       this.productArr = data.items;
     })
   }

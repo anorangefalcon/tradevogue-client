@@ -13,6 +13,8 @@ export class ProductOverviewComponent {
   skuId!: string;
 
   constructor(private activeRoute: ActivatedRoute, private backendUrl: UtilsModule, private fetchService: FetchDataService){
+    // console.log('CONSTRUCTOR CALELD--------->');
+    
     activeRoute.params.subscribe({
       next: (data)=>{
         this.skuId = data['sku'];

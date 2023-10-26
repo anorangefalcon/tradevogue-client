@@ -56,7 +56,8 @@ export class FetchDataService {
   getProductDetails(sku: any) {
     let params = new HttpParams();
     params = params.set("sku", sku);
-
+    console.log('sky called by ----->');
+    
     return this.http.get(this.backendUrls.URLs.fetchProductUrl, { params })
   }
 
