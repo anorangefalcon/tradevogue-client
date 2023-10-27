@@ -11,27 +11,24 @@ import { DialogBoxService } from 'src/app/shared/services/dialog-box.service';
   styleUrls: ['./products.component.css'],
 })
 export class ProductsComponent implements OnInit {
-
-  stockStatus: any[] = ['Out of Stock', 'Low Inventory', 'In Stock'];
-  ratingOption: any[] = ['Low to High', 'High to Low'];
+  sortOption: any[] = ['Rating: Low to High', 'Rating: High to Low', 'Stock: Low to High', 'Stock: High to Low'];
   pageSize: number = 8;
   currentPage: number = 1;
   selectedColor: any = 0;
+  totalCount: any;
   selectAll: boolean = false;
 
   categoryOption!: any[];
-  dataField: string [] = ['categories'];
-  productTemplate = ['Product Name', 'Category', 'Brand' ,'Price', 'Stock', 'Status', 'Published', 'Action'];
+  dataField: string[] = ['categories'];
+  productTemplate = ['Product Name', 'Category', 'Brand', 'Price', 'Stock', 'Status', 'Published', 'Action'];
 
 
   template: any = {
-    search: '',
     limit: this.pageSize,
     page: this.currentPage,
     filter: {
-      stockStatus: '',
+      search: '',
       categories: '',
-      rating: '',
     }
   }
 
@@ -46,81 +43,87 @@ export class ProductsComponent implements OnInit {
     private dialogBoxService: DialogBoxService,
     private toastService: ToastService,) { }
 
-  async ngOnInit(){
+  async ngOnInit() {
     const category: any = await this.fetchdata.httpPost(this.backendUrl.URLs.fetchFeatures, this.dataField);
     this.categoryOption = category?.categories;
     this.fetchData();
   }
 
   async fetchData() {
-    try{
-      this.productArray = await this.fetchdata.httpPost(this.backendUrl.URLs.fetchProductInventory, this.template);      
+    try {
+      this.productArray = await this.fetchdata.httpPost(this.backendUrl.URLs.fetchProductInventory, this.template);
       this.productList = [];
-      this.productArray.forEach((product: any) => {
+      this.totalCount = this.productArray.pageInfo[0].count;
+
+
+      this.productArray.data.forEach((product: any) => {
         let item = {
-          _id : product._id,
-          itemId: product.sku,
-          image: product.assets[0].photo[0],
-          name: product.name,
-          price: product.price,
-          category: product.info.category,
-          assets: product.assets,
-          brand: product.info.brand,
+          _id: product.productInfo._id,
+          itemId: product.productInfo.sku,
+          image: product.productInfo.assets[0].photo[0],
+          name: product.productInfo.name,
+          price: product.productInfo.price,
+          category: product.productInfo.info.category,
+          assets: product.productInfo.assets,
+          brand: product.productInfo.info.brand,
           unit_sold: product.unitSold,
-          orderQuantity: product.info.orderQuantity,
-          product_inventory: (product.totalStock - product.unitSold),
-          rating: product.avgRating,
-          last_updated: product.updatedAt.split('T')[0],
+          orderQuantity: product.productInfo.info.orderQuantity,
+          product_inventory: product.inventory,
+          rating: Math.round(product.avgRating * 10) / 10,
+          last_updated: product.productInfo.updatedAt.split('T')[0],
           checked: false
         }
         this.productList.push(item);
       })
-    }catch(err){
+    } catch (err) {
       console.log(err);
     }
   }
 
-  async deleteData(){
+  async deleteData() {
     this.productArray = await this.fetchdata.httpPost(this.backendUrl.URLs.deleteProductInventory, this.template);
   }
 
-  toggleSelectAll(){
-    this.productList.forEach((product: any)=>{
+
+  // Check for tables
+
+  toggleSelectAll() {
+    this.productList.forEach((product: any) => {
       product.checked = this.selectAll;
     });
   }
 
-  checkboxChanged(){
-    if(this.isAllcheckboxChecked()) this.selectAll = true;
+  checkboxChanged() {
+    if (this.isAllcheckboxChecked()) this.selectAll = true;
     else this.selectAll = false;
   }
 
-  isAllcheckboxChecked(){
-    return this.productList.every((product: any)=>product.checked);
+  isAllcheckboxChecked() {
+    return this.productList.every((product: any) => product.checked);
   }
 
-  updateCheckList(){
+  updateCheckList() {
     this.deleteList = [];
-    this.productList.forEach((product: any)=>{
-      if(product.checked) this.deleteList.push(product._id);
+    this.productList.forEach((product: any) => {
+      if (product.checked) this.deleteList.push(product._id);
     });
   }
 
   // Delete Entry
-  deleteItem(entry: any, name:string = '', type: string = 'single') {
+  deleteItem(entry: any, name: string = '', type: string = 'single') {
     this.dialogBoxService.confirmationDialogBox(name);
 
-    this.dialogBoxService.responseEmitter.subscribe(async (res: boolean)=>{
+    this.dialogBoxService.responseEmitter.subscribe(async (res: boolean) => {
 
-        let data: any = {};
+      let data: any = {};
 
-        if(res == true){
-            data.type = type,
-            data.data = entry;
-            await this.fetchdata.httpPost(this.backendUrl.URLs.deleteproducts, data);
-            this.fetchData();
-            this.dialogBoxService.responseEmitter.next(false);
-        }
+      if (res == true) {
+        data.type = type,
+          data.data = entry;
+        await this.fetchdata.httpPost(this.backendUrl.URLs.deleteproducts, data);
+        this.fetchData();
+        this.dialogBoxService.responseEmitter.next(false);
+      }
     })
   }
 
@@ -129,32 +132,50 @@ export class ProductsComponent implements OnInit {
   // }
 
   // Filter Handling function
-  updateFields(e: any, field: string) {
-    this.template.filter[field] = e;
-    console.log(this.template.filter);
+  updateFields(e: any, field: string = '') {
+
+    if (field) {
+      this.template.filter[field] = e;
+
+    } else {
+      let data = e.split(':');
+      delete this.template.filter['rating'];
+      delete this.template.filter['stockQuantity'];
+
+      if (data[0] == 'Rating') {
+        (data[1].trim(' ') == "Low to High") ? this.template.filter['rating'] = 1 : this.template.filter['rating'] = -1;
+      } else {
+        (data[1].trim(' ') == "Low to High") ? this.template.filter['stockQuantity'] = 1 : this.template.filter['stockQuantity'] = -1;
+      }
+    }
     this.fetchData();
   }
 
-  isradioChecked(e: Event, color_index: number){
-    if((<HTMLInputElement>e.target).checked){
+  pageChange(e: any){
+    this.currentPage = e;
+    this.fetchData();
+  }
+
+  isradioChecked(e: Event, color_index: number) {
+    if ((<HTMLInputElement>e.target).checked) {
       this.selectedColor = color_index;
     }
   }
 
-  fetchOrderQuantity(quantity: number, orderArray: any){
-    return orderArray.filter((amt: any)=>{
-        return amt <= quantity;
+  fetchOrderQuantity(quantity: number, orderArray: any) {
+    return orderArray.filter((amt: any) => {
+      return amt <= quantity;
     });
   }
 
-  starRating(rating: any){
+  starRating(rating: any) {
     let ratingArray = [];
 
-    for(let i = 1; i <= 5; i++){
-      if(i <= Math.floor(rating)){
+    for (let i = 1; i <= 5; i++) {
+      if (i <= Math.floor(rating)) {
         ratingArray.push('fa-solid fa-star');
       }
-      else if(i > Math.floor(rating) && i <= Math.ceil(rating))
+      else if (i > Math.floor(rating) && i <= Math.ceil(rating))
         ratingArray.push('fa-solid fa-star-half-stroke');
       else
         ratingArray.push('fa-regular fa-star');
@@ -163,18 +184,18 @@ export class ProductsComponent implements OnInit {
     return ratingArray;
   }
 
-  filterData(array: any, limit: any){
+  filterData(array: any, limit: any) {
     let filteredArray = array.filter((item: any) => item <= limit);
     // console.log(array, "   --  ", limit, " --> ", filteredArray);
 
     return filteredArray;
   }
 
-  displayInfo(e: Event){
+  displayInfo(e: Event) {
     console.log(<HTMLDivElement>(<HTMLDivElement>e.target));
     (<HTMLDivElement>(<HTMLDivElement>e.target)?.parentElement?.nextSibling)?.classList.add('active');
   }
-  closeInfo(e: Event){
+  closeInfo(e: Event) {
     console.log(<HTMLDivElement>(<HTMLSpanElement>e.target).parentElement);
     (<HTMLDivElement>(<HTMLSpanElement>e.target).parentElement).parentElement?.classList.remove('active');
   }

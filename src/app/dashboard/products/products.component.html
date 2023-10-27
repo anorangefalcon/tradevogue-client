@@ -37,19 +37,19 @@
         <div class="row d-flex flex-column">
             <div class="product-header filters d-flex gap-15 align-item-center mh100 mw100">
                 <span class="search-bar mh100">
-                    <app-search-bar [searchPlaceholder]="'Search by Name, Category'"></app-search-bar>
+                    <app-search-bar [searchPlaceholder]="'Search by Name, Category'" (searchQuery$)="updateFields($event, 'search')"></app-search-bar>
                 </span>
-                <!-- Product Inventory -->
+                <!-- Product Inventory
                 <app-custom-select class="options" [options]="stockStatus" [selectedOption]="'Filter by Stock Status'"
-                    (final_option)="updateFields($event, 'stockStatus')"></app-custom-select>
+                    (final_option)="updateFields($event, 'stockStatus')"></app-custom-select> -->
 
                 <!-- Product Category -->
-                <app-custom-select class="options" [options]="categoryOption" [selectedOption]="'Filter by Catgory'"
+                <app-custom-select class="options" [options]="categoryOption" [selectedOption]="'Filter by Category'"
                     (final_option)="updateFields($event, 'categories')"></app-custom-select>
 
                 <!-- Rating -->
-                <app-custom-select class="options" [options]="ratingOption" [selectedOption]="'Sort by Rating'"
-                    (final_option)="updateFields($event, 'rating')"></app-custom-select>
+                <app-custom-select class="options" [options]="sortOption" [selectedOption]="'Sort by'"
+                    (final_option)="updateFields($event)"></app-custom-select>
                 <!-- <button class="clear_btn btn-primary" (click)="filters = {}">Clear</button> -->
             </div>
         </div>
@@ -234,9 +234,7 @@
         </div>
     </div>
 
-    <app-pagination>
-
-    </app-pagination>
+    <app-pagination #pagination [collectionSize]="totalCount" [pageSize]="pageSize" [currentPage]="currentPage" (activePage)="pageChange($event)"></app-pagination>
     <!-- PopUp Div -->
     <!-- <app-dialog [type]="'confirmation'" (reply)="response($event)"></app-dialog> -->
 </section>

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges } from '@angular/core';
 
 @Component({
   selector: 'app-pagination',
@@ -8,15 +8,15 @@ import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
 export class PaginationComponent implements OnInit {
   /** The total number of records */
   @Input()
-  collectionSize = 100;
+  collectionSize!: number;
 
   /** The number of records to display */
   @Input()
-  pageSize = 5;
+  pageSize!: number;
 
   /** Current page */
   @Input()
-  currentPage = 1;
+  currentPage!: number;
 
   /** The number of buttons to show either side of the current page */
   @Input()
@@ -34,6 +34,8 @@ export class PaginationComponent implements OnInit {
   @Input()
   small = false;
 
+  @Output() activePage: any = new EventEmitter<number>();
+
   totalPages: any[] = [];
 
   constructor() {}
@@ -49,6 +51,7 @@ export class PaginationComponent implements OnInit {
   /** Set page number */
   selectPageNumber(pageNumber: number) {
     this.currentPage = pageNumber;
+    this.activePage.emit(this.currentPage);
   }
 
   /** Set next page number */
