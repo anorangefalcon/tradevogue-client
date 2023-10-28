@@ -16,6 +16,7 @@
 
     & input{
         padding-inline: 16px 35px;
+        cursor: pointer;
     }
 
     &::after{

@@ -19,18 +19,6 @@ export class FetchDataService {
 
   constructor(private http: HttpClient, private toastService: ToastService, private backendUrls: UtilsModule, private route: ActivatedRoute) { }
 
-  productKeys: any = ['available', 'colors', 'description', 'image', 'info', 'name', 'price', 'oldPrice', 'orderQuantity', 'reviews', 'sizes', 'sku', 'stockQuantity'];
-  getData(): Observable<any> {
-    return this.http.get(this.url).pipe(
-      map((arrayData: any) => {
-        return arrayData.filter((item: any) => {
-
-          return (Object.keys(item).length > 0) && (this.productKeys.length === Object.keys(item).length)
-        });
-      })
-    )
-  }
-
   getUserData(): Observable<any> {
     return this.http.get(this.userUrl);
   }
@@ -76,7 +64,7 @@ export class FetchDataService {
         params = params.set(key, data[key]);
       }
     }); 
-    // console.log(" param si ",params);
+    console.log(" param si ",params);
     
     return this.http.get(this.backendUrls.URLs.fetchProducts, { params });
   }

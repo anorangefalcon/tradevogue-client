@@ -85,16 +85,16 @@
                     </div>
                 </div>
             </div>
-            <!-- <div class="types">
+            <div class="types">
                 <div class="category d-flex flex-column gap-10">
                     <p>Colors</p>
-                    <div class="colors-opt d-flex gap-10">
+                    <div class="colors-opt d-flex gap-10 flex-wrap">
                         <div class="colors-radios d-flex align-item-center" *ngFor="let color of colors">
                             <input type="radio" name="color" [value]=color [style.background-color]="color">
                         </div>
                     </div>
                 </div>
-            </div> -->
+            </div>
             <!-- <div class="types">
                 <div class="category d-flex flex-column gap-10">
                     <p>Size</p>
@@ -107,14 +107,15 @@
         </div>
 
         <div class="non-filters">
-            <div class="d-flex justify-content-md-between sort">
+            <div class="d-flex justify-content-end sort">
                 <div class="d-flex gap-20">
-                    <app-custom-select [_id]="'colors'" [options]="colors" [selectedOption]="'Select Colors'"
-                    [type]="'multiSelect'" (SelectedList)="onAdd($event, 'colors')"></app-custom-select>
-                    <app-custom-select [_id]="'colors'" [options]="sizes" [selectedOption]="'Select Sizes'"
+                    <!-- <app-custom-select [_id]="'colors'" [options]="colors" [selectedOption]="'Select Colors'"
+                    [type]="'multiSelect'" (SelectedList)="onAdd($event, 'colors')"></app-custom-select> -->
+                    <app-custom-select [_id]="'sizes'" [options]="sizes" [selectedOption]="'Select Sizes'"
                     [type]="'multiSelect'" (SelectedList)="onAdd($event, 'size')"></app-custom-select>
-                    <app-custom-select [_id]="'sort'" [options]="sorting" [selectedOption]="'Sort by: '"
-                     (SelectedList)="onAdd($event, 'colors')"></app-custom-select>
+
+                    <app-custom-select [_id]="'sort'" [options]="sorting.titles" [selectedOption]=sorting.titles[0]
+                     (final_option)="onAdd($event, 'sort')"></app-custom-select>
                 </div>
                 <div>
                 </div>

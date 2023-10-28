@@ -25,8 +25,12 @@ export class ExploreComponent {
   filterKeys: any = {}
   data: any;
   sizes: string[] = ['XS', 'S', 'M', 'L', 'XL', 'XXL', 'XXXL'];
-  colors: string[] = ['Black', 'White', 'Red', 'Blue', 'Green', 'Purple']
-  sorting: string[] = ["Price: High to Low", "Price: Low to High", "Customer Rating", "What's New"]
+  colors: string[] = ['Black', 'White', 'Red', 'Blue', 'Green', 'Purple', 'Yellow']
+  sorting: any = {
+    titles:  ["Highest Rated", "Price: High to Low", "Price: Low to High"],
+    value: ['avgRating:-1','price:-1', 'price:1']
+  }
+ 
 
   constructor(private productFilter: ProductsFilterService, private fetchData: FetchDataService, private http: HttpClient, private route: ActivatedRoute, private location: Location, private backendUrls: UtilsModule, private fetchDataService: FetchDataService) { }
 
@@ -39,9 +43,7 @@ export class ExploreComponent {
       let actualParams = (Object.keys(this.filterApplied).length > 0) ? this.filterApplied : JSON.parse(JSON.stringify(data));
 
       this.fetchData.getProducts(actualParams).subscribe((data: any) => {
-        this.products = data.items
-        console.log("filtered products" , this.products); //2
-        
+        this.products = data.items        
       });
     });
 
@@ -50,23 +52,23 @@ export class ExploreComponent {
     }
 
     this.fetchData.getUniqueProductFields(body).subscribe((res: any) => {
-
       this.uniqueData = res.data;
-      console.log(this.uniqueData, "unique");
-
     })
   }
 
   onAdd(event: any, field: string) {
     console.log(event, field)
-    console.log(event[0], "evv");
-
-    console.log(this.filterApplied);
-
-    if (this.filterApplied.hasOwnProperty(field)) {
+    if (field == 'sort'){
+      let index = this.sorting.titles.findIndex((title: string)=> title == event);
+      this.sorting.value[index]
+      console.log(this.filterApplied[field] = this.sorting.value[index]);
+    }
+    else if(Array.isArray(event)){
+      this.filterApplied[field] = event;
+    }
+    else if (this.filterApplied.hasOwnProperty(field)) {
       this.filterApplied[field] = [this.filterApplied[field]]
       this.filterApplied[field].push(event.length-1)
-      
     }
     else {
       this.filterApplied[field] = event[0]
@@ -86,21 +88,15 @@ export class ExploreComponent {
   }
 
   onChecked(event: any, field: string) {
-
-    console.log('event is ', event.target.checked, " field is ", field);
-
     const value = field === 'price' ? Number(event.target.value) : event.target.value;
     if (event.target.checked) {
       if (this.filterApplied.hasOwnProperty(field)) {
         if (Array.isArray(this.filterApplied[field])) {
-          this.filterApplied[field].push(value); // Add value to the existing array
+          this.filterApplied[field].push(value); 
         }
         else {
           let intialValue = this.filterApplied[field];
-          console.log('intial value is ', intialValue, " filterapplied is ", this.filterApplied);
           this.filterApplied[field] = [intialValue, value];
-          // this.filterApplied[field].push(intialValue,value);
-
         }
       }
 

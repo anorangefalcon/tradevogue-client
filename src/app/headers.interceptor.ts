@@ -25,6 +25,7 @@ export class HeadersInterceptor implements HttpInterceptor {
         }
       });
     }
+    
     return next.handle(request)
     // .pipe(
     //   map(event=>{
