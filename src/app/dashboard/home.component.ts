@@ -26,12 +26,12 @@ export class DashboardComponent {
     { name: 'Reviews', icons: 'reviews', route: '' },
     { name: 'Promo Code', icons: 'redeem' ,route: '/dashboard/coupons'},
     {
-      name: 'Elements', icons: 'build', sublist: [
+      name: 'Elements', route:'',icons: 'build', sublist: [
         { name: 'FAQs', route: '/dashboard/faq' },
       ]
     },
     {
-      name: 'Support Tickets', icons: 'chat_bubble', sublist: [
+      name: 'Support Tickets', route:'', icons: 'chat_bubble', sublist: [
         { name: 'Ticket Types', route: '/dashboard/support' },
         { name: 'Tickets' , route: '/dashboard/tickets'}
       ]

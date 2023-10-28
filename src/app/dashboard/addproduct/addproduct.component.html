@@ -19,6 +19,11 @@
 
         <div class="d-flex align-item-center gap-15">
 
+            <button class="btn-secondary d-flex flex-center gap-5" (click)="checkFormStatus()"
+                [ngStyle]="{display: current_form == 'product_images'? 'none' : 'flex'}">
+                Add Product Features
+            </button>
+
             <button class="btn-primary d-flex flex-center gap-5" (click)="checkFormStatus()"
                 [ngStyle]="{display: current_form == 'product_images'? 'none' : 'flex', 'background-color': productsForm.get('basicinfo')?.invalid? 'rgb(var(--primaryClr), 0.8)' : 'rgb(var(--primaryClr))'}">
                 Continue
@@ -31,7 +36,7 @@
                 Add Color Variant
             </button>
 
-            <button class="btn-primary d-flex align-item-center" (click)="onsubmit()" 
+            <button class="btn-primary d-flex align-item-center" (click)="onsubmit()"
                 [ngStyle]="{display: current_form != 'product_images'? 'none' : 'flex','background-color': productsForm.invalid? 'rgb(var(--primaryClr), 0.8)' : 'rgb(var(--primaryClr))'}">
                 {{isUpdateRequest? 'Update Product':'Submit Product'}}
             </button>
@@ -139,9 +144,10 @@
                                                 <td>
                                                     <div class="form__group">
 
-                                                        
-                                                        
-                                                        <app-custom-select [_id]=" '' + i + j" [options]="sizes ? sizes: []" [type]="''"
+
+
+                                                        <app-custom-select [_id]=" '' + i + j"
+                                                            [options]="sizes ? sizes: []" [type]="''"
                                                             [selectedOption]="(_form.get('size')?.value ? _form.get('size')?.value : 'Select Size')"
                                                             (final_option)="_form.get('size')?.patchValue($event)"></app-custom-select>
 
@@ -251,7 +257,8 @@
                             <div class="form__group" formGroupName="info">
                                 <label for="category" class="input__label">Category<span
                                         class="important">*</span></label>
-                                <app-custom-select [_id]="'category1'" [options]="categories?categories:[]" [type]="'searchSelect'"
+                                <app-custom-select [_id]="'category1'" [options]="categories?categories:[]"
+                                    [type]="'searchSelect'"
                                     [selectedOption]="(productSubForm('info.category')?.value? productSubForm('info.category')?.value:'Select Category')"
                                     (final_option)="updateFormFields($event, 'info.category')"></app-custom-select>
                                 <span class="error"
@@ -343,7 +350,7 @@
 
                                 <app-custom-select [options]="orderQuantity?orderQuantity:[]" [type]="'multiSelect'"
                                     [selectedOption]="(productSubForm('info.orderQuantity')?.value.length ? productSubForm('info.orderQuantity')?.value : 'Select Order')"
-                                    (SelectedList)="productSubForm('info.orderQuantity')?.patchValue($event)" ></app-custom-select>
+                                    (SelectedList)="productSubForm('info.orderQuantity')?.patchValue($event)"></app-custom-select>
 
 
                                 <small class="note">*Order Quantity is various Unit to be Sold</small>
@@ -361,3 +368,8 @@
         </ng-container>
     </form>
 </section>
+
+
+<!-- <app-drawer [direction]="'bottom'" [show]="true" (showChange)="ShowChangeHandler($event)">
+    <p>this is p tah</p>
+</app-drawer> -->

@@ -9,8 +9,6 @@ button:disabled{
 #product-section {
 
     & .product-table {
-        display: flex;
-        flex-direction: column;
         gap: 25px;
         border-radius: 10px;
     }
@@ -100,7 +98,6 @@ button:disabled{
         background-color: rgb(var(--whiteClr));
         border: 1px solid rgba(var(--blackClr), 0.1);
         border-radius: 10px;
-        overflow: hidden;
     }
 }
 
@@ -116,7 +113,7 @@ button:disabled{
     position: absolute;
     inset-inline-start: 50%;
     transform: translateX(-50%);
-    z-index: 3;
+    z-index: 10;
     visibility: hidden;
     pointer-events: none;
     opacity: 0;

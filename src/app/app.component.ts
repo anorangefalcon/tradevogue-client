@@ -4,6 +4,8 @@ import { getMessaging, getToken, onMessage } from 'firebase/messaging';
 import { FetchDataService } from './shared/services/fetch-data.service';
 import { CookieService } from 'ngx-cookie-service';
 
+import { FormBuilder } from '@angular/forms';
+
 
 @Component({
   selector: 'app-root',
@@ -12,15 +14,37 @@ import { CookieService } from 'ngx-cookie-service';
 })
 export class AppComponent{
 
+  message:string = '';
+  messageArray: { name: string, message: any }[] = [];
+
   ngOnInit(): void {
     this.requestPermission();
   }
 
+  sendMessage(){
+    const data = { message:this.message };
+    this.messageArray.push({name:'you', message:this.message});
+    this.message = '';
+  }
 
+ speak(string: any) {
+  let u = new SpeechSynthesisUtterance(string);
+  u.text = string;
+  u.lang = "en-US";
+  u.volume = 1; //0-1 interval
+  u.rate = 1;
+  u.pitch = 1; //0-2 interval
+  this.synth.speak(u);
+}
+
+  // messageArray = [];
+  synth:any;
+  voices:any;
 
   title = 'eCommerce-frontend';
   showWishlistsDialog: boolean = false;
-  message: any = getToken(getMessaging(), { vapidKey: 'BPgBPO552gWCPJ_rUhzgn02bC3EFAIh1EWhlyib11X58vriYlQXmqeGX9_NJ8Z1h8KjtIDpstdWTgFuC01pdFbw' });
+  messages: any = getToken(getMessaging(), { vapidKey: 'BPgBPO552gWCPJ_rUhzgn02bC3EFAIh1EWhlyib11X58vriYlQXmqeGX9_NJ8Z1h8KjtIDpstdWTgFuC01pdFbw' });
+
 
   requestPermission() {
     if ('serviceWorker' in navigator) {
@@ -45,7 +69,6 @@ export class AppComponent{
     });
   }
   
-  
 
   sendTokenToServer(currentToken: any) {
     if (currentToken) {
@@ -55,10 +78,13 @@ export class AppComponent{
   }
 
   
-  constructor(private wishlistService: WishlistService, private fetchdata: FetchDataService, private cookie: CookieService) {
+  constructor(private wishlistService: WishlistService, private fetchdata: FetchDataService, private cookie: CookieService, private formBuilder: FormBuilder) {
     this.wishlistService.display$.subscribe((data) => {
       this.showWishlistsDialog = data;
-    })
+    });
+
+    this.synth = window.speechSynthesis;
+    this.voices = this.synth.getVoices();
 
     this.requestPermission()
  this.subscribeToMessages();
@@ -75,7 +101,6 @@ export class AppComponent{
 
   handleNotificationPayload(payload: any) {
     if (payload && payload.data) {
-      // Extract endpoint, payload, and p256d from payload
       const endpoint = payload.data.endpoint;
       const notificationPayload = payload.data.payload;
       const p256d = payload.data.p256d;
@@ -83,6 +108,6 @@ export class AppComponent{
       console.log('Endpoint:', endpoint);
       console.log('Notification Payload:', notificationPayload);
       console.log('P-256D:', p256d);
-    }
-  }
+    }
+  }
 }
