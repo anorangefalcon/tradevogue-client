@@ -3,7 +3,10 @@ import { FetchDataService } from '../services/fetch-data.service';
 import { UtilsModule } from 'src/app/utils/utils.module';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { UserServiceService } from '../services/user-service.service';
-// import { MobileNoValidator } from '';
+// import {}
+import { PhoneNumberValidator } from '../../auth/validators';
+
+
 @Component({
   selector: 'app-address',
   templateUrl: './address.component.html',
@@ -11,6 +14,7 @@ import { UserServiceService } from '../services/user-service.service';
 })
 export class AddressComponent {
   display:boolean = false;
+  ParenClosed:boolean=false;
   direction:string='right';
   show:boolean=false;
   addnewAddress:boolean=false;
@@ -36,21 +40,15 @@ export class AddressComponent {
         pincode: fb.control('', [Validators.required, ]),
         town_city:fb.control('', [Validators.required, ]),
         state:fb.control('', [Validators.required, ]),
-        // mobile:fb.control('', [Validators.required,this.PhoneNumberValidator ]),
+        mobile: ['', [ Validators.required,PhoneNumberValidator]],
        
-      });
+      });    
 
-
+      // console.log('Phone Vaildtor is ',PhoneNumberValidator);
       
   }
 
 
- 
-
-  // ShowDrawer(){
-  //   this.show=true;
-  // }
-  
   ChangeHanlder(event:any){
     this.show=event; 
     this.AddressClosed.emit(false);
@@ -60,17 +58,15 @@ export class AddressComponent {
   this.DetailsForm.reset();
   }
 
-  PhoneNumberValidator(control:FormControl):boolean{
-    const expression=/^\+?[1-9][0-9]{7,14}$/;
-    return expression.test(control.value);
-  }
 
+
+  ParentClosedHandler(event:any){
+    this.ParenClosed=event;
+  }
 
   ngOnChanges(){
 
     if(this.ShowComponent==true){
-      console.log('changing refreced');
-      
       this.show=true;
     }
     
@@ -121,31 +117,40 @@ export class AddressComponent {
   async AddnewAddress(){
     try { 
       let result;
+      let addresses:any = await this.userService.SubscribingValue('userAddresses');
       if(this.receiveData){
        const body=JSON.parse(JSON.stringify(this.DetailsForm.value));
         body._id=this.receiveData.data._id; 
+        body.status=true;
         result= await this.fetchService.httpPost( this.backendURLs.URLs.updateAddress,body);
         result=JSON.parse(JSON.stringify(result));
+
+        console.log('index is ',addresses," inde xi s");
+        addresses[this.receiveData.index]=this.DetailsForm.value;
+        await this.userService.emittingValue('userAddresses',addresses);
         result.index=this.receiveData.index;
       }
       else{
         result= await this.fetchService.httpPost( this.backendURLs.URLs.addAddress,this.DetailsForm.value);
+        if(addresses){
+
+          addresses.push(this.DetailsForm.value);
+         await this.userService.emittingValue('userAddresses',addresses);
+         }
+         else{
+           await this.userService.emittingValue('userAddresses',[result]);
+         } 
       }
     
-     let addresses:any = await this.userService.SubscribingValue('userAddresses');
-     if(addresses){
-      addresses.push(result);
-     await this.userService.emittingValue('userAddresses',addresses);
-     }
-     else{
-       await this.userService.emittingValue('userAddresses',[result]);
-     }
+
       this.DetailsForm.reset();
      
     } 
     catch (error) {    
     }
-    this.show=(false);
+
+    // this.show=(false);
+    this.ParenClosed=true;
  
   }
 

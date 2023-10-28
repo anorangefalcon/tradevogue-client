@@ -25,18 +25,39 @@
                 </button>
             </div>
             <div class="product-desc">
+                <!-- {{data|json}} -->
+                
                 <h2 class="prod-name">{{ data?.name }}</h2>
                 <p class="subTitle mw-100">{{ data.subTitle }}</p>
                 <div class="prod-info d-flex flex-column gap-20">
                     <div class="d-flex align-item-center gap-10">
-                        <h5 class="price">₹{{ data.price }}</h5>
+                        <h5 class="price">
+                            <!-- ₹{{ data.price }} -->
+                            <!-- <span *ngIf="data.discount">
+                                ₹{{ data.price}}
+                            </span> -->
+                            
+                            <!-- <span *ngIf="!data.discount"> -->
+                                ₹{{ data.price}}
+                            <!-- </span> -->
+                        </h5>
 
                         <div class="offer d-flex gap-5 align-item-center">
-                            <p *ngIf="data.oldPrice" class="old-price">
+                            <p *ngIf="data.discount" class="old-price">
                                 ₹{{ data.oldPrice }}
                             </p>
-                            <p class="offer-percentage" *ngIf="data.offerPercentage">
-                                ({{ data.offerPercentage }}% Off)</p>
+
+    
+
+                            <!-- <p class="offer-percentage" *ngIf="data.offerPercentage">
+                                ({{ data.offerPercentage }}% Off)</p> -->
+
+                                <p *ngIf="data.discountType!== 0" class="offer-percentage">
+                                    <span *ngIf="data.discountPercentage"> ({{ data.discountPercentage }}% off)</span>
+                                    <span *ngIf="!data.discountPercentage && data.discountAmount"> ({{ data.discount }} Flat off)</span>
+                                   
+                                </p>
+                               
                         </div>
                     </div>
 

@@ -1,5 +1,4 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
-import { CartService } from 'src/app/shared/services/cart.service';
 import { CookieService } from 'ngx-cookie-service';
 import { FetchDataService } from 'src/app/shared/services/fetch-data.service';
 import { UtilsModule } from 'src/app/utils/utils.module';
@@ -9,60 +8,31 @@ import { UserServiceService } from 'src/app/shared/services/user-service.service
   templateUrl: './billing.component.html',
   styleUrls: ['./billing.component.css']
 })
-export class BillingComponent{
+export class BillingComponent {
 
   checkoutHtml: string = '';
   checkoutCss: string = '';
   item: any = {};
-  cartitems: any = {}
   total: any = {}
   quantity: any = {}
 
 
-    // ngOnInit():void {
-    // const script = this.renderer.createElement('script');
-    // script.type = 'text/javascript';
-    // script.src = 'http://localhost:5000/checkout.js';
-    // script.defer = true;
-    // this.renderer.appendChild(this.document.body, script);
-    // }
-
-  constructor(private cartService: CartService,
-    private cookie: CookieService,private fetchDataService:FetchDataService,private userService:UserServiceService,private backendURLs:UtilsModule) {
-    this.cartService.fetchCart().subscribe((data) => {
-  
-      this.cartitems = data;
-    });
-    
-    const checkSubTotal = () => {
-      if (this.cartitems.amounts.subTotal !== 0) {
-        this.total = this.cartitems.amounts.total;
-        // this.quantity = this.cartitems.details.map((item: { Quantity: any; }) => item.Quantity);
-        // console.log("Total:", this.total , "Quantity:", this.quantity);
-
-            {
-      this.item = [
-        {
-          "id": this.cartitems.details.map((item: { sku: any; }) => item.sku),
-          "name": this.cartitems.details.map((item: { name: any; }) => item.name),
-          "price": this.cartitems.amounts.total,
-          "quantity": this.cartitems.details.map((item: { Quantity: any; }) => item.Quantity),
-        }
-      ]
-    }
-    localStorage.setItem('paymentIntent', JSON.stringify(this.item));
-      } else {
-        setTimeout(checkSubTotal, 1000);
-      }
-    }
-
-    checkSubTotal();
-
+  constructor(private cookie: CookieService, private fetchDataService: FetchDataService, private userService: UserServiceService, private backendURLs: UtilsModule) {
     this.getAddresses();
-    // this.checkoutService.sendPayload(this.item).subscribe((data) => {
-    //   this.checkoutHtml = data;
-    // });
   }
+
+
+  //  ngOnInit(){
+  //     this.getAddresses();
+  //   }
+
+
+  ngOnInit() {
+
+
+  }
+
+
 
 
   @ViewChild('mydiv') my_div: ElementRef | undefined;
@@ -91,75 +61,105 @@ export class BillingComponent{
 
 
   // ADDRESS TS FILE---------------------
-  userAddresses:any;
-  DeliveredAddress:any;
-  async getAddresses(){
-  let data:any=await  this.fetchDataService.httpGet(this.backendURLs.URLs.getAddress);
-  this.userAddresses=data.info.address;  
+  userAddresses: any;
+  navbar_scroll_style: boolean = false;
+  cart: any = '';
+  CouponApplied: any = '';
+  DeliveredAddress: any= '';
+  // async getAddresses(){
+  // let data:any=await  this.fetchDataService.httpGet(this.backendURLs.URLs.getAddress);
+  // this.userAddresses=data.info.address;  
+  // }
+
+
+  async getAddresses() {;
+    let Addresses = await this.userService.SubscribingValue('userAddresses');
+    if (!Addresses) {
+      let data: any = await this.fetchDataService.httpGet(this.backendURLs.URLs.getAddress);
+      data = data.addresses;
+      this.userAddresses = data;
+      if (data.length != 0) {
+        await this.userService.emittingValue('userAddresses', data);
+        this.userAddresses = data;
+      }
+    }
+
+    else {
+      this.userAddresses = Addresses;
+    }
+
+
   }
 
-  AddressSended:any;
-  addnewAddress:boolean=false;
-  EditAddress(address:any,index:any){
-    const data=this.userAddresses[index];
-    this.AddressSended={data,index};
-    this.addnewAddress=true;
+  AddressSended: any;
+  addnewAddress: boolean = false;
+  EditAddress(address: any, index: any) {
+    const data = this.userAddresses[index];
+    this.AddressSended = { data, index };
+    this.addnewAddress = true;
   }
 
-  async RemoveAddress(address:any,index:any){
-    try{
-      const body={id:address._id}
-      let deleteAddress=await this.fetchDataService.httpPost(this.backendURLs.URLs.deleteAddress,body);
+  async RemoveAddress(address: any, index: any) {
+    try {
+      const body = { id: address._id }
+      let deleteAddress = await this.fetchDataService.httpPost(this.backendURLs.URLs.deleteAddress, body);
       this.userAddresses.splice(index);
     }
 
-    catch(error){
+    catch (error) {
 
     }
-   
-    
+
+
   }
 
 
-  NewAddressHandler(event:any){
-    if(event.hasOwnProperty("index")){
-      this.userAddresses[event.index]=event;      
-     return;
-   }
-     this.userAddresses.push(event);
+  NewAddressHandler(event: any) {
+    if (event.hasOwnProperty("index")) {
+      this.userAddresses[event.index] = event;
+      return;
+    }
+    this.userAddresses.push(event);
   }
 
-  CloseAddress(){
-    this.addnewAddress=false;
+  CloseAddress() {
+    this.addnewAddress = false;
   }
 
-  AddAddress(){
-    this.addnewAddress=true;
+  AddAddress() {
+    this.addnewAddress = true;
   }
 
-  SelectAddress(address:any){
-    this.DeliveredAddress=address;
-    // this.userService.UserAddress.next(this.DeliveredAddress);
-    console.log('emitting value done');
+  SelectAddress(address: any) {
+    this.DeliveredAddress = address;
+    this.userService.emittingValue('DeliveryAddress', this.DeliveredAddress);
 
   }
 
-  ChangeAddress(){
-    this.DeliveredAddress=false;
+  ChangeAddress() {
+    this.DeliveredAddress = false;
   }
 
-  async MakeDefault(address:any,i:any){
+  async MakeDefault(address: any, i: any) {
     try {
-      console.log('adress is ',address," i is ",i);
-      const body={address_id:address._id};
-      const update:any=await this.fetchDataService.httpPost(this.backendURLs.URLs.setDefaultAddress,body);
-      console.log('UPDATE  is ',update[0].info.address);
-        this.userAddresses=update[0].info.address;
-      
+      const body = { address_id: address._id };
+      const update: any = await this.fetchDataService.httpPost(this.backendURLs.URLs.setDefaultAddress, body);
+      this.userAddresses = update[0].info.address;
+
     } catch (error) {
-      
+
     }
   }
-  
+
+
+  //  async CreateOrder(){
+  //     this.cartService.fetchCart().subscribe(async (data:any)=>{
+  //       const body={products:data.details, deliveryAddress:this.DeliveredAddress};
+  //       const response=await this.fetchDataService.httpPost(this.backendURLs.URLs.createOrder,body);
+
+  //     });
+
+  //   }
+
 
 }

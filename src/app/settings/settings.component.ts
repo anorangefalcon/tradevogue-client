@@ -56,7 +56,10 @@ export class SettingsComponent {
       againNewPassword: fb.control('', [Validators.required, (control: any) => matchPasswordValidator(control, this.changePasswordForm)])
     })
 
-   
+    // this.userService.
+    // this.
+  
+
   };
 
   changeComponent(el: string) {
@@ -83,21 +86,20 @@ export class SettingsComponent {
         data.dob = data.info.dob.split('T')[0];
       }
       this.ProfileForm.patchValue(data);
-  let result= await  this.userService.emittingValue('address',[1,23]);
-     let address=await this.userService.SubscribingValue('address');
-
+ 
     } catch (error) {
 
     }
   }
 
   async getAddresses(){
+    
     this.showData='addresses';
     this.TranslateData = true;
-    let Addresses=await this.userService.SubscribingValue('userAddresses');
+    let Addresses=await this.userService.SubscribingValue('userAddresses'); 
     if(!Addresses){
       let data:any=await  this.fetchDataService.httpGet(this.backendURLs.URLs.getAddress);
-      data=data.info.address;
+      data=data.addresses;
       if(data.length!=0){
         await this.userService.emittingValue('userAddresses',data);
         this.userAddresses=data;  
@@ -110,7 +112,6 @@ export class SettingsComponent {
   }
 
   AddAddress(){
-    // this.addnewAddress=true;
     this.ShowComponent=true;
   }
 
@@ -139,7 +140,7 @@ export class SettingsComponent {
     try{
       const body={address_id:address._id}
       let deleteAddress=await this.fetchDataService.httpPost(this.backendURLs.URLs.deleteAddress,body);
-      this.userAddresses.splice(index);
+      this.userAddresses.splice(index,1);
     }
     catch(error){
     }
@@ -193,8 +194,10 @@ export class SettingsComponent {
 
   DetailsSubmitted: Boolean = false;
   async saveDetails() { 
+    console.log('save details clicked--->');
+    
     this.DetailsSubmitted = true;
-    if (this.ProfileForm.invalid) return;
+    // if (this.ProfileForm.invalid) return;
 
     let body = {
       name: { firstname: this.ProfileForm.get('firstname')?.value, lastname: this.ProfileForm.get('lastname')?.value },

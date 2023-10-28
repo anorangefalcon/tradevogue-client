@@ -8,7 +8,7 @@
         <router-outlet class="cartAndBilling" ></router-outlet>
     </div>
 
-    <div class="orderSummary"  [class.active]="navbar_scroll_style == true" >
+    <div class="orderSummary" [class.active]="navbar_scroll_style == true" >
         <div class="summary-container d-flex flex-column gap-10" id="orders">
             
             <h2 class="border-end text-center">Order Summary</h2>
@@ -65,7 +65,7 @@
                 <span (click)="RemoveAppliedCoupon()">Remove</span>
             </button>
             <!-- (click)="CreateOrder()" -->
-            <button class="btn-primary"><a>Proceed to Checkout</a></button>
+            <button class="btn-primary" (click)="createOrder()"><a>Proceed to Payment</a></button>
         </div>
     </div>
     
@@ -114,7 +114,7 @@
 
 <!-- COUPONS  -->
 <!-- <div class="wrapper d-flex" [ngClass]="{'open_Coupon':OpenCoupon}"> -->
-    <app-drawer [direction]="direction" [show]="show" (showChange)="ChangeHanlder($event)">
+    <app-drawer [direction]="direction" [show]="show" (showChange)="ChangeHanlder($event)" [ParenClosed]="ParenClosed" (ParentClosedEmitter)="ParentClosedFun($event)"> 
     <div class="coupons d-flex flex-column gap-15">
         <h2>Coupons Available</h2>
         <div class="d-flex justify-content-md-between">
@@ -177,6 +177,7 @@
                     
                 </ul>
                 <small>Lorem ipsum, dolor sit amet consectetur adipisicing elit.</small> -->
+
                 <button (click)="ApplyCoupon(coupon)" class="coupon__btns">Apply Coupon</button>
             </div>
             <!-- <div class="coupon d-flex flex-column gap-10">

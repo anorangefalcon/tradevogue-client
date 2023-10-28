@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { UserServiceService } from '../../services/user-service.service';
 
 @Component({
   selector: 'app-drawer',
@@ -9,21 +10,34 @@ export class DrawerComponent {
   @Input() direction!: string;
   @Input() show!: boolean;
   @Output() showChange: EventEmitter<any> =   new EventEmitter();
+  @Input() ParenClosed!:boolean;
+
+  //  this below is emiited becuase when parent closed the drawer and we open the the coupon than ngOnChange ParenClosed is true so it again close
+  @Output() ParentClosedEmitter: EventEmitter<any> =   new EventEmitter();
+
+constructor(private userService:UserServiceService){}
+
   CloseWrapper(){
     this.translate='';
+    // this.show=false;
+    // this.ParenClosed=false;
     setTimeout(()=>{
       this.showChange.emit(false);
-      
+      this.ParentClosedEmitter.emit(false);
     },300);
     
 }
 
+
+
+
 translate!:string;
 
+
 ngOnChanges(){
-  console.log('show is-----------> ',this.show);
-  
-  if(this.show==false){ this.CloseWrapper();  return;}
+if(this.ParenClosed) {this.CloseWrapper(); return;}
+
+  // if(this.show==false){ this.CloseWrapper();  return;}
   if(this.show == true){
 
     if(this.direction == 'top' ){
@@ -41,7 +55,17 @@ ngOnChanges(){
       this.translate='translateRight';
     }
   }
+
+  // this.userService.DrawerClose.asObservable().subscribe((data)=>{
+  //   if(data==true){
+  //     this.CloseWrapper();
+  //   }
+  // });
+ 
+
  
 }
+
+
 
 }

@@ -101,7 +101,9 @@ export class CartService {
       if(!cartDetails){
         cartDetails = [];
       }
-      this.http.post(this.backendUrls.URLs.fetchCart, cartDetails).subscribe((data: any) => {                  
+      this.http.post(this.backendUrls.URLs.fetchCart, cartDetails).subscribe((data: any) => {  
+        console.log('Data emiited is ',data);
+                        
         this.cartSubject?.next(data);
       });
     }

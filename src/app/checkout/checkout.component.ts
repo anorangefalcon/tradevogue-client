@@ -23,33 +23,39 @@ export class CheckoutComponent implements OnInit {
   AllCoupons:any;
   updateBoolean: boolean = false;
   cart: any = {};
+  ParenClosed:boolean=false;
 
   direction:string='right';
   show:boolean=false;
 
-  @ViewChild('CouponCode') CouponCode:any; 
-  constructor(private cartService: CartService,private userService:UserServiceService,private toastService:ToastService,private BackendUrl:UtilsModule,private fetchService:FetchDataService, private cookie: CookieService, private route: Router, private el: ElementRef) { }
+  @ViewChild('CouponCode') CouponCode:any;
+  
+  constructor(private cartService: CartService,private router:Router,private userService:UserServiceService,private toastService:ToastService,private BackendUrl:UtilsModule,private fetchService:FetchDataService, private cookie: CookieService, private route: Router, private el: ElementRef) {
+   
+    
+  
+   }
 
  async ngOnInit() {
-    this.cartService.fetchCart("count").subscribe((data) => {
+    this.cartService.fetchCart('count').subscribe((data) => {
       this.cartCount = data;
     });
+
     this.cartService.fetchCart().subscribe((data) => {
       this.cart = data;
     });
 
-    this.AllCoupons=await this.fetchService.httpGet(this.BackendUrl.URLs.getCoupons);
+
+    this.AllCoupons = await this.fetchService.httpGet(this.BackendUrl.URLs.getCoupons);
   }
 
   ChangeHanlder(event:any){
     this.show=event; 
-  //   this.AddressClosed.emit(false);
-  // //   setTimeout(()=>{
-
-  // //  },300) 
-  // this.DetailsForm.reset();
   }
 
+  ParentClosedFun(event:any){
+      this.ParenClosed=event;
+  }
 
   DateParser(el:any){
     // console.log('el is ',(new Date(el).toDateString()).split(' ').splice(0,1));
@@ -125,29 +131,20 @@ export class CheckoutComponent implements OnInit {
   }
 
   CheckMinimumPurchase(coupon:any){
-    console.log('result is ',this.cart.amounts.total);
-    
     return coupon.minimumPurchaseAmount<this.cart.amounts.total;
    
   }
 
   CalculateDiscount(coupon:any){
-    // if(cart.amounts.savings)
     let totalAmount=(this.cart.amounts.total);
-    // if(coupon.)
     if(coupon.discountType=='flat'){
       return coupon.discountAmount;
     }
     else{
       if(coupon.discountType=='percentage' && coupon.DiscountPercentageType=='fixed'){
-        // console.log('result is ',((totalAmount/100))*coupon.discountAmount);
-        
         return (totalAmount/100)*coupon.discountAmount; 
       }
-      else{
-        const discountPercentage = Math.floor(Math.random() * coupon.discountAmount);
-        return (totalAmount/100)*coupon.discountPercentage; 
-      }
+    
     }
 
   }
@@ -171,7 +168,7 @@ export class CheckoutComponent implements OnInit {
         this.CouponValid='invalid';
         return;
       } 
-
+      // this.ParenClosed;
     }
     
     else{
@@ -182,13 +179,12 @@ export class CheckoutComponent implements OnInit {
       }
       this.CouponApplied=coupon; 
       this.CouponValid='valid';
-      
-    
+      // this.ParenClosed=true;
     }
     
-    this.CouponCode.nativeElement.value = ' ';
+    this.CouponCode.nativeElement.value = ''; // change input field to ''
     this.cart.amounts.savings=this.CalculateDiscount(coupon);
-    this.OpenCoupon=false;
+    this.ParenClosed=true;
   }
 
   InputChange(){
@@ -212,6 +208,25 @@ export class CheckoutComponent implements OnInit {
    
   }
 
+
+
+  async createOrder(){
+    try {
+      let DeliveredAddress=await this.userService.SubscribingValue('DeliveryAddress');
+
+      this.cartService.fetchCart().subscribe(async (res)=>{  
+        // console.log('coupone applied is ',this.CouponApplied);
+        // data=JSON.stringify(data);
+       let hehe=JSON.parse(JSON.stringify(res));
+        hehe.CouponApplied=this.CouponApplied;
+        hehe.DeliveredAddress=DeliveredAddress;
+        const response = await this.fetchService.httpPost(this.BackendUrl.URLs.createOrder,hehe);
+      });
+        
+    } catch (error) {
+      
+    }
+  }
   // async CreateOrder(){  
   //   try {
   //     let products:any=await this.GetProducts();

@@ -1,5 +1,8 @@
-<app-navbar></app-navbar>
-<app-breadcrumb></app-breadcrumb>
+<ng-container *ngIf="ShowNavBar">
+    <app-navbar></app-navbar>
+    <app-breadcrumb></app-breadcrumb>
+</ng-container>
+
 <router-outlet></router-outlet>
 <!-- <app-sidecart></app-sidecart> -->
 <app-support></app-support>

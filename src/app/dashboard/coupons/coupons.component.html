@@ -21,7 +21,7 @@
             </tr>
 
             <tr *ngFor="let data of allOffers; let i=index">
-                <!-- {{data|json}} -->
+                <!-- {{data.status.deleted}} akmfjnvf -->
                 <ng-container *ngIf="!data.status.deleted">
                     <td class="items">
                         <p *ngIf="!data.couponcode">{{data.Title}}</p>
@@ -31,17 +31,14 @@
                     <td class="items">{{data.OfferType}}</td>
                     <td class="items">{{data.discountType}}</td>
                     <td class="items">{{data.discountAmount}}</td>
-                    <!-- <td>{{data.startDate}}</td> -->
                     <td class="items">{{(data.startDate.split('T')[0])}}</td>
                     <td class="items">{{data.endDate.split('T')[0]}}</td>
                     <td class="items">{{data.status.active}}</td>
-                    <!-- <td>{{data.couponUsersLimit}}</td> -->
-
                     <td class="items">
 
 
                         <div class="d-flex action__btns align-item-center">
-                            <button class="tooltip" (click)="EditOffer(data)">
+                            <button class="tooltip" (click)="EditOffer(data,i)">
                                 <span class="tooltiptext" >
                                     Edit
                                 </span>
@@ -63,12 +60,8 @@
     </div>
 
 </div>
-<app-drawer [direction]="direction" [show]="show" (showChange)="ChangeHanlder($event)">
+<app-drawer [direction]="direction" [show]="show" (showChange)="ChangeHanlder($event)" (ParentClosedEmitter)="ParenClosedHandler($event)" [ParenClosed]="ParenClosed">
 
-        <!-- ngClass]="{'translateBack':CouponRequest,}"
-        [ngClass]="{'add':CouponRequest,'remove':!CouponRequest}"
-        -->
-       
             <div class="CouponDiv d-flex flex-column" >
                 <div class="d-flex align-item-center justify-content-md-between header__addOffer">
                     <div>
@@ -128,8 +121,6 @@
                     <div class="form__group d-flex" *ngIf="OfferForm.get('discountType')?.value=='percentage'">
                         <label class="form__label"> Discount Percentage Type<span>*</span></label>
                         <div class="custom__select">
-                            {{OfferForm.get('DiscountPercentageType')?.value}} abcdxyz
-    
                             <app-custom-select [type]="''" [options]="DiscountPercentageType" [selectedOption]="(OfferForm.get('DiscountPercentageType')?.value ? OfferForm.get('DiscountPercentageType')?.value:'Select DiscountPercentageType')"
                                 (final_option)="DiscountPercentageHandler($event)"></app-custom-select>
                         </div>
@@ -149,7 +140,7 @@
                         <div class="validation__div">
                             <input type="date" id="startDate" class="form__input" formControlName="startDate"
                                 placeholder="Enter Start Date">
-                            <small *ngIf="OfferForm.get('startDate')?.hasError('format')">Start Date should be greater than
+                            <small *ngIf="OfferForm.get('startDate')?.hasError('format') && OfferForm.get('startDate')?.touched">Start Date should be greater than
                                 current Date</small>
                         </div>
     
@@ -162,7 +153,7 @@
     
                             <input type="date" id="endDate" class="form__input" formControlName="endDate"
                                 placeholder="Enter End Date">
-                            <small *ngIf="OfferForm.get('endDate')?.hasError('format')">end Date should be greater than
+                            <small *ngIf="OfferForm.get('endDate')?.hasError('format') &&  OfferForm.get('endDate')?.touched">end Date should be greater than
                                 start Date</small>
                         </div>
                     </div>
@@ -176,7 +167,7 @@
                                 <input type="text" id="couponcode" class="form__input" formControlName="couponcode"
                                     placeholder="Enter Coupon Code" oninput="this.value = this.value.toUpperCase()">
     
-                                <small *ngIf="OfferForm.get('couponcode')?.hasError('error')"> coupon code is not
+                                <small *ngIf="OfferForm.get('couponcode')?.hasError('error') "> coupon code is not
                                     valid</small>
                             </div>
                         </div>
@@ -256,16 +247,19 @@
                 </form>
     
                 <div
-                    class="d-flex align-item-center justify-content-md-between btns footer__addOffer">
-                    <button class="" (click)="CancelCoupon()">Cancel</button> <!-- "
+                    class="d-flex align-item-center justify-content-end btns footer__addOffer">
+                    <!-- <button class="" (click)="CancelCoupon()">Cancel</button>  -->
+                    
+                    <!-- "
                         
                     -->
-                    <button class="btn-primary" (click)="CouponSubmit()" [disabled]="OfferForm.invalid"
-                        [ngClass]="{disabled:OfferForm.invalid}">
+                    <!-- -->
+                    <button class="btn-primary" (click)="CouponSubmit()" 
+                        [ngClass]="{disabled:OfferForm.invalid}" [disabled]="OfferForm.invalid" >
     
-                        <span *ngIf="EditClicked else add">Save</span>
+                        <span *ngIf="!EditRequest else add">Save</span>
                         <ng-template #add>
-                           Add Coupon
+                            Update
                           </ng-template>
                     </button>
                 </div>

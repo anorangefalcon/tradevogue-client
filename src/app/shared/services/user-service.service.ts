@@ -7,8 +7,11 @@ import { BehaviorSubject, Subject } from 'rxjs';
 export class UserServiceService {
 
 
-  userSubect = new BehaviorSubject({});
+   userSubect = new BehaviorSubject({});
+
   constructor() { }
+
+  
 
  async emittingValue(field:any,value:any){
    

@@ -27,17 +27,8 @@ export class CardTemplateComponent {
   ngOnInit(): void {
 
     this.avgRating = this.product.avgRating;
-    // console.log('ngOnInit is-----------> ',this.product);
     
     const sku = this.product.sku;
-
-    
-    this.product.oldPrice = 0; //temp
-    // this will be updated once coupon/discount backend is done
-    // if (this.product.oldPrice !== (undefined || 0)) {
-      // this.offerPercentage = Math.floor((this.product.oldPrice- this.product.price) / this.product.oldPrice * 100);
-    // }
-
     const allSkeleton = document.querySelectorAll('.skeleton');
 
     window.addEventListener('load', () => {
