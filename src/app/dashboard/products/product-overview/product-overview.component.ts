@@ -16,14 +16,17 @@ export class ProductOverviewComponent {
     // console.log('CONSTRUCTOR CALELD--------->');
     
     activeRoute.params.subscribe({
-      next: (data)=>{
+      next: async (data)=>{
         this.skuId = data['sku'];
-        this.fetchService.getProductDetails(data['sku']).subscribe({
-          next: (data)=>{
-            console.log(data, "Data");
-            this.productDetails = data;
-          }
-        })
+        // this.productDetails = await this.fetchService.httpGet(this.backendUrl.URLs.fetchProductDetails, this.skuId);
+        // console.log(this.productDetails);
+
+        // this.fetchService.getProductDetails(data['sku']).subscribe({
+        //   next: (data)=>{
+        //     console.log(data, "Data");
+        //     this.productDetails = data;
+        //   }
+        // })
 
       }
     });

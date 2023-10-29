@@ -31,11 +31,47 @@ export class AddproductComponent {
   productsForm: FormGroup;
   current_form: string = '';
 
+  // Data array
+  dataList: any = {
+    categoriesList: [],
+    brandsList: [],
+    sizesList: [],
+    tagsList: [],
+    orderQuantityList: [],
+  }
+
+  //Data
+  filter: any = {
+    category: '',
+    brand: '',
+    sizes: '',
+    tags: '',
+    quantity: ''
+  }
+
+  field_data: any;
+  popup: boolean = false;
+
+  deleteObject: any = {
+    field: '',
+    index: '',
+  }
+
   // Template for Toast
   data_template: any = {
     title: '',
     body: []
   }
+
+  // Type Name should be same as that of backend (avoiding conflicts)
+  card_template: any = [
+    { name: 'Category', type: 'categories', filter: 'category', file_name: 'Categories_Sample' },
+    { name: 'Brand', type: 'brands', filter: 'brand' },
+    { name: 'Order Quantity', type: 'orderQuantity', filter: 'quantity' },
+    { name: 'Product Tags', type: 'tags', filter: 'tags' }
+  ];
+
+  dataField: string[] = ['categories', 'brands', 'orderQuantity', 'tags'];
 
   constructor(private fb: FormBuilder,
     private dataService: FetchDataService,
@@ -45,8 +81,8 @@ export class AddproductComponent {
     private activeRoute: ActivatedRoute,
     private router: Router) {
 
-      // console.log('ADDPRDOUCT CALLEC-------->');
-      
+    // console.log('ADDPRDOUCT CALLEC-------->');
+
     this.productsForm = this.fb.group({
 
       assets: this.fb.array([
@@ -180,11 +216,6 @@ export class AddproductComponent {
     })
   }
 
-  // sizes(){
-  //   return this.sizes;
-  // }
-  dataField: string[] = ['categories', 'brands', 'orderQuantity', 'tags'];
-
   async ngOnInit() {
     const result: any = await this.dataService.httpPost(this.backendUrl.URLs.fetchFeatures, this.dataField);
     this.categories = result.categories;
@@ -229,6 +260,12 @@ export class AddproductComponent {
   deleteStockQuantityForm(formId: number, index: number) {
     (<FormArray>this.productsForm.get('assets')?.get(String(formId))?.get('stockQuantity'))?.removeAt(index);
   }
+
+  show!: boolean;
+  ShowChangeHandler(event: any) {
+    this.show = false;
+  }
+
 
   addProductImageForm() {
     const template = this.fb.group({
@@ -333,26 +370,6 @@ export class AddproductComponent {
         });
         this.toastservice.warningToast(this.data_template);
       }
-
-      // Handling Image Exceeding the Size Limit of 2MB
-      // if (formControl?.hasError('exceedSize')) {
-      //   console.log("Error::", formControl?.getError('errorFiles'), productImages);
-
-      //   let errorFile = formControl?.getError('errorFiles');
-
-      //   // Filtering Out Error Free Data
-      //   productImages = productImages.filter((file: any) => {
-      //     return !errorFile.includes(file);
-      //   });
-      //   formControl?.patchValue(productImages);
-
-      //   // Warning Message
-      //   this.data_template.title = 'Maximum Image Size Exceeded (2MB)';
-      //   errorFile.forEach((err: any) => {
-      //     this.data_template.body.push(err.file.name);
-      //   });
-      //   this.toastservice.warningToast(this.data_template);
-      // }
     })
   }
 
@@ -428,7 +445,7 @@ export class AddproductComponent {
       if (this.isUpdateRequest) {
         formData.data.sellerID = this.reponseData.sellerID;
         formData.data.sku = this.reponseData.sku;
-        formData.data._id = this.reponseData._id; 
+        formData.data._id = this.reponseData._id;
       }
 
       let url = !this.isUpdateRequest ? this.backendUrl.URLs.addproduct : this.backendUrl.URLs.updateproduct;

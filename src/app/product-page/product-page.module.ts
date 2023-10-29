@@ -27,6 +27,7 @@ const routes: Routes = [
     ReactiveFormsModule
   ],
   exports: [
+    ProductPageComponent
   ]
 })
 export class ProductPageModule { }

@@ -7,7 +7,7 @@ import { BehaviorSubject } from 'rxjs';
 export class DialogBoxService {
   constructor() { }
 
-  public responseEmitter = new BehaviorSubject<boolean>(false);
+  public responseEmitter = new BehaviorSubject<any>('');
   public contentEmitter = new BehaviorSubject<string>('');
 
   template: any = {
@@ -25,6 +25,9 @@ export class DialogBoxService {
     this.template.type = 'confirmation';
     this.template.value = data;
     this.contentEmitter.next(this.template);
+    // this.responseEmitter.next(false);
   }
 
+
+  
 }

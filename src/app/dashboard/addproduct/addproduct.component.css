@@ -246,3 +246,117 @@ app-custom-select {
     color: rgb(var(--danger)) !important;
     font-weight: 500 !important;
 }
+
+/* POP UP */
+.card-container {
+    gap: 20px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+}
+
+.data-field__text{
+    text-transform: capitalize;
+}
+
+.card__block{
+    padding: 25px;
+    background-color: rgb(var(--whiteClr));
+    border: 1px solid rgb(var(--blackClr), 0.1);
+    border-radius: 5px;
+
+    & .row-1 {
+        border-bottom: 1px solid rgba(128, 128, 128, 0.1);
+        padding-bottom: 5px;
+        margin-bottom: 10px;
+
+        & h4 {
+            font-size: 22px !important;
+        }
+    }
+
+    & .row-2{
+        margin-bottom: 10px;
+    }
+
+    & .card-data{
+        height: 174px;
+        overflow-y: auto;
+        padding: 10px 14px;
+        background-color: rgb(var(--secondary));
+        border-radius: 5px;
+
+        &::-webkit-scrollbar {
+            width: 3px;
+            border-radius: 0px 5px 5px 0;
+            background-color: rgb(var(--secondary), 0.4);
+        }
+
+        &::-webkit-scrollbar-thumb {
+            border-radius: 0px 5px 5px 0;
+            background-color: rgb(var(--primaryClr), 0.8);
+        }
+
+        & .data__field{
+            border-radius: 2px;
+            font-weight: 500;
+
+            & span:last-child {
+                font-size: 20px;
+                color: rgb(var(--danger));
+
+                &:hover {
+                    font-weight: 500;
+                    transform: scale(1.1);
+                }
+            }
+        }
+
+    }
+}
+
+.form__input{
+  padding-inline-end: 45px;
+}
+
+input[type="file"] {
+    display: none;
+
+    &::-webkit-file-upload-button {
+        display: none;
+    }
+}
+
+input[type="file"] + label {
+    border: none;
+    padding: 5px 10px;
+    border-radius: 8px;
+    color: rgb(var(--blackClr));
+    font-weight: 500;
+    font-size: 13px;
+}
+
+input[type="file"]+label:hover, .file-section span:hover {
+    color: rgb(var(--primaryClr));
+    border-color: rgb(var(--whiteClr));
+}
+
+.btn-primary {
+    font-weight: 500;
+    padding-block: 7px;
+    padding-inline: 8px;
+    height: 40px;
+    border-radius: 0px 4px 4px 0px;
+    background-color: rgb(var(--primaryClr));
+}
+
+@media (max-width: 768px) {
+    .form_container {
+        grid-template-columns: 2fr;
+    }
+}
+
+@media (max-width: 480px) {
+    .form_container {
+        grid-template-columns: 1fr;
+    }
+}

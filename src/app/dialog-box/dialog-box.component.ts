@@ -33,6 +33,7 @@ export class DialogBoxComponent implements AfterViewInit {
         if (data) {
           this.type = data.type;
           this.value = data.value;
+          // this.dialogService.responseEmitter.next(false);
           this.dialogBox.nativeElement.classList.add('open');
           this.currentRoute = this.activeRoute.url;
         }

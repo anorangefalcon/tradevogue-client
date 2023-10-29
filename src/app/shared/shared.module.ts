@@ -23,6 +23,7 @@ import { LessThanOrEqualPipe } from './Pipe/less-than-or-equal.pipe';
 import { PopUpComponent } from './pop-up/pop-up.component';
 import { PaginationComponent } from './pagination/pagination.component';
 import { DrawerComponent } from './components/drawer/drawer.component';
+import { InvoiceTemplateComponent } from './components/invoice-template/invoice-template.component';
 
 
 @NgModule({
@@ -42,7 +43,8 @@ import { DrawerComponent } from './components/drawer/drawer.component';
     PopUpComponent,
     LessThanOrEqualPipe,
     PaginationComponent,
-    DrawerComponent
+    DrawerComponent,
+    InvoiceTemplateComponent
   ],
   imports: [
     CommonModule,

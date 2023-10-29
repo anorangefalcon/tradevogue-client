@@ -19,7 +19,7 @@
 
         <div class="d-flex align-item-center gap-15">
 
-            <button class="btn-secondary d-flex flex-center gap-5" (click)="checkFormStatus()"
+            <button class="btn-secondary d-flex flex-center gap-5" (click)="show = true"
                 [ngStyle]="{display: current_form == 'product_images'? 'none' : 'flex'}">
                 Add Product Features
             </button>
@@ -370,6 +370,39 @@
 </section>
 
 
-<!-- <app-drawer [direction]="'bottom'" [show]="true" (showChange)="ShowChangeHandler($event)">
-    <p>this is p tah</p>
-</app-drawer> -->
+<app-drawer [direction]="'bottom'" [show]="show" (showChange)="ShowChangeHandler($event)">
+    <div class="card-container mh100 ">
+    
+        <div class="card__block mw100" *ngFor="let item of card_template; let i=index">
+            <div class="row row-1 d-flex align-item-center justify-content-md-between">
+                <h4>{{item.name}}</h4>
+    
+                <div class="file-section d-flex flex-center gap-5">
+                    <input type="file" [id]="'item'+i" minlength="1" class="mh100 mw100"
+                        accept="image/CSV, application/vnd.ms-excel ,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+                        multiple />
+                    <label [for]="'item'+i" class="d-flex flex-center pointer transition"><span class="material-symbols-outlined">upload_file</span></label>
+                    <a class="d-flex flex-center" [href]="'../../../assets/ExcelSampleFile/'+ item.file_name + '.xlsx'" download>
+                        <span class=" transition material-symbols-outlined">download</span></a>
+                </div>
+            </div>
+            <div class="row row-2 card-data d-flex gap-10 flex-column">
+                <ng-container *ngIf="field_data">
+                    <div class="data__field d-flex justify-content-md-between fs-14 transition " *ngFor="let option of field_data[item.type] | productFilter: filter[item.filter]; let j = index">
+                        <span class="data-field__text">{{option}}</span>
+                        <span class="pointer d-flex flex-center transition material-symbols-outlined">close</span>
+                    </div>
+                </ng-container>
+            </div>
+            <div class="row row-3 relative mh100">
+                <input type="text" class="form__input" [placeholder]="'Add '+ item.name" [id]="item.type" [(ngModel)]='filter[item.filter]' />
+    
+                <div class="button absolute inset-inline-end-0 inset-block-start-0">
+                    <button class="btn-primary d-flex flex-center" type="submit" >
+                        <span class="material-symbols-outlined">add</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</app-drawer>

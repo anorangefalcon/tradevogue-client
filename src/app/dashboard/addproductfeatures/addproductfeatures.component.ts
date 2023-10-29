@@ -103,14 +103,15 @@ export class AddproductfeaturesComponent {
   // }
 
   deleteItem(field: string, index: number) {
+    console.log('deleted called');
+    
     console.log(field, index, this.field_data[field]);
-
     this.DialogBoxService.confirmationDialogBox(this.field_data[field][index]);
 
     this.DialogBoxService.responseEmitter.subscribe(async (res) => {
-
+      console.log("---------------");
       if (res == true) {
-        this.field_data[field].splice(index, 1);
+        // this.field_data[field].splice(index, 1);
         console.log("After Delete: ", this.field_data[field]);
 
         const data = {
@@ -118,10 +119,9 @@ export class AddproductfeaturesComponent {
           'data': this.field_data[field]
         };
 
-        // await this.dataService.httpPost(this.backendurls.URLs.updateFeatures, data);
-
-        this.DialogBoxService.responseEmitter.next(false);
+        // await this.dataService.httpPost(this.backendurls.URLs.updateFeatures, data); 
       }
+    
     })
   }
 
@@ -131,6 +131,7 @@ export class AddproductfeaturesComponent {
 
   async addItem(item: any, field: string) {
     try {
+
       if (!this.field_data[field].includes(this.filter[item])) {
 
         this.field_data[field].push(this.filter[item]);

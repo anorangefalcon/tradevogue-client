@@ -16,9 +16,9 @@
                     <span class=" transition material-symbols-outlined">download</span></a>
             </div>
         </div>
-        <div class="row row-2 card-data d-flex gap-10 flex-column">
+        <div class="row row-2 card-data d-flex gap-10 flex-wrap">
             <ng-container *ngIf="field_data">
-                <div class="data__field d-flex justify-content-md-between fs-14 transition " *ngFor="let option of field_data[item.type] | productFilter: filter[item.filter]; let j = index">
+                <div class="data__field d-flex justify-content-md-between align-item-center fs-14 gap-10 transition " *ngFor="let option of field_data[item.type] | productFilter: filter[item.filter]; let j = index">
                     <span class="data-field__text">{{option}}</span>
                     <span class="pointer d-flex flex-center transition material-symbols-outlined" (click)="deleteItem(item.type, j)">close</span>
                 </div>
@@ -29,7 +29,7 @@
 
             <div class="button absolute inset-inline-end-0 inset-block-start-0">
                 <button class="btn-primary d-flex flex-center" type="submit" (click)="addItem(item.filter, item.type)">
-                    <span class="material-symbols-outlined">add</span>
+                    <span class="pointer-none material-symbols-outlined">add</span>
                 </button>
             </div>
         </div>

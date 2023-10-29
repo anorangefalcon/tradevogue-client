@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FetchDataService } from '../shared/services/fetch-data.service';
 import { CartService } from '../shared/services/cart.service';
@@ -7,6 +7,7 @@ import { WishlistService } from '../shared/services/wishlist.service';
 import { ReviewService } from './services/review.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToastService } from '../shared/services/toast.service';
+import { param } from 'jquery';
 
 @Component({
   selector: 'app-product-page',
@@ -14,6 +15,8 @@ import { ToastService } from '../shared/services/toast.service';
   styleUrls: ['./product-page.component.css']
 })
 export class ProductPageComponent implements OnInit {
+  @Input() productSku: any;
+
   data: any = null;
   cartStorage: any[] = [];
   selectedSize: string = "";
@@ -51,34 +54,41 @@ export class ProductPageComponent implements OnInit {
   breadcrumbs: { label: string; url: string }[] = [];
 
   ngOnInit(): void {
-    this.fetchProductData();
+
+    if(this.productSku){
+      this.sku = this.productSku;
+      this.fetchProductData();
+    }
+
+    this.fetchProductDatabyRoute();
+  }
+
+  fetchProductDatabyRoute() {
+    this.route.params.subscribe(params => {
+      this.sku = params['sku'];
+      this.fetchProductData();
+    });
   }
 
   fetchProductData() {
+    this.fetchService.getProductDetails(this.sku).subscribe((data: any) => {
+      // console.log('data comes is -------->',data);
 
-    
-    this.route.params.subscribe(params => {
-      this.sku = params['sku'];
-      this.fetchService.getProductDetails(this.sku).subscribe((data: any) => {
-        // console.log('data comes is -------->',data);
-        
-        this.data = data;
-        this.data.avgRating = data.avgRating;
-        this.activeIndex = 0;
-        this.selectedColor = data.assets[0].color;
-        this.selectedSize = data.assets[this.assetIndex].stockQuantity[0].size;
+      this.data = data;
+      this.data.avgRating = data.avgRating;
+      this.activeIndex = 0;
+      this.selectedColor = data.assets[0].color;
+      this.selectedSize = data.assets[this.assetIndex].stockQuantity[0].size;
 
-        // if this user has already reviewed:
-        if (data.userReview) {
-          this.userReview = data.userReview;
-          this.userRating = data.userReview.rating - 1;
-          this.ratingForm.setValue({
-            rating: data.userReview.rating,
-            review: data.userReview.comment
-          })
-        }
-      });
-
+      // if this user has already reviewed:
+      if (data.userReview) {
+        this.userReview = data.userReview;
+        this.userRating = data.userReview.rating - 1;
+        this.ratingForm.setValue({
+          rating: data.userReview.rating,
+          review: data.userReview.comment
+        })
+      }
     });
   }
 
@@ -117,7 +127,7 @@ export class ProductPageComponent implements OnInit {
     }
 
     this.reviewService.addReview(review).subscribe((data: any) => {
-      this.fetchProductData();
+      this.fetchProductDatabyRoute();
       this.showReview = false;
       this.toastService.successToast({
         title: 'Review successfully ' + (this.userReview ? 'updated' : 'posted')
@@ -126,26 +136,26 @@ export class ProductPageComponent implements OnInit {
   }
 
   deleteReview() {
-    this.reviewService.deleteReview(this.data._id).subscribe((data: any)=>{
+    this.reviewService.deleteReview(this.data._id).subscribe((data: any) => {
       console.log(data.message);
       this.userReview = '';
-      this.fetchProductData();
+      this.fetchProductDatabyRoute();
       this.toastService.notificationToast({
         title: 'Review deleted successfully'
       });
     });
   }
 
-  scroll(element: HTMLElement){
+  scroll(element: HTMLElement) {
     var headerOffset = 250;
     var elementPosition = element.getBoundingClientRect().top;
     var offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-  
+
     window.scrollTo({
-         top: offsetPosition,
-         behavior: "smooth"
+      top: offsetPosition,
+      behavior: "smooth"
     });
-}
+  }
 
   createArrayToIterate(num: number) {
     const newTotal = Math.floor(num);

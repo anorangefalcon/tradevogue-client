@@ -23,6 +23,9 @@ import { PopupService } from '../shared/services/popup.service';
 import { SupportComponent } from './support/support.component';
 import { TicketsComponent } from './tickets/tickets.component';
 import { DateDisplayPipe } from '../shared/Pipe/date-display.pipe';
+import { ProductPageModule } from '../product-page/product-page.module';
+
+
 @NgModule({
   declarations: [
     DashboardComponent,
@@ -49,7 +52,7 @@ import { DateDisplayPipe } from '../shared/Pipe/date-display.pipe';
     NgxPaginationModule,
     FormsModule,
     ReactiveFormsModule,
-
+    ProductPageModule
   ],
   providers: [
     UploadExcelService,

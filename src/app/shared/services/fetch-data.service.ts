@@ -92,9 +92,15 @@ export class FetchDataService {
     })
   }
 
-  httpGet(url: any) {
+  httpGet(url: any, data: any = null) {
+    let params = new HttpParams();
+
+    if(data){
+      params = params.set("data", data);
+    }
+
     return new Promise((res, rej) => {
-      this.http.get(url).subscribe({
+      this.http.get(url, {params}).subscribe({
         next: (data) => {
           res(data);
 

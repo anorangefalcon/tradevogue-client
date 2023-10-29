@@ -10,7 +10,7 @@
     font-size: 13px !important;
 
     & .header {
-        z-index: 1;
+        z-index: 99;
         height: 65px;
         width: 100%;
         background-color: rgb(var(--whiteClr));
@@ -91,7 +91,7 @@
     & .sidebar {
         width: 240px;
         height: 100%;
-        z-index: 2;
+        z-index: 100;
         border-right: 1px solid rgba(var(--blackClr), 0.1);
 
         & .branding {
@@ -390,7 +390,7 @@
 /* Table CSS */
 main {
     .table-list {
-        overflow: scroll;
+        overflow-x  : scroll;
 
         &::-webkit-scrollbar {
             width: 2px;
