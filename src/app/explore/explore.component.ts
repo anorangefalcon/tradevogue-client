@@ -27,12 +27,11 @@ export class ExploreComponent {
   sizes: string[] = ['XS', 'S', 'M', 'L', 'XL', 'XXL', 'XXXL'];
   colors: string[] = ['Black', 'White', 'Red', 'Blue', 'Green', 'Purple', 'Yellow']
   sorting: any = {
-    titles:  ["Highest Rated", "Price: High to Low", "Price: Low to High"],
-    value: ['avgRating:-1','price:-1', 'price:1']
+    titles:  ["Fresh Arrivals", "Highest Rated", "Price: High to Low", "Price: Low to High"],
+    value: ['createdAt:-1','avgRating:-1', 'price:-1', 'price:1']
   }
  
-
-  constructor(private productFilter: ProductsFilterService, private fetchData: FetchDataService, private http: HttpClient, private route: ActivatedRoute, private location: Location, private backendUrls: UtilsModule, private fetchDataService: FetchDataService) { }
+  constructor(private fetchData: FetchDataService, private route: ActivatedRoute, private location: Location) { }
 
   ngOnInit() {
 
@@ -208,6 +207,10 @@ export class ExploreComponent {
     let target = event.target.innerHTML;
     event.target.innerHTML = (target === 'Show Less') ? 'Show More' : 'Show Less';
     this.uniqueData[key][-1] = !this.uniqueData[key][-1];
+  }
+
+  setPriceLimit(){
+
   }
 
 }

@@ -69,11 +69,13 @@
                         </div>
                         <div class="d-flex gap-10">
                             <div class="form__group relative">
-                                <span class="material-symbols-outlined key  form__icon absolute">currency_rupee</span>
+                                <span class="material-symbols-outlined key form__icon absolute">
+                                    currency_rupee</span>
                                 <input type="number" class="form__input">
                             </div>
                             <div class="form__group relative">
-                                <span class="material-symbols-outlined key  form__icon absolute">currency_rupee</span>
+                                <span class="material-symbols-outlined key form__icon absolute">
+                                    currency_rupee</span>
                                 <input type="number" class="form__input">
                             </div>
                             <button class="d-flex justify-content-center align-item-center">
@@ -114,7 +116,7 @@
                     <app-custom-select [_id]="'sizes'" [options]="sizes" [selectedOption]="'Select Sizes'"
                     [type]="'multiSelect'" (SelectedList)="onAdd($event, 'size')"></app-custom-select>
 
-                    <app-custom-select [_id]="'sort'" [options]="sorting.titles" [selectedOption]=sorting.titles[0]
+                    <app-custom-select [_id]="'sort'" [options]="sorting.titles" [selectedOption]="'Sort By'"
                      (final_option)="onAdd($event, 'sort')"></app-custom-select>
                 </div>
                 <div>
@@ -157,6 +159,9 @@
                             [product]="product"></app-card-template>
                     </div>
                 </ng-container>
+                <div *ngIf="products.length == 0">
+                    <p>Nothing found</p>
+                </div>
             </div>
         </div>
     </div>

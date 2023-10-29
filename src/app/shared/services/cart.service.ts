@@ -115,6 +115,7 @@ export class CartService {
     if (userToken) {
       this.http.post(this.backendUrls.URLs.removeItemFromCart, {itemId: identifier}).subscribe((message: any) => {
         console.log(message);
+        this.fetchDetails();
       });
     }
     else{
@@ -128,15 +129,13 @@ export class CartService {
       }
 
       const myCart = JSON.stringify(this.cartStorage);
-    localStorage.setItem("myCart", myCart);
+      localStorage.setItem("myCart", myCart);
+      this.fetchDetails();
     }
-
-
     this.toastService.notificationToast({
       title: 'Item removed!'
     })
     
-    this.fetchDetails();
   }
 
   refreshCart(){

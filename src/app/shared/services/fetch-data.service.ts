@@ -72,15 +72,11 @@ export class FetchDataService {
   httpPost(url: any, body: any) {
 
     return new Promise((res, rej) => {
-      // console.log('POST MEETHOD CALLED ', url, " BODY IS ", body);
-
       this.http.post(url, body).subscribe({
         next: (data) => {
           console.log('DATA INSIDE NE', data);
 
           res(data);
-          // console.log(data, "ervice data");
-
 
         }, error: (error) => {
 
