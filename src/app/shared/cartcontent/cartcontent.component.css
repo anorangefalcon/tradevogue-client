@@ -603,7 +603,7 @@
 
 audio, canvas, embed, iframe, img, object, svg, video {
     display: block;
-    vertical-align: middle;
+    /* vertical-align: middle; */
 }
 
 .text-gray-700 {

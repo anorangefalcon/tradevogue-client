@@ -7,6 +7,7 @@ import { UserServiceService } from '../../services/user-service.service';
   styleUrls: ['./drawer.component.css']
 })
 export class DrawerComponent {
+  @Input() title!: string;
   @Input() direction!: string;
   @Input() show!: boolean;
   @Output() showChange: EventEmitter<any> =   new EventEmitter();

@@ -222,9 +222,20 @@ export class CheckoutComponent implements OnInit {
       this.CouponApplied = coupon;
       await this.userService.emittingValue('couponApplied',this.CouponApplied);
       this.CouponValid = 'valid';
+      
       // this.ParenClosed=true;
     }
 
+    if(this.CouponValid == 'valid'){
+      this.toastService.successToast({
+        title: 'Coupon applied successfully'
+      })
+    }
+    else if(this.CouponValid == 'invalid'){
+      this.toastService.errorToast({
+        title: 'Coupon not valid'
+      })
+    }
     this.CouponCode.nativeElement.value = ''; // change input field to ''
     this.cart.amounts.savings = this.CalculateDiscount(coupon);
     this.cart.amounts.total -= this.cart.amounts.savings;

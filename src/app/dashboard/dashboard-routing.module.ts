@@ -13,6 +13,7 @@ import { ProductOverviewComponent } from './products/product-overview/product-ov
 import { CouponsComponent } from './coupons/coupons.component';
 import { SupportComponent } from './support/support.component';
 import { TicketsComponent } from './tickets/tickets.component';
+import { SocialsComponent } from './socials/socials.component';
 
 const routes: Routes = [
   {
@@ -25,13 +26,14 @@ const routes: Routes = [
       { path: 'editproduct/:sku', component: AddproductComponent },
 
       { path: 'account', component: AccountComponent },
-      { path: 'features', component: AddproductfeaturesComponent},
-      { path: 'orderDetails/:orderId', component: OrderPageComponent},
-      {path: 'faq', component: FaqsComponent},
-      { path: 'product-overview/:sku', component: ProductOverviewComponent},
-      {path:'coupons',component:CouponsComponent},
-      {path: 'support', component: SupportComponent},
-      {path: 'tickets', component: TicketsComponent}
+      { path: 'features', component: AddproductfeaturesComponent },
+      { path: 'orderDetails/:orderId', component: OrderPageComponent },
+      { path: 'faq', component: FaqsComponent },
+      { path: 'product-overview/:sku', component: ProductOverviewComponent },
+      { path: 'coupons', component: CouponsComponent },
+      { path: 'support', component: SupportComponent },
+      { path: 'tickets', component: TicketsComponent },
+      { path: 'socials', component: SocialsComponent }
     ]
   },
 ];

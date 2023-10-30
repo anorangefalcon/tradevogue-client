@@ -75,15 +75,7 @@ export class FetchDataService {
     return new Promise((res, rej) => {
       this.http.post(url, body).subscribe({
         next: (data) => {
-          console.log('DATA INSIDE NE', data);
-
-<<<<<<< Updated upstream
           res(data);
-=======
-            res(data);
-          // console.log(data, "ervice data");
-
->>>>>>> Stashed changes
 
         }, error: (error) => {
 

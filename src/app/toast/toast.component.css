@@ -4,12 +4,11 @@
     justify-content: center;
 }
 
-
 .loader{
     position: absolute;
-    height: 100%;
+    height: 6px;
     left: 0;
-    top: 0;
+    bottom: 0;
     width: 100%;
     z-index: -1;
     animation: loading 5s linear;
@@ -23,13 +22,14 @@
     box-shadow: 5px 6px 16px 0px #60606021;
 
     position: fixed;
-    right: 10px;
+    left: 50%;
+    transform: translateX(-50%);
     top: 90px;
 
     max-width: 350px;
     overflow: hidden;
 
-    animation: slide-in 0.3s ease-in-out;
+    animation: slide-in 0.4s ease-in-out;
 
 }
 .toast:hover .loader{
@@ -39,7 +39,10 @@
 .toast-header {
     position: relative;
     min-height: 45px;
-    padding: 5px 12px;
+    padding-block-start: 5px;
+    padding-block-end: 11px;
+    padding-inline-start: 10px;
+    padding-inline-end: 15px;
 }
 
 .success {
@@ -56,16 +59,16 @@
 }
 
 .success-bg{
-    background-color: rgb(var(--success), 0.1);
+    background-color: rgb(var(--success));
 }
 .error-bg{
-    background-color: rgb(var(--danger), 0.1);
+    background-color: rgb(var(--danger));
 }
 .warning-bg{
-    background-color: rgb(var(--warning), 0.1);
+    background-color: rgb(var(--warning));
 }
 .notification-bg{
-    background-color: rgb(var(--info), 0.1);
+    background-color: rgb(var(--info));
 }
 
 
@@ -86,13 +89,13 @@
 @keyframes slide-in {
     from{
         opacity: 0;
-        transform: translateX(150px);
+        top: -100px;
     }
     80%{
-        transform: translateX(-20px);
+        top: 110px;
     }
     to{
         opacity: 1;
-        transform: translateX(0px);
+        top: 90px;
     }
 }

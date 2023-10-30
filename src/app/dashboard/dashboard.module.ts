@@ -18,13 +18,12 @@ import { FaqsComponent } from './faqs/faqs.component';
 import { ProductOverviewComponent } from './products/product-overview/product-overview.component';
 import { CouponsComponent } from './coupons/coupons.component';
 import { PaginationService } from '../shared/services/pagination.service';
-import { PopUpComponent } from '../shared/pop-up/pop-up.component';
 import { PopupService } from '../shared/services/popup.service';
 import { SupportComponent } from './support/support.component';
 import { TicketsComponent } from './tickets/tickets.component';
 import { DateDisplayPipe } from '../shared/Pipe/date-display.pipe';
 import { ProductPageModule } from '../product-page/product-page.module';
-
+import { SocialsComponent } from './socials/socials.component';
 
 @NgModule({
   declarations: [
@@ -42,9 +41,10 @@ import { ProductPageModule } from '../product-page/product-page.module';
     CouponsComponent,
     SupportComponent,
     TicketsComponent,
-    DateDisplayPipe
+    DateDisplayPipe,
+    SocialsComponent
   ],
-  
+
   imports: [
     CommonModule,
     DashboardRoutingModule,
@@ -59,6 +59,6 @@ import { ProductPageModule } from '../product-page/product-page.module';
     NgModel,
     PaginationService,
     PopupService
-    ],
+  ],
 })
 export class DashboardModule { }

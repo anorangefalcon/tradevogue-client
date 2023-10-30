@@ -1,7 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { CartService } from '../../services/cart.service';
 import { OwlOptions } from 'ngx-owl-carousel-o';
-import { SidecartService } from '../../services/sidecart.service';
 import { FetchDataService } from '../../services/fetch-data.service';
 import { PopupService } from '../../services/popup.service';
 import { WishlistService } from '../../services/wishlist.service';
@@ -17,7 +16,7 @@ export class CardTemplateComponent {
   showPopup: boolean = false;
 
 
-  constructor(private cartService: CartService, private sideCartService: SidecartService, private fetchdata: FetchDataService, private popupService: PopupService, private wishlist : WishlistService) { }
+  constructor(private cartService: CartService, private fetchdata: FetchDataService, private popupService: PopupService, private wishlist : WishlistService) { }
 
   avgRating: number = 0;
   productData: any = [];

@@ -1,9 +1,6 @@
-import { Component, ElementRef, HostListener } from '@angular/core';
+import { Component } from '@angular/core';
 import { CartService } from '../services/cart.service';
-import { CookieService } from 'ngx-cookie-service';
 import { Router } from '@angular/router';
-import { SidecartService } from '../services/sidecart.service';
-import { UserServiceService } from '../services/user-service.service';
 
 @Component({
   selector: 'app-sidecart',
@@ -11,20 +8,29 @@ import { UserServiceService } from '../services/user-service.service';
   styleUrls: ['./sidecart.component.css']
 })
 export class SidecartComponent {
-  direction:string='right';
-  show:boolean=false;
-  constructor(private cartService:CartService){
-    this.cartService.sideCart.asObservable().subscribe((data:any)=>{
-        this.show=data;
-    })
+  direction: string = 'right';
+  show: boolean = false;
+  totalAmt: Number = 0;
+
+  constructor(private cartService: CartService, private router: Router) {
+    this.cartService.sideCart.asObservable().subscribe((data: any) => {
+      this.show = data;
+    });
+
+    this.cartService.fetchCart('amount').subscribe((amount: any)=>{
+      if(amount.total === 0){
+        this.show = false
+      }
+      this.totalAmt = amount?.total;
+    });
   }
 
-  ChangeHanlder(event:any){
-    this.show=event;
+  ChangeHanlder(event: any) {
+    this.show = event;
   }
 
+  proceedToCart(){
+    this.show = false;
+    this.router.navigate(['/cart']);
+  }
 }
-
-
-
-

@@ -16,9 +16,8 @@
 }
 
 .product-info {
-    width: 50%;
     & h4 {
-        /* width: 25ch; */
+        width: 25ch;
         text-overflow: ellipsis;
         overflow: hidden;
         white-space: nowrap;
@@ -229,16 +228,13 @@
 }
 
 .product-image {
-    /* width: 12%; */
-    width: 15%;
+    width: 12%;
 }
 
 
 .ProductINFO {
-    /* width: 88%; */
-    /* width: 70%; */
+    width: 88%;
     /* background-color: green !important; */
-    width: 85%;
     display: flex;
     justify-content: space-between;
 }

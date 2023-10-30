@@ -47,6 +47,7 @@ export class CartService {
       this.fetchDetails();      
     }
 
+    this.toastService.successToast();
     this.sideCart.next(true);
 
   }
@@ -104,9 +105,7 @@ export class CartService {
       if(!cartDetails){
         cartDetails = [];
       }
-      this.http.post(this.backendUrls.URLs.fetchCart, cartDetails).subscribe((data: any) => {  
-        console.log('Data emiited is ',data);
-                        
+      this.http.post(this.backendUrls.URLs.fetchCart, cartDetails).subscribe((data: any) => {                          
         this.cartSubject?.next(data);
       });
     }
@@ -118,6 +117,7 @@ export class CartService {
     if (userToken) {
       this.http.post(this.backendUrls.URLs.removeItemFromCart, {itemId: identifier}).subscribe((message: any) => {
         console.log(message);
+        // this.ItemDeleted=true;
         this.fetchDetails();
       });
     }

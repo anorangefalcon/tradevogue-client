@@ -1,13 +1,16 @@
-<div class="wrapper" [ngClass]="{'show':show}">
+<div class="wrapper " [ngClass]="{'show':show}">
 
-
-    <div class="content-drawer" [style]="translate"  [style]="direction" [ngClass]="{'top':direction=='top','bottom':direction=='bottom','right':direction=='right', 'left':direction=='left','top_show':translate=='translateTop', 'bottom_show':translate=='translateBottom','right_show':translate=='translateRight','left_show':translate=='translateLeft'}">
-      <span class="material-symbols-outlined close__icon" (click)="CloseWrapper()">
+  <div class="content-drawer" [style]="translate" [style]="direction"
+    [ngClass]="{'top':direction=='top','bottom':direction=='bottom','right':direction=='right', 'left':direction=='left','top_show':translate=='translateTop', 'bottom_show':translate=='translateBottom','right_show':translate=='translateRight','left_show':translate=='translateLeft'}">
+    <div class="drawer__header d-flex justify-content-md-between align-item-center">
+      <h3>{{title}}</h3>
+      <span class="pointer material-symbols-outlined close__icon" (click)="CloseWrapper()">
         close
-        </span>
+      </span>
+    </div>
+    <div class="drawer__content">
       <ng-content></ng-content>
     </div>
+  </div>
 
-    
 </div>
-

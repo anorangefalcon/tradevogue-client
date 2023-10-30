@@ -1,7 +1,7 @@
 <!-- <app-drawer [direction]="direction" [show]="true"> -->
 
     <div class="wrappers d-flex flex-column gap-20">
-        <h2>Cart</h2>
+       
         <div class="cart-container d-flex flex-wrap default-animation">
             <div class="cart-items d-flex" *ngFor="let item of cartArr; let i = index">
                 <div class="col gap-25 d-flex">
@@ -37,7 +37,7 @@
                             </div>
                         </div>
         
-                        <div class="d-flex gap-10 align-item-center flex-column common">
+                        <div class="d-flex gap-10 align-item-center common">
                             <div class="quantity-btn-outer">
                                 <div class="quantity">
                                     <button class="quantity-btn" (click)="changeQuantity('previous', i, item.quantity)">

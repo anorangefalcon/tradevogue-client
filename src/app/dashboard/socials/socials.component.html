@@ -1,0 +1,24 @@
+<form [formGroup]="socialsForm" (ngSubmit)="onSubmit()">
+    <div>
+      <label for="facebookLink">Facebook Profile Link:</label>
+      <input type="text" id="facebookLink" formControlName="facebookLink" />
+    </div>
+  
+    <div>
+      <label for="whatsappNumber">WhatsApp Number:</label>
+      <input type="text" id="whatsappNumber" formControlName="whatsappNumber" />
+    </div>
+  
+    <div>
+        <label for="instagramLink">Instagram Profile Link:</label>
+        <input type="text" id="instagramLink" formControlName="instagramLink" />
+
+        <label for="accountID">Account ID:</label>
+        <input type="text" id="accountID" formControlName="accountID" />
+
+        <label for="accessToken">Access Token:</label>
+        <input type="text" id="accessToken" formControlName="accessToken" />
+    </div>
+
+    <button type="submit" [disabled]="socialsForm.invalid">Submit</button>
+  </form>
