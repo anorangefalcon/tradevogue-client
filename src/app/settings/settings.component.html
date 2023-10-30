@@ -12,7 +12,7 @@
                     </span>
                 </li>
                 <li class="nav-links" [ngClass]="{'nav-link-active': this.showData === 'orders'}"
-                    (click)="changeComponent('orders')">
+                    (click)="getOrders()">
                     <a>
                         <span class="nav-txt">My Order</span>
                     </a>
@@ -49,10 +49,6 @@
                 </li>
             </ul>
         </nav>
-
-        <!--  
-            'width_100':showData=='profile'
-        -->
 
         <div class="content" [ngClass]="{'expand':TranslateData}">
             <div class="profile selected d-flex flex-column gap-20" *ngIf="showData=='profile'">
@@ -100,13 +96,13 @@
                         <input type="text" id="mobile" formControlName="mobile" placeholder="Enter Your MobileNo">
 
                         <small
-                            *ngIf="DetailsSubmitted && ProfileForm.get('mobile')?.hasError('notvalid') && ProfileForm.get('mobile')?.touched"
+                            *ngIf="ProfileForm.get('mobile')?.hasError('notvalid') && ProfileForm.get('mobile')?.touched"
                             class="invalid">*Mobile No is invalid.</small>
 
                     </div>
 
 
-               
+
                     <div class="form__group relative d-flex flex-column">
                         <label class="form__label">DOB<span>*</span></label>
                         <span class="material-symbols-outlined form__icon absolute">person</span>
@@ -147,112 +143,9 @@
 
             </div>
 
-            <!-- <div class="Allorders" *ngIf="showData=='orders'">
-                <div *ngFor="let order of userData.orders" class="order">
-
-                    <div class="d-flex justify-content-md-between orderDetails">
-
-
-
-                        <div class="orderDetailFirstColumn">
-                            <div>
-                                <p class="orderDetialsHeading"> Order Id</p>
-                                <p> {{order.orderId}}</p>
-                            </div>
-
-
-                            <div>
-                                <p class="orderDetialsHeading"> Order Date </p>
-                                <p> {{order.orderDate}}</p>
-                            </div>
-
-
-                            <div>
-                                <p class="orderDetialsHeading"> Total Amount </p>
-                                <p> {{order.orderTotal}}</p>
-                            </div>
-
-
-                        </div>
-
-                        <div class="orderDetailSecondColumn">
-                            <button (click)="ViewProduct(order)">View Order
-                                <span class="material-symbols-outlined" #expand>
-                                    expand_more
-                                </span>
-                            </button>
-                            <button>View Invoice</button>
-                        </div>
-
-                    </div>
-
-
-
-                    <div class="productsList" [ngClass]="{ expanded2: order.expanded }">
-                        <div *ngFor="let product of order.products"
-                            class="d-flex flex-column gap-20 justify-content-md-between productItem">
-
-
-                            <div class="productItemFirstRow">
-                                <div class="d-flex gap-20">
-                                    <img src="{{product.image}}" style="width: 100px; height: 100px;">
-
-                                    <div class="product-detials">
-                                        <h3>{{product.name}}</h3>
-                                        <p>Size: {{product.size}}</p>
-                                        <p>Color: {{product.color}}</p>
-
-
-                                    </div>
-
-
-                                </div>
-
-
-
-                                <div class="d-flex flex-column gap-15 justify-content-evenly">
-
-                                    <div class="d-flex justify-content-md-between">
-                                        <div class="status relative">
-
-
-                                            <span class="absolute material-symbols-outlined pending"
-                                                *ngIf="product.status=='pending'">
-                                                local_shipping
-                                            </span>
-
-                                            <span class="absolute material-symbols-outlined done_logo"
-                                                *ngIf="product.status=='delivered'" cla>
-                                                done
-                                            </span>
-
-                                            <p>{{product.status}}</p>
-                                        </div>
-                                        <p class="price d-flex">₹{{product.price}}</p>
-                                    </div>
-
-                                    <div class="btns">
-                                        <button class="viewProduct">View Product</button>
-                                        <button>Buy Again</button>
-                                    </div>
-
-
-
-                                </div>
-
-                            </div>
-
-                        </div>
-
-                    </div>
-                </div>
-            </div> -->
-
-
             <div *ngIf="showData=='addresses'" class="address">
                 <div class="d-flex  align-item-center justify-content-md-between pointer h2_div"
                     (click)="TranslateBack()">
-
 
                     <div class="d-flex align-item-center pointer h2_div" (click)="TranslateBack()">
                         <span class="material-symbols-outlined left__icon">
@@ -280,9 +173,11 @@
                             <div class="d-flex">
                                 <!-- <button></button> -->
                                 <span *ngIf="address.defaultAddress">Default Address</span>
-                                <button class="btn default__btn" (click)="MakeDefault(address,i)" *ngIf="i!=0">Make this  Defult</button>
-                       
-                                <button class="edit__btn d-flex align-item-center" (click)="EditAddress(address,i)">Edit</button>
+                                <button class="btn default__btn" (click)="MakeDefault(address,i)" *ngIf="i!=0">Make this
+                                    Defult</button>
+
+                                <button class="edit__btn d-flex align-item-center"
+                                    (click)="EditAddress(address,i)">Edit</button>
                                 <button class="remove" (click)="RemoveAddress(address,i)">Remove</button>
                             </div>
                         </div>
@@ -403,6 +298,46 @@
                 <button class="btn-primary width-160" (click)="onPasswordChange()">Save</button>
             </div>
 
+            <div class="Orders d-flex flex-column gap-20" *ngIf="showData=='orders'">
+
+                <div class="d-flex align-item-center pointer h2_div" (click)="TranslateBack()">
+                    <span class="material-symbols-outlined left__icon">
+                        chevron_left
+                    </span>
+                    <h2>
+                        Orders History
+                    </h2>
+
+
+                </div>
+                <p class="orders__p">Check the status of recent orders, manage returns, and discover similar products</p>
+                
+                <div *ngFor="let order of AllOrders">
+                    <div class="order__firstDiv">
+                        <div>
+                            <div>
+                                <p>Order Number</p>
+                                <span>{{order._id}}</span>
+                            </div>
+                            <div>
+                                <p>Date Placed</p>
+                                <span>{{getDate(order.orderDate)}}</span>
+                            </div> 
+                            <div>
+                                <p>Total Amount</p>
+                                <span>{{order.orderAmount}}</span>
+                            </div>
+                        </div>
+
+                        <div>
+
+                        </div>
+
+                    </div>
+                    <div class="order__secondDiv"></div>
+                </div>
+
+            </div>
 
 
         </div>
@@ -415,5 +350,9 @@
 
 
 
-    <app-address (newAddress)="NewAddressHandler($event)"[ShowComponent]="ShowComponent" [receiveData]="receiveData"  (AddressClosed)="AddresscloseHandler($event)"> (closeaddressed)="CloseAddress()" ></app-address>
+<app-address  [ShowComponent]="ShowComponent" [receiveData]="receiveData"
+     (AddressHandler)="AddressHandler($event)"></app-address>
+    <!-- > (closeaddressed)="CloseAddress()"  -->
+    <!-- (AddressClosed)="AddresscloseHandler($event)" -->
+    <!-- (newAddress)="NewAddressHandler($event)" -->
 <!-- <app-address></app-address> -->

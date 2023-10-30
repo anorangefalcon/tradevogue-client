@@ -2,13 +2,10 @@
 <div class="address">
     <div class="d-flex flex-column gap-10">
 
-        <div class="d-flex justify-content-md-between align-item-center pointer h2_div" [ngClass]="{'h2_div':!DeliveredAddress}">
+        <div class="d-flex justify-content-md-between align-item-center pointer" [ngClass]="{'h2_div':!DeliveredAddress}">
         <div class="d-flex align-item-center pointer">
-            <h2>
-                SELECT DELIVERY ADDRESS
+            <h2>SELECT DELIVERY ADDRESS
             </h2>
-
-
         </div>
 
         <div class="d-flex align-item-center addAddress__div" *ngIf="!DeliveredAddress" (click)="AddAddress()">
@@ -38,21 +35,23 @@
         
 
     </div>
+
+
+
     <div class="d-flex flex-column gap-10" *ngIf="!DeliveredAddress">
         <ng-container *ngFor="let address of userAddresses; let i=index" class="d-flex address__firstdiv ">
             <div class="ok" style="display: none;">
                 <input type="radio" id="radio{{i}}" name="address" value="address" class="d-flex">
             </div>
 
-            <label for="radio{{i}}" class="d-flex align-item-center pointer">
+            <label for="radio{{i}}" id="{{i}}" class="d-flex align-item-center pointer">
               
-                
-                
                 <div class="d-flex gap-10 input mw100 flex-column">
 
-                    <div class="d-flex justify-content-md-between">
+                    <div class="d-flex justify-content-md-between" >
                         <p class="name pointer-none">{{address.firstname}} {{address.lastname}}</p>
                         <div class="d-flex">
+                            <span *ngIf="address.defaultAddress">Default Address</span>
                             <button class="btn default__btn" (click)="MakeDefault(address,i)" *ngIf="!address.defaultAddress">Make this  Defult</button>
                             <button class="edit__btn btn" (click)="EditAddress(address,i)">Edit</button>
                             <button class="remove__btn btn" (click)="RemoveAddress(address,i)">Remove</button>
@@ -75,6 +74,12 @@
 </div>
 
 
-<div [ngClass]="{'show':addnewAddress==true}">
-    <app-address (newAddress)="NewAddressHandler($event)"  (closeaddressed)="CloseAddress()" [receiveData]="AddressSended"></app-address>
-</div>
+
+    <!-- <app-address (newAddress)="NewAddressHandler($event)"  (closeaddressed)="CloseAddress()" [receiveData]="AddressSended"></app-address> -->
+    
+<app-address  [ShowComponent]="ShowComponent" [receiveData]="receiveData"
+(AddressHandler)="AddressHandler($event)"></app-address>
+
+
+<!-- <button (click)="ProceedToPayment()">Payment</button> -->
+    <!-- (closeaddressed)="CloseAddress()" -->

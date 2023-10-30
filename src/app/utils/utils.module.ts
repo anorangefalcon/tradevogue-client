@@ -25,7 +25,7 @@ export class UtilsModule {
     updateAddress:'http://localhost:1000/user/updateAdress',
     deleteAddress:'http://localhost:1000/user/deleteAddress',
     setDefaultAddress:'http://localhost:1000/user/setDefault',
-    getCoupons:'http://localhost:1000/user/coupons',
+    getCoupons:'http://localhost:1000/offer/getCoupons',
 
     // Dashboard
     addproduct: 'http://localhost:1000/admin/addProduct',
@@ -46,6 +46,7 @@ export class UtilsModule {
     fetchProductUrl: 'http://localhost:1000/products/fetchProduct',
     uniqueProductFields: 'http://localhost:1000/products/uniqueFields',
     getOriginalProductPrice:'http://localhost:1000/products/getOriginalPrice',
+    // getProductPrice:'http://localhost:1000/admin/getProductPrice',
 
    // product reviews
    addOrUpdateReview: 'http://localhost:1000/reviews/addOrUpdate',
@@ -61,12 +62,11 @@ export class UtilsModule {
     updateItemFromCart: 'http://localhost:1000/cart/update',
     clearCart: 'http://localhost:1000/cart/clear',
 
-    // COUPONS
-    createCoupon:'http://localhost:1000/admin/createOffer',
-    getOffers:'http://localhost:1000/admin/getOffers',
-    getProductPrice:'http://localhost:1000/admin/getProductPrice',
-    deleteOffer:'http://localhost:1000/admin/deleteOffer',
-    updateOffer:'http://localhost:1000/admin/updateOffer',
+    // OFFER
+    createOffer:'http://localhost:1000/offer/create',
+    getOffers:'http://localhost:1000/offer/get',
+    deleteOffer:'http://localhost:1000/offer/delete',
+    updateOffer:'http://localhost:1000/offer/update',
    
     // FAQS
     updateFaqData: 'http://localhost:1000/admin/updateFaq',
@@ -79,7 +79,9 @@ export class UtilsModule {
     showWishlist : 'http://localhost:1000/wishlist/showWishlist',
 
     // ORDERS
+    verifyOrderSummary:'http://localhost:1000/orders/verifyOrderSummary',
     createOrder:'http://localhost:1000/orders/create',
+    getParticularUserOrders:'http://localhost:1000/orders/getparticularUserOrders',
 
     // support chat
     getTicketTitle: 'http://localhost:1000/user/getTicketTitle',

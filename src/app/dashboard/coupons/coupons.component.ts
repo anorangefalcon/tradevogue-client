@@ -229,7 +229,7 @@ async ngOnInit(){
         body.id=this.EditRequest;      
     }
     else{
-      url=this.BackendUrls.URLs.createCoupon;
+      url=this.BackendUrls.URLs.createOffer;
     }
 
 

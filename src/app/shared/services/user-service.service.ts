@@ -8,6 +8,13 @@ export class UserServiceService {
 
 
    userSubect = new BehaviorSubject({});
+   
+   PaymentUrlVisited=new BehaviorSubject<any>('');
+  paymentObservable=this.PaymentUrlVisited.asObservable();
+
+  // when billing page refresh
+  // couponApplied=new BehaviorSubject<any>('');
+  
 
   constructor() { }
 

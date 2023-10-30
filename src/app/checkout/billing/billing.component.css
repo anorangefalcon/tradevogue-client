@@ -440,12 +440,12 @@ button:disabled {
   visibility: initial;
 }
 
-.addressFormContent {
+/* .addressFormContent {
   top: 0px !important;
   top: 50% !important;
   transform: translate(-50%, -50%) scale(1.1);
   transition: transform 0.4s cubic-bezier(0, 0.59, 0.25, 1), -webkit-transform 0.4s cubic-bezier(0, 0.59, 0.25, 1);
-}
+} */
 
 
 input {
@@ -456,6 +456,15 @@ input {
   width: 148px;
   padding-inline: 0px;
 }
+
+
+.show_delivery_btn{
+  & .btn-deliver{
+    display: block;
+  }
+  
+}
+
 .ok:has(> input[type="radio"]:checked)+label::before {
   background-color: rgba(var(--primaryClr));
   border: none;
@@ -525,7 +534,7 @@ label {
 }
 
 
-.show{
+/* .show{
 
   & .addressForm{
       opacity: 1;
@@ -533,12 +542,12 @@ label {
   }
   & .addressFormContent{
       top: 0px !important;
-      /* left:0px; */
+
       top:50% !important;
       transform: translate(-50%, -50%) scale(1.1);
       transition: transform 0.4s cubic-bezier(0, 0.59, 0.25, 1), -webkit-transform 0.4s cubic-bezier(0, 0.59, 0.25, 1);
   }
-} 
+}  */
 
 
 .changeaddress__btn{
@@ -555,3 +564,4 @@ label {
   border-radius: 20px;
   color: #DF1621;
 }
+

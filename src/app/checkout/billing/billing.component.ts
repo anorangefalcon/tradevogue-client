@@ -3,6 +3,7 @@ import { CookieService } from 'ngx-cookie-service';
 import { FetchDataService } from 'src/app/shared/services/fetch-data.service';
 import { UtilsModule } from 'src/app/utils/utils.module';
 import { UserServiceService } from 'src/app/shared/services/user-service.service';
+import { CartService } from 'src/app/shared/services/cart.service';
 @Component({
   selector: 'app-billing',
   templateUrl: './billing.component.html',
@@ -13,25 +14,17 @@ export class BillingComponent {
   checkoutHtml: string = '';
   checkoutCss: string = '';
   item: any = {};
+  receiveData:any;
+  ShowComponent:boolean=false;
+  
   total: any = {}
   quantity: any = {}
 
 
-  constructor(private cookie: CookieService, private fetchDataService: FetchDataService, private userService: UserServiceService, private backendURLs: UtilsModule) {
+  constructor(private cookie: CookieService, private fetchDataService: FetchDataService, private cartService:CartService, private userService: UserServiceService, private backendURLs: UtilsModule) {
+    this.userService.PaymentUrlVisited.next(true);
     this.getAddresses();
   }
-
-
-  //  ngOnInit(){
-  //     this.getAddresses();
-  //   }
-
-
-  ngOnInit() {
-
-
-  }
-
 
 
 
@@ -66,69 +59,54 @@ export class BillingComponent {
   cart: any = '';
   CouponApplied: any = '';
   DeliveredAddress: any= '';
-  // async getAddresses(){
-  // let data:any=await  this.fetchDataService.httpGet(this.backendURLs.URLs.getAddress);
-  // this.userAddresses=data.info.address;  
-  // }
 
 
-  async getAddresses() {;
-    let Addresses = await this.userService.SubscribingValue('userAddresses');
-    if (!Addresses) {
+  async getAddresses() {
       let data: any = await this.fetchDataService.httpGet(this.backendURLs.URLs.getAddress);
       data = data.addresses;
       this.userAddresses = data;
-      if (data.length != 0) {
-        await this.userService.emittingValue('userAddresses', data);
-        this.userAddresses = data;
+    }
+
+
+    AddAddress(){
+      this.ShowComponent=true;
+    }
+  
+    EditAddress(address:any,index:any){
+      const data=this.userAddresses[index];
+      this.receiveData={data,index};
+      this.ShowComponent=true;
+    }
+  
+  
+  
+    AddressHandler(event:any){
+      if(!event){
+        this.ShowComponent=event;
       }
+      //  edit request updated
+      else if(event.index){
+        this.userAddresses[event.index]=event.data;
+      }
+      // new address added
+      else{
+        this.userAddresses.push(event.data);
+      }
+   }
+  
+  
+
+  async RemoveAddress(address:any,index:any){
+    try{
+      const body={address_id:address._id}
+      let deleteAddress=await this.fetchDataService.httpPost(this.backendURLs.URLs.deleteAddress,body);
+      this.userAddresses.splice(index,1);
     }
-
-    else {
-      this.userAddresses = Addresses;
+    catch(error){
     }
-
-
+     
   }
 
-  AddressSended: any;
-  addnewAddress: boolean = false;
-  EditAddress(address: any, index: any) {
-    const data = this.userAddresses[index];
-    this.AddressSended = { data, index };
-    this.addnewAddress = true;
-  }
-
-  async RemoveAddress(address: any, index: any) {
-    try {
-      const body = { id: address._id }
-      let deleteAddress = await this.fetchDataService.httpPost(this.backendURLs.URLs.deleteAddress, body);
-      this.userAddresses.splice(index);
-    }
-
-    catch (error) {
-
-    }
-
-
-  }
-
-
-  NewAddressHandler(event: any) {
-    if (event.hasOwnProperty("index")) {
-      this.userAddresses[event.index] = event;
-      return;
-    }
-    this.userAddresses.push(event);
-  }
-
-  CloseAddress() {
-    this.addnewAddress = false;
-  }
-
-  AddAddress() {
-    this.addnewAddress = true;
-  }
 
   SelectAddress(address: any) {
     this.DeliveredAddress = address;
@@ -151,15 +129,17 @@ export class BillingComponent {
     }
   }
 
-
-  //  async CreateOrder(){
-  //     this.cartService.fetchCart().subscribe(async (data:any)=>{
-  //       const body={products:data.details, deliveryAddress:this.DeliveredAddress};
-  //       const response=await this.fetchDataService.httpPost(this.backendURLs.URLs.createOrder,body);
-
-  //     });
-
+  // ProceedToPayment(){
+  //   try {
+  //     this.cartService.fetchCart().subscribe((data)=>{
+  //       console.log('data is ',data);
+        
+  //     })
+        
+  //   } catch (error) {
+      
   //   }
-
+    
+  // }
 
 }

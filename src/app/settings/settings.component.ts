@@ -15,7 +15,8 @@ import { UserServiceService } from '../shared/services/user-service.service';
   styleUrls: ['./settings.component.css']
 })
 export class SettingsComponent {
-  showData: string = "profile";
+  // showData: string = "profile";
+  showData: string = "orders"
   isReadOnly: boolean = true;
   changePasswordForm: FormGroup;
   ShowComponent:boolean=false;
@@ -55,26 +56,14 @@ export class SettingsComponent {
       newPassword: fb.control('', [Validators.required, Validators.minLength(8), passwordStrengthValidator]),
       againNewPassword: fb.control('', [Validators.required, (control: any) => matchPasswordValidator(control, this.changePasswordForm)])
     })
-
-    // this.userService.
-    // this.
-  
-
   };
+
 
   changeComponent(el: string) {
     this.showData = el;
     this.TranslateData = true;
   }
 
-  // async ngOnInit(){
-  //   try {
-  //     const Details:any=await this.fetchDataService.httpGet(this.backendURLs.URLs.getDetails);
-  //     this.ProfileForm.patchValue(Details);
-  //   } catch (error) {
-      
-  //   }
-  // }
 
   async ngOnInit() {
     try {
@@ -95,8 +84,9 @@ export class SettingsComponent {
   async getAddresses(){
     
     this.showData='addresses';
+
     this.TranslateData = true;
-    let Addresses=await this.userService.SubscribingValue('userAddresses'); 
+    let Addresses=await this.userService.SubscribingValue('userAddresses');  
     if(!Addresses){
       let data:any=await  this.fetchDataService.httpGet(this.backendURLs.URLs.getAddress);
       data=data.addresses;
@@ -121,19 +111,35 @@ export class SettingsComponent {
   // }
 
 
-  AddresscloseHandler(event:any){
-    this.ShowComponent=event;
-    this.receiveData='';
-  }
+  // AddresscloseHandler(event:any){
+  //   this.ShowComponent=event;
+  //   this.receiveData='';
+  // }
 
-  NewAddressHandler(event:any){
-    if(event.hasOwnProperty("index")){
-       this.userAddresses[event.index]=event;      
-      return;
+  AddressHandler(event:any){
+    if(!event){
+      this.ShowComponent=event;
     }
-      this.userAddresses.push(event);
-    // this.userAddresses=(event.info.address);
-  }
+    //  edit request updated
+    else if(event.index){
+      this.userAddresses[event.index]=event.data;
+    }
+    // new address added
+    else{
+      this.userAddresses.push(event.data);
+    }
+ }
+
+  // NewAddressHandler(event:any){
+  //   console.log('new address called-->');
+    
+  //   if(event.hasOwnProperty("index")){
+  //      this.userAddresses[event.index]=event;      
+  //     return;
+  //   }
+  //     this.userAddresses.push(event);
+  //   // this.userAddresses=(event.info.address);
+  // }
 
 
   async RemoveAddress(address:any,index:any){
@@ -151,14 +157,8 @@ export class SettingsComponent {
 
   EditAddress(address:any,index:any){
     const data=this.userAddresses[index];
-    console.log('data and is ',data);
-    
-    // this.AddressSended={ data: data, index: index };
-    // console.log('AddresseSedned is ',this.AddressSended);
-    // this.AddressSended=true;
     this.receiveData={data,index};
     this.ShowComponent=true;
-    // this.addnewAddress=true;
   }
 
 
@@ -192,13 +192,7 @@ export class SettingsComponent {
   }
 
 
-  DetailsSubmitted: Boolean = false;
   async saveDetails() { 
-    console.log('save details clicked--->');
-    
-    this.DetailsSubmitted = true;
-    // if (this.ProfileForm.invalid) return;
-
     let body = {
       name: { firstname: this.ProfileForm.get('firstname')?.value, lastname: this.ProfileForm.get('lastname')?.value },
       email: this.ProfileForm.get('email')?.value,
@@ -222,4 +216,20 @@ export class SettingsComponent {
     }
   }
   
+  //  ORDERS TS
+  AllOrders!:any
+ async getOrders(){
+    this.showData='orders';
+      this.AllOrders=await this.fetchDataService.httpGet(this.backendURLs.URLs.getParticularUserOrders);
+      console.log('Allorders come is ',this.AllOrders);
+      
+  }
+
+  getDate(orderDate:any){
+    console.log('orderDate spliting is ', (orderDate));
+    
+    return orderDate.split('T')[0];
+  }
+
+
 }

@@ -385,3 +385,15 @@ label span {
         color: rgb(var(--danger))
     }
 }
+
+
+
+/* ORDERS  CSS */
+.Orders{
+    width: 100%;
+    padding-inline: 50px;
+}
+
+.orders__p{
+    color: rgba(var(--blackClr), 0.6);
+}

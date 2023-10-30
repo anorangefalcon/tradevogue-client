@@ -17,6 +17,7 @@ export class CartService {
 
   // used to add items to cart in localStorage
   cartStorage: any[] = [];
+  sideCart=new BehaviorSubject<any>('');
   // used as a subject for cart to be as observable
   cartSubject = new BehaviorSubject<any>({});
   // actual data lies here
@@ -45,6 +46,8 @@ export class CartService {
   
       this.fetchDetails();      
     }
+
+    this.sideCart.next(true);
 
   }
 

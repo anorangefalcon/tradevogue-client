@@ -6,6 +6,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { UserDataService } from '../user-data.service';
 import { UtilsModule } from 'src/app/utils/utils.module';
 import { FetchDataService } from 'src/app/shared/services/fetch-data.service';
+import { UserServiceService } from 'src/app/shared/services/user-service.service';
 
 
 @Component({
@@ -24,7 +25,7 @@ export class LoginComponent {
   isactive: boolean = false;
   script: any;
 
-  constructor(private fb: FormBuilder, private cookies: CookieService, private router: Router, private userData: UserDataService, private route: ActivatedRoute, private backendUrls: UtilsModule, private fetchDataService: FetchDataService, private renderer: Renderer2) {
+  constructor(private fb: FormBuilder, private cookies: CookieService,private userService:UserServiceService, private router: Router, private userData: UserDataService, private route: ActivatedRoute, private backendUrls: UtilsModule, private fetchDataService: FetchDataService, private renderer: Renderer2) {
     this.loginForm = fb.group(
       {
         email: fb.control('', [Validators.required, Validators.email]),
@@ -79,6 +80,11 @@ export class LoginComponent {
       this.fetchDataService.subject.next(data.firstName);
       this.cookies.set('userToken', data.token)
       this.cookies.set('userName', data.firstName)
+      let response=await this.userService.SubscribingValue('GoToPayment');
+      if(response){
+        this.router.navigate(['/cart/billing']);
+        return;
+      }
       this.router.navigate(['/']);
 
     }

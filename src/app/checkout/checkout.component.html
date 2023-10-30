@@ -47,9 +47,9 @@
         
             <div class="total d-flex justify-content-md-between">
                 <p>Total</p>
-                <p>₹{{cart.amounts.total-cart.amounts.savings | number : '1.0-2'}}</p>
+                <p>₹{{cart.amounts.total | number : '1.0-2'}}</p>
             </div>
-            <button  *ngIf="!CouponApplied" class="btn-primary apply__coupon d-flex align-item-center justify-content-center" (click)="CouponOpener()">
+            <button  *ngIf="(!CouponApplied && !(BillingPageVisited))" class="btn-primary apply__coupon d-flex align-item-center justify-content-center" (click)="CouponOpener()">
               
                 Apply Coupons
                 <span class="material-symbols-outlined">
@@ -58,22 +58,24 @@
                
             </button>
 
-            <button *ngIf="CouponApplied" class="d-flex justify-content-md-between">
+            <button *ngIf="CouponApplied && (!BillingPageVisited)" class="d-flex justify-content-md-between">
                 <span>
                 {{CouponApplied.couponcode}}
             </span>
                 <span (click)="RemoveAppliedCoupon()">Remove</span>
             </button>
             <!-- (click)="CreateOrder()" -->
-            <button class="btn-primary" (click)="createOrder()"><a>Proceed to Payment</a></button>
+            <button class="btn-primary" (click)="verifyOrderSummary()" *ngIf="!BillingPageVisited"><a>Proceed to Checkout</a></button>
+            <button class="btn-primary" (click)="ProceedToPayment()" *ngIf="BillingPageVisited"><a>Proceed to Payment</a></button>
+      
         </div>
     </div>
     
-    <div class="fixed-checkout">
+    <!-- <div class="fixed-checkout">
         <div class="fix-total">
             <p class="subtotal" >Subtotal : ₹{{cart.amounts.subTotal}}</p>
             
-            <p class="total fw-500">Total : ₹{{(cart.amounts.total)-(cart.amounts.savings)}}</p>
+            <p class="total fw-500">Total : ₹{{(cart.amounts.total)}}</p> 
         </div>
         <div class="items">
              <p>Items : <span>{{cartCount}}<span *ngIf="cartCount>1"></span>
@@ -92,7 +94,7 @@
         <div class="next2">
             <button class="btn-primary" (click)="scrollToOrders()">Next</button>
         </div>
-    </div>
+    </div> -->
 </div>
 
 <!-- when cart count is zero -->
@@ -164,6 +166,7 @@
                     <li>Coupon Can be valid only once per user</li>
                     <li>Coupon is valid till {{DateParser(coupon.endDate)}}
                     </li>
+                    <li>Maximum Discount You can get is {{coupon.maximumDiscount}}</li>
                    </ul>
                 </div>
 

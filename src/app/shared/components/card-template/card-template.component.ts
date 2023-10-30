@@ -61,7 +61,7 @@ export class CardTemplateComponent {
     const cartItem = {
       sku: this.product.sku,
     }
-    this.sideCartService.toggleSidecart(true); 
+    // this.sideCartService.toggleSidecart(true); 
     this.cartService.addToCart(cartItem);
   }
 

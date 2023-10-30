@@ -71,17 +71,24 @@ export class FetchDataService {
 
   httpPost(url: any, body: any) {
 
+
     return new Promise((res, rej) => {
       this.http.post(url, body).subscribe({
         next: (data) => {
           console.log('DATA INSIDE NE', data);
 
+<<<<<<< Updated upstream
           res(data);
+=======
+            res(data);
+          // console.log(data, "ervice data");
+
+>>>>>>> Stashed changes
 
         }, error: (error) => {
 
           rej(error)
-          console.log('ERROR IS ',error);
+
           
           if (error.message) {
             const data = { title: error.error.message };

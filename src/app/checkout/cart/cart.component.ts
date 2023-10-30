@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 import { CartService } from 'src/app/shared/services/cart.service';
+import { UserServiceService } from 'src/app/shared/services/user-service.service';
 
 @Component({
   selector: 'app-cart',
@@ -10,10 +12,12 @@ import { CartService } from 'src/app/shared/services/cart.service';
 
 export class CartComponent implements OnInit {
 
-  constructor(private cartService: CartService, private cookie: CookieService) { }
+  constructor(private cartService: CartService, private cookie: CookieService,private router:Router,private userService:UserServiceService) {
+    this.userService.PaymentUrlVisited.next(false);
+   }
   cartArr: any[] = [];
   userToken: any = this.cookie.get("userToken");
-
+  direction:any='right';
   ngOnInit() {
     this.cartService.fetchCart("details").subscribe((data) => {
       this.cartArr = data;
@@ -64,5 +68,20 @@ export class CartComponent implements OnInit {
     }
 
     this.cartService.updateCart(cartItem);
+  }
+
+  async ProceedCheckOut(){
+    const checkToken=this.cookie.get('userToken');
+    console.log('chcektoken is ',checkToken);
+    if(!checkToken){
+      await this.userService.emittingValue('GoToPayment',1);
+      this.router.navigate(['/auth/login']);
+    }
+    
+    this.cartService.fetchCart().subscribe((data)=>{
+      console.log('cart coming is ',data);
+      
+    })
+    
   }
 }
