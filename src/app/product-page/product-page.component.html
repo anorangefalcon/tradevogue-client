@@ -18,10 +18,13 @@
                     </ng-template>
                 </owl-carousel-o>
                 <button *ngIf="!productSku" class=" wishlist-btn d-flex align-item-center absolute"
-                    (click)="addToWishlist()" [ngClass]="{'wishlisted' : isWishlisted}">
-                    <span class="material-symbols-outlined">
-                        favorite
-                    </span>
+                    (click)="chooseWishlist()" [ngClass]="{'wishlisted' : isWishlisted}">
+                    <button class=" wishlist-btn d-flex align-item-center absolute" (click)="chooseWishlist()"
+                        [ngClass]="{'wishlisted' : isWishlisted}">
+                        <span class="material-symbols-outlined">
+                            favorite
+                        </span>
+                    </button>
                 </button>
             </div>
             <div class="product-desc">

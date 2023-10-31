@@ -30,13 +30,25 @@
                 <h4>FILTERS</h4>
                 <button class="clear-btn" (click)="clearAll()">Reset</button>
             </div>
+            <div class="types">
+                <div class="d-flex flex-column gap-10">
+                    <p>Gender</p>
+                    <div class="d-flex flex-column gap-10">
+                        <div class="d-flex gap-10" *ngFor="let gender of genders">
+                            <input type="checkbox" [name]="gender" [value]="gender"
+                                (change)="onChecked($event, 'gender')" id={{gender}} class="checkboxes"
+                                [checked]="isValueSelected(gender, filterApplied['gender'])">
+                            <label [for]="gender" class="capital">{{ gender}}</label>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
 
             <div *ngFor="let filter of uniqueData | keyvalue " class="types">
                 <div class="d-flex flex-column gap-10">
                     <p>{{filter.key | titlecase}}</p>
-
-
-                    <!--    [checked]="isValueSelected(value,filterApplied[filter.key])" -->
                     <div *ngFor="let value of filter.value | slice:0:3; let i = index" class="d-flex gap-10 ">
 
                         <input type="checkbox" [name]="filter.key" [value]="value"
@@ -87,7 +99,7 @@
                     </div>
                 </div>
             </div>
-            <div class="types">
+            <!-- <div class="types">
                 <div class="category d-flex flex-column gap-10">
                     <p>Colors</p>
                     <div class="colors-opt d-flex gap-10 flex-wrap">
@@ -96,7 +108,8 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> -->
+            
             <!-- <div class="types">
                 <div class="category d-flex flex-column gap-10">
                     <p>Size</p>
@@ -114,10 +127,10 @@
                     <!-- <app-custom-select [_id]="'colors'" [options]="colors" [selectedOption]="'Select Colors'"
                     [type]="'multiSelect'" (SelectedList)="onAdd($event, 'colors')"></app-custom-select> -->
                     <app-custom-select [_id]="'sizes'" [options]="sizes" [selectedOption]="'Select Sizes'"
-                    [type]="'multiSelect'" (SelectedList)="onAdd($event, 'size')"></app-custom-select>
+                        [type]="'multiSelect'" (SelectedList)="onAdd($event, 'size')"></app-custom-select>
 
                     <app-custom-select [_id]="'sort'" [options]="sorting.titles" [selectedOption]="'Sort By'"
-                     (final_option)="onAdd($event, 'sort')"></app-custom-select>
+                        (final_option)="onAdd($event, 'sort')"></app-custom-select>
                 </div>
                 <div>
                 </div>
@@ -125,10 +138,24 @@
             <div class="d-flex flex-column cards">
                 <div class="tags-inside d-flex flex-row gap-10">
                     <span class="d-flex gap-10" *ngFor="let filter of filterApplied | keyvalue">
-                        <div *ngIf="isString(filter.value)">
-                            <!-- {{val}} -->
-                            <div class="d-flex tags align-item-center justify-content-center ">
-                                <p>{{filter.value}}</p>
+
+                        <div *ngIf="filter.key !== 'sort' && filter.key !== 'size'">
+                            <div *ngIf="isString(filter.value)">
+                                <div class="d-flex tags align-item-center justify-content-center ">
+                                    <p>{{filter.value}}</p>
+                                    <a class="d-flex justify-content-center align-item-center">
+                                        <span class="material-symbols-outlined pointer"
+                                            (click)="onRemove($event, filter.key)">
+                                            close
+                                        </span>
+                                    </a>
+                                </div>
+                            </div>
+
+                            <div class="d-flex gap-10 tags align-item-center justify-content-center "
+                                *ngFor="let val of filter.value  ">
+                                <!-- {{val}} -->
+                                <p>{{val}}</p>
                                 <a class="d-flex justify-content-center align-item-center">
                                     <span class="material-symbols-outlined pointer"
                                         (click)="onRemove($event, filter.key)">
@@ -136,17 +163,7 @@
                                     </span>
                                 </a>
                             </div>
-                        </div>
 
-                        <div class="d-flex gap-10 tags align-item-center justify-content-center "
-                            *ngFor="let val of filter.value  ">
-                            <!-- {{val}} -->
-                            <p>{{val}}</p>
-                            <a class="d-flex justify-content-center align-item-center">
-                                <span class="material-symbols-outlined pointer" (click)="onRemove($event, filter.key)">
-                                    close
-                                </span>
-                            </a>
                         </div>
                     </span>
                 </div>

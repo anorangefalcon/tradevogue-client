@@ -75,8 +75,14 @@ export class UtilsModule {
 
     // pagination common
     getPaginatedData: 'http://localhost:1000/user/getPaginatedData',
+
     //wishlists
     showWishlist : 'http://localhost:1000/wishlist/showWishlist',
+    addNewWishlist : 'http://localhost:1000/wishlist/addWishlist',
+    addToWishlist : 'http://localhost:1000/wishlist/addToWishlist',
+    showWishlistCount : 'http://localhost:1000/wishlist/showWishlistCount',
+    showProducts : 'http://localhost:1000/wishlist/showWishlistProducts',
+    deleteFromWishlist : 'http://localhost:1000/wishlist/deleteFromWishlist',
 
     // ORDERS
     verifyOrderSummary:'http://localhost:1000/orders/verifyOrderSummary',

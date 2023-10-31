@@ -1,78 +1,68 @@
-.wishlist-outer {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    z-index: 10;
-    background-color: rgb(255, 255, 255, 0.1);
-    backdrop-filter: blur(0.5px);
-    transition: all 0.3s ease-in-out;
+.text {
+    margin-block-start: 7px;
+    opacity: 0.8;
+    padding-inline-start: 20px;
+    width: 240px;
 }
-.wishlist-list {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    padding: 15px;
-    width: 350px;
-    border-radius: 4px;
-    z-index: 10;
+input[type="radio"]{
+    display: none;
+}
+label {
+    padding-block: 5px;
+    padding-inline-start: 20px;
+}
+label p {
+    font-size: 16px !important;
+    font-weight: 500;
+}
+label:hover {
     background-color: rgb(var(--gray));
+}
+.add-btn {
+    background-color: transparent;
+    padding: 0;
+    font-weight: 400;
+    opacity: 0.7;
 
-    & input[type="radio"] {
-        display: none;
+    & span {
+        font-size: 18px;
     }
+}
+input[type="text"] {
+    width: 240px;
+    height: 40px;
+    padding-inline: 15px;
+    border-radius: 8px;
+    border: 1px solid transparent;
+    background-color: #f5f5f5cf;
+    font-size: 14px;
+    outline: none;
+}
 
-    & p {
-        font-size: 18px !important;
-    }
-    & .close-btn {
-        top: -10px;
-        right: -10px;
-       
-
-        & .close {
-            font-size: 18px;
-            background-color: rgb(var(--whiteClr), 0.7);
-            border-radius: 50%;
-            padding: 2px;
-        }
-    }
-    /* & .wishlist-name::before {
-        content: "";
-        position: absolute;
-        width: 18px;
-        height: 18px;
-        border-radius: 50%;
-        border: 1px solid rgb(var(--blackClr), 0.8);
-        background-color: white;
-        bottom: 2px;
-        left: 0px;
-    }
-
-    & .wishlist-name::after {
-        content: "";
-        position: absolute;
-        height: 10px;
-        width: 10px;
-        background-color: white;
-        border-radius: 50%;
-        left: 4px;
-        bottom: 6px;
-    } */
-
-    & input[type="radio"]:checked+.wishlist-name::before {
-        background-color: red;
-    }
-    & button {
-        padding: 0;
-        background-color: transparent;
-    }
-    & .header {
-        border-block-end: 1px solid rgb(var(--blackClr), 0.2);
+::placeholder {
+    color: rgb(var(--textClr), 0.3);
+}
+input[type="text"]:focus {
+    border-color: rgb(var(--textClr), 0.4);
+}
+.create-btn {
+    height: 40px;
+    padding-inline: 15px;
+    border-radius: 6px;
+}
+.add-div{
+    padding-inline: 20px;
+}
+.hide {
+    display: none;
+}
+.drawer {
+    & .drawer__content {
+        padding-inline: 0;
         padding-block-end: 10px;
-        margin-block-end: 10px;
+    }
+    & .drawer__header {
+        box-shadow: none;
     }
 
 }

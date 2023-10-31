@@ -16,7 +16,7 @@ import { UserServiceService } from 'src/app/shared/services/user-service.service
 })
 export class LoginComponent {
 
-  
+
   loginForm: FormGroup;
   forgetPasswordForm: FormGroup;
   passwordFieldType: string = 'password';
@@ -25,7 +25,7 @@ export class LoginComponent {
   isactive: boolean = false;
   script: any;
 
-  constructor(private fb: FormBuilder, private cookies: CookieService,private userService:UserServiceService, private router: Router, private userData: UserDataService, private route: ActivatedRoute, private backendUrls: UtilsModule, private fetchDataService: FetchDataService, private renderer: Renderer2) {
+  constructor(private fb: FormBuilder, private userService: UserServiceService, private cookies: CookieService, private router: Router, private userData: UserDataService, private route: ActivatedRoute, private backendUrls: UtilsModule, private fetchDataService: FetchDataService, private renderer: Renderer2) {
     this.loginForm = fb.group(
       {
         email: fb.control('', [Validators.required, Validators.email]),
@@ -40,22 +40,15 @@ export class LoginComponent {
 
     // Google login
     window.addEventListener('loginEvent', async (event: any) => {
-      try {
-        const token = { credential: event.detail.credential }
-        const body = { token };
-       
+      const token = { credential: event.detail.credential }
+      const body = { token };
 
-        let data: any = await this.fetchDataService.httpPost(this.backendUrls.URLs.loginUrl, body);
-  
-
+      this.userService.loginUser(body).subscribe((data: any) => {
         this.cookies.set('userToken', data.token)
         this.cookies.set('userName', data.firstName)
-
         this.router.navigate(['/']);
+      });
 
-      } catch (error) {
-
-      }
 
     })
   }
@@ -69,28 +62,44 @@ export class LoginComponent {
   }
 
   async onLogin() {
-    try {
+    // try {
 
-      const body = {
-        email: this.loginForm.get('email')?.value,
-        password: this.loginForm.get('password')?.value
-      }
-      const data: any = await this.fetchDataService.httpPost(this.backendUrls.URLs.loginUrl, body)
-
-      this.fetchDataService.subject.next(data.firstName);
-      this.cookies.set('userToken', data.token)
-      this.cookies.set('userName', data.firstName)
-      let response=await this.userService.SubscribingValue('GoToPayment');
-      if(response){
-        this.router.navigate(['/cart/billing']);
-        return;
-      }
-      this.router.navigate(['/']);
-
+    const body = {
+      email: this.loginForm.get('email')?.value,
+      password: this.loginForm.get('password')?.value
     }
-    catch (error) {
-      console.log("Error in Logging In: ", error);
-    }
+    //   const data: any = await this.fetchDataService.httpPost(this.backendUrls.URLs.loginUrl, body)
+
+    //   this.fetchDataService.subject.next(data.firstName);
+    //   this.cookies.set('userToken', data.token)
+    //   this.cookies.set('userName', data.firstName)
+    //   // this.
+    //   this.router.navigate(['/']);
+
+    // }
+    // catch (error) {
+    //   console.log("Error in Logging In: ", error);
+    // }
+
+    this.fetchDataService.HTTPPOST(this.backendUrls.URLs.loginUrl, body).subscribe(
+      (data: any) => {
+        this.fetchDataService.subject.next(data.firstName);
+        this.cookies.set('userToken', data.token)
+        this.cookies.set('userName', data.firstName)
+        this.router.navigate(['/']);
+      }
+    )
+
+      // this.fetchDataService.subject.next(data.firstName);
+      // this.cookies.set('userToken', data.token)
+      // this.cookies.set('userName', data.firstName)
+      // let response=await this.userService.SubscribingValue('GoToPayment');
+      // if(response){
+      //   this.router.navigate(['/cart/billing']);
+      //   return;
+      // }
+      // this.router.navigate(['/']);
+
   }
 
   async onResetPassword() {
@@ -98,9 +107,15 @@ export class LoginComponent {
       const body = {
         email: this.forgetPasswordForm.get('passwordEmail')?.value
       }
-      const data = await this.fetchDataService.httpPost(this.backendUrls.URLs.forgetPasswordUrl, body);
-      console.log(data, "forget password data");
-      this.isactive = true;
+      this.fetchDataService.HTTPPOST(this.backendUrls.URLs.forgetPasswordUrl, body).subscribe(
+        (data: any) => {
+          console.log(data, "forget password data");
+          this.isactive = true;
+        }
+      )
+      // const data = await this.fetchDataService.httpPost(this.backendUrls.URLs.forgetPasswordUrl, body);
+      // console.log(data, "forget password data");
+      // this.isactive = true;
 
     }
     catch (error) {

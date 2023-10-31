@@ -2,7 +2,10 @@ import { Component, HostListener, OnInit } from '@angular/core';
 import { CartService } from '../../services/cart.service';
 import { CookieService } from 'ngx-cookie-service';
 import { FetchDataService } from '../../services/fetch-data.service';
-import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { NavigationEnd, Router } from '@angular/router';
+import { WishlistService } from '../../services/wishlist.service';
+import { UtilsModule } from 'src/app/utils/utils.module';
+
 // declare var doSignout:any;
 @Component({
   selector: 'app-navbar',
@@ -16,6 +19,7 @@ export class NavbarComponent implements OnInit {
   hamburgerOpen: boolean = false;
   purchaser: any = 'User';
   cart_count: number = 0;
+  wishlistCount : number = 0;
 
   cartArr: any[] = [];
   navbar_scroll_style: boolean = false;
@@ -25,9 +29,9 @@ export class NavbarComponent implements OnInit {
     women: []
   }
 
-  constructor(private cartService: CartService, private cookie: CookieService, private fetchDataService: FetchDataService, private router: Router) { }
+constructor(private cartService: CartService, private cookie: CookieService, private fetchDataService: FetchDataService, private router: Router, private wishlistService : WishlistService, private utils: UtilsModule) { }
 
-  ngOnInit() {
+async ngOnInit() {
 
     this.purchaser = this.cookie.get('userName');
     const isUser = this.cookie.get("userToken")
@@ -35,9 +39,20 @@ export class NavbarComponent implements OnInit {
       this.isUserLogin = true;
     }
 
+    // this.wishlistService.wis((data: any)=> {
+    //   console.log(data, "navbardTA");
+      
+    // })
+
+
     this.cartService.fetchCart('count').subscribe((item_count: any) => {
       this.cart_count = item_count;
     })
+
+
+
+
+    
 
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
@@ -53,15 +68,10 @@ export class NavbarComponent implements OnInit {
     const body = {
       parameter: "mix"
     }
-    // console.log("hi"
-    // );
-
+  
     this.fetchDataService.getUniqueProductFields(body).subscribe((data: any) => {
-      console.log(data, "uniqe data navbar");
-
-      // this.categories.men = data.data.male.category;
-      // this.categories.women = data.data.female.category;
-      // console.log(this.categories);
+      // console.log(data, "navbar data");
+     
 
     })
 

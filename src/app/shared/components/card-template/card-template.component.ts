@@ -16,7 +16,7 @@ export class CardTemplateComponent {
   showPopup: boolean = false;
 
 
-  constructor(private cartService: CartService, private fetchdata: FetchDataService, private popupService: PopupService, private wishlist : WishlistService) { }
+  constructor(private cartService: CartService, private fetchdata: FetchDataService, private popupService: PopupService, private wishlistService : WishlistService) { }
 
   avgRating: number = 0;
   productData: any = [];
@@ -52,8 +52,9 @@ export class CardTemplateComponent {
     return Array(newTotal).fill(0);
   }
 
-  async addToWishlist() {
-    this.wishlist.showWishlist();
+  async chooseWishlist() {
+    this.wishlistService.chooseWishlist(this.product);
+    
   }
   
   addToCart(){

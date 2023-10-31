@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { ToastService } from './toast.service';
-import { Observable, Subject, filter, map, tap, BehaviorSubject } from 'rxjs';
+import { Observable, Subject, filter, map, tap, BehaviorSubject, catchError } from 'rxjs';
 import { UtilsModule } from 'src/app/utils/utils.module';
 import { ActivatedRoute } from '@angular/router';
 
@@ -44,7 +44,7 @@ export class FetchDataService {
   getProductDetails(sku: any) {
     let params = new HttpParams();
     params = params.set("sku", sku);
-    console.log('sky called by ----->');
+    // console.log('sky called by ----->');
     
     return this.http.get(this.backendUrls.URLs.fetchProductUrl, { params })
   }
@@ -95,13 +95,30 @@ export class FetchDataService {
     })
   }
 
+ 
+
+  HTTPGET(url:any,data:any='',field:any=''){ 
+    let params;
+    if(params){
+      params = new HttpParams();
+      params = params.set(field, data);
+    }
+    return this.http.get(url,{params});
+
+    // return this.http.get(url);
+  }
+
+  HTTPPOST(url:any,body: any){
+    return this.http.post(url,body);
+  }
+
+
   httpGet(url: any, data: any = null) {
     let params = new HttpParams();
 
     if(data){
       params = params.set("data", data);
     }
-
     return new Promise((res, rej) => {
       this.http.get(url, {params}).subscribe({
         next: (data) => {

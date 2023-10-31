@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+ import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FetchDataService } from '../shared/services/fetch-data.service';
 import { CartService } from '../shared/services/cart.service';
@@ -39,7 +39,7 @@ export class ProductPageComponent implements OnInit {
     private route: ActivatedRoute,
     private fetchService: FetchDataService,
     private cartService: CartService,
-    private wishlist: WishlistService,
+    private wishlistService: WishlistService,
     private reviewService: ReviewService,
     private fb: FormBuilder,
     private toastService: ToastService) {
@@ -103,8 +103,8 @@ export class ProductPageComponent implements OnInit {
     this.cartService.addToCart(cartItem);
   }
 
-  async addToWishlist() {
-    this.wishlist.showWishlist();
+  chooseWishlist() {
+    this.wishlistService.chooseWishlist(this.data);
   }
 
   LabelClicked(event: any) {

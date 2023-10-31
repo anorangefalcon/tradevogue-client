@@ -19,8 +19,8 @@ export class ForgetPasswordComponent {
   showPassword: boolean = false;
   showPassword2: boolean = false;
   token: string = "";
-  
-  constructor(private fb: FormBuilder, private router: Router, private backendUrls: UtilsModule, private fetchDataService: FetchDataService, private toastservice : ToastService) {
+
+  constructor(private fb: FormBuilder, private router: Router, private backendUrls: UtilsModule, private fetchDataService: FetchDataService, private toastservice: ToastService) {
     this.resetPasswordForm = fb.group({
       password: fb.control('', [Validators.required, passwordStrengthValidator]),
       confirmPassword: fb.control('', [Validators.required, passwordStrengthValidator])
@@ -33,7 +33,7 @@ export class ForgetPasswordComponent {
   async ngOnInit() {
     this.token = this.router.url.split('/')[3];
     // try {
-     
+
 
     //   const body = {
     //     tokenData: this.token
@@ -57,28 +57,30 @@ export class ForgetPasswordComponent {
     }
   }
   async onReset() {
-    console.log(this.resetPasswordForm.value)
+    // console.log(this.resetPasswordForm.value)
 
-    try {
-      const body = {
-        password: this.resetPasswordForm.get('password')?.value,
-        tokenData: this.token
-      }
-     
-      const data: any = await this.fetchDataService.httpPost(this.backendUrls.URLs.updatePasswordUrl, body);
-      console.log(data, "update data");
-      const toastData = {
-        title : data.message
-      }
-      this.toastservice.successToast(toastData)
-      setTimeout(() => {
-        this.router.navigate(['/auth/login'])
-      }, 5000);
+    // try {
+    const body = {
+      password: this.resetPasswordForm.get('password')?.value,
+      tokenData: this.token
     }
-    catch (error) {
-      console.log("Error in Update Password: ", error);
 
-    }
+    // const data: any = await this.fetchDataService.httpPost(this.backendUrls.URLs.updatePasswordUrl, body);
+
+    this.fetchDataService.HTTPPOST(this.backendUrls.URLs.updatePasswordUrl, body).subscribe(
+      (data: any) => {
+        console.log(data, "update data");
+        const toastData = {
+          title: data.message
+        }
+        this.toastservice.successToast(toastData)
+        setTimeout(() => {
+          this.router.navigate(['/auth/login'])
+        }, 5000);
+      })
+
   }
+
+
 
 }

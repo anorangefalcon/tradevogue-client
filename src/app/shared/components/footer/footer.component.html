@@ -43,22 +43,12 @@
                 <div class="footer-col d-flex flex-column gap-30">
                     <h4 >TOP CATEGORIES</h4>
                     <ul class="d-flex flex-column gap-20">
-                        <li>
-                            <a routerLink="/explore">T-shirts</a>
-                        </li>
-                        <li>
-                            <a routerLink="/explore">Shirts</a>
-                        </li>
-                        <li>
-                            <a routerLink="/explore">Cargos</a>
-                        </li>
-                        <li>
-                            <a routerLink="/explore">Shorts</a>
-                        </li>
-                        <li>
-                            <a routerLink="/explore">Tops</a>
-                        </li>
-
+                        <ng-container *ngFor="let category of categories">
+                            <li>
+                                <a [routerLink]="['/explore']" [queryParams]="{category: category}">
+                                    {{category | titlecase}}</a>
+                            </li>
+                        </ng-container>
                     </ul>
                 </div>
                 <div class="footer-col d-flex flex-column gap-30">
@@ -91,12 +81,6 @@
                         <li>
                             <a routerLink="/faq">FAQs</a>
                         </li>
-                        <!-- <li>
-                            <a href="#">Blogs</a>
-                        </li> -->
-                        <!-- <li>
-                            <a href="#">Return Policy</a>
-                        </li> -->
                     </ul>
                 </div>
                 <div class="footer-col d-flex flex-column gap-30">
@@ -111,15 +95,6 @@
                         <li>
                             <a routerLink="/usersetting" (click)="show('orders')">Orders</a>
                         </li>
-                        <!-- <li>
-                            <a href="/t&c#payment" (click)="onPayment()">Payment Policy</a>
-                        </li> -->
-                        <!-- <li>
-                            <a href="#">Return Policy</a>
-                        </li> -->
-                        <!-- <li>
-                            <a href="#">Shipping Policy</a>
-                        </li> -->
                     </ul>
                 </div>
                
@@ -249,21 +224,12 @@
             <div class="section d-flex flex-column gap-5">
                 <h5 class="subtitle">TOP CATEGORIES</h5>
                 <ul class="d-flex gap-10 list">
-                    <li>
-                        <a  routerLink="/explore">T-shirts</a>
-                    </li>
-                    <li>
-                        <a routerLink="/explore">Shirts</a>
-                    </li>
-                    <li>
-                        <a  routerLink="/explore">Cargos</a>
-                    </li>
-                    <li>
-                        <a  routerLink="/explore">Shorts</a>
-                    </li>
-                    <li>
-                        <a  routerLink="/explore">Tops</a>
-                    </li>
+                    <ng-container *ngFor="let category of categories">
+                        <li>
+                            <a [routerLink]="['/explore']" [queryParams]="{category: category}">
+                                {{category | titlecase}}</a>
+                        </li>
+                    </ng-container>
                 </ul>
             </div>
             <div class="section d-flex flex-column gap-5">

@@ -32,6 +32,7 @@ export class ExploreComponent {
     titles:  ["Fresh Arrivals", "Highest Rated", "Price: High to Low", "Price: Low to High"],
     value: ['createdAt:-1','avgRating:-1', 'price:-1', 'price:1']
   }
+  genders : string[] = ['Male', 'Female'];
  
   constructor(private fetchData: FetchDataService, private route: ActivatedRoute, private location: Location) { }
 
@@ -94,6 +95,8 @@ export class ExploreComponent {
   }
 
   onChecked(event: any, field: string) {
+    console.log(event, field, "gender aaya?");
+    
     const value = field === 'price' ? Number(event.target.value) : event.target.value;
     if (event.target.checked) {
       if (this.filterApplied.hasOwnProperty(field)) {
@@ -191,6 +194,8 @@ export class ExploreComponent {
     console.log(this.filterApplied, 'ok');
     
 
+    console.log(this.filterApplied, "final filterrrr");
+    
     const finalURL = '/explore' + '?' + param.toString();
     this.location.replaceState(finalURL);
 

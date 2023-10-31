@@ -22,7 +22,7 @@
 
 .drawer__content {
     padding-inline: 24px;
-    height: calc(100vh - 60px);
+    /* height: calc(100vh - 60px); */
 }
 
 .show {
@@ -80,4 +80,16 @@
 
 .left_show {
     transform: translate(0, 0);
+}
+.popup {
+    width: 350px;
+    height: fit-content;
+    left:50%;
+    transform: translate(-50%,-100%);
+    border-radius: 8px;
+    /* padding-inline: 0; */
+    /* padding-block: 10px; */
+}
+.popup_show {
+    transform: translate(-50%,100%);
 }

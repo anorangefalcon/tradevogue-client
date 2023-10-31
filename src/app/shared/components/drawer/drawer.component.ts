@@ -55,6 +55,10 @@ if(this.ParenClosed) {this.CloseWrapper(); return;}
     else if(this.direction == 'right'){
       this.translate='translateRight';
     }
+
+    else if(this.direction == 'popup'){
+      this.translate='popup_show';
+    }
   }
 
   // this.userService.DrawerClose.asObservable().subscribe((data)=>{

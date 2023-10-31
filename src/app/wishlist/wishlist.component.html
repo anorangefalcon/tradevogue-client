@@ -1,25 +1,27 @@
-<app-drawer [direction]="direction" [show]="show">
-    <div class="wishlist-list d-flex flex-column gap-10 absolute">
-        <div class="d-flex justify-content-md-between align-item-center header">
-            <h3 *ngIf="name">New Wishlist</h3>
-            <button class="d-flex align-item-center">
-                <span class="material-symbols-outlined">
-                    add
-                </span>
-            </button>
-        </div>
-        <div class="d-flex flex-column gap-5">
-            <button (click)="Close()" class="absolute close-btn">
-                <span class="material-symbols-outlined close">
-                    close
-                </span>
-            </button>
+<div class="drawer">
+    <app-drawer [direction]="direction" [show]="show" (showChange)="handler($event)">
+        <div class="d-flex flex-column gap-20">
+            <p class="text">Wishlist {{productName}} to...</p>
+            <div class="d-flex flex-column radios">
                 <div *ngFor="let item of list; let i = index">
-                    <label class="d-flex gap-20 justify-content-md-between" for="{{i}}">
-                        <input type="radio" name="{{item}}" id="{{i}}" value="{{item}}">
+                    <label class="d-flex gap-20 pointer" for="{{i}}">
+                        <input type="radio" name="wishlist" id="{{i}}" value="{{item}}" (click)="addToWishlist(item)" >
                         <p class="wishlist-name relative">{{item}}</p>
                     </label>
                 </div>
-         </div>
-    </div>
-</app-drawer>
+            </div>
+            <div class="d-flex justify-content-center align-item-center click-div" *ngIf="!showTextField">
+                <button class="d-flex align-item-center gap-5 justify-content-center add-btn" (click)="showTextField=true">
+                    <span class="material-symbols-outlined">
+                        add
+                    </span>
+                    Add New Wishlist
+                </button>
+            </div>
+            <div class="d-flex justify-content-md-between add-div" *ngIf="showTextField==true">
+                <input type="text" [(ngModel)]="selectedWishlist" placeholder="Create new wishlist">
+                <button class="btn-primary create-btn d-flex justify-content-center align-item-center" (click)="addNewWishlist()" [disabled]="selectedWishlist==''">Add</button>
+            </div> 
+        </div>
+    </app-drawer>
+</div>
