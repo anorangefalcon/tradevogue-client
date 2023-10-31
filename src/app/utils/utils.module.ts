@@ -95,6 +95,13 @@ export class UtilsModule {
     deleteSupportTicket: 'http://localhost:1000/admin/deleteSupportTicket',
     ticketMail: 'http://localhost:1000/ticketStatus',
     webPushDetail: 'http://localhost:1000/user/webPushDetails',
+
+    // ------ custom-UI ------
+
+    // Socials:
+    setSocials: 'http://localhost:1000/socials/set',
+    getSocials: 'http://localhost:1000/socials/get'
+    
   }
 }
 

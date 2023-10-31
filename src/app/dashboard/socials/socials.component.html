@@ -1,24 +1,88 @@
-<form [formGroup]="socialsForm" (ngSubmit)="onSubmit()">
-    <div>
-      <label for="facebookLink">Facebook Profile Link:</label>
-      <input type="text" id="facebookLink" formControlName="facebookLink" />
-    </div>
-  
-    <div>
-      <label for="whatsappNumber">WhatsApp Number:</label>
-      <input type="text" id="whatsappNumber" formControlName="whatsappNumber" />
-    </div>
-  
-    <div>
-        <label for="instagramLink">Instagram Profile Link:</label>
-        <input type="text" id="instagramLink" formControlName="instagramLink" />
+<div class="d-flex flex-column gap-20">
 
-        <label for="accountID">Account ID:</label>
-        <input type="text" id="accountID" formControlName="accountID" />
 
-        <label for="accessToken">Access Token:</label>
-        <input type="text" id="accessToken" formControlName="accessToken" />
+  <div class="form__card__head d-flex justify-content-md-between align-item-center">
+    <h3>Social Info</h3>
+    <div class="operation_button d-flex gap-10">
+      <button class="btn-primary" [ngStyle]="{'display': !socialsForm.disabled? 'none': 'block'}"
+        (click)="socialsForm.enable()">Edit</button>
+      <button class="btn-secondary" [ngStyle]="{'display': socialsForm.disabled? 'none': 'block'}"
+        (click)="socialsForm.disable()">Cancel</button>
+      <button class="btn-primary" [ngStyle]="{'display': socialsForm.disabled? 'none': 'block'}"
+        (click)="onSubmit()">Update</button>
+    </div>
+  </div>
+
+  <form [formGroup]="socialsForm" class="form__card second_card d-flex flex-wrap gap-20 justify-content-center">
+    <div class="internal-div">
+      <label class="form__title" for="email">E-Mail</label>
+      <input class="form__input" type="text" id="email" formControlName="email" />
     </div>
 
-    <button type="submit" [disabled]="socialsForm.invalid">Submit</button>
+    <div class="internal-div">
+      <label class="form__title" for="address">Address</label>
+      <input class="form__input" type="text" id="address" formControlName="address" />
+    </div>
+
+    <div class="internal-div">
+      <label class="form__title" for="mobile">Mobile Number</label>
+      <input class="form__input" type="text" id="mobile" formControlName="mobile" />
+    </div>
+
+    <div class="internal-div">
+      <label class="form__title" for="facebook">Facebook Profile Link</label>
+      <input class="form__input" type="text" id="facebook" formControlName="facebook" />
+    </div>
+
+    <div class="internal-div">
+      <label class="form__title" for="whatsapp">WhatsApp Number</label>
+      <input class="form__input" type="text" id="whatsapp" formControlName="whatsapp" />
+    </div>
+
+    <div class="internal-div">
+      <label class="form__title" for="instagramLink">Instagram Profile Link</label>
+      <input class="form__input" type="text" id="instagramLink" formControlName="instagramLink" />
+    </div>
+
+
+    <div class="dynamic_gallery d-flex flex-wrap gap-20 justify-content-center">
+
+      <div class="gallery-title d-flex align-item-center">
+        <h4>
+          Instagram Gallery
+        </h4>
+        <div class="tooltip d-flex align-item-center">
+          <span class="info-icon pointer material-symbols-outlined" (click)="show = true">
+            info
+          </span>
+          <span class="tooltiptext">
+            Preview
+          </span>
+        </div>
+
+        <app-drawer [direction]="'bottom'" [show]="show" (showChange)="ChangeHandler($event)" [title]="'Gallery available at Home Page'">
+            <app-gallery></app-gallery>
+        </app-drawer>
+
+      </div>
+
+      <div class="internal-div">
+        <label class="form__title" for="accountID">Account ID</label>
+        <input class="form__input" type="text" id="accountID" formControlName="accountID" />
+      </div>
+
+      <div class="internal-div">
+        <label class="form__title" for="accessToken">Access Token</label>
+        <input class="form__input" type="text" id="accessToken" formControlName="accessToken" />
+        <a class="documentation d-flex align-item-center" href="https://developers.facebook.com/docs/instagram-basic-display-api/getting-started" target="_blank"><span class="link-icon material-symbols-outlined">
+          link
+          </span>
+          How to obtain ID & Token?</a>
+
+      </div>
+
+    </div>
+
   </form>
+
+</div>

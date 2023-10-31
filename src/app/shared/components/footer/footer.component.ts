@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { RouterLinksService } from '../../services/router-links.service';
 import { Router } from '@angular/router';
+import { SocialsService } from '../../services/custom-UI/socials.service';
 
 
 @Component({
@@ -8,8 +9,18 @@ import { Router } from '@angular/router';
   templateUrl: './footer.component.html',
   styleUrls: ['./footer.component.css']
 })
+
 export class FooterComponent {
-  constructor(private routerService: RouterLinksService, private router: Router) {}
+
+  socialsData! : any;
+
+  constructor(private routerService: RouterLinksService, private router: Router, private socialsService: SocialsService) {}
+
+  ngOnInit(){
+    this.socialsService.getSocials().subscribe((data:any)=>{
+      this.socialsData = data;
+    });
+  }
 
   show(el: any) {
     if (el == 'profile') {

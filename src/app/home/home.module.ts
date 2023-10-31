@@ -35,6 +35,9 @@ const routes: Routes = [
     CarouselModule,
     ReactiveFormsModule,
     RouterModule.forChild(routes),
+  ],
+  exports: [
+    GalleryComponent
   ]
 })
 export class HomeModule { }

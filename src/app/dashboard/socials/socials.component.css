@@ -1,0 +1,78 @@
+.form__card {
+    padding: 25px;
+    border: 1px solid rgb(var(--blackClr), 0.1);
+    background-color: rgb(var(--whiteClr));
+    border-radius: 10px;
+
+    & .internal-div {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        width: calc(50% - 20px);
+    }
+}
+
+.form__card__head {
+    padding: 25px;
+    border: 1px solid rgb(var(--blackClr), 0.1);
+    background-color: rgb(var(--whiteClr));
+    border-radius: 10px;
+}
+
+.second_card{
+    padding-block-end: 40px;
+}
+
+.operation_button button {
+    border: 1px solid;
+    padding: 12px;
+    padding-block: 8px;
+    padding-inline: 18px;
+}
+
+.dynamic_gallery {
+    width: 100%;
+    margin-block-start: 20px;
+
+    & .gallery-title {
+        width: 100%;
+        margin-inline-start: 10px;
+        gap: 2px;
+    }
+
+    & .info-icon{
+        font-weight: 300;
+        font-size: 16px;
+        opacity: 0.8;
+    }
+
+    & .internal-div {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        width: calc(50% - 20px);
+
+        position: relative;
+
+        & .documentation{
+            color: rgb(var(--primaryClr));
+            right: 0;
+            position: absolute;
+            bottom: -24px;
+            font-style: italic;
+            padding-inline-end: 5px;
+            gap: 2px;
+            font-size: 12px;
+            transition: 0.3s ease-in-out;
+
+            & .link-icon{
+                font-size: 12px;
+                transform: rotate(-45deg);
+            }
+
+            &:hover{
+                opacity: 0.8;
+            }
+        }
+    }
+}

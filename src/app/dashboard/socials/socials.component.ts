@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { SocialsService } from 'src/app/shared/services/custom-UI/socials.service';
+import { ToastService } from 'src/app/shared/services/toast.service';
 
 @Component({
   selector: 'app-socials',
@@ -8,26 +10,51 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class SocialsComponent {
   socialsForm!: FormGroup;
-
-  constructor(private fb: FormBuilder) {}
+  show: boolean = false;
+  constructor(private fb: FormBuilder, private toastService: ToastService, private socialsService: SocialsService) { }
 
   ngOnInit() {
     this.socialsForm = this.fb.group({
-      facebookLink: '',
-      whatsappNumber: ['', Validators.pattern(/^\+[1-9]\d{1,14}$/)],
+      email: ['', [Validators.required, Validators.email]],
+      address: '',
+      mobile: ['', Validators.pattern(/^\+[1-9]\d{1,14}$/)],
+      facebook: '',
+      whatsapp: ['', Validators.pattern(/^\+[1-9]\d{1,14}$/)],
       instagramLink: '',
       accountID: '',
       accessToken: ''
     });
+
+    this.socialsService.getSocials().subscribe((data: any) => {
+      console.log(data);
+      
+      this.socialsForm.setValue({
+        email: data.email,
+        mobile: data.mobile,
+        address: data.address,
+        facebook: data.facebook,
+        whatsapp: data.whatsapp,
+        instagramLink: data.instagram.link,
+        accountID: data.instagram.accountID,
+        accessToken: data.instagram.accessToken
+      })
+    });
+
+    this.socialsForm.disable();
   }
 
   onSubmit() {
+    this.socialsService.setSocials(this.socialsForm?.value).subscribe((data: any) => {
+      this.toastService.successToast({
+        title: data.message
+      })
 
-    console.log(this.socialsForm?.value);
+      this.socialsForm.disable();
+    });
   }
-}
 
-// Facebook credentials::
-// Email: business.tradevogue@gmail.com
-// Password:
-// Trade@2023.
+  ChangeHandler(event: boolean){
+    this.show = event;
+  }
+
+}

@@ -49,7 +49,7 @@ export class FetchDataService {
     return this.http.get(this.backendUrls.URLs.fetchProductUrl, { params })
   }
 
-  getProducts(data: any = '') {
+  getProducts(data: any = '', limit: any = '', page: any = '') {
     let params = new HttpParams();
     console.log(data, 'ts');
 
@@ -64,6 +64,10 @@ export class FetchDataService {
         params = params.set(key, data[key]);
       }
     }); 
+
+    if(limit) params = params.set('limit', limit);
+    if(page) params = params.set('page', page);
+
     console.log(" param si ",params);
     
     return this.http.get(this.backendUrls.URLs.fetchProducts, { params });

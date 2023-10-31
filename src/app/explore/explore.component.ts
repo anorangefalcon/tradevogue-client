@@ -1,10 +1,8 @@
 import { Component } from '@angular/core';
-import { ProductsFilterService } from '../shared/services/products-filter.service'
 import { FetchDataService } from '../shared/services/fetch-data.service';
-import { HttpClient, HttpClientModule, HttpParams } from '@angular/common/http';
+import { HttpParams } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
-import { UtilsModule } from './../utils/utils.module';
 
 @Component({
   selector: 'app-explore',
@@ -15,6 +13,10 @@ import { UtilsModule } from './../utils/utils.module';
 export class ExploreComponent {
 
   products: any = [];
+  totalProducts: number = 0;
+  limit: number = 8;
+  pageNumber: number = 1;
+  
   OriginalData: any = [];
   uniqueData: { [field: string]: any[] } = {};
   filters: any[] = [];
@@ -41,8 +43,9 @@ export class ExploreComponent {
 
       let actualParams = (Object.keys(this.filterApplied).length > 0) ? this.filterApplied : JSON.parse(JSON.stringify(data));
 
-      this.fetchData.getProducts(actualParams).subscribe((data: any) => {
-        this.products = data.items        
+      this.fetchData.getProducts(actualParams, this.limit, 1).subscribe((data: any) => {
+        this.products = data.items;      
+        this.totalProducts = data.total;
       });
     });
 
@@ -56,11 +59,13 @@ export class ExploreComponent {
   }
 
   onAdd(event: any, field: string) {
-    console.log(event, field)
+    console.log(event, field);
+    
     if (field == 'sort'){
       let index = this.sorting.titles.findIndex((title: string)=> title == event);
-      this.sorting.value[index]
-      console.log(this.filterApplied[field] = this.sorting.value[index]);
+      this.sorting.value[index]    
+      this.filterApplied[field] = this.sorting.value[index]
+      
     }
     else if(Array.isArray(event)){
       this.filterApplied[field] = event;
@@ -72,6 +77,8 @@ export class ExploreComponent {
     else {
       this.filterApplied[field] = event[0]
     }
+    console.log(this.filterApplied, "when setting params");
+    
     this.setParams()
   }
   
@@ -117,15 +124,11 @@ export class ExploreComponent {
     }
 
     else {
-      //  console.log('hello  ', this.filterApplied[field].splice(event.target.value));
       if (Array.isArray(this.filterApplied[field])) {
-        console.log(" field is  ", field, 'filter object is ', this.filterApplied, " value is ", event.target.value);
 
         let index = this.filterApplied[field].indexOf(event.target.value);
-        console.log('index is ', index,);
 
         this.filterApplied[field].splice(index, 1);
-        console.log('filterApplied intiall y is is ', this.filterApplied);
       }
       else {
         delete this.filterApplied[field];
@@ -139,16 +142,14 @@ export class ExploreComponent {
     let checkboxes: any = document.querySelectorAll('.checkboxes');
     //returns nodelist and type is object
 
-    console.log('checkbox is ', checkboxes, "type is ", typeof (checkboxes));
     checkboxes = Array.from(checkboxes)
 
     checkboxes.forEach(function (checkbox: any) {
       checkbox.checked = false;
     });
 
-    this.fetchData.getProducts({}).subscribe((data: any) => {
+    this.fetchData.getProducts({}, this.limit, 1).subscribe((data: any) => {
       this.products = data.items;
-      console.log(this.products, "proooo");
       this.location.replaceState("/explore");
 
     })
@@ -157,13 +158,10 @@ export class ExploreComponent {
 
   onRemove(event: any, field: any) {
     if (Array.isArray(this.filterApplied[field])) {
-      console.log(" field is  ", field, 'filter object is ', this.filterApplied, " value is ", event.target.value);
 
       let index = this.filterApplied[field].indexOf(event.target.value);
-      console.log('index is ', index,);
 
       this.filterApplied[field].splice(index, 1);
-      console.log('filterApplied intiall y is is ', this.filterApplied);
     }
     else {
       delete this.filterApplied[field];
@@ -173,10 +171,13 @@ export class ExploreComponent {
 
   setParams(){
     let param = new HttpParams();
-    console.log('FILTRP APPLIED IS ', this.filterApplied);
+    console.log(this.filterApplied, "filterrr");
+    
 
     (Object.keys(this.filterApplied)).forEach(key => {
 
+      console.log(this.filterApplied, "plis");
+      
       if (Array.isArray(this.filterApplied[key])) {
         this.filterApplied[key].forEach((element: any) => {
           param = param.append(key, element);
@@ -187,15 +188,18 @@ export class ExploreComponent {
         param = param.set(key, valueString);
       }
     });
+    console.log(this.filterApplied, 'ok');
+    
+
     const finalURL = '/explore' + '?' + param.toString();
     this.location.replaceState(finalURL);
 
     let actualParams = (Object.keys(this.filterApplied).length > 0) ? this.filterApplied : JSON.parse(JSON.stringify(this.filterApplied));
-    console.log('actual params is ', actualParams);
+    console.log(actualParams, "actual params???");
+    
 
-    this.fetchData.getProducts(actualParams).subscribe((data: any) => {
+    this.fetchData.getProducts(actualParams, this.limit, this.pageNumber).subscribe((data: any) => {
       this.products = data.items
-      console.log("filtered products", this.products); //2 
     });
   }
 
@@ -211,6 +215,11 @@ export class ExploreComponent {
 
   setPriceLimit(){
 
+  }
+
+  changePage(event: any){
+    this.pageNumber = event;
+    this.setParams();
   }
 
 }

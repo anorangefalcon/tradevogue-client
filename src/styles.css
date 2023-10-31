@@ -773,6 +773,11 @@ button {
         border-color: rgb(var(--primaryClr));
         outline-color: rgb(var(--primaryClr));
     }
+
+    &:disabled:hover{
+        outline: 1px solid rgba(var(--blackClr), 0.2);
+    }
+
     &::placeholder {
         font-size: 13px;
     }

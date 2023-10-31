@@ -24,11 +24,13 @@ import { TicketsComponent } from './tickets/tickets.component';
 import { DateDisplayPipe } from '../shared/Pipe/date-display.pipe';
 import { ProductPageModule } from '../product-page/product-page.module';
 import { SocialsComponent } from './socials/socials.component';
+import { HomeModule } from '../home/home.module';
 
 @NgModule({
   declarations: [
     DashboardComponent,
     StatisticsComponent,
+
     ProductsComponent,
     // FilterPipe,
     OrdersComponent,
@@ -47,6 +49,7 @@ import { SocialsComponent } from './socials/socials.component';
 
   imports: [
     CommonModule,
+    HomeModule,
     DashboardRoutingModule,
     SharedModule,
     NgxPaginationModule,

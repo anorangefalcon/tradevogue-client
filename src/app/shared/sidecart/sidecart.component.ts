@@ -18,7 +18,7 @@ export class SidecartComponent {
     });
 
     this.cartService.fetchCart('amount').subscribe((amount: any)=>{
-      if(amount.total === 0){
+      if(amount?.total === 0){
         this.show = false
       }
       this.totalAmt = amount?.total;

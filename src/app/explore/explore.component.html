@@ -165,6 +165,6 @@
             </div>
         </div>
     </div>
+
 </div>
-
-
+<app-pagination [collectionSize]="totalProducts" [currentPage]="pageNumber" [pageSize]="limit" (activePage)="changePage($event)"></app-pagination>

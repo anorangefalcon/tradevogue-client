@@ -44,9 +44,8 @@ import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
 import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 import { AngularFireMessagingModule } from '@angular/fire/compat/messaging';
 import { MessagingService } from './shared/services/messaging-service';
+import { GalleryComponent } from './home/gallery/gallery.component';
 initializeApp(environment.firebase);
-
-
 
 @NgModule({
   declarations: [
@@ -86,6 +85,7 @@ initializeApp(environment.firebase);
     AngularFireMessagingModule,
     AngularFireModule.initializeApp(environment.firebase),
   ],
+ 
   providers: [
     CookieService,
     MessagingService, AsyncPipe,

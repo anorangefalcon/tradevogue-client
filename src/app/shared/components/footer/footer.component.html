@@ -11,28 +11,28 @@
                 <div class="contact-info d-flex flex-column gap-10">
                     <div class="home d-flex gap-10">
                         <span class="material-symbols-outlined">home</span>
-                        <p >Block - 38, LPU, Phagwara, Punjab</p>
+                        <p >{{socialsData?.address}}</p>
                     </div>
                     <div class="mobile d-flex gap-10">
                         <span class="material-symbols-outlined">phone_iphone</span>
-                        <p >123-456-789</p>
+                        <p >{{socialsData?.mobile}}</p>
                     </div>
                     <div class="mail d-flex gap-10">
                         <span class="material-symbols-outlined">mail</span>
-                        <p >info@tradevogue.com</p>
+                        <p><a href="mailto:{{socialsData?.email}}" target="_blank">{{socialsData?.email}}</a></p>
                     </div>
                 </div>
                 <div class="medias d-flex gap-10">
                     <div class="logo-circle d-flex justify-content-center align-item-center">
-                        <a href="https://www.facebook.com/profile.php?id=61551726754963&mibextid=LQQJ4d">
+                        <a href="{{socialsData?.facebook}}" target="_blank">
                             <i class="fa-brands fa-facebook-f"></i>
                         </a>
                     </div>
                     <div class="logo-circle d-flex justify-content-center align-item-center">
-                        <a href="https://instagram.com/tradevogue?igshid=MzRlODBiNWFlZA=="><i class="fa-brands fa-instagram"></i></a>
+                        <a href="{{socialsData?.instagram.link}}" target="_blank"><i class="fa-brands fa-instagram"></i></a>
                     </div>
                     <div class="logo-circle d-flex justify-content-center align-item-center">
-                        <a href="#">
+                        <a href="https://wa.me/{{socialsData?.whatsapp}}" target="_blank">
                             <i class="fa-brands fa-whatsapp"></i>
                         </a>
                     </div>
