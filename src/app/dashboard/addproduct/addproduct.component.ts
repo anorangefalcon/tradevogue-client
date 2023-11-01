@@ -217,11 +217,14 @@ export class AddproductComponent {
   }
 
   async ngOnInit() {
-    const result: any = await this.dataService.httpPost(this.backendUrl.URLs.fetchFeatures, this.dataField);
-    this.categories = result.categories;
-    this.brands = result.brands;
-    this.tags = result.tags;
-    this.orderQuantity = result.orderQuantity;
+    this.dataService.HTTPPOST(this.backendUrl.URLs.fetchFeatures, this.dataField).subscribe({
+      next: (res: any)=>{
+        this.categories = res.categories;
+        this.brands = res.brands;
+        this.tags = res.tags;
+        this.orderQuantity = res.orderQuantity;
+      }
+    });
   }
 
   productImagesFormArray() {
@@ -450,15 +453,13 @@ export class AddproductComponent {
 
       let url = !this.isUpdateRequest ? this.backendUrl.URLs.addproduct : this.backendUrl.URLs.updateproduct;
       console.log(url);
-      this.dataService.httpPost(url, formData).then((res: any) => {
+      this.dataService.HTTPPOST(url, formData).subscribe((res: any) => {
         //Success Message
         this.data_template.title = 'Product Uploaded';
         this.toastservice.successToast(this.data_template);
         this.router.navigate(['/dashboard/products']);
 
-      }).catch((err) => {
-        console.log(err);
-      })
+      });
     }
   }
 }

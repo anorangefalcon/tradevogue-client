@@ -1,4 +1,7 @@
-  import { Component } from '@angular/core';
+import { Component } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { FetchDataService } from 'src/app/shared/services/fetch-data.service';
+import { UtilsModule } from 'src/app/utils/utils.module';
 
 @Component({
   selector: 'app-order-page',
@@ -6,9 +9,28 @@
   styleUrls: ['./order-page.component.css']
 })
 export class OrderPageComponent {
-  order: any [] = [
-    { product_name: "Pikachu Oversized Jersey", category: "Oversized T-shirt", color: 'pink', qty: "200", size: "X", price: "1190"},
-    { product_name: "Pikachu Oversized Jersey", category: "Oversized T-shirt", color: 'blue', qty: "100", size: "XL", price: "1190"},
-    { product_name: "Pikachu Oversized Jersey", category: "Oversized T-shirt", color: 'green', qty: "150", size: "XXL", price: "1190"}
-  ]
+  orderId!: string;
+  orderInfo!: any;
+
+  constructor(
+    private fetchDataService: FetchDataService,
+    private backendUrl: UtilsModule,
+    private activeRoute: ActivatedRoute
+  ) {
+    activeRoute.params.subscribe({
+      next: async (data) => {
+        this.orderId = data['orderId'];
+        this.fetchOrderDetail();
+      }
+    });
+  }
+
+  fetchOrderDetail() {
+    this.fetchDataService.HTTPGET(this.backendUrl.URLs.getSellerOrderDetails, this.orderId, 'orderID').subscribe({
+      next: (data: any)=>{
+        console.log(data.sellerAdd);
+        this.orderInfo = data;
+      }
+    })
+  }
 }

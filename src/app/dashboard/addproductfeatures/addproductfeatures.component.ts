@@ -4,6 +4,7 @@ import { UploadExcelService } from '../services/upload-excel.service';
 import { UtilsModule } from 'src/app/utils/utils.module';
 import { ToastService } from 'src/app/shared/services/toast.service';
 import { DialogBoxService } from 'src/app/shared/services/dialog-box.service';
+import { first, take } from 'rxjs';
 
 @Component({
   selector: 'app-addproductfeatures',
@@ -63,7 +64,33 @@ export class AddproductfeaturesComponent {
     private backendurls: UtilsModule) { }
 
   async ngOnInit() {
-    this.field_data = await this.dataService.httpPost(this.backendurls.URLs.fetchFeatures, this.dataField);
+
+    this.DialogBoxService.responseEmitter.subscribe(async (res) => {
+      console.log("Inside Subscrive")
+      if (res == true) {
+        this.field_data[this.deleteObject.field].splice(this.deleteObject.index, 1);
+        console.log("After Delete: ", this.field_data[this.deleteObject.field]);
+
+        const data = {
+          'field': this.deleteObject.field,
+          'data': this.field_data[this.deleteObject.field]
+        };
+
+        this.dataService.HTTPPOST(this.backendurls.URLs.updateFeatures, data).subscribe({
+          next: ()=>{
+            this.toastService.successToast({ title: 'Item Deleted Successfully' });
+          }
+        }); 
+      }
+
+    })
+
+
+    this.dataService.HTTPPOST(this.backendurls.URLs.fetchFeatures, this.dataField).subscribe({
+      next: (res: any) => {
+        this.field_data = res;
+      }
+    });
   }
 
   uploadFile(event: Event, field: string) {
@@ -85,49 +112,12 @@ export class AddproductfeaturesComponent {
     })
   }
 
-  // async deleteItem(e: any) {
-  //   this.popup = false;
-  //   try{
-  //     if (e == true) {
-  //       this.field_data[this.deleteObject.field].splice(this.deleteObject.index, 1);
-  //       const data = {
-  //         'field': this.deleteObject.field,
-  //         'data': this.field_data[this.deleteObject.field]
-  //       };
-  //       await this.dataService.httpPost(this.backendurls.URLs.updateFeatures, data);
-  //       this.toastService.successToast({title: 'Item Deleted Successfully'});
-  //     }
-  //   }catch(err){
-  //     console.log(err)
-  //   }
-  // }
-
   deleteItem(field: string, index: number) {
     console.log('deleted called');
-    
-    console.log(field, index, this.field_data[field]);
+    this.deleteObject.field = field;
+    this.deleteObject.index = index;
     this.DialogBoxService.confirmationDialogBox(this.field_data[field][index]);
-
-    this.DialogBoxService.responseEmitter.subscribe(async (res) => {
-      console.log("---------------");
-      if (res == true) {
-        // this.field_data[field].splice(index, 1);
-        console.log("After Delete: ", this.field_data[field]);
-
-        const data = {
-          'field': field,
-          'data': this.field_data[field]
-        };
-
-        // await this.dataService.httpPost(this.backendurls.URLs.updateFeatures, data); 
-      }
-    
-    })
   }
-
-  // ngOnDestroy(){
-  //   this.DialogBoxService.responseEmitter.unsubscribe();
-  // }
 
   async addItem(item: any, field: string) {
     try {
@@ -141,9 +131,11 @@ export class AddproductfeaturesComponent {
           'field': field,
           'data': this.field_data[field]
         };
-        await this.dataService.httpPost(this.backendurls.URLs.updateFeatures, data);
-        this.toastService.successToast({ title: 'Item Added Successfully' });
-        return;
+        this.dataService.HTTPPOST(this.backendurls.URLs.updateFeatures, data).subscribe({
+          next: (res: any) => {
+            this.toastService.successToast({ title: 'Item Added Successfully' });
+          }
+        });
       }
     } catch (err) {
       console.log(err);

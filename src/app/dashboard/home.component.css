@@ -93,7 +93,6 @@
         height: 100%;
         z-index: 100;
         border-right: 1px solid rgba(var(--blackClr), 0.1);
-
         & .branding {
             padding: 8px 12px;
             height: 65px;
@@ -115,7 +114,7 @@
 
         & .navbar {
             height: calc(100% - 65px);
-            background-color: rgb(var(--whiteClr), 0.2);
+            background-color: rgb(var(--whiteClr));
         }
 
 

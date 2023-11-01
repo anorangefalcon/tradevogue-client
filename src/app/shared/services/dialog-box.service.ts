@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -7,7 +7,7 @@ import { BehaviorSubject } from 'rxjs';
 export class DialogBoxService {
   constructor() { }
 
-  public responseEmitter = new BehaviorSubject<any>('');
+  public responseEmitter = new Subject<any>();
   public contentEmitter = new BehaviorSubject<string>('');
 
   template: any = {

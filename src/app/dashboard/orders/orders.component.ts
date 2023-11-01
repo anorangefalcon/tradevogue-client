@@ -1,4 +1,8 @@
 import { Component, ElementRef} from '@angular/core';
+import { first, take } from 'rxjs';
+import { DialogBoxService } from 'src/app/shared/services/dialog-box.service';
+import { FetchDataService } from 'src/app/shared/services/fetch-data.service';
+import { UtilsModule } from 'src/app/utils/utils.module';
 
 @Component({
   selector: 'app-orders',
@@ -8,36 +12,82 @@ import { Component, ElementRef} from '@angular/core';
 export class OrdersComponent {
   order_status:string = 'Completed';
   payment_status: string = 'Confirmed';
+  paymentStatus: any[] = ['Confirmed', 'Pending', 'Failed', 'Canceled'];
+  orderData: any[] = [];
+  pageSize: number = 8;
+  currentPage: number = 1;
+  selectedColor: any = 0;
+  totalCount: any;
 
-
-  categoryOption: any[] = ['Category 1', 'Category 2', 'Category 3', 'Category 4'];
-  orderStatus: any[] = ['Confirmed', 'Pending', 'Returned', 'Canceled'];
-
-
-  constructor(private element: ElementRef){}
-
-  ngOnInit(){
+  template: any = {
+    limit: this.pageSize,
+    page: this.currentPage,
+    filter: {
+      search: '',
+      payment_status: '',
+      dateto: '',
+      datefrom: ''
+    }
   }
 
-  orders: any[] = [
-    {'orderId': '1234', 'orderTime': '2020-12-02' ,'customer': 'Vijay Kumar' ,'amount': 20000, 'quantity': 150,'order_status': 'Confirmed'},
-    {'orderId': '1234', 'orderTime': '2020-12-03' ,'customer': 'Davinder Singh' ,'amount': 20000, 'quantity': 200,'order_status': 'Canceled'},
-    {'orderId': '1234', 'orderTime': '2020-12-04' ,'customer': 'Vijay Rajan' ,'amount': 20000, 'quantity': 300,'order_status': 'Canceled'},
-    {'orderId': '1234', 'orderTime': '2020-12-05' ,'customer': 'Vijay Sharma' ,'amount': 20000, 'quantity': 100,'order_status': 'Confirmed'},
-    {'orderId': '1234', 'orderTime': '2020-12-09' ,'customer': 'Vijay Rana' ,'amount': 20000, 'quantity': 150,'order_status': 'Confirmed'},
-    {'orderId': '1234', 'orderTime': '2020-12-01' ,'customer': 'Vikas Singh' ,'amount': 20000, 'quantity': 200,'order_status': 'Confirmed'},
-    {'orderId': '1234', 'orderTime': '2020-12-02' ,'customer': 'Arshdeep Singh' ,'amount': 20000, 'quantity': 150,'order_status': 'Shipping'},
-    {'orderId': '1234', 'orderTime': '2020-12-02' ,'customer': 'Abhishek Kumar' ,'amount': 20000, 'quantity': 200,'order_status': 'Confirmed'}
-  ];
+  constructor(
+    private dialogService: DialogBoxService, 
+    private fetchData: FetchDataService, 
+    private backendUrl: UtilsModule){}
 
-  pageSize:number = 8;
-  currentPage: number=1;
+  async ngOnInit(){
+    this.fetchOrders();
+  }
+
+  fetchOrders(){
+    this.fetchData.HTTPPOST(this.backendUrl.URLs.getSellerOrders, this.template).subscribe({
+      next: (data: any)=>{
+        console.log(data);
+        this.orderData = [];
+        data.forEach((order: any)=>{
+          let orderInfo = {
+            invoiceId: order._id,
+            customer: order.customer,
+            orderTime: (new Date(order.data.orderDate)).toDateString(),
+            amount: order.data.orderAmount,
+            quantity: order.orderQuantity,
+            payment_status:  order.data.payment_status,
+            invoice_status: order.data.invoice_status,
+            _id: order._id
+          };
+          this.orderData.push(orderInfo);
+        });
+      }
+    });
+  }
+
+  updateInvoice(invoiceId: string, _id: string){
+    console.log("hello");
+    this.dialogService.confirmationDialogBox(invoiceId);
+
+    this.dialogService.responseEmitter.pipe(first()).subscribe((res: any)=>{
+      if(res == true){
+        console.log('Hello');
+      }
+    })
+  }
 
   pageChanged(event:any){
-    this.currentPage = event; 
+    this.currentPage = event;
+    this.template.page = event;
+    this.fetchOrders();
   }
 
   updateFields(e: any, type: string){
-    console.log(e);
+    this.template.filter[type] = e;
+    
+    this.fetchOrders();
+  }
+
+  updateDateFields(e: Event, field: string){
+    
+    this.template.filter[field] = (<HTMLInputElement>e.target).value;
+    console.log(this.template);
+    this.fetchOrders();
   }
 }

@@ -8,6 +8,7 @@ import { ReviewService } from './services/review.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToastService } from '../shared/services/toast.service';
 import { param } from 'jquery';
+import { UtilsModule } from '../utils/utils.module';
 
 @Component({
   selector: 'app-product-page',
@@ -34,10 +35,12 @@ export class ProductPageComponent implements OnInit {
 
   ratingForm!: FormGroup;
   userReview: any;
+  query: any = this.fetchService.getProductDetails(this.sku);
 
   constructor(
     private route: ActivatedRoute,
     private fetchService: FetchDataService,
+    private backendUrl: UtilsModule,
     private cartService: CartService,
     private wishlistService: WishlistService,
     private reviewService: ReviewService,
@@ -55,7 +58,7 @@ export class ProductPageComponent implements OnInit {
 
   ngOnInit(): void {
 
-    if(this.productSku){
+    if (this.productSku) {
       this.sku = this.productSku;
       this.fetchProductData();
     }
@@ -70,26 +73,34 @@ export class ProductPageComponent implements OnInit {
     });
   }
 
-  fetchProductData() {
+  async fetchProductData() {
+
+    if(this.productSku){
+      let data = await this.fetchService.httpGet(this.backendUrl.URLs.fetchProductDetails, this.sku);
+      this.updateDataFields(data);
+      return;
+    }
     this.fetchService.getProductDetails(this.sku).subscribe((data: any) => {
-      // console.log('data comes is -------->',data);
-
-      this.data = data;
-      this.data.avgRating = data.avgRating;
-      this.activeIndex = 0;
-      this.selectedColor = data.assets[0].color;
-      this.selectedSize = data.assets[this.assetIndex].stockQuantity[0].size;
-
-      // if this user has already reviewed:
-      if (data.userReview) {
-        this.userReview = data.userReview;
-        this.userRating = data.userReview.rating - 1;
-        this.ratingForm.setValue({
-          rating: data.userReview.rating,
-          review: data.userReview.comment
-        })
-      }
+      this.updateDataFields(data);
     });
+  }
+
+  updateDataFields(data: any) {
+    this.data = data;
+    this.data.avgRating = data.avgRating;
+    this.activeIndex = 0;
+    this.selectedColor = data.assets[0].color;
+    this.selectedSize = data.assets[this.assetIndex].stockQuantity[0].size;
+
+    // if this user has already reviewed:
+    if (data.userReview) {
+      this.userReview = data.userReview;
+      this.userRating = data.userReview.rating - 1;
+      this.ratingForm.setValue({
+        rating: data.userReview.rating,
+        review: data.userReview.comment
+      })
+    }
   }
 
   addToCart() {

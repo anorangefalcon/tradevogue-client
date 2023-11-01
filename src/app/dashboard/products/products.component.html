@@ -234,7 +234,7 @@
         </div>
     </div>
 
-    <app-pagination #pagination [collectionSize]="totalCount" [pageSize]="pageSize" [currentPage]="currentPage" (activePage)="pageChange($event)"></app-pagination>
+    <app-pagination [collectionSize]="totalCount" [pageSize]="pageSize" [currentPage]="currentPage" (activePage)="pageChange($event)"></app-pagination>
     <!-- PopUp Div -->
     <!-- <app-dialog [type]="'confirmation'" (reply)="response($event)"></app-dialog> -->
 </section>

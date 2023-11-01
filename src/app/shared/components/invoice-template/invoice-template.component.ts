@@ -6,5 +6,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./invoice-template.component.css']
 })
 export class InvoiceTemplateComponent {
-
+  
 }

@@ -879,6 +879,48 @@ button {
     background-color: transparent !important;
 }
 
+
+/* Checkbox Toogle */
+.slide-button{
+    & input[type="checkbox"]{
+        appearance: none;
+        width: 0;
+        height: 0;
+    }
+      
+    & input[type="checkbox"] + label{
+        position: relative;
+        display: flex;
+        align-items: center;
+        width: 42px;
+        height: 23px;
+        padding: 2px;
+        display: flex;
+        background-color: rgb(var(--text-gray), 0.5);
+        border: 1px solid rgb(var(--whiteClr));
+        border-radius: 25px;
+      }
+      
+    & input[type="checkbox"] + label::before{
+        content: "";
+        width: 15px;
+        height: 15px;
+        display: flex;
+        border-radius: 100%;
+        background-color: rgb(var(--whiteClr));
+        position: absolute;
+        /* top: px; */
+        left: 3px;
+        transition: transform 0.5s ease;
+      }
+      
+    & input[type="checkbox"]:checked + label::before{
+        transform: translateX(19px);
+        background-color: rgb(var(--success));
+      }
+}
+
+
 @media screen and (max-width: 450px) {
 
     .container {

@@ -22,12 +22,12 @@ const routes: Routes = [
       { path: '', component: StatisticsComponent },
       { path: 'products', component: ProductsComponent },
       { path: 'orders', component: OrdersComponent },
+      { path: 'orderDetails/:orderId', component: OrderPageComponent},
       { path: 'addproduct', component: AddproductComponent },
       { path: 'editproduct/:sku', component: AddproductComponent },
 
       { path: 'account', component: AccountComponent },
       { path: 'features', component: AddproductfeaturesComponent },
-      { path: 'orderDetails/:orderId', component: OrderPageComponent },
       { path: 'faq', component: FaqsComponent },
       { path: 'product-overview/:sku', component: ProductOverviewComponent },
       { path: 'coupons', component: CouponsComponent },

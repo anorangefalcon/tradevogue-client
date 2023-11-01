@@ -13,21 +13,10 @@ export class ProductOverviewComponent {
   skuId!: string;
 
   constructor(private activeRoute: ActivatedRoute, private backendUrl: UtilsModule, private fetchService: FetchDataService){
-    // console.log('CONSTRUCTOR CALELD--------->');
     
     activeRoute.params.subscribe({
       next: async (data)=>{
         this.skuId = data['sku'];
-        // this.productDetails = await this.fetchService.httpGet(this.backendUrl.URLs.fetchProductDetails, this.skuId);
-        // console.log(this.productDetails);
-
-        // this.fetchService.getProductDetails(data['sku']).subscribe({
-        //   next: (data)=>{
-        //     console.log(data, "Data");
-        //     this.productDetails = data;
-        //   }
-        // })
-
       }
     });
   }

@@ -37,7 +37,8 @@ export class UtilsModule {
     updateFeatures: 'http://localhost:1000/admin/updateProductFeature',
     updateAccount: 'http://localhost:1000/admin/updateDetails',
     getAccount: 'http://localhost:1000/admin/getadminDetails',
-
+    getSellerOrders: 'http://localhost:1000/orders/sellerOrders',
+    getSellerOrderDetails: 'http://localhost:1000/orders/sellerOrderDetail',
     // stripe
     stripePayment: 'http://localhost:1000/user/create-payment-intent',
 

@@ -35,9 +35,9 @@ export class FetchDataService {
     return this.http.get(this.sellerUrl);
   }
 
-  getUniqueProductFields(body : any){
+  getUniqueProductFields(body: any) {
     // console.log('BODY IS ',body);
-   
+
     return this.http.post('http://localhost:1000/products/uniqueFields', body);
   }
 
@@ -85,7 +85,7 @@ export class FetchDataService {
 
           rej(error)
 
-          
+
           if (error.message) {
             const data = { title: error.error.message };
             this.toastService.errorToast(data);
@@ -94,33 +94,14 @@ export class FetchDataService {
       })
     })
   }
-
- 
-
-  HTTPGET(url:any,data:any='',field:any=''){ 
-    let params;
-    if(params){
-      params = new HttpParams();
-      params = params.set(field, data);
-    }
-    return this.http.get(url,{params});
-
-    // return this.http.get(url);
-  }
-
-  HTTPPOST(url:any,body: any){
-    return this.http.post(url,body);
-  }
-
-
   httpGet(url: any, data: any = null) {
     let params = new HttpParams();
 
-    if(data){
+    if (data) {
       params = params.set("data", data);
     }
     return new Promise((res, rej) => {
-      this.http.get(url, {params}).subscribe({
+      this.http.get(url, { params }).subscribe({
         next: (data) => {
           res(data);
 
@@ -133,7 +114,22 @@ export class FetchDataService {
           }
         }
       })
-    })
+    });
 
+  }
+
+  HTTPGET(url: any, data: any = '', field: any = '') {
+    let params;
+    if (data) {
+      params = new HttpParams();
+      params = params.set(field, data); 
+    }
+    return this.http.get(url, { params });
+
+    // return this.http.get(url);
+  }
+
+  HTTPPOST(url: any, body: any) {
+    return this.http.post(url, body);
   }
 }

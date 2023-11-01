@@ -118,6 +118,34 @@
                         </div>
                     </div>
 
+                    <div *ngIf="productSku">
+                        <div class="assetsInfo table-list d-flex flex-column gap-15">
+                            <p class="table-title_">
+                                Inventory Status
+                            </p>
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th class="items">Size</th>
+                                        <th class="items">Unit Sold</th>
+                                        <th class="items">Unit Remaining</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                    <ng-container *ngFor="let asset of data.assets">
+                                        <tr *ngFor="let stock of asset.stockQuantity">
+                                            <td class="items">{{stock.size}}</td>
+                                            <td class="items">{{stock.unitSold}}</td>
+                                            <td class="items">{{stock.quantity - stock.unitSold}}</td>
+                                        </tr>
+                                    </ng-container>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+
                     <div class="d-flex flex-column">
 
                         <div class="accordian mw-100">
@@ -159,33 +187,6 @@
                         <p>
                             Stock : {{ data.assets[assetIndex].stockQuantity[sizeIndex].quantity }}
                         </p>
-                    </div>
-
-                    <div *ngIf="productSku">
-                        <div class="assetsInfo table-list d-flex flex-column gap-15">
-                            <p class="table-title_">
-                                Inventory Status
-                            </p>
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th class="items">Size</th>
-                                        <th class="items">Unit Sold</th>
-                                        <th class="items">Unit Remaining</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-
-                                    <ng-container *ngFor="let asset of data.assets">
-                                        <tr *ngFor="let stock of asset.stockQuantity">
-                                            <td class="items">{{stock.size}}</td>
-                                            <td class="items">{{stock.unitSold}}</td>
-                                            <td class="items">{{stock.quantity - stock.unitSold}}</td>
-                                        </tr>
-                                    </ng-container>
-                                </tbody>
-                            </table>
-                        </div>
                     </div>
 
                     <div class="tags d-flex gap-10 d-flex align-item-center">

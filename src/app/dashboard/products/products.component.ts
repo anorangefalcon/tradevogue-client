@@ -44,46 +44,54 @@ export class ProductsComponent implements OnInit {
     private toastService: ToastService,) { }
 
   async ngOnInit() {
-    const category: any = await this.fetchdata.httpPost(this.backendUrl.URLs.fetchFeatures, this.dataField);
-    this.categoryOption = category?.categories;
-    this.fetchData();
+    this.fetchdata.HTTPPOST(this.backendUrl.URLs.fetchFeatures, this.dataField).subscribe({
+      next: (res: any) => {
+        this.categoryOption = res.categories;
+        this.fetchData();
+      }
+    });
   }
 
   async fetchData() {
     try {
-      this.productArray = await this.fetchdata.httpPost(this.backendUrl.URLs.fetchProductInventory, this.template);
-      this.productList = [];
-      this.totalCount = this.productArray.pageInfo[0].count;
-
-
-      this.productArray.data.forEach((product: any) => {
-        let item = {
-          _id: product.productInfo._id,
-          itemId: product.productInfo.sku,
-          image: product.productInfo.assets[0].photo[0],
-          name: product.productInfo.name,
-          price: product.productInfo.price,
-          category: product.productInfo.info.category,
-          assets: product.productInfo.assets,
-          brand: product.productInfo.info.brand,
-          unit_sold: product.unitSold,
-          orderQuantity: product.productInfo.info.orderQuantity,
-          product_inventory: product.inventory,
-          rating: Math.round(product.avgRating * 10) / 10,
-          last_updated: product.productInfo.updatedAt.split('T')[0],
-          checked: false
+      this.fetchdata.HTTPPOST(this.backendUrl.URLs.fetchProductInventory, this.template).subscribe({
+        next: (res) => {
+          this.productArray = res;
+          this.productList = [];
+          this.totalCount = this.productArray.pageInfo[0].count;
+          this.productArray.data.forEach((product: any) => {
+            let item = {
+              _id: product.productInfo._id,
+              itemId: product.productInfo.sku,
+              image: product.productInfo.assets[0].photo[0],
+              name: product.productInfo.name,
+              price: product.productInfo.price,
+              category: product.productInfo.info.category,
+              assets: product.productInfo.assets,
+              brand: product.productInfo.info.brand,
+              unit_sold: product.unitSold,
+              orderQuantity: product.productInfo.info.orderQuantity,
+              product_inventory: product.inventory,
+              rating: Math.round(product.avgRating * 10) / 10,
+              last_updated: product.productInfo.updatedAt.split('T')[0],
+              checked: false
+            }
+            this.productList.push(item);
+          })
         }
-        this.productList.push(item);
-      })
+      });
     } catch (err) {
       console.log(err);
     }
   }
 
   async deleteData() {
-    this.productArray = await this.fetchdata.httpPost(this.backendUrl.URLs.deleteProductInventory, this.template);
+    this.fetchdata.HTTPPOST(this.backendUrl.URLs.deleteProductInventory, this.template).subscribe({
+      next: (res: any) => {
+        this.productArray = res;
+      }
+    });
   }
-
 
   // Check for tables
 
@@ -151,7 +159,7 @@ export class ProductsComponent implements OnInit {
     this.fetchData();
   }
 
-  pageChange(e: any){
+  pageChange(e: any) {
     this.currentPage = e;
     this.fetchData();
   }
