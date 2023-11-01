@@ -538,9 +538,10 @@
         opacity: 0.5;
         cursor: not-allowed;
 
-        & .your-review-edit-button{
+        & .your-review-edit-button, .your-review-delete-button{
             z-index: -1;
         }
+
     }
 
     & label {

@@ -7,7 +7,6 @@ import { WishlistService } from '../shared/services/wishlist.service';
 import { ReviewService } from './services/review.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToastService } from '../shared/services/toast.service';
-import { param } from 'jquery';
 import { UtilsModule } from '../utils/utils.module';
 
 @Component({
@@ -87,7 +86,7 @@ export class ProductPageComponent implements OnInit {
 
   updateDataFields(data: any) {
     this.data = data;
-    this.data.avgRating = data.avgRating;
+    this.data.avgRating = data.avgRating ? data.avgRating : 0;
     this.activeIndex = 0;
     this.selectedColor = data.assets[0].color;
     this.selectedSize = data.assets[this.assetIndex].stockQuantity[0].size;
@@ -137,7 +136,7 @@ export class ProductPageComponent implements OnInit {
       comment: this.ratingForm.controls['review'].value
     }
 
-    this.reviewService.addReview(review).subscribe((data: any) => {
+    this.reviewService.addReview(review).subscribe(() => {     
       this.fetchProductDatabyRoute();
       this.showReview = false;
       this.toastService.successToast({

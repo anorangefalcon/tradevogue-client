@@ -21,7 +21,6 @@ export class CartComponent implements OnInit {
   ngOnInit() {
     this.cartService.fetchCart("details").subscribe((data) => {
       this.cartArr = data;
-
       this.cartArr = this.cartArr?.map((item: any) => {
         item.image = (item.assets).find((asset: any) => {
           return (asset.color) === item.color;
@@ -80,7 +79,6 @@ export class CartComponent implements OnInit {
     
     this.cartService.fetchCart().subscribe((data)=>{
       console.log('cart coming is ',data);
-      
     })
     
   }

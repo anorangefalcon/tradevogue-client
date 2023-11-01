@@ -260,10 +260,11 @@
             </div>
 
         </div>
+        
         <ng-container *ngIf="!productSku">
-            <div class="add-review-btn" *ngIf="!userReview">
+            <div class="add-review-btn" *ngIf="!userReview" >
                 <button class="btn-primary review-btn pointer d-flex align-item-center gap-10"
-                    *ngIf="this.showReview!=true" (click)="showReview = true; scroll(addReview)">
+                *ngIf="!showReview" (click)="showReview = true; scroll(addReview)">
                     <span class="material-symbols-outlined">
                         add
                     </span>

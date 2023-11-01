@@ -116,9 +116,8 @@
 
 <!-- COUPONS  -->
 <!-- <div class="wrapper d-flex" [ngClass]="{'open_Coupon':OpenCoupon}"> -->
-    <app-drawer [direction]="direction" [show]="show" (showChange)="ChangeHanlder($event)" [ParenClosed]="ParenClosed" (ParentClosedEmitter)="ParentClosedFun($event)"> 
+    <app-drawer [direction]="direction" [show]="show" (showChange)="ChangeHanlder($event)" [ParenClosed]="ParenClosed" (ParentClosedEmitter)="ParentClosedFun($event)" [title]="'Available Coupons'"> 
     <div class="coupons d-flex flex-column gap-15">
-        <h2>Coupons Available</h2>
         <div class="d-flex justify-content-md-between">
             <input type="text" placeholder="Enter coupon code"  #CouponCode oninput="this.value = this.value.toUpperCase()" (input)="InputChange()">
            

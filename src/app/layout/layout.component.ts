@@ -12,7 +12,7 @@ export class LayoutComponent {
       if(this.router.url=='/cart/billing'){
         this.ShowNavBar=false;
       }
-      console.log('routerurl is ',this.router.url);
+      // console.log('routerurl is ',this.router.url);
       
   }
 
