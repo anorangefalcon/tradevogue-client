@@ -1,4 +1,33 @@
 
+<form id="payment-form">
+    <h3 style="align-items: center; text-align: center;">Place Your Order</h3>
+   <!-- gpay
+    <div id="payment-request-button">
+A Stripe Element will be inserted here.
+   </div> -->
+
+    <div id="link-authentication-element">
+        <!-- Stripe.js injects the Link Authentication Element -->
+    </div>
+
+    <!-- <div id="shipping-address-element">
+       
+    </div> -->
+
+    <div id="payment-element">
+        <!-- Stripe.js injects the Payment Element -->
+    </div>
+
+    <!-- <div id="address-element">
+        Stripe.js injects the Address Element
+    </div> -->
+    <button id="submit">
+        <div class="spinner hidden" id="spinner"></div>
+        <span id="button-text">Pay now</span>
+    </button>
+    <div id="payment-message" class="hidden"></div>
+</form>
+
 <div class="address">
     <div class="d-flex flex-column gap-10">
 
@@ -75,11 +104,86 @@
 
 
 
-    <!-- <app-address (newAddress)="NewAddressHandler($event)"  (closeaddressed)="CloseAddress()" [receiveData]="AddressSended"></app-address> -->
+
+
+
+<!-- <div class="address">
+<div class="d-flex flex-column gap-10">
+
+    <div class="d-flex justify-content-md-between align-item-center pointer h2_div" [ngClass]="{'h2_div':!DeliveredAddress}">
+    <div class="d-flex align-item-center pointer">
+        <h2>
+            SELECT DELIVERY ADDRESS
+        </h2>
+
+
+    </div>
+
+    <div class="d-flex align-item-center addAddress__div" *ngIf="!DeliveredAddress" (click)="AddAddress()">
+        <span class="material-symbols-outlined">
+            add_circle
+        </span>
+        <p>ADD NEW ADDRESS</p>
+    </div>
+
+    <button *ngIf="DeliveredAddress" class="changeaddress__btn" (click)="ChangeAddress()">
+            
+            Change Address
+     
+    </button>
+
+    </div>
+
+    <div *ngIf="DeliveredAddress">
+        <p>
+        {{DeliveredAddress.apartment}}
+        {{DeliveredAddress.area}},
+        {{DeliveredAddress.landmark}}
+            {{DeliveredAddress.town_city}}
+            {{DeliveredAddress.country}}
+        </p> 
+        </div>
     
-<app-address  [ShowComponent]="ShowComponent" [receiveData]="receiveData"
-(AddressHandler)="AddressHandler($event)"></app-address>
+
+</div>
+<div class="d-flex flex-column gap-10" *ngIf="!DeliveredAddress">
+    <ng-container *ngFor="let address of userAddresses; let i=index" class="d-flex address__firstdiv ">
+        <div class="ok" style="display: none;">
+            <input type="radio" id="radio{{i}}" name="address" value="address" class="d-flex">
+        </div>
+
+        <label for="radio{{i}}" class="d-flex align-item-center pointer">
+          
+            
+            
+            <div class="d-flex gap-10 input mw100 flex-column">
+
+                <div class="d-flex justify-content-md-between">
+                    <p class="name pointer-none">{{address.firstname}} {{address.lastname}}</p>
+                    <div class="d-flex">
+                        <button class="btn default__btn" (click)="MakeDefault(address,i)" *ngIf="!address.defaultAddress">Make this  Defult</button>
+                        <button class="edit__btn btn" (click)="EditAddress(address,i)">Edit</button>
+                        <button class="remove__btn btn" (click)="RemoveAddress(address,i)">Remove</button>
+                    </div>
+                </div>
+
+                <div class="pointer-none">
+                    <p>{{address.apartment}} {{address.area}} {{address.landmark}}, {{address.town_city}}</p>
+                    <p>{{address.state}}- {{address.pincode}}</p>
+                </div>
+
+                <button class="btn-primary btn-deliver" (click)="SelectAddress(address)">DELIVER HERE</button>
+            </div>
+          
+        </label>
+    </ng-container>
+</div>
 
 
-<!-- <button (click)="ProceedToPayment()">Payment</button> -->
-    <!-- (closeaddressed)="CloseAddress()" -->
+</div> -->
+
+
+<div [ngClass]="{'show':addnewAddress==true}">
+<app-address (newAddress)="NewAddressHandler($event)"  (closeaddressed)="CloseAddress()" [receiveData]="AddressSended"></app-address>
+</div>
+

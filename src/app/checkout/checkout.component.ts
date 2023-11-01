@@ -34,6 +34,8 @@ export class CheckoutComponent implements OnInit {
   BillingPageVisited: boolean = false;
   constructor(private cartService: CartService, private router: Router, private renderer: Renderer2, private userService: UserServiceService, private toastService: ToastService, private BackendUrl: UtilsModule, private fetchService: FetchDataService, private cookie: CookieService, private route: Router, private el: ElementRef) {
 
+    console.log('stripe is ------> ',this.BillingPageVisited);
+    
     if(this.route.url=='/cart/billing'){
       this.BillingPageVisited=true;
     }
@@ -51,8 +53,8 @@ export class CheckoutComponent implements OnInit {
 
     this.AllCoupons = await this.fetchService.httpGet(this.BackendUrl.URLs.getCoupons);
      this.userService.paymentObservable.subscribe((response)=>{
-      // console.log('subscribing every time====>');
-      this.BillingPageVisited=response;
+       this.BillingPageVisited=response;
+       console.log('subscribing every time====> ',this.BillingPageVisited  );
       // if(response){
       //   this.BillingPageVisited=true;
       // }
@@ -125,21 +127,11 @@ export class CheckoutComponent implements OnInit {
 
     if (!cookieExists) {
       // this.redirectToLogin();
-      this.route.navigate(['/cart/billing']).then(() => {
-
-
-        console.log("CART IS  ", this.cart)
-        window.location.reload();
-      });
+      this.route.navigate(['/cart/billing']);
 
     } else {
 
-      this.route.navigate(['/cart/billing']).then(() => {
-
-
-        console.log("CART IS  ", this.cart)
-        window.location.reload();
-      });
+      this.route.navigate(['/cart/billing']);
     }
   }
 
@@ -265,6 +257,7 @@ export class CheckoutComponent implements OnInit {
 
 
 
+  PaymentAmount:any;
   async verifyOrderSummary() {
     try {
 
@@ -282,8 +275,11 @@ export class CheckoutComponent implements OnInit {
         //  }
 
         // result.DeliveredAddress=DeliveredAddress;
-        const response = await this.fetchService.httpPost(this.BackendUrl.URLs.verifyOrderSummary, result);
+        const response:any = await this.fetchService.httpPost(this.BackendUrl.URLs.verifyOrderSummary, result);
         this.cart.amounts = response;
+        // this.userService.PaymentValue.next(response);
+        this.PaymentAmount=response.total;
+        this.userService.updateTotalAmount(response.total);
         const checkToken = this.cookie.get('userToken');
         if (!checkToken) {
           await this.userService.emittingValue('GoToPayment', 1);
@@ -307,6 +303,11 @@ export class CheckoutComponent implements OnInit {
            if(!DeliveredAddress){
           this.toastService.errorToast({title:'Please select Address'});
            }
+
+
+          //  PAYMENT GATEWAY 
+
+
           this.cartService.fetchCart().subscribe(async (res) => {
             let input=JSON.parse(JSON.stringify(res));
             input.DeliveredAddress=DeliveredAddress;

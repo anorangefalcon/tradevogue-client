@@ -4,7 +4,6 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { UtilsModule } from 'src/app/utils/utils.module';
 import { FetchDataService } from 'src/app/shared/services/fetch-data.service';
 import { PopupService } from 'src/app/shared/services/popup.service';
-
 @Component({
   selector: 'app-faqs',
   templateUrl: './faqs.component.html',
@@ -172,5 +171,7 @@ export class FaqsComponent {
 
   toggleMenu() {
     this.isMenuActive = !this.isMenuActive;
-  }
+  }
 }
+
+

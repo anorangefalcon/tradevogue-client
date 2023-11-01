@@ -1,104 +1,96 @@
-<section id="faq-adding-section" class="d-flex flex-column gap-20">
-  <div class="row d-flex justify-content-md-between">
+<section class="d-flex flex-column gap-20" style="background-color: #fff; border-radius: 8px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);">
+  <div class="row d-flex justify-content-md-between" style="padding: 20px;">
     <div class="d-flex gap-15 align-item-center">
-      <h2>FAQs</h2>
+      <h2 style="font-size: 24px; color: #333; font-weight: bold;">FAQs</h2>
     </div>
 
-    <div class="drawer" [ngClass]="{ 'open': isDrawerOpen }">
-      <div (click)="closeDrawer()" class="absolute right-5 top-5">
-        <button type="button"
-          class="inline-flex justify-center px-2 py-2 text-base font-medium text-red-500 bg-white border border-transparent rounded-full hover:bg-red-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500">
-          <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 512 512" height="1em" width="1em"
-            xmlns="http://www.w3.org/2000/svg">
-            <path
-              d="M289.94 256l95-95A24 24 0 00351 127l-95 95-95-95a24 24 0 00-34 34l95 95-95 95a24 24 0 1034 34l95-95 95 95a24 24 0 0034-34z">
-            </path>
-          </svg>
-        </button>
-      </div>
-
-      <form [formGroup]="faqForm">
-        <div class="custom-select" style="width:200px;">
-          <select formControlName="selectedOption">
-            <option value="" disabled>Select a Category</option>
-            <option *ngFor="let item of faqData" [value]="item.title">{{item.title}}</option>
-          </select>
-        </div>
-
-        <div class="form-group">
-          <label for="query">Query</label>
-          <input type="text" id="query" formControlName="query" required />
-          <div *ngIf="faqForm.get('query')?.invalid && faqForm.get('query')?.touched" class="error-message">
-            <!-- Error messages go here -->
-          </div>
-        </div>
-
-        <div class="form-group">
-          <label for="content">Answer</label>
-          <input type="text" id="content" formControlName="content" required />
-          <div *ngIf="faqForm.get('content')?.invalid && faqForm.get('content')?.touched" class="error-message">
-            <!-- Error messages go here -->
-          </div>
-        </div>
-
-        <button (click)="addCategory()" [disabled]="faqForm.invalid">Add Category</button>
-      </form>
-    </div>
-
-    <div class="custom-select" style="width:200px;">
+    <div class="custom-select">
       <select [(ngModel)]="selectedOption" (change)="retrieveContent()">
         <option *ngFor="let item of faqData">{{item.title}}</option>
       </select>
     </div>
 
-    <div class="operational-buttons d-flex  flex-wrap">
-      <button (click)="openDrawer()" class=" d-flex align-item-center gap-5">
+    <div class="operational-buttons d-flex flex-wrap">
+      <button (click)="openDrawer()" class="d-flex align-item-center gap-5" style="background-color: #4CAF50; color: #fff; padding: 8px 12px; border: none; border-radius: 4px; cursor: pointer;">
         <i class="material-symbols-outlined operational-buttons-icons">add</i>
-        Add New Category
+        <span style="font-weight: bold;">Add New Category</span>
       </button>
     </div>
   </div>
 </section>
 
-<div *ngIf="selectedCategory" class="selected-category">
-  <h2 class="selected-title">{{selectedCategory.title}}</h2>
 
-  <table class="selected-category">
+<div class="drawer" [ngClass]="{ 'open': isDrawerOpen }">
+  <div (click)="closeDrawer()" class="close-button">
+    <svg class="close-icon" width="24" height="24" viewBox="0 0 24 24" fill="none">
+      <path d="M18.2929 5.70711C18.6834 6.09763 18.6834 6.73079 18.2929 7.12132L13.4142 12L18.2929 16.8787C18.6834 17.2692 18.6834 17.9024 18.2929 18.2929C17.9024 18.6834 17.2692 18.6834 16.8787 18.2929L12 13.4142L7.12132 18.2929C6.73079 18.6834 6.09763 18.6834 5.70711 18.2929C5.31658 17.9024 5.31658 17.2692 5.70711 16.8787L10.5858 12L5.70711 7.12132C5.31658 6.73079 5.31658 6.09763 5.70711 5.70711C6.09763 5.31658 6.73079 5.31658 7.12132 5.70711L12 10.5858L16.8787 5.70711C17.2692 5.31658 17.9024 5.31658 18.2929 5.70711Z" fill="currentColor" />
+    </svg>
+  </div>
+  
+  
+
+  <form [formGroup]="faqForm">
+    <div class="custom-select" style="width:200px;">
+      <select formControlName="selectedOption">
+        <option value="" disabled>Select a Category</option>
+        <option *ngFor="let item of faqData" [value]="item.title">{{item.title}}</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="query">Query</label>
+      <input type="text" id="query" formControlName="query" required />
+      <div *ngIf="faqForm.get('query')?.invalid && faqForm.get('query')?.touched" class="error-message">
+        <!-- Error messages go here -->
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="content">Answer</label>
+      <input type="text" id="content" formControlName="content" required />
+      <div *ngIf="faqForm.get('content')?.invalid && faqForm.get('content')?.touched" class="error-message">
+        <!-- Error messages go here -->
+      </div>
+    </div>
+
+    <button (click)="addCategory()" [disabled]="faqForm.invalid">Add Category</button>
+  </form>
+</div>
+
+<div *ngIf="selectedCategory" class="table-list table-container">
+  <table class="selected-category-table">
     <thead>
       <tr>
-        <th>Serial Number</th>
-        <th>Query</th>
-        <th class="ellipsis">Answer</th>
-        <th>Actions</th>
+        <th class="items">Serial Number</th>
+        <th class="items">Query</th>
+        <th class="items">Answer</th>
+        <th class="items">Actions</th>
       </tr>
     </thead>
     <tbody>
-      <!-- use the slice part -->
-      <tr *ngFor="let child of selectedCategory.childrens | slice
-      : (pagination.currentPage - 1) * pagination.pageSize
-      : pagination.currentPage * pagination.pageSize;
- let i = index;">
-        <td class="ellipsis">{{(currentPage - 1) * pageSize + i + 1}}</td>
-        <td class="ellipsis">{{child.title}}</td>
-        <td class="ellipsis">{{child.content}}</td>
-        <td>
-          <span (click)="showItemDetails(child)"
-            class="material-symbols-outlined view-button material-icons">visibility</span>
-          <span (click)="showEdit(child)" class="material-symbols-outlined edit-button material-icons">edit</span>
-          <span (click)="deleteFaq(child)" class="material-symbols-outlined delete-button material-icons">delete</span>
+      <tr *ngFor="let child of selectedCategory.childrens | slice: (pagination.currentPage - 1) * pagination.pageSize: pagination.currentPage * pagination.pageSize; let i = index;">
+        <td class="ellipsis items serial-number">{{ (pagination.currentPage - 1) * pagination.pageSize + i + 1 }}</td>
+        <td class="ellipsis items query">{{ child.title }}</td>
+        <td class="ellipsis items answer">{{ child.content }}</td>
+        <td class="items actions">
+          <div class="action-buttons">
+            <span (click)="showItemDetails(child)" class="material-symbols-outlined view-button material-icons">visibility</span>
+            <span (click)="showEdit(child)" class="material-symbols-outlined edit-button material-icons">edit</span>
+            <span (click)="deleteFaq(child)" class="material-symbols-outlined delete-button material-icons">delete</span>
+          </div>
         </td>
       </tr>
     </tbody>
   </table>
-  <!-- use this my dear friends for pagination -->
   <app-pagination
-  #pagination
-  [collectionSize]="selectedCategory.childrens.length"
-  [pageSize]="5"
-  [firstLastButtons]="true"
-  [maxSize]="2"
-></app-pagination>
+    #pagination
+    [collectionSize]="selectedCategory.childrens.length"
+    [pageSize]="5"
+    [firstLastButtons]="true"
+    [maxSize]="5"
+  ></app-pagination>
 </div>
+
 
 <!-- <div class="pagination">
   <span (click)="previousPage()"
@@ -143,7 +135,7 @@
 
 <div *ngIf="editItem" class="slider">
   <div *ngIf="selectedItem" class="details-container">
-    <div class="form_card basicinfo form_card d-flex flex-column gap-20">
+    <div class="form__card basic__info form__card d-flex flex-column gap-20">
 
       <div class="d-flex justify-content-md-between align-item-center ">
         <h3>Info</h3>
@@ -194,5 +186,5 @@
 
     </div>
 
-  </div>
+  </div>
 </div>

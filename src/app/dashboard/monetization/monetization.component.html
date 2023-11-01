@@ -1,0 +1,116 @@
+<div class="form-container">
+    <h2 class="form-heading">Stripe Payment Keys</h2>
+    <form [formGroup]="stripeKeysForm" (ngSubmit)="onSubmit()" class="form">
+      <div class="form-group">
+        <label for="publicKey">Public Key</label>
+        <input type="text" id="publicKey" formControlName="publicKey" class="form-control">
+        <div *ngIf="stripeKeysForm.get('publicKey')?.invalid && stripeKeysForm.get('publicKey')?.touched" class="error-message">
+          Public Key is required.
+        </div>
+      </div>
+  
+      <div class="form-group">
+        <label for="privateKey">Private Key</label>
+        <input type="text" id="privateKey" formControlName="privateKey" class="form-control">
+        <div *ngIf="stripeKeysForm.get('privateKey')?.invalid && stripeKeysForm.get('privateKey')?.touched" class="error-message">
+          Private Key is required.
+        </div>
+      </div>
+  
+      <button type="submit" [disabled]="!stripeKeysForm.valid" class="submit-button btn-primary">Submit</button>
+    </form>
+  </div>
+  
+  <div class="table-container">
+    <h2 class="form-heading">User Keys Table</h2>
+    <div class="table-wrapper table-list">
+      <table class="keys-table">
+        <thead>
+          <tr>
+            <th class="items">Seller Email</th>
+            <th class="items">Public Key</th>
+            <th class="items">Private Key</th>
+            <th class="items">Enable</th>
+            <th class="items">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let key of paymentKeys[0]?.keys">
+          <td class="items">{{ key.adminId?.email }}</td>
+          <td class="items">{{ key.publicKey }}</td>
+          <td class="items">{{ key.privateKey }}</td>
+          <td class="items">{{ key.enable }}</td>
+          <td>
+            <span
+              class="material-symbols-outlined view-button material-icons" (click)="view(key)">visibility</span>
+            <span  class="material-symbols-outlined edit-button material-icons" (click)="edit(key)">edit</span>
+            <span class="material-symbols-outlined delete-button material-icons" (click)="delete(key)">delete</span>
+          </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  
+  <app-pop-up>
+    <div *ngIf="selectedItem" class="details-container">
+      <div>
+        <strong>User Email:</strong> {{ selectedItem?.adminId?.email }}
+      </div>
+      <div>
+        <strong>Public Key:</strong> {{ selectedItem?.publicKey }}
+      </div>
+      <div>
+        <strong>Private Key:</strong> {{ selectedItem?.privateKey }}
+      </div>
+      <div>
+        <strong>Enable:</strong> {{ selectedItem?.enable }}
+      </div>
+    </div>
+  </app-pop-up>
+  
+
+  <div *ngIf="editItem" class="slider">
+    <div *ngIf="selectedItem" class="details-container">
+      <div class="form-card d-flex flex-column gap-20">
+        <div class="d-flex justify-content-md-between align-item-center">
+          <h3>Info</h3>
+          <div class="operation-button d-flex gap-10">
+            <button class="btn-primary" [hidden]="stripeKeysForm.enabled" (click)="stripeKeysForm.enable()">Edit</button>
+            <button class="btn-secondary" [hidden]="stripeKeysForm.disabled" (click)="stripeKeysForm.disable()">Cancel</button>
+            <button class="btn-primary" [hidden]="stripeKeysForm.disabled" (click)="onUpdate()">Update</button>
+          </div>
+        </div>
+  
+        <form [formGroup]="stripeKeysForm" class="d-flex flex-wrap gap-20">
+          <div class="form-group">
+            <label class="form-title" for="publicKey">Public Key</label>
+            <input type="text" class="form-input" id="publicKey" formControlName="publicKey" required />
+            <div *ngIf="stripeKeysForm.get('publicKey')?.invalid && stripeKeysForm.get('publicKey')?.touched" class="error-message">
+              <div *ngIf="stripeKeysForm.get('publicKey')?.hasError('required')">Public Key is required.</div>
+            </div>
+          </div>
+  
+          <div class="form-group">
+            <label class="form-title" for="privateKey">Private Key</label>
+            <input type="text" class="form-input" id="privateKey" formControlName="privateKey" required />
+            <div *ngIf="stripeKeysForm.get('privateKey')?.invalid && stripeKeysForm.get('privateKey')?.touched" class="error-message">
+              <div *ngIf="stripeKeysForm.get('privateKey')?.hasError('required')">Private Key is required.</div>
+            </div>
+          </div>
+  
+          <!-- Dropdown for 'true' and 'false' -->
+          <div class="form-group">
+            <label class="form-title" for="enableDropdown">Enable</label>
+            <select id="enableDropdown" formControlName="enableDropdown" class="form-input">
+              <option value="true">True</option>
+              <option value="false">False</option>
+            </select>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  
+  
+  

@@ -1,203 +1,343 @@
-#faq-adding-section {
-    padding: 10px;
-    border: 1px solid rgb(var(--blackClr), 0.1);
-    border-radius: 10px;
-    background-color: #ffffff;
+.drawer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 300px;
+  background-color: #fff;
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+  transform: translateX(100%);
+  z-index: 1000; /* Adjust z-index as needed */
 }
 
-.selected-category {
-    padding: 5px;
-    background-color: #f7f7f7;
-    border-radius: 5px;
-  }
-  
-  .selected-title {
-    color: blue; 
-    font-size: 24px;
-    margin-bottom: 10px;
-  }
-  
-  .child-content {
-    margin-top: 20px;
-  }
-  
-  .child-content h3 {
-    font-size: 18px; 
-  }
-  
-  .child-content div {
-    font-size: 16px; 
-  }
+/* Other styles... */
 
-  .child-title {
-    display: flex;
-    align-items: center;
-    margin-top: 10px;
-  }
-
-table.selected-category {
-    border-collapse: collapse;
-    width: 100%;
-    border: 1px solid #ccc; 
-  }
-  
-  table.selected-category th,
-  table.selected-category td, span {
-    border: 1px solid #ccc; 
-    padding: 8px;
-    text-align: left; 
-  }
-  
-  table.selected-category th {
-    background-color: #f2f2f2;
-  }
-  
-  table.selected-category tr:nth-child(even) {
-    background-color: #f9f9f9; 
-  }
-
-  .material-icons {
-    font-size: 15px; 
-    cursor: pointer;
-    margin-right: 2px; 
-  }
-
-  .edit-button {
-    color: #3498db; 
-  }
-  
-  .delete-button {
-    color: #e74c3c; 
-  }
-  
-  .view-button {
-    color: #27ae60; 
-  }
-
-  .flex-for-action {
-    display: flex;
-    align-items: center;
-    border: none !important;
-
-  }
-
-  .ellipsis {
-    white-space: nowrap;       
-    overflow: hidden;         
-    text-overflow: ellipsis;  
-    max-width: 150px;        
-  }
-
-.dropdown-menu {
-  display: none;
+nav {
+  z-index: 999; /* Ensure navbar stays above other elements */
 }
 
-.dropdown-menu.active {
+.drawer.open {
+  transform: translateX(0);
+}
+
+/* Icon style */
+.drawer svg {
+  width: 1em;
+  height: 1em;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+}
+
+/* Form styles */
+form {
+  padding: 20px;
+}
+
+.custom-select {
+  margin-bottom: 20px;
+}
+
+.custom-select select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
   display: block;
+  font-weight: bold;
+  margin-bottom: 5px;
 }
 
-.operational-buttons {
-  gap: 20px;
+.form-group input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
 
-  & button {
-      border: 1px solid rgba(var(--blackClr), 0.1);
-      border-radius: 5px;
-      background: none;
-      cursor: pointer;
-      font-weight: 400;
+.error-message {
+  color: #ff0000;
+  font-size: 14px;
+  margin-top: 5px;
+}
 
-      &:hover{
-          border: 1px solid rgba(var(--blackClr), 0);
-          background-color: rgb(var(--blackClr), 0.02);
-      }
-  }
+button {
+  padding: 10px 20px;
+  background-color: #4CAF50;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
 
-  & .operational-buttons-icons {
-      font-size: 22px;
-      font-weight: 300;
-      transition: transform 0.3s ease-in-out;
-      /* &:is(:hover) {
-          transform: scale(1.1);
-      } */
-  }
-
-  & button:first-child .operational-buttons-icons {
-      color: rgb(var(--blue-clr));
-  }
-
-  & button:last-child .operational-buttons-icons {
-      color: rgb(var(--red-clr));
-  }
+button:disabled {
+  background-color: #ccc;
+  color: #666;
+  cursor: not-allowed;
 }
 
 .custom-select {
   position: relative;
-  width: 400px;
-  max-width: 100%;
-  font-size: 1.15rem;
-  color: #000;
-  margin-top: 3rem;
+  width: 200px;
 }
 
-.select-button {
+.custom-select select {
   width: 100%;
-  font-size: 1.15rem;
-  background-color: #fff;
-  padding: 0.675em 1em;
-  border: 1px solid #caced1;
-  border-radius: 0.25rem;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  appearance: none; /* Hides default dropdown arrow in some browsers */
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  background: white;
+  background-image: url("data:image/svg+xml,%3csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M1 1L6 6L11 1' stroke='%23000' stroke-width='2'/%3e%3c/svg%3e"); /* Custom arrow */
+  background-repeat: no-repeat;
+  background-position: right 10px top 50%;
   cursor: pointer;
-
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
 }
 
-.selected-value {
+.custom-select select:focus {
+  outline: none;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+
+
+.pagination-wrapper {
+padding-top: 10px;
+display: flex;
+justify-content: center;
+}
+
+.table-list {
+  margin-top: 20px; /* Adding a margin from the top */
+}
+
+.selected-category-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #f8f8f8; /* Example background color */
+}
+
+.selected-category-table th,
+.selected-category-table td {
+  padding: 10px;
   text-align: left;
 }
 
-.arrow {
-  border-left: 5px solid transparent;
-  border-right: 5px solid transparent;
-  border-top: 6px solid #000;
-  transition: transform ease-in-out 0.3s;
+.selected-category-table th {
+  background-color: #eee; /* Example header background color */
 }
 
-h2 {
-  font-size: 1.5rem; 
-  margin-bottom: 10px;
+.selected-category-table td {
+  border-bottom: 1px solid #ddd; /* Example border between rows */
+}
+
+.items {
+  min-width: 120px;
+}
+
+.ellipsis {
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+}
+
+.view-button,
+.edit-button,
+.delete-button {
+  cursor: pointer;
+  margin-right: 5px;
+}
+
+.table-list {
+  overflow-x: auto; /* Enable horizontal scroll if content overflows */
+}
+
+.selected-category-table {
+  width: 100%; /* Adjust this width as needed */
+  table-layout: fixed; /* Ensures uniform column width */
+}
+
+.ellipsis.items {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Individual column widths if necessary */
+.ellipsis.serial-number {
+  width: 100px; /* Adjust as needed */
+}
+
+.ellipsis.query {
+  width: 200px; /* Adjust as needed */
+}
+
+.ellipsis.answer {
+  width: 300px; /* Adjust as needed */
+}
+
+.ellipsis.actions {
+  width: 150px; /* Adjust as needed */
+}
+
+.items.actions {
+  width: 120px; /* Adjust the width as needed */
+}
+
+.material-symbols-outlined {
+  cursor: pointer;
+  font-size: 15px; /* Adjust the icon size */
+  margin: 0 5px; /* Adjust the spacing between icons */
+}
+
+.view-button,
+.edit-button,
+.delete-button {
+  display: inline-block;
+  width: 30px; /* Adjust the width of the button */
+  height: 30px; /* Adjust the height of the button */
+  border-radius: 50%; /* Makes the button round */
+  text-align: center;
+  line-height: 30px; /* Center the icon vertically */
+  background: transparent; /* Removes background color */
+  border: 1px solid #ccc; /* Example border for distinction */
+}
+
+
+.table-container {
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
+  padding: 20px;
+  border-radius: 8px;
+}
+
+.selected-category-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #ffffff;
+}
+
+/* General styles for form */
+.slider {
+  margin-top: 20px; /* Adjust margin value */
 }
 
 .details-container {
-  margin-top: 15px;
+  background-color: #f9f9f9; /* Light background color */
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
 }
 
-.detail-item {
-  margin-bottom: 10px; 
+/* Heading styles */
+.form__card h3 {
+  font-size: 24px;
+  color: #333;
+}
+
+/* Buttons */
+.operation_button {
+  margin-top: 10px;
+}
+
+.btn-primary,
+.btn-secondary {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.btn-primary {
+  background-color: #4CAF50; /* Green color */
+  color: #fff;
+}
+
+.btn-secondary {
+  background-color: #ddd; /* Light gray color */
+  color: #333;
+}
+
+/* Form Input Fields */
+.form__group {
+  margin-bottom: 20px;
+}
+
+.form__title {
+  font-weight: bold;
+  color: #555;
+}
+
+.form__input {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.error-message {
+  color: #ff0000; /* Red color for error messages */
+  font-size: 14px;
 }
 
 
-
-.drawer {
-  position: fixed;
-  z-index: 10000000000;
-  top: 0;
-  right: -100%;
-  width: 500px;
-  height: 100%;
-  background-color: #fff;
-  transition: right 0.3s ease-in-out;
-  overflow: auto;
-}
-
-.drawer.open {
-  right: 0;
-}
-
-  
-.pagination-wrapper {
-  padding-top: 10px;
+.circular-button {
+  width: 40px;
+  height: 40px;
+  border: none;
+  border-radius: 50%;
+  background-color: transparent;
+  cursor: pointer;
   display: flex;
   justify-content: center;
+  align-items: center;
 }
+
+.circular-button svg {
+  width: 24px;
+  height: 24px;
+  fill: #333; /* Change the color as per your preference */
+}
+
+.circular-button:hover {
+  background-color: #f0f0f0; /* Change the background color on hover as desired */
+}
+
+.close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.close-button {
+  /* (Existing styles) */
+  background: #fff;
+  /* (Existing styles) */
+}
+
+.close-button:hover {
+  background: #ffcccc; /* Light red */
+  /* (Existing styles) */
+}
+

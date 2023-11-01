@@ -1,5 +1,10 @@
+.pagination-container {
+  margin-top: 20px; /* Adjust margin value as needed */
+}
+
 .pagination {
   padding: 0;
+  display: inline-block;
 }
 
 .page-item {
@@ -26,9 +31,11 @@
   border-color: rgba(var(--primaryClr));
   border-radius: 4px;
 }
-.page-item.disabled{
+
+.page-item.disabled {
   background-color: transparent;
 }
+
 .page-item.disabled .page-link {
   pointer-events: none;
   background-color: rgba(var(--whiteClr));

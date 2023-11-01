@@ -1,7 +1,7 @@
 <div *ngIf="showPopup" class="popup-overlay relative">
     <div class="popup-content popup-details" [ngClass]="{'fade-in': showPopup}">
         <ng-content></ng-content>
-    </div>
+    
 
     <div (click)="closePopup()" class="absolute right-5 top-5">
         <button type="button"
@@ -14,4 +14,5 @@
             </svg>
         </button>
     </div>
+</div>
 </div>

@@ -29,6 +29,7 @@ export class DashboardComponent {
       name: 'Elements', route:'',icons: 'build', sublist: [
         { name: 'Socials', route: '/dashboard/socials' },
         { name: 'FAQs', route: '/dashboard/faq' },
+        { name: 'Monetization' , route: '/dashboard/monetization'}
       ]
     },
     {

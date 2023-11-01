@@ -54,7 +54,7 @@ export class UtilsModule {
    deleteReview: 'http://localhost:1000/reviews/delete',   
 
     // FAQ
-    getFaqData: 'http://localhost:1000/user/getFaq',
+    getFaqData: 'http://localhost:1000/getpaginatedData/faq',
 
     // CART
     fetchCart: 'http://localhost:1000/cart/fetch',
@@ -75,8 +75,7 @@ export class UtilsModule {
     addFaqData: 'http://localhost:1000/admin/addFaq',
 
     // pagination common
-    getPaginatedData: 'http://localhost:1000/user/getPaginatedData',
-
+    getPaginatedData: 'http://localhost:1000/getPaginatedData',
     //wishlists
     showWishlist : 'http://localhost:1000/wishlist/showWishlist',
     addNewWishlist : 'http://localhost:1000/wishlist/addWishlist',
@@ -107,8 +106,12 @@ export class UtilsModule {
 
     // Socials:
     setSocials: 'http://localhost:1000/socials/set',
-    getSocials: 'http://localhost:1000/socials/get'
+    getSocials: 'http://localhost:1000/socials/get',
     
+    // payment keys 
+    addPaymentKeys: 'http://localhost:1000/admin/addPaymentKeys',
+    updatePaymentKeys: 'http://localhost:1000/admin/updatePaymentKeys',
+    deletePaymentKeys: 'http://localhost:1000/admin/deletePaymentKeys',
   }
 }
 

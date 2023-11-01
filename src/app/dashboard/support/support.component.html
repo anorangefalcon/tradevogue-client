@@ -1,64 +1,58 @@
-<table class="selected-category">
+<div class="table-list">
+  <table class="selected-category">
     <thead>
       <tr>
-        <th>Serial Number</th>
-        <th class="ellipsis">Title</th>
-        <th>Actions</th>
+        <th class="items">Serial Number</th>
+        <th class=" items ellipsis">Title</th>
+        <th class="items">Actions</th>
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let item of titleData; let i = index;">
-        <td class="ellipsis">{{i+1}}</td>
-        <td class="ellipsis">{{item}}</td>
-        <td>
+        <td class="items ellipsis">{{ i + 1 }}</td>
+        <td class="items ellipsis">{{ item }}</td>
+        <td class="items">
           <span class="material-symbols-outlined edit-button material-icons" (click)="showItemDetails(item)">edit</span>
           <span class="material-symbols-outlined delete-button material-icons" (click)="deleteTicketTitle(item)">delete</span>
         </td>
       </tr>
     </tbody>
   </table>
+</div>
 
-  <div class="operational-buttons d-flex  flex-wrap">
-    <button (click)="openDrawer()" class=" d-flex align-item-center gap-5">
-      <i class="material-symbols-outlined operational-buttons-icons">add</i>
-      Add New Title
+<div class="operational-buttons d-flex flex-wrap">
+  <button (click)="openDrawer()" class="d-flex align-item-center gap-5" style="background-color: #4CAF50; color: #fff; padding: 8px 12px; border: none; border-radius: 4px; cursor: pointer;">
+    <i class="material-symbols-outlined operational-buttons-icons">add</i>
+    Add New Title
+  </button>
+</div>
+
+<div class="drawer" [ngClass]="{ 'open': isDrawerOpen }">
+  <div (click)="closeDrawer()" class="absolute right-5 top-5">
+    <button type="button" class="close-button" style="border: none; background: none; padding: 0; cursor: pointer;">
+      <!-- Insert your preferred close icon here -->
     </button>
   </div>
 
-  <div class="drawer" [ngClass]="{ 'open': isDrawerOpen }">
-    <div (click)="closeDrawer()" class="absolute right-5 top-5">
-      <button type="button"
-        class="inline-flex justify-center px-2 py-2 text-base font-medium text-red-500 bg-white border border-transparent rounded-full hover:bg-red-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500">
-        <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 512 512" height="1em" width="1em"
-          xmlns="http://www.w3.org/2000/svg">
-          <path
-            d="M289.94 256l95-95A24 24 0 00351 127l-95 95-95-95a24 24 0 00-34 34l95 95-95 95a24 24 0 1034 34l95-95 95 95a24 24 0 0034-34z">
-          </path>
-        </svg>
-      </button>
-    </div>
-
+  <div>
+    <h2>Add New Title</h2>
     <div>
-        <h2>Add New Title</h2>
-        <div>
-            <strong>Title:</strong>
-        </div>
-        <input type="text" [(ngModel)]="updatedItem">
-        <button (click)="pushItem()">Add</button>
-        <button (click)="closeDrawer()">Cancel</button>
+      <strong>Title:</strong>
     </div>
+    <input type="text" [(ngModel)]="updatedItem" style="padding: 8px; border: 1px solid #ccc; border-radius: 4px;">
+    <button (click)="pushItem()" style="background-color: #4CAF50; color: #fff; padding: 8px 12px; border: none; border-radius: 4px; cursor: pointer;">Add</button>
+    <button (click)="closeDrawer()" style="background-color: #f44336; color: #fff; padding: 8px 12px; border: none; border-radius: 4px; cursor: pointer;">Cancel</button>
   </div>
+</div>
 
-
-
-  <app-pop-up *ngIf="selectedItem">
-    <div class="details-container">
-      <h2>Edit TicketType</h2>
-      <div>
-        <strong>Title:</strong>
-      </div>
-      <input type="text" [(ngModel)]="updatedItem">
-      <button (click)="updateItem()">Update</button>
-      <button (click)="cancelUpdate()">Cancel</button>
+<app-pop-up *ngIf="selectedItem">
+  <div class="details-container">
+    <h2>Edit TicketType</h2>
+    <div>
+      <strong>Title:</strong>
     </div>
-  </app-pop-up>
+    <input type="text" [(ngModel)]="updatedItem" style="padding: 8px; border: 1px solid #ccc; border-radius: 4px;">
+    <button (click)="updateItem()" style="background-color: #4CAF50; color: #fff; padding: 8px 12px; border: none; border-radius: 4px; cursor: pointer;">Update</button>
+    <button (click)="cancelUpdate()" style="background-color: #f44336; color: #fff; padding: 8px 12px; border: none; border-radius: 4px; cursor: pointer;">Cancel</button>
+  </div>
+</app-pop-up>

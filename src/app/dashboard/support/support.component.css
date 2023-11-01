@@ -47,3 +47,33 @@
   .drawer.open {
     right: 0;
   }
+
+  .material-symbols-outlined {
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    line-height: 24px;
+    text-align: center;
+    cursor: pointer;
+    border-radius: 50%;
+    transition: background-color 0.3s, color 0.3s;
+    font-size: 18px; /* Change the font size to make the icons smaller */
+  }
+  
+  /* Rest of the styling remains the same */
+  
+  .edit-button {
+    background-color: #00bcd4; /* Edit button background color */
+    color: #fff; /* Edit button icon color */
+  }
+  
+  .delete-button {
+    background-color: #f44336; /* Delete button background color */
+    color: #fff; /* Delete button icon color */
+  }
+  
+  .material-symbols-outlined:hover {
+    background-color: #333; /* Background color on hover */
+    color: #fff; /* Icon color on hover */
+  }
+  

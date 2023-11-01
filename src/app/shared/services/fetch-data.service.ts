@@ -79,7 +79,11 @@ export class FetchDataService {
     return new Promise((res, rej) => {
       this.http.post(url, body).subscribe({
         next: (data) => {
-          res(data);
+          console.log('DATA INSIDE NE', data);
+
+            res(data);
+          // console.log(data, "ervice data");
+
 
         }, error: (error) => {
 

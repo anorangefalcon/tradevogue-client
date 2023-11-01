@@ -14,6 +14,15 @@ export class UserServiceService {
   UserSubject = new BehaviorSubject<any>({});
   User$ = this.UserSubject.asObservable();
 
+  private totalAmountSubject: BehaviorSubject<number> = new BehaviorSubject<number>(0);
+  public totalAmount$ = this.totalAmountSubject.asObservable();
+
+  updateTotalAmount(total: number) {
+    this.totalAmountSubject.next(total);
+  }
+
+
+  //  userSubect = new BehaviorSubject({});
   PaymentUrlVisited=new BehaviorSubject<any>('');
   paymentObservable=this.PaymentUrlVisited.asObservable();
 

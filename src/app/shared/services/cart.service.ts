@@ -24,6 +24,8 @@ export class CartService {
   cart$ = this.cartSubject.asObservable();
 
   addToCart(data: any) {
+    console.log('addto cart clicked ',data);
+    
     const cartObj = { "sku": data.sku, "size": data.size, "color": data.color, "quantity": data.quantity };
   
     const userToken = this.cookie.get("userToken");

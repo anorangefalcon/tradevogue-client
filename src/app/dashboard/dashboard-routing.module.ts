@@ -14,6 +14,7 @@ import { CouponsComponent } from './coupons/coupons.component';
 import { SupportComponent } from './support/support.component';
 import { TicketsComponent } from './tickets/tickets.component';
 import { SocialsComponent } from './socials/socials.component';
+import { MonetizationComponent } from './monetization/monetization.component';
 
 const routes: Routes = [
   {
@@ -33,7 +34,15 @@ const routes: Routes = [
       { path: 'coupons', component: CouponsComponent },
       { path: 'support', component: SupportComponent },
       { path: 'tickets', component: TicketsComponent },
-      { path: 'socials', component: SocialsComponent }
+      { path: 'socials', component: SocialsComponent },
+      { path: 'features', component: AddproductfeaturesComponent},
+      { path: 'orderDetails/:orderId', component: OrderPageComponent},
+      {path: 'faq', component: FaqsComponent},
+      { path: 'product-overview/:sku', component: ProductOverviewComponent},
+      {path:'coupons',component:CouponsComponent},
+      {path: 'support', component: SupportComponent},
+      {path: 'tickets', component: TicketsComponent},
+      {path: 'monetization', component: MonetizationComponent}
     ]
   },
 ];

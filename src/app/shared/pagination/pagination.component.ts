@@ -16,7 +16,7 @@ export class PaginationComponent implements OnInit {
 
   /** Current page */
   @Input()
-  currentPage!: number;
+  currentPage: number = 1;
 
   /** The number of buttons to show either side of the current page */
   @Input()
