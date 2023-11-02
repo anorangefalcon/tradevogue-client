@@ -32,6 +32,8 @@ export class ProductsComponent implements OnInit {
     }
   }
 
+  deleteDataField: any = {};
+
   // Contains all details about the product Displayed
   productArray: any = [];
   deleteList: any = [];
@@ -48,6 +50,14 @@ export class ProductsComponent implements OnInit {
       next: (res: any) => {
         this.categoryOption = res.categories;
         this.fetchData();
+      }
+    });
+
+    this.dialogBoxService.responseEmitter.subscribe(async (res: boolean) => {
+      if (res == true) {
+        await this.fetchdata.httpPost(this.backendUrl.URLs.deleteproducts, this.deleteDataField);
+        this.fetchData();
+        this.dialogBoxService.responseEmitter.next(false);
       }
     });
   }
@@ -85,14 +95,6 @@ export class ProductsComponent implements OnInit {
     }
   }
 
-  async deleteData() {
-    this.fetchdata.HTTPPOST(this.backendUrl.URLs.deleteProductInventory, this.template).subscribe({
-      next: (res: any) => {
-        this.productArray = res;
-      }
-    });
-  }
-
   // Check for tables
 
   toggleSelectAll() {
@@ -120,24 +122,9 @@ export class ProductsComponent implements OnInit {
   // Delete Entry
   deleteItem(entry: any, name: string = '', type: string = 'single') {
     this.dialogBoxService.confirmationDialogBox(name);
-
-    this.dialogBoxService.responseEmitter.subscribe(async (res: boolean) => {
-
-      let data: any = {};
-
-      if (res == true) {
-        data.type = type,
-          data.data = entry;
-        await this.fetchdata.httpPost(this.backendUrl.URLs.deleteproducts, data);
-        this.fetchData();
-        this.dialogBoxService.responseEmitter.next(false);
-      }
-    })
+    this.deleteDataField.type = type,
+    this.deleteDataField.data = entry;
   }
-
-  // ngOnDestroy(){
-  //   this.dialogBoxService.responseEmitter.unsubscribe();
-  // }
 
   // Filter Handling function
   updateFields(e: any, field: string = '') {

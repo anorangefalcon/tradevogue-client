@@ -58,13 +58,11 @@ export class DialogBoxComponent implements AfterViewInit {
 
   delete() {
     this.dialogService.responseEmitter.next(true);
-    console.log(this.dialogService.responseEmitter);
     this.closeDialog();
   }
 
   cancel() {
     this.dialogService.responseEmitter.next(false);
     this.closeDialog();
-    console.log(this.dialogService.responseEmitter);
   }
 }

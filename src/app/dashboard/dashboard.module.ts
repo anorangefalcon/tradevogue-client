@@ -3,7 +3,7 @@ import { NgModel } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { DashboardRoutingModule } from './dashboard-routing.module';
-import { DashboardComponent } from './home.component';
+import { DashboardComponent } from './dashboard.component';
 import { StatisticsComponent } from './statistics/statistics.component';
 import { ProductsComponent } from './products/products.component';
 import { OrdersComponent } from './orders/orders.component';
@@ -31,7 +31,6 @@ import { MonetizationComponent } from './monetization/monetization.component';
   declarations: [
     DashboardComponent,
     StatisticsComponent,
-
     ProductsComponent,
     // FilterPipe,
     OrdersComponent,

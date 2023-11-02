@@ -18,6 +18,7 @@ export class OrdersComponent {
   currentPage: number = 1;
   selectedColor: any = 0;
   totalCount: any;
+  updateIndex: any = false; //Purpose of invoice Avalibility
 
   template: any = {
     limit: this.pageSize,
@@ -37,6 +38,15 @@ export class OrdersComponent {
 
   async ngOnInit(){
     this.fetchOrders();
+
+    this.dialogService.responseEmitter.subscribe((res: any)=>{
+      if(res == true){
+        console.log(this.orderData)
+        this.orderData[this.updateIndex].invoice_status = true;
+      }else{
+        this.orderData[this.updateIndex].invoice_status = false;
+      }
+    })
   }
 
   fetchOrders(){
@@ -61,15 +71,10 @@ export class OrdersComponent {
     });
   }
 
-  updateInvoice(invoiceId: string, _id: string){
+  updateInvoice(index: number, _id: string){
     console.log("hello");
-    this.dialogService.confirmationDialogBox(invoiceId);
-
-    this.dialogService.responseEmitter.pipe(first()).subscribe((res: any)=>{
-      if(res == true){
-        console.log('Hello');
-      }
-    })
+    this.dialogService.confirmationDialogBox(_id);
+    this.updateIndex = index;
   }
 
   pageChanged(event:any){
@@ -80,7 +85,6 @@ export class OrdersComponent {
 
   updateFields(e: any, type: string){
     this.template.filter[type] = e;
-    
     this.fetchOrders();
   }
 

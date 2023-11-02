@@ -29,16 +29,19 @@ export class CustomSelectComponent {
     if (this.type == 'multiSelect' && Array.isArray(this.selectedOption)) {
       this.multiSelected = this.selectedOption;
     }
-    const isOptionValid = this.options.some(option => {
-      if (typeof option === 'string' || option instanceof String) {
-        return option.toString().toLowerCase() === this.selectedOption.toString().toLowerCase();
-      } else {
-        return option === this.selectedOption;
+    if(this.options){
+      
+      const isOptionValid = this.options.some(option => {
+        if (typeof option === 'string' || option instanceof String) {
+          return option.toString().toLowerCase() === this.selectedOption.toString().toLowerCase();
+        } else {
+          return option === this.selectedOption;
+        }
+      });
+      
+      if (isOptionValid) {
+        this.selected = this.selectedOption;
       }
-    });
-    
-    if (isOptionValid) {
-      this.selected = this.selectedOption;
     }
   }
 

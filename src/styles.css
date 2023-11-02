@@ -299,6 +299,10 @@ ul {
     align-items: center;
 }
 
+.align-item-start {
+    align-items: start;
+}
+
 .align-items-end {
     align-items: flex-end;
 }
@@ -477,7 +481,7 @@ ul {
 /* Other common styles */
 
 .text-center {
-    text-align: center;
+    text-align: center !important;
 }
 
 .text-left {

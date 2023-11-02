@@ -92,7 +92,7 @@
                         </td>
                         <td class="items">
                             <div class="slide-button d-flex align-item-center">
-                                <input type="checkbox" [checked]="item.invoice_status" (change)="updateInvoice(item.orderId, item._id)" [name]="i + 'Available'" [id]="i + 'Available'" />
+                                <input type="checkbox" [(ngModel)]="item.invoice_status" (change)="updateInvoice(i, item._id)" [name]="i + 'Available'" [id]="i + 'Available'" />
                                 <label [for]="i + 'Available'"></label>
                             </div>
                         </td>

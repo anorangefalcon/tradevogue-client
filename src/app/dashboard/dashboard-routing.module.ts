@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { DashboardComponent } from './home.component';
+import { DashboardComponent } from './dashboard.component';
 import { StatisticsComponent } from './statistics/statistics.component';
 import { ProductsComponent } from './products/products.component';
 import { OrdersComponent } from './orders/orders.component';
@@ -15,6 +15,7 @@ import { SupportComponent } from './support/support.component';
 import { TicketsComponent } from './tickets/tickets.component';
 import { SocialsComponent } from './socials/socials.component';
 import { MonetizationComponent } from './monetization/monetization.component';
+import { NoPageComponent } from '../no-page/no-page.component';
 
 const routes: Routes = [
   {
@@ -23,7 +24,7 @@ const routes: Routes = [
       { path: '', component: StatisticsComponent },
       { path: 'products', component: ProductsComponent },
       { path: 'orders', component: OrdersComponent },
-      { path: 'orderDetails/:orderId', component: OrderPageComponent},
+      { path: 'orderDetails/:orderId', component: OrderPageComponent },
       { path: 'addproduct', component: AddproductComponent },
       { path: 'editproduct/:sku', component: AddproductComponent },
 
@@ -35,14 +36,17 @@ const routes: Routes = [
       { path: 'support', component: SupportComponent },
       { path: 'tickets', component: TicketsComponent },
       { path: 'socials', component: SocialsComponent },
-      { path: 'features', component: AddproductfeaturesComponent},
-      { path: 'orderDetails/:orderId', component: OrderPageComponent},
-      {path: 'faq', component: FaqsComponent},
-      { path: 'product-overview/:sku', component: ProductOverviewComponent},
-      {path:'coupons',component:CouponsComponent},
-      {path: 'support', component: SupportComponent},
-      {path: 'tickets', component: TicketsComponent},
-      {path: 'monetization', component: MonetizationComponent}
+      { path: 'features', component: AddproductfeaturesComponent },
+      { path: 'orderDetails/:orderId', component: OrderPageComponent },
+      { path: 'faq', component: FaqsComponent },
+      { path: 'product-overview/:sku', component: ProductOverviewComponent },
+      { path: 'coupons', component: CouponsComponent },
+      { path: 'support', component: SupportComponent },
+      { path: 'tickets', component: TicketsComponent },
+      { path: 'monetization', component: MonetizationComponent },
+      { path: 'socials', component: SocialsComponent },
+
+      { path: '**', component: NoPageComponent, data: { breadcrumb: '404' } },
     ]
   },
 ];

@@ -1,10 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, ViewEncapsulation } from '@angular/core';
 
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css'],
+  encapsulation: ViewEncapsulation.None
 })
 export class DashboardComponent {
 
@@ -29,7 +30,6 @@ export class DashboardComponent {
       name: 'Elements', route:'',icons: 'build', sublist: [
         { name: 'Socials', route: '/dashboard/socials' },
         { name: 'FAQs', route: '/dashboard/faq' },
-        { name: 'Monetization' , route: '/dashboard/monetization'}
       ]
     },
     {
