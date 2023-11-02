@@ -99,17 +99,19 @@
                     </div>
                 </div>
             </div>
-            <!-- <div class="types">
+            <div class="types">
                 <div class="category d-flex flex-column gap-10">
                     <p>Colors</p>
                     <div class="colors-opt d-flex gap-10 flex-wrap">
                         <div class="colors-radios d-flex align-item-center" *ngFor="let color of colors">
-                            <input type="checkbox" name="color" [value]=color [style.background-color]="color">
+                            <input type="checkbox" [name]="color" [value]="color" [style.background-color]="color"
+                                (change)="onChecked($event, 'color')" id={{color}} class="checkboxes"
+                                [checked]="isValueSelected(color, filterApplied['color'])">
                         </div>
                     </div>
                 </div>
-            </div> -->
-            
+            </div>
+
             <!-- <div class="types">
                 <div class="category d-flex flex-column gap-10">
                     <p>Size</p>
@@ -184,4 +186,5 @@
     </div>
 
 </div>
-<app-pagination [collectionSize]="totalProducts" [currentPage]="pageNumber" [pageSize]="limit" (activePage)="changePage($event)"></app-pagination>
+<app-pagination [collectionSize]="totalProducts" [currentPage]="pageNumber" [pageSize]="limit"
+    (activePage)="changePage($event)"></app-pagination>

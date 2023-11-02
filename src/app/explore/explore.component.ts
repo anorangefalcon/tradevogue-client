@@ -28,7 +28,7 @@ export class ExploreComponent {
   filterKeys: any = {}
   data: any;
   sizes: string[] = ['XS', 'S', 'M', 'L', 'XL', 'XXL', 'XXXL'];
-  colors: string[] = ['#000000', '#ffffff', '#ff0000', '#0000ff', '#008000', '#800080', '#ffff00']
+  colors: string[] = ['#000000', '#ffffff', '#ff0000', '#0357ff', '#008000', '#cf00cf', '#ffff00']
   sorting: any = {
     titles:  ["Fresh Arrivals", "Highest Rated", "Price: High to Low", "Price: Low to High"],
     value: ['createdAt:-1','avgRating:-1', 'price:-1', 'price:1']
