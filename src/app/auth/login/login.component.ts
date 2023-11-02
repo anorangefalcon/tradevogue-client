@@ -6,7 +6,9 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { UserDataService } from '../user-data.service';
 import { UtilsModule } from 'src/app/utils/utils.module';
 import { FetchDataService } from 'src/app/shared/services/fetch-data.service';
-import { UserServiceService } from 'src/app/shared/services/user-service.service';
+import { WishlistService } from 'src/app/shared/services/wishlist.service';
+import { LoginCheckService } from 'src/app/shared/services/login-check.service';
+
 
 
 @Component({
@@ -25,7 +27,7 @@ export class LoginComponent {
   isactive: boolean = false;
   script: any;
 
-  constructor(private fb: FormBuilder, private userService: UserServiceService, private cookies: CookieService, private router: Router, private userData: UserDataService, private route: ActivatedRoute, private backendUrls: UtilsModule, private fetchDataService: FetchDataService, private renderer: Renderer2) {
+  constructor(private fb: FormBuilder,private loginService:LoginCheckService, private wishlistService:WishlistService, private cookies: CookieService, private router: Router, private userData: UserDataService, private route: ActivatedRoute, private backendUrls: UtilsModule, private fetchDataService: FetchDataService, private renderer: Renderer2) {
     this.loginForm = fb.group(
       {
         email: fb.control('', [Validators.required, Validators.email]),
@@ -37,22 +39,14 @@ export class LoginComponent {
       passwordEmail: fb.control('', [Validators.required, Validators.email])
     })
 
-
     // Google login
-    window.addEventListener('loginEvent', async (event: any) => {
+    window.addEventListener('loginEvent',(event:any)=>{
       const token = { credential: event.detail.credential }
-      const body = { token };
-
-      this.userService.loginUser(body).subscribe((data: any) => {
-        this.cookies.set('userToken', data.token)
-        this.cookies.set('userName', data.firstName)
-        this.router.navigate(['/']);
-      });
-
-
-    })
+        const body = { token };
+      this.LoginUser(body);
+    } );
   }
-
+  
   ngOnInit() {
     this.script = this.renderer.createElement('script');
     this.script.src = 'https://accounts.google.com/gsi/client';
@@ -61,49 +55,28 @@ export class LoginComponent {
     this.renderer.appendChild(document.body, this.script);
   }
 
-  async onLogin() {
-    // try {
 
-    const body = {
-      email: this.loginForm.get('email')?.value,
-      password: this.loginForm.get('password')?.value
-    }
-    //   const data: any = await this.fetchDataService.httpPost(this.backendUrls.URLs.loginUrl, body)
-
-    //   this.fetchDataService.subject.next(data.firstName);
-    //   this.cookies.set('userToken', data.token)
-    //   this.cookies.set('userName', data.firstName)
-    //   // this.
-    //   this.router.navigate(['/']);
-
-    // }
-    // catch (error) {
-    //   console.log("Error in Logging In: ", error);
-    // }
-
+  LoginUser(body:any){ 
     this.fetchDataService.HTTPPOST(this.backendUrls.URLs.loginUrl, body).subscribe(
       (data: any) => {
         this.fetchDataService.subject.next(data.firstName);
         this.cookies.set('userToken', data.token)
         this.cookies.set('userName', data.firstName)
         this.router.navigate(['/']);
+        this.loginService.LoginCheck.next(true);
       }
     )
+  }
 
-      // this.fetchDataService.subject.next(data.firstName);
-      // this.cookies.set('userToken', data.token)
-      // this.cookies.set('userName', data.firstName)
-      // let response=await this.userService.SubscribingValue('GoToPayment');
-      // if(response){
-      //   this.router.navigate(['/cart/billing']);
-      //   return;
-      // }
-      // this.router.navigate(['/']);
-
+  async onLogin() {
+    const body = {
+      email: this.loginForm.get('email')?.value,
+      password: this.loginForm.get('password')?.value
+    }
+    this.LoginUser(body);
   }
 
   async onResetPassword() {
-    try {
       const body = {
         email: this.forgetPasswordForm.get('passwordEmail')?.value
       }
@@ -113,15 +86,6 @@ export class LoginComponent {
           this.isactive = true;
         }
       )
-      // const data = await this.fetchDataService.httpPost(this.backendUrls.URLs.forgetPasswordUrl, body);
-      // console.log(data, "forget password data");
-      // this.isactive = true;
-
-    }
-    catch (error) {
-      console.log("Error in Reset Password: ", error);
-
-    }
   }
 
   togglePasswordVisibility() {

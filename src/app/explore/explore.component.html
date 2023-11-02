@@ -83,14 +83,14 @@
                             <div class="form__group relative">
                                 <span class="material-symbols-outlined key form__icon absolute">
                                     currency_rupee</span>
-                                <input type="number" class="form__input">
+                                <input type="number" class="form__input" [(ngModel)]="minPrice">
                             </div>
                             <div class="form__group relative">
                                 <span class="material-symbols-outlined key form__icon absolute">
                                     currency_rupee</span>
-                                <input type="number" class="form__input">
+                                <input type="number" class="form__input" [(ngModel)]="maxPrice">
                             </div>
-                            <button class="d-flex justify-content-center align-item-center">
+                            <button class="d-flex justify-content-center align-item-center" (click)="onAdd('','')">
                                 <span class="material-symbols-outlined">
                                     search
                                 </span>

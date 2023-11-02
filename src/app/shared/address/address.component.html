@@ -1,30 +1,22 @@
     
-<app-drawer [direction]="direction" [show]="show" (showChange)="ChangeHanlder($event)" [ParenClosed]="ParenClosed" (ParentClosedEmitter)="ParentClosedHandler($event)">
+<app-drawer [direction]="direction" [show]="show" (showChange)="ChangeHanlder($event)" [ParenClosed]="ParenClosed" (ParentClosedEmitter)="ParentClosedHandler($event)" [title]="title">
         <div class="addressFormContent">
      
        
     <div class="d-flex flex-column gap-20">
 
-    <h2>Add New Address
-    </h2>
-
-    
-    
     <form [formGroup]="DetailsForm" class="d-flex gap-15">
     <div class="form__group relative d-flex flex-column">
         <label class="form__label">First Name<span>*</span></label>
-        <!-- <span class="material-symbols-outlined form__icon absolute">person</span> -->
         <input type="text" id="firstname" formControlName="firstname" placeholder="Enter Your First Name" class="form__input">
     </div>
     
     <div class="form__group relative d-flex flex-column">
         <label class="form__label">Last Name<span>*</span></label>
-        <!-- <span class="material-symbols-outlined form__icon absolute">person</span> -->
         <input type="text" id="lastname" formControlName="lastname" placeholder="Enter Your Last Name" class="form__input">
     </div>
     <div class="form__group relative d-flex flex-column">
         <label class="form__label">Apartment<span>*</span></label>
-        <!-- <span class="material-symbols-outlined form__icon absolute">mail</span> -->
         <input type="text" id="apartment" formControlName="apartment" placeholder="Enter Your apartment no" class="form__input">
     </div>
     
@@ -77,17 +69,12 @@
     </form>
     
     <div class="d-flex gap-15">
-        <!--  (click)="AddressClose()" -->
-        <button class="width-160 cancelbtn">Cancel</button>
-        <!-- -->
-        <button class="btn-primary width-160" #EditBtn (click)="AddnewAddress()"  [disabled]="DetailsForm.invalid" >
-            
+        <!-- <button class="width-160 cancelbtn">Cancel</button> -->
+        <button class="btn-primary width-160" #EditBtn (click)="SaveAddress()"  [disabled]="DetailsForm.invalid" >
             <span *ngIf="receiveData">Update</span>
             <span *ngIf="!receiveData">Save</span>
         </button>
     </div>
-    
-    
     
     </div>
     

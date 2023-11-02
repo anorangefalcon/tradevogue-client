@@ -2,7 +2,6 @@ import { Component, ElementRef, Renderer2, ViewChild } from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
 import { FetchDataService } from 'src/app/shared/services/fetch-data.service';
 import { UtilsModule } from 'src/app/utils/utils.module';
-import { UserServiceService } from 'src/app/shared/services/user-service.service';
 import { CartService } from 'src/app/shared/services/cart.service';
 import { ActivatedRoute } from '@angular/router';
 declare var Stripe: any;
@@ -130,6 +129,10 @@ export class BillingComponent {
       }
     });
   }
+  // constructor(private cookie: CookieService, private fetchDataService: FetchDataService, private cartService:CartService, private userService: UserServiceService, private backendURLs: UtilsModule) {
+    // this.userService.PaymentUrlVisited.next(true);
+  //   this.getAddresses();
+  // }
 
 
   async initialize(stripe: any): Promise<void> {
@@ -294,11 +297,11 @@ export class BillingComponent {
     }
   }
 
-  constructor(private cartService: CartService, private fetchDataService: FetchDataService, private userService: UserServiceService, private backendURLs: UtilsModule, private renderer: Renderer2, private elementRef: ElementRef, private cookie: CookieService, private route: ActivatedRoute) {
+  constructor(private cartService: CartService, private fetchDataService: FetchDataService, private backendURLs: UtilsModule, private renderer: Renderer2, private elementRef: ElementRef, private cookie: CookieService, private route: ActivatedRoute) {
 
-    this.userService.totalAmount$.subscribe((data: any) => {
-      this.totalAmount = data;
-    })
+    // this.userService.totalAmount$.subscribe((data: any) => {
+    //   this.totalAmount = data;
+    // })
 
     this.proceedToPayment();
 
@@ -335,7 +338,7 @@ export class BillingComponent {
     }
 
     checkSubTotal();
-    this.userService.PaymentUrlVisited.next(true);
+    // this.userService.PaymentUrlVisited.next(true);
 
 
 
@@ -443,8 +446,10 @@ export class BillingComponent {
 
   SelectAddress(address: any) {
     this.DeliveredAddress = address;
-    this.userService.emittingValue('DeliveryAddress', this.DeliveredAddress);
-
+    // this.userService.DeliveryAddress.next(this.DeliveredAddress);
+    // this.userService.OrderSubject.next(address);
+   
+    // this.userService.emitOrderSubject(address,address);
   }
 
   ChangeAddress() {
@@ -452,13 +457,9 @@ export class BillingComponent {
   }
 
   async MakeDefault(address: any, i: any) {
-    try {
       const body = { address_id: address._id };
-      const update: any = await this.fetchDataService.httpPost(this.backendURLs.URLs.setDefaultAddress, body);
-      this.userAddresses = update[0].info.address;
-
-    } catch (error) {
-
-    }
+      this.fetchDataService.HTTPPOST(this.backendURLs.URLs.setDefaultAddress, body).subscribe((update:any)=>{
+        this.userAddresses = update[0].info.address;
+      }); 
   }
 }

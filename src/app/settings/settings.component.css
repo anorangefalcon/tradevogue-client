@@ -2,8 +2,8 @@
     width: calc(100% - 260px);
 }
 
+.width-160{
 
-.width-160 {
     width: 160px;
 }
 
@@ -401,11 +401,104 @@ label span {
 .Orders{
     width: 100%;
     padding-inline: 50px;
+
 }
 
 .orders__p{
     color: rgba(var(--blackClr), 0.6);
 }
+
+.particularOrder{
+    /* border-top: 1px solid rgba(var(--blackClr), 0.6); */
+    /* border-right-radius: 5px; */
+    /* border-left-radius: 5px; */
+    border-top-right-radius: 9px;
+    border-top-left-radius: 9px;
+    border: 1px solid rgba(var(--blackClr), 0.2);
+    padding-inline: 30px;
+    padding-block : 20px;
+    
+}
+
+
+.order__basic{
+    & span{
+        color:rgba(var(--blackClr), 0.6);
+    }
+
+    & p{
+        font-weight: 500;
+    }
+}
+.order {
+    padding-block: 20px;
+}
+
+.order__firstDiv__btn{
+    & button{
+        padding-inline : 15px;
+        padding-block : 10px ;
+        background: transparent;
+        border: 1px dashed rgba(var(--primaryClr));
+        color:rgba(var(--blackClr), 0.6);
+    
+    }
+}
+.imgDiv {
+    width: 80px;    
+    overflow: hidden;
+    border-radius: 8px;
+    height: 100px;
+
+    
+    /* background-color: black; */
+}
+.order__secondDiv:not(:first-child) {
+    border-block-end: 0.8px solid rgb(var(--textClr), 0.9);
+}
+.productDetails {
+    & p {
+        opacity: 0.7;
+        /* font-size: 12px !important; */
+    }
+}
+.prodName {
+    font-size : 22px;
+    font-weight : 500;
+    font-size: 16px !important;
+    opacity: 1 !important;
+}
+.price {
+    font-weight: 500;
+}
+.order:not(:last-child){
+    border-block-end : 0.8px solid rgba(var(--blackClr), 0.6);
+}
+.delivery {
+    & span {
+        color: rgb(var(--whiteClr));
+        background-color: rgb(var(--success));
+        width: 15px;
+        height: 15px;
+        font-size: 15px;
+        border-radius: 50%;
+    }
+}
+.btns button {
+    background-color: transparent;
+    padding: 0;
+    color : rgb(var(--primaryClr))
+}
+
+.color__div{
+    height: 15px;
+    width: 15px;
+    border-radius: 50%;
+}
+
+
+
+/*  WISHLISTS CSS */
 .accordian {
     & .content {
         font-size: 13px !important;

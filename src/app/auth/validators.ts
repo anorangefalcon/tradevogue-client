@@ -72,9 +72,6 @@ export function usernameValidator(control: FormControl): { [key: string]: boolea
 // VALIDATOR FOR MOBILE NO
 export  function PhoneNumberValidator(control: FormControl): any{
   let expression:any=/^\+?[1-9][0-9]{7,14}$/;
-  // expression=((\+*)((0[ -]*)*|((91 )*))((\d{12})+|(\d{10})+))|\d{5}([- ]*)\d{6}
-  console.log('result is ',expression.test(control.value));
-  
   if( expression.test(control.value)) return null;
   return {invalidPhoneNo:true};
 }

@@ -52,8 +52,11 @@ export class CardTemplateComponent {
     return Array(newTotal).fill(0);
   }
 
-  async chooseWishlist() {
-    this.wishlistService.chooseWishlist(this.product);
+  async addToWishlist(product:any) {
+    // this.wishlistService.chooseWishlist();
+    // console.log('product coming is ',product);
+    
+    this.wishlistService.ShowWishlist(product._id);
     
   }
   

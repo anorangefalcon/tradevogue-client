@@ -25,6 +25,7 @@ import { InvoiceTemplateComponent } from './components/invoice-template/invoice-
 
 
 
+
 @NgModule({
   declarations: [
     NavbarComponent,
@@ -71,6 +72,7 @@ import { InvoiceTemplateComponent } from './components/invoice-template/invoice-
     LessThanOrEqualPipe,
     PaginationComponent,
     DrawerComponent
-  ]
+  ],
+
 })
 export class SharedModule { }

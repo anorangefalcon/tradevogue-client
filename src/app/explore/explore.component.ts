@@ -3,6 +3,7 @@ import { FetchDataService } from '../shared/services/fetch-data.service';
 import { HttpParams } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
+import { WishlistService } from '../shared/services/wishlist.service';
 
 @Component({
   selector: 'app-explore',
@@ -33,8 +34,10 @@ export class ExploreComponent {
     value: ['createdAt:-1','avgRating:-1', 'price:-1', 'price:1']
   }
   genders : string[] = ['Male', 'Female'];
+  minPrice : any;
+  maxPrice : any;
  
-  constructor(private fetchData: FetchDataService, private route: ActivatedRoute, private location: Location) { }
+  constructor(private fetchData: FetchDataService, private wishlistService:WishlistService, private route: ActivatedRoute, private location: Location) { }
 
   ngOnInit() {
 
@@ -45,6 +48,13 @@ export class ExploreComponent {
       let actualParams = (Object.keys(this.filterApplied).length > 0) ? this.filterApplied : JSON.parse(JSON.stringify(data));
 
       this.fetchData.getProducts(actualParams, this.limit, 1).subscribe((data: any) => {
+        data.items.forEach((el:any)=>{
+          this.wishlistService.WishListedProducts.subscribe((response:any)=>{
+            if(response.includes(el._id)){
+              el.wishlisted=true;
+            } 
+          })
+        })
         this.products = data.items;      
         this.totalProducts = data.total;
       });
@@ -76,7 +86,8 @@ export class ExploreComponent {
       this.filterApplied[field].push(event.length-1)
     }
     else {
-      this.filterApplied[field] = event[0]
+      if(event){
+      this.filterApplied[field] = event[0]}
     }
     console.log(this.filterApplied, "when setting params");
     

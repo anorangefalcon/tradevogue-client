@@ -5,6 +5,7 @@ import { FetchDataService } from '../../services/fetch-data.service';
 import { NavigationEnd, Router } from '@angular/router';
 import { WishlistService } from '../../services/wishlist.service';
 import { UtilsModule } from 'src/app/utils/utils.module';
+import { LoginCheckService } from '../../services/login-check.service';
 
 // declare var doSignout:any;
 @Component({
@@ -29,27 +30,27 @@ export class NavbarComponent implements OnInit {
     women: []
   }
 
-constructor(private cartService: CartService, private cookie: CookieService, private fetchDataService: FetchDataService, private router: Router, private wishlistService : WishlistService, private utils: UtilsModule) { }
+constructor(private cartService: CartService, private checkLogin:LoginCheckService, private cookie: CookieService, private fetchDataService: FetchDataService, private router: Router, private wishlistService : WishlistService, private utils: UtilsModule) { }
 
 async ngOnInit() {
-
-    this.purchaser = this.cookie.get('userName');
-    const isUser = this.cookie.get("userToken")
-    if (isUser) {
-      this.isUserLogin = true;
-    }
-
-    // this.wishlistService.wis((data: any)=> {
-    //   console.log(data, "navbardTA");
-      
-    // })
-
-
+    if(this.checkLogin.loginCheckObservable$.subscribe((data)=>{
+      this.isUserLogin=data;
+    }))
+    
     this.cartService.fetchCart('count').subscribe((item_count: any) => {
       this.cart_count = item_count;
     })
 
+    this.wishlistService.getWishlistCount();
 
+
+    this.wishlistService.WishlistCount$.subscribe((data)=>{
+        if(data){
+          this.wishlistCount=data;
+        }
+    })
+
+    
 
 
     
@@ -82,6 +83,8 @@ async ngOnInit() {
   }
 
   onLogout() {
+    console.log('logout clicked------>');
+    
     this.cookie.delete('userToken');
     this.cookie.delete('userName');
     

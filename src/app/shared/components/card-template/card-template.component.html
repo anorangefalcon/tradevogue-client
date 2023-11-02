@@ -53,7 +53,8 @@
             </span>
         </a>
 
-        <a class="options-icon wishlist-logo" (click)="chooseWishlist()"><span class="material-symbols-outlined">
+        <!-- (click)="chooseWishlist()" -->
+        <a class="options-icon wishlist-logo" (click)="addToWishlist(product)"><span class="material-symbols-outlined" [ngClass]="{'wishlised':product.wishlisted}">
                 favorite
             </span>
         </a>

@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 import { CartService } from 'src/app/shared/services/cart.service';
-import { UserServiceService } from 'src/app/shared/services/user-service.service';
+
+
 
 @Component({
   selector: 'app-cart',
@@ -12,8 +13,8 @@ import { UserServiceService } from 'src/app/shared/services/user-service.service
 
 export class CartComponent implements OnInit {
 
-  constructor(private cartService: CartService, private cookie: CookieService,private router:Router,private userService:UserServiceService) {
-    this.userService.PaymentUrlVisited.next(false);
+  constructor(private cartService: CartService, private cookie: CookieService,private router:Router) {
+    // this.userService.PaymentUrlVisited.next(false);
    }
   cartArr: any[] = [];
   userToken: any = this.cookie.get("userToken");
@@ -73,7 +74,7 @@ export class CartComponent implements OnInit {
     const checkToken=this.cookie.get('userToken');
     console.log('chcektoken is ',checkToken);
     if(!checkToken){
-      await this.userService.emittingValue('GoToPayment',1);
+      // await this.userService.emittingValue('GoToPayment',1);
       this.router.navigate(['/auth/login']);
     }
     

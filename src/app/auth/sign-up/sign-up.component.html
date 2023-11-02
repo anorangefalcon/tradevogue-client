@@ -10,7 +10,7 @@ l<section class="signup-section d-flex flex-">
 
       <form [formGroup]="signupForm" class="d-flex flex-column gap-15">
 
-        <div class="d-flex Name">
+
           <div class="form__group relative d-flex flex-column">
             <label class="form__label">First Name<span>*</span></label>
             <span class="material-symbols-outlined form__icon absolute">person</span>
@@ -29,7 +29,7 @@ l<section class="signup-section d-flex flex-">
               class="invalid">*LastName is required.</small>
 
           </div>
-        </div>
+
 
         <div class="form__group relative d-flex flex-column">
           <label class="form__label">Email<span>*</span></label>
@@ -104,24 +104,6 @@ l<section class="signup-section d-flex flex-">
 
           </div>
 
-
-        </div>
-
-        <div class="form__group d-flex flex-column relative">
-          <label class="form__label">Re-type Password<span>*</span></label>
-          <span class="material-symbols-outlined key form__icon absolute">key</span>
-          <input [type]="confirmPassword" id="confirmPassword" formControlName="confirmPassword"
-            placeholder="Re-type Password">
-          <button class="eye-btn flex justify-content-center align-items-center"
-            (click)="showPassword2 = !showPassword2;  confirmPassword = showPassword2 ? 'text' : 'password';"><span
-              class="material-symbols-outlined eye">{{showPassword2? 'visibility' : 'visibility_off'}}</span></button>
-
-
-          <small
-            *ngIf="!signupForm.get('confirmPassword')?.hasError('required') && signupForm?.get('confirmPassword')?.invalid && signupForm.get('confirmPassword')?.touched"
-            class="invalid">
-            *Your passwords and confirm password do not match.
-          </small>
 
         </div>
 

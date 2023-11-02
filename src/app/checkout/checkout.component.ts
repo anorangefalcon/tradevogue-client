@@ -1,11 +1,13 @@
 import { Component, HostListener, OnInit, ElementRef, ViewChild, Renderer2 } from '@angular/core';
 import { CartService } from '../shared/services/cart.service';
-import { CookieService } from 'ngx-cookie-service';
+
 import { Router } from '@angular/router';
 import { UtilsModule } from '../utils/utils.module';
 import { FetchDataService } from '../shared/services/fetch-data.service';
 import { ToastService } from '../shared/services/toast.service';
-import { UserServiceService } from '../shared/services/user-service.service';
+import { lastValueFrom } from 'rxjs';
+import { CookieService } from 'ngx-cookie-service';
+
 
 @Component({
   selector: 'app-checkout',
@@ -32,13 +34,28 @@ export class CheckoutComponent implements OnInit {
   @ViewChild('Proceed__btn') Proceed__btn!: ElementRef;
 
   BillingPageVisited: boolean = false;
-  constructor(private cartService: CartService, private router: Router, private renderer: Renderer2, private userService: UserServiceService, private toastService: ToastService, private BackendUrl: UtilsModule, private fetchService: FetchDataService, private cookie: CookieService, private route: Router, private el: ElementRef) {
+  constructor(private cartService: CartService, private cookie:CookieService, private router: Router, private renderer: Renderer2, private toastService: ToastService, private BackendUrl: UtilsModule, private fetchService: FetchDataService, private route: Router, private el: ElementRef) {
 
-    console.log('stripe is ------> ',this.BillingPageVisited);
+    // if(this.route.url=='/cart/billing'){
+    //   // this.BillingPageVisited=true;
+    // }
+
+    // console.log('result is ',this.cookieService.get('CouponApplied'));
     
-    if(this.route.url=='/cart/billing'){
-      this.BillingPageVisited=true;
-    }
+    // if(!this.cookieService.get('CouponApplied')){
+    //   this.CouponApplied=this.cookieService.get('CouponApplied');
+    // }
+
+
+
+
+
+  //  this.cookieService.get('DeliveryAddress');
+
+    // (this.userService.PaymentUrlVisited.subscribe((data)=>{
+    //   this.BillingPageVisited=data;
+    // }))
+
   }
 
   async ngOnInit() {
@@ -50,40 +67,10 @@ export class CheckoutComponent implements OnInit {
       this.cart = data;
     });
 
-
-    this.AllCoupons = await this.fetchService.httpGet(this.BackendUrl.URLs.getCoupons);
-     this.userService.paymentObservable.subscribe((response)=>{
-       this.BillingPageVisited=response;
-       console.log('subscribing every time====> ',this.BillingPageVisited  );
-      // if(response){
-      //   this.BillingPageVisited=true;
-      // }
-      // else if(!response && this.route.url == '/cart/billing'){
-        
-      //   let data=this.userService.emittingValue('PaymentUrlVisited',1);
-      //   this.BillingPageVisited=true;
-      //   console.log('hel------> ',this.BillingPageVisited);
-      // }
-  
-      // else{
-      //   this.BillingPageVisited=false;
-      // }
-  
+    this.fetchService.HTTPGET(this.BackendUrl.URLs.getCoupons).subscribe((data:any)=>{
+      this.AllCoupons=data;
     });
-
-    // let data=await this.userService.SubscribingValue('couponApplied');
-    
-    // this.userService.couponApplied.asObservable().subscribe((data)=>{
-    //     // console.log('data is ',data);
-    //     this.CouponApplied=data;
-
-    //   })
-    // if (this.route.url == '/cart/billing') {
-    //   console.log('this btn si ', this.Proceed__btn);
-    //   this.BillingPageVisited = true;
-    // }
-
-
+ 
 
 
   }
@@ -121,7 +108,7 @@ export class CheckoutComponent implements OnInit {
   }
   checkLogin() {
     const cookieExists = document.cookie.indexOf('loginDetails') !== -1;
-    console.log(cookieExists);
+
 
     // cookieExists == true ? this.updateBoolean = false : this.updateBoolean = true;
 
@@ -194,6 +181,7 @@ export class CheckoutComponent implements OnInit {
           }
           this.CouponApplied = coupon;
           // await this.userService.couponApplied.next(this.CouponApplied);
+          // this.cookieService.set('CouponApplied',JSON.stringify(this.CouponApplied));
           this.CouponValid = 'valid';
           break;
         }
@@ -212,7 +200,8 @@ export class CheckoutComponent implements OnInit {
         return;
       }
       this.CouponApplied = coupon;
-      await this.userService.emittingValue('couponApplied',this.CouponApplied);
+      // await this.userService.emittingValue('couponApplied',this.CouponApplied);
+      // this.cookieService.set('CouponApplied',JSON.stringify(this.CouponApplied));
       this.CouponValid = 'valid';
       
       // this.ParenClosed=true;
@@ -230,7 +219,9 @@ export class CheckoutComponent implements OnInit {
     }
     this.CouponCode.nativeElement.value = ''; // change input field to ''
     this.cart.amounts.savings = this.CalculateDiscount(coupon);
+    // this.cookieService.set('coupon',this.CalculateDiscount(coupon));
     this.cart.amounts.total -= this.cart.amounts.savings;
+    // this.cookieService.set('total',this.cart.amounts.total);
     this.ParenClosed = true;
   }
 
@@ -257,83 +248,79 @@ export class CheckoutComponent implements OnInit {
 
 
 
-  PaymentAmount:any;
-  async verifyOrderSummary() {
-    try {
-
-      // let DeliveredAddress=await this.userService.SubscribingValue('DeliveryAddress');
-
+  async verifyOrderSummary() { 
+    
       this.cartService.fetchCart().subscribe(async (res) => {
+        console.log('res is ',res);
+        
         let result = JSON.parse(JSON.stringify(res));
         if (this.CouponApplied) {
           result.CouponApplied = this.CouponApplied;
         }
 
-        //  if(!DeliveredAddress){
-        //   this.toastService.errorToast({title:'Please select Address'});
-        //   return;
-        //  }
+         this.fetchService.HTTPPOST(this.BackendUrl.URLs.verifyOrderSummary, result).subscribe((response)=>{
+          console.log('response is ',response);
+          
+          this.cart.amounts = response;
 
-        // result.DeliveredAddress=DeliveredAddress;
-        const response:any = await this.fetchService.httpPost(this.BackendUrl.URLs.verifyOrderSummary, result);
-        this.cart.amounts = response;
-        // this.userService.PaymentValue.next(response);
-        this.PaymentAmount=response.total;
-        this.userService.updateTotalAmount(response.total);
-        const checkToken = this.cookie.get('userToken');
-        if (!checkToken) {
-          await this.userService.emittingValue('GoToPayment', 1);
-          this.router.navigate(['/auth/login']);
-        }
-        else {
-          this.router.navigate(['/cart/billing']);
-        }
+          const checkToken = this.cookie.get('userToken');
+          console.log('token find is ',checkToken);
+          if (!checkToken) {
+            this.router.navigate(['/auth/login']);
+          }
+          else {
+            this.router.navigate(['/cart/billing']);
+          }
+        });
+        
+       });
 
-      });
-
-    } catch (error) {
-
-    }
+    
   }
 
 
  async ProceedToPayment() {
-    try {
-         let DeliveredAddress=await this.userService.SubscribingValue('DeliveryAddress');
-           if(!DeliveredAddress){
-          this.toastService.errorToast({title:'Please select Address'});
-           }
+  
 
+  // this.userService.ordersubject$.subscribe((data:any)=>{
+  //   // console.log('data ---------> ',data);
+    
+  // });
 
-          //  PAYMENT GATEWAY 
+  // return;
 
+  //       (this.userService.SelectedAddress$).subscribe((address)=>{
+  //         if(!address) this.toastService.errorToast({title:'Please select Address'});
+  //         this.cartService.fetchCart().subscribe((res) => {
+  //           let input=JSON.parse(JSON.stringify(res));
+  //           // console.log('input amount is ',input.amounts);
+  //           // this.userService.PaymentSubject.next(input.amounts);
 
-          this.cartService.fetchCart().subscribe(async (res) => {
-            let input=JSON.parse(JSON.stringify(res));
-            input.DeliveredAddress=DeliveredAddress;
-            let data:any={};
-            if(this.CouponApplied){
-              data.coupon=this.CouponApplied;
-              data.discount=input.amounts.savings;
-            }
-            data.address=DeliveredAddress;
-            data.products=input.details;
-            console.log('body is ',data);
-          let response=  await this.fetchService.httpPost(this.BackendUrl.URLs.createOrder,data);
-              console.log('responsse is ',response);
-              
-            
-          })
-          return;
-         
+  //           // this.userService.Payment$.subscribe((data)=>{
 
-         
+  //           // })
 
-    } catch (error) {
-      
-    }
-  }
+  //           // return;
+  //           // input.DeliveredAddress=address;            
+  //           let data:any={};
+  //           if(this.CouponApplied){
+  //             data.coupon=this.CouponApplied;
+  //             data.discount=input.amounts.savings;
+  //           }
+  //           data.address=address;
+  //           data.products=input.details;
+  //           this.fetchService.HTTPPOST(this.BackendUrl.URLs.createOrder,data).subscribe((data:any)=>{
 
+  //           });
 
+  //         })
+  //       });
+          
+        
+  //         return;
+  // }
+
+  
+}
 
 }

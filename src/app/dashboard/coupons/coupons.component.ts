@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { FetchDataService } from 'src/app/shared/services/fetch-data.service';
-import { UserServiceService } from 'src/app/shared/services/user-service.service';
 import { UtilsModule } from 'src/app/utils/utils.module';
 
 @Component({
@@ -26,7 +25,7 @@ this.show=event;
 
 OfferType=['coupon','discount'];
 discountType=['percentage','flat'];
-DiscountPercentageType=['fixed','variable'];
+// DiscountPercentageType=['fixed','variable'];
 couponType=['global', 'custom','new'];
 Brands:any;
 EditIndex:any;
@@ -37,7 +36,7 @@ CouponRequest:boolean=false;
 
 
 
-constructor(private fb:FormBuilder,private fetchDateService:FetchDataService,private BackendUrls:UtilsModule,private userService:UserServiceService){
+constructor(private fb:FormBuilder,private fetchDateService:FetchDataService,private BackendUrls:UtilsModule){
 
 
 
@@ -179,12 +178,10 @@ constructor(private fb:FormBuilder,private fetchDateService:FetchDataService,pri
   }
 
 async ngOnInit(){
-  try {
-    this.allOffers=await this.fetchDateService.httpGet(this.BackendUrls.URLs.getOffers);
-  } catch (error) {
-  
+ this.fetchDateService.HTTPGET(this.BackendUrls.URLs.getOffers).subscribe((data)=>{
+      this.allOffers=data;
+    });
     
-  }
 }
 
 
@@ -211,17 +208,14 @@ async ngOnInit(){
 
   DiscountTypeHandler(event:any){
    this.OfferForm.get('discountType')?.patchValue(event);
-   this.OfferForm.addControl('DiscountPercentageType', this.fb.control('', [Validators.required]));
-   
-  }
+  //  this.OfferForm.addControl('DiscountPercentageType', this.fb.control('', [Validators.required]));
+   }
 
-  DiscountPercentageHandler(event:any){
-    this.OfferForm.get('DiscountPercentageType')?.patchValue(event);
-  }
+  // DiscountPercentageHandler(event:any){
+  //   this.OfferForm.get('DiscountPercentageType')?.patchValue(event);
+  // }
   
   async CouponSubmit(){
-
-    
     let url;
     let body=this.OfferForm.value;
     if(this.EditRequest){
@@ -231,40 +225,29 @@ async ngOnInit(){
     else{
       url=this.BackendUrls.URLs.createOffer;
     }
+this.fetchDateService.HTTPPOST(url,body).subscribe((data)=>{
+        if(this.EditRequest){
+          this.allOffers[this.EditIndex]=data;
+          this.EditRequest=false;
+        }
+        else{
+          this.allOffers.push(data);
+        }
+        this.OfferForm.reset();
+        this.ParenClosed=true;
+        
+      });
+  return;  
 
-
-    
-    try {
-      let response=await this.fetchDateService.httpPost(url,body);
-
-      if(this.EditRequest){
-        this.allOffers[this.EditIndex]=response;
-        this.EditRequest=false;
-      }
-      else{
-        this.allOffers.push(response);
-      }
-    
-      this.OfferForm.reset();
-      this.ParenClosed=true;
-      
-      return;  
-    } catch (error) {
-   
-    }
   }
 
 
   async DeleteOffer(element:any,index:any){
-    try {
-      
-      const body={id:element._id};
-      const offerDeleted=await this.fetchDateService.httpPost(this.BackendUrls.URLs.deleteOffer,body);
-      this.allOffers.splice(index,1);
-    } catch (error) {
-      
-    }
-    
+        const body={id:element._id};
+ this.fetchDateService.HTTPPOST(this.BackendUrls.URLs.deleteOffer,body).subscribe((data)=>{
+   this.allOffers.splice(index,1);
+ });
+     
   }
 
 

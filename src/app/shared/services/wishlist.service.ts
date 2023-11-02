@@ -4,7 +4,6 @@ import { FetchDataService } from './fetch-data.service';
 import { UtilsModule } from 'src/app/utils/utils.module';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { Router } from '@angular/router';
-import { UserServiceService } from './user-service.service';
 import { productData } from '../productData';
 import { ToastService } from './toast.service';
 import { HttpClient } from '@angular/common/http';
@@ -20,14 +19,14 @@ export class WishlistService {
   showWishlistPopup = new BehaviorSubject<any>('');
   wishlistPopupData = this.showWishlistPopup.asObservable();
 
-  // sendWishlists = new BehaviorSubject<any>('');
-  // send$ = this.sendWishlists.asObservable();
-  // WishlistOpened: any = false;
+  WishListedProducts:any=new BehaviorSubject('');
+  WishlistCount=new BehaviorSubject<any>('');
+  WishlistCount$=this.WishlistCount.asObservable();
+  productId:any;
 
   constructor(private cookie: CookieService,
     private fetchService: FetchDataService,
     private backendUrls: UtilsModule,
-    private userService: UserServiceService,
     private router: Router,
     private fetchDataService: FetchDataService,
     private utils: UtilsModule,
@@ -36,54 +35,68 @@ export class WishlistService {
 
   ) { }
 
-  chooseWishlist(productData: any = '') {
 
+
+  ShowWishlist(productId: string) { 
     const IsLogin = this.cookie.get('userToken')
-
-    if(IsLogin){
-      this.fetchDataService.HTTPGET(this.backendUrls.URLs.showWishlist).subscribe((data: any)=>{
+    if (IsLogin) {    
+      this.productId=productId;  
+        this.fetchDataService.HTTPGET(this.backendUrls.URLs.showWishlist).subscribe((data: any) => {
         this.showWishlistPopup.next(data);
       });
-    }
+    } 
     else {
-
       this.router.navigate(['/auth/login']);
     }
 
-    return;
-    // let data: any = await this.fetchService.httpGet(this.backendUrls.URLs.showWishlist);
-    // return this.http.get(this.backendUrls.URLs.showWishlist);
+  }
+
+
+
+
+  getWishlistCount(){
+    const IsLogin = this.cookie.get('userToken')
+    if (IsLogin) {  
+    this.fetchDataService.HTTPGET(this.backendUrls.URLs.showWishlist).subscribe((data: any) => {
+     let newData= data.wishlists.map((el:any)=>{
+        return el.products;
+      }).flat();
+    this.WishListedProducts.next(newData);   
+      this.WishlistCount.next(data.count);
       
-    
-    // .subscribe((data)=>{
-    //   this.showWishlistsSlider.next({data, productData});
-    // });
-    
+    });
+  }
   }
 
-  addToWishList(){
-    
+  AddtoWishlist(wishlistName:string){
+    if(!this.productId) return;
+    const body = {
+      wishlistName: wishlistName,
+      productId: this.productId,
+    }
+    this.fetchDataService.HTTPPOST(this.utils.URLs.addToWishlist, body).subscribe((response: any) => {
+      if (!response) return;
+      this.toastService.notificationToast(response.message);
+      this.WishlistCount.next(this.WishlistCount.value+1);
+    })
   }
 
-  // async addToWishlist(item : string,productId:string){
-  //   let body:any={wishlistName:item,productId};
+  async removeFromWishlist(productId: any, wishlistName: string, index: number) {
+    console.log(productId, "del");
+    const delProduct = {
+      wishlistName: wishlistName,
+      productId: productId
+    }
+    console.log(delProduct);
+
+    let delData = await this.fetchDataService.HTTPPOST(this.backendUrls.URLs.deleteFromWishlist, delProduct).subscribe((data)=>{
+      console.log(data, "deleted is ");
+    })
+    // this.showWishlistedProducts(wishlistName, index)
+
+  }
 
 
-  //   let data: any = await this.fetchDataService.httpPost(this.utils.URLs.addToWishlist, body)
-  //   const toastMessage = { title: data.message };
-  //   this.toastService.notificationToast(toastMessage);
-  //   console.log(data, "hua add wishlist mein?");
 
 
-  //   // let newCount = await this.fetchDataService.ht  tpGet(this.utils.URLs.showWishlistCount)
-  //   // await this.UserService.emittingValue('wishlistCount', newCount);
-
-  //   // console.log(newCount, "neww counttt");
-  //   // this.showTextField = false;
-
-  //   // this.show = false
-  //   // console.log("end");
-
-
-  // }
 }

@@ -22,6 +22,7 @@
 
 .drawer__content {
     padding-inline: 24px;
+    padding-block: 20px;
     /* height: calc(100vh - 60px); */
 }
 

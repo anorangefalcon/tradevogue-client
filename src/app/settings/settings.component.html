@@ -1,6 +1,5 @@
 <section>
     <div class="container d-flex">
-
         <nav class="navbar d-flex flex-column align-item-center gap-25">
             <ul class="nav-items d-flex flex-column align-item-center">
                 <li class="nav-links" [ngClass]="{'nav-link-active': this.showData === 'profile'}"
@@ -11,8 +10,7 @@
                         chevron_right
                     </span>
                 </li>
-                <li class="nav-links" [ngClass]="{'nav-link-active': this.showData === 'orders'}"
-                    (click)="getOrders()">
+                <li class="nav-links" [ngClass]="{'nav-link-active': this.showData === 'orders'}" (click)="getOrders()">
                     <a>
                         <span class="nav-txt">My Order</span>
                     </a>
@@ -174,7 +172,7 @@
                             <div class="d-flex">
                                 <!-- <button></button> -->
                                 <span *ngIf="address.defaultAddress">Default Address</span>
-                                <button class="btn default__btn" (click)="MakeDefault(address,i)" *ngIf="i!=0">Make this
+                                <button class="btn default__btn" (click)="MakeDefault(address)" *ngIf="i!=0">Make this
                                     Defult</button>
 
                                 <button class="edit__btn d-flex align-item-center"
@@ -299,15 +297,148 @@
                 <button class="btn-primary width-160" (click)="onPasswordChange()">Save</button>
             </div>
 
+            <div class="Orders  d-flex flex-column gap-20" *ngIf="showData=='orders'">
+
+                <div class="d-flex align-item-center pointer h2_div" (click)="TranslateBack()">
+                    <span class="material-symbols-outlined left__icon">
+                        chevron_left
+                    </span>
+                    <h2>
+                        Orders History
+                    </h2>
+
+
+                </div>
+                <p class="orders__p">Check the status of recent orders, manage returns, and discover similar products
+                </p>
+
+                <div class="AllOrders d-flex flex-column gap-25">
+                    <div *ngFor="let order of AllOrders ; let i=index" class="particularOrder">
+                        <div class="order__firstDiv d-flex gap-25 justify-content-md-between">
+                            <div class=" d-flex gap-25 align-item-center order__basic">
+                                <div>
+                                    <p>Order Number</p>
+                                    <span>{{order._id}}</span>
+                                </div>
+                                <div>
+                                    <p>Date Placed</p>
+                                    <span>{{getDate(order.orderDate)}}</span>
+                                </div>
+                                <div>
+                                    <p>Total Amount</p>
+                                    <span>{{order.orderAmount}}</span>
+                                </div>
+                            </div>
+
+                            <div class="d-flex gap-20 order__firstDiv__btn">
+                                <button>View Order</button>
+                                <button>View Invoice</button>
+                            </div>
+
+                        </div>
+                        <div class="order__secondDiv" *ngFor="let product of order.products">
+                            <div class="order d-flex flex-column gap-20">
+                                <div class=" d-flex justify-content-md-between">
+                                    <div class="d-flex gap-15">
+                                        <!-- <div > -->
+                                        <img src={{product.image}} class="imgDiv">
+                                        <!-- </div> -->
+                                        <div class="d-flex flex-column productDetails">
+                                            <p class="prodName">{{product.name}}</p>
+                                            <div class="d-flex align-item-center gap-5">
+                                                <p>Product</p>
+                                                <div [style.background-color]="product.color" class="color__div"></div>
+                                            </div>
+                                            <p>Qty - {{product.quantity}}</p>
+                                            <!-- <p>Order Id - {{order._id}}</p> -->
+                                        </div>
+                                    </div>
+                                    <div class="d-flex justify-content-center align-item-center">
+                                        <p class="price">₹ {{product.price}}</p>
+                                    </div>
+                                </div>
+                                <div class="deliverDiv d-flex justify-content-md-between">
+                                    <div class="d-flex gap-10 delivery align-item-center">
+                                        <span class="material-symbols-outlined">
+                                            done
+                                        </span>
+                                        <p class="delivery-status">Delivered</p>
+                                    </div>
+                                    <div class="d-flex gap-10 btns">
+                                        <button routerLink="/product/{{product.sku}}">
+                                            View Product
+                                        </button>
+                                        <p>|</p>
+                                        <button (click)="BuyAgain(product)">
+                                            Buy Again
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- <div class="order d-flex flex-column gap-20">
+                                <div class=" d-flex justify-content-md-between">
+                                    <div class="d-flex gap-15">
+                                        <div class="imgDiv">
+
+                                        </div>
+                                        <div class="d-flex flex-column productDetails">
+                                            <p class="prodName">Product Name</p>
+                                            <p>Product Brand</p>
+                                            <p>Qty - 3</p>
+                                            <p>Order Id - njc3323e</p>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex justify-content-center align-item-center">
+                                        <p class="price">$897</p>
+                                    </div>
+                                </div>
+                                <div class="deliverDiv d-flex justify-content-md-between">
+                                    <div class="d-flex gap-10 delivery align-item-center">
+                                        <span class="material-symbols-outlined">
+                                            done
+                                        </span>
+                                        <p class="delivery-status">{{product.status.shipment}}</p>
+                                    </div>
+                                    <div class="d-flex gap-10 btns">
+                                        <button>
+                                            View Product
+                                        </button>
+                                        <p>|</p>
+                                        <button>
+                                            Buy Again
+                                        </button>
+                                    </div>
+                                </div>
+                            </div> -->
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <div *ngIf="showData=='wishlist'" class="wishlist">
+
+                <div class="d-flex align-item-center pointer h2_div" (click)="TranslateBack()">
+                    <span class="material-symbols-outlined left__icon">
+                        chevron_left
+                    </span>
+                    <h2>
+                        Wishlists
+                    </h2>
+
+
+                </div>
+
+
                 <div class="d-flex flex-column">
+
                     <div class="accordian mw-100" *ngFor="let item of list; let i = index">
                         <h3 class="accordian__head relative pointer" (click)="showWishlistedProducts(item, i)">
                             {{item}}
                         </h3>
-                        <div class="accordian__body openedAccordionIndex === i"
-                        class="" *ngIf="openedAccordionIndex === i">
-                           
+                        <div class="accordian__body openedAccordionIndex === i" class=""
+                            *ngIf="openedAccordionIndex === i">
+
                             <ng-container *ngFor="let product of wishlistedProducts">
                                 <div class="product d-flex justify-content-md-between">
                                     <div class="d-flex gap-20">
@@ -316,8 +447,9 @@
                                                 <img [src]="product.productDetails.assets[0].photo[0]"
                                                     alt="Product Image">
                                             </a>
-                                            <button class="absolute remove-btn d-flex justify-content-center align-item-center" 
-                                            (click)="removeFromWishlist(product.productDetails._id, item, i)">                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          
+                                            <button
+                                                class="absolute remove-btn d-flex justify-content-center align-item-center"
+                                                (click)="removeFromWishlist(product._id, item, i)">
                                                 <span class="material-symbols-outlined">
                                                     close
                                                 </span>
@@ -332,7 +464,8 @@
                                         </div>
                                     </div>
                                     <div class="d-flex justify-content-center align-item-center">
-                                        <button class="btn-primary cart-btn" (click)="moveToCart(product.productDetails.sku)">
+                                        <button class="btn-primary cart-btn"
+                                            (click)="moveToCart(product.productDetails.sku)">
                                             MOVE TO CART
                                         </button>
                                     </div>
@@ -343,18 +476,10 @@
                 </div>
             </div>
 
-
-
         </div>
-
     </div>
-
-
 
 </section>
 
-
-
-<!-- <app-address (newAddress)="NewAddressHandler($event)" [ShowComponent]="ShowComponent" [receiveData]="receiveData"
-    (AddressClosed)="AddresscloseHandler($event)"> (closeaddressed)="CloseAddress()" ></app-address> -->
-<!-- <app-address></app-address> -->
+<app-address [ShowComponent]="ShowComponent" [receiveData]="receiveData"
+    (AddressHandler)="AddressHandler($event)"></app-address>

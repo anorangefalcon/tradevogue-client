@@ -35,9 +35,7 @@ export class FetchDataService {
     return this.http.get(this.sellerUrl);
   }
 
-  getUniqueProductFields(body: any) {
-    // console.log('BODY IS ',body);
-
+  getUniqueProductFields(body : any){
     return this.http.post('http://localhost:1000/products/uniqueFields', body);
   }
 
@@ -69,13 +67,10 @@ export class FetchDataService {
     if(page) params = params.set('page', page);
 
     console.log(" param si ",params);
-    
     return this.http.get(this.backendUrls.URLs.fetchProducts, { params });
   }
 
   httpPost(url: any, body: any) {
-
-
     return new Promise((res, rej) => {
       this.http.post(url, body).subscribe({
         next: (data) => {
@@ -99,6 +94,8 @@ export class FetchDataService {
     })
   }
   httpGet(url: any, data: any = null) {
+    console.log('request of http get is ',url);
+    
     let params = new HttpParams();
 
     if (data) {
@@ -129,11 +126,9 @@ export class FetchDataService {
       params = params.set(field, data); 
     }
     return this.http.get(url, { params });
-
-    // return this.http.get(url);
   }
 
-  HTTPPOST(url: any, body: any) {
+  HTTPPOST(url: any, body: any) {    
     return this.http.post(url, body);
   }
 }

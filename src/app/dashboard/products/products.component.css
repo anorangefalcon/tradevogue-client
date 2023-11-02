@@ -108,6 +108,8 @@ button:disabled{
     display: flex;
 }
 
+
+
 .popup {
     display: none;
     position: absolute;
@@ -116,7 +118,7 @@ button:disabled{
     z-index: 10;
     visibility: hidden;
     pointer-events: none;
-    opacity: 0;
+    opacity: 1;
     transition: all 0.3s ease-in-out;
     background-color: rgb(var(--whiteClr));
     margin-top: 12px;
@@ -206,8 +208,8 @@ button:disabled{
     height: 40px;
     padding-block: 0;
     padding-inline: 16px;
-}
-
+}                                     
+                                                          
 @media screen and (max-width: 780px) {
 
     .popup {
