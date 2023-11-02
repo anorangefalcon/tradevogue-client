@@ -53,9 +53,6 @@ export class UtilsModule {
    addOrUpdateReview: 'http://localhost:1000/reviews/addOrUpdate',
    deleteReview: 'http://localhost:1000/reviews/delete',   
 
-    // FAQ
-    getFaqData: 'http://localhost:1000/getpaginatedData/faq',
-
     // CART
     fetchCart: 'http://localhost:1000/cart/fetch',
     addItemsToCart: 'http://localhost:1000/cart/add',
@@ -68,11 +65,14 @@ export class UtilsModule {
     getOffers:'http://localhost:1000/offer/get',
     deleteOffer:'http://localhost:1000/offer/delete',
     updateOffer:'http://localhost:1000/offer/update',
+
+    // FAQs User Routes
+    getFaqData: 'http://localhost:1000/getpaginatedData/faq',
    
-    // FAQS
-    updateFaqData: 'http://localhost:1000/admin/updateFaq',
-    deleteFaqData: 'http://localhost:1000/admin/deleteFaq',
-    addFaqData: 'http://localhost:1000/admin/addFaq',
+    // FAQS Admin Routes
+    updateFaqData: 'http://localhost:1000/faqs/update',
+    deleteFaqData: 'http://localhost:1000/faqs/delete',
+    addFaqData: 'http://localhost:1000/faqs/add',
 
     // pagination common
     getPaginatedData: 'http://localhost:1000/getPaginatedData',
@@ -104,14 +104,15 @@ export class UtilsModule {
 
     // ------ custom-UI ------
 
-    // Socials:
+    // Socials:http://localhost:1000/admin/getPaymentKeys
     setSocials: 'http://localhost:1000/socials/set',
     getSocials: 'http://localhost:1000/socials/get',
     
     // payment keys 
-    addPaymentKeys: 'http://localhost:1000/admin/addPaymentKeys',
-    updatePaymentKeys: 'http://localhost:1000/admin/updatePaymentKeys',
-    deletePaymentKeys: 'http://localhost:1000/admin/deletePaymentKeys',
+    addPaymentKeys: 'http://localhost:1000/paymentKeys/add',
+    updatePaymentKeys: 'http://localhost:1000/paymentKeys/update',
+    deletePaymentKeys: 'http://localhost:1000/paymentKeys/delete',
+    getPaymentKeys: 'http://localhost:1000/paymentKeys/get'
   }
 }
 

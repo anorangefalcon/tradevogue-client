@@ -4,9 +4,10 @@
   </div>
 </div>
 
-<section class="faq-section skeleton">
-  <div *ngFor="let section of faqData" class="container accordion-wrapper main-panel">
-    <button class="accordion main-acc" (click)="toggleSection(section)" [ngClass]="{ expanded2: section.expanded }">
+<section class="faq-section skeleton containerwidth">
+  <div *ngFor="let section of faqData" class="container accordion-wrapper main-panel wrapper">
+    <button class="accordion main-acc content" (click)="toggleSection(section)"
+      [ngClass]="{ expanded2: section.expanded }">
       {{ section.title }}
     </button>
     <div class="panel" [ngClass]="{ expanded2: section.expanded }">

@@ -108,7 +108,7 @@ export class TicketsComponent {
     console.log(item)
     this.selectedItem = item;
     this.ticketTypeId = item._id;
-    this.popupService.openPopup();
+    // this.popupService.openPopup();
   }
 
 

@@ -5,6 +5,7 @@ import { UtilsModule } from 'src/app/utils/utils.module';
 import { CartService } from 'src/app/shared/services/cart.service';
 import { ActivatedRoute } from '@angular/router';
 declare var Stripe: any;
+import { StripPaymentService } from 'src/app/shared/services/stripe-Integration/strip-payment.service';
 
 @Component({
   selector: 'app-billing',
@@ -29,22 +30,11 @@ export class BillingComponent {
 
       window.onload = async () => {
         try {
-          const response = await fetch('http://localhost:1000/getPaymentKeys');
 
-          if (!response.ok) {
-            throw new Error('Network response was not ok');
-          }
-
-          const data = await response.json();
-
-          console.log("response is public key ", data[0]?.keys[0]?.publicKey);
-
-          if (Array.isArray(data) && data.length > 0 && data[0]?.keys && data[0].keys.length > 0) {
-            const publicKey = data[0].keys[0].publicKey;
-            this.stripe = Stripe(publicKey);
+          if (this.stripePay.publicKey) {
+            this.stripe = Stripe(this.stripePay.publicKey);
 
             this.initialize(this.stripe);
-            this.checkStatus(this.stripe);
 
             const paymentForm = document.querySelector("#payment-form");
 
@@ -60,15 +50,6 @@ export class BillingComponent {
           console.error('Error occurred:', error);
         }
       };
-
-      this.route.queryParams.subscribe(params => {
-        const redirectStatus = params['redirect_status'];
-
-        if (redirectStatus === 'succeeded') {
-          this.proceedToPayment();
-        }
-      });
-
     } catch (error) {
       console.error('Error loading Stripe scripts:', error);
     }
@@ -77,7 +58,7 @@ export class BillingComponent {
   async proceedToPayment() {
 
     try {
-      const response = await fetch('http://localhost:1000/getPaymentKeys');
+      const response = await fetch(this.backendURLs.URLs.getPaymentKeys);
 
       if (!response.ok) {
         throw new Error('Network response was not ok');
@@ -89,10 +70,10 @@ export class BillingComponent {
 
       if (Array.isArray(data) && data.length > 0 && data[0]?.keys && data[0].keys.length > 0) {
         const publicKey = data[0].keys[0].publicKey;
+        console.log("service payment key" , this.stripePay.publicKey);
         this.stripe = Stripe(publicKey);
 
         this.initialize(this.stripe);
-        this.checkStatus(this.stripe);
 
         const paymentForm = document.querySelector("#payment-form");
 
@@ -104,18 +85,6 @@ export class BillingComponent {
       } else {
         console.log("No Public keys found");
       }
-
-
-
-      this.route.queryParams.subscribe(params => {
-        const redirectStatus = params['redirect_status'];
-
-        if (redirectStatus === 'succeeded') {
-          this.proceedToPayment();
-
-        }
-      });
-
     } catch (error) {
       console.error('Error loading Stripe scripts:', error);
     }
@@ -180,23 +149,23 @@ export class BillingComponent {
     try {
 
       e.preventDefault();
-      await this.setLoading(true);
+      await this.stripePay.setLoading(true);
 
       const { error } = await this.stripe.confirmPayment({
         elements: this.elements,
         confirmParams: {
-          return_url: "http://localhost:4200/cart",
+          return_url: "http://localhost:4200/usersetting",
           receipt_email: this.emailAddress,
         },
       });
 
       if (error.type === "card_error" || error.type === "validation_error") {
-        this.showMessage(error.message);
+        this.stripePay.showMessage(error.message);
       } else {
-        this.showMessage("An unexpected error occurred.");
+        this.stripePay.showMessage("An unexpected error occurred.");
       }
 
-      this.setLoading(false);
+      this.stripePay.setLoading(false);
 
     } catch (error) {
       console.log("error is ", error);
@@ -204,100 +173,7 @@ export class BillingComponent {
     }
   }
 
-  async showMessage(messageText: any) {
-    const messageContainer = document.querySelector("#payment-message");
-
-    if (messageContainer) {
-      messageContainer.classList.remove("hidden");
-      messageContainer.textContent = messageText;
-
-      setTimeout(function () {
-        messageContainer.classList.add("hidden");
-        messageContainer.textContent = "";
-      }, 2000);
-    }
-  }
-
-  setLoading = async (isLoading: boolean): Promise<void> => {
-    const submitButton = document.querySelector("#submit") as HTMLButtonElement | null;
-    const spinner = document.querySelector("#spinner");
-    const buttonText = document.querySelector("#button-text");
-
-    if (submitButton) {
-      submitButton.disabled = isLoading;
-    }
-
-    if (spinner) {
-      if (isLoading) {
-        spinner.classList.remove("hidden");
-      } else {
-        spinner.classList.add("hidden");
-      }
-    }
-
-    if (buttonText) {
-      if (isLoading) {
-        buttonText.classList.add("hidden");
-      } else {
-        buttonText.classList.remove("hidden");
-      }
-    }
-  };
-
-  async checkStatus(stripe: any): Promise<void> {
-    const clientSecret = new URLSearchParams(window.location.search).get(
-      "payment_intent_client_secret"
-    );
-
-    if (!clientSecret) {
-      return;
-    }
-
-    const { paymentIntent } = await stripe.retrievePaymentIntent(clientSecret);
-
-    switch (paymentIntent.status) {
-      case "succeeded":
-        this.showMessage("Payment succeeded!");
-
-        await fetch('http://localhost:1000/invoiceSend', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(paymentIntent)
-        })
-          .then(response => {
-            if (response.ok) {
-              return response.json();
-            }
-            throw new Error('Network response was not ok.');
-          })
-          .then(data => {
-            console.log("Invoice data sent:", data);
-          })
-          .catch(error => {
-            console.error("Error sending invoice data:", error);
-          });
-
-
-        console.log("Payment succeeded. Payment Intent Status:", paymentIntent);
-        break;
-      case "processing":
-        this.showMessage("Your payment is processing.");
-        console.log("Payment is processing. Payment Intent Status:", paymentIntent.status);
-        break;
-      case "requires_payment_method":
-        this.showMessage("Your payment was not successful, please try again.");
-        console.log("Payment requires a valid payment method. Payment Intent Status:", paymentIntent.status);
-        break;
-      default:
-        this.showMessage("Something went wrong.");
-        console.log("An unexpected error occurred. Payment Intent Status:", paymentIntent.status);
-        break;
-    }
-  }
-
-  constructor(private cartService: CartService, private fetchDataService: FetchDataService, private backendURLs: UtilsModule, private renderer: Renderer2, private elementRef: ElementRef, private cookie: CookieService, private route: ActivatedRoute) {
+  constructor(private cartService: CartService, private fetchDataService: FetchDataService, private backendURLs: UtilsModule, private renderer: Renderer2, private elementRef: ElementRef, private cookie: CookieService, private route: ActivatedRoute, private stripePay: StripPaymentService) {
 
     // this.userService.totalAmount$.subscribe((data: any) => {
     //   this.totalAmount = data;
@@ -305,9 +181,9 @@ export class BillingComponent {
 
     this.proceedToPayment();
 
-    this.setLoading = this.setLoading.bind(this);
+    this.stripePay.setLoading = this.stripePay.setLoading.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.showMessage = this.showMessage.bind(this);
+    this.stripePay.showMessage = this.stripePay.showMessage.bind(this);
     this.initialize = this.initialize.bind(this);
 
     this.cartService.fetchCart().subscribe((data) => {
@@ -339,13 +215,6 @@ export class BillingComponent {
 
     checkSubTotal();
     // this.userService.PaymentUrlVisited.next(true);
-
-
-
-
-    // this.checkoutService.sendPayload(this.item).subscribe((data) => {
-    //   this.checkoutHtml = data;
-    // });
 
   }
 
@@ -380,30 +249,7 @@ export class BillingComponent {
   cart: any = '';
   CouponApplied: any = '';
   DeliveredAddress: any = '';
-  // async getAddresses(){
-  // let data:any=await  this.fetchDataService.httpGet(this.backendURLs.URLs.getAddress);
-  // this.userAddresses=data.info.address;  
-  // }
 
-
-  // async getAddresses() {;
-  //   let Addresses = await this.userService.SubscribingValue('userAddresses');
-  //   if (!Addresses) {
-  //     let data: any = await this.fetchDataService.httpGet(this.backendURLs.URLs.getAddress);
-  //     data = data.addresses;
-  //     this.userAddresses = data;
-  //     if (data.length != 0) {
-  //       await this.userService.emittingValue('userAddresses', data);
-  //       this.userAddresses = data;
-  //     }
-  //   }
-
-  //   else {
-  //     this.userAddresses = Addresses;
-  //   }
-
-
-  // }
 
   AddressSended: any;
   addnewAddress: boolean = false;

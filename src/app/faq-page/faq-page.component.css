@@ -1,6 +1,6 @@
 
 .faq_title {
-  min-height: 400px;
+  min-height: 335px;
   background-color: rgb(var(--primaryClr), 0.1);
   background-image: url(../../assets/deal-of-week-component/dealOfWeek-homeBg.png);
   background-repeat: no-repeat;
@@ -8,7 +8,7 @@
   background-position: center;
 
   & h1 {
-    font-size: 84px !important;
+    font-size: 62px !important;
     letter-spacing: 2.2px !important;
   }
 }
@@ -21,9 +21,9 @@ button.accordion {
   background: transparent;
 }
 
-.accordion-wrapper:last-child {
+/* .accordion-wrapper:last-child {
   box-shadow: none;
-}
+} */
 
 .faq-section {
   padding: 100px;
@@ -262,3 +262,23 @@ body {
     overflow: hidden;
 }
 /* CARD */
+
+.containerwidth {
+  width: 100%;
+}
+
+.wrapper {
+  background-color: #ffffff;
+  padding: 10px 20px;
+  margin-bottom: 20px;
+  border-radius: 5px;
+  box-shadow: 0 15px 15px rgba(0, 0, 0, 0.2); 
+}
+
+
+.content {
+  position: relative;
+  font-size: 14px;
+  text-align: justify;
+  line-height: 30px;
+}

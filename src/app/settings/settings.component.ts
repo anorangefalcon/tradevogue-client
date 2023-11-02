@@ -9,8 +9,10 @@ import { MobileNoValidator } from './validators';
 import { PopupService } from '../shared/services/popup.service';
 import { BehaviorSubject, Observable, Subject, throttleTime } from 'rxjs';
 import { CartService } from '../shared/services/cart.service';
+import { ActivatedRoute, Router } from '@angular/router';
+declare var Stripe: any;
+import { StripPaymentService } from '../shared/services/stripe-Integration/strip-payment.service';
 import { WishlistService } from '../shared/services/wishlist.service';
-
 @Component({
   selector: 'app-settings',
   templateUrl: './settings.component.html',
@@ -34,9 +36,29 @@ export class SettingsComponent {
   list: any = []
   wishlistedProducts: any;
   openedAccordionIndex: number | null = null;
-  userAddresses: any[]=[];
+  stripe: any;
+  
+
+  // addnewAddress:boolean=false;
+  userAddresses!: any;
   TranslateData: boolean = false;
-  constructor( private backendURLs: UtilsModule,private wishlistService:WishlistService, private cartService:CartService, private fetchDataService: FetchDataService, private fb: FormBuilder ) {
+
+  // private toastService: ToastService
+  constructor(private backendURLs: UtilsModule, private wishlistService:WishlistService, private fetchDataService: FetchDataService, private fb: FormBuilder, private cartService: CartService, private route: ActivatedRoute, private stripePay: StripPaymentService) {
+
+    this.route.queryParams.subscribe(params => {
+      const redirectStatus = params['redirect_status'];
+
+      if (redirectStatus === 'succeeded') {
+        
+        console.log("yes succeed")
+
+
+        this.stripePay.checkOrderStatus()
+      }
+    });
+
+    
 
     this.ProfileForm = fb.group(
       {

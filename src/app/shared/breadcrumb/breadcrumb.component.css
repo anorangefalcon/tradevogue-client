@@ -1,7 +1,6 @@
 .breadcrumb{
-    padding-block-start: 95px;
-    padding-block-end: 15px;
-
+    padding-block-start: 95px !important;
+    padding-block-end: 15px !important;
     font-size: 12px;
 }
 

@@ -4,7 +4,7 @@
 }
 .helpBox {
     width: 100%;
-    min-height: 400px;
+    min-height: 200px;
     /* background-image: url(../../assets/tc-bg.jpg); */
     background-color: rgb(var(--primaryClr),0.1);
     background-image: url(../../assets/deal-of-week-component/dealOfWeek-homeBg.png);
@@ -14,9 +14,15 @@
     color: rgb(var(--textClr));
 
     & h2 {
-        font-size: 84px !important;
+        font-size: 35px !important;
         letter-spacing: 2.2px;
     }
+}
+
+.btn-primary {
+    text-align: center !important;
+    margin: 0 auto !important;
+    align-items: center !important;
 }
 
 .map-wrap {
@@ -316,7 +322,6 @@ li label {
   button {
         border-radius: 8px !important;
         height: 42px !important;
-        width : 100px !important;
         margin-inline-end: 0 !important;
         
     }

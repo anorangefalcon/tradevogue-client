@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { NgModel } from '@angular/forms';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { DashboardRoutingModule } from './dashboard-routing.module';
 import { DashboardComponent } from './dashboard.component';
@@ -62,7 +62,8 @@ import { MonetizationComponent } from './monetization/monetization.component';
     UploadExcelService,
     NgModel,
     PaginationService,
-    PopupService
+    PopupService,
+    DatePipe
   ],
 })
 export class DashboardModule { }

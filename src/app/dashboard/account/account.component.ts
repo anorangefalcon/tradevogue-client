@@ -8,7 +8,7 @@ import { UtilsModule } from 'src/app/utils/utils.module';
 import { SellerFetchDataService } from 'src/app/shared/services/seller-fetch-data.service';
 import { CookieService } from 'ngx-cookie-service';
 import { PopupService } from 'src/app/shared/services/popup.service';
-
+import { DatePipe } from '@angular/common';
 @Component({
   selector: 'app-account',
   templateUrl: './account.component.html',
@@ -39,7 +39,8 @@ export class AccountComponent implements OnInit {
     private backendURLs: UtilsModule,
     private sellerFetchDataService: SellerFetchDataService,
     private cookieService: CookieService,
-    private popupService: PopupService
+    private popupService: PopupService,
+    private datePipe: DatePipe
   ) {
 
    }
@@ -95,17 +96,19 @@ export class AccountComponent implements OnInit {
       postalCode: ['', [Validators.required, Validators.pattern('[0-9]{6}')]],
       country: ['', [Validators.required]],
       state: ['', [Validators.required]],
-      city: ['', [Validators.required]],
+      town_city: ['', [Validators.required]],
     });
 
 
     var adminData = this.sellerFetchDataService.getSellerInfo().subscribe((data: any) => {
+      const formattedDob = this.datePipe.transform(data[0].info.dob, 'yyyy-MM-dd');
+
       console.log(data, "data is coming");
       this.profileForm.patchValue({
         firstName: data[0].name.firstname,
         lastName: data[0].name.lastname,
         email: data[0].email,
-        dob: data[0].info.dob,
+        dob: formattedDob,
         address: data[0].info.address[0].apartment,
         postalCode: data[0].info.address[0].pincode,
         country: data[0].info.address[0].country,

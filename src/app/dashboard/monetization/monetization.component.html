@@ -35,11 +35,16 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let key of paymentKeys[0]?.keys">
+          <tr *ngFor="let key of paymentKeys[0]?.keys; let i = index">
           <td class="items">{{ key.adminId?.email }}</td>
           <td class="items">{{ key.publicKey }}</td>
           <td class="items">{{ key.privateKey }}</td>
-          <td class="items">{{ key.enable }}</td>
+          <td class="items">
+            <div class="slide-button d-flex align-item-center">
+              <input type="checkbox" [checked]="key.enable" (change)="togglePayment(key)" [name]="i + 'Available'" [id]="i + 'Available'" />
+              <label [for]="i + 'Available'"></label>
+          </div>
+          </td>
           <td>
             <span
               class="material-symbols-outlined view-button material-icons" (click)="view(key)">visibility</span>

@@ -22,7 +22,7 @@ export class MonetizationComponent {
 
   ngOnInit(): void {
     this.createForm();
-    this.http.get<any[]>('http://localhost:1000/admin/getPaymentKeys').subscribe((data) => {
+    this.http.get<any[]>('http://localhost:1000/paymentKeys/getAll').subscribe((data) => {
       this.paymentKeys = data;
     });
   }
@@ -51,9 +51,28 @@ export class MonetizationComponent {
       this.stripeKeysForm.patchValue({
         publicKey: this.selectedItem.publicKey,
         privateKey: this.selectedItem.privateKey,
-        enableDropdown: this.selectedItem.enable ? 'true' : 'false', // Set the dropdown value based on the 'enable' property
+        enableDropdown: this.selectedItem.enable ? 'true' : 'false', 
       });
     }
+  }
+
+  togglePayment(key: any) {
+    this.selectedItem = key;
+    if (this.selectedItem) {
+      const id = this.selectedItem._id;
+      const enable = !this.selectedItem.enable;
+      const body = {
+        id , enable
+      }
+
+      this.fetch.HTTPPOST(this.util.URLs.updatePaymentKeys,body).subscribe((response: any) => {
+        console.log('Keys updated successfully:', response);
+      }
+      ,(error: any) => {
+        console.error('Error updating keys:', error);
+      });
+    }
+
   }
 
   onUpdate() {

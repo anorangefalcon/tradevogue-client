@@ -9,6 +9,7 @@ import { BreadcrumbService } from 'src/app/shared/services/breadcrumb.service';
 })
 export class BreadcrumbComponent implements OnInit {
   breadcrumbs: Array<{ label: string; url: string }> = [];
+  currentRoute: string = '';
   activeSku:any;
   constructor(
     private router: Router,
@@ -16,6 +17,11 @@ export class BreadcrumbComponent implements OnInit {
     private breadcrumbService: BreadcrumbService
   ) {
     this.router.events.subscribe((event) => {
+      this.router.events.subscribe(event => {
+        if (event instanceof NavigationEnd) {
+          this.currentRoute = event.url; 
+        }
+      });
       if (event instanceof NavigationEnd) {
         if (this.router.url === '/' || this.router.url === '') {
           this.breadcrumbs = [];
@@ -26,6 +32,10 @@ export class BreadcrumbComponent implements OnInit {
         this.breadcrumbService.setBreadcrumbs(this.breadcrumbs);
       }
     });
+  }
+
+  isHomePage(): boolean {
+    return window.location.pathname === '/';
   }
 
   ngOnInit(): void {

@@ -16,7 +16,7 @@
 </div> -->
 
 
-<div class="breadcrumb container" *ngIf="breadcrumbs.length > 0">
+<div class="breadcrumb container" *ngIf="breadcrumbs && breadcrumbs.length > 0 && breadcrumbs[0].url !== '/'; else defaultBreadcrumbs">
   <ng-container *ngFor="let breadcrumb of breadcrumbs; let last = last">
     <ng-container *ngIf="!last && breadcrumb.label !== null">
       <a [routerLink]="breadcrumb.url" class="breadcrumb-link">{{ breadcrumb.label }}</a>
@@ -36,3 +36,11 @@
     </ng-container>
   </ng-container>
 </div>
+
+<ng-template #defaultBreadcrumbs>
+  <div *ngIf="!isHomePage(); let breadcrumb of breadcrumbs" class="breadcrumb container">
+    <!-- Check if not on the home route, display the breadcrumbs -->
+    <a [routerLink]="['']" class="breadcrumb-link breadcrumb-last">Home</a>
+    <!-- <span class="breadcrumb-separator"> > </span> -->
+  </div>
+</ng-template>

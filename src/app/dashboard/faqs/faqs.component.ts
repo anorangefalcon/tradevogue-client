@@ -4,6 +4,8 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { UtilsModule } from 'src/app/utils/utils.module';
 import { FetchDataService } from 'src/app/shared/services/fetch-data.service';
 import { PopupService } from 'src/app/shared/services/popup.service';
+import { ToastService } from 'src/app/shared/services/toast.service';
+
 @Component({
   selector: 'app-faqs',
   templateUrl: './faqs.component.html',
@@ -23,7 +25,7 @@ export class FaqsComponent {
   pageSize: number = 5;
   currentPage: number = 1;
 
-  constructor(public pagination: PaginationService, private formBuilder: FormBuilder, private bgURL: UtilsModule, private fetchDataService: FetchDataService, private popupService: PopupService, private fb: FormBuilder) {
+  constructor(private toast: ToastService,public pagination: PaginationService, private formBuilder: FormBuilder, private bgURL: UtilsModule, private fetchDataService: FetchDataService, private popupService: PopupService, private fb: FormBuilder) {
     this.loadData();
   }
 
@@ -96,7 +98,15 @@ export class FaqsComponent {
         ],
       };
 
-      await this.fetchDataService.httpPost(this.bgURL.URLs.addFaqData, dataToSend)
+      await this.fetchDataService.HTTPPOST(this.bgURL.URLs.addFaqData, dataToSend).subscribe((data) => {
+        if(data){
+          this.toast.successToast({ title: "FAQ added successfully" });
+        }else {
+          this.toast.errorToast({ title: "FAQ not added" });
+        }
+        console.log("data", data);
+        this.loadData();
+      });
 
       console.log(selectedCategoryId, query, content);
       this.faqForm.reset();
@@ -132,8 +142,27 @@ export class FaqsComponent {
         this.selectedCategory.childrens[itemIndex] = updatedItem;
       }
 
+      interface FaqItem {
+        _id: string;
+        title: string;
+        content: string;
+        expanded: boolean;
+      }
+
+      const updatedFaqItem: FaqItem = {
+        _id: updatedItem._id,
+        title: updatedItem.query,
+        content: updatedItem.content,
+        expanded: updatedItem.expanded,
+      };
+
       try {
-        const data = await this.fetchDataService.httpPost(this.bgURL.URLs.updateFaqData, updatedItem);
+        const data: any = await this.fetchDataService.httpPost(this.bgURL.URLs.updateFaqData, updatedFaqItem);
+        if(data){
+          this.toast.successToast({ title: "FAQ updated successfully" });
+        }else {
+          this.toast.errorToast({ title: "FAQ not updated" });
+        }
         console.log("Item updated successfully.", data);
       } catch (error) {
         console.error("Error updating item:", error);
@@ -161,8 +190,13 @@ export class FaqsComponent {
       }
 
       try {
-        const data = await this.fetchDataService.httpPost(this.bgURL.URLs.deleteFaqData, { _id: itemId });
-        console.log("Item deleted successfully.", data);
+        const data = await this.fetchDataService.HTTPPOST(this.bgURL.URLs.deleteFaqData, { _id: itemId });
+        // console.log("Item deleted successfully.", data);
+        if(data) {
+          this.toast.successToast({ title: "FAQ deleted successfully" });
+        } else {
+          this.toast.errorToast({ title: "FAQ not deleted" });
+        }
       } catch (error) {
         console.error("Error deleting item:", error);
       }

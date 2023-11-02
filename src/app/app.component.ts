@@ -13,12 +13,12 @@ import { FormBuilder } from '@angular/forms';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent{
-
+  
   message:string = '';
   messageArray: { name: string, message: any }[] = [];
 
   ngOnInit(): void {
-    // this.requestPermission();
+    this.requestPermission();
   }
 
   sendMessage(){
@@ -43,31 +43,31 @@ export class AppComponent{
 
   title = 'eCommerce-frontend';
   showWishlistsDialog: boolean = false;
-  // messages: any = getToken(getMessaging(), { vapidKey: 'BPgBPO552gWCPJ_rUhzgn02bC3EFAIh1EWhlyib11X58vriYlQXmqeGX9_NJ8Z1h8KjtIDpstdWTgFuC01pdFbw' });
+  messages: any = getToken(getMessaging(), { vapidKey: 'BPgBPO552gWCPJ_rUhzgn02bC3EFAIh1EWhlyib11X58vriYlQXmqeGX9_NJ8Z1h8KjtIDpstdWTgFuC01pdFbw' });
 
 
-  // requestPermission() {
-  //   if ('serviceWorker' in navigator) {
-  //     navigator.serviceWorker.register('./firebase-messaging-sw.js')
-  //       .then(function (registration) {
-  //         console.log('Registration successful, scope is:', registration.scope);
-  //       }).catch(function (err) {
-  //         console.log('Service worker registration failed, error:', err);
-  //       });
-  //   }
+  requestPermission() {
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('./firebase-messaging-sw.js')
+        .then(function (registration) {
+          console.log('Registration successful, scope is:', registration.scope);
+        }).catch(function (err) {
+          console.log('Service worker registration failed, error:', err);
+        });
+    }
 
-  //   const messaging = getMessaging();
-  //   getToken(messaging, { vapidKey: 'BPgBPO552gWCPJ_rUhzgn02bC3EFAIh1EWhlyib11X58vriYlQXmqeGX9_NJ8Z1h8KjtIDpstdWTgFuC01pdFbw' }).then((currentToken) => {
-  //     if (currentToken) {
-  //       console.log('current tokens for client: ', currentToken);
-  //       this.sendTokenToServer(currentToken);
-  //     } else {
-  //       console.log('No registration token available. Request permission to generate one.');
-  //     }
-  //   }).catch((err) => {
-  //     console.log('An error occurred while retrieving token. ', err);
-  //   });
-  // }
+    const messaging = getMessaging();
+    getToken(messaging, { vapidKey: 'BPgBPO552gWCPJ_rUhzgn02bC3EFAIh1EWhlyib11X58vriYlQXmqeGX9_NJ8Z1h8KjtIDpstdWTgFuC01pdFbw' }).then((currentToken) => {
+      if (currentToken) {
+        console.log('current tokens for client: ', currentToken);
+        this.sendTokenToServer(currentToken);
+      } else {
+        console.log('No registration token available. Request permission to generate one.');
+      }
+    }).catch((err) => {
+      console.log('An error occurred while retrieving token. ', err);
+    });
+  }
   
 
   sendTokenToServer(currentToken: any) {
@@ -86,7 +86,7 @@ export class AppComponent{
     this.synth = window.speechSynthesis;
     this.voices = this.synth.getVoices();
 
-    // this.requestPermission()
+    this.requestPermission()
  this.subscribeToMessages();
 
   }
@@ -108,6 +108,6 @@ export class AppComponent{
       console.log('Endpoint:', endpoint);
       console.log('Notification Payload:', notificationPayload);
       console.log('P-256D:', p256d);
-    }
-  }
+    }
+  }
 }
