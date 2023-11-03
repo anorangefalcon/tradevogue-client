@@ -147,6 +147,7 @@ export class ProductsComponent implements OnInit {
   }
 
   pageChange(e: any) {
+    this.template.page = e;
     this.currentPage = e;
     this.fetchData();
   }
@@ -163,6 +164,8 @@ export class ProductsComponent implements OnInit {
     });
   }
 
+
+  // Generate a string array based upon rating transmitted store class from 'font-awesome'
   starRating(rating: any) {
     let ratingArray = [];
 
@@ -175,10 +178,10 @@ export class ProductsComponent implements OnInit {
       else
         ratingArray.push('fa-regular fa-star');
     }
-
     return ratingArray;
   }
 
+  // Purpose to detemine the quantiy of product->color->size based upon orderQuantity
   filterData(array: any, limit: any) {
     let filteredArray = array.filter((item: any) => item <= limit);
     // console.log(array, "   --  ", limit, " --> ", filteredArray);

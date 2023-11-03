@@ -1,31 +1,33 @@
-<table class="selected-category">
-  <thead>
-    <tr>
-      <th>Serial Number</th>
-      <th>Ticket Title</th>
-      <th>User Name</th>
-      <th>User Email</th>
-      <th>Status</th>
-      <th>Date Created</th>
-      <th>Actions</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let item of ticketData; let i = index;">
-      <td class="ellipsis">{{i+1}}</td>
-      <td>{{ item.ticketTitle }}</td>
-      <td>{{ item.userName }}</td>
-      <td>{{ item.userEmail }}</td>
-      <td>{{ item.status }}</td>
-      <td>{{ item.dateCreated | date: 'dd/MM/yyyy' }}</td>
-      <td>
-        <span class="material-symbols-outlined edit-button material-icons" (click)="showItemDetails(item)">edit</span>
-        <span class="material-symbols-outlined delete-button material-icons" (click)="webPush(item)">notifications</span>
-        <span class="material-symbols-outlined delete-button material-icons" (click)="deleteTicketTitle(item)">delete</span>
-      </td>
-    </tr>
-  </tbody>
-</table>
+<div class="table-list card">
+  <table class="selected-category">
+    <thead>
+      <tr>
+        <th class="items">Serial Number</th>
+        <th class="items">Ticket Title</th>
+        <th class="items">User Name</th>
+        <th class="items">User Email</th>
+        <th class="items">Status</th>
+        <th class="items">Date Created</th>
+        <th class="items">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of ticketData; let i = index;">
+        <td class="items ellipsis">{{i+1}}</td>
+        <td class="items">{{ item.ticketTitle }}</td>
+        <td class="items">{{ item.userName }}</td>
+        <td class="items">{{ item.userEmail }}</td>
+        <td class="items">{{ item.status }}</td>
+        <td class="items">{{ item.dateCreated | date: 'dd/MM/yyyy' }}</td>
+        <td class="items">
+          <span class="material-symbols-outlined edit-button material-icons" (click)="showItemDetails(item)">edit</span>
+          <span class="material-symbols-outlined delete-button material-icons" (click)="webPush(item)">notifications</span>
+          <span class="material-symbols-outlined delete-button material-icons" (click)="deleteTicketTitle(item)">delete</span>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
 
 <!-- <div class="operational-buttons d-flex  flex-wrap">
   <button (click)="openDrawer()" class=" d-flex align-item-center gap-5">

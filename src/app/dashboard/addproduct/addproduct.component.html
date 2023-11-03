@@ -1,5 +1,5 @@
 <section id="product-adding-section" class="d-flex flex-column gap-20">
-    <div class="row d-flex justify-content-md-between">
+    <div class="card card__pd-20 row d-flex justify-content-md-between">
         <div class="d-flex gap-15 align-item-center">
 
             <button class="previous d-flex flex-center pointer transition" (click)="current_form = ''"
@@ -193,7 +193,7 @@
             </ng-container>
 
             <ng-container *ngSwitchDefault>
-                <div formGroupName="basicinfo" class="row d-flex gap-20">
+                <div formGroupName="basicinfo" class="card card__pd-20 row d-flex gap-20">
 
                     <div class="col col-1">
                         <div class="form__group">
@@ -306,9 +306,23 @@
                             </div>
 
                             <div class="form__group">
-                                <label for="price" class="input__label">Actual Price<span
+                                <label for="cost-price" class="input__label">Cost Price<span
                                         class="important">*</span></label>
-                                <input type="number" class="form__input" placeholder="Actual Price" id="price"
+                                <input type="number" class="form__input" placeholder="Cost Price" id="cost-price"
+                                    formControlName="costPrice" required
+                                    onKeyPress="if(this.value.length == 7) return false;" />
+
+                                <span class="error"
+                                    *ngIf="productSubForm('costPrice')?.invalid && (productSubForm('costPrice')?.dirty || productSubForm('costPrice')?.touched)">
+                                    <small *ngIf="productSubForm('costPrice')?.hasError('required')">*Field
+                                        Required</small>
+                                </span>
+                            </div>
+
+                            <div class="form__group">
+                                <label for="sell-price" class="input__label">Selling Price<span
+                                        class="important">*</span></label>
+                                <input type="number" class="form__input" placeholder="Selling Price" id="sell-price"
                                     formControlName="price" required
                                     onKeyPress="if(this.value.length == 7) return false;" />
 
@@ -373,8 +387,8 @@
 <app-drawer [direction]="'bottom'" [show]="show" (showChange)="ShowChangeHandler($event)">
     <div class="card-container mh100 ">
     
-        <div class="card__block mw100" *ngFor="let item of card_template; let i=index">
-            <div class="row row-1 d-flex align-item-center justify-content-md-between">
+        <div class="card card__block mw100" *ngFor="let item of card_template; let i=index">
+            <div class="card card__pd-20 row row-1 d-flex align-item-center justify-content-md-between">
                 <h4>{{item.name}}</h4>
     
                 <div class="file-section d-flex flex-center gap-5">
@@ -386,7 +400,7 @@
                         <span class=" transition material-symbols-outlined">download</span></a>
                 </div>
             </div>
-            <div class="row row-2 card-data d-flex gap-10 flex-column">
+            <div class="card card__pd-20 row row-2 card-data d-flex gap-10 flex-column">
                 <ng-container *ngIf="field_data">
                     <div class="data__field d-flex justify-content-md-between fs-14 transition " *ngFor="let option of field_data[item.type] | productFilter: filter[item.filter]; let j = index">
                         <span class="data-field__text">{{option}}</span>
@@ -394,7 +408,7 @@
                     </div>
                 </ng-container>
             </div>
-            <div class="row row-3 relative mh100">
+            <div class="card card__pd-20 row row-3 relative mh100">
                 <input type="text" class="form__input" [placeholder]="'Add '+ item.name" [id]="item.type" [(ngModel)]='filter[item.filter]' />
     
                 <div class="button absolute inset-inline-end-0 inset-block-start-0">

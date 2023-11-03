@@ -22,25 +22,21 @@ const routes: Routes = [
   {
     path: '', component: DashboardComponent,
     children: [
-      { path: '', component: StatisticsComponent },
+
+      { path: 'overview', component: StatisticsComponent },
+
       { path: 'products', component: ProductsComponent },
-      { path: 'orders', component: OrdersComponent },
-      { path: 'orderDetails/:orderId', component: OrderPageComponent },
+      { path: 'features', component: AddproductfeaturesComponent },
+      { path: 'product-overview/:sku', component: ProductOverviewComponent },
       { path: 'addproduct', component: AddproductComponent },
       { path: 'editproduct/:sku', component: AddproductComponent },
 
-      { path: 'account', component: AccountComponent },
-      { path: 'features', component: AddproductfeaturesComponent },
-      { path: 'faq', component: FaqsComponent },
-      { path: 'product-overview/:sku', component: ProductOverviewComponent },
-      { path: 'coupons', component: CouponsComponent },
-      { path: 'support', component: SupportComponent },
-      { path: 'tickets', component: TicketsComponent },
-      { path: 'socials', component: SocialsComponent },
-      { path: 'features', component: AddproductfeaturesComponent },
+      { path: 'orders', component: OrdersComponent },
       { path: 'orderDetails/:orderId', component: OrderPageComponent },
+
+      { path: 'account', component: AccountComponent },
+
       { path: 'faq', component: FaqsComponent },
-      { path: 'product-overview/:sku', component: ProductOverviewComponent },
       { path: 'coupons', component: CouponsComponent },
       { path: 'support', component: SupportComponent },
       { path: 'tickets', component: TicketsComponent },
@@ -48,7 +44,7 @@ const routes: Routes = [
       { path: 'socials', component: SocialsComponent },
       { path: 'customise-banner', component: CustomBannerComponent},
 
-      { path: '**', component: NoPageComponent, data: { breadcrumb: '404' } },
+      { path: '**', component: NoPageComponent},
     ]
   },
 ];

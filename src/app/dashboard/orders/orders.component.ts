@@ -45,7 +45,7 @@ export class OrdersComponent {
         this.orderData[this.updateIndex].invoice_status = true;
       }else{
         this.orderData[this.updateIndex].invoice_status = false;
-      }
+      } 
     })
   }
 

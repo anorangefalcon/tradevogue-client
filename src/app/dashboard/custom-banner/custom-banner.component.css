@@ -1,8 +1,5 @@
 .form__card__head {
     padding: 25px;
-    border: 1px solid rgb(var(--blackClr), 0.1);
-    background-color: rgb(var(--whiteClr));
-    border-radius: 10px;
 
     & button {
         border: 1px solid;
@@ -12,10 +9,6 @@
     }
 }
 .form__card {
-    /* padding: 25px; */
-    /* border: 1px solid rgb(var(--blackClr), 0.1);
-    background-color: rgb(var(--whiteClr)); */
-    border-radius: 10px;
 
     & .internal-div {
         display: flex;
@@ -25,11 +18,7 @@
     }
 }
 .single-banner {
-    padding: 20px;
-    border: 1px solid rgb(var(--blackClr), 0.1);
-    border-radius: 8px;
-    background-color: rgb(var(--whiteClr)); 
-    width: 390px;
+    width: fit-content;
 }
 .add-btn {
     padding-block: 14px;

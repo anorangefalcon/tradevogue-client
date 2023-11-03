@@ -70,21 +70,6 @@ form {
   margin-top: 5px;
 }
 
-button {
-  padding: 10px 20px;
-  background-color: #4CAF50;
-  color: #fff;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-button:disabled {
-  background-color: #ccc;
-  color: #666;
-  cursor: not-allowed;
-}
-
 .custom-select {
   position: relative;
   width: 200px;
@@ -246,27 +231,13 @@ justify-content: center;
   color: #333;
 }
 
-/* Buttons */
-.operation_button {
-  margin-top: 10px;
-}
-
-.btn-primary,
-.btn-secondary {
-  padding: 8px 16px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
 .btn-primary {
-  background-color: #4CAF50; /* Green color */
-  color: #fff;
-}
-
-.btn-secondary {
-  background-color: #ddd; /* Light gray color */
-  color: #333;
+  font-weight: 500;
+  padding-block: 7px;
+  padding-inline: 15px;
+  height: 40px;
+  /* border-radius: 0px 4px 4px 0px; */
+  background-color: rgb(var(--primaryClr));
 }
 
 /* Form Input Fields */

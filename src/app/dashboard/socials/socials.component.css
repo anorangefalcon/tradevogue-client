@@ -1,8 +1,4 @@
 .form__card {
-    padding: 25px;
-    border: 1px solid rgb(var(--blackClr), 0.1);
-    background-color: rgb(var(--whiteClr));
-    border-radius: 10px;
 
     & .internal-div {
         display: flex;
@@ -10,13 +6,6 @@
         gap: 6px;
         width: calc(50% - 20px);
     }
-}
-
-.form__card__head {
-    padding: 25px;
-    border: 1px solid rgb(var(--blackClr), 0.1);
-    background-color: rgb(var(--whiteClr));
-    border-radius: 10px;
 }
 
 .second_card{

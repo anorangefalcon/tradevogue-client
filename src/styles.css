@@ -496,7 +496,7 @@ ul {
     text-transform: uppercase;
 }
 .text-capitalize {
-    text-transform: capitalize;
+    text-transform: capitalize !important;
 }
 
 .transition {

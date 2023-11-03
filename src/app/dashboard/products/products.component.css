@@ -13,13 +13,6 @@ button:disabled{
         border-radius: 10px;
     }
 
-    & .row {
-        padding: 20px;
-        background-color: rgb(var(--whiteClr));
-        border: 1px solid rgba(var(--blackClr), 0.1);
-        border-radius: 10px;
-    }
-
     & .operational-buttons {
         gap: 20px;
 
@@ -94,11 +87,6 @@ button:disabled{
         }
     }
 
-    & .row-2 {
-        background-color: rgb(var(--whiteClr));
-        border: 1px solid rgba(var(--blackClr), 0.1);
-        border-radius: 10px;
-    }
 }
 
 .items.displayInfo:hover > .popup {

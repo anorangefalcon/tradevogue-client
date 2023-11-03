@@ -1,42 +1,49 @@
+.gap-24{
+    gap: 24px;
+}
 
 #overview-section {
-    gap: 24px;
 
-    & .card,
-    .graph,
-    .product-info-cards {
-        padding: 20px;
-        border: 1px solid rgba(var(--blackClr), 0.1);
-        border-radius: 10px;
-        background-color: rgb(var(--whiteClr));
+    & .row-1 {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-block-end: 10px;
+        border-block-end: 1px solid rgb(var(--textClr), 0.1);
     }
 
-    & .card {
+    & .row-2 {
+        width: 100%;
         display: flex;
-        flex-direction: column;
-        gap: 5px;
+        text-align: right;
 
-        & .row-1 {
-            text-align: left !important;
-            display: flex;
-            flex-direction: row-reverse;
-            justify-content: space-between;
-            align-items: center;
-            border-block-end: none !important;
-            padding-block-end: 0px !important;
+        & span {
+            color: rgb(var(--sub-title-clr));
+            font-size: 14px !important;
+        }
+
+        & .value {
+            font-size: 12px !important;
+        }
+
+        & p{
+            color: rgb(var(--sub-title-clr));
+            font-weight: 500;
         }
     }
 
-
     & .info-cards {
-        width: 100%;
         grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
         grid-template-rows: repeat(4);
-        gap: 24px;
 
         & .card-value {
             font-size: 26px;
             font-weight: 500;
+        }
+
+        & .row-1{
+            padding-block-end: 0px;
+            border-block-end: 0px solid rgb(var(--textClr), 0.1);
         }
     }
 
@@ -77,41 +84,9 @@
             background: linear-gradient(327deg, rgb(var(--red-clr), 0.2), rgba(255, 255, 255, 0));
         }
     }
-
-    & .row-1 {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding-block-end: 10px;
-        border-block-end: 1px solid rgb(var(--textClr), 0.1);
-    }
-
-    & .row-2 {
-        width: 100%;
-        display: flex;
-        text-align: right;
-
-        & span {
-            color: rgb(var(--sub-title-clr));
-            font-size: 14px !important;
-        }
-
-        & .value {
-            font-size: 12px !important;
-        }
-
-
-        & p {
-            color: rgb(var(--sub-title-clr));
-            font-weight: 500;
-        }
-    }
-
     /* Chart-section */
 
     & .stats-cards {
-        display: grid;
-        gap: 24px;
 
         & .col-1{
             grid-area: 1 / 1 / span 1 / span 2;
@@ -128,8 +103,6 @@
         & .col-4{
             grid-area: 2 / 3 / span 1 / span 1;
         }
-
-
 
         & .graph {
 

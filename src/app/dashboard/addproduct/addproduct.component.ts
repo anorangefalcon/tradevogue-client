@@ -184,6 +184,11 @@ export class AddproductComponent {
             Validators.required,
           ]
         }],
+        costPrice: [,{
+          validators: [
+            Validators.required,
+          ]
+        }]
       })
     });
 

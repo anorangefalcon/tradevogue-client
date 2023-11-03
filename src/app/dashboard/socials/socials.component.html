@@ -1,7 +1,7 @@
 <div class="d-flex flex-column gap-20">
 
 
-  <div class="form__card__head d-flex justify-content-md-between align-item-center">
+  <div class="card card__pd-25 form__card__head d-flex justify-content-md-between align-item-center">
     <h3>Social Info</h3>
     <div class="operation_button d-flex gap-10">
       <button class="btn-primary" [ngStyle]="{'display': !socialsForm.disabled? 'none': 'block'}"
@@ -13,7 +13,7 @@
     </div>
   </div>
 
-  <form [formGroup]="socialsForm" class="form__card second_card d-flex flex-wrap gap-20 justify-content-center">
+  <form [formGroup]="socialsForm" class="card card__pd-25 form__card second_card d-flex flex-wrap gap-20 justify-content-center">
     <div class="internal-div">
       <label class="form__title" for="email">E-Mail</label>
       <input class="form__input" type="text" id="email" formControlName="email" />

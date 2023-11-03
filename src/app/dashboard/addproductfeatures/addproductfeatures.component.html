@@ -3,7 +3,7 @@
     <div class="fixed" style="z-index: 2;" [ngStyle]="{display: popup? 'block': 'none'}">
     </div>
 
-    <div class="card__block mw100" *ngFor="let item of card_template; let i=index">
+    <div class="card card__block mw100" *ngFor="let item of card_template; let i=index">
         <div class="row row-1 d-flex align-item-center justify-content-md-between">
             <h4>{{item.name}}</h4>
 

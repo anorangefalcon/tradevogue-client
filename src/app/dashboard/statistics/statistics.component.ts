@@ -1,6 +1,7 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import Chart from 'chart.js/auto';
 import { FetchDataService } from 'src/app/shared/services/fetch-data.service';
+import { UtilsModule } from 'src/app/utils/utils.module';
 
 @Component({
   selector: 'app-statistics',
@@ -8,18 +9,29 @@ import { FetchDataService } from 'src/app/shared/services/fetch-data.service';
   styleUrls: ['./statistics.component.css']
 })
 export class StatisticsComponent implements OnInit {
+  customerCount: number = 0;
+  orderCount: number = 0;
+  revenue: number = 0;
+  inventoryAlert: number = 0;
+
+
   barChart: any;
-  // lineChart: any;
   donutChart: any;
   table: any;
+  reviewDataLabel: any[] = ['Satisfied', 'Neutral', 'Unsatisfied'];
+  reviewData: any[] = [0, 0 , 0];
+
+  SPLabel: any[] = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  salesData: any[] = [0,0,0,0,0,0,0,0,0,0,0,0];
+  profitData: any[] = [0,0,0,0,0,0,0,0,0,0,0,0];
 
   isCustomerChange: boolean = true;
   isOrderChange: boolean = false;
   isRevenueChange: boolean = true;
 
-  constructor(private fetchdata: FetchDataService){
-  
-  }
+  category_sales: any = []; 
+
+  constructor(private fetchdata: FetchDataService, private backendUrl: UtilsModule){}
 
   ngOnInit(): void {
     
@@ -27,6 +39,7 @@ export class StatisticsComponent implements OnInit {
     this.createDonut();
 
     this.popularProducts();
+    this.fetchData();
     // this.createTable();
 
     // $('#datatable').DataTable({
@@ -35,16 +48,49 @@ export class StatisticsComponent implements OnInit {
     // }); 
   }
 
+  fetchData(){
+    this.fetchdata.HTTPGET(this.backendUrl.URLs.fetchOverallData).subscribe((data: any)=>{
+        this.reviewDataLabel = [];
+        // this.reviewData = [];
+        Object.keys(data.customer_review).forEach((key: any)=>{
+          this.reviewDataLabel.push(key);
+          this.reviewData.push(data.customer_review[key])
+        });
+        this.donutChart.update();
+
+        console.log(data);
+        this.customerCount = data.customer;
+        this.orderCount  = data.orders;
+
+        let sales = 0, alert = 0;
+        data.productInfo[0].sales_profit.forEach((product: any)=>{
+          sales += product.qtySold * product.SP;
+          alert += product.alertCount;
+        })
+        this.revenue = sales;
+        this.inventoryAlert = alert;
+
+        this.category_sales = [];
+        data.productInfo[0].category_sales_profit.forEach((category: any)=>{
+          let temp = {
+            field: category._id,
+            sales: category.sales
+          }
+          this.category_sales.push(temp);
+        })
+    })
+  }
+
   createBarChart() {
 
     this.barChart = new Chart("barChart", {
 
       type: 'line',
       data: {
-        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+        labels: this.SPLabel,
         datasets: [{
           label: "Sales",
-          data: ["30", "40", "45", "50", "49", "60", "70", "91", "125", "70", "91", "125"],
+          data: this.salesData,
           backgroundColor: 'rgba(57, 62, 70)',
           borderColor: 'rgba(57, 62, 70)',
           borderWidth: 2,
@@ -52,7 +98,7 @@ export class StatisticsComponent implements OnInit {
         },
         {
           label: "Profit",
-          data: ["50", "20", "60", "50", "90", "40", "60", "80", "250", "80", "123", "50"],
+          data: this.profitData,
           backgroundColor: 'rgb(0, 173, 181)',
           // maxBarThickness: 5,
           borderColor: 'rgba(0, 173, 181)',
@@ -101,13 +147,14 @@ export class StatisticsComponent implements OnInit {
 
 
   createDonut() {
+
     this.donutChart = new Chart('donutChart', {
       type: 'doughnut',
 
       data: {
-        labels: ['Satisfied', 'Dissatisfied', 'Neutral'],
+        labels: this.reviewDataLabel,
         datasets: [{
-          data: ['80', '30', '40'],
+          data: this.reviewData,
           backgroundColor: [
             'rgba(0, 28, 48, 0.9)',
             'rgb(0, 173, 181)',

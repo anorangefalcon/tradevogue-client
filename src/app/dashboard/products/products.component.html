@@ -1,10 +1,10 @@
 <section id="product-section">
     <div class="product-table d-flex flex-column">
-        <div class="row-1 d-flex justify-content-md-between">
+        <div class="d-flex justify-content-md-between">
             <h3>Products Inventory</h3>
         </div>
 
-        <div class="row d-flex gap-20 align-item-center justify-content-md-between">
+        <div class="card card__pd-20 d-flex gap-20 align-item-center justify-content-md-between">
             <div class="file-section d-flex align-item-center gap-20">
                 <input type="file" id="sizes" maxlength="1" minlength="1" (change)="uploadFile($event)"
                     accept="image/CSV, application/vnd.ms-excel ,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" />
@@ -34,7 +34,7 @@
 
         </div>
 
-        <div class="row d-flex flex-column">
+        <div class="card card__pd-20 d-flex flex-column">
             <div class="product-header filters d-flex gap-15 align-item-center mh100 mw100">
                 <span class="search-bar mh100">
                     <app-search-bar [searchPlaceholder]="'Search by Name, Category'" (searchQuery$)="updateFields($event, 'search')"></app-search-bar>
@@ -54,7 +54,7 @@
             </div>
         </div>
 
-        <div class="row-2 d-flex flex-column gap-20">
+        <div class="card d-flex flex-column gap-20">
             <div class="table-list">
                 <table class="text-wrap mh100 mw100">
                     <thead>
@@ -206,21 +206,21 @@
 
                                     <td class="items">{{item.last_updated}}</td>
 
-                                    <td class="items">
-                                        <span class=" d-flex align-item-center gap-10 transition">
+                                    <td class="items action-btns">
+                                        <span class="d-flex align-item-center gap-10 transition">
                                             <a href="javascript:void(0);" class="tooltip"
                                                 [routerLink]="['/dashboard/product-overview', item.itemId]">
-                                                <i class="fs-20 fa-icon material-symbols-outlined">zoom_in</i>
+                                                <i class="fs-20 action__btn-icon material-symbols-outlined">zoom_in</i>
                                                 <span class="tooltiptext">View</span>
                                             </a>
                                             <a href="javascript:void(0);" class="tooltip"
                                                 [routerLink]="['/dashboard/editproduct', item.itemId]">
-                                                <i class="fa-icon fa-regular fa-pen-to-square"></i>
+                                                <i class="action__btn-icon fa-regular fa-pen-to-square"></i>
                                                 <span class="tooltiptext">Edit</span>
                                             </a>
                                             <a href="javascript:void(0);" class="tooltip"
                                                 (click)="deleteItem(item._id, item.name)">
-                                                <i class="fa-icon fa-regular fa-trash-can"></i>
+                                                <i class="action__btn-icon fa-regular fa-trash-can"></i>
                                                 <span class="tooltiptext">Delete</span>
                                             </a>
                                         </span>

@@ -11,9 +11,6 @@
 
 .card__block{
     padding: 25px;
-    background-color: rgb(var(--whiteClr));
-    border: 1px solid rgb(var(--blackClr), 0.1);
-    border-radius: 5px;
 
     & .row-1 {
         border-bottom: 1px solid rgba(128, 128, 128, 0.1);

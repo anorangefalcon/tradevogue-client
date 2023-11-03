@@ -1,13 +1,13 @@
-<section id="overview-section" class="d-flex flex-column mh100 mw100">
+<section id="overview-section" class="d-flex flex-column mh100 mw100 gap-24">
     <!-- <h1>DashBoard</h1> -->
-    <div class="info-cards grid">
-        <div class="column-1 card">
+    <div class="info-cards grid mh100 gap-24">
+        <div class="column-1 d-flex flex-column gap-5 card card__pd-20">
             <div class="row-1">
-                <span class="icons material-symbols-outlined">bar_chart_4_bars</span>
                 <div class="d-flex flex-column ">
                     <p class="title">Customers</p>
-                    <span class="card-value" id="visitor">2790</span>
+                    <span class="card-value" id="visitor">{{customerCount}}</span>
                 </div>
+                <span class="icons material-symbols-outlined">bar_chart_4_bars</span>
             </div>
             <div class="row-2 d-flex align-item-center  gap-5">
                 <p *ngIf="isCustomerChange; else customer_increase" class="spike d-flex align-item-center gap-10">
@@ -22,13 +22,13 @@
                 </ng-template>
             </div>
         </div>
-        <div class="column-2 card">
+        <div class="column-2 d-flex flex-column gap-5 card card__pd-20">
             <div class="row-1">
-                <span class="icons  material-symbols-outlined">shopping_cart</span>
                 <div class="d-flex flex-column ">
                     <p class="title">Orders</p>
-                    <span class="card-value" id="orders">200</span>
+                    <span class="card-value" id="orders">{{orderCount}}</span>
                 </div>
+                <span class="icons  material-symbols-outlined">shopping_cart</span>
             </div>
             <div class="row-2 d-flex align-item-center  gap-5">
                 <p *ngIf="isOrderChange; else order_decrease" class="spike d-flex align-item-center gap-10">
@@ -43,13 +43,13 @@
                 </ng-template>
             </div>
         </div>
-        <div class="column-3 card">
+        <div class="column-3 d-flex flex-column gap-5 card card__pd-20">
             <div class="row-1">
-                <span class="icons material-symbols-outlined">currency_rupee</span>
                 <div class="d-flex flex-column ">
                     <p class="title">Revenue</p>
-                    <span class="card-value" id="revenue">27990</span>
+                    <span class="card-value" id="revenue">{{revenue}}</span>
                 </div>
+                <span class="icons material-symbols-outlined">currency_rupee</span>
             </div>
             <div class="row-2 d-flex align-item-center  gap-5">
                 <!-- <span class="material-symbols-outlined">info</span> -->
@@ -65,14 +65,13 @@
                 </ng-template>
             </div>
         </div>
-
-        <div class="column-4 card">
+        <div class="column-4 d-flex flex-column gap-5 card card__pd-20">
             <div class="row-1">
-                <span class="icons material-symbols-outlined">production_quantity_limits</span>
                 <div class="d-flex flex-column ">
                     <p class="title">Inventory Alert</p>
-                    <span class="card-value"  id="inventory">10</span>
+                    <span class="card-value"  id="inventory">{{inventoryAlert}}</span>
                 </div>
+                <span class="icons material-symbols-outlined">production_quantity_limits</span>
             </div>
             <div class="row-2 d-flex align-item-center gap-5">
                 <span class="value">Recently Updated</span>
@@ -80,8 +79,8 @@
             </div>
         </div>
     </div>
-    <div class="stats-cards">
-        <div class="column col-1 graph d-flex flex-column gap-15">
+    <div class="stats-cards grid gap-24">
+        <div class="column col-1 graph d-flex flex-column gap-15 card card__pd-20">
             <div class="row-1">
                 <h3>Sales & Profits</h3>
                 <span class="material-symbols-outlined">refresh</span>
@@ -90,7 +89,7 @@
                 <canvas id="barChart">{{barChart}}</canvas>
             </div>
         </div>
-        <div class="column col-2 graph d-flex flex-column gap-15">
+        <div class="column col-2 graph d-flex flex-column gap-15 card card__pd-20">
             <div class="row-1 ">
                 <h3>Customer Reviews</h3>
                 <span class="material-symbols-outlined">refresh</span>
@@ -109,7 +108,7 @@
             </div>
         </div> -->
 
-        <div class="column col-3 product-info-cards d-flex flex-column gap-15">
+        <div class="column col-3 product-info-cards d-flex flex-column gap-15 card card__pd-20">
             <div class="row-1">
                 <h3>Popular Product</h3>
                 <form action="" class="d-flex align-item-center">
@@ -158,39 +157,19 @@
             </div>
         </div>
 
-        <div class="column col-4 product-info-cards d-flex flex-column gap-15">
+        <div class="column col-4 product-info-cards d-flex flex-column gap-15 card card__pd-20">
             <div class="row-1">
-                <h3>Sales Profit by Catogory</h3>
+                <h3>Category Sales</h3>
+                <span class="material-symbols-outlined">refresh</span>
             </div>
             <div class="row-2 category-table">
                 <table class="category-row d-flex flex-column gap-20">
-                    <tr>
+                    <tr *ngFor="let category of category_sales; let i=index">
                         <span class="d-flex justify-content-md-between align-item-center">
-                            <h4>Jeans</h4>
-                            <span class="Category-price">&#8377;15K</span>
+                            <h4>{{category.field}}</h4>
+                            <span class="Category-price">&#8377; {{category.sales}}</span>
                         </span>
-                        <progress value="15000" max="100000"></progress>    
-                    </tr>
-                    <tr>
-                        <span class="d-flex justify-content-md-between align-item-center">
-                            <h4>Shirts</h4>
-                            <span class="Category-price">&#8377;20K</span>
-                        </span>
-                        <progress value="20000" max="100000"></progress>    
-                    </tr>
-                    <tr>
-                        <span class="d-flex justify-content-md-between align-item-center">
-                            <h4>T-shirts</h4>
-                            <span class="Category-price">&#8377;11.2K</span>
-                        </span>
-                        <progress value="11200" max="100000"></progress>
-                    </tr>
-                    <tr>
-                        <span class="d-flex justify-content-md-between align-item-center">
-                            <h4>Trousers</h4>
-                            <span class="Category-price">&#8377;32K</span>
-                        </span>
-                        <progress value="32000" max="100000"></progress>    
+                        <progress [value]="category.sales" max="10000000"></progress>    
                     </tr>
                 </table>
             </div>

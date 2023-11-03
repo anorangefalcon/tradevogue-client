@@ -4,7 +4,7 @@
     <button (click)="AddCoupon()">Add Coupon</button>
     
 
-    <div class="table-list">
+    <div class="table-list card">
         <table>
             <tr>
                 <th class="items item-check ">
@@ -42,28 +42,22 @@
                         <p *ngIf="data.couponcode">{{data.couponcode}}</p>
                     </td>
 
-                    <td class="items">{{data.OfferType}}</td>
-                    <td class="items">{{data.discountType}}</td>
+                    <td class="items text-capitalize">{{data.OfferType}}</td>
+                    <td class="items text-capitalize">{{data.discountType}}</td>
                     <td class="items">{{data.discountAmount}}</td>
                     <td class="items">{{(data.startDate.split('T')[0])}}</td>
                     <td class="items">{{data.endDate.split('T')[0]}}</td>
-                    <td class="items">{{data.status.active}}</td>
-                    <td class="items">
-
-
+                    <td class="items text-capitalize">{{data.status.active}}</td>
+                    <td class="items action-btns">
                         <div class="d-flex action__btns align-item-center">
-                            <button class="tooltip" (click)="EditOffer(data,i)">
-                                <span class="tooltiptext" >
-                                    Edit
-                                </span>
-                                <span class="material-symbols-outlined">
-                                    edit
-                                </span></button>
-                            <button>
-                                <span class="material-symbols-outlined" (click)="DeleteOffer(data,i)">
-                                    delete
-                                </span>
-                            </button>
+                            <a class="pointer tooltip" (click)="EditOffer(data,i)">
+                                <span class="tooltiptext" >Edit</span>
+                                <i class="action__btn-icon material-symbols-outlined">edit</i>
+                            </a>
+                            <a class="pointer tooltip">
+                                <span class="tooltiptext" >Delete</span>
+                                <i class="action__btn-icon material-symbols-outlined" (click)="DeleteOffer(data,i)">delete</i>
+                            </a>
                         </div>
                     </td>
 

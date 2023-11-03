@@ -28,6 +28,7 @@ export class UtilsModule {
     getCoupons: 'http://localhost:1000/offer/getCoupons',
 
     // Dashboard
+    fetchOverallData: 'http://localhost:1000/admin/getOverallInfo',
     addproduct: 'http://localhost:1000/admin/addProduct',
     fetchProductInventory: 'http://localhost:1000/admin/fetchProducts',
     fetchProductDetails: 'http://localhost:1000/admin/fetchProductDetails',

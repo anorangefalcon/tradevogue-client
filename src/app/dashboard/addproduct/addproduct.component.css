@@ -179,10 +179,6 @@ app-custom-select {
     }
 
     & .row {
-        padding: 20px;
-        border: 1px solid rgb(var(--blackClr), 0.1);
-        border-radius: 10px;
-        background-color: rgb(var(--whiteClr));
 
         & .previous {
             height: 35px;
@@ -345,7 +341,7 @@ input[type="file"]+label:hover, .file-section span:hover {
     padding-block: 7px;
     padding-inline: 8px;
     height: 40px;
-    border-radius: 0px 4px 4px 0px;
+    /* border-radius: 0px 4px 4px 0px; */
     background-color: rgb(var(--primaryClr));
 }
 

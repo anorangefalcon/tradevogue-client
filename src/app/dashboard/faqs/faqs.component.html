@@ -1,21 +1,15 @@
-<section class="d-flex flex-column gap-20" style="background-color: #fff; border-radius: 8px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);">
-  <div class="row d-flex justify-content-md-between" style="padding: 20px;">
-    <div class="d-flex gap-15 align-item-center">
-      <h2 style="font-size: 24px; color: #333; font-weight: bold;">FAQs</h2>
-    </div>
-
+<section class="card card__pd-20  d-flex flex-column gap-20">
+  <div class="d-flex justify-content-md-between">
+    <h2 style="font-size: 24px; color: #333; font-weight: bold;">FAQs</h2>
     <div class="custom-select">
       <select [(ngModel)]="selectedOption" (change)="retrieveContent()">
         <option *ngFor="let item of faqData">{{item.title}}</option>
       </select>
     </div>
-
-    <div class="operational-buttons d-flex flex-wrap">
-      <button (click)="openDrawer()" class="d-flex align-item-center gap-5" style="background-color: #4CAF50; color: #fff; padding: 8px 12px; border: none; border-radius: 4px; cursor: pointer;">
-        <i class="material-symbols-outlined operational-buttons-icons">add</i>
-        <span style="font-weight: bold;">Add New Category</span>
-      </button>
-    </div>
+    <button (click)="openDrawer()" class="btn-primary d-flex align-item-center gap-5">
+      <i class="material-symbols-outlined operational-buttons-icons">add</i>
+      <span style="font-weight: bold;">Add New Category</span>
+    </button>
   </div>
 </section>
 
@@ -23,11 +17,13 @@
 <div class="drawer" [ngClass]="{ 'open': isDrawerOpen }">
   <div (click)="closeDrawer()" class="close-button">
     <svg class="close-icon" width="24" height="24" viewBox="0 0 24 24" fill="none">
-      <path d="M18.2929 5.70711C18.6834 6.09763 18.6834 6.73079 18.2929 7.12132L13.4142 12L18.2929 16.8787C18.6834 17.2692 18.6834 17.9024 18.2929 18.2929C17.9024 18.6834 17.2692 18.6834 16.8787 18.2929L12 13.4142L7.12132 18.2929C6.73079 18.6834 6.09763 18.6834 5.70711 18.2929C5.31658 17.9024 5.31658 17.2692 5.70711 16.8787L10.5858 12L5.70711 7.12132C5.31658 6.73079 5.31658 6.09763 5.70711 5.70711C6.09763 5.31658 6.73079 5.31658 7.12132 5.70711L12 10.5858L16.8787 5.70711C17.2692 5.31658 17.9024 5.31658 18.2929 5.70711Z" fill="currentColor" />
+      <path
+        d="M18.2929 5.70711C18.6834 6.09763 18.6834 6.73079 18.2929 7.12132L13.4142 12L18.2929 16.8787C18.6834 17.2692 18.6834 17.9024 18.2929 18.2929C17.9024 18.6834 17.2692 18.6834 16.8787 18.2929L12 13.4142L7.12132 18.2929C6.73079 18.6834 6.09763 18.6834 5.70711 18.2929C5.31658 17.9024 5.31658 17.2692 5.70711 16.8787L10.5858 12L5.70711 7.12132C5.31658 6.73079 5.31658 6.09763 5.70711 5.70711C6.09763 5.31658 6.73079 5.31658 7.12132 5.70711L12 10.5858L16.8787 5.70711C17.2692 5.31658 17.9024 5.31658 18.2929 5.70711Z"
+        fill="currentColor" />
     </svg>
   </div>
-  
-  
+
+
 
   <form [formGroup]="faqForm">
     <div class="custom-select" style="width:200px;">
@@ -57,7 +53,7 @@
   </form>
 </div>
 
-<div *ngIf="selectedCategory" class="table-list table-container">
+<div *ngIf="selectedCategory" class="table-list card">
   <table class="selected-category-table">
     <thead>
       <tr>
@@ -68,28 +64,26 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let child of selectedCategory.childrens | slice: (pagination.currentPage - 1) * pagination.pageSize: pagination.currentPage * pagination.pageSize; let i = index;">
+      <tr
+        *ngFor="let child of selectedCategory.childrens | slice: (pagination.currentPage - 1) * pagination.pageSize: pagination.currentPage * pagination.pageSize; let i = index;">
         <td class="ellipsis items serial-number">{{ (pagination.currentPage - 1) * pagination.pageSize + i + 1 }}</td>
         <td class="ellipsis items query">{{ child.title }}</td>
         <td class="ellipsis items answer">{{ child.content }}</td>
         <td class="items actions">
           <div class="action-buttons">
-            <span (click)="showItemDetails(child)" class="material-symbols-outlined view-button material-icons">visibility</span>
+            <span (click)="showItemDetails(child)"
+              class="material-symbols-outlined view-button material-icons">visibility</span>
             <span (click)="showEdit(child)" class="material-symbols-outlined edit-button material-icons">edit</span>
-            <span (click)="deleteFaq(child)" class="material-symbols-outlined delete-button material-icons">delete</span>
+            <span (click)="deleteFaq(child)"
+              class="material-symbols-outlined delete-button material-icons">delete</span>
           </div>
         </td>
       </tr>
     </tbody>
   </table>
-  <app-pagination
-    #pagination
-    [collectionSize]="selectedCategory.childrens.length"
-    [pageSize]="5"
-    [firstLastButtons]="true"
-    [maxSize]="5"
-  ></app-pagination>
 </div>
+<app-pagination #pagination [collectionSize]="selectedCategory.childrens.length" [pageSize]="5"
+  [firstLastButtons]="true" [maxSize]="5"></app-pagination>
 
 
 <!-- <div class="pagination">

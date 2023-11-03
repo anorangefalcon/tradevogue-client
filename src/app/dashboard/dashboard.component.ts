@@ -15,7 +15,7 @@ export class DashboardComponent {
   title: string = 'Dashboard';
 
   navitems = [
-    { name: 'Dashboard', icons: 'grid_view', route: '/dashboard' },
+    { name: 'Dashboard', icons: 'grid_view', route: '/dashboard/overview' },
     {
       name: 'Products', route:'', icons: 'inventory', sublist: [
         { name: 'Product Overview', route: '/dashboard/products' },
