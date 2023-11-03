@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 declare var Stripe: any;
+import { UtilsModule } from 'src/app/utils/utils.module';
 
 @Injectable({
   providedIn: 'root'
@@ -8,7 +9,7 @@ export class StripPaymentService {
   publicKey: any;
   stripe: any;
 
-  constructor() {
+  constructor(private backendUri: UtilsModule) {
 
   }
 
@@ -73,7 +74,7 @@ export class StripPaymentService {
   };
 
   async checkOrderStatus(): Promise<void> {
-    const response = await fetch('this.backendURLs.URLs.getPaymentKeys');
+    const response = await fetch(this.backendUri.URLs.getPaymentKeys);
 
     if (!response.ok) {
       throw new Error('Network response was not ok');

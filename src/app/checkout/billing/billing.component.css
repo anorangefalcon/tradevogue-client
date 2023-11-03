@@ -943,3 +943,7 @@ form {
   min-width: initial;
 }
 }
+
+#submit {
+  display: none;
+}

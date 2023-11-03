@@ -30,7 +30,7 @@ const routers: Routes = [
     RouterModule.forChild(routers),
   ],
   exports:[
-    CartComponent
+    CartComponent,
   ]
 })
 export class CheckoutModule{

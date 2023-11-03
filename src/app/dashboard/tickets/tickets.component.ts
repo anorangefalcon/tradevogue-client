@@ -68,31 +68,30 @@ export class TicketsComponent {
       dateCreated: new Date(item.dateCreated),
       userToken: this.findUserToken(item.userEmail),
     }));
+
+    console.log(this.ticketData, "TICKET DATA")
     
+
     this.uniqueStatusValues = this.extractUniqueStatusValues(this.ticketData);
     this.ticketTypeId = data[0]._id;
   }
 
   findUserToken(userEmail: string): string | undefined {
     for (const item of this.ticketData) {
-      if (item.notificationDetails?.tokenDetail) {
-        const user = item.notificationDetails.tokenDetail.find((user: any) => user.email === userEmail);
-        if (user) {
-          const userToken = user.token;
-          console.log(`Found token for email ${userEmail}: ${userToken}`);
-          return userToken;
+      if (item.notificationDetails) {
+        for (const notification of item.notificationDetails) {
+          const user = notification.tokenDetail.find((user: any) => user.email === userEmail);
+          if (user) {
+            const userToken = user.token;
+            console.log(`Found token for email ${userEmail}: ${userToken}`);
+            return userToken;
+          }
         }
       }
     }
-  
-    console.log(`Token not found for email ${userEmail}`);
     return undefined;
   }
 
-
-
-
-  
   private extractUniqueStatusValues(ticketData: any[]): string[] {
     return Array.from(
       new Set(
@@ -108,7 +107,7 @@ export class TicketsComponent {
     console.log(item)
     this.selectedItem = item;
     this.ticketTypeId = item._id;
-    // this.popupService.openPopup();
+    this.popupService.openPopup();
   }
 
 

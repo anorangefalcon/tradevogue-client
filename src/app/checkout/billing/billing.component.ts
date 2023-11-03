@@ -154,7 +154,7 @@ export class BillingComponent {
       const { error } = await this.stripe.confirmPayment({
         elements: this.elements,
         confirmParams: {
-          return_url: "http://localhost:4200/usersetting",
+          return_url: "http://localhost:4200/usersetting/orders",
           receipt_email: this.emailAddress,
         },
       });
@@ -174,10 +174,6 @@ export class BillingComponent {
   }
 
   constructor(private cartService: CartService, private fetchDataService: FetchDataService, private backendURLs: UtilsModule, private renderer: Renderer2, private elementRef: ElementRef, private cookie: CookieService, private route: ActivatedRoute, private stripePay: StripPaymentService) {
-
-    // this.userService.totalAmount$.subscribe((data: any) => {
-    //   this.totalAmount = data;
-    // })
 
     this.proceedToPayment();
 

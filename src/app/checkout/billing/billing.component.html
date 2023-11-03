@@ -1,4 +1,3 @@
-
 <form id="payment-form">
     <h3 style="align-items: center; text-align: center;">Place Your Order</h3>
    <!-- gpay
@@ -27,6 +26,7 @@ A Stripe Element will be inserted here.
     </button>
     <div id="payment-message" class="hidden"></div>
 </form>
+
 
 <div class="address">
     <div class="d-flex flex-column gap-10">
@@ -64,8 +64,6 @@ A Stripe Element will be inserted here.
         
 
     </div>
-
-
 
     <div class="d-flex flex-column gap-10" *ngIf="!DeliveredAddress">
         <ng-container *ngFor="let address of userAddresses; let i=index" class="d-flex address__firstdiv ">
@@ -182,8 +180,8 @@ A Stripe Element will be inserted here.
 
 </div> -->
 
-
 <div [ngClass]="{'show':addnewAddress==true}">
-<app-address (newAddress)="NewAddressHandler($event)"  (closeaddressed)="CloseAddress()" [receiveData]="AddressSended"></app-address>
+<app-address (newAddress)="NewAddressHandler($event)"  (closeaddressed)="CloseAddress()" [receiveData]="AddressSended">
+</app-address>
 </div>
 

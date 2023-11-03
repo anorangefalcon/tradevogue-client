@@ -60,18 +60,16 @@
 
             </button>
 
-            <button *ngIf="CouponApplied && (!BillingPageVisited)" class="d-flex justify-content-md-between">
+            <button *ngIf="CouponApplied && (BillingPageVisited)" class="d-flex justify-content-md-between">
                 <span>
                     {{CouponApplied.couponcode}}
                 </span>
                 <span (click)="RemoveAppliedCoupon()">Remove</span>
             </button>
             <!-- (click)="CreateOrder()" -->
-            <button class="btn-primary" (click)="verifyOrderSummary()" *ngIf="!BillingPageVisited"><a>Proceed to
-                    Checkout</a></button>
-            <button class="btn-primary" (click)="ProceedToPayment()" *ngIf="BillingPageVisited"><a>Proceed to
-                    Payment</a></button>
-
+            <button class="btn-primary" (click)="verifyOrderSummary()" *ngIf="!BillingPageVisited" ><a>Proceed to Checkout</a></button>
+            <button class="btn-primary" *ngIf="BillingPageVisited" (click)="ProceedToPayment()">Proceed to Payment</button>
+              
         </div>
     </div>
 

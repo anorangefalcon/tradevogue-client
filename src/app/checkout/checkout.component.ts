@@ -36,6 +36,17 @@ export class CheckoutComponent implements OnInit {
   BillingPageVisited: boolean = false;
   constructor(private cartService: CartService, private cookie:CookieService, private router: Router, private renderer: Renderer2, private toastService: ToastService, private BackendUrl: UtilsModule, private fetchService: FetchDataService, private route: Router, private el: ElementRef) {
 
+      // Log route changes
+      this.router.events.subscribe((event) => {
+        console.log('Current Route:', this.router.url);
+  
+        if (this.router.url === '/cart/billing') {
+          this.BillingPageVisited = true;
+        } else {
+          this.BillingPageVisited = false;
+        }
+      });
+
     // if(this.route.url=='/cart/billing'){
     //   // this.BillingPageVisited=true;
     // }
@@ -280,47 +291,16 @@ export class CheckoutComponent implements OnInit {
 
 
  async ProceedToPayment() {
-  
 
-  // this.userService.ordersubject$.subscribe((data:any)=>{
-  //   // console.log('data ---------> ',data);
-    
-  // });
-
-  // return;
-
-  //       (this.userService.SelectedAddress$).subscribe((address)=>{
-  //         if(!address) this.toastService.errorToast({title:'Please select Address'});
-  //         this.cartService.fetchCart().subscribe((res) => {
-  //           let input=JSON.parse(JSON.stringify(res));
-  //           // console.log('input amount is ',input.amounts);
-  //           // this.userService.PaymentSubject.next(input.amounts);
-
-  //           // this.userService.Payment$.subscribe((data)=>{
-
-  //           // })
-
-  //           // return;
-  //           // input.DeliveredAddress=address;            
-  //           let data:any={};
-  //           if(this.CouponApplied){
-  //             data.coupon=this.CouponApplied;
-  //             data.discount=input.amounts.savings;
-  //           }
-  //           data.address=address;
-  //           data.products=input.details;
-  //           this.fetchService.HTTPPOST(this.BackendUrl.URLs.createOrder,data).subscribe((data:any)=>{
-
-  //           });
-
-  //         })
-  //       });
-          
-        
-  //         return;
-  // }
+  console.log("its working")
 
   
+
+  
+  const paymentButton = document.getElementById('submit') as HTMLButtonElement;
+    if (paymentButton) {
+      paymentButton.click(); 
+    }
 }
 
 }

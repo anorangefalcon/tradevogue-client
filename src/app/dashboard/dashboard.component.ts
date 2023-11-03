@@ -31,12 +31,14 @@ export class DashboardComponent {
         { name : 'Banner', route : '/dashboard/customise-banner'},
         { name: 'Socials', route: '/dashboard/socials' },
         { name: 'FAQs', route: '/dashboard/faq' },
+        { name: 'Monetization' , route: '/dashboard/monetization'}
       ]
     },
     {
       name: 'Support Tickets', route:'', icons: 'chat_bubble', sublist: [
         { name: 'Ticket Types', route: '/dashboard/support' },
-        { name: 'Tickets' , route: '/dashboard/tickets'}
+        { name: 'Tickets' , route: '/dashboard/tickets'},
+        // {name: 'Monetization', route: '/dashboard/monetization'}
       ]
     },
     { name: 'Logout', icons: 'logout', route: '' }
