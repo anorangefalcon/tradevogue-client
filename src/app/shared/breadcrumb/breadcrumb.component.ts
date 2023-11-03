@@ -70,7 +70,7 @@ export class BreadcrumbComponent implements OnInit {
     if (route.children.length > 0) {
       return this.createBreadcrumbs(route.children[0], url, breadcrumbs);
     }
-    return breadcrumbs;
+    return breadcrumbs;``
   }
 
 }

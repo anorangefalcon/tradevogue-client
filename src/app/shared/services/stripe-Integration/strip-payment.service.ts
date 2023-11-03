@@ -1,6 +1,10 @@
 import { Injectable } from '@angular/core';
 declare var Stripe: any;
 import { UtilsModule } from 'src/app/utils/utils.module';
+import { CartService } from '../cart.service';
+import { FetchDataService } from '../fetch-data.service';
+import { CookieService } from 'ngx-cookie-service';
+import { BillingResponseService } from 'src/app/checkout/billing-response.service';
 
 @Injectable({
   providedIn: 'root'
@@ -9,9 +13,7 @@ export class StripPaymentService {
   publicKey: any;
   stripe: any;
 
-  constructor(private backendUri: UtilsModule) {
-
-  }
+  constructor(private backendUri: UtilsModule,private billingService:BillingResponseService, private CartService: CartService, private fetchData: FetchDataService, private cookie: CookieService) {}
 
   // async ngOnInit(): Promise<any> {
 
@@ -103,6 +105,28 @@ export class StripPaymentService {
     switch (paymentIntent.status) {
       case "succeeded":
         // this.showMessage("Payment succeeded!");
+        let body:any = {
+          buyerId: this.cookie.get('userToken'),
+          newPaymentStatus: 'succeeded',
+          transactionId: paymentIntent.id,
+          MOP: paymentIntent.payment_method_types[0],
+        };
+        
+        // this.billingService.PaymentResponse.next(true);
+        
+
+        this.fetchData.HTTPPOST(this.backendUri.URLs.updateOrderStatus, body).subscribe((data: any) => {
+          console.log('status updated ', data);
+        });
+        
+          
+          body.payment_status = "succeeded"
+  
+          console.log("submiting user token is ", this.cookie.get('userToken'));
+
+          // this.fetchData.HTTPPOST(this.backendUri.URLs.createOrder,body).subscribe((data:any)=>{
+          //   console.log('daa coming is ',data);                 
+          // });
 
         await fetch('http://localhost:1000/invoiceSend', {
           method: 'POST',

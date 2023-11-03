@@ -9,8 +9,13 @@ export class BillingResponseService {
   Address:any;
   PaymentStatus:any;
 
-  BillingPageVisited=new BehaviorSubject(false);
-  BillingpageVisited$=this.BillingPageVisited.asObservable();
+  BillingPageVisited = new BehaviorSubject(false);
+  BillingpageVisited$ = this.BillingPageVisited.asObservable();
 
+
+  private PaymentResponse=new BehaviorSubject(false);
+  PaymentResponse$=this.PaymentResponse.asObservable();
   constructor() { }
+  
+
 }

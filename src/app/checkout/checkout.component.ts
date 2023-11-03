@@ -8,6 +8,8 @@ import { ToastService } from '../shared/services/toast.service';
 import { lastValueFrom } from 'rxjs';
 import { CookieService } from 'ngx-cookie-service';
 import { BillingResponseService } from './billing-response.service';
+import { StripPaymentService } from '../shared/services/stripe-Integration/strip-payment.service';
+import { data } from 'jquery';
 
 
 @Component({
@@ -35,7 +37,7 @@ export class CheckoutComponent implements OnInit {
   @ViewChild('Proceed__btn') Proceed__btn!: ElementRef;
 
   BillingPageVisited: boolean = false;
-  constructor(private cartService: CartService, private cookie:CookieService,private billingService:BillingResponseService, private router: Router, private renderer: Renderer2, private toastService: ToastService, private BackendUrl: UtilsModule, private fetchService: FetchDataService, private route: Router, private el: ElementRef) {
+  constructor(private cartService: CartService, private cookie:CookieService,private billingService:BillingResponseService, private router: Router, private renderer: Renderer2, private toastService: ToastService, private BackendUrl: UtilsModule, private fetchService: FetchDataService, private route: Router, private el: ElementRef, private stripePay: StripPaymentService) {
 
       // Log route changes
       this.router.events.subscribe((event) => {
@@ -277,21 +279,35 @@ this.billingService.BillingpageVisited$.subscribe((data:any)=>{
           }
         });
         
-       });
-
-    
+       }); 
   }
 
 
  async ProceedToPayment() {
 
+  
   if(!this.billingService.Address) {
     this.toastService.errorToast({title:'Please select Address'});
     return;
   }
+
+// response of payment here 
+console.log("proceed to payment called")
+
+const paymentButton = document.getElementById('submit') as HTMLButtonElement;
+if (paymentButton) {
+  paymentButton.click(); 
+}
+
+
+  this.billingService.PaymentResponse$.subscribe((data)=>{
+    console.log('data coming is ',data);
+    
+  })
+
   console.log(this.billingService.Address);
   this.cartService.fetchCart().subscribe((data)=>{
-    console.log('data coing is ',data);
+    console.log('data coming is davin ',data);
     let body:any={};
     if (this.CouponApplied) {
       body.coupon = this.CouponApplied;
@@ -299,22 +315,20 @@ this.billingService.BillingpageVisited$.subscribe((data:any)=>{
     }
     body.products=data.details;   
     body.address=this.billingService.Address;
+    // body.payment_status = "succeeded"
+
     
     this.fetchService.HTTPPOST(this.BackendUrl.URLs.createOrder,body).subscribe((data:any)=>{
-      console.log('daa coming is ',data);
-                       
+      console.log('daa coming is ',data);      
     });
   })
 
   console.log("its working")
 
-  
-
-  
-  const paymentButton = document.getElementById('submit') as HTMLButtonElement;
-    if (paymentButton) {
-      paymentButton.click(); 
-    }
+  // const paymentButton = document.getElementById('submit') as HTMLButtonElement;
+  //   if (paymentButton) {
+  //     paymentButton.click(); 
+  //   }
 }
 
 }

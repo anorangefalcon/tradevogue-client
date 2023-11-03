@@ -128,7 +128,10 @@ export class UtilsModule {
     addPaymentKeys: 'http://localhost:1000/paymentKeys/add',
     updatePaymentKeys: 'http://localhost:1000/paymentKeys/update',
     deletePaymentKeys: 'http://localhost:1000/paymentKeys/delete',
-    getPaymentKeys: 'http://localhost:1000/paymentKeys/get'
+    getPaymentKeys: 'http://localhost:1000/paymentKeys/get',
+
+    // update the order status 
+    updateOrderStatus: 'http://localhost:1000/orders/updateOrderStatus'
   }
 }
 
