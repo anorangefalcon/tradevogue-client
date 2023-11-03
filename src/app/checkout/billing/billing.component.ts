@@ -4,6 +4,7 @@ import { FetchDataService } from 'src/app/shared/services/fetch-data.service';
 import { UtilsModule } from 'src/app/utils/utils.module';
 import { CartService } from 'src/app/shared/services/cart.service';
 import { ActivatedRoute } from '@angular/router';
+import { BillingResponseService } from '../billing-response.service';
 declare var Stripe: any;
 import { StripPaymentService } from 'src/app/shared/services/stripe-Integration/strip-payment.service';
 
@@ -50,6 +51,17 @@ export class BillingComponent {
           console.error('Error occurred:', error);
         }
       };
+
+      this.route.queryParams.subscribe(params => {
+        const redirectStatus = params['redirect_status'];
+
+        if (redirectStatus === 'succeeded') {
+          this.proceedToPayment();
+        }
+      });
+
+      this.getAddresses();
+
     } catch (error) {
       console.error('Error loading Stripe scripts:', error);
     }
@@ -173,8 +185,12 @@ export class BillingComponent {
     }
   }
 
-  constructor(private cartService: CartService, private fetchDataService: FetchDataService, private backendURLs: UtilsModule, private renderer: Renderer2, private elementRef: ElementRef, private cookie: CookieService, private route: ActivatedRoute, private stripePay: StripPaymentService) {
+  constructor(private cartService: CartService,private billingService:BillingResponseService, private fetchDataService: FetchDataService, private backendURLs: UtilsModule, private renderer: Renderer2, private elementRef: ElementRef, private cookie: CookieService, private route: ActivatedRoute, private stripePay: StripPaymentService) {
 
+    // this.userService.totalAmount$.subscribe((data: any) => {
+    //   this.totalAmount = data;
+    // })
+    this.billingService.BillingPageVisited.next(true);
     this.proceedToPayment();
 
     this.stripePay.setLoading = this.stripePay.setLoading.bind(this);
@@ -240,58 +256,90 @@ export class BillingComponent {
 
 
   // ADDRESS TS FILE---------------------
-  userAddresses: any;
+  userAddresses: any[]=[];
+  receiveData: any;
   navbar_scroll_style: boolean = false;
   cart: any = '';
   CouponApplied: any = '';
   DeliveredAddress: any = '';
+  ShowComponent: boolean = false;
+
+  
+
+  getAddresses(){
+      this.fetchDataService.HTTPGET(this.backendURLs.URLs.getAddress)
+      .subscribe((data:any)=>{
+        if(data){
+          data = data.addresses;
+          if (data.length != 0) {
+            this.userAddresses = data;
+          } 
+        }  
+      })  
+    }
 
 
-  AddressSended: any;
-  addnewAddress: boolean = false;
+  // async getAddresses() {;
+  //   let Addresses = await this.userService.SubscribingValue('userAddresses');
+  //   if (!Addresses) {
+  //     let data: any = await this.fetchDataService.httpGet(this.backendURLs.URLs.getAddress);
+  //     data = data.addresses;
+  //     this.userAddresses = data;
+  //     if (data.length != 0) {
+  //       await this.userService.emittingValue('userAddresses', data);
+  //       this.userAddresses = data;
+  //     }
+  //   }
+
+  //   else {
+  //     this.userAddresses = Addresses;
+  //   }
+
+
+  // }
+
+  
+ 
+
   EditAddress(address: any, index: any) {
     const data = this.userAddresses[index];
-    this.AddressSended = { data, index };
-    this.addnewAddress = true;
+    this.receiveData = { data, index };
+    this.ShowComponent = true;
   }
+  
 
-  async RemoveAddress(address: any, index: any) {
-    try {
-      const body = { id: address._id }
-      let deleteAddress = await this.fetchDataService.httpPost(this.backendURLs.URLs.deleteAddress, body);
-      this.userAddresses.splice(index);
+  AddressHandler(event: any) {
+    if (!event) {
+      this.ShowComponent = event;
     }
 
-    catch (error) {
-
+   
+    //edit request updated
+    else if(event.index===0 || event.index){
+      this.userAddresses[event.index]=event.data;
     }
-
-
-  }
-
-
-  NewAddressHandler(event: any) {
-    if (event.hasOwnProperty("index")) {
-      this.userAddresses[event.index] = event;
-      return;
+    // // new address added
+    else{
+      this.userAddresses=event;
     }
-    this.userAddresses.push(event);
+   
   }
 
-  CloseAddress() {
-    this.addnewAddress = false;
-  }
+  RemoveAddress(address:any,index:any){
+    const body={address_id:address._id}
+     this.fetchDataService.HTTPPOST(this.backendURLs.URLs.deleteAddress,body).subscribe((data)=>{
+       this.userAddresses.splice(index,1);
+     })
+ }
+
 
   AddAddress() {
-    this.addnewAddress = true;
+    this.ShowComponent=true;
   }
 
   SelectAddress(address: any) {
     this.DeliveredAddress = address;
-    // this.userService.DeliveryAddress.next(this.DeliveredAddress);
-    // this.userService.OrderSubject.next(address);
-   
-    // this.userService.emitOrderSubject(address,address);
+    this.billingService.Address=this.DeliveredAddress;
   }
 
   ChangeAddress() {

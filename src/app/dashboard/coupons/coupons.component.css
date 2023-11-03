@@ -13,8 +13,7 @@
   /* padding: 10px 20px; */
 
   & .header__addOffer{
-    height: 100px;
-    top:0;
+
   }
 
   & .OfferForm{
@@ -230,4 +229,8 @@ tr:hover {
     border-radius: 10px;
     overflow: hidden;
 
+}
+
+textarea{
+    padding: 10px;
 }

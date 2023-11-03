@@ -15,6 +15,7 @@
                     </label>
                 </th>
                 <th class="items">Discount Title / Coupon Code</th>
+                <th class="items">Title/Coupon Code</th>
                 <th class="items">OfferType</th>
                 <!-- <th>Coupon Type</th> -->
                 <th class="items">Discount Type</th>
@@ -37,6 +38,7 @@
                     </label>
                 </td>
                     
+                <ng-container>
                     <td class="items">
                         <p *ngIf="!data.couponcode">{{data.Title}}</p>
                         <p *ngIf="data.couponcode">{{data.couponcode}}</p>
@@ -48,6 +50,9 @@
                     <td class="items">{{(data.startDate.split('T')[0])}}</td>
                     <td class="items">{{data.endDate.split('T')[0]}}</td>
                     <td class="items">{{data.status.active}}</td>
+                    <!-- <td class="items">
+                        <input type="radio" [attr.checked]="data.status.active">
+                    </td> -->
                     <td class="items">
 
 
@@ -66,29 +71,19 @@
                             </button>
                         </div>
                     </td>
-
+                    </ng-container>
 
             </tr>
         </table>
     </div>
 
 </div>
-<app-drawer [direction]="direction" [show]="show" (showChange)="ChangeHanlder($event)" (ParentClosedEmitter)="ParenClosedHandler($event)" [ParenClosed]="ParenClosed">
+<app-drawer [direction]="direction" [show]="show" (showChange)="ChangeHanlder($event)" (ParentClosedEmitter)="ParenClosedHandler($event)" [ParenClosed]="ParenClosed" [title]="title">
 
             <div class="CouponDiv d-flex flex-column" >
                 <div class="d-flex align-item-center justify-content-md-between header__addOffer">
-                    <div>
-                        <h3> Add Coupon/Discount</h3>
                         <p>Add your coupon and necessary information from here
-                        </p>
-                    </div>
-    
-                    <!-- <button class="close_btn" (click)="CancelCoupon()">
-                        <span class="material-symbols-outlined">
-                            close
-                        </span>
-                    </button> -->
-    
+                        </p>    
                 </div>
     
     
@@ -142,10 +137,17 @@
     
                     <div class="form__group d-flex">
                         <label class="form__label"> discountAmount (%/Amount)<span>*</span></label>
+
+                        <div class="validation__div">
                         <input type="number" id="discountAmount" class="form__input" formControlName="discountAmount"
                             placeholder="Enter Discount Amount"
                             [attr.min]="OfferForm.get('discountType')?.value=='percentage' ? 0 : null"
                             [attr.max]="OfferForm.get('discountType')?.value=='percentage' ? 100 : null">
+
+                            <small *ngIf="OfferForm.get('discountAmount')?.hasError('error')"> must be between 0 and 100 is not
+                                valid</small>
+
+                            </div>
                     </div>
     
                     <div class="form__group d-flex">
@@ -180,7 +182,7 @@
                                 <input type="text" id="couponcode" class="form__input" formControlName="couponcode"
                                     placeholder="Enter Coupon Code" oninput="this.value = this.value.toUpperCase()">
     
-                                <small *ngIf="OfferForm.get('couponcode')?.hasError('error') "> coupon code is not
+                                <small *ngIf="OfferForm.get('couponcode')?.hasError('error')"> coupon code is not
                                     valid</small>
                             </div>
                         </div>
@@ -252,9 +254,9 @@
                     </div>
     
     
-                    <div class="form__group d-flex" *ngIf="OfferForm.get('couponType')?.value=='custom'">>
+                    <div class="form__group d-flex" *ngIf="OfferForm.get('couponType')?.value=='custom'">
                         <label class="form__label"> User Email <span>*</span></label>
-                        <input type="email" id="email" class="form__input" placeholder="Enter Your Email">
+                        <input type="email" id="email" class="form__input" formControlName="email" placeholder="Enter Your Email">
                     </div>
     
                 </form>
@@ -266,10 +268,9 @@
                     <!-- "
                         
                     -->
-                    <!-- -->
-                    <button class="btn-primary" (click)="CouponSubmit()" 
-                        [ngClass]="{disabled:OfferForm.invalid}" [disabled]="OfferForm.invalid" >
-    
+                    <!-- [disabled]="OfferForm.invalid"-->
+                    <button class="btn-primary" (click)="CouponSubmit()"  
+                        [ngClass]="{disabled:OfferForm.invalid}" >
                         <span *ngIf="!EditRequest else add">Save</span>
                         <ng-template #add>
                             Update

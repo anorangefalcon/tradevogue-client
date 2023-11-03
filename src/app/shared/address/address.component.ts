@@ -36,7 +36,6 @@ export class AddressComponent {
         town_city: fb.control('', [Validators.required,]),
         state: fb.control('', [Validators.required,]),
         mobile: ['', [Validators.required, PhoneNumberValidator]],
-
       });
 
 
@@ -56,8 +55,6 @@ export class AddressComponent {
     if (this.ShowComponent == true) {
       this.show = true;
     }
-    console.log('edit address is ',this.receiveData);
-    
     if (this.receiveData) {
       this.title='Edit Address';
       this.DetailsForm.patchValue(this.receiveData.data);
@@ -71,44 +68,32 @@ export class AddressComponent {
 
 
   async SaveAddress() {
-    console.log('save clicked ----------> ',this.DetailsForm," recieve data is ",this.receiveData);
-    
     try {
       let result;
       if (this.receiveData) {
-        const body = JSON.parse(JSON.stringify(this.DetailsForm.value));
+        const body =this.DetailsForm.value;
         body._id = this.receiveData.data._id;
-        body.status = true;
         this.fetchService.HTTPPOST(this.backendURLs.URLs.updateAddress, body).subscribe((result)=>{
-          console.log('edited data====>');
-          
-          this.AddressHandler.next({ data: this.DetailsForm.value, index: this.receiveData.index });
+          this.AddressHandler.next({ data: body, index: this.receiveData.index });
         });
-        // result = JSON.parse(JSON.stringify(result));
       }
       else {
     this.fetchService.HTTPPOST(this.backendURLs.URLs.addAddress, JSON.parse(JSON.stringify(this.DetailsForm.value))).subscribe((result)=>{
-      console.log('data coming is ',result);
-      
-          this.AddressHandler.next({ data:  this.DetailsForm.value});
+          this.AddressHandler.next(result);
         });
       }
 
-      // this.DetailsForm.reset();
+      
     }
     catch (error) {
     }
-
-    // this.show=(false);
     this.DetailsForm.reset();
-    // this.ParenClosed = true;
-
+      this.ParenClosed = true;
   }
 
   StateHandler(event: any) {
     this.DetailsForm.get('state')?.setValue(event);
   }
-
 
 
 }

@@ -217,22 +217,22 @@ const body={
     if (!event) {
       this.ShowComponent = event;
     }
-    // //  edit request updated
-    // else if(event.index===0){
-    //   this.userAddresses[event.index]=event.data;
-    // }
+
+   
+    //edit request updated
+    else if(event.index===0 || event.index){
+      this.userAddresses[event.index]=event.data;
+    }
     // // new address added
-    // else {
-    //   this.userAddresses.push(event.data);
-    // }
+    else{
+      this.userAddresses=event;
+    }
+   
   }
 
    RemoveAddress(address:any,index:any){
-    console.log('address coming is ',address);
      const body={address_id:address._id}
       this.fetchDataService.HTTPPOST(this.backendURLs.URLs.deleteAddress,body).subscribe((data)=>{
-        console.log('data comes is after deletion',data);
-        
         this.userAddresses.splice(index,1);
       })
   }
@@ -278,8 +278,10 @@ const body={
   async MakeDefault(address:any){
     try {
       const body={address:address};
-      const data:any=await this.fetchDataService.httpPost(this.backendURLs.URLs.setDefaultAddress,body);
-      this.userAddresses=data;
+      this.fetchDataService.HTTPPOST(this.backendURLs.URLs.setDefaultAddress,body).subscribe((data:any)=>{
+        this.userAddresses=data;
+
+    });
       
     } catch (error) {
 

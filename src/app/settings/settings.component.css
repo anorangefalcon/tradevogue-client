@@ -288,9 +288,9 @@ label span {
 
 
 .default__btn {
-    text-transform: uppercase;
-    border-radius: 20px;
-    color: #DF1621;
+    border-radius: 16px;
+    color : rgb(var(--textClr), 0.5);
+    font-weight: 400;
 }
 
 

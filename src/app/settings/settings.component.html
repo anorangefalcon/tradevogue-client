@@ -67,19 +67,19 @@
                 <form [formGroup]="ProfileForm" class="d-flex gap-15 disableInput flex-wrap"
                     [ngClass]="isReadOnly === true ? 'disableInput' : 'enableInput'">
                     <div class="form__group relative d-flex flex-column">
-                        <label class="form__label">FIRSTNAME<span>*</span></label>
+                        <label class="form__label">First Name<span>*</span></label>
                         <span class="material-symbols-outlined form__icon absolute">person</span>
                         <input type="text" id="firstname" formControlName="firstname"
                             placeholder="Enter Your First Name">
                     </div>
 
                     <div class="form__group relative d-flex flex-column">
-                        <label class="form__label">LASTNAME<span>*</span></label>
+                        <label class="form__label">Last Name<span>*</span></label>
                         <span class="material-symbols-outlined form__icon absolute">person</span>
                         <input type="text" id="lastname" formControlName="lastname" placeholder="Enter Your Last Name">
                     </div>
                     <div class="form__group relative d-flex flex-column">
-                        <label class="form__label">EMAIL<span>*</span></label>
+                        <label class="form__label">Email<span>*</span></label>
                         <span class="material-symbols-outlined form__icon absolute">mail</span>
                         <input type="text" id="email" formControlName="email" placeholder="Enter Your Email">
                         <small *ngIf="ProfileForm.get('email')?.hasError('email') && ProfileForm.get('email')?.touched"
@@ -90,7 +90,7 @@
 
 
                     <div class="form__group relative d-flex flex-column">
-                        <label class="form__label">MOBILENO<span>*</span></label>
+                        <label class="form__label">Mobile No.<span>*</span></label>
                         <span class="material-symbols-outlined form__icon absolute">call</span>
                         <input type="text" id="mobile" formControlName="mobile" placeholder="Enter Your MobileNo">
 
@@ -103,7 +103,7 @@
 
 
                     <div class="form__group relative d-flex flex-column">
-                        <label class="form__label">DOB<span>*</span></label>
+                        <label class="form__label">Date of Birth<span>*</span></label>
                         <span class="material-symbols-outlined form__icon absolute">person</span>
                         <input type="date" id="dob" formControlName="dob" placeholder="Enter Your Username">
                     </div>
@@ -168,7 +168,6 @@
                         <div class="d-flex justify-content-md-between align-item-center address__firstdiv">
                             <p class="name text-capitalize">{{address.firstname}} {{address.lastname}}</p>
                             <div class="d-flex">
-                                <!-- <button></button> -->
                                 <span *ngIf="address.defaultAddress">Default Address</span>
                                 <button class="btn default__btn" (click)="MakeDefault(address)" *ngIf="i!=0">Make this
                                     Defult</button>

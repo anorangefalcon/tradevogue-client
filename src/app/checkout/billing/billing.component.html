@@ -20,7 +20,7 @@ A Stripe Element will be inserted here.
     <!-- <div id="address-element">
         Stripe.js injects the Address Element
     </div> -->
-    <button id="submit">
+    <button id="submit" class="btn-primary">
         <div class="spinner hidden" id="spinner"></div>
         <span id="button-text">Pay now</span>
     </button>
@@ -77,9 +77,9 @@ A Stripe Element will be inserted here.
 
                     <div class="d-flex justify-content-md-between" >
                         <p class="name pointer-none">{{address.firstname}} {{address.lastname}}</p>
-                        <div class="d-flex">
+                        <div class="d-flex functionality-btns">
                             <span *ngIf="address.defaultAddress">Default Address</span>
-                            <button class="btn default__btn" (click)="MakeDefault(address,i)" *ngIf="!address.defaultAddress">Make this  Defult</button>
+                            <button class="btn default__btn" (click)="MakeDefault(address,i)" *ngIf="!address.defaultAddress">Make this  Default</button>
                             <button class="edit__btn btn" (click)="EditAddress(address,i)">Edit</button>
                             <button class="remove__btn btn" (click)="RemoveAddress(address,i)">Remove</button>
                         </div>
@@ -180,8 +180,19 @@ A Stripe Element will be inserted here.
 
 </div> -->
 
-<div [ngClass]="{'show':addnewAddress==true}">
+<!-- <div [ngClass]="{'show':addnewAddress==true}">
 <app-address (newAddress)="NewAddressHandler($event)"  (closeaddressed)="CloseAddress()" [receiveData]="AddressSended">
 </app-address>
-</div>
+</div> -->
 
+<!-- <div [ngClass]="{'show':addnewAddress==true}">
+<app-address (newAddress)="NewAddressHandler($event)"  (closeaddressed)="CloseAddress()" [receiveData]="AddressSended"></app-address>
+</div> -->
+
+
+<div [ngClass]="{'show':ShowComponent==true}">
+<app-address [ShowComponent]="ShowComponent" [receiveData]="receiveData"
+    (AddressHandler)="AddressHandler($event)"></app-address>
+
+
+</div>

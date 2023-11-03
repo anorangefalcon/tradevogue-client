@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 import { CartService } from 'src/app/shared/services/cart.service';
+import { BillingResponseService } from '../billing-response.service';
 
 
 
@@ -13,8 +14,9 @@ import { CartService } from 'src/app/shared/services/cart.service';
 
 export class CartComponent implements OnInit {
 
-  constructor(private cartService: CartService, private cookie: CookieService,private router:Router) {
+  constructor(private cartService: CartService, private cookie: CookieService, private billingService:BillingResponseService, private router:Router) {
     // this.userService.PaymentUrlVisited.next(false);
+    this.billingService.BillingPageVisited.next(false);
    }
   cartArr: any[] = [];
   userToken: any = this.cookie.get("userToken");
