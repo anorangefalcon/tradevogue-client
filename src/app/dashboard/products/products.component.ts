@@ -200,18 +200,31 @@ export class ProductsComponent implements OnInit {
 
   // Handles Excel File Uplaoded
   uploadFile(event: Event) {
-    let data = this.excelService.handleFileInput(event);
-    data.then((products) => {
-      console.log(products);
+    let excelData = this.excelService.handleFileInput(event);
+    excelData.then((excel:any) => {
+      console.log(excel.data); // fine products
+      
+      if(excel.errors){
+        let errorObj: any = {
+          title: 'Some Rows were Rejected',
+          body: []
+        };
 
-      let product_keys = Object.keys(products['errors']);
-      this.toastService.errorToast({
-        title: 'Errors found in Excel',
-        body: ['In sheet First, Second']
-      })
+        excel.errors.forEach((error: any)=>{
+          errorObj.body.push('Row: ' + error.row + ' Rejected from Sheet: ' + error.sheet);
+        })
 
-      product_keys.forEach((sheet) => {
-        let sheets_keys = Object.keys(products['errors'][sheet]);
+        this.toastService.errorToast(errorObj);
+      }
+
+      // let product_keys = Object.keys(products['errors']);
+      // this.toastService.errorToast({
+      //   title: 'Errors found in Excel',
+      //   body: ['In sheet First, Second']
+      // })
+
+      // product_keys.forEach((sheet) => {
+      //   let sheets_keys = Object.keys(products['errors'][sheet]);
         // console.log(sheets_keys);
 
         // sheets_keys.forEach((errors) => {
@@ -225,7 +238,7 @@ export class ProductsComponent implements OnInit {
         //   console.log(detail);
         // })
         // })
-      })
+      // })
     })
   }
 }

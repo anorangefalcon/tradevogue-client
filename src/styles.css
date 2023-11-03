@@ -1011,7 +1011,7 @@ button {
 }
 
 /* SKELETON */
-.skeleton {
+/* .skeleton {
     position: relative;
 }
 .skeleton::before {
@@ -1025,7 +1025,7 @@ button {
     background: linear-gradient(90deg, rgba(var(--blackClr), 0.05), #f9f9f9, rgba(var(--blackClr), 0.05));
     background-size: 200%;
     animation: skeleton 2s infinite reverse;
-}
+} */
 @keyframes skeleton {
     0% {
         background-position: -100% 0;

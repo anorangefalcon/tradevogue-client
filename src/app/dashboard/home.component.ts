@@ -1,11 +1,10 @@
-import { Component, ViewEncapsulation } from '@angular/core';
+import { Component } from '@angular/core';
 
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css'],
-  encapsulation: ViewEncapsulation.None
 })
 export class DashboardComponent {
 
@@ -15,7 +14,7 @@ export class DashboardComponent {
   title: string = 'Dashboard';
 
   navitems = [
-    { name: 'Dashboard', icons: 'grid_view', route: '/dashboard/overview' },
+    { name: 'Dashboard', icons: 'grid_view', route: '/dashboard' },
     {
       name: 'Products', route:'', icons: 'inventory', sublist: [
         { name: 'Product Overview', route: '/dashboard/products' },
@@ -28,17 +27,14 @@ export class DashboardComponent {
     { name: 'Promo Code', icons: 'redeem' ,route: '/dashboard/coupons'},
     {
       name: 'Elements', route:'',icons: 'build', sublist: [
-        { name : 'Banner', route : '/dashboard/customise-banner'},
         { name: 'Socials', route: '/dashboard/socials' },
         { name: 'FAQs', route: '/dashboard/faq' },
-        { name: 'Monetization' , route: '/dashboard/monetization'}
       ]
     },
     {
       name: 'Support Tickets', route:'', icons: 'chat_bubble', sublist: [
         { name: 'Ticket Types', route: '/dashboard/support' },
-        { name: 'Tickets' , route: '/dashboard/tickets'},
-        // {name: 'Monetization', route: '/dashboard/monetization'}
+        { name: 'Tickets' , route: '/dashboard/tickets'}
       ]
     },
     { name: 'Logout', icons: 'logout', route: '' }

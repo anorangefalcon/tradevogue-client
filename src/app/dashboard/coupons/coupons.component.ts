@@ -10,7 +10,7 @@ import { UtilsModule } from 'src/app/utils/utils.module';
 })
 export class CouponsComponent {
 OfferForm:FormGroup;
-FormSubmiited:boolean=false;
+title='Add Coupon/Discount';
 direction: string='right';
 ParenClosed:boolean=false;
 show:boolean=false;
@@ -25,7 +25,6 @@ this.show=event;
 
 OfferType=['coupon','discount'];
 discountType=['percentage','flat'];
-// DiscountPercentageType=['fixed','variable'];
 couponType=['global', 'custom','new'];
 Brands:any;
 EditIndex:any;
@@ -39,9 +38,6 @@ deleteList : any = [];
 
 
 constructor(private fb:FormBuilder,private fetchDateService:FetchDataService,private BackendUrls:UtilsModule){
-
-
-
     this.OfferForm = fb.group(
       { OfferType:fb.control('', [Validators.required]),
         Title: fb.control('', [Validators.required]),
@@ -53,11 +49,13 @@ constructor(private fb:FormBuilder,private fetchDateService:FetchDataService,pri
         maximumDiscount:fb.control('', [Validators.required]),
       },
       {  validator: this.DateValidator}
-      )
-
-
-      // this.getDates();
-    
+      ) 
+      const body=['categories','brands']
+     this.fetchDateService.HTTPPOST( this.BackendUrls.URLs.fetchFeatures,body).subscribe((data:any)=>{
+      this.Brands=data.brands;
+      this.Categories=data.categories;
+     })
+      
   }
 
   toggleSelectAll() {
@@ -84,13 +82,16 @@ constructor(private fb:FormBuilder,private fetchDateService:FetchDataService,pri
 
 
   CouponCodeValidator(control: FormControl){
+    if(!control.value) return null;
     if(control.value.includes(' ')){
       return {error:true}
     }
     return null;
   }
 
-  ParenClosedHandler(event:any){
+  ParenClosedHandler(event:any){   
+    console.log('event comingi is=========>',event);
+     
     this.ParenClosed=event;
   }
 
@@ -101,6 +102,7 @@ constructor(private fb:FormBuilder,private fetchDateService:FetchDataService,pri
     let startDate=control.get('startDate')?.value;
     startDate=new Date(startDate).getTime();
     let endDate=control.get('endDate')?.value;
+  if(!startDate || !endDate) return null;
     endDate=new Date(endDate).getTime();
     if(startDate<currentTime){
     control.get('startDate')?.setErrors({'format':"incorrect"});
@@ -114,47 +116,19 @@ constructor(private fb:FormBuilder,private fetchDateService:FetchDataService,pri
 
   }
 
-
-  // getDates(){
-  //   const currentDate = new Date();
-  //   let endDate = new Date(currentDate);
-  //   endDate.setDate(currentDate.getDate() + 1);
-  
-  //   const day = currentDate.getDate();
-  //   const month = currentDate.getMonth() + 1;
-  //   const year = currentDate.getFullYear();
-  
-  //   const endDateDay = endDate.getDate();
-  //   const endDateMonth = endDate.getMonth() + 1;
-  
-  //   const startDate = `${day < 10 ? '0' : ''}${day}/${month < 10 ? '0' : ''}${month}/${year}`;
-  //   const endDateFormatted = `${endDateDay < 10 ? '0' : ''}${endDateDay}/${endDateMonth < 10 ? '0' : ''}${endDateMonth}/${year}`;
-  
-  //   console.log('startDate is', startDate, 'end Date is', endDateFormatted);
-  
-  //   return { startDate, endDate: endDateFormatted };
-  // }
-
-  
-
   OfferTypeHandler(event:any){
     this.OfferForm.get('OfferType')?.patchValue(event);
     const controls :any= [
-      { name: 'couponcode'},
+      { name: 'couponcode',validator:this.CouponCodeValidator},
       { name: 'couponType', },
       { name: 'couponUsersLimit' },
       { name: 'minimumPurchaseAmount' },
     ];
-
-
     if(event=='coupon'){
       if(this.OfferForm.get('ExtraInfo')){
          this.OfferForm.removeControl('ExtraInfo');
          this.OfferForm.removeControl('DiscountPercentageHandler');
       }
-   
-
-
       // this.OfferForm.addFor
       controls.forEach((el:any)=>{
         if(el.validator){
@@ -162,8 +136,7 @@ constructor(private fb:FormBuilder,private fetchDateService:FetchDataService,pri
         }
         else{
           this.OfferForm.addControl(el.name, this.fb.control('', [Validators.required]));
-        }
-        
+        }  
       })
 
 
@@ -196,7 +169,7 @@ constructor(private fb:FormBuilder,private fetchDateService:FetchDataService,pri
   CouponTypeHandler(event:any){
     this?.OfferForm?.get('couponType')?.patchValue(event);
     if(event=='custom'){
-      this.OfferForm.addControl('email', this.fb.control('', [Validators.email]));
+      this.OfferForm.addControl('email', this.fb.control('', [Validators.email,Validators.required]));
     }
     
   }
@@ -204,8 +177,7 @@ constructor(private fb:FormBuilder,private fetchDateService:FetchDataService,pri
 async ngOnInit(){
  this.fetchDateService.HTTPGET(this.BackendUrls.URLs.getOffers).subscribe((data)=>{
       this.allOffers=data;
-    });
-    
+    });    
 }
 currentPage: number = 1
 pageChange(e: any){
@@ -234,9 +206,24 @@ pageChange(e: any){
   }
 
 
+  PercentageValidator(control:AbstractControl){
+    if(control.value>=0 && control.value<=100){
+      return null;
+    }
+    return {error:true}
+  }
+
+
   DiscountTypeHandler(event:any){
    this.OfferForm.get('discountType')?.patchValue(event);
-  //  this.OfferForm.addControl('DiscountPercentageType', this.fb.control('', [Validators.required]));
+   if(this?.OfferForm?.get('discountType')?.value=='percentage'){
+      this.OfferForm.get('discountAmount')?.setValidators([this.PercentageValidator])
+   }
+
+   else{
+    this.OfferForm.get('discountAmount')?.removeValidators(this.PercentageValidator)
+   }
+
    }
 
   // DiscountPercentageHandler(event:any){
@@ -245,7 +232,7 @@ pageChange(e: any){
   
   async CouponSubmit(){
     let url;
-    let body=this.OfferForm.value;
+    let body:any=this.OfferForm.value;
     if(this.EditRequest){
       url=this.BackendUrls.URLs.updateOffer;
         body.id=this.EditRequest;      
@@ -261,11 +248,10 @@ this.fetchDateService.HTTPPOST(url,body).subscribe((data)=>{
         else{
           this.allOffers.push(data);
         }
+        this.ParenClosed=true;  
         this.OfferForm.reset();
-        this.ParenClosed=true;
-        
       });
-  return;  
+      return;  
 
   }
 
@@ -280,29 +266,19 @@ this.fetchDateService.HTTPPOST(url,body).subscribe((data)=>{
 
 
   // function 
-
-
   EditRequest:any;
 
   async EditOffer(data:any,index:any){
     this.EditIndex=index;
     this.EditRequest=data._id;
     data.startDate=data.startDate.split('T')[0];
-
     data.endDate=data.endDate.split('T')[0];
-
-    
     this.OfferTypeHandler(data.OfferType);
     this.DiscountTypeHandler(data.discountType);
-  
-
+    if(data.email) this.CouponTypeHandler('custom');
     this.OfferForm.patchValue(data);
-    // console.log('OFferform is ',this.OfferForm.value);
-    // this.userService.DrawerClose.next(false);
     this.show=true;
-    this.CouponRequest=true
-  
-    
+    this.CouponRequest=true 
   }
 
 

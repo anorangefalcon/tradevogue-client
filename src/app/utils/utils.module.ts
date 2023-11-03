@@ -26,6 +26,13 @@ export class UtilsModule {
     deleteAddress: 'http://localhost:1000/user/deleteAddress',
     setDefaultAddress: 'http://localhost:1000/user/setDefault',
     getCoupons: 'http://localhost:1000/offer/getCoupons',
+    // getAddress:'http://localhost:1000/user/getAddress',
+    // addAddress:'http://localhost:1000/user/addAddress',
+    // subscribeMail : 'http://localhost:1000/sendMail',
+    // updateAddress:'http://localhost:1000/user/updateAdress',
+    // deleteAddress:'http://localhost:1000/user/deleteAddress',
+    // setDefaultAddress:'http://localhost:1000/user/setDefault',
+   
 
     // Dashboard
     fetchOverallData: 'http://localhost:1000/admin/getOverallInfo',
@@ -66,6 +73,11 @@ export class UtilsModule {
     getOffers: 'http://localhost:1000/offer/get',
     deleteOffer: 'http://localhost:1000/offer/delete',
     updateOffer: 'http://localhost:1000/offer/update',
+    // createOffer:'http://localhost:1000/offer/create',
+    // getOffers:'http://localhost:1000/offer/get',
+    // deleteOffer:'http://localhost:1000/offer/delete',
+    // updateOffer:'http://localhost:1000/offer/update',
+    // getCoupons:'http://localhost:1000/offer/getCoupons',
 
     // FAQs User Routes
     getFaqData: 'http://localhost:1000/getpaginatedData/faq',
