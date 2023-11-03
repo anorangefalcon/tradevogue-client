@@ -94,14 +94,14 @@
                 <span (click)="isSearching = false" class="back material-symbols-outlined pointer">
                     keyboard_backspace
                 </span>
-                <app-search-bar (click)="hamburgerOpen = false" class="search-bar" [searchPlaceholder]="'search products...'" (searchQuery$)="searchExplore($event)"></app-search-bar>
+                <app-search-bar (click)="hamburgerOpen = false" class="search-bar" [searchPlaceholder]="'Search products...'" (searchQuery$)="searchExplore($event)"></app-search-bar>
             </div>
             <span (click)="isSearching = !isSearching; hamburgerOpen = false"
                 class="search-icon-mobile material-symbols-outlined">
                 search
             </span>
             <li>
-                <a class="icons" href="javscript:void(0);">
+                <a class="icons" href="javscript:void(0);" routerLink="/usersetting/wishlist">
                     <span class="wishlist_count material-symbols-outlined">
                         favorite
                         <span class="count" id="wishList">{{wishlistCount}}</span>

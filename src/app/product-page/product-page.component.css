@@ -894,3 +894,16 @@
     }
 
 }
+
+
+
+.wishlisted {
+    color: rgb(var(--danger), 0.7)  !important; 
+    /* background-color: pink; */
+    font-size: 32px;
+    font-variation-settings:
+        'FILL' 1,
+        'wght' 400,
+        'GRAD' 0,
+        'opsz' 24
+}

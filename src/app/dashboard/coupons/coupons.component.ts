@@ -33,6 +33,8 @@ allOffers:any;
 Categories:any;
 Filters=['categories','brands'];
 CouponRequest:boolean=false;
+selectAll: boolean = false;
+deleteList : any = [];
 
 
 
@@ -56,6 +58,28 @@ constructor(private fb:FormBuilder,private fetchDateService:FetchDataService,pri
 
       // this.getDates();
     
+  }
+
+  toggleSelectAll() {
+    this.allOffers.forEach((product: any) => {
+      product.checked = this.selectAll;
+    });
+  }
+
+  checkboxChanged() {
+    if (this.isAllcheckboxChecked()) this.selectAll = true;
+    else this.selectAll = false;
+  }
+
+  isAllcheckboxChecked() {
+    return this.allOffers.every((product: any) => product.checked);
+  }
+
+  updateCheckList() {
+    this.deleteList = [];
+    this.allOffers.forEach((product: any) => {
+      if (product.checked) this.deleteList.push(product._id);
+    });
   }
 
 
@@ -183,7 +207,11 @@ async ngOnInit(){
     });
     
 }
-
+currentPage: number = 1
+pageChange(e: any){
+  this.currentPage = e;
+  // this.fetchData();
+}
 
   AddCoupon(){
     this.OfferForm.reset();

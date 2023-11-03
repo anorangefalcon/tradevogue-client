@@ -26,6 +26,7 @@ export class LoginComponent {
   showPasswordForm: boolean = false;
   isactive: boolean = false;
   script: any;
+  loading : boolean = false;
 
   constructor(private fb: FormBuilder,private loginService:LoginCheckService, private wishlistService:WishlistService, private cookies: CookieService, private router: Router, private userData: UserDataService, private route: ActivatedRoute, private backendUrls: UtilsModule, private fetchDataService: FetchDataService, private renderer: Renderer2) {
     this.loginForm = fb.group(
@@ -69,8 +70,7 @@ export class LoginComponent {
   }
 
   async onLogin() {
-    console.log("he");
-    
+    this.loading = true;
     const body = {
       email: this.loginForm.get('email')?.value,
       password: this.loginForm.get('password')?.value

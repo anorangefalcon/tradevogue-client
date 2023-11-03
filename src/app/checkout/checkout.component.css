@@ -327,6 +327,19 @@
 
 /* COUPONS CSS */
 
+.drawer-wrapper {
+    .drawer__header {
+        /* box-shadow: none;
+        background-color: rgb(var(--whiteClr)); */
+        /* padding-block-start: 35px;
+        padding-inline: 40px; */
+    }
+
+    & .drawer__content {
+        margin-block-start: 35px;
+    }
+}
+
 .coupons {
     /* border: 1px solid black;
     width: 400px;
@@ -352,9 +365,9 @@
     }
 
     & .all-coupons {
-        margin-block: 30px;
+        /* margin-block: 30px; */
         /* border: 1px solid rgb(var(--textClr), 0.3); */
-        padding-inline-start: 15px;
+        /* padding-inline-start: 15px; */
 
         & .coupon::last-child {
             border: none;
@@ -365,7 +378,8 @@
         padding-block: 20px;
 
         & .coupon-name h2 {
-            padding: 5px;
+            padding-inline: 10px;
+            padding-block: 4px;
             display: inline-block;
             border: 1px dashed rgb(var(--textClr), 0.7);
             font-size: 16px;

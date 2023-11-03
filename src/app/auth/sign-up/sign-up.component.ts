@@ -18,6 +18,8 @@ export class SignUpComponent {
   script: any;
   password: string = 'password';
   showPassword: boolean = false;
+  loading : boolean = false;
+
 constructor(private fb: FormBuilder, private router: Router,private loginService:LoginCheckService, private cookies: CookieService, private renderer: Renderer2, private backendURLs: UtilsModule, private fetchDataService: FetchDataService) {
     // Google login
     window.addEventListener('signupEvent', async (event: any) => {
@@ -48,16 +50,19 @@ constructor(private fb: FormBuilder, private router: Router,private loginService
 
    CreateUser(body:any){
     this.fetchDataService.HTTPPOST(this.backendURLs.URLs.signupUrl, body).subscribe((data:any)=>{
+
       this.cookies.set('userToken', data.token)
       this.cookies.set('userName',data.firstName)
       this.router.navigate(['/']);
       this.loginService.LoginCheck.next(true);
+      this.loading = false;
     })
   }
 
  
   // ON SUBMIT METHOD
   async onSubmit() {
+    this.loading = true;
       const body = {
         name: { firstname: this.signupForm.get('firstname')?.value, lastname: this.signupForm.get('lastname')?.value },
         email: this.signupForm.get('email')?.value,

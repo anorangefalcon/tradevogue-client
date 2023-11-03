@@ -40,6 +40,7 @@ export class ProductPageComponent implements OnInit {
     private route: ActivatedRoute,
     private fetchService: FetchDataService,
     private backendUrl: UtilsModule,
+
     private cartService: CartService,
     private wishlistService: WishlistService,
     private reviewService: ReviewService,
@@ -59,6 +60,7 @@ export class ProductPageComponent implements OnInit {
 
     if (this.productSku) {
       this.sku = this.productSku;
+      
       this.fetchProductData();
     }
 
@@ -80,6 +82,12 @@ export class ProductPageComponent implements OnInit {
       return;
     }
     this.fetchService.getProductDetails(this.sku).subscribe((data: any) => {
+      console.log(data);
+      this.wishlistService.WishListedProducts.subscribe((response:any)=>{
+            if(response.includes(data._id)){
+              data.wishlisted=true;
+            } 
+          })
       this.updateDataFields(data);
     });
   }

@@ -192,6 +192,11 @@
 
 
 
+@keyframes spinner {
+    to {transform: rotate(360deg);}
+  }
+
+
 @media screen and (max-width: 960px) {
     .form-container {
 
@@ -272,7 +277,3 @@
         }
     }
 }
-
-
-
-

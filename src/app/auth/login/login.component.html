@@ -10,37 +10,46 @@
                 <div class="form__group relative d-flex flex-column">
                     <label class="form__label">Email</label>
                     <span class="material-symbols-outlined person form__icon absolute">person</span>
-                    <input type="text" placeholder="Enter Your Username" formControlName="email">
-    
+                    <input type="text" placeholder="Enter Your Email" formControlName="email">
+
 
                 </div>
 
                 <!-- PASSWORD INPUT  -->
                 <div class="form__group d-flex  flex-column relative">
 
-                 
+
                     <label class="d-flex  password-label">Password</label>
                     <span class="material-symbols-outlined key  form__icon absolute">key</span>
                     <input [type]="passwordFieldType" placeholder="Enter Your Password" formControlName="password">
+<<<<<<< Updated upstream
                     <a class="eye-btn flex justify-content-center align-item-center"
                         (click)="togglePasswordVisibility()">
                         <span class="material-symbols-outlined eye">{{ showPassword ? 'visibility' : 'visibility_off'}}</span>
                 </a>
+=======
+                    <a class="eye-btn flex justify-content-center align-item-center pointer"
+                        (click)="togglePasswordVisibility()">
+                        <span class="material-symbols-outlined eye">{{ showPassword ? 'visibility' :
+                            'visibility_off'}}</span>
+                    </a>
+>>>>>>> Stashed changes
                     <div class="forgot-pass">
                         <a class="pointer sign-up-text" (click)="showPasswordForm=true">Forgot password?</a>
                     </div>
-                  
-                </div>
-              
-                
-                <button class="btn-primary loginbtn" [disabled]="loginForm.invalid" [ngClass]="{'disabled':loginForm.invalid}" (click)="onLogin()">Login</button>
 
+                </div>
+
+
+                <button class="btn-primary  relative" [disabled]="loginForm.invalid"
+                    [ngClass]="{'disabled':loginForm.invalid, 'spinner' : loading}" (click)="onLogin()">Login</button>
                 <div class="or-div relative">
                     <p class="absolute">or</p>
                 </div>
 
-                <button class="btn-secondary relative d-flex justify-content-center align-item-center google-btn-wrapper ">
-                    <img src="../../../assets/logos/google-logo.svg" width="50px" height="50px" alt="google"/>
+                <button
+                    class="btn-secondary relative d-flex justify-content-center align-item-center google-btn-wrapper ">
+                    <img src="../../../assets/logos/google-logo.svg" width="50px" height="50px" alt="google" />
                     Sign in with Google
                     <div class="google-btn ">
                         <div id="g_id_onload"

@@ -32,6 +32,7 @@ export class SettingsComponent {
   password2: string = "password";
   password3: string = "password";
   AddressSended: boolean = false;
+  productsArray : any = [];
   receiveData: any;
   list: any = []
   wishlistedProducts: any;
@@ -75,30 +76,48 @@ export class SettingsComponent {
       newPassword: fb.control('', [Validators.required, Validators.minLength(8), passwordStrengthValidator]),
       againNewPassword: fb.control('', [Validators.required, (control: any) => matchPasswordValidator(control, this.changePasswordForm)])
     })
+
+    this.route.paramMap.subscribe((params:any) => {
+      console.log('params.page is ',params," page is ",params.get('page'));
+      
+      this.changeComponent(params.get('page'));
+    
+    });
   };
 
   async changeComponent(el: string) {
     this.showData = el;
     this.TranslateData = true;
-    this.fetchDataService.HTTPGET(this.backendURLs.URLs.showWishlist).subscribe((data: any) => {
-      let wishlistArray = data.wishlists
-      this.list = wishlistArray.map((wishlist: any) => {
-        return wishlist.wishlistName
-      })
-      
-    })
+    if(el=='wishlist'){
+      this.fetchDataService.HTTPGET(this.backendURLs.URLs.showWishlist).subscribe((data: any) => {
+        this.productsArray = data.wishlists;
+        let wishlistArray = data.wishlists
+        this.list = wishlistArray.map((wishlist: any) => {
+          return wishlist.wishlistName
+        })
+        
+      })  
+    }
+    
+   
+
+    
   }
   async showWishlistedProducts(wishlist: string, index: number) {
 
-    console.log(wishlist, "konisi wishlist", index, "i");
+    
+const body={
+  wishlistName:wishlist
+}
 
-    const body = {
-      wishlistName: wishlist
-    }
-    console.log(body, "body");
+    this.fetchDataService.HTTPPOST(this.backendURLs.URLs.showProducts,body).subscribe((data)=>{
+      this.wishlistedProducts=data;
+      console.log(this.wishlistedProducts, "wishlisted products");
+      
 
-    this.wishlistedProducts = await this.fetchDataService.httpPost(this.backendURLs.URLs.showProducts, body)
-    console.log(this.wishlistedProducts, "products wish");
+        })
+
+
 
     if (this.openedAccordionIndex === index) {
       this.openedAccordionIndex = null; // Close the currently open accordion
@@ -110,17 +129,52 @@ export class SettingsComponent {
 
   async removeFromWishlist(productId: any, wishlistName: string, index: number) {
     // console.log(productId, "del");
-    // const delProduct = {
-    //   wishlistName: wishlistName,
-    //   productId: productId
-    // }
+    const delProduct = {
+      wishlistName: wishlistName,
+      productId: productId
+    }
     // console.log(delProduct);
 
-    // let delData = await this.fetchDataService.httpPost(this.backendURLs.URLs.deleteFromWishlist, delProduct)
+    let delData = await this.fetchDataService.httpPost(this.backendURLs.URLs.deleteFromWishlist, delProduct)
+    
     // console.log(delData, "del");
     // this.showWishlistedProducts(wishlistName, index)
 
-    this.wishlistService.removeFromWishlist(productId,wishlistName,index);
+    // console.log("del function");
+    // console.log(this.productsArray, "products array");
+
+    // this.productsArray.forEach((wishlists: any)=>{
+    //   if (wishlists.wishlistName == wishlistName){
+    //     console.log(wishlists, "before splice");
+        
+    //     // wishlists.splice(productId, 1);
+    //     wishlists.products.splice(wishlists.products.indexOf(productId),1);
+    //     console.log(wishlists, "after splice");
+        
+
+        
+    //   }
+      
+    // })
+
+
+      this.wishlistedProducts.forEach((product: any)=>{
+      // console.log(product, "single product");
+      if (product.productDetails._id == productId)
+      { this.wishlistedProducts.splice(this.wishlistedProducts.indexOf(product), 1)
+        this.wishlistService.WishlistCount.next(this.wishlistService.WishlistCount.value-1);
+      }
+      
+      
+    })
+
+
+    
+    // this.wishlistService.removeFromWishlist(productId,wishlistName,index);
+    // this.wishlistService.delete$.subscribe((data)=)
+
+  
+    
 
   }
 

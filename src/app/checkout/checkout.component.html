@@ -5,12 +5,12 @@
             <span>{{cartCount}} item<span *ngIf="cartCount>1">s</span>
             </span>
         </div>
-        <router-outlet class="cartAndBilling" ></router-outlet>
+        <router-outlet class="cartAndBilling"></router-outlet>
     </div>
 
-    <div class="orderSummary" [class.active]="navbar_scroll_style == true" >
+    <div class="orderSummary" [class.active]="navbar_scroll_style == true">
         <div class="summary-container d-flex flex-column gap-10" id="orders">
-            
+
             <h2 class="border-end text-center">Order Summary</h2>
             <div class="border-end items-container d-flex flex-column gap-10">
                 <div class="item" *ngFor="let item of cart.details">
@@ -24,12 +24,12 @@
                     </div>
                 </div>
             </div>
-            
+
             <!-- <div>
             <div class="Router-outlet">
             <router-outlet class="cartAndBilling"></router-outlet>
         </div> -->
-        <!-- </div> -->
+            <!-- </div> -->
 
             <div class="border-end subtotal d-flex justify-content-md-between">
                 <p>Subtotal</p>
@@ -39,38 +39,42 @@
                 <p>Shipping</p>
                 <p>₹{{cart.amounts.shipping}}</p>
             </div>
-        
+
             <div class="border-end savings d-flex justify-content-md-between">
                 <p>Savings</p>
                 <p class="savings-amt">₹{{cart.amounts.savings | number : '1.0-2'}}</p>
             </div>
-        
+
             <div class="total d-flex justify-content-md-between">
                 <p>Total</p>
                 <p>₹{{cart.amounts.total | number : '1.0-2'}}</p>
             </div>
-            <button  *ngIf="(!CouponApplied && !(BillingPageVisited))" class="btn-primary apply__coupon d-flex align-item-center justify-content-center" (click)="CouponOpener()">
-              
+            <button *ngIf="(!CouponApplied && !(BillingPageVisited))"
+                class="btn-primary apply__coupon d-flex align-item-center justify-content-center"
+                (click)="CouponOpener()">
+
                 Apply Coupons
                 <span class="material-symbols-outlined">
                     chevron_right
-                    </span>
-               
+                </span>
+
             </button>
 
             <button *ngIf="CouponApplied && (!BillingPageVisited)" class="d-flex justify-content-md-between">
                 <span>
-                {{CouponApplied.couponcode}}
-            </span>
+                    {{CouponApplied.couponcode}}
+                </span>
                 <span (click)="RemoveAppliedCoupon()">Remove</span>
             </button>
             <!-- (click)="CreateOrder()" -->
-            <button class="btn-primary" (click)="verifyOrderSummary()" *ngIf="!BillingPageVisited"><a>Proceed to Checkout</a></button>
-            <button class="btn-primary" (click)="ProceedToPayment()" *ngIf="BillingPageVisited"><a>Proceed to Payment</a></button>
-      
+            <button class="btn-primary" (click)="verifyOrderSummary()" *ngIf="!BillingPageVisited"><a>Proceed to
+                    Checkout</a></button>
+            <button class="btn-primary" (click)="ProceedToPayment()" *ngIf="BillingPageVisited"><a>Proceed to
+                    Payment</a></button>
+
         </div>
     </div>
-    
+
     <!-- <div class="fixed-checkout">
         <div class="fix-total">
             <p class="subtotal" >Subtotal : ₹{{cart.amounts.subTotal}}</p>
@@ -119,54 +123,57 @@
     <app-drawer [direction]="direction" [show]="show" (showChange)="ChangeHanlder($event)" [ParenClosed]="ParenClosed" (ParentClosedEmitter)="ParentClosedFun($event)" [title]="'Available Coupons'"> 
     <div class="coupons d-flex flex-column gap-15">
         <div class="d-flex justify-content-md-between">
-            <input type="text" placeholder="Enter coupon code"  #CouponCode oninput="this.value = this.value.toUpperCase()" (input)="InputChange()">
-           
-            <button class="btn-primary apply__btn" (click)="ApplyCoupon(null,$event)" [disabled]="CouponValid=='invalid'" [ngClass]="{'disabled':CouponValid=='invalid'}">APPLY</button>
+            <input type="text" placeholder="Enter coupon code" #CouponCode
+                oninput="this.value = this.value.toUpperCase()" (input)="InputChange()">
+
+            <button class="btn-primary apply__btn" (click)="ApplyCoupon(null,$event)"
+                [disabled]="CouponValid=='invalid'" [ngClass]="{'disabled':CouponValid=='invalid'}">APPLY</button>
             <span *ngIf="CouponValid=='invalid'">Coupon is not valid</span>
         </div>
-        <div class="all-coupons" >
-           
+        <div class="all-coupons">
+
             <div class="coupon d-flex flex-column gap-10" *ngFor="let coupon of AllCoupons">
                 <div class="coupon-name">
                     <h2>{{coupon.couponcode}}</h2>
                 </div>
-                
 
-                <div class="description">
-                    <ng-container *ngIf="coupon.discountType=='flat'">
+
+                <div class="description">bhhjk
+                    <!-- <ng-container *ngIf="coupon.discountType=='flat'">
                         <p>get Flat {{coupon.discountAmount}}</p>
                     </ng-container>
 
                     <ng-container *ngIf="coupon.discountType=='percentage'">
-                        <p *ngIf="coupon.DiscountPercentageType=='fixed'">Get 
+                        <p *ngIf="coupon.DiscountPercentageType=='fixed'">Get
                             <span *ngIf="coupon.DiscountPercentageType=='variable'">Upto</span>
-                            {{coupon.discountAmount}}% off</p>
-                    
-                    </ng-container> 
+                            {{coupon.discountAmount}}% off
+                        </p>
 
-            
-                    <p>User Code {{coupon.couponcode}}  &   
+                    </ng-container> -->
+
+
+                    <p>User Code {{coupon.couponcode}} &
                         <ng-container *ngIf="coupon.discountType=='flat'">
                             <span>get Flat {{coupon.discountAmount}}</span>
                         </ng-container>
-    
+
                         <ng-container *ngIf="coupon.discountType=='percentage'">
-                            <span *ngIf="coupon.DiscountPercentageType=='fixed'">Get 
+                            <span *ngIf="coupon.DiscountPercentageType=='fixed'">Get
                                 <span *ngIf="coupon.DiscountPercentageType=='variable'">Upto</span>
                                 {{coupon.discountAmount}}% off</span>
-                          
-                        </ng-container> 
-                        
+
+                        </ng-container>
+
                     </p>
 
                     <p>Terms and Conditions:</p>
-                   <ul>
-                    <li>Minimum Order value of {{coupon.minimumPurchaseAmount}}</li>
-                    <li>Coupon Can be valid only once per user</li>
-                    <li>Coupon is valid till {{DateParser(coupon.endDate)}}
-                    </li>
-                    <li>Maximum Discount You can get is {{coupon.maximumDiscount}}</li>
-                   </ul>
+                    <ul>
+                        <li>Minimum Order value of {{coupon.minimumPurchaseAmount}}</li>
+                        <li>Coupon Can be valid only once per user</li>
+                        <li>Coupon is valid till {{DateParser(coupon.endDate)}}
+                        </li>
+                        <li>Maximum Discount You can get is {{coupon.maximumDiscount}}</li>
+                    </ul>
                 </div>
 
                 <!-- <button class="d-flex align-item-center more-btn pointer" (click)="showMore=!showMore" *ngIf="showMore==false">
@@ -217,7 +224,7 @@
 
             </div> -->
         </div>
-        
+
 
     </div>
 </app-drawer>

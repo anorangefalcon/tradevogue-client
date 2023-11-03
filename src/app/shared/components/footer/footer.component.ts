@@ -27,6 +27,8 @@ export class FooterComponent {
     }
     this.fetchDataService.HTTPPOST(this.backendUrls.URLs.uniqueProductFields, body).subscribe(
       (data: any) => {
+        console.log(data, "unique data");``
+        
         this.categories = data.data.category;
       }
     )

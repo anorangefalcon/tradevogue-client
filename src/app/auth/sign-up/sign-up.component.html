@@ -1,4 +1,4 @@
-l<section class="signup-section d-flex flex-">
+<section class="signup-section d-flex flex-">
 
   <div class="column left-column d-flex justify-content-center align-item-center">
     <div class="form-container d-flex flex-column align-item-center">
@@ -107,7 +107,7 @@ l<section class="signup-section d-flex flex-">
 
         </div>
 
-        <button class="btn-primary registerbtn" [disabled]="signupForm.invalid" [ngClass]="{'disabled':signupForm.invalid}" (click)="onSubmit()">Register</button>
+        <button class="btn-primary registerbtn relative" [disabled]="signupForm.invalid" [ngClass]="{'disabled':signupForm.invalid, 'spinner': loading}" (click)="onSubmit()">Register</button>
         <div class="or-div relative">
           <p class="absolute">or</p>
       </div>

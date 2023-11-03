@@ -63,7 +63,6 @@
                         <li>
                             <a routerLink="/t&c">Return</a>
                         </li>
-                       
                         <!-- <li>
                             <a href="#">Wishlist</a>
                         </li> -->
@@ -87,13 +86,13 @@
                     <h4 >MY ACCOUNT</h4>
                     <ul class="d-flex flex-column gap-20">
                         <li>
-                            <a routerLink="/usersetting" (click)=" show('profile')" >Account</a>
+                            <a routerLink="/usersetting/profile" (click)=" show('profile')">Account</a>
                         </li>
                         <li>
-                            <a href="#" routerLink="/cart">My cart</a>
+                            <a href="#" routerLink="/cart">My Cart</a>
                         </li>
                         <li>
-                            <a routerLink="/usersetting" (click)="show('orders')">Orders</a>
+                            <a routerLink="/usersetting/orders" (click)="show('orders')">Orders</a>
                         </li>
                     </ul>
                 </div>
@@ -264,13 +263,14 @@
                 <h5 class="subtitle">MY ACCOUNT</h5>
                 <ul class="d-flex gap-10 list">
                     <li>
-                        <a routerLink="/setting" (click)=" show('profile')" >Account</a>
+                        <!--  (click)=" show('profile')" -->
+                        <a routerLink="/usersetting/profile" >Account</a>
                     </li>
                     <li>
                         <a href="#" routerLink="/cart">My cart</a>
                     </li>
                     <li>
-                        <a routerLink="/setting" (click)="show('orders')">Order history</a>
+                        <a routerLink="/usersetting/orders" (click)="show('orders')">Order history</a>
                     </li>
                 </ul>
             </div>

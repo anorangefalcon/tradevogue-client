@@ -1,4 +1,3 @@
-
 <div class="container">
     <h2>Coupon</h2>
         
@@ -8,6 +7,13 @@
     <div class="table-list">
         <table>
             <tr>
+                <th class="items item-check ">
+                    <input [(ngModel)]="selectAll" (change)="toggleSelectAll();  updateCheckList();"
+                        type="checkbox" id="all_product">
+                    <label for='all_product' class="d-flex flex-center">
+                        <span class="d-flex flex-center material-symbols-outlined">done</span>
+                    </label>
+                </th>
                 <th class="items">Discount Title / Coupon Code</th>
                 <th class="items">OfferType</th>
                 <!-- <th>Coupon Type</th> -->
@@ -22,7 +28,15 @@
 
             <tr *ngFor="let data of allOffers; let i=index">
                 <!-- {{data.status.deleted}} akmfjnvf -->
-                <ng-container *ngIf="!data.status.deleted">
+                <td class="items item-check">
+                    <input [(ngModel)]="data.checked" type="checkbox"
+                        (change)="checkboxChanged(); updateCheckList();"
+                        id="itemId_{{i}}">
+                    <label class="d-flex flex-center" for='itemId_{{i}}'>
+                        <span class="d-flex flex-center material-symbols-outlined">done</span>
+                    </label>
+                </td>
+                    
                     <td class="items">
                         <p *ngIf="!data.couponcode">{{data.Title}}</p>
                         <p *ngIf="data.couponcode">{{data.couponcode}}</p>
@@ -52,7 +66,6 @@
                             </button>
                         </div>
                     </td>
-                </ng-container>
 
 
             </tr>
@@ -265,6 +278,8 @@
                 </div>
      
             </div>
+
+            <app-pagination #pagination [collectionSize]="25" [pageSize]="5" [currentPage]="1" (activePage)="pageChange($event)"></app-pagination>
 
     
     

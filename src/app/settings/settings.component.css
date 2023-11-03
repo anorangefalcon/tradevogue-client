@@ -139,9 +139,9 @@ form {
 
 .nav-link-active {
     border-left: 3.5px solid rgb(var(--primaryClr));
-    background: rgb(var(--primaryClr), 0.1);
+    /* background: rgb(var(--primaryClr), 0.1);
     border-top-right-radius: 50px;
-    border-bottom-right-radius: 50px;
+    border-bottom-right-radius: 50px; */
     margin-inline-end: 20px;
 }
 
@@ -535,7 +535,10 @@ label span {
 }
 
 .wishlist {
-    padding-inline: 30px;
+    padding-inline: 50px;
+    & h2 {
+        font-weight: 600;
+    }
 }
 
 .prod-img img {

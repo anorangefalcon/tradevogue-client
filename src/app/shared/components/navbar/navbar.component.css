@@ -4,16 +4,16 @@
 
 header {
     position: fixed;
-
+    /* padding-block-end: 95px; */
     font-weight: 500;
     width: 100%;
     transition: all 0.3s ease-in-out;
     z-index: 97;
-    /* padding-block: 20px; */
 
     & .navbar {
         height: 80px;
         transition: all 0.3s ease-in-out;
+        
     }
 
     & .branding {

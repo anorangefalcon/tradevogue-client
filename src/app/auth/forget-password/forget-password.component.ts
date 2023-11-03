@@ -71,7 +71,7 @@ export class ForgetPasswordComponent {
       (data: any) => {
         console.log(data, "update data");
         const toastData = {
-          title: data.message
+          title: data.message,
         }
         this.toastservice.successToast(toastData)
         setTimeout(() => {

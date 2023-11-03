@@ -924,6 +924,24 @@ button {
       }
 }
 
+/* Button loading  */
+.spinner::before {
+    content: '';
+    position: absolute;
+    top: 34%;
+    left: 47%;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 2px solid #ffffff;
+    border-top-color: rgb(var(--primaryClr));;
+    animation: spinner .8s linear infinite;
+}
+
+
+.spinner{
+    color: transparent;
+}
 
 @media screen and (max-width: 450px) {
 
