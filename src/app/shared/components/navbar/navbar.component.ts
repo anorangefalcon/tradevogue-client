@@ -30,7 +30,12 @@ export class NavbarComponent implements OnInit {
     women: []
   }
 
-constructor(private cartService: CartService, private checkLogin:LoginCheckService, private cookie: CookieService, private fetchDataService: FetchDataService, private router: Router, private wishlistService : WishlistService, private utils: UtilsModule) { }
+constructor(private cartService: CartService, private checkLogin:LoginCheckService, private cookie: CookieService, private fetchDataService: FetchDataService, private router: Router, private wishlistService : WishlistService, private utils: UtilsModule) { 
+  let userName=this.cookie.get('userName')
+  if(userName){
+    this.purchaser=userName;
+  }
+}
 
 async ngOnInit() {
     if(this.checkLogin.loginCheckObservable$.subscribe((data)=>{

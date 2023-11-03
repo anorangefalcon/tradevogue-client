@@ -1,0 +1,47 @@
+<div class="d-flex flex-column gap-20">
+    <div class="form__card__head d-flex justify-content-md-between align-item-center">
+        <h3>Customise Banner</h3>
+        <div class="operation_button d-flex gap-10">
+            <!-- <button class="btn-primary" [ngStyle]="{'display': bannerForm.disabled? 'none': 'block'}">Edit</button> -->
+            <!-- <button class="btn-secondary" [ngStyle]="{'display': bannerForm.disabled? 'none': 'block'}">Cancel</button> -->
+            <button class="btn-primary" [ngStyle]="{'display': bannerForm.disabled? 'none': 'block'}" (click)="onUpdate()">Update</button>
+        </div>
+    </div>
+    <div class="d-flex" style="justify-content: flex-start;">
+        <button class="btn-primary d-flex align-item-center justify-content-center gap-5 add-btn" (click)="addBanner()">
+            <span class="material-symbols-outlined">
+                add
+            </span>
+            Add another banner
+        </button>
+    </div>
+    <form [formGroup]="bannerForm" class="form__card second_card d-flex flex-wrap  ">
+        <div formArrayName='banner'>
+            <div *ngFor="let banner of getBanner(); let i = index" class="single-banner d-flex flex-column gap-10">
+                <div formGroupName="{{i}}" class="d-flex flex-column gap-10">
+                    <div class="internal-div">
+                        <label class="form__title" for="backgroundImage">Background Image Link</label>
+                        <input class="form__input" type="file" id="backgroundImage" accept="image/jpg, image/jpeg, image/png" formControlName="backgroundImage" (change)="bannerImageUpload($event)" />
+                    </div>
+                    <div class="internal-div">
+                        <label class="form__title" for="title">Title</label>
+                        <input class="form__input" type="text" id="title" formControlName="title" />
+                    </div>
+                    <div class="internal-div">
+                        <label class="form__title" for="description">Description</label>
+                        <input class="form__input" type="text" id="description" formControlName="description" />
+                    </div>
+                    <div class="internal-div">
+                        <label class="form__title" for="button">Button</label>
+                        <input class="form__input" type="text" id="button" formControlName="button" />
+                    </div>
+                    <div class="internal-div">
+                        <label class="form__title" for="buttonLink">Button Link</label>
+                        <input class="form__input" type="text" id="buttonLink" formControlName="buttonLink" />
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </form>
+</div>

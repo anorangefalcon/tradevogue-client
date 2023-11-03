@@ -38,11 +38,17 @@ export class WishlistService {
 
 
   ShowWishlist(productId: string) { 
+    console.log("hei");
+    
     const IsLogin = this.cookie.get('userToken')
-    if (IsLogin) {    
+    if (IsLogin) { 
+      console.log("inside");
+         
       this.productId=productId;  
         this.fetchDataService.HTTPGET(this.backendUrls.URLs.showWishlist).subscribe((data: any) => {
         this.showWishlistPopup.next(data);
+        console.log(data, "jhjbm");
+        
       });
     } 
     else {

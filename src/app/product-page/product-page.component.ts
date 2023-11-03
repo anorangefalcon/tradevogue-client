@@ -114,7 +114,9 @@ export class ProductPageComponent implements OnInit {
   }
 
   chooseWishlist() {
-    this.wishlistService.ShowWishlist (this.data._id);
+    console.log("wish");
+    
+    this.wishlistService.ShowWishlist(this.data._id);
   }
   LabelClicked(event: any) {
     console.log('event is ', event.target.value);

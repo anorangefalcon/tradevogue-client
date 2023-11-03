@@ -16,6 +16,7 @@ import { TicketsComponent } from './tickets/tickets.component';
 import { SocialsComponent } from './socials/socials.component';
 import { MonetizationComponent } from './monetization/monetization.component';
 import { NoPageComponent } from '../no-page/no-page.component';
+import { CustomBannerComponent } from './custom-banner/custom-banner.component';
 
 const routes: Routes = [
   {
@@ -45,6 +46,7 @@ const routes: Routes = [
       { path: 'tickets', component: TicketsComponent },
       { path: 'monetization', component: MonetizationComponent },
       { path: 'socials', component: SocialsComponent },
+      { path: 'customise-banner', component: CustomBannerComponent},
 
       { path: '**', component: NoPageComponent, data: { breadcrumb: '404' } },
     ]

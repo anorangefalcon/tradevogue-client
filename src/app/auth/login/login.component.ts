@@ -69,6 +69,8 @@ export class LoginComponent {
   }
 
   async onLogin() {
+    console.log("he");
+    
     const body = {
       email: this.loginForm.get('email')?.value,
       password: this.loginForm.get('password')?.value
