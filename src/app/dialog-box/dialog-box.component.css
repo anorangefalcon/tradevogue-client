@@ -2,7 +2,7 @@
     visibility: hidden;
     opacity: 0;
     pointer-events: none;
-    z-index: 5;
+    z-index: 99;
     background-color: rgb(var(--blackClr), 0.1);
 }
 
@@ -15,12 +15,13 @@
 .dialog__container {
     background-color: rgb(var(--whiteClr));
     width: 400px;
-    min-height: 260px;
+    min-height: 230px;
     border-radius: 5px;
     box-shadow: 0px 0px 10px rgb(var(--blackClr), 0.1);
     text-align: center;
-    padding: 24px;
+    padding: 12px;
 }
+
 
 h3 {
     font-size: 23px !important;
@@ -33,16 +34,16 @@ p{
 }
 
 button{
-    padding: 8px 24px;
+    padding: 10px 24px;
     font-weight: 400;
 }
 
 .warning_icon{
-    inset-block-start: -35px;
-    width: 70px;
-    height: 70px;
+    inset-block-start: -30px;
+    width: 60px;
+    height: 60px;
     border-radius: 50%;
-    font-size: 40px;
+    font-size: 30px;
     font-weight: 300;
     background-color: rgb(var(--primaryClr));
     color: rgb(var(--whiteClr));

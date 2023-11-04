@@ -71,25 +71,29 @@ export class ProductPageComponent implements OnInit {
     this.route.params.subscribe(params => {
       this.sku = params['sku'];
       this.fetchProductData();
+
     });
   }
 
   async fetchProductData() {
 
     if(this.productSku){
-      let data = await this.fetchService.httpGet(this.backendUrl.URLs.fetchProductDetails, this.sku);
-      this.updateDataFields(data);
-      return;
+      this.fetchService.HTTPGET(this.backendUrl.URLs.fetchProductDetails, this.sku, 'data').subscribe((data: any)=>{
+        console.log(data);
+
+        this.updateDataFields(data);
+      })
+    }else{
+      this.fetchService.getProductDetails(this.sku).subscribe((data: any) => {
+        console.log(data);
+        this.wishlistService.WishListedProducts.subscribe((response:any)=>{
+              if(response.includes(data._id)){
+                data.wishlisted=true;
+              } 
+            })
+        this.updateDataFields(data);
+      });
     }
-    this.fetchService.getProductDetails(this.sku).subscribe((data: any) => {
-      console.log(data);
-      this.wishlistService.WishListedProducts.subscribe((response:any)=>{
-            if(response.includes(data._id)){
-              data.wishlisted=true;
-            } 
-          })
-      this.updateDataFields(data);
-    });
   }
 
   updateDataFields(data: any) {

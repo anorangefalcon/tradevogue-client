@@ -107,7 +107,7 @@ export class StripPaymentService {
         // this.showMessage("Payment succeeded!");
         let body:any = {
           buyerId: this.cookie.get('userToken'),
-          newPaymentStatus: 'succeeded',
+          newPaymentStatus: 'success',
           transactionId: paymentIntent.id,
           MOP: paymentIntent.payment_method_types[0],
         };

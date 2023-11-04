@@ -76,8 +76,8 @@
                             <td class="items">{{item.quantity}}</td>
                             <td class="items">&#8377; {{item.amount}}</td>
                             <td class="items" style="font-weight: 500;">
-                                <span *ngIf="item.payment_status == 'Confirmed'"
-                                    style="color: rgb(var(--success));">Confirmed</span>
+                                <span *ngIf="item.payment_status == 'success' || item.payment_status == 'Success'"
+                                    style="color: rgb(var(--success));">Success</span>
                                 <span *ngIf="item.payment_status == 'Pending' || item.payment_status == 'pending'"
                                     style="color: rgba(255, 85, 0, 0.992);">Pending</span>
                                 <span *ngIf="item.payment_status == 'Canceled' || item.payment_status == 'canceled'"

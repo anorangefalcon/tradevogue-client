@@ -1,21 +1,27 @@
 <div #content class="dialogBox fixed d-flex flex-center mw100 mh100 inset-block-start-0 inset-inline-start-0">
 
-    <div class="dialog__container relative d-flex flex-column flex-center gap-10" *ngIf="type == 'confirmation'">
+    <div class="dialog__container relative d-flex flex-column flex-center gap-10" *ngIf="dialogboxData.type == 'confirmation'">
         <span class="warning_icon absolute d-flex flex-center material-symbols-outlined" >warning</span>
-        <h3>Are You Sure! Want to Delete <i>{{value}}</i>?</h3>
-        <p>You can't view this in your list anymore if you delete!</p>
+        <h3>{{dialogboxData.title}}</h3>
+        <p>{{dialogboxData.subtitle}}</p>
         <span class="d-flex flex-center gap-30">
-            <button class="btn-secondary" (click)="cancel()" s>No, Keep it</button>
-            <button class="btn-primary" (click)="delete()">Yes, Delete it</button>
+            <button class="btn-secondary" (click)="cancel()">{{dialogboxData.cancelText}}</button>
+            <button class="btn-primary" (click)="confirm()">{{dialogboxData.confirmationText}}</button>
         </span>
     </div>
 
-    <div class="dialog__container relative d-flex flex-column flex-center gap-10" *ngIf="type == 'success'">
+    <div class="dialog__container relative d-flex flex-column flex-center gap-10" *ngIf="dialogboxData.type == 'info'">
         <img src="../../../assets/logos/mail-animation.gif" alt="mail" class="mail-animate">
-        <h3>Mail Sent Successfully</h3>
-        <p>We have successfully sent the mail to you which includes a link to change your password that will expire
-            after 3 minutes.</p>
+        <h3>{{dialogboxData.title}}</h3>
+        <p>{{dialogboxData.subtitle}}</p>
         <button #popupclose class="btn-primary" (click)="closeDialog()">Close</button>
     </div>
 
 </div>
+
+<!--  <i>{{value}}</i>? -->
+<!-- You can't view this in your list anymore if you delete! -->
+
+<!-- Mail Sent Successfully -->
+<!-- We have successfully sent the mail to you which includes a link to change your password that will expire
+            after 3 minutes. -->

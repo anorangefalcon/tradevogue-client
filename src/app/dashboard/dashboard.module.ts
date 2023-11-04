@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { NgModel } from '@angular/forms';
+import { RouterModule } from '@angular/router';
 import { CommonModule, DatePipe } from '@angular/common';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { DashboardRoutingModule } from './dashboard-routing.module';
@@ -58,7 +59,8 @@ import { CustomBannerComponent } from './custom-banner/custom-banner.component';
     NgxPaginationModule,
     FormsModule,
     ReactiveFormsModule,
-    ProductPageModule
+    ProductPageModule,
+    RouterModule
   ],
   providers: [
     UploadExcelService,

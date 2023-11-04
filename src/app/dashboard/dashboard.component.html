@@ -22,7 +22,7 @@
                     </span>
                 </li>
                 <li class="header_links profile d-flex align-item-center gap-10 pointer"
-                    [routerLink]="['/dashboard/account']">
+                    [routerLink]="'/dashboard/account'">
                     <span class="photo-section relative d-flex justify-content-center align-item-center">
                         <img id="profile__photo" src="../../../assets/avatars/try.svg" alt="">
                         <!-- <span class="account__icon absolute material-symbols-outlined">settings</span>                -->
@@ -39,7 +39,7 @@
 
     <div class="sidebar fixed inset-block-start-0 inset-inline-start-0 transition" [class.active]="isCollapse">
         <span class="branding d-flex align-item-center">
-            <a [routerLink]="['/']">
+            <a [routerLink]="'/'">
                 <img class="brand-logo" src="../../assets/logo.svg" [class.active]="isCollapse" alt="Logo">
                 <img class="mobile-logo" src="../../assets/logo-mobile.svg" alt="Logo" alt="">
             </a>
@@ -58,7 +58,7 @@
                     <ul class="sub-navlist" *ngIf="item.sublist">
 
                         <li class="sub-links" *ngFor="let subitem of item.sublist" (click)="title = 'Product Overview'">
-                            <a routerLink={{subitem.route}} >{{subitem.name}}</a>
+                            <a [routerLink]="subitem.route">{{subitem.name}}</a>
                         </li>
 
                     </ul>

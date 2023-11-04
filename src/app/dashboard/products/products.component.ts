@@ -12,16 +12,16 @@ import { DialogBoxService } from 'src/app/shared/services/dialog-box.service';
 })
 export class ProductsComponent implements OnInit {
   sortOption: any[] = ['Rating: Low to High', 'Rating: High to Low', 'Stock: Low to High', 'Stock: High to Low'];
+  productTemplate: any[] = ['Product Name', 'Category', 'Brand', 'Price', 'Stock', 'Status', 'Published', 'Action'];
   pageSize: number = 8;
   currentPage: number = 1;
   selectedColor: any = 0;
   totalCount: any;
   selectAll: boolean = false;
+  deleteDataField: any = {};
 
   categoryOption!: any[];
   dataField: string[] = ['categories'];
-  productTemplate = ['Product Name', 'Category', 'Brand', 'Price', 'Stock', 'Status', 'Published', 'Action'];
-
 
   template: any = {
     limit: this.pageSize,
@@ -32,18 +32,17 @@ export class ProductsComponent implements OnInit {
     }
   }
 
-  deleteDataField: any = {};
-
   // Contains all details about the product Displayed
   productArray: any = [];
   deleteList: any = [];
   productList: any[] = [];
+
   constructor(private element: ElementRef,
     private fetchdata: FetchDataService,
     private excelService: UploadExcelService,
     private backendUrl: UtilsModule,
     private dialogBoxService: DialogBoxService,
-    private toastService: ToastService,) { }
+    private toastService: ToastService) { }
 
   async ngOnInit() {
     this.fetchdata.HTTPPOST(this.backendUrl.URLs.fetchFeatures, this.dataField).subscribe({
@@ -121,9 +120,9 @@ export class ProductsComponent implements OnInit {
 
   // Delete Entry
   deleteItem(entry: any, name: string = '', type: string = 'single') {
-    this.dialogBoxService.confirmationDialogBox(name);
+    this.dialogBoxService.confirmationDialogBox();
     this.deleteDataField.type = type,
-    this.deleteDataField.data = entry;
+      this.deleteDataField.data = entry;
   }
 
   // Filter Handling function
@@ -201,21 +200,31 @@ export class ProductsComponent implements OnInit {
   // Handles Excel File Uplaoded
   uploadFile(event: Event) {
     let excelData = this.excelService.handleFileInput(event);
-    excelData.then((excel:any) => {
-      console.log(excel.data); // fine products
-      
-      if(excel.errors){
+    excelData.then((excel: any) => {
+
+      if (excel.errors) {
         let errorObj: any = {
           title: 'Some Rows were Rejected',
           body: []
         };
 
-        excel.errors.forEach((error: any)=>{
+        excel.errors.forEach((error: any) => {
           errorObj.body.push('Row: ' + error.row + ' Rejected from Sheet: ' + error.sheet);
         })
 
         this.toastService.errorToast(errorObj);
       }
+      console.log("Excel Data", excel.data); // fine products
+      const formData = {
+        type: 'bulk',
+        data: excel.data
+      };
+      // this.fetchdata.HTTPPOST(this.backendUrl.URLs.addproduct, formData).subscribe({
+      //   next: (res: any) => {
+      //     this.toastService.successToast("Data Uploaded Successfuly");
+      //     this.fetchData();
+      //   }
+      // })
 
       // let product_keys = Object.keys(products['errors']);
       // this.toastService.errorToast({
@@ -225,19 +234,19 @@ export class ProductsComponent implements OnInit {
 
       // product_keys.forEach((sheet) => {
       //   let sheets_keys = Object.keys(products['errors'][sheet]);
-        // console.log(sheets_keys);
+      // console.log(sheets_keys);
 
-        // sheets_keys.forEach((errors) => {
+      // sheets_keys.forEach((errors) => {
 
-        //   let error_list = Object.keys(products['errors'][sheet][errors]);
-        //   console.log(error_list);
+      //   let error_list = Object.keys(products['errors'][sheet][errors]);
+      //   console.log(error_list);
 
-        // console.log(error_list); 
+      // console.log(error_list); 
 
-        // error_list.forEach((detail) => {
-        //   console.log(detail);
-        // })
-        // })
+      // error_list.forEach((detail) => {
+      //   console.log(detail);
+      // })
+      // })
       // })
     })
   }

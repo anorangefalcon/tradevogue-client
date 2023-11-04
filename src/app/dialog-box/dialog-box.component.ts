@@ -11,8 +11,7 @@ export class DialogBoxComponent implements AfterViewInit {
 
   @ViewChild('content') dialogBox!: ElementRef;
 
-  value: string = '';
-  type: string = '';
+  dialogboxData: any = '';
   open: boolean = false;
   currentRoute: any;
 
@@ -24,8 +23,7 @@ export class DialogBoxComponent implements AfterViewInit {
     
     this.dialogService.contentEmitter.subscribe((data: any) => {
       if (data) {
-        this.type = data.type;
-        this.value = data.value;
+        this.dialogboxData = data;
         this.dialogBox.nativeElement.classList.add('open');
         this.dialogService.responseEmitter.next(false);
       }
@@ -56,7 +54,7 @@ export class DialogBoxComponent implements AfterViewInit {
     this.dialogBox.nativeElement.classList.remove('open');
   }
 
-  delete() {
+  confirm() {
     this.dialogService.responseEmitter.next(true);
     this.closeDialog();
   }

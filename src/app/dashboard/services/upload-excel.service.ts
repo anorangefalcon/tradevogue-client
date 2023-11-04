@@ -15,8 +15,6 @@ export class UploadExcelService {
     let file = event.target.files[0];
     const excelData: any = {};
 
-    console.log("File", file);
-
     let fileReader = new FileReader();
     fileReader.readAsBinaryString(file);
 
@@ -37,7 +35,6 @@ export class UploadExcelService {
             element['row'] = element['__rowNum__'];
           });
         }
-        console.log("Excel", excelData);
 
         if (singleField !== '') {
           dataAndErrors = this.validateSingleFeildFile(excelData, singleField);
