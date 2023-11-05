@@ -4,7 +4,6 @@
         <h2>Contact Us</h2>
     </div>
     <div class="container">
-
         <div class="contact-content d-flex gap-30">
             <div class="contact-form-warp">
                 <div class="review-form">
@@ -31,11 +30,18 @@
                             Please enter a valid email address.
                         </div>
 
-                        <label for="ticket">Select Ticket</label>
-                        <select formControlName="selectedTicket">
-                            <option *ngFor="let item of ticketData" [value]="item">{{ item }}</option>
-                        </select>
-                        <div *ngIf="contactForm.get('selectedTicket')?.hasError('required') && contactForm.get('selectedTicket')?.touched"
+                        <div class="form__group" formGroupName="contactForm">
+                            <label for="ticket">Select Ticket</label>
+                            <app-custom-select [type]="''"  [options]="ticketData" [selectedOption]="((contactForm.get('selectedTicket')?.value) ? (contactForm.get('selectedTicket')?.value) : 'Select Ticket')"
+                                [selectedOption]="(faqSubForm('contactForm.selectedTicket')?.value? faqSubForm('item')?.value:'Select Ticket')"
+                                (final_option)="updateFormFields($event)"></app-custom-select>
+                            <span class="error"
+                                *ngIf="faqSubForm('item')?.invalid && (faqSubForm('item')?.dirty || faqSubForm('item')?.touched)">
+                                <small *ngIf="faqSubForm('item')?.hasError('required')">*Field
+                                    Required</small>
+                            </span>
+                        </div>
+                        <div *ngIf="contactForm.get('item')?.hasError('required') && contactForm.get('item')?.touched"
                             class="error">
                             Please select a ticket.
                         </div>
@@ -48,7 +54,7 @@
                             Message is required.
                         </div>
 
-                        <div class="d-flex">
+                        <div>
                             <button type="submit" class="btn-primary">Submit</button>
                         </div>
                     </form>

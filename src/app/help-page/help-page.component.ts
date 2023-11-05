@@ -78,4 +78,13 @@ export class HelpPageComponent {
       console.log('Form is not valid. Please check the fields.');
     }
   }
+
+  faqSubForm(field: string) {
+    return this.contactForm.get('selectedTicket')?.get(field);
+  }
+
+  updateFormFields(field: string) {
+    this.contactForm.get('selectedTicket')?.patchValue(field);
+  }
 }
+

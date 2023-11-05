@@ -38,14 +38,14 @@ export class TicketsComponent {
       icon: ['', Validators.required]
     });
   }
-  
+
   loadData() {
     const url = this.utils.URLs.getAllTickets;
     this.http.get(url)
       .pipe(
         catchError((error) => {
           console.error("Error loading data:", error);
-          throw error; 
+          throw error;
         })
       )
       .subscribe((data: any) => {
@@ -53,7 +53,7 @@ export class TicketsComponent {
         this.processTicketData(data);
       });
   }
-  
+
   private processTicketData(data: any): void {
     this.ticketData = data.map((item: any) => ({
       _id: item._id,
@@ -63,14 +63,14 @@ export class TicketsComponent {
       status: item.status,
       action: item.action,
       statusChangeable: [...new Set(item.ticketType[0]?.title.status || [])].map(String),
-      ticketType: item.ticketType,
+      ticketType: item.ticketTypes,
       notificationDetails: item.notificationDetails,
       dateCreated: new Date(item.dateCreated),
       userToken: this.findUserToken(item.userEmail),
     }));
 
     console.log(this.ticketData, "TICKET DATA")
-    
+
 
     this.uniqueStatusValues = this.extractUniqueStatusValues(this.ticketData);
     this.ticketTypeId = data[0]._id;
@@ -142,37 +142,37 @@ export class TicketsComponent {
         ([response1]) => {
           if (response1) {
             const updatedIndex = this.ticketData
-            .findIndex(title => title === this.selectedItem);
-                if (updatedIndex !== -1) {
-                  this.ticketData
+              .findIndex(title => title === this.selectedItem);
+            if (updatedIndex !== -1) {
+              this.ticketData
               [updatedIndex] = this.updatedItem;
-                }
-                this.selectedItem = null;
+            }
+            this.selectedItem = null;
           }
         },
         (error) => {
           console.error('Error updating item:', error);
         }
       );
-      this.loadData()
+    this.loadData()
   }
 
   sendNotification() {
 
-    
+
     if (this.notificationForm.valid) {
       // Create the data object with the desired structure
       const data = {
-          title: this.notificationForm.value.title,
-          body: this.notificationForm.value.body,
-          icon: this.notificationForm.value.icon,
-          token: this.cookie.get('fcmToken'),
+        title: this.notificationForm.value.title,
+        body: this.notificationForm.value.body,
+        icon: this.notificationForm.value.icon,
+        token: this.cookie.get('fcmToken'),
       };
       this.cookie.set('fcmToken', this.token)
       const fcmToken = this.token;
-  
+
       const apiUrl = 'http://localhost:1000/send-notification';
-  
+
       this.http.post(apiUrl, data).subscribe(
         (response) => {
           console.log('Notification sent successfully:', response);
@@ -187,7 +187,7 @@ export class TicketsComponent {
     }
   }
 
-  
+
 
   // updateItem() {
   //   this.loadData()
@@ -231,14 +231,14 @@ export class TicketsComponent {
       .then((response: any) => {
         if (response.success) {
           this.ticketData
-      .push(this.updatedItem);
+            .push(this.updatedItem);
         }
       })
       .catch(error => {
         console.error("Error adding item:", error);
       });
 
-      this.loadData();
+    this.loadData();
   }
 
   cancelUpdate() {
@@ -264,14 +264,14 @@ export class TicketsComponent {
       .then((response: any) => {
         if (response.success) {
           this.ticketData
-      .push(this.updatedItem);
+            .push(this.updatedItem);
         }
       })
       .catch(error => {
         console.error("Error pushing item:", error);
       });
 
-      this.loadData()
+    this.loadData()
   }
 
   deleteTicketTitle(item: any) {
@@ -284,10 +284,10 @@ export class TicketsComponent {
       .then((response: any) => {
         if (response.success) {
           const deletedIndex = this.ticketData
-      .findIndex(title => title === item);
+            .findIndex(title => title === item);
           if (deletedIndex !== -1) {
             this.ticketData
-        .splice(deletedIndex, 1);
+              .splice(deletedIndex, 1);
           }
         }
       })
@@ -295,6 +295,6 @@ export class TicketsComponent {
         console.error("Error deleting item:", error);
       });
 
-      this.loadData()
+    this.loadData()
   }
 }
