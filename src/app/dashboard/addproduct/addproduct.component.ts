@@ -184,7 +184,7 @@ export class AddproductComponent {
             Validators.required,
           ]
         }],
-        costPrice: [,{
+        costPrice: [, {
           validators: [
             Validators.required,
           ]
@@ -223,7 +223,7 @@ export class AddproductComponent {
 
   async ngOnInit() {
     this.dataService.HTTPPOST(this.backendUrl.URLs.fetchFeatures, this.dataField).subscribe({
-      next: (res: any)=>{
+      next: (res: any) => {
         this.categories = res.categories;
         this.brands = res.brands;
         this.tags = res.tags;
@@ -437,13 +437,14 @@ export class AddproductComponent {
       const imageFormArray = this.productsForm.get('assets')?.value;
 
       // Iterate through Image Array
-      imageFormArray.forEach(async (imageArray: any, index: number) => {
+      await Promise.all(imageFormArray.map(async (imageArray: any, index: number) => {
         // Wait for Image Upload
         let res = await this.upload.fileupload(imageArray['photo'])
         this.productsForm.get('assets')?.get(String(index))?.get('photo')?.patchValue(res);
-      })
+        
+        return res;
+      }));
 
-      console.log(this.productsForm.get('assets')?.value);
 
       const formData = {
         type: 'single',

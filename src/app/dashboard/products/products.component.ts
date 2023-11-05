@@ -200,6 +200,9 @@ export class ProductsComponent implements OnInit {
   // Handles Excel File Uplaoded
   uploadFile(event: Event) {
     let excelData = this.excelService.handleFileInput(event);
+    (<HTMLInputElement>event.target).value = '';
+
+    console.log("HEllo");
     excelData.then((excel: any) => {
 
       if (excel.errors) {
@@ -219,12 +222,13 @@ export class ProductsComponent implements OnInit {
         type: 'bulk',
         data: excel.data
       };
-      // this.fetchdata.HTTPPOST(this.backendUrl.URLs.addproduct, formData).subscribe({
-      //   next: (res: any) => {
-      //     this.toastService.successToast("Data Uploaded Successfuly");
-      //     this.fetchData();
-      //   }
-      // })
+      
+      this.fetchdata.HTTPPOST(this.backendUrl.URLs.addproduct, formData).subscribe({
+        next: (res: any) => {
+          this.toastService.successToast("Data Uploaded Successfuly");
+          this.fetchData();
+        }
+      })
 
       // let product_keys = Object.keys(products['errors']);
       // this.toastService.errorToast({

@@ -5,28 +5,28 @@
         <div class="card card__pd-20 column col-2">
             <div>
                 <p class="title">Confirmed</p>
-                <span class="order-count">323</span>
+                <span class="order-count">{{orderStats.confirmed ? orderStats.confirmed : 0}}</span>
             </div>
             <i class="material-symbols-outlined">thumb_up</i>
         </div>
         <div class="card card__pd-20 column col-4">
             <div>
-                <p class="title">Shipping</p>
-                <span class="order-count">100</span>
+                <p class="title">Shipped</p>
+                <span class="order-count">{{orderStats.shipped ? orderStats.shipped : 0}}</span>
             </div>
             <i class="material-symbols-outlined">local_shipping</i>
         </div>
         <div class="card card__pd-20 column col-3">
             <div>
-                <p class="title">Canceled</p>
-                <span class="order-count">10</span>
+                <p class="title">Cancelled</p>
+                <span class="order-count">{{orderStats.cancelled ? orderStats.cancelled: 0}}</span>
             </div>
             <i class="material-symbols-outlined">close</i>
         </div>
         <div class="card card__pd-20 column col-1">
             <div>
                 <p class="title">Delivered</p>
-                <span class="order-count">2000</span>
+                <span class="order-count">{{orderStats.delivered ? orderStats.delivered: 0}}</span>
             </div>
             <i class="material-symbols-outlined">done</i>
         </div>

@@ -47,6 +47,8 @@ export class UtilsModule {
     getAccount: 'http://localhost:1000/admin/getadminDetails',
     getSellerOrders: 'http://localhost:1000/orders/sellerOrders',
     getSellerOrderDetails: 'http://localhost:1000/orders/sellerOrderDetail',
+    getOrderOverallData: 'http://localhost:1000/orders/getOrderOverallData',
+
     // stripe
     stripePayment: 'http://localhost:1000/user/create-payment-intent',
 

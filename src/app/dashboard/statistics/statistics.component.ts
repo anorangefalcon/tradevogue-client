@@ -48,6 +48,14 @@ export class StatisticsComponent implements OnInit {
     // }); 
   }
 
+
+  fetchOverAllStats(){
+
+  }
+
+  fetchSalesProfitStats(){}
+  fetchReviewStats(){}
+
   fetchData(){
     this.fetchdata.HTTPGET(this.backendUrl.URLs.fetchOverallData).subscribe((data: any)=>{
         this.reviewDataLabel = [];

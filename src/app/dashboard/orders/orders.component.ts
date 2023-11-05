@@ -19,6 +19,12 @@ export class OrdersComponent {
   selectedColor: any = 0;
   totalCount: any;
   updateIndex: any = false; //Purpose of invoice Avalibility
+  orderStats: any = {
+    confirmed: 0,
+    shipped: 0,
+    cancelled: 0,
+    delivered: 0
+  }
 
   template: any = {
     limit: this.pageSize,
@@ -37,6 +43,7 @@ export class OrdersComponent {
     private backendUrl: UtilsModule){}
 
   async ngOnInit(){
+    this.fetchStats();
     this.fetchOrders();
 
     this.dialogService.responseEmitter.subscribe((res: any)=>{
@@ -46,6 +53,21 @@ export class OrdersComponent {
       }else{
         this.orderData[this.updateIndex].invoice_status = false;
       } 
+    })
+  }
+
+  fetchStats(){
+    this.fetchData.HTTPGET(this.backendUrl.URLs.getOrderOverallData).subscribe({
+      next: (stats: any)=>{
+        console.log(stats);
+        this.orderStats = stats;
+
+        stats.forEach((data: any)=>{
+          if(data.status){
+            this.orderStats[data.status] = data.count;
+          }
+        })
+      }
     })
   }
 

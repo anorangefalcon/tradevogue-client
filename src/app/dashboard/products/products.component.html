@@ -6,7 +6,7 @@
 
         <div class="card card__pd-20 d-flex gap-20 align-item-center justify-content-md-between">
             <div class="file-section d-flex align-item-center gap-20">
-                <input type="file" id="sizes" maxlength="1" minlength="1" (change)="uploadFile($event)"
+                <input type="file" id="sizes" maxlength="1" minlength="1" (input)="uploadFile($event)"
                     accept="image/CSV, application/vnd.ms-excel ,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" />
                 <label class="uploadbtn d-flex flex-center pointer gap-5" for="sizes">
                     <span class="material-symbols-outlined operation-icon">upload_file</span>
@@ -15,7 +15,7 @@
                 <a class="downloadBtn d-flex flex-center pointer gap-5"
                     href="../../../assets/ExcelSampleFile/sampleFullData.xlsx" download>
                     <span class="material-symbols-outlined operation-icon">download</span>
-                    Export Sample
+                    Download Sample
                 </a>
             </div>
 
