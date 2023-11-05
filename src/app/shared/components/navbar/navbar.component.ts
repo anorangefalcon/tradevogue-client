@@ -1,7 +1,7 @@
 import { Component, HostListener, OnInit } from '@angular/core';
 import { CartService } from '../../services/cart.service';
 import { CookieService } from 'ngx-cookie-service';
-import { FetchDataService } from '../../services/fetch-data.service';
+import { FetchDataService } from '../../../faq-page/fetch-data.service';
 import { NavigationEnd, Router } from '@angular/router';
 import { WishlistService } from '../../services/wishlist.service';
 import { UtilsModule } from 'src/app/utils/utils.module';

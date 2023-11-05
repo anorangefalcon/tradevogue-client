@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { UtilsModule } from '../utils/utils.module';
-import { FetchDataService } from '../shared/services/fetch-data.service';
+import { FetchDataService } from '../faq-page/fetch-data.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({

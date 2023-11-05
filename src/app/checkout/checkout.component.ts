@@ -3,7 +3,7 @@ import { CartService } from '../shared/services/cart.service';
 
 import { Router } from '@angular/router';
 import { UtilsModule } from '../utils/utils.module';
-import { FetchDataService } from '../shared/services/fetch-data.service';
+import { FetchDataService } from '../faq-page/fetch-data.service';
 import { ToastService } from '../shared/services/toast.service';
 import { lastValueFrom } from 'rxjs';
 import { CookieService } from 'ngx-cookie-service';
@@ -268,16 +268,18 @@ this.billingService.BillingpageVisited$.subscribe((data:any)=>{
           result.CouponApplied = this.CouponApplied;
         }
 
-         this.fetchService.HTTPPOST(this.BackendUrl.URLs.verifyOrderSummary, result).subscribe((response)=>{
+        const checkToken = this.cookie.get('userToken');
+        if (!checkToken) {
+          this.router.navigate(['/auth/login']);
+        }
+            else {
+        this.fetchService.HTTPPOST(this.BackendUrl.URLs.verifyOrderSummary, result).subscribe((response)=>{
           this.cart.amounts = response;
-          const checkToken = this.cookie.get('userToken');
-          if (!checkToken) {
-            this.router.navigate(['/auth/login']);
-          }
-          else {
-            this.router.navigate(['/cart/billing']);
-          }
+          this.router.navigate(['/cart/billing']);
         });
+        }
+        
+      
         
        }); 
   }

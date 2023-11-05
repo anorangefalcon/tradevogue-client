@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { UtilsModule } from 'src/app/utils/utils.module';
 import { PopupService } from 'src/app/shared/services/popup.service';
-import { FetchDataService } from 'src/app/shared/services/fetch-data.service';
+import { FetchDataService } from 'src/app/faq-page/fetch-data.service';
 import { catchError, forkJoin } from 'rxjs';
 import { FormBuilder, Validators } from '@angular/forms';
 import { CookieService } from 'ngx-cookie-service';

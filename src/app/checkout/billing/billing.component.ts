@@ -1,6 +1,6 @@
 import { Component, ElementRef, Renderer2, ViewChild } from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
-import { FetchDataService } from 'src/app/shared/services/fetch-data.service';
+import { FetchDataService } from 'src/app/faq-page/fetch-data.service';
 import { UtilsModule } from 'src/app/utils/utils.module';
 import { CartService } from 'src/app/shared/services/cart.service';
 import { ActivatedRoute } from '@angular/router';
@@ -82,7 +82,7 @@ export class BillingComponent {
 
       if (Array.isArray(data) && data.length > 0 && data[0]?.keys && data[0].keys.length > 0) {
         const publicKey = data[0].keys[0].publicKey;
-        console.log("service payment key" , this.stripePay.publicKey);
+        console.log("service payment key", this.stripePay.publicKey);
         this.stripe = Stripe(publicKey);
 
         this.initialize(this.stripe);
@@ -111,7 +111,7 @@ export class BillingComponent {
     });
   }
   // constructor(private cookie: CookieService, private fetchDataService: FetchDataService, private cartService:CartService, private userService: UserServiceService, private backendURLs: UtilsModule) {
-    // this.userService.PaymentUrlVisited.next(true);
+  // this.userService.PaymentUrlVisited.next(true);
   //   this.getAddresses();
   // }
 
@@ -185,7 +185,7 @@ export class BillingComponent {
     }
   }
 
-  constructor(private cartService: CartService,private billingService:BillingResponseService, private fetchDataService: FetchDataService, private backendURLs: UtilsModule, private renderer: Renderer2, private elementRef: ElementRef, private cookie: CookieService, private route: ActivatedRoute, private stripePay: StripPaymentService) {
+  constructor(private cartService: CartService, private billingService: BillingResponseService, private fetchDataService: FetchDataService, private backendURLs: UtilsModule, private renderer: Renderer2, private elementRef: ElementRef, private cookie: CookieService, private route: ActivatedRoute, private stripePay: StripPaymentService) {
 
     // this.userService.totalAmount$.subscribe((data: any) => {
     //   this.totalAmount = data;
@@ -256,7 +256,7 @@ export class BillingComponent {
 
 
   // ADDRESS TS FILE---------------------
-  userAddresses: any[]=[];
+  userAddresses: any[] = [];
   receiveData: any;
   navbar_scroll_style: boolean = false;
   cart: any = '';
@@ -264,19 +264,19 @@ export class BillingComponent {
   DeliveredAddress: any = '';
   ShowComponent: boolean = false;
 
-  
 
-  getAddresses(){
-      this.fetchDataService.HTTPGET(this.backendURLs.URLs.getAddress)
-      .subscribe((data:any)=>{
-        if(data){
+
+  getAddresses() {
+    this.fetchDataService.HTTPGET(this.backendURLs.URLs.getAddress)
+      .subscribe((data: any) => {
+        if (data) {
           data = data.addresses;
           if (data.length != 0) {
             this.userAddresses = data;
-          } 
-        }  
-      })  
-    }
+          }
+        }
+      })
+  }
 
 
   // async getAddresses() {;
@@ -298,48 +298,48 @@ export class BillingComponent {
 
   // }
 
-  
- 
+
+
 
   EditAddress(address: any, index: any) {
     const data = this.userAddresses[index];
     this.receiveData = { data, index };
     this.ShowComponent = true;
   }
-  
+
 
   AddressHandler(event: any) {
     if (!event) {
       this.ShowComponent = event;
     }
 
-   
+
     //edit request updated
-    else if(event.index===0 || event.index){
-      this.userAddresses[event.index]=event.data;
+    else if (event.index === 0 || event.index) {
+      this.userAddresses[event.index] = event.data;
     }
     // // new address added
-    else{
-      this.userAddresses=event;
+    else {
+      this.userAddresses = event;
     }
-   
+
   }
 
-  RemoveAddress(address:any,index:any){
-    const body={address_id:address._id}
-     this.fetchDataService.HTTPPOST(this.backendURLs.URLs.deleteAddress,body).subscribe((data)=>{
-       this.userAddresses.splice(index,1);
-     })
- }
+  RemoveAddress(address: any, index: any) {
+    const body = { address_id: address._id }
+    this.fetchDataService.HTTPPOST(this.backendURLs.URLs.deleteAddress, body).subscribe((data) => {
+      this.userAddresses.splice(index, 1);
+    })
+  }
 
 
   AddAddress() {
-    this.ShowComponent=true;
+    this.ShowComponent = true;
   }
 
   SelectAddress(address: any) {
     this.DeliveredAddress = address;
-    this.billingService.Address=this.DeliveredAddress;
+    this.billingService.Address = this.DeliveredAddress;
   }
 
   ChangeAddress() {
@@ -347,9 +347,9 @@ export class BillingComponent {
   }
 
   async MakeDefault(address: any, i: any) {
-      const body = { address_id: address._id };
-      this.fetchDataService.HTTPPOST(this.backendURLs.URLs.setDefaultAddress, body).subscribe((update:any)=>{
-        this.userAddresses = update[0].info.address;
-      }); 
+    const body = { address_id: address._id };
+    this.fetchDataService.HTTPPOST(this.backendURLs.URLs.setDefaultAddress, body).subscribe((update: any) => {
+      this.userAddresses = update[0].info.address;
+    });
   }
 }

@@ -43,12 +43,13 @@
         <div class="chatroom">
           <div class="msg msg-left">
             <div class="bubble">
-              <h6 class="name">Vivek Dhiman's Bot</h6>
+              <h6 class="name">Welcome To ChatBot</h6>
               Hello, I am a smart chat bot, <br />
               How can I help you.
             </div>
           </div>
-          <div class="msg msg-right">
+          <h6 class="name">Your Latest Orders</h6>
+          <!-- <div class="msg msg-right">
             <div class="bubble">
               Oh! Look at you. You are awesome
             </div>
@@ -86,15 +87,169 @@
             <div class="bubble">
               Good bye. Take care
             </div>
-          </div>
+          </div> -->
           <!-- msgs  -->
+          <!-- <div class="msg msg-left">
+            <div class="bubble">
+              Good bye. Take care
+            </div>
+          </div>  -->
+
+          <div class="msg msg-left">
+            <ng-container *ngIf="loadingProducts">
+              <div class="loader"></div>
+            </ng-container>
+
+            <ng-container *ngIf="!loadingProducts">
+              <div *ngFor="let product of products" class="product-item pointer" (click)="showProductDetails(product)"
+                [title]="'Click to get details'">
+                <img [title]="'Click to get details'" [src]="product.image" alt="Product Image" class="product-image">
+                <div [title]="'Click to get details'" class="product-details">
+                  <p class="product-name">{{ product.name }}</p>
+                  <div class="details">
+                    <span>Price: {{ product.price }}</span>
+                    <span>Quantity: {{ product.quantity }}</span>
+                    <span>Size: {{ product.size }}</span>
+                    <span>Color: {{ product.color }}</span>
+                  </div>
+                </div>
+              </div>
+              <div *ngIf="selectedProduct" class="shipment-details">
+                Shipment Status: {{ selectedProduct.shipmentStatus }}
+              </div>
+            </ng-container>
+          </div>
+
+
+
+
+
+
+          <div class="msg msg-left">
+            <div class="name">
+              Need More Detail
+            </div>
+            <div class="button-container">
+              <button *ngIf="!Clicked" class="btn" (click)="onYesClick()">Yes</button>
+              <button *ngIf="!Clicked" class="btn">No</button>
+            </div>
+          </div>
+
+
+          <div *ngIf="showNewSection">
+            <div class="bubble msg msg-right">
+              Yes
+            </div>
+
+
+            <div class="msg msg-left">
+              <h6 class="name">Your Order Details</h6>
+              <div class="name" *ngIf="orderDetails">
+                You have ordered this item on <strong>{{ orderDetails.orderDate | date: 'MMM d, y' }}</strong> <br>.
+                Your transaction ID is <strong>{{ orderDetails.transactionId }}.</strong><br> Invoice status is
+                <strong>{{ orderDetails.invoice_status }}.</strong><br> MOP is <strong>{{ orderDetails.MOP }}</strong>.
+              </div>
+            </div>
+
+
+            <div class="msg msg-left">
+              <div class="name">
+                Need More Help
+              </div>
+              <div class="button-container" *ngIf="!buttonsHidden">
+                <button class="btn" (click)="onAsk()">Ask Us</button>
+                <button class="btn" (click)="onNoThanks()">No Thanks</button>
+              </div>
+            </div>
+
+            <div class="chat-container">
+              <div class="chat-box">
+                <div *ngFor="let message of messages" class="chat-message"
+                  [ngClass]="{'user-message': message.sender === 'user', 'bot-message': message.sender === 'bot'}">
+                  <p [innerHTML]="message.content"></p>
+                </div>
+              </div>
+
+              <div *ngIf="noMatch">
+                <div class="user-action-buttons">
+                  <button class="btn" (click)="onAsk()">Human Assistance?</button>
+                  <br>
+                  <button class="btn" (click)="onNoThanks()">Resolved</button>
+                  <br>
+                  <button class="btn" (click)="orderNotListed()">Order Not Listed</button>
+                </div>
+              </div>
+
+              <div *ngIf="previousOrders.length > 0" class="pointer">
+                <h3>Previous Orders:</h3>
+                <div class="dotted-box">
+                  <div *ngFor="let order of previousOrders" class="order-item">
+                    <p class="order-date">Order Date: {{ order.orderDate | date }}</p>
+                    <div *ngFor="let product of order.products" class="product-item" (click)="showProductDetail(order, product)">
+                      <img [src]="product.image" alt="Product Image" width="50" height="50">
+                      <span>{{ product.name }}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <div *ngIf="selectedOrder && selectedProduct">
+                <!-- Show only the details of the selected product -->
+                <div class="product-details">
+                  <p class="product-name">{{ selectedProduct.name }}</p>
+                  <div class="details">
+                    <span>Price: {{ selectedProduct.price }}</span>
+                    <span>Quantity: {{ selectedProduct.quantity }}</span>
+                    <!-- Add other product details here... -->
+                  </div>
+                </div>
+              </div>
+              
+              
+
+
+
+              <div class="type-area" *ngIf="showTextView">
+                <input type="text" [(ngModel)]="newMessage" (keyup.enter)="sendMessage()" class="typing"
+                  placeholder="Type Here...">
+                <span class="send" (click)="sendMessage()">
+                  <i class="bi bi-arrow-return-left"></i>
+                </span>
+              </div>
+            </div>
+
+
+            <!-- <div class="user-action-buttons">
+              <button (click)="chatWithHuman()">Chat with Human</button>
+              <button (click)="markResolved()">Resolved</button>
+          </div> -->
+
+
+
+
+            <!-- <div class="chat-container" *ngIf="showTextView">
+                <div class="chat-box">
+                    <div *ngFor="let message of messages" class="chat-message">
+                        <p>{{ message.content }}</p>
+                    </div>
+                </div>
+                <div class="input-box">
+                    <input type="text" [(ngModel)]="newMessage" (keyup.enter)="sendMessage()">
+                    <button (click)="sendMessage()">Send</button>
+                </div>
+            </div> -->
+
+
+
+          </div>
+
         </div>
-        <div class="type-area">
+        <!-- <div class="type-area">
           <input type="text" class="typing" placeholder="Type Here...">
           <span class="send">
             <i class="bi bi-arrow-return-left"></i>
           </span>
-        </div>
+        </div> -->
       </mat-tab>
       <mat-tab label="Help">
         <div class="accordion">

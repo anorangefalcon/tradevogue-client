@@ -131,7 +131,8 @@ export class UtilsModule {
     getPaymentKeys: 'http://localhost:1000/paymentKeys/get',
 
     // update the order status 
-    updateOrderStatus: 'http://localhost:1000/orders/updateOrderStatus'
+    updateOrderStatus: 'http://localhost:1000/orders/updateOrderStatus',
+    getLatestProductForBuyer: 'http://localhost:1000/orders/latestOrder'
   }
 }
 

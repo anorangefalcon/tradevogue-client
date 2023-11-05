@@ -1,26 +1,34 @@
-<div class="faq-header">
-  <div class="faq_title d-flex justify-content-center align-item-center">
-    <h1>FAQs</h1>
-  </div>
+<!--- Heading --->
+<div class="faq_title d-flex justify-content-center align-item-center">
+  <h1>FAQs</h1>
 </div>
 
-<section class="faq-section skeleton containerwidth">
-  <div *ngFor="let section of faqData" class="container accordion-wrapper main-panel wrapper">
-    <button class="accordion main-acc content" (click)="toggleSection(section)"
-      [ngClass]="{ expanded2: section.expanded }">
+<!--- Faq Q/A --->
+<section class="faq_section d-flex flex-column gap-5 containerwidth">
+  <div *ngFor="let section of faqData" class="container accordion_wrapper">
+
+    <!--- Parent --->
+    <button class="d-flex align-item-center justify-content-md-between pointer relative accordion main_acc content"
+      (click)="toggleParent(section)" [ngClass]="{ expanded: section.expanded }">
       {{ section.title }}
     </button>
-    <div class="panel" [ngClass]="{ expanded2: section.expanded }">
+
+    <!-- Child --->
+    <div class="panel" [ngClass]="{ expanded: section.expanded }">
       <div *ngFor="let child of section.childrens">
-        <button class=" main-acc child custom-title" (click)="toggleChild(child)">
+
+        <!--- Child Questions --->
+        <button class=" main_acc custom-title" (click)="toggleChild(child)">
           <div>{{ child.title }}</div>
           <div class="custom">{{ child.expanded ? '-' : '+' }}</div>
+
+          <!--- Child Answers -->
         </button>
-        <div class="panel2" [ngClass]="{ expanded2: child.expanded }">
-          <!-- <div [ngClass]="{ expanded2: child.expanded }" class="panel"> -->
+        <div class="panel2" [ngClass]="{ expanded: child.expanded }">
           {{ child.content }}
         </div>
       </div>
     </div>
+
   </div>
 </section>

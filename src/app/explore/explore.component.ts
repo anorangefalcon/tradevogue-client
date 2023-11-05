@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FetchDataService } from '../shared/services/fetch-data.service';
+import { FetchDataService } from '../faq-page/fetch-data.service';
 import { HttpParams } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';

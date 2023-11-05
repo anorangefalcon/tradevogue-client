@@ -44,7 +44,7 @@ import { InvoiceTemplateComponent } from './components/invoice-template/invoice-
     LessThanOrEqualPipe,
     PaginationComponent,
     DrawerComponent,
-    InvoiceTemplateComponent
+    InvoiceTemplateComponent,
   ],
   imports: [
     CommonModule,
@@ -71,7 +71,7 @@ import { InvoiceTemplateComponent } from './components/invoice-template/invoice-
     PopUpComponent,
     LessThanOrEqualPipe,
     PaginationComponent,
-    DrawerComponent
+    DrawerComponent,
   ],
 
 })

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { ToastService } from './toast.service';
+import { ToastService } from '../shared/services/toast.service';
 import { Observable, Subject, filter, map, tap, BehaviorSubject, catchError } from 'rxjs';
 import { UtilsModule } from 'src/app/utils/utils.module';
 import { ActivatedRoute } from '@angular/router';

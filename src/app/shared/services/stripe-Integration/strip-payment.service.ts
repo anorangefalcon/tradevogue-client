@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 declare var Stripe: any;
 import { UtilsModule } from 'src/app/utils/utils.module';
 import { CartService } from '../cart.service';
-import { FetchDataService } from '../fetch-data.service';
+import { FetchDataService } from '../../../faq-page/fetch-data.service';
 import { CookieService } from 'ngx-cookie-service';
 import { BillingResponseService } from 'src/app/checkout/billing-response.service';
 
@@ -13,27 +13,7 @@ export class StripPaymentService {
   publicKey: any;
   stripe: any;
 
-  constructor(private backendUri: UtilsModule,private billingService:BillingResponseService, private CartService: CartService, private fetchData: FetchDataService, private cookie: CookieService) {}
-
-  // async ngOnInit(): Promise<any> {
-
-  //   try {
-  //     const response = await fetch('http://localhost:1000/getPaymentKeys');
-
-  //     const data = await response.json();
-
-  //     this.publicKey = data[0]?.keys[0]?.publicKey;
-
-  //     this.stripe = Stripe(this.publicKey);
-
-  //     console.log("service payment key ", this.publicKey)
-
-
-  //   } catch (error) {
-  //     console.error('Error loading Stripe scripts:', error);
-  //   }
-
-  // }
+  constructor(private backendUri: UtilsModule, private billingService: BillingResponseService, private CartService: CartService, private fetchData: FetchDataService, private cookie: CookieService) { }
 
   async showMessage(messageText: any) {
     const messageContainer = document.querySelector("#payment-message");
@@ -105,28 +85,28 @@ export class StripPaymentService {
     switch (paymentIntent.status) {
       case "succeeded":
         // this.showMessage("Payment succeeded!");
-        let body:any = {
+        let body: any = {
           buyerId: this.cookie.get('userToken'),
           newPaymentStatus: 'success',
           transactionId: paymentIntent.id,
           MOP: paymentIntent.payment_method_types[0],
         };
-        
+
         // this.billingService.PaymentResponse.next(true);
-        
+
 
         this.fetchData.HTTPPOST(this.backendUri.URLs.updateOrderStatus, body).subscribe((data: any) => {
           console.log('status updated ', data);
         });
-        
-          
-          body.payment_status = "succeeded"
-  
-          console.log("submiting user token is ", this.cookie.get('userToken'));
 
-          // this.fetchData.HTTPPOST(this.backendUri.URLs.createOrder,body).subscribe((data:any)=>{
-          //   console.log('daa coming is ',data);                 
-          // });
+
+        body.payment_status = "succeeded"
+
+        console.log("submiting user token is ", this.cookie.get('userToken'));
+
+        // this.fetchData.HTTPPOST(this.backendUri.URLs.createOrder,body).subscribe((data:any)=>{
+        //   console.log('daa coming is ',data);                 
+        // });
 
         await fetch('http://localhost:1000/invoiceSend', {
           method: 'POST',
@@ -166,6 +146,9 @@ export class StripPaymentService {
     }
   }
 
+
+
+  
   async checkStatus(stripe: any): Promise<void> {
     const clientSecret = new URLSearchParams(window.location.search).get(
       "payment_intent_client_secret"
@@ -219,3 +202,23 @@ export class StripPaymentService {
     }
   }
 }
+
+  // async ngOnInit(): Promise<any> {
+
+  //   try {
+  //     const response = await fetch('http://localhost:1000/getPaymentKeys');
+
+  //     const data = await response.json();
+
+  //     this.publicKey = data[0]?.keys[0]?.publicKey;
+
+  //     this.stripe = Stripe(this.publicKey);
+
+  //     console.log("service payment key ", this.publicKey)
+
+
+  //   } catch (error) {
+  //     console.error('Error loading Stripe scripts:', error);
+  //   }
+
+  // }

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
-import { FetchDataService } from './fetch-data.service';
+import { FetchDataService } from '../../faq-page/fetch-data.service';
 import { UtilsModule } from 'src/app/utils/utils.module';
 import { BehaviorSubject } from 'rxjs';
 import { Router } from '@angular/router';

@@ -1,6 +1,6 @@
 import { inject } from '@angular/core';
 import { CanActivateFn, Router } from '@angular/router';
-import { FetchDataService } from './shared/services/fetch-data.service';
+import { FetchDataService } from './faq-page/fetch-data.service';
 import { UtilsModule } from './utils/utils.module';
 import { lastValueFrom } from 'rxjs';
 

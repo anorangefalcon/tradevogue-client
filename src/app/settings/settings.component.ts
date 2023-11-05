@@ -1,6 +1,6 @@
 import { Component, ElementRef, Input, Renderer2, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { FetchDataService } from '../shared/services/fetch-data.service';
+import { FetchDataService } from '../faq-page/fetch-data.service';
 import { RouterLinksService } from '../shared/services/router-links.service';
 import { UtilsModule } from 'src/app/utils/utils.module';
 import { passwordStrengthValidator, matchPasswordValidator } from '../auth/validators';
@@ -54,11 +54,14 @@ export class SettingsComponent {
         
         console.log("yes succeed")
 
-
+        
         this.stripePay.checkOrderStatus()
       }
     });
 
+    // if(this.route.url()=='/cart/billing'){
+    //   this.getOrders();
+    // }
     
 
     this.ProfileForm = fb.group(

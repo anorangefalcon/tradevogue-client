@@ -1,7 +1,7 @@
 import { WishlistService } from './shared/services/wishlist.service';
 import { Component, OnInit, Renderer2 } from '@angular/core';
 import { getMessaging, getToken, onMessage } from 'firebase/messaging';
-import { FetchDataService } from './shared/services/fetch-data.service';
+import { FetchDataService } from './faq-page/fetch-data.service';
 import { CookieService } from 'ngx-cookie-service';
 
 import { FormBuilder } from '@angular/forms';

@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { CartService } from '../../services/cart.service';
 import { OwlOptions } from 'ngx-owl-carousel-o';
-import { FetchDataService } from '../../services/fetch-data.service';
+import { FetchDataService } from '../../../faq-page/fetch-data.service';
 import { PopupService } from '../../services/popup.service';
 import { WishlistService } from '../../services/wishlist.service';
 

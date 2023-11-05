@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { FetchDataService } from './fetch-data.service';
+import { FetchDataService } from '../../faq-page/fetch-data.service';
 import { BehaviorSubject, Observable, map } from 'rxjs';
 import { ToastService } from './toast.service';
 import { HttpClient } from '@angular/common/http';

@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/fo
 import { passwordStrengthValidator } from '../validators';
 import { Router } from '@angular/router';
 import { UtilsModule } from 'src/app/utils/utils.module';
-import { FetchDataService } from 'src/app/shared/services/fetch-data.service';
+import { FetchDataService } from 'src/app/faq-page/fetch-data.service';
 import { ToastService } from 'src/app/shared/services/toast.service';
 
 @Component({

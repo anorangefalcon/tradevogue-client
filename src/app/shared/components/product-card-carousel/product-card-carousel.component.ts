@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { OwlOptions } from 'ngx-owl-carousel-o';
-import { FetchDataService } from '../../services/fetch-data.service';
+import { FetchDataService } from '../../../faq-page/fetch-data.service';
 import { productData } from '../../productData';
 
 @Component({

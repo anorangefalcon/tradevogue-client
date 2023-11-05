@@ -13,7 +13,6 @@
   </div>
 </section>
 
-
 <div class="drawer" [ngClass]="{ 'open': isDrawerOpen }">
   <div (click)="closeDrawer()" class="close-button">
     <svg class="close-icon" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -22,8 +21,6 @@
         fill="currentColor" />
     </svg>
   </div>
-
-
 
   <form [formGroup]="faqForm">
     <div class="custom-select" style="width:200px;">
@@ -37,7 +34,6 @@
       <label for="query">Query</label>
       <input type="text" id="query" formControlName="query" required />
       <div *ngIf="faqForm.get('query')?.invalid && faqForm.get('query')?.touched" class="error-message">
-        <!-- Error messages go here -->
       </div>
     </div>
 
@@ -45,7 +41,6 @@
       <label for="content">Answer</label>
       <input type="text" id="content" formControlName="content" required />
       <div *ngIf="faqForm.get('content')?.invalid && faqForm.get('content')?.touched" class="error-message">
-        <!-- Error messages go here -->
       </div>
     </div>
 
@@ -85,15 +80,6 @@
 <app-pagination #pagination [collectionSize]="selectedCategory.childrens.length" [pageSize]="5"
   [firstLastButtons]="true" [maxSize]="5"></app-pagination>
 
-
-<!-- <div class="pagination">
-  <span (click)="previousPage()"
-    class="material-symbols-outlined previous-button material-icons">keyboard_arrow_left</span>
-  {{currentPage}}
-  <span (click)="nextPage()" class="material-symbols-outlined next-button material-icons">keyboard_arrow_right</span>
-</div> -->
-
-
 <app-pop-up>
   <div *ngIf="selectedItem" class="details-container">
     <p class="detail-item"><strong>Serial Number:</strong> {{ (currentPage - 1) * pageSize +
@@ -102,30 +88,6 @@
     <p class="detail-item"><strong>Answer:</strong> {{ selectedItem.content }}</p>
   </div>
 </app-pop-up>
-
-
-<!-- <div *ngIf="showPopup" class="popup-overlay relative">
-  <div class="popup-content popup-details" [ngClass]="{'fade-in': showPopup}">
-    <div *ngIf="selectedItem" class="details-container">
-      <p class="detail-item"><strong>Serial Number:</strong> {{ (currentPage - 1) * pageSize +
-        selectedCategory.childrens.indexOf(selectedItem) + 1 }}</p>
-      <p class="detail-item"><strong>Query:</strong> {{ selectedItem.title }}</p>
-      <p class="detail-item"><strong>Answer:</strong> {{ selectedItem.content }}</p>
-    </div>
-  </div>
-
-  <div (click)="showPopup = false" class="absolute right-5 top-5">
-    <button type="button"
-      class="inline-flex justify-center px-2 py-2 text-base font-medium text-red-500 bg-white border border-transparent rounded-full hover:bg-red-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500">
-      <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 512 512" height="1em" width="1em"
-        xmlns="http://www.w3.org/2000/svg">
-        <path
-          d="M289.94 256l95-95A24 24 0 00351 127l-95 95-95-95a24 24 0 00-34 34l95 95-95 95a24 24 0 1034 34l95-95 95 95a24 24 0 0034-34z">
-        </path>
-      </svg>
-    </button>
-  </div>
-</div> -->
 
 <div *ngIf="editItem" class="slider">
   <div *ngIf="selectedItem" class="details-container">

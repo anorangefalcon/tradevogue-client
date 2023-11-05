@@ -1,10 +1,17 @@
-import { Component, HostListener, provideZoneChangeDetection } from '@angular/core';
+import { Component } from '@angular/core';
 import { PaginationService } from 'src/app/shared/services/pagination.service';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UtilsModule } from 'src/app/utils/utils.module';
-import { FetchDataService } from 'src/app/shared/services/fetch-data.service';
+import { FetchDataService } from 'src/app/faq-page/fetch-data.service';
 import { PopupService } from 'src/app/shared/services/popup.service';
 import { ToastService } from 'src/app/shared/services/toast.service';
+
+interface FaqItem {
+  _id: string;
+  title: string;
+  content: string;
+  expanded: boolean;
+}
 
 @Component({
   selector: 'app-faqs',
@@ -15,7 +22,7 @@ export class FaqsComponent {
   faqData: any[] = [];
   selectedOption: string = '';
   faqForm!: FormGroup;
-  selectedCategory: { title: string; childrens: any[] } = { title: '', childrens: []};
+  selectedCategory: { title: string; childrens: any[] } = { title: '', childrens: [] };
   showPopup: boolean = false;
   editItem: boolean = false;
   isSlideIn = false;
@@ -25,7 +32,7 @@ export class FaqsComponent {
   pageSize: number = 5;
   currentPage: number = 1;
 
-  constructor(private toast: ToastService,public pagination: PaginationService, private formBuilder: FormBuilder, private bgURL: UtilsModule, private fetchDataService: FetchDataService, private popupService: PopupService, private fb: FormBuilder) {
+  constructor(private toast: ToastService, public pagination: PaginationService, private formBuilder: FormBuilder, private bgURL: UtilsModule, private fetchDataService: FetchDataService, private popupService: PopupService) {
     this.loadData();
   }
 
@@ -56,30 +63,12 @@ export class FaqsComponent {
     this.pagination.paginateBackend(`${this.bgURL.URLs.getPaginatedData}/faq`, this.currentPage, this.pageSize).subscribe((data) => {
       this.faqData = data;
     });
-    this.paginateData();
-  }
-
-  paginateData() {
-    this.pagination.paginateFrontend(this.faqData, this.currentPage, this.pageSize);
   }
 
   retrieveContent() {
     console.log(this.selectedOption);
     this.selectedCategory = this.faqData.find((category: any) => category.title === this.selectedOption);
   }
-
-  // nextPage() {
-  //   if (this.selectedCategory && (this.currentPage * this.pageSize) < this.selectedCategory.childrens.length) {
-  //     this.currentPage++;
-  //   }
-  // }
-  
-  // previousPage() {
-  //   if (this.currentPage > 1) {
-  //     this.currentPage--;
-  //     this.loadData();
-  //   }
-  // }
 
   async addCategory() {
     if (this.faqForm.valid) {
@@ -99,9 +88,9 @@ export class FaqsComponent {
       };
 
       await this.fetchDataService.HTTPPOST(this.bgURL.URLs.addFaqData, dataToSend).subscribe((data) => {
-        if(data){
+        if (data) {
           this.toast.successToast({ title: "FAQ added successfully" });
-        }else {
+        } else {
           this.toast.errorToast({ title: "FAQ not added" });
         }
         console.log("data", data);
@@ -142,13 +131,6 @@ export class FaqsComponent {
         this.selectedCategory.childrens[itemIndex] = updatedItem;
       }
 
-      interface FaqItem {
-        _id: string;
-        title: string;
-        content: string;
-        expanded: boolean;
-      }
-
       const updatedFaqItem: FaqItem = {
         _id: updatedItem._id,
         title: updatedItem.query,
@@ -158,9 +140,9 @@ export class FaqsComponent {
 
       try {
         const data: any = await this.fetchDataService.httpPost(this.bgURL.URLs.updateFaqData, updatedFaqItem);
-        if(data){
+        if (data) {
           this.toast.successToast({ title: "FAQ updated successfully" });
-        }else {
+        } else {
           this.toast.errorToast({ title: "FAQ not updated" });
         }
         console.log("Item updated successfully.", data);
@@ -179,26 +161,26 @@ export class FaqsComponent {
   }
 
 
-  async deleteFaq(item: any) {
+  async deleteFaq(item: FaqItem) {
     this.selectedItem = item;
     if (this.selectedItem) {
       const itemId = item._id;
 
-      const itemIndex = this.selectedCategory.childrens.findIndex((child: any) => child._id === itemId);
+      const itemIndex = this.selectedCategory.childrens.findIndex((child: FaqItem) => child._id === itemId);
       if (itemIndex !== -1) {
         this.selectedCategory.childrens.splice(itemIndex, 1);
       }
 
       try {
-        const data = await this.fetchDataService.HTTPPOST(this.bgURL.URLs.deleteFaqData, { _id: itemId });
-        // console.log("Item deleted successfully.", data);
-        if(data) {
-          this.toast.successToast({ title: "FAQ deleted successfully" });
+        const data = await this.fetchDataService.HTTPPOST(this.bgURL.URLs.deleteFaqData, { _id: itemId }).toPromise();
+        if (data) {
+          this.toast.successToast({ title: 'FAQ deleted successfully' });
+          this.loadData();
         } else {
-          this.toast.errorToast({ title: "FAQ not deleted" });
+          this.toast.errorToast({ title: 'FAQ not deleted' });
         }
       } catch (error) {
-        console.error("Error deleting item:", error);
+        console.error('Error deleting item:', error);
       }
     }
   }

@@ -1,6 +1,6 @@
  import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { FetchDataService } from '../shared/services/fetch-data.service';
+import { FetchDataService } from '../faq-page/fetch-data.service';
 import { CartService } from '../shared/services/cart.service';
 import { OwlOptions } from 'ngx-owl-carousel-o';
 import { WishlistService } from '../shared/services/wishlist.service';
