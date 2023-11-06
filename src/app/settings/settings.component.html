@@ -311,11 +311,11 @@
 
                 <div class="AllOrders d-flex flex-column gap-25">
                     <div *ngFor="let order of AllOrders ; let i=index" class="particularOrder">
-                        <div class="order__firstDiv d-flex gap-25 justify-content-md-between">
+                        <div class="order__firstDiv d-flex gap-25 justify-content-md-between" >
                             <div class=" d-flex gap-25 align-item-center order__basic">
                                 <div>
                                     <p>Order Number</p>
-                                    <span>{{order._id}}</span>
+                                    <span>{{order.orderID}}</span>
                                 </div>
                                 <div>
                                     <p>Date Placed</p>
@@ -333,8 +333,8 @@
                             </div>
 
                         </div>
-                        <div class="order__secondDiv" *ngFor="let product of order.products">
-                            <div class="order d-flex flex-column gap-20">
+                        <ng-container *ngFor="let product of order.products" >
+                            <div class="order d-flex flex-column gap-20"  *ngIf="product.shipmentStatus!='cancelled'" >
                                 <div class=" d-flex justify-content-md-between">
                                     <div class="d-flex gap-15">
                                         <!-- <div > -->
@@ -355,24 +355,38 @@
                                     </div>
                                 </div>
                                 <div class="deliverDiv d-flex justify-content-md-between">
-                                    <div class="d-flex gap-10 delivery align-item-center">
-                                        <span class="material-symbols-outlined">
+
+ 
+                                    <div class="d-flex gap-10 delivery align-item-center"> 
+                                        <span class="material-symbols-outlined" *ngIf="product.shipmentStatus=='pending'">
+                                            pending
+                                        </span>
+
+                                        <span class="material-symbols-outlined" *ngIf="product.shipmentStatus=='delivered'">
                                             done
                                         </span>
-                                        <p class="delivery-status">Delivered</p>
+                                        <p class="delivery-status">{{product.shipmentStatus}}</p>
                                     </div>
                                     <div class="d-flex gap-10 btns">
                                         <button routerLink="/product/{{product.sku}}">
                                             View Product
                                         </button>
-                                        <p>|</p>
-                                        <button (click)="BuyAgain(product)">
+                                        <p >|</p>
+                                        <!-- <button (click)="BuyAgain(product)">
                                             Buy Again
+                                        </button> -->
+                                     
+                                        <button *ngIf="product.shipmentStatus=='pending'"  (click)="CancelProduct(order._id,product._id)">
+                                                Cancel Product
+                                        </button>
+
+                                        <button *ngIf="product.shipmentStatus=='delivered'">
+                                            Exchange Product
                                         </button>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </ng-container>
                     </div>
                 </div>
             </div>

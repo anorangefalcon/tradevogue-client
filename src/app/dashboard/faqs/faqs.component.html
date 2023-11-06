@@ -30,6 +30,19 @@
       </select>
     </div>
 
+    <!-- <div class="form__group" formGroupName="faqForm">
+      <label for="ticket">Select Ticket</label>
+      <app-custom-select [type]="''" [options]="faqData"
+          [selectedOption]="((faqForm.get('selectedTicket')?.value) ? (faqForm.get('selectedTicket')?.value) : 'Select Ticket')"
+          [selectedOption]="(faqSubForm('contactForm.selectedTicket')?.value? faqSubForm('item')?.value:'Select Ticket')"
+          (final_option)="updateFormFields($event)"></app-custom-select>
+      <span class="error"
+          *ngIf="faqSubForm('item')?.invalid && (faqSubForm('item')?.dirty || faqSubForm('item')?.touched)">
+          <small *ngIf="faqSubForm('item')?.hasError('required')">*Field
+              Required</small>
+      </span>
+  </div> -->
+
     <div class="form-group">
       <label for="query">Query</label>
       <input type="text" id="query" formControlName="query" required />

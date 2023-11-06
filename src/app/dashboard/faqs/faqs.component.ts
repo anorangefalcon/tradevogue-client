@@ -188,6 +188,7 @@ export class FaqsComponent {
   toggleMenu() {
     this.isMenuActive = !this.isMenuActive;
   }
+
 }
 
 

@@ -15,6 +15,7 @@ import { CookieService } from 'ngx-cookie-service';
 export class TicketsComponent {
   ticketData: any[] = [];
   selectedItem: any;
+  editItem: boolean = false;
   selectedTicket: any = {
     title: '',
     body: '',
@@ -77,7 +78,9 @@ export class TicketsComponent {
   }
 
   findUserToken(userEmail: string): string | undefined {
+    
     for (const item of this.ticketData) {
+      console.log(item, "item is")
       if (item.notificationDetails) {
         for (const notification of item.notificationDetails) {
           const user = notification.tokenDetail.find((user: any) => user.email === userEmail);
@@ -112,11 +115,12 @@ export class TicketsComponent {
 
 
   webPush(item: any) {
-    console.log(item);
     this.selectedTicket = item;
+    this.editItem = true;
     this.ticketTypeId = item._id;
     this.token = this.findUserToken(item.userEmail);
-    this.popupService.openPopup();
+    console.log(item.userEmail, "token is")
+    // this.popupService.openPopup();
   }
 
 

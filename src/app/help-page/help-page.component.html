@@ -32,7 +32,8 @@
 
                         <div class="form__group" formGroupName="contactForm">
                             <label for="ticket">Select Ticket</label>
-                            <app-custom-select [type]="''"  [options]="ticketData" [selectedOption]="((contactForm.get('selectedTicket')?.value) ? (contactForm.get('selectedTicket')?.value) : 'Select Ticket')"
+                            <app-custom-select [type]="''" [options]="ticketData"
+                                [selectedOption]="((contactForm.get('selectedTicket')?.value) ? (contactForm.get('selectedTicket')?.value) : 'Select Ticket')"
                                 [selectedOption]="(faqSubForm('contactForm.selectedTicket')?.value? faqSubForm('item')?.value:'Select Ticket')"
                                 (final_option)="updateFormFields($event)"></app-custom-select>
                             <span class="error"

@@ -44,3 +44,7 @@
   .drawer.open {
     right: 0;
   }
+
+  .slider {
+    margin-top: 20px !important;
+  }

@@ -14,6 +14,7 @@ export class CardTemplateComponent {
   
   @Input() product: any = {};
   showPopup: boolean = false;
+  selectedItem: boolean = false;
 
 
   constructor(private cartService: CartService, private fetchdata: FetchDataService, private popupService: PopupService, private wishlistService : WishlistService) { }
@@ -28,19 +29,6 @@ export class CardTemplateComponent {
     this.avgRating = this.product.avgRating;
     
     const sku = this.product.sku;
-    const allSkeleton = document.querySelectorAll('.skeleton');
-
-    window.addEventListener('load', () => {
-      allSkeleton.forEach((item: Element) => {
-        item.classList.remove('skeleton');
-      });
-    });
-
-    window.addEventListener('scroll', () => {
-      allSkeleton.forEach((item: Element) => {
-        item.classList.remove('skeleton')
-      })
-    })
 
   }
 
@@ -92,7 +80,8 @@ export class CardTemplateComponent {
 
   openPopup() {
       this.popupService.openPopup();
-      // this.showPopup = true;
+      this.showPopup = true;
+      console.log(this.product,"product")
     }
 
 }

@@ -289,7 +289,7 @@ label span {
 
 .default__btn {
     border-radius: 16px;
-    color : rgb(var(--textClr), 0.5);
+    color: rgb(var(--textClr), 0.5);
     font-weight: 400;
 }
 
@@ -456,9 +456,10 @@ label span {
     /* background-color: black; */
 }
 
-.order__secondDiv:not(:first-child) {
+.order:not(:last-child) {
     border-block-end: 0.8px solid rgb(var(--textClr), 0.9);
 }
+
 
 .productDetails {
     & p {
@@ -478,10 +479,9 @@ label span {
     font-weight: 500;
 }
 
-.order:not(:last-child) {
-    border-block-end: 0.8px solid rgba(var(--blackClr), 0.6);
-}
-
+/* .order:not(:last-child){
+    border-block-end : 0.8px solid rgba(var(--blackClr), 0.6);
+} */
 .delivery {
     & span {
         color: rgb(var(--whiteClr));
@@ -617,4 +617,9 @@ label span {
     /* padding-inline: 14px;
     padding-block: 7px; */
     font-size: 12px !important;
+}
+
+.cancelled {
+    display: flex;
+    justify-content: flex-end;
 }

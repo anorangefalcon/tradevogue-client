@@ -38,9 +38,8 @@
 </div>
 
 <ng-template #defaultBreadcrumbs>
-  <div *ngIf="!isHomePage(); let breadcrumb of breadcrumbs" class="breadcrumb container">
-    <!-- Check if not on the home route, display the breadcrumbs -->
+  <!-- <div *ngIf="!isHomePage(); let breadcrumb of breadcrumbs" class="breadcrumb container">
     <a [routerLink]="['']" class="breadcrumb-link breadcrumb-last">Home</a>
-    <!-- <span class="breadcrumb-separator"> > </span> -->
-  </div>
+   
+  </div> -->
 </ng-template>

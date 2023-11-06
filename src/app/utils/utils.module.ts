@@ -104,6 +104,7 @@ export class UtilsModule {
     verifyOrderSummary: 'http://localhost:1000/orders/verifyOrderSummary',
     createOrder: 'http://localhost:1000/orders/create',
     getParticularUserOrders: 'http://localhost:1000/orders/getparticularUserOrders',
+    cancelOrder: 'http://localhost:1000/orders/cancelOrder',
 
     // support chat
     getTicketTitle: 'http://localhost:1000/user/getTicketTitle',

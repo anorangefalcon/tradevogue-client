@@ -66,7 +66,7 @@
     <div class="popup-content popup-details" [ngClass]="{'fade-in': showPopup}">
         <div class="left-side">
             <owl-carousel-o [options]="customOptions" [ngClass]="{crousel: true}">
-                <ng-template carouselSlide *ngFor="let item of productData.assets[0].photo">
+                <ng-template carouselSlide *ngFor="let item of product.assets[0].photo">
                     <div>
                         <img class="image-carousel" [src]="item" alt="Product Image">
                     </div>
@@ -95,8 +95,6 @@
 
             <p id="description">{{productData.description}}</p>
             <div class="price">
-
-                {{product.price}} abcd si   
                 <h1 id="number-discount">₹{{ product.price - product.discount }}</h1>
                 <p id="number-full" *ngIf="product.price !== (undefined || 0)">₹{{product.price}}</p>
             </div>

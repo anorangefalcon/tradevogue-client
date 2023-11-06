@@ -10,6 +10,8 @@ import { CartService } from '../shared/services/cart.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { StripPaymentService } from '../shared/services/stripe-Integration/strip-payment.service';
 import { WishlistService } from '../shared/services/wishlist.service';
+import { DialogBoxService } from '../shared/services/dialog-box.service';
+
 @Component({
   selector: 'app-settings',
   templateUrl: './settings.component.html',
@@ -36,13 +38,24 @@ export class SettingsComponent {
   openedAccordionIndex: number | null = null;
   stripe: any;
 
+  productStatus: any = 'cancelled';
+
+  body:any;
+
+  template: any = {
+    title: 'Are You Sure! Want to Cancel?',
+    subtitle: `You can't view this in your list anymore if you delete!`,
+    type: 'confirmation',
+    confirmationText: 'Yes, Cancel it',
+    cancelText: 'No, Revert'
+  };
 
   // addnewAddress:boolean=false;
   userAddresses!: any;
   TranslateData: boolean = false;
 
   // private toastService: ToastService
-  constructor(private backendURLs: UtilsModule, private wishlistService: WishlistService, private fetchDataService: FetchDataService, private fb: FormBuilder, private cartService: CartService, private route: ActivatedRoute, private stripePay: StripPaymentService) {
+  constructor(private backendURLs: UtilsModule, private wishlistService:WishlistService, private fetchDataService: FetchDataService, private fb: FormBuilder, private cartService: CartService, private route: ActivatedRoute, private stripePay: StripPaymentService, private dialogBox: DialogBoxService) {
 
     this.route.queryParams.subscribe(params => {
       const redirectStatus = params['redirect_status'];
@@ -81,6 +94,16 @@ export class SettingsComponent {
       this.changeComponent(params.get('page'));
 
     });
+
+    this.dialogBox.responseEmitter.subscribe(async (res: boolean) => {
+      if (res == true) {
+        await this.fetchDataService.httpPost(this.backendURLs.URLs.cancelOrder, this.body);
+        // this.fetchData();
+        this.dialogBox.responseEmitter.next(false);
+      }
+    });
+
+    
   };
 
   async changeComponent(el: string) {
@@ -89,7 +112,6 @@ export class SettingsComponent {
     if (el == 'wishlist') {
       this.showLists();
     }
-
   }
 
   showLists() {
@@ -312,5 +334,10 @@ export class SettingsComponent {
     this.cartService.addToCart(product);
   }
 
+
+  CancelProduct(orderId:any,productId:any){
+    this.body = { orderId , productId}
+    this.dialogBox.confirmationDialogBox(this.template);
+  }
 
 }

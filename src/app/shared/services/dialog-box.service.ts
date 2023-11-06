@@ -28,7 +28,9 @@ export class DialogBoxService {
   template: any = {
     title: '',
     subtitle: '',
-    type: ''
+    type: '',
+    confirmationText: '',
+    cancelText: '',
   };
 
   infoDialogBox(data: any = '') {
@@ -49,10 +51,10 @@ export class DialogBoxService {
       this.template.type = 'confirmation';
       this.template.title = data.title;
       this.template.subtitle = data.subtitle;
-      this.template.confirmationText = data.confirmText;
+      this.template.confirmationText = data.confirmationText;
+      this.template.cancelText = data.cancelText;
       this.template.cancelText = data.cancelText;
     }
-
     this.contentEmitter.next(this.template);
   }
 
