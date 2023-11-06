@@ -1,0 +1,106 @@
+<div class="d-flex flex-column gap-20">
+    <div class="form__card__head d-flex justify-content-md-between align-item-center">
+        <h3>Customise Banner</h3>
+        <div class="operation_button d-flex gap-10">
+            <!-- <button class="btn-primary" [ngStyle]="{'display': bannerForm.disabled? 'none': 'block'}">Edit</button> -->
+            <button class="btn-secondary d-flex align-item-center gap-10"
+                [ngStyle]="{'display': bannerForm.disabled? 'none': 'flex'}" (click)="addBanner()">
+                <span class="material-symbols-outlined">
+                    add
+                </span>
+                <p> Add Banner</p>
+            </button>
+            <button class="btn-primary" [ngStyle]="{'display': bannerForm.disabled? 'none': 'flex'}"
+                (click)="onUpdate()">Update</button>
+        </div>
+    </div>
+    <form class="form__card d-flex gap-15 flex-column" [formGroup]="bannerForm">
+        <ng-container formArrayName='banner'>
+            <ng-container *ngFor="let banner of getBanner(); let i = index">
+                <div formGroupName="{{i}}" class=" d-flex gap-15 card card__pd-25 mw100 relative" >
+                    <button (click)="removeBanner(i)" class="absolute btn-primary remove-banner-btn d-flex justify-content-center align-items-center"
+                    *ngIf="i!=0" >
+                        <span class="material-symbols-outlined">
+                            close
+                        </span>
+                    </button>
+                    <div class="image-upload-div d-flex justify-content-center align-item-center relative">
+                        <div class="upload-image d-flex flex-column gap-10 align-item-center">
+                            <input type="file" [id]="'backgroundImage'+i" accept="image/jpg, image/jpeg, image/png"
+                                (input)="bannerImageUpload($event, i)" />
+                            <label [for]="'backgroundImage'+i"
+                                class="upload__block d-flex flex-column flex-center pointer">
+                                <span class="upload_icon material-symbols-outlined">
+                                    cloud_upload
+                                </span>
+                            </label>
+                            <small class="banner-label">Upload
+                                Banner Image</small>
+                            <img [src]="getImagePreview(i)" [style.display]="getImagePreview(i) ? 'flex' : 'none'"
+                                class="banner-iage">
+                            <span class="material-symbols-outlined remove-btn pointer"
+                                [style.display]="getImagePreview(i) ? 'flex' : 'none'" (click)="removeImage(i)">
+                                close
+                            </span>
+                            <div class="loader" *ngIf="showLoading(i)"></div>
+
+                        </div>
+                    </div>
+                    <div class="data-upload-div d-flex gap-15">
+                        <div class="d-flex flex-column mw100 gap-10">
+                            <div class="internal-div">
+                                <label class="form__title" for="title">Title</label>
+                                <input class="form__input" type="text" id="title" formControlName="title" />
+                            </div>
+                            <div class="internal-div">
+                                <label class="form__title" for="subTitle">Description</label>
+                                <input class="form__input" type="text" id="subTitle" formControlName="subTitle" />
+                            </div>
+                            <div class="internal-div">
+                                <label class="form__title" for="buttonText">Button</label>
+                                <input class="form__input" type="text" id="buttonText" formControlName="buttonText" />
+                            </div>
+                            <div class="internal-div">
+                                <label class="form__title" for="buttonLink">Button Link</label>
+                                <input class="form__input" type="text" id="buttonLink" formControlName="buttonLink" />
+                            </div>
+                        </div>
+                        <div class="d-flex flex-column mw100 gap-10">
+                            <div class="internal-div">
+                                <label class="form__title" for="contentAlign">Content Align</label>
+                                <app-custom-select [_id]="'alignment'" [options]="alignment"
+                                    [selectedOption]="'Select..'"
+                                    (final_option)="updateContentAlign(i, $event)"></app-custom-select>
+                            </div>
+                            <ng-container formGroupName="colors">
+                                <div class="internal-div">
+                                    <label class="form__title" [for]="'titleText'+i">Title Color</label>
+                                    <input class="form__input" type="color" name="" [id]="'titleText'+i"
+                                        formControlName="titleColor">
+                                    <!-- <input class="form__input" type="text" id="titleText" formControlName="titleColor" /> -->
+                                </div>
+                                <div class="internal-div">
+                                    <label class="form__title" [for]="'subTitleText'+i">Subtitle Color</label>
+                                    <input class="form__input" type="color" [id]="'subTitleText'+i"
+                                        formControlName="subTitleColor" />
+                                </div>
+                                <div class="internal-div">
+                                    <label class="form__title" [for]="'buttonText'+i">Button Color</label>
+                                    <input class="form__input" type="color" [id]="'buttonText'+i"
+                                        formControlName="buttonColor" />
+                                </div>
+                            </ng-container>
+                        </div>
+                    </div>
+                </div>
+            </ng-container>
+        </ng-container>
+    </form>
+    <div class="d-flex" style="justify-content: flex-start;">
+        <!-- <button class="btn-primary d-flex align-item-center justify-content-center gap-5 add-btn" (click)="addBanner()">
+            <span class="material-symbols-outlined">
+                add
+            </span>
+        </button> -->
+    </div>
+</div>

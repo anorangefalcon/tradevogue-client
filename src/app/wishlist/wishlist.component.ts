@@ -33,18 +33,15 @@ export class WishlistComponent {
 
   async ngOnInit() {
     this.wishlistService.wishlistPopupData.subscribe((data)=>{
+      console.log(data, "popup data");
+      
       if(!data) return;
+      
       this.list=data.wishlists;
       this.show=true;        
     })
   }
 
-
-  async showWishlists() {
-      
-    // this.wishlistService.showWishlist().subscribe()
-    // let data: any = await this.UserService.SubscribingValue('wishlists');
-  }
 
   async addToWishlist(wishlistName: string = '') {
     if(!wishlistName){

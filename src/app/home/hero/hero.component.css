@@ -51,6 +51,9 @@
         padding: 20px;
         margin-block-end: 50px;
     }
+    & .banner-background {
+        height: calc(100vh - 95px);
+    }
 
 }
 

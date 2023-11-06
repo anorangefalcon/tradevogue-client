@@ -12,9 +12,6 @@ import { HttpClient } from '@angular/common/http';
 })
 export class WishlistService {
 
-  showWishlistsSlider = new BehaviorSubject<any>('');
-  display$ = this.showWishlistsSlider.asObservable();
-
   showWishlistPopup = new BehaviorSubject<any>('');
   wishlistPopupData = this.showWishlistPopup.asObservable();
 
@@ -34,10 +31,10 @@ export class WishlistService {
     private fetchDataService: FetchDataService,
     private utils: UtilsModule,
     private http: HttpClient,
-    private toastService: ToastService
+    private toastService: ToastService,
+    
 
   ) { }
-
 
 
   ShowWishlist(productId: string) {
@@ -45,9 +42,7 @@ export class WishlistService {
     if (IsLogin) {
       this.productId = productId;
       this.fetchDataService.HTTPGET(this.backendUrls.URLs.showWishlist).subscribe((data: any) => {
-        this.showWishlistPopup.next(data);
-        console.log(data, "jhjbm");
-        
+        this.showWishlistPopup.next(data);     
       });
     }
     else {
@@ -55,9 +50,6 @@ export class WishlistService {
     }
 
   }
-
-
-
 
   getWishlistCount() {
     const IsLogin = this.cookie.get('userToken')
@@ -106,6 +98,10 @@ export class WishlistService {
 
     // this.showWishlistedProducts(wishlistName, index)
 
+  }
+
+  removeWishlist (index: any) {
+    return this.http.post(this.backendUrls.URLs.removeWishlist, index);
   }
 
 

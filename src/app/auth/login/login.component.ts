@@ -67,6 +67,7 @@ export class LoginComponent {
         this.loginService.LoginCheck.next(true);
       }
     )
+    this.loading=false;
   }
 
   async onLogin() {

@@ -18,9 +18,10 @@ export class NavbarComponent implements OnInit {
   isSearching: boolean = false;
   isUserLogin: boolean = false;
   hamburgerOpen: boolean = false;
-  purchaser: any = 'User';
+  purchaser: any = '';
   cart_count: number = 0;
   wishlistCount: number = 0;
+  isLogin : boolean = false;
 
   cartArr: any[] = [];
   navbar_scroll_style: boolean = false;
@@ -33,6 +34,7 @@ export class NavbarComponent implements OnInit {
   constructor(private cartService: CartService, private checkLogin: LoginCheckService, private cookie: CookieService, private fetchDataService: FetchDataService, private router: Router, private wishlistService: WishlistService, private utils: UtilsModule) {
     let userName = this.cookie.get('userName')
     if (userName) {
+    
       this.purchaser = userName;
     }
   }
@@ -85,14 +87,7 @@ export class NavbarComponent implements OnInit {
     this.router.navigateByUrl(`/explore?search=${query}`);
   }
 
-  onLogout() {
-
-    this.cookie.delete('userToken');
-    this.cookie.delete('userName');
-    this.router.navigate(['/']);
-    this.isUserLogin = false;
-  }
-
+ 
   @HostListener('window:scroll', []) onScroll() {
     if (window.scrollY > 40) {
       this.navbar_scroll_style = true;
@@ -101,5 +96,14 @@ export class NavbarComponent implements OnInit {
     }
 
   }
+
+
+onLogout() {
+
+  this.cookie.delete('userToken');
+  this.cookie.delete('userName');
+  this.router.navigate(['/']);
+  this.isUserLogin = false;
+}
 
 }

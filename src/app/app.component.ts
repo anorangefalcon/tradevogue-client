@@ -1,4 +1,3 @@
-import { WishlistService } from './shared/services/wishlist.service';
 import { Component, OnInit, Renderer2 } from '@angular/core';
 import { getMessaging, getToken, onMessage } from 'firebase/messaging';
 import { FetchDataService } from './faq-page/fetch-data.service';
@@ -78,10 +77,8 @@ export class AppComponent{
   }
 
   
-  constructor(private wishlistService: WishlistService, private fetchdata: FetchDataService, private cookie: CookieService, private formBuilder: FormBuilder) {
-    this.wishlistService.display$.subscribe((data) => {
-      this.showWishlistsDialog = data;
-    });
+  constructor( private fetchdata: FetchDataService, private cookie: CookieService, private formBuilder: FormBuilder) {
+  
 
     this.synth = window.speechSynthesis;
     this.voices = this.synth.getVoices();

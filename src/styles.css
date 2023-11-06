@@ -942,6 +942,10 @@ button {
     color: transparent;
 }
 
+@keyframes spinner {
+    to {transform: rotate(360deg);}
+  }
+
 @media screen and (max-width: 450px) {
 
     .container {

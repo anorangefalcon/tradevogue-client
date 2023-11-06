@@ -59,7 +59,7 @@ input[type="text"]:focus {
 .drawer {
     & .drawer__content {
         padding-inline: 0;
-        padding-block-end: 10px;
+        /* padding-block-end: 10px; */
     }
     & .drawer__header {
         box-shadow: none;

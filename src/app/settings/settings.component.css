@@ -2,7 +2,7 @@
     width: calc(100% - 260px);
 }
 
-.width-160{
+.width-160 {
 
     width: 160px;
 }
@@ -398,17 +398,17 @@ label span {
 
 
 /* ORDERS  CSS */
-.Orders{
+.Orders {
     width: 100%;
     padding-inline: 50px;
 
 }
 
-.orders__p{
+.orders__p {
     color: rgba(var(--blackClr), 0.6);
 }
 
-.particularOrder{
+.particularOrder {
     /* border-top: 1px solid rgba(var(--blackClr), 0.6); */
     /* border-right-radius: 5px; */
     /* border-left-radius: 5px; */
@@ -416,64 +416,72 @@ label span {
     border-top-left-radius: 9px;
     border: 1px solid rgba(var(--blackClr), 0.2);
     padding-inline: 30px;
-    padding-block : 20px;
-    
+    padding-block: 20px;
+
 }
 
 
-.order__basic{
-    & span{
-        color:rgba(var(--blackClr), 0.6);
+.order__basic {
+    & span {
+        color: rgba(var(--blackClr), 0.6);
     }
 
-    & p{
+    & p {
         font-weight: 500;
     }
 }
+
 .order {
     padding-block: 20px;
 }
 
-.order__firstDiv__btn{
-    & button{
-        padding-inline : 15px;
-        padding-block : 10px ;
+.order__firstDiv__btn {
+    & button {
+        padding-inline: 15px;
+        padding-block: 10px;
         background: transparent;
         border: 1px dashed rgba(var(--primaryClr));
-        color:rgba(var(--blackClr), 0.6);
-    
+        color: rgba(var(--blackClr), 0.6);
+
     }
 }
+
 .imgDiv {
-    width: 80px;    
+    width: 80px;
     overflow: hidden;
     border-radius: 8px;
     height: 100px;
 
-    
+
     /* background-color: black; */
 }
+
 .order__secondDiv:not(:first-child) {
     border-block-end: 0.8px solid rgb(var(--textClr), 0.9);
 }
+
 .productDetails {
     & p {
         opacity: 0.7;
         /* font-size: 12px !important; */
     }
 }
+
 .prodName {
-    font-size : 22px;
-    font-weight : 500;
+    font-size: 22px;
+    font-weight: 500;
     font-size: 16px !important;
     opacity: 1 !important;
 }
+
 .price {
     font-weight: 500;
 }
-.order:not(:last-child){
-    border-block-end : 0.8px solid rgba(var(--blackClr), 0.6);
+
+.order:not(:last-child) {
+    border-block-end: 0.8px solid rgba(var(--blackClr), 0.6);
 }
+
 .delivery {
     & span {
         color: rgb(var(--whiteClr));
@@ -484,13 +492,14 @@ label span {
         border-radius: 50%;
     }
 }
+
 .btns button {
     background-color: transparent;
     padding: 0;
-    color : rgb(var(--primaryClr))
+    color: rgb(var(--primaryClr))
 }
 
-.color__div{
+.color__div {
     height: 15px;
     width: 15px;
     border-radius: 50%;
@@ -512,30 +521,46 @@ label span {
 .accordian__head {
     padding-block: 10px;
     font-size: 16px !important;
-}
 
-.accordian__head::after {
-    content: "";
-    border-left: 6px solid transparent;
-    border-right: 6px solid transparent;
-    border-top: 6px solid #ddd;
-    position: absolute;
-    right: 15px;
-    top: 15px;
+    & span {
+        transition: all 0.3s ease-in-out;
+        font-size: 18px;
+        opacity: 0.6;
+    }
 }
 
 .accordian__body {
-    padding-block-start: 20px;
+    /* padding-block-start: 20px; */
     padding-block-end: 10px;
-    /* display: none; */
+    display: none;
+    transition: all 0.3s ease-in-out;
 }
 
-.accordian__head.active+.accordian__body {
+.accordian__body.active {
     display: flex;
+    justify-content: space-between;
 }
+
+/* .accordian__body.active:has(.accordian__head) {
+    & span {
+        transform: rotate(-180deg);
+    }
+} */
+
+.accordian__head:has(+ .accordian__body.active) > span {
+
+    transform: rotate(-180deg);
+
+}
+.no-item-label {
+    font-size: 12px !important;
+    opacity: 0.6;
+}
+
 
 .wishlist {
     padding-inline: 50px;
+
     & h2 {
         font-weight: 600;
     }
@@ -551,10 +576,10 @@ label span {
     border-block-end: 1px solid rgba(var(--textClr), 0.1);
     padding-block: 20px;
 
-    &:first-child {
+    /* &:first-child {
         padding-block: 10px;
         padding-block-end: 20px;
-    }
+    } */
 }
 
 .product:last-child {
@@ -587,8 +612,9 @@ label span {
         font-size: 14px;
     }
 }
+
 .cart-btn {
-    padding-inline: 14px;
-    padding-block: 7px;
+    /* padding-inline: 14px;
+    padding-block: 7px; */
     font-size: 12px !important;
 }

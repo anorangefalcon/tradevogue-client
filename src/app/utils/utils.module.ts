@@ -98,6 +98,7 @@ export class UtilsModule {
     showWishlistCount: 'http://localhost:1000/wishlist/showWishlistCount',
     showProducts: 'http://localhost:1000/wishlist/showWishlistProducts',
     deleteFromWishlist: 'http://localhost:1000/wishlist/deleteFromWishlist',
+    removeWishlist : 'http://localhost:1000/wishlist/deleteWishlist',
 
     // ORDERS
     verifyOrderSummary: 'http://localhost:1000/orders/verifyOrderSummary',
@@ -125,6 +126,7 @@ export class UtilsModule {
 
     //banner
     setBanners : 'http://localhost:1000/banners/setBanners',
+    getBanners : 'http://localhost:1000/banners/getBanners',
 
     // payment keys 
     addPaymentKeys: 'http://localhost:1000/paymentKeys/add',

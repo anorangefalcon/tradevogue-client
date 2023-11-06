@@ -6,11 +6,8 @@ import { UtilsModule } from 'src/app/utils/utils.module';
 import { passwordStrengthValidator, matchPasswordValidator } from '../auth/validators';
 // import { ToastService } from '../shared/services/toast.service';
 import { MobileNoValidator } from './validators';
-import { PopupService } from '../shared/services/popup.service';
-import { BehaviorSubject, Observable, Subject, throttleTime } from 'rxjs';
 import { CartService } from '../shared/services/cart.service';
 import { ActivatedRoute, Router } from '@angular/router';
-declare var Stripe: any;
 import { StripPaymentService } from '../shared/services/stripe-Integration/strip-payment.service';
 import { WishlistService } from '../shared/services/wishlist.service';
 @Component({
@@ -20,7 +17,7 @@ import { WishlistService } from '../shared/services/wishlist.service';
 })
 export class SettingsComponent {
   showData: string = "profile";
-  AllOrders!:any
+  AllOrders!: any
   isReadOnly: boolean = true;
   changePasswordForm: FormGroup;
   ShowComponent: boolean = false;
@@ -32,26 +29,24 @@ export class SettingsComponent {
   password2: string = "password";
   password3: string = "password";
   AddressSended: boolean = false;
-  productsArray : any = [];
+  productsArray: any = [];
   receiveData: any;
   list: any = []
   wishlistedProducts: any;
   openedAccordionIndex: number | null = null;
   stripe: any;
-  
+
 
   // addnewAddress:boolean=false;
   userAddresses!: any;
   TranslateData: boolean = false;
 
   // private toastService: ToastService
-  constructor(private backendURLs: UtilsModule, private wishlistService:WishlistService, private fetchDataService: FetchDataService, private fb: FormBuilder, private cartService: CartService, private route: ActivatedRoute, private stripePay: StripPaymentService) {
+  constructor(private backendURLs: UtilsModule, private wishlistService: WishlistService, private fetchDataService: FetchDataService, private fb: FormBuilder, private cartService: CartService, private route: ActivatedRoute, private stripePay: StripPaymentService) {
 
     this.route.queryParams.subscribe(params => {
       const redirectStatus = params['redirect_status'];
-
       if (redirectStatus === 'succeeded') {
-        
         console.log("yes succeed")
 
         
@@ -80,45 +75,44 @@ export class SettingsComponent {
       againNewPassword: fb.control('', [Validators.required, (control: any) => matchPasswordValidator(control, this.changePasswordForm)])
     })
 
-    this.route.paramMap.subscribe((params:any) => {
-      console.log('params.page is ',params," page is ",params.get('page'));
-      
+    this.route.paramMap.subscribe((params: any) => {
+      console.log('params.page is ', params, " page is ", params.get('page'));
+
       this.changeComponent(params.get('page'));
-    
+
     });
   };
 
   async changeComponent(el: string) {
     this.showData = el;
     this.TranslateData = true;
-    if(el=='wishlist'){
-      this.fetchDataService.HTTPGET(this.backendURLs.URLs.showWishlist).subscribe((data: any) => {
-        this.productsArray = data.wishlists;
-        let wishlistArray = data.wishlists
-        this.list = wishlistArray.map((wishlist: any) => {
-          return wishlist.wishlistName
-        })
-        
-      })  
+    if (el == 'wishlist') {
+      this.showLists();
     }
-    
-   
 
-    
   }
+
+  showLists() {
+    this.fetchDataService.HTTPGET(this.backendURLs.URLs.showWishlist).subscribe((data: any) => {
+      this.productsArray = data.wishlists;
+      console.log(this.productsArray, "djckdsb");
+    })
+  }
+
   async showWishlistedProducts(wishlist: string, index: number) {
 
-    
-const body={
-  wishlistName:wishlist
-}
 
-    this.fetchDataService.HTTPPOST(this.backendURLs.URLs.showProducts,body).subscribe((data)=>{
-      this.wishlistedProducts=data;
-      console.log(this.wishlistedProducts, "wishlisted products");
+    const body = {
+      wishlistName: wishlist
+    }
+
+    this.fetchDataService.HTTPPOST(this.backendURLs.URLs.showProducts, body).subscribe((data) => {
+      this.wishlistedProducts = data;
+      console.log(data, "products?/?");
       
+      console.log(this.wishlistedProducts, "wishlisted products");
 
-        })
+    })
 
 
 
@@ -130,6 +124,15 @@ const body={
 
   }
 
+  removeWishlist(index: number) {
+    console.log("del dunc");
+
+    this.wishlistService.removeWishlist({ index }).subscribe((data) => {
+      console.log("am i called?");
+      this.showLists()
+    })
+  }
+
   async removeFromWishlist(productId: any, wishlistName: string, index: number) {
     // console.log(productId, "del");
     const delProduct = {
@@ -139,7 +142,7 @@ const body={
     // console.log(delProduct);
 
     let delData = await this.fetchDataService.httpPost(this.backendURLs.URLs.deleteFromWishlist, delProduct)
-    
+
     // console.log(delData, "del");
     // this.showWishlistedProducts(wishlistName, index)
 
@@ -149,35 +152,35 @@ const body={
     // this.productsArray.forEach((wishlists: any)=>{
     //   if (wishlists.wishlistName == wishlistName){
     //     console.log(wishlists, "before splice");
-        
+
     //     // wishlists.splice(productId, 1);
     //     wishlists.products.splice(wishlists.products.indexOf(productId),1);
     //     console.log(wishlists, "after splice");
-        
 
-        
+
+
     //   }
-      
+
     // })
 
 
-      this.wishlistedProducts.forEach((product: any)=>{
+    this.wishlistedProducts.forEach((product: any) => {
       // console.log(product, "single product");
-      if (product.productDetails._id == productId)
-      { this.wishlistedProducts.splice(this.wishlistedProducts.indexOf(product), 1)
-        this.wishlistService.WishlistCount.next(this.wishlistService.WishlistCount.value-1);
+      if (product.productDetails._id == productId) {
+        this.wishlistedProducts.splice(this.wishlistedProducts.indexOf(product), 1)
+        this.wishlistService.WishlistCount.next(this.wishlistService.WishlistCount.value - 1);
       }
-      
-      
+
+
     })
 
 
-    
+
     // this.wishlistService.removeFromWishlist(productId,wishlistName,index);
     // this.wishlistService.delete$.subscribe((data)=)
 
-  
-    
+
+
 
   }
 
@@ -186,33 +189,33 @@ const body={
   }
 
   async ngOnInit() {
-      this.fetchDataService.HTTPGET(this.backendURLs.URLs.getDetails).subscribe((data:any)=>{
-        data.firstname = data.name.firstname;
-        data.lastname = data.name.lastname;
-        data.gender = data.info.gender;
-        if(data.info.dob){
-          data.dob = data.info.dob.split('T')[0];
-        }
-        this.ProfileForm.patchValue(data);
-      })
+    this.fetchDataService.HTTPGET(this.backendURLs.URLs.getDetails).subscribe((data: any) => {
+      data.firstname = data.name.firstname;
+      data.lastname = data.name.lastname;
+      data.gender = data.info.gender;
+      if (data.info.dob) {
+        data.dob = data.info.dob.split('T')[0];
+      }
+      this.ProfileForm.patchValue(data);
+    })
   }
 
-  getAddresses(){
-    this.showData='addresses';
+  getAddresses() {
+    this.showData = 'addresses';
     this.TranslateData = true;
-      this.fetchDataService.HTTPGET(this.backendURLs.URLs.getAddress)
-      .subscribe((data:any)=>{
-        if(data){
+    this.fetchDataService.HTTPGET(this.backendURLs.URLs.getAddress)
+      .subscribe((data: any) => {
+        if (data) {
           data = data.addresses;
           if (data.length != 0) {
             this.userAddresses = data;
-          } 
-        }  
-      })  
-    }
+          }
+        }
+      })
+  }
 
   AddAddress() {
-    this.receiveData='';
+    this.receiveData = '';
     this.ShowComponent = true;
   }
 
@@ -221,23 +224,26 @@ const body={
       this.ShowComponent = event;
     }
 
-   
+
     //edit request updated
-    else if(event.index===0 || event.index){
-      this.userAddresses[event.index]=event.data;
+    else if (event.index === 0 || event.index) {
+      this.userAddresses[event.index] = event.data;
     }
     // // new address added
-    else{
-      this.userAddresses=event;
+    else {
+      this.userAddresses = event;
     }
-   
+
   }
 
-   RemoveAddress(address:any,index:any){
-     const body={address_id:address._id}
-      this.fetchDataService.HTTPPOST(this.backendURLs.URLs.deleteAddress,body).subscribe((data)=>{
-        this.userAddresses.splice(index,1);
-      })
+  RemoveAddress(address: any, index: any) {
+    console.log('address coming is ', address);
+    const body = { address_id: address._id }
+    this.fetchDataService.HTTPPOST(this.backendURLs.URLs.deleteAddress, body).subscribe((data) => {
+      console.log('data comes is after deletion', data);
+
+      this.userAddresses.splice(index, 1);
+    })
   }
 
   EditAddress(address: any, index: any) {
@@ -246,18 +252,18 @@ const body={
     this.ShowComponent = true;
   }
 
-  TranslateBack(){
-    this.TranslateData=false;
+  TranslateBack() {
+    this.TranslateData = false;
   }
 
   onPasswordChange() {
-      const body = {
-        oldPassword: this.changePasswordForm.get('currentPassword')?.value,
-        newPassword: this.changePasswordForm.get('newPassword')?.value
-      }
-      this.fetchDataService.HTTPPOST(this.backendURLs.URLs.changePassword, body).subscribe((data)=>{
-        // this.toastService.successToast({ title: data.message })
-      });
+    const body = {
+      oldPassword: this.changePasswordForm.get('currentPassword')?.value,
+      newPassword: this.changePasswordForm.get('newPassword')?.value
+    }
+    this.fetchDataService.HTTPPOST(this.backendURLs.URLs.changePassword, body).subscribe((data) => {
+      // this.toastService.successToast({ title: data.message })
+    });
   }
 
   editClick() {
@@ -272,41 +278,39 @@ const body={
       "info.gender": this.ProfileForm.get('gender')?.value,
       "info.dob": new Date(this.ProfileForm.get('dob')?.value)
     }
-    this.fetchDataService.HTTPPOST(this.backendURLs.URLs.updateDetails, body).subscribe((data)=>{
+    this.fetchDataService.HTTPPOST(this.backendURLs.URLs.updateDetails, body).subscribe((data) => {
       this.isReadOnly = !this.isReadOnly;
     })
 
   }
 
-  async MakeDefault(address:any){
+  async MakeDefault(address: any) {
     try {
-      const body={address:address};
-      this.fetchDataService.HTTPPOST(this.backendURLs.URLs.setDefaultAddress,body).subscribe((data:any)=>{
-        this.userAddresses=data;
+      const body = { address: address };
+      const data: any = await this.fetchDataService.httpPost(this.backendURLs.URLs.setDefaultAddress, body);
+      this.userAddresses = data;
 
-    });
-      
     } catch (error) {
 
     }
   }
 
   //  ORDERS TS
-   getOrders(){
-    this.showData='orders';
-    this.TranslateData=true;
-     this.fetchDataService.HTTPGET(this.backendURLs.URLs.getParticularUserOrders).subscribe((data:any)=>{
-        this.AllOrders=data;   
-    });      
+  getOrders() {
+    this.showData = 'orders';
+    this.TranslateData = true;
+    this.fetchDataService.HTTPGET(this.backendURLs.URLs.getParticularUserOrders).subscribe((data: any) => {
+      this.AllOrders = data;
+    });
   }
 
-   getDate(orderDate:any){    
+  getDate(orderDate: any) {
     return orderDate.split('T')[0];
   }
 
-  BuyAgain(product:any){
+  BuyAgain(product: any) {
     this.cartService.addToCart(product);
-  } 
+  }
 
 
 }

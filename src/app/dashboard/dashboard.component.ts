@@ -28,7 +28,7 @@ export class DashboardComponent {
     { name: 'Promo Code', icons: 'redeem' ,route: '/dashboard/coupons'},
     {
       name: 'Elements', route:'',icons: 'build', sublist: [
-        { name : 'Banner', route : '/dashboard/customise-banner'},
+        { name: 'Banner', route: '/dashboard/banner'},
         { name: 'Socials', route: '/dashboard/socials' },
         { name: 'FAQs', route: '/dashboard/faq' },
         { name: 'Monetization' , route: '/dashboard/monetization'}

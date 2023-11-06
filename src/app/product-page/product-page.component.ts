@@ -125,11 +125,10 @@ export class ProductPageComponent implements OnInit {
     this.cartService.addToCart(cartItem);
   }
 
-  chooseWishlist() {
-    console.log("wish");
-    
-    this.wishlistService.ShowWishlist(this.data._id);
+  chooseWishlist() {    
+    this.wishlistService.ShowWishlist(this.data._id);    
   }
+  
   LabelClicked(event: any) {
     console.log('event is ', event.target.value);
   }

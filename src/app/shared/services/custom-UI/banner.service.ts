@@ -12,4 +12,8 @@ export class BannerService {
   setBanners(data : any) {
     return this.http.post(this.backendUrls.URLs.setBanners, data);
   }
+
+  getBanners() {
+    return this.http.get(this.backendUrls.URLs.getBanners);
+  }
 }

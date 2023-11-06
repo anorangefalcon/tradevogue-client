@@ -26,9 +26,8 @@ import { DateDisplayPipe } from '../shared/Pipe/date-display.pipe';
 import { ProductPageModule } from '../product-page/product-page.module';
 import { SocialsComponent } from './socials/socials.component';
 import { HomeModule } from '../home/home.module';
-
 import { MonetizationComponent } from './monetization/monetization.component';
-import { CustomBannerComponent } from './custom-banner/custom-banner.component';
+import { BannerComponent } from './banner/banner.component';
 @NgModule({
   declarations: [
     DashboardComponent,
@@ -48,7 +47,7 @@ import { CustomBannerComponent } from './custom-banner/custom-banner.component';
     DateDisplayPipe,
     SocialsComponent,
     MonetizationComponent,
-    CustomBannerComponent
+    BannerComponent
   ],
 
   imports: [
@@ -70,4 +69,5 @@ import { CustomBannerComponent } from './custom-banner/custom-banner.component';
     DatePipe
   ],
 })
+
 export class DashboardModule { }
