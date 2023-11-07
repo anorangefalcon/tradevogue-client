@@ -1,37 +1,42 @@
 import { Injectable } from '@angular/core';
-import { FetchDataService } from '../../faq-page/fetch-data.service';
 import { BehaviorSubject, Observable, map } from 'rxjs';
 import { ToastService } from './toast.service';
 import { HttpClient } from '@angular/common/http';
 import { UtilsModule } from './../../utils/utils.module';
-import { CookieService } from 'ngx-cookie-service';
+import { LoginCheckService } from './login-check.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CartService {
 
-  constructor(private fetchData: FetchDataService, private toastService: ToastService, private cookie: CookieService, private http: HttpClient, private backendUrls: UtilsModule) {
+  constructor(private toastService: ToastService, private http: HttpClient, private backendUrls: UtilsModule, private loginCheckService: LoginCheckService) { 
+    
+    this.loginCheckService.loginCheckObservable$.subscribe((loggedIn: any) => {      
+      this.user = loggedIn;
+    });
     this.fetchDetails();
+
+
   }
 
+  user: boolean = false;
   // used to add items to cart in localStorage
   cartStorage: any[] = [];
   sideCart = new BehaviorSubject<any>('');
   // used as a subject for cart to be as observable
-  private cartSubject = new BehaviorSubject<any>({});
+  private cartSubject = new BehaviorSubject<any>([]);
   // actual data lies here
   private cart$ = this.cartSubject.asObservable();
 
-  addToCart(data: any) {
-    console.log('addto cart clicked ',data);
-    
-    const cartObj = { "sku": data.sku, "size": data.size, "color": data.color, "quantity": data.quantity };
-    const userToken = this.cookie.get("userToken");
 
-    if (userToken) {
+  addToCart(data: any) {
+    const cartObj = { "sku": data.sku, "size": data.size, "color": data.color, "quantity": data.quantity };
+
+    if (this.user) {
       this.addToCartWithToken(cartObj);
-    } else {
+    }
+    else {
       this.addToCartWithoutToken(cartObj);
     }
   }
@@ -41,7 +46,8 @@ export class CartService {
       (details: any) => {
         if (!details.added) {
           this.toastService.warningToast({ title: 'Item already exists in cart' });
-        } else {
+        }
+        else {
           this.handleSuccessfulAddToCart();
         }
       }
@@ -56,7 +62,8 @@ export class CartService {
       this.cartStorage.push(cartObj);
       localStorage.setItem("myCart", JSON.stringify(this.cartStorage));
       this.handleSuccessfulAddToCart();
-    } else {
+    }
+    else {
       this.toastService.warningToast({ title: 'Item already exists in cart' });
     }
   }
@@ -81,8 +88,7 @@ export class CartService {
 
   updateCart(data: any) {
 
-    const userToken = this.cookie.get("userToken");
-    if (userToken) {
+    if (this.user) {
       this.http.post(this.backendUrls.URLs.updateItemFromCart, data).subscribe((data: any) => {
         if (data.updated) {
           this.fetchDetails();
@@ -118,8 +124,7 @@ export class CartService {
     const localCart = localStorage.getItem('myCart');
     let cartDetails = localCart ? JSON.parse(localCart) : null;
 
-    const userToken = this.cookie.get("userToken");
-    if (localCart && userToken) {
+    if (localCart && this.user) {
       this.http.post(this.backendUrls.URLs.addItemsToCart, cartDetails).subscribe((message: any) => {
         this.clearCart('localOnly');
 
@@ -140,8 +145,7 @@ export class CartService {
 
   removeItem(identifier: any) {
 
-    const userToken = this.cookie.get("userToken");
-    if (userToken) {
+    if (this.user) {
       this.http.post(this.backendUrls.URLs.removeItemFromCart, { itemId: identifier }).subscribe((message: any) => {
         console.log(message);
         // this.ItemDeleted=true;
@@ -196,8 +200,7 @@ export class CartService {
   clearCart(which: string = '') {
 
     if (!which) {
-      const userToken = this.cookie.get("userToken");
-      if (userToken) {
+      if (this.user) {
         this.http.get(this.backendUrls.URLs.clearCart).subscribe((message: any) => {
           console.log(message);
         });

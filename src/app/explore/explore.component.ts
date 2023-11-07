@@ -36,13 +36,14 @@ export class ExploreComponent {
   genders : string[] = ['Male', 'Female'];
   minPrice : any;
   maxPrice : any;
+  loading: boolean = false;
  
   constructor(private fetchData: FetchDataService, private wishlistService:WishlistService, private route: ActivatedRoute, private location: Location) { }
 
   ngOnInit() {
 
     this.route.queryParams.subscribe((data: any) => {
-
+      this.loading = true;
       this.filterApplied = JSON.parse(JSON.stringify(data));
       let actualParams = (Object.keys(this.filterApplied).length > 0) ? this.filterApplied : JSON.parse(JSON.stringify(data));
 
@@ -56,6 +57,7 @@ export class ExploreComponent {
         })
         this.products = data.items;      
         this.totalProducts = data.total;
+        this.loading = false;
       });
     });
 
@@ -183,9 +185,7 @@ export class ExploreComponent {
 
   setParams(){
     let param = new HttpParams();
-    console.log(this.filterApplied, "filterrr");
-    
-
+    this.loading = true;
     (Object.keys(this.filterApplied)).forEach(key => {
 
       console.log(this.filterApplied, "plis");
@@ -200,10 +200,6 @@ export class ExploreComponent {
         param = param.set(key, valueString);
       }
     });
-    console.log(this.filterApplied, 'ok');
-    
-
-    console.log(this.filterApplied, "final filterrrr");
     
     const finalURL = '/explore' + '?' + param.toString();
     this.location.replaceState(finalURL);
@@ -214,6 +210,7 @@ export class ExploreComponent {
 
     this.fetchData.getProducts(actualParams, this.limit, this.pageNumber).subscribe((data: any) => {
       this.products = data.items
+      this.loading = false;
     });
   }
 

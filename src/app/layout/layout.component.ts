@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { NavigationEnd, Router } from '@angular/router';
 
 @Component({
   selector: 'app-layout',
@@ -9,9 +9,17 @@ import { Router } from '@angular/router';
 export class LayoutComponent {
   ShowNavBar:boolean=true;
   constructor(private router: Router) {
-      if(this.router.url=='/cart/billing'){
-        this.ShowNavBar=false;
+
+    this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        if (this.router.url === '/cart/billing' ) {
+          this.ShowNavBar = false;
+        }
+        else{
+          this.ShowNavBar = true;
+        }
       }
+    })
   }
 
 }

@@ -15,7 +15,7 @@ export class DashboardComponent {
   title: string = 'Dashboard';
 
   navitems = [
-    { name: 'Dashboard', icons: 'grid_view', route: '/dashboard/overview' },
+    { name: 'Dashboard', icons: 'grid_view', route: '/dashboard' },
     {
       name: 'Products', route:'', icons: 'inventory', sublist: [
         { name: 'Product Overview', route: '/dashboard/products' },
@@ -24,11 +24,11 @@ export class DashboardComponent {
       ]
     },
     { name: 'Orders', icons: 'shopping_cart', route: '/dashboard/orders' },
-    { name: 'Reviews', icons: 'reviews', route: '' },
     { name: 'Promo Code', icons: 'redeem' ,route: '/dashboard/coupons'},
     {
-      name: 'Elements', route:'',icons: 'build', sublist: [
-        { name: 'Banner', route: '/dashboard/banner'},
+      name: 'Customise', route:'',icons: 'build', sublist: [
+        { name: 'HomePage', route: '/dashboard/customise-home'},
+        { name : 'Banner', route : '/dashboard/banner'},
         { name: 'Socials', route: '/dashboard/socials' },
         { name: 'FAQs', route: '/dashboard/faq' },
         { name: 'Payment Keys' , route: '/dashboard/monetization'},

@@ -1,4 +1,4 @@
- import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FetchDataService } from '../faq-page/fetch-data.service';
 import { CartService } from '../shared/services/cart.service';
@@ -30,7 +30,10 @@ export class ProductPageComponent implements OnInit {
   sizeIndex: any = 0;
   isWishlisted: boolean = false;
   isLogin: boolean = false;
-  sku: any = ""
+  sku: any = "";
+  fetchSimilarProducts: any = {};
+  outOfStock: boolean = false;
+  loading: boolean = false;
 
   ratingForm!: FormGroup;
   userReview: any;
@@ -60,37 +63,32 @@ export class ProductPageComponent implements OnInit {
 
     if (this.productSku) {
       this.sku = this.productSku;
-      
+
       this.fetchProductData();
     }
+    else {
+      this.route.params.subscribe(params => {
+        this.sku = params['sku'];
+        this.fetchProductData();
+      });
+    }
 
-    this.fetchProductDatabyRoute();
   }
 
-  fetchProductDatabyRoute() {
-    this.route.params.subscribe(params => {
-      this.sku = params['sku'];
-      this.fetchProductData();
-
-    });
-  }
-
-  async fetchProductData() {
-
-    if(this.productSku){
-      this.fetchService.HTTPGET(this.backendUrl.URLs.fetchProductDetails, this.sku, 'data').subscribe((data: any)=>{
-        console.log(data);
-
+  fetchProductData() {
+    this.loading = true;
+    if (this.productSku) {
+      this.fetchService.HTTPGET(this.backendUrl.URLs.fetchProductDetails, this.sku, 'data').subscribe((data: any) => {
         this.updateDataFields(data);
-      })
-    }else{
+      });
+    } 
+    else {
       this.fetchService.getProductDetails(this.sku).subscribe((data: any) => {
-        console.log(data);
-        this.wishlistService.WishListedProducts.subscribe((response:any)=>{
-              if(response.includes(data._id)){
-                data.wishlisted=true;
-              } 
-            })
+        this.wishlistService.WishListedProducts.subscribe((response: any) => {
+          if (response.includes(data._id)) {
+            data.wishlisted = true;
+          }
+        })
         this.updateDataFields(data);
       });
     }
@@ -103,6 +101,7 @@ export class ProductPageComponent implements OnInit {
     this.selectedColor = data.assets[0].color;
     this.selectedSize = data.assets[this.assetIndex].stockQuantity[0].size;
 
+    this.outOfStock = (this.data.assets[this.assetIndex].stockQuantity[this.sizeIndex].quantity <= 0) ? true : false;
     // if this user has already reviewed:
     if (data.userReview) {
       this.userReview = data.userReview;
@@ -112,6 +111,8 @@ export class ProductPageComponent implements OnInit {
         review: data.userReview.comment
       })
     }
+    this.fetchSimilarProducts = { 'tags': this.data.info.tags };
+    this.loading = false;
   }
 
   addToCart() {
@@ -122,15 +123,51 @@ export class ProductPageComponent implements OnInit {
       quantity: this.selectedQ
     }
 
-    this.cartService.addToCart(cartItem);
+    this.outOfStock = (this.data.assets[this.assetIndex].stockQuantity[this.sizeIndex].quantity <= 0) ? true : false;
+    if (this.outOfStock) {
+      this.toastService.errorToast({
+        title: "This Product is out of stock"
+      });
+    }
+    else {
+      this.cartService.addToCart(cartItem);
+    }
   }
 
-  chooseWishlist() {    
-    this.wishlistService.ShowWishlist(this.data._id);    
+  changeColor(index: any) {
+    this.assetIndex = index;
+    this.sizeIndex = 0;
+    this.normalizeSizeColorQuantity();
   }
-  
-  LabelClicked(event: any) {
-    console.log('event is ', event.target.value);
+
+  updateSizeIndex(index: number) {
+    this.sizeIndex = index;
+    this.normalizeSizeColorQuantity();
+  }
+
+  normalizeSizeColorQuantity() {
+    this.selectedColor = this.data.assets[this.assetIndex].color;
+    this.selectedSize = this.data.assets[this.assetIndex].stockQuantity[this.sizeIndex].size;
+    this.outOfStock = (this.data.assets[this.assetIndex].stockQuantity[this.sizeIndex].quantity <= 0) ? true : false;
+
+    if (!(this.getOrderQuantity().includes(this.selectedQ))) this.selectedQ = 0;
+  }
+
+  chooseWishlist() {
+    this.wishlistService.ShowWishlist(this.data._id);
+  }
+
+
+  getOrderQuantity() {
+    let limit = this.data.assets[this.assetIndex].stockQuantity[this.sizeIndex].quantity;
+    let arr = this.data.info.orderQuantity;
+    let filteredArray = arr.filter((item: any) => item <= limit);
+
+    if (!(filteredArray.includes(limit)) && (arr[arr.length - 1] > limit)) {
+      filteredArray.push(limit);
+    }
+
+    return filteredArray;
   }
 
   selectedSection = 'description';
@@ -148,8 +185,8 @@ export class ProductPageComponent implements OnInit {
       comment: this.ratingForm.controls['review'].value
     }
 
-    this.reviewService.addReview(review).subscribe(() => {     
-      this.fetchProductDatabyRoute();
+    this.reviewService.addReview(review).subscribe(() => {
+      this.fetchProductData();
       this.showReview = false;
       this.toastService.successToast({
         title: 'Review successfully ' + (this.userReview ? 'updated' : 'posted')
@@ -161,7 +198,7 @@ export class ProductPageComponent implements OnInit {
     this.reviewService.deleteReview(this.data._id).subscribe((data: any) => {
       console.log(data.message);
       this.userReview = '';
-      this.fetchProductDatabyRoute();
+      this.fetchProductData();
       this.toastService.notificationToast({
         title: 'Review deleted successfully'
       });
@@ -189,10 +226,6 @@ export class ProductPageComponent implements OnInit {
 
   updateSelectedField(e: any) {
     this.selectedQ = e;
-  }
-
-  updateSizeIndex(index: number) {
-    this.sizeIndex = index;
   }
 
   customOptions: OwlOptions = {

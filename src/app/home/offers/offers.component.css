@@ -55,9 +55,9 @@ img {
 }
 
 .btn-style3:hover {
-  color: #df4117;
+  color: rgb(var(--primaryClr));
   background-color: #0000;
-  border: 2px solid #df4117;
+  border: 2px solid rgb(var(--primaryClr));
   box-shadow: 0 0 10px #0000000d;
 }
 

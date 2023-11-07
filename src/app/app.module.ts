@@ -33,18 +33,15 @@ import { ToastComponent } from './toast/toast.component';
 import { SidecartComponent } from './shared/sidecart/sidecart.component';
 import { DialogBoxComponent } from './dialog-box/dialog-box.component';
 import { environment } from 'src/environments/environment';
-// import { initializeApp } from 'firebase/app';
-// initializeApp(environment.firebase);
 import { WishlistComponent } from './wishlist/wishlist.component';
-// import { DrawerComponent } from './drawer/drawer.component';
 import { initializeApp } from 'firebase/app';
-import { provideFirebaseApp } from '@angular/fire/app';
 import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
 import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 import { AngularFireMessagingModule } from '@angular/fire/compat/messaging';
 import { MessagingService } from './shared/services/messaging-service';
-import { GalleryComponent } from './home/gallery/gallery.component';
+
+
 initializeApp(environment.firebase);
 
 @NgModule({
@@ -61,7 +58,6 @@ initializeApp(environment.firebase);
     SidecartComponent,
     DialogBoxComponent,
     WishlistComponent,
-    // DrawerComponent, 
   ],
   imports: [
     BrowserModule,
@@ -85,7 +81,8 @@ initializeApp(environment.firebase);
     AngularFireMessagingModule,
     AngularFireModule.initializeApp(environment.firebase),
   ],
- 
+  exports: [
+  ],
   providers: [
     CookieService,
     MessagingService, AsyncPipe,
@@ -95,6 +92,6 @@ initializeApp(environment.firebase);
 })
 export class AppModule {
   constructor() {
-    
+
   }
 }

@@ -16,9 +16,9 @@
     width: 70%;
     margin-inline-end: 25px;
 
-    & h4 {
+    /* & h4 {
         font-weight: 700;
-    }
+    } */
 
 }
 
@@ -328,12 +328,12 @@
 /* COUPONS CSS */
 
 .drawer-wrapper {
-    .drawer__header {
+    /* .drawer__header { */
         /* box-shadow: none;
         background-color: rgb(var(--whiteClr)); */
         /* padding-block-start: 35px;
         padding-inline: 40px; */
-    }
+    /* } */
 
     & .drawer__content {
         margin-block-start: 35px;

@@ -25,7 +25,7 @@ const routes: Routes = [
     path: '', component: DashboardComponent,
     children: [
 
-      { path: 'overview', component: StatisticsComponent },
+      { path: '', component: StatisticsComponent },
 
       { path: 'products', component: ProductsComponent },
       { path: 'features', component: AddproductfeaturesComponent },
@@ -46,6 +46,9 @@ const routes: Routes = [
       { path: 'socials', component: SocialsComponent },
       { path: 'banner', component: BannerComponent},
       { path: 'sales', component: SalesComponent},
+      {
+        path: 'customise-home', loadChildren: () => import('./edit-home/edit-home.module').then(m => m.EditHomeModule)
+      },
 
       {path:'deal',component:DealComponent},
 

@@ -41,11 +41,11 @@ export class LoginComponent {
     })
 
     // Google login
-    window.addEventListener('loginEvent',(event:any)=>{
-      const token = { credential: event.detail.credential }
-        const body = { token };
-      this.LoginUser(body);
-    } );
+    // window.addEventListener('loginEvent',(event:any)=>{
+    //   const token = { credential: event.detail.credential }
+    //     const body = { token };
+    //   this.LoginUser(body);
+    // } );
   }
   
   ngOnInit() {

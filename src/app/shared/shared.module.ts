@@ -16,15 +16,13 @@ import { ProductFilterPipe } from './Pipe/product-filter.pipe';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { AddressComponent } from './address/address.component';
-import { CartcontentComponent } from './cartcontent/cartcontent.component';
 import { LessThanOrEqualPipe } from './Pipe/less-than-or-equal.pipe';
 import { PopUpComponent } from './pop-up/pop-up.component';
 import { PaginationComponent } from './pagination/pagination.component';
 import { DrawerComponent } from './components/drawer/drawer.component';
 import { InvoiceTemplateComponent } from './components/invoice-template/invoice-template.component';
-
-
-
+import { GalleryComponent } from '../home/gallery/gallery.component';
+import { HeroComponent } from '../home/hero/hero.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +36,6 @@ import { InvoiceTemplateComponent } from './components/invoice-template/invoice-
     CustomSelectComponent,
     ProductFilterPipe,
     AddressComponent,
-    CartcontentComponent,
     LessThanOrEqualPipe,
     PopUpComponent,
     LessThanOrEqualPipe,
@@ -54,6 +51,8 @@ import { InvoiceTemplateComponent } from './components/invoice-template/invoice-
     MatExpansionModule,
     RouterModule,
     FormsModule,
+    GalleryComponent,
+    HeroComponent
   ],
   exports: [
     NavbarComponent,
@@ -66,7 +65,6 @@ import { InvoiceTemplateComponent } from './components/invoice-template/invoice-
     ProductFilterPipe,
     CustomSelectComponent,
     AddressComponent,
-    CartcontentComponent,
     LessThanOrEqualPipe,
     PopUpComponent,
     LessThanOrEqualPipe,

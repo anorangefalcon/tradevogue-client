@@ -1,0 +1,107 @@
+.card-hero-app {
+    background-color: rgb(var(--whiteClr));
+    border: 1px solid rgba(var(--blackClr), 0.1);
+    border-radius: 10px;
+
+    & div {
+        height: fit-content;
+
+        & .hero-section {
+            height: 500px !important;
+        }
+    }
+
+    & .hero-model-img {
+
+        & img {
+            object-position: center !important;
+        }
+    }
+
+    /* & .hero-content{
+        transform: translateY(-80px);
+    } */
+
+}
+
+
+.card {
+    display: flex;
+    align-items: center;
+    position: relative;
+    width: 100%;
+
+    & .app-div {
+        width: 90%;
+
+        /* collections */
+        & .collections {
+            padding-block: 20px;
+        }
+
+        .grid-container {
+            height: 300px !important;
+        }
+
+        /* deal of week */
+        & #deal-of-week {
+
+            & .sub-heading {
+                padding-inline-start: 30px;
+                transform: scale(0.8);
+            }
+
+            & .container {
+                min-height: 0;
+                height: 300px;
+            }
+
+            & .deal-week-img {
+                transform: scale(0.8);
+            }
+        }
+
+
+        /* offers */
+        & .offer-container {
+            & img {
+                height: 170px;
+            }
+
+            .offer-title[_ngcontent-ng-c2956826697] {
+                font-size: 21px !important;
+                margin-bottom: 20px;
+            }
+
+            .btn-style3[_ngcontent-ng-c2956826697] {
+                font-size: 10px;
+                padding: 10px 15px;
+                width: 100px;
+            }
+        }
+    }
+
+}
+
+.controls {
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 100%;
+    width: 20%;
+    background: rgb(255, 255, 255);
+    background: linear-gradient(267deg, rgba(255, 255, 255, 1) 69%, rgba(255, 255, 255, 0) 100%);
+
+}
+
+
+
+.restrict-height {
+    height: fit-content;
+    overflow: hidden;
+}
+
+
+.padding {
+    padding: 40px;
+}

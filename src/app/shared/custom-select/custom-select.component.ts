@@ -42,6 +42,9 @@ export class CustomSelectComponent {
       if (isOptionValid) {
         this.selected = this.selectedOption;
       }
+      else{
+        this.selected = '';
+      }
     }
   }
 

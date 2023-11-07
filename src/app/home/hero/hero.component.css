@@ -1,9 +1,10 @@
 .hero-section {
+    width: 100%;
+    height: calc(100vh); 
 
     & .hero-content{
         padding-inline: 0px;
         padding-block-start: 80px;
-        height: calc(100vh);
         
     }
     

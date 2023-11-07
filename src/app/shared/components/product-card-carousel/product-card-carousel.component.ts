@@ -12,16 +12,13 @@ export class ProductCardCarouselComponent {
 
   @Input() whatToFetch: string = '';
   productArr: productData[] = [];
-  i: number = -1;
   
   //will fetch ?queryParam according to whatToFetch (but a dummy which gets 10 data from a .json)
   constructor(private fetchDataService: FetchDataService) {}
 
   ngOnInit(){
-
-    
-    this.fetchDataService.getProducts(this.whatToFetch).subscribe((data:any)=>{
-
+    this.fetchDataService.getProducts(this.whatToFetch, 10).subscribe((data:any)=>{
+      console.log(data);
       
       this.productArr = data.items;
     })

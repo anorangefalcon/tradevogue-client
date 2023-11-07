@@ -1,7 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { CartService } from '../../services/cart.service';
 import { OwlOptions } from 'ngx-owl-carousel-o';
-import { FetchDataService } from '../../../faq-page/fetch-data.service';
 import { PopupService } from '../../services/popup.service';
 import { WishlistService } from '../../services/wishlist.service';
 
@@ -16,8 +15,7 @@ export class CardTemplateComponent {
   showPopup: boolean = false;
   selectedItem: boolean = false;
 
-
-  constructor(private cartService: CartService, private fetchdata: FetchDataService, private popupService: PopupService, private wishlistService : WishlistService) { }
+  constructor(private cartService: CartService, private popupService: PopupService, private wishlistService : WishlistService) { }
 
   avgRating: number = 0;
   productData: any = [];
@@ -25,11 +23,10 @@ export class CardTemplateComponent {
   selectedColor: string = "";
 
   ngOnInit(): void {
-
-    this.avgRating = this.product.avgRating;
+    console.log(this.product);
     
     const sku = this.product.sku;
-
+    this.avgRating = this.product.avgRating;
   }
 
   createArrayToIterate(num: number){
@@ -45,10 +42,15 @@ export class CardTemplateComponent {
   }
   
   addToCart(){
+    console.log(this.product);
+    
     const cartItem = {
       sku: this.product.sku,
+      color: this.product.assets[0].color,
+      size: this.product.assets[0].stockQuantity[0].size,
+      quantity: this.product.info.orderQuantity[0]
     }
-    // this.sideCartService.toggleSidecart(true); 
+    
     this.cartService.addToCart(cartItem);
   }
 
@@ -81,7 +83,6 @@ export class CardTemplateComponent {
   openPopup() {
       this.popupService.openPopup();
       this.showPopup = true;
-      console.log(this.product,"product")
     }
 
 }

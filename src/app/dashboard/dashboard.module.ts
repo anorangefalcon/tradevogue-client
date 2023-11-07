@@ -25,11 +25,12 @@ import { TicketsComponent } from './tickets/tickets.component';
 import { DateDisplayPipe } from '../shared/Pipe/date-display.pipe';
 import { ProductPageModule } from '../product-page/product-page.module';
 import { SocialsComponent } from './socials/socials.component';
-import { HomeModule } from '../home/home.module';
 import { MonetizationComponent } from './monetization/monetization.component';
 import { BannerComponent } from './banner/banner.component';
 import { DealComponent } from './deal/deal.component';
 import { SalesComponent } from './sales/sales.component';
+import { GalleryComponent } from '../home/gallery/gallery.component';
+
 @NgModule({
   declarations: [
     DashboardComponent,
@@ -56,13 +57,13 @@ import { SalesComponent } from './sales/sales.component';
 
   imports: [
     CommonModule,
-    HomeModule,
     DashboardRoutingModule,
     SharedModule,
     NgxPaginationModule,
     FormsModule,
     ReactiveFormsModule,
     ProductPageModule,
+    GalleryComponent,
     RouterModule
   ],
   providers: [

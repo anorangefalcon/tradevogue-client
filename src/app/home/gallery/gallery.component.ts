@@ -1,8 +1,11 @@
+import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { SocialsService } from 'src/app/shared/services/custom-UI/socials.service';
 
 @Component({
+  standalone: true,
+  imports: [CommonModule],
   selector: 'app-gallery',
   templateUrl: './gallery.component.html',
   styleUrls: ['./gallery.component.css']

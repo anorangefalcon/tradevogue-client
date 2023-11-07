@@ -605,6 +605,15 @@
         color: rgb(var(--primaryClr));
     }
 }
+.stockAvailable.out-of-stock{
+    border-color: rgb(var(--danger));
+    background-color: rgb(var(--danger), 0.08);
+    opacity: 0.7;
+    & p{
+        color: rgb(var(--danger));
+        font-size: 16px !important;
+    }
+}
 
 .wishlisted span {
     color: rgb(var(--danger));

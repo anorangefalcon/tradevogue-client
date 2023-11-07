@@ -1,15 +1,12 @@
 import { Component, HostListener, OnInit, ElementRef, ViewChild, Renderer2 } from '@angular/core';
 import { CartService } from '../shared/services/cart.service';
-
 import { Router } from '@angular/router';
 import { UtilsModule } from '../utils/utils.module';
 import { FetchDataService } from '../faq-page/fetch-data.service';
 import { ToastService } from '../shared/services/toast.service';
-import { lastValueFrom } from 'rxjs';
 import { CookieService } from 'ngx-cookie-service';
 import { BillingResponseService } from './billing-response.service';
 import { StripPaymentService } from '../shared/services/stripe-Integration/strip-payment.service';
-import { data } from 'jquery';
 
 
 @Component({
@@ -32,6 +29,7 @@ export class CheckoutComponent implements OnInit {
 
   direction: string = 'right';
   show: boolean = false;
+  loading: boolean = false;
 
   @ViewChild('CouponCode') CouponCode: any;
   @ViewChild('Proceed__btn') Proceed__btn!: ElementRef;
@@ -74,16 +72,20 @@ this.billingService.BillingpageVisited$.subscribe((data:any)=>{
   }
 
   async ngOnInit() {
+    this.loading = true;
     this.cartService.fetchCart('count').subscribe((data) => {
       this.cartCount = data;
     });
 
     this.cartService.fetchCart().subscribe((data) => {
       this.cart = data;
+      this.loading = false;
+
     });
 
     this.fetchService.HTTPGET(this.BackendUrl.URLs.getCoupons).subscribe((data:any)=>{
       this.AllCoupons=data;
+      this.loading = false;
     });
  
 

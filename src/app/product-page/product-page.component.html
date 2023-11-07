@@ -1,309 +1,317 @@
 <section class="container">
-    <div class="product" *ngIf="data">
-        <div class="d-flex gap-30 main">
-            <div class="product-carousel d-flex  gap-10 justify-content-center relative overflow-hidden">
-                <div class="products-imgs-container d-flex flex-column  thumbnails gap-10">
 
-                    <div class="gal-img pointer mw-100 relative"
-                        *ngFor="let image of data?.assets[assetIndex]?.photo; let i = index" [ngStyle]="{ 'background': 'url(' + image + ')', 'background-size': 'cover', 'background-position': 'center' }
-                         " (click)="switchImage(i)" [ngClass]="{ active: i === activeIndex }">
-                    </div>
-                </div>
-                <owl-carousel-o [options]="atDefault ? customOptions : carouselOption" [ngClass]="{crousel: true}"
-                    class="bigcarousel overflow-hidden">
-                    <ng-template carouselSlide *ngFor="let image of data.assets[assetIndex].photo">
-                        <div class="img-div d-flex justify-content-center align-item-center overflow-hidden mw-100"
-                            [ngStyle]="{ 'background': 'url(' + image + ')', 'background-size': 'cover' }">
+
+    <div *ngIf="loading" class="tv-loading">
+        <img src="../../assets/logo-mobile.svg" alt="tradeVogue-loading">
+        <div class="circle-tv-loader"></div>
+    </div>
+
+
+    <div *ngIf="!loading">
+        <div class="product" *ngIf="data">
+            <div class="d-flex gap-30 main">
+                <div class="product-carousel d-flex  gap-10 justify-content-center relative overflow-hidden">
+                    <div class="products-imgs-container d-flex flex-column thumbnails gap-10">
+    
+                        <div class="gal-img pointer mw-100 relative skeleton"
+                            *ngFor="let image of data?.assets[assetIndex]?.photo; let i = index" [ngStyle]="{ 'background': 'url(' + image + ')', 'background-size': 'cover', 'background-position': 'center' }
+                             " (click)="switchImage(i)" [ngClass]="{ active: i === activeIndex }">
                         </div>
-                    </ng-template>
-                </owl-carousel-o>
-                <button *ngIf="!productSku" class=" wishlist-btn d-flex align-item-center absolute">
-                    <button class=" wishlist-btn d-flex align-item-center absolute" (click)="chooseWishlist()" [disabled]="data.wishlisted">
-                        <span class="material-symbols-outlined" [ngClass]="data.wishlisted ? 'wishlisted': ''">
-                            favorite
-                        </span>
+                    </div>
+                    <owl-carousel-o [options]="atDefault ? customOptions : carouselOption" [ngClass]="{crousel: true}"
+                        class="bigcarousel overflow-hidden">
+                        <ng-template carouselSlide *ngFor="let image of data.assets[assetIndex].photo">
+                            <div class="skeleton img-div d-flex justify-content-center align-item-center overflow-hidden mw-100"
+                                [ngStyle]="{ 'background': 'url(' + image + ')', 'background-size': 'cover' }">
+                            </div>
+                        </ng-template>
+                    </owl-carousel-o>
+                    <button *ngIf="!productSku" class=" wishlist-btn d-flex align-item-center absolute">
+                        <button class=" wishlist-btn d-flex align-item-center absolute" (click)="chooseWishlist()"
+                            [disabled]="data.wishlisted">
+                            <span class="material-symbols-outlined" [ngClass]="data.wishlisted ? 'wishlisted': ''">
+                                favorite
+                            </span>
+                        </button>
                     </button>
-                </button>
-            </div>
-            <div class="product-desc">
-                <!-- {{data|json}} -->
-
-                <h2 class="prod-name">{{ data?.name }}</h2>
-                <p class="subTitle mw-100">{{ data.subTitle }}</p>
-                <div class="prod-info d-flex flex-column gap-20">
-                    <div class="d-flex align-item-center gap-10">
-                        <h5 class="price">
-                            ₹{{ data.price}}
-                        </h5>
-
-                        <div class="offer d-flex gap-5 align-item-center">
-                            <p *ngIf="data.discount" class="old-price">
-                                ₹{{ data.oldPrice }}
-                            </p>
-
-
-
-                            <!-- <p class="offer-percentage" *ngIf="data.offerPercentage">
-                                ({{ data.offerPercentage }}% Off)</p> -->
-
-                            <p *ngIf="data.discountType!== 0" class="offer-percentage">
-                                <span *ngIf="data.discountPercentage"> ({{ data.discountPercentage }}% off)</span>
-                                <span *ngIf="!data.discountPercentage && data.discountAmount"> ({{ data.discount }} Flat
-                                    off)</span>
-
-                            </p>
-
-                        </div>
-                    </div>
-
-                    <div class="reviews-avail d-flex align-item-center gap-10">
-                        <div *ngIf="data.avgRating !== 0" class="rating d-flex align-item-center">
-                            <span *ngFor="let i of createArrayToIterate(data.avgRating)"
-                                class="material-symbols-outlined filled">star</span>
-                            <span *ngIf="(data.avgRating % 1) !== 0" class="material-symbols-outlined">star_half</span>
-                            <span *ngFor="let i of createArrayToIterate(5 - data.avgRating)"
-                                class="material-symbols-outlined">star</span>
-                        </div>
-                        <p *ngIf="data.avgRating > 0" class="rate">({{data.avgRating}}/5 · {{ userReview ?
-                            data.reviews.length + 1 : data.reviews.length}} Reviews)</p>
-                        <p *ngIf="data.avgRating === 0" class="rate">No Reviews yet</p>
-                    </div>
-
-                    <div class="colors d-flex align-item-center gap-15">
-                        <p>Color:</p>
-                        <div class="colors-opt d-flex gap-10">
-                            <div class="colors-radios d-flex align-item-center"
-                                *ngFor="let asset of data.assets; let i = index">
-                                <input type="radio" name="color" [value]=asset.color
-                                    [style.background-color]="asset.color" [(ngModel)]="selectedColor"
-                                    (click)="assetIndex = i">
+                </div>
+                <div class="product-desc">
+                    <!-- {{data|json}} -->
+    
+                    <h2 class="prod-name">{{ data?.name }}</h2>
+                    <p class="subTitle mw-100">{{ data.subTitle }}</p>
+                    <div class="prod-info d-flex flex-column gap-20">
+                        <div class="d-flex align-item-center gap-10">
+                            <h5 class="price">
+                                ₹{{ data.price}}
+                            </h5>
+    
+                            <div class="offer d-flex gap-5 align-item-center">
+                                <p *ngIf="data.discount" class="old-price">
+                                    ₹{{ data.oldPrice }}
+                                </p>
+        
+                                <p *ngIf="data.discountType!== 0" class="offer-percentage">
+                                    <span *ngIf="data.discountPercentage"> ({{ data.discountPercentage }}% off)</span>
+                                    <span *ngIf="!data.discountPercentage && data.discountAmount"> ({{ data.discount }} Flat
+                                        off)</span>
+    
+                                </p>
+    
                             </div>
                         </div>
-                    </div>
-
-                    <div class="sizes d-flex align-item-center gap-20" id="sizes">
-                        <p>Size:</p>
-                        <div class="sizes-opt d-flex gap-10">
-                            <div *ngFor="let stock of data.assets[assetIndex].stockQuantity; let i = index"
-                                class="sizes-radios relative">
-                                <input type="radio" name="size" [value]=stock.size id="size_{{ stock.size }}"
-                                    [(ngModel)]="selectedSize" [checked]="i == 0" (click)="updateSizeIndex(i)">
-                                <label for="size_{{ stock.size }}">{{ stock.size }}</label>
+    
+                        <div class="reviews-avail d-flex align-item-center gap-10">
+                            <div *ngIf="data.avgRating !== 0" class="rating d-flex align-item-center">
+                                <span *ngFor="let i of createArrayToIterate(data.avgRating)"
+                                    class="material-symbols-outlined filled">star</span>
+                                <span *ngIf="(data.avgRating % 1) !== 0" class="material-symbols-outlined">star_half</span>
+                                <span *ngFor="let i of createArrayToIterate(5 - data.avgRating)"
+                                    class="material-symbols-outlined">star</span>
+                            </div>
+                            <p *ngIf="data.avgRating > 0" class="rate">({{data.avgRating}}/5 · {{ userReview ?
+                                data.reviews.length + 1 : data.reviews.length}} Reviews)</p>
+                            <p *ngIf="data.avgRating === 0" class="rate">No Reviews yet</p>
+                        </div>
+    
+                        <div class="colors d-flex align-item-center gap-15">
+                            <p>Color:</p>
+                            <div class="colors-opt d-flex gap-10">
+                                <div class="colors-radios d-flex align-item-center"
+                                    *ngFor="let asset of data.assets; let i = index">
+                                    <input type="radio" name="color" [value]=asset.color
+                                        [style.background-color]="asset.color" [(ngModel)]="selectedColor"
+                                        (click)="changeColor(i)">
+                                </div>
                             </div>
                         </div>
-                    </div>
-
-                    <div class="d-flex gap-15 align-item-center">
-                        <div class="customSelect">
-                            <app-custom-select [selectedOption]=data.info.orderQuantity[0]
-                                (final_option)="updateSelectedField($event)"
-                                [options]="data.info.orderQuantity | lessThanOrEqual: data.assets[assetIndex].stockQuantity[sizeIndex].quantity">
-                            </app-custom-select>
+    
+                        <div class="sizes d-flex align-item-center gap-20" id="sizes">
+                            <p>Size:</p>
+                            <div class="sizes-opt d-flex gap-10">
+                                <div *ngFor="let stock of data.assets[assetIndex].stockQuantity; let j = index"
+                                    class="sizes-radios relative">
+                                    <input type="radio" name="size" [value]=stock.size id="size_{{ stock.size }}"
+                                        [(ngModel)]="selectedSize"  (click)="updateSizeIndex(j)">
+                                    <label for="size_{{ stock.size }}">{{ stock.size }}</label>
+                                </div>
+                            </div>
                         </div>
-
-                        <div *ngIf="!productSku" class="cart-div d-flex gap-10 align-item-center">
-                            <button class="btn-primary d-flex gap-10 align-item-center cart cart-btn"
-                                (click)="addToCart()">
-                                ADD TO CART
-                            </button>
+    
+                        <div *ngIf="!outOfStock" class="d-flex gap-15 align-item-center">
+                            <div class="customSelect">
+                                <app-custom-select [selectedOption]="selectedQ !== 0 ? selectedQ : 'Select Quantity'"
+                                    (final_option)="updateSelectedField($event)"
+                                    [options]="getOrderQuantity()">
+                                </app-custom-select>
+                            </div>
+                            <div *ngIf="!productSku" class="cart-div d-flex gap-10 align-item-center">
+                                <button [ngClass]="!this.selectedQ ? 'disabled': ''"
+                                [disabled]="!this.selectedQ" class="btn-primary d-flex gap-10 align-item-center cart cart-btn"
+                                    (click)="addToCart()">
+                                    ADD TO CART
+                                </button>
+                            </div>
                         </div>
-                    </div>
-
-                    <div *ngIf="productSku">
-                        <div class="assetsInfo table-list d-flex flex-column gap-15">
-                            <p class="table-title_">
-                                Inventory Status
-                            </p>
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th class="items">Size</th>
-                                        <th class="items">Unit Sold</th>
-                                        <th class="items">Unit Remaining</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-
-                                    <ng-container *ngFor="let asset of data.assets">
-                                        <tr *ngFor="let stock of asset.stockQuantity">
-                                            <td class="items">{{stock.size}}</td>
-                                            <td class="items">{{stock.unitSold}}</td>
-                                            <td class="items">{{stock.quantity - stock.unitSold}}</td>
+                        <div *ngIf="outOfStock" class="d-flex gap-15 align-item-center stockAvailable out-of-stock">
+                            <p>Out Of Stock</p>
+                        </div>
+    
+                        <div *ngIf="productSku">
+                            <div class="assetsInfo table-list d-flex flex-column gap-15">
+                                <p class="table-title_">
+                                    Inventory Status
+                                </p>
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th class="items">Size</th>
+                                            <th class="items">Unit Sold</th>
+                                            <th class="items">Unit Remaining</th>
                                         </tr>
-                                    </ng-container>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-
-
-                    <div class="d-flex flex-column">
-
-                        <div class="accordian mw-100">
-                            <h3 class="accordian__head relative pointer" [ngClass]="accordianOpen ? 'active' : ''"
-                                (click)="accordianOpen = !accordianOpen">
-                                Description
-                            </h3>
-                            <div class="accordian__body">
-                                {{ data.description }}
+                                    </thead>
+                                    <tbody>
+    
+                                        <ng-container *ngFor="let asset of data.assets">
+                                            <tr *ngFor="let stock of asset.stockQuantity">
+                                                <td class="items">{{stock.size}}</td>
+                                                <td class="items">{{stock.unitSold}}</td>
+                                                <td class="items">{{stock.quantity - stock.unitSold}}</td>
+                                            </tr>
+                                        </ng-container>
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
-                        <div class="accordian">
-                            <h3 class="accordian__head relative pointer" [ngClass]="accordianOpen2 ? 'active' : ''"
-                                (click)="accordianOpen2 = !accordianOpen2">
-                                Information
-                            </h3>
-                            <div class="accordian__body d-flex flex-column gap-5">
-                                <div class="info-content d-flex gap-10">
-                                    <h5>Product Code :</h5>
-                                    <p>{{ data.info.code }}</p>
+    
+    
+                        <div class="d-flex flex-column">
+    
+                            <div class="accordian mw-100">
+                                <h3 class="accordian__head relative pointer" [ngClass]="accordianOpen ? 'active' : ''"
+                                    (click)="accordianOpen = !accordianOpen">
+                                    Description
+                                </h3>
+                                <div class="accordian__body">
+                                    {{ data.description }}
                                 </div>
-                                <div class="info-content d-flex gap-10">
-                                    <h5>Brand :</h5>
-                                    <p>{{ data.info.brand }}</p>
-                                </div>
-                                <div class="info-content d-flex gap-10">
-                                    <h5>Composition :</h5>
-                                    <p>{{ data.info.composition }}</p>
-                                </div>
-                                <div class="info-content d-flex gap-10">
-                                    <h5>Weight :</h5>
-                                    <p>{{ data.info.weight }}</p>
+                            </div>
+                            <div class="accordian">
+                                <h3 class="accordian__head relative pointer" [ngClass]="accordianOpen2 ? 'active' : ''"
+                                    (click)="accordianOpen2 = !accordianOpen2">
+                                    Information
+                                </h3>
+                                <div class="accordian__body d-flex flex-column gap-5">
+                                    <div class="info-content d-flex gap-10">
+                                        <h5>Product Code :</h5>
+                                        <p>{{ data.info.code }}</p>
+                                    </div>
+                                    <div class="info-content d-flex gap-10">
+                                        <h5>Brand :</h5>
+                                        <p>{{ data.info.brand }}</p>
+                                    </div>
+                                    <div class="info-content d-flex gap-10">
+                                        <h5>Composition :</h5>
+                                        <p>{{ data.info.composition }}</p>
+                                    </div>
+                                    <div class="info-content d-flex gap-10">
+                                        <h5>Weight :</h5>
+                                        <p>{{ data.info.weight }}</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
+                        <div *ngIf="!productSku && !outOfStock" class="stockAvailable">
+                            <p>
+                                Stock : {{ data.assets[assetIndex].stockQuantity[sizeIndex].quantity }}
+                            </p>
+                        </div>
+    
+                        <div class="tags d-flex gap-10 d-flex align-item-center">
+                            <a [routerLink]="['/explore']" [queryParams]="{ tags: tag }" *ngFor="let tag of data.info.tags">
+                                {{ tag }}
+                            </a>
+                        </div>
                     </div>
-
-                    <div *ngIf="!productSku" class="stockAvailable">
-                        <p>
-                            Stock : {{ data.assets[assetIndex].stockQuantity[sizeIndex].quantity }}
+    
+                </div>
+            </div>
+    
+            <div #reviews class="review-cards d-flex flex-column">
+                <h3 class="rate">Customer Reviews</h3>
+    
+                <div *ngIf="userReview" class="review-card d-flex flex-column gap-10" [ngClass]="showReview ? 'hide' : ''">
+                    <div>
+                        <p class="rev">
+                            {{ userReview.comment }}
                         </p>
                     </div>
-
-                    <div class="tags d-flex gap-10 d-flex align-item-center">
-                        <a [routerLink]="['/explore']" [queryParams]="{ tags: tag }" *ngFor="let tag of data.info.tags">
-                            {{ tag }}
-                        </a>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-
-        <div #reviews class="review-cards d-flex flex-column">
-            <h3 class="rate">Customer Reviews</h3>
-
-            <div *ngIf="userReview" class="review-card d-flex flex-column gap-10" [ngClass]="showReview ? 'hide' : ''">
-                <div>
-                    <p class="rev">
-                        {{ userReview.comment }}
-                    </p>
-                </div>
-                <div class="person-info d-flex justify-content-md-between">
-                    <div *ngIf="userReview.rating !== 0" class="rating d-flex align-item-center">
-                        <span *ngFor="let i of createArrayToIterate(userReview.rating)"
-                            class="material-symbols-outlined filled">star</span>
-                        <span *ngIf="(userReview.rating % 1) !== 0" class="material-symbols-outlined">star_half</span>
-                        <span *ngFor="let i of createArrayToIterate(5 - userReview.rating)"
-                            class="material-symbols-outlined">star</span>
-                        <div *ngIf="!productSku" class="your-review-edit-button opacity-70 d-flex justify-content-center 
-                        align-item-center gap-5 pointer" (click)="showReview = !showReview; scroll(addReview)"
-                            [ngClass]="showReview ? 'active' : ''">
-                            <i class="material-symbols-outlined">
+                    <div class="person-info d-flex justify-content-md-between">
+                        <div *ngIf="userReview.rating !== 0" class="rating d-flex align-item-center">
+                            <span *ngFor="let i of createArrayToIterate(userReview.rating)"
+                                class="material-symbols-outlined filled">star</span>
+                            <span *ngIf="(userReview.rating % 1) !== 0" class="material-symbols-outlined">star_half</span>
+                            <span *ngFor="let i of createArrayToIterate(5 - userReview.rating)"
+                                class="material-symbols-outlined">star</span>
+                            <div *ngIf="!productSku" class="your-review-edit-button opacity-70 d-flex justify-content-center 
+                            align-item-center gap-5 pointer" (click)="showReview = !showReview; scroll(addReview)"
+                                [ngClass]="showReview ? 'active' : ''">
+                                <i class="material-symbols-outlined">
+                                    edit
+                                </i>
                                 edit
-                            </i>
-                            edit
+                            </div>
+    
+                            <div *ngIf="!productSku" class="your-review-delete-button opacity-70 d-flex justify-content-center 
+                            align-item-center gap-5 pointer" (click)="deleteReview()"
+                                [ngClass]="showReview ? 'active' : ''">
+                                <i class="material-symbols-outlined">
+                                    delete
+                                </i>
+                            </div>
                         </div>
-
-                        <div *ngIf="!productSku" class="your-review-delete-button opacity-70 d-flex justify-content-center 
-                        align-item-center gap-5 pointer" (click)="deleteReview()"
-                            [ngClass]="showReview ? 'active' : ''">
-                            <i class="material-symbols-outlined">
-                                delete
-                            </i>
+                        <p class="fw-600 opacity-70">
+                            {{ userReview?.userId?.name.firstname +' '+ userReview?.userId?.name.lastname }}
+                            · {{
+                            userReview.date | date: 'dd/MM/yyyy' }}
+                        </p>
+                    </div>
+                </div>
+                <div class="review-card d-flex flex-column gap-10" *ngFor="let review of data.reviews">
+                    <div>
+                        <p class="rev">
+                            {{ review.comment }}
+                        </p>
+                    </div>
+                    <div class="person-info d-flex justify-content-md-between">
+                        <div *ngIf="review.rating !== 0" class="rating d-flex align-item-center">
+                            <span *ngFor="let i of createArrayToIterate(review.rating)"
+                                class="material-symbols-outlined filled">star</span>
+                            <span *ngIf="(review.rating % 1) !== 0" class="material-symbols-outlined">star_half</span>
+                            <span *ngFor="let i of createArrayToIterate(5 - review.rating)"
+                                class="material-symbols-outlined">star</span>
                         </div>
+                        <p class="fw-600 opacity-70">{{ review?.userId?.name.firstname +' '+ review?.userId?.name.lastname
+                            }} · {{
+                            review.date | date: 'dd/MM/yyyy' }}</p>
                     </div>
-                    <p class="fw-600 opacity-70">
-                        {{ userReview?.userId?.name.firstname +' '+ userReview?.userId?.name.lastname }}
-                        · {{
-                        userReview.date | date: 'dd/MM/yyyy' }}
-                    </p>
                 </div>
+    
             </div>
-            <div class="review-card d-flex flex-column gap-10" *ngFor="let review of data.reviews">
-                <div>
-                    <p class="rev">
-                        {{ review.comment }}
-                    </p>
+    
+            <ng-container *ngIf="!productSku">
+                <div class="add-review-btn" *ngIf="!userReview">
+                    <button class="btn-primary review-btn pointer d-flex align-item-center gap-10" *ngIf="!showReview"
+                        (click)="showReview = true; scroll(addReview)">
+                        <span class="material-symbols-outlined">
+                            add
+                        </span>
+                        Add a Review
+                    </button>
                 </div>
-                <div class="person-info d-flex justify-content-md-between">
-                    <div *ngIf="review.rating !== 0" class="rating d-flex align-item-center">
-                        <span *ngFor="let i of createArrayToIterate(review.rating)"
-                            class="material-symbols-outlined filled">star</span>
-                        <span *ngIf="(review.rating % 1) !== 0" class="material-symbols-outlined">star_half</span>
-                        <span *ngFor="let i of createArrayToIterate(5 - review.rating)"
-                            class="material-symbols-outlined">star</span>
+            </ng-container>
+            <div #addReview class="review-form review-cards" [ngClass]="this.showReview ? 'active' : ''">
+                <h3 *ngIf="this.showReview==true" (click)="this.showReview = !this.showReview">
+                    {{ userReview ? 'Update your Review' : 'Review this Product' }}
+                </h3>
+                <form [formGroup]="ratingForm" class="d-flex flex-column gap-15 reviewSection"
+                    [ngClass]="(this.showReview == true) ? 'showReviewSection' : ''">
+                    <div class="edit-rating">
+                        <span *ngFor="let ok of createArrayToIterate(5); let i = index"
+                            (click)="userRating = i; RatingUpdated()" (mouseover)="tempUserRating = i"
+                            (mouseleave)="tempUserRating = -1"
+                            [ngClass]="i <= (userRating !== -1 ? userRating : tempUserRating) ? 'filled' : ''"
+                            class="material-symbols-outlined pointer">
+                            star
+                        </span>
                     </div>
-                    <p class="fw-600 opacity-70">{{ review?.userId?.name.firstname +' '+ review?.userId?.name.lastname
-                        }} · {{
-                        review.date | date: 'dd/MM/yyyy' }}</p>
-                </div>
+                    <textarea formControlName="review" rows="5" placeholder="Write your review here..."></textarea>
+                    <div class="d-flex gap-10">
+                        <button class="btn-primary" [ngClass]="ratingForm.invalid ? 'disabled': ''"
+                            [disabled]="ratingForm.invalid" (click)="addOrUpdateReview(); scroll(reviews)">
+                            {{ userReview ? 'Update' : 'Submit' }}
+                        </button>
+    
+                        <button class="btn-secondary review-btn pointer d-flex align-item-center gap-10"
+                            *ngIf="this.showReview==true" (click)="this.showReview = !this.showReview; scroll(reviews)">
+                            Cancel
+                        </button>
+    
+                    </div>
+    
+                </form>
             </div>
-
         </div>
-        
-        <ng-container *ngIf="!productSku">
-            <div class="add-review-btn" *ngIf="!userReview" >
-                <button class="btn-primary review-btn pointer d-flex align-item-center gap-10"
-                *ngIf="!showReview" (click)="showReview = true; scroll(addReview)">
-                    <span class="material-symbols-outlined">
-                        add
-                    </span>
-                    Add a Review
-                </button>
-            </div>
-        </ng-container>
-        <div #addReview class="review-form review-cards" [ngClass]="this.showReview ? 'active' : ''">
-            <h3 *ngIf="this.showReview==true" (click)="this.showReview = !this.showReview">
-                {{ userReview ? 'Update your Review' : 'Review this Product' }}
-            </h3>
-            <form [formGroup]="ratingForm" class="d-flex flex-column gap-15 reviewSection"
-                [ngClass]="(this.showReview == true) ? 'showReviewSection' : ''">
-                <div class="edit-rating">
-                    <span *ngFor="let ok of createArrayToIterate(5); let i = index"
-                        (click)="userRating = i; RatingUpdated()" (mouseover)="tempUserRating = i"
-                        (mouseleave)="tempUserRating = -1"
-                        [ngClass]="i <= (userRating !== -1 ? userRating : tempUserRating) ? 'filled' : ''"
-                        class="material-symbols-outlined pointer">
-                        star
-                    </span>
-                </div>
-                <textarea formControlName="review" rows="5" placeholder="Write your review here..."></textarea>
-                <div class="d-flex gap-10">
-                    <button class="btn-primary" [ngClass]="ratingForm.invalid ? 'disabled': ''"
-                        [disabled]="ratingForm.invalid" (click)="addOrUpdateReview(); scroll(reviews)">
-                        {{ userReview ? 'Update' : 'Submit' }}
-                    </button>
-
-                    <button class="btn-secondary review-btn pointer d-flex align-item-center gap-10"
-                        *ngIf="this.showReview==true" (click)="this.showReview = !this.showReview; scroll(reviews)">
-                        Cancel
-                    </button>
-
-                </div>
-
-            </form>
+    
+        <div *ngIf="!productSku" class="next">
+            <h2 class="section-heading">Similar Products</h2>
+            <p class="section-sub-heading">
+                Explore our most similar products.
+            </p>
         </div>
-    </div>
-
-    <div *ngIf="!productSku" class="next">
-        <h2 class="section-heading">Popular Products</h2>
-        <p class="section-sub-heading">
-            Explore our most popular products.
-        </p>
-    </div>
-
-    <div *ngIf="!productSku" style="padding-block-end: 50px;">
-        <app-product-card-carousel></app-product-card-carousel>
+    
+        <div *ngIf="!productSku" style="padding-block-end: 50px;">
+            <app-product-card-carousel [whatToFetch]="fetchSimilarProducts"></app-product-card-carousel>
+        </div>
     </div>
 </section>

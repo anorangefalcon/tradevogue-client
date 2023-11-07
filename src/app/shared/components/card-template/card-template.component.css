@@ -246,6 +246,9 @@ h2 {
     max-height: 280px;
 }
 
+.skeleton{
+    min-height: 270px;
+}
 
 .image-carousel {
     overflow: hidden !important;

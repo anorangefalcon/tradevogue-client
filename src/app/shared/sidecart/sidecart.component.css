@@ -38,7 +38,7 @@
 
 
 .app-cart{
-    height: calc(100vh - 120px);
+    height: calc(100vh - 90px);
     overflow-y: scroll;
     padding-block: 20px;
 }
@@ -50,11 +50,12 @@
     background-color : rgba(var(--whiteClr));
     color: rgba(var(--primaryClr));
 }
+
+
 .proceed-btn {
     position: absolute;
-    inset-block-end: -46px;
-    inset-inline-end: 0;
-    z-index: 2;
-    padding-inline : 15px;
-    padding-block : 10px;
+    inset-block-end: 0px;
+    inset-inline-end: 0px;
+    z-index: 2; 
+
 }

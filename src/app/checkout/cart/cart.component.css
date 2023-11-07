@@ -93,13 +93,9 @@
 }
 
 .quantity-btn-outer {
-    /* border-radius: 5px; */
-
     & .quantity-value {
         padding-inline: 14px;
-        background-color: white;
         height: 100%;
-        /* border-block: 1px solid rgb(var(--textClr), 0.05); */
     }
 }
 
@@ -180,26 +176,6 @@
 
 .colors-radios input::before {
     text-align: center;
-}
-
-.blue {
-    background-color: rgb(0, 172, 245);
-}
-
-.pink {
-    background-color: pink;
-}
-
-.red {
-    background-color: red;
-}
-
-.teal {
-    background-color: rgb(44, 196, 196);
-}
-
-.yellow {
-    background-color: yellow;
 }
 
 

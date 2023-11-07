@@ -6,7 +6,7 @@
     opacity: 0;
     visibility: hidden;
     background-color: rgba(0, 0, 0, 0.4);
-    transition: background-color 0.3s;
+    transition: background-color 0.1s ease-in-out;
     top: 0;
     left: 0;
 }
@@ -82,15 +82,19 @@
 .left_show {
     transform: translate(0, 0);
 }
+
 .popup {
     width: 350px;
     height: fit-content;
-    left:50%;
-    transform: translate(-50%,-100%);
+    left: 50%;
+    top: 20%;
     border-radius: 8px;
-    /* padding-inline: 0; */
-    /* padding-block: 10px; */
+    opacity: 0;
+    transform: translate(-50%, 0);
 }
+
 .popup_show {
-    transform: translate(-50%,100%);
+    top: 40%;
+    opacity: 1;
+    transform: translate(-50%, -50%);
 }
