@@ -140,6 +140,7 @@ export class UtilsModule {
     getSales: 'http://localhost:1000/sales/getSales',
     toggleSales: 'http://localhost:1000/sales/toggle',
     updateSales: 'http://localhost:1000/sales/update',
+    deleteSales: 'http://localhost:1000/sales/delete',
 
     // payment keys 
     addPaymentKeys: 'http://localhost:1000/paymentKeys/add',

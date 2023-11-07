@@ -24,6 +24,11 @@
     text-overflow: ellipsis;
     white-space: nowrap;
   }
+
+  img, picture {
+    max-width: 30% !important;
+    display: block !important;
+}
   
 
 .form__card {

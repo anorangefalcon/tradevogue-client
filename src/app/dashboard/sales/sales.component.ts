@@ -44,8 +44,21 @@ export class SalesComponent {
     })
 
   }
-  deleteItem(ere: any){
+  deleteItem(key: any){
+    this.selectedItem = key;
+    if(this.selectedItem) {
+      const id = this.selectedItem._id;
+      console.log(id);
 
+      const body = {
+        _id: id
+      }
+
+      this.fetch.HTTPPOST(this.util.URLs.deleteSales, body).subscribe((data=> {
+        console.log("delete data is ", data);
+      }))
+      
+    }
   }
 
   toggle(key: any) {

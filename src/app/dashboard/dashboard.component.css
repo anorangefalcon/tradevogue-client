@@ -391,7 +391,7 @@
 /* Table CSS */
 main {
     .table-list {
-        /* overflow-x  : scroll; */
+        overflow-x  : scroll;
 
         &::-webkit-scrollbar {
             width: 2px;
