@@ -29,6 +29,7 @@ import { HomeModule } from '../home/home.module';
 import { MonetizationComponent } from './monetization/monetization.component';
 import { BannerComponent } from './banner/banner.component';
 import { DealComponent } from './deal/deal.component';
+import { SalesComponent } from './sales/sales.component';
 @NgModule({
   declarations: [
     DashboardComponent,
@@ -49,7 +50,8 @@ import { DealComponent } from './deal/deal.component';
     SocialsComponent,
     MonetizationComponent,
     BannerComponent,
-    DealComponent
+    DealComponent,
+    SalesComponent
   ],
 
   imports: [

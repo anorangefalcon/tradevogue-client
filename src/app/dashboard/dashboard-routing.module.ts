@@ -18,6 +18,7 @@ import { MonetizationComponent } from './monetization/monetization.component';
 import { NoPageComponent } from '../no-page/no-page.component';
 import { BannerComponent } from './banner/banner.component';
 import { DealComponent } from './deal/deal.component';
+import { SalesComponent } from './sales/sales.component';
 
 const routes: Routes = [
   {
@@ -44,6 +45,7 @@ const routes: Routes = [
       { path: 'monetization', component: MonetizationComponent },
       { path: 'socials', component: SocialsComponent },
       { path: 'banner', component: BannerComponent},
+      { path: 'sales', component: SalesComponent},
 
       {path:'deal',component:DealComponent},
 

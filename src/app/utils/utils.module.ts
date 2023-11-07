@@ -135,6 +135,11 @@ export class UtilsModule {
     setDeals:'http://localhost:1000/deals/set',
     getDealsDetails:'http://localhost:1000/deals/getDetails',
 
+    // sale 
+    setSales: 'http://localhost:1000/sales/setSales',
+    getSales: 'http://localhost:1000/sales/getSales',
+    toggleSales: 'http://localhost:1000/sales/toggle',
+    updateSales: 'http://localhost:1000/sales/update',
 
     // payment keys 
     addPaymentKeys: 'http://localhost:1000/paymentKeys/add',

@@ -31,7 +31,8 @@ export class DashboardComponent {
         { name: 'Banner', route: '/dashboard/banner'},
         { name: 'Socials', route: '/dashboard/socials' },
         { name: 'FAQs', route: '/dashboard/faq' },
-        { name: 'Monetization' , route: '/dashboard/monetization'}
+        { name: 'Payment Keys' , route: '/dashboard/monetization'},
+        { name: 'Sales' , route: '/dashboard/sales'}
       ]
     },
     {

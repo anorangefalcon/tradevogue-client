@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { OwlOptions } from 'ngx-owl-carousel-o';
 import { BannerService } from 'src/app/shared/services/custom-UI/banner.service';
 
+
 @Component({
   selector: 'app-hero',
   templateUrl: './hero.component.html',
