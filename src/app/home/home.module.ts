@@ -37,7 +37,8 @@ const routes: Routes = [
     RouterModule.forChild(routes),
   ],
   exports: [
-    GalleryComponent
+    GalleryComponent,
+    DealOfWeekComponent
   ]
 })
 export class HomeModule { }

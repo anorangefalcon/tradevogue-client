@@ -4,6 +4,7 @@ import { FetchDataService } from './faq-page/fetch-data.service';
 import { CookieService } from 'ngx-cookie-service';
 
 import { FormBuilder } from '@angular/forms';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -11,34 +12,34 @@ import { FormBuilder } from '@angular/forms';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
 })
-export class AppComponent{
-  
-  message:string = '';
+export class AppComponent {
+
+  message: string = '';
   messageArray: { name: string, message: any }[] = [];
 
   ngOnInit(): void {
-    this.requestPermission();
+    this.requestPermission()
   }
 
-  sendMessage(){
-    const data = { message:this.message };
-    this.messageArray.push({name:'you', message:this.message});
+  sendMessage() {
+    const data = { message: this.message };
+    this.messageArray.push({ name: 'you', message: this.message });
     this.message = '';
   }
 
- speak(string: any) {
-  let u = new SpeechSynthesisUtterance(string);
-  u.text = string;
-  u.lang = "en-US";
-  u.volume = 1; //0-1 interval
-  u.rate = 1;
-  u.pitch = 1; //0-2 interval
-  this.synth.speak(u);
-}
+  speak(string: any) {
+    let u = new SpeechSynthesisUtterance(string);
+    u.text = string;
+    u.lang = "en-US";
+    u.volume = 1; //0-1 interval
+    u.rate = 1;
+    u.pitch = 1; //0-2 interval
+    this.synth.speak(u);
+  }
 
   // messageArray = [];
-  synth:any;
-  voices:any;
+  synth: any;
+  voices: any;
 
   title = 'eCommerce-frontend';
   showWishlistsDialog: boolean = false;
@@ -67,24 +68,26 @@ export class AppComponent{
       console.log('An error occurred while retrieving token. ', err);
     });
   }
-  
+
 
   sendTokenToServer(currentToken: any) {
     if (currentToken) {
       this.cookie.set('fcmToken', currentToken);
-      
+
     }
   }
 
-  
-  constructor( private fetchdata: FetchDataService, private cookie: CookieService, private formBuilder: FormBuilder) {
-  
+
+  constructor(private fetchdata: FetchDataService, private cookie: CookieService, private formBuilder: FormBuilder) {
+
+
+
 
     this.synth = window.speechSynthesis;
     this.voices = this.synth.getVoices();
 
     this.requestPermission()
- this.subscribeToMessages();
+    this.subscribeToMessages();
 
   }
 

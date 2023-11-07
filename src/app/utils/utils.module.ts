@@ -75,6 +75,8 @@ export class UtilsModule {
     getOffers: 'http://localhost:1000/offer/get',
     deleteOffer: 'http://localhost:1000/offer/delete',
     updateOffer: 'http://localhost:1000/offer/update',
+    updateOfferStatus:'http://localhost:1000/offer/statusUpdate',
+    searchOffer:'http://localhost:1000/offer/search',
     // createOffer:'http://localhost:1000/offer/create',
     // getOffers:'http://localhost:1000/offer/get',
     // deleteOffer:'http://localhost:1000/offer/delete',
@@ -128,6 +130,11 @@ export class UtilsModule {
     //banner
     setBanners : 'http://localhost:1000/banners/setBanners',
     getBanners : 'http://localhost:1000/banners/getBanners',
+
+    // deals
+    setDeals:'http://localhost:1000/deals/set',
+    getDealsDetails:'http://localhost:1000/deals/getDetails',
+
 
     // payment keys 
     addPaymentKeys: 'http://localhost:1000/paymentKeys/add',

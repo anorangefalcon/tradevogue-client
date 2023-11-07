@@ -71,6 +71,7 @@ export class SettingsComponent {
     //   this.getOrders();
     // }
     
+    
 
     this.ProfileForm = fb.group(
       {
@@ -318,12 +319,14 @@ export class SettingsComponent {
   }
 
   //  ORDERS TS
-  getOrders() {
-    this.showData = 'orders';
-    this.TranslateData = true;
-    this.fetchDataService.HTTPGET(this.backendURLs.URLs.getParticularUserOrders).subscribe((data: any) => {
-      this.AllOrders = data;
-    });
+   getOrders(){
+    this.showData='orders';
+    this.TranslateData=true;
+     this.fetchDataService.HTTPGET(this.backendURLs.URLs.getParticularUserOrders).subscribe((data:any)=>{
+      console.log('allOrders is ',this.AllOrders);
+      
+        this.AllOrders=data;   
+    });      
   }
 
   getDate(orderDate: any) {

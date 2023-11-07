@@ -18,18 +18,8 @@
 
             <div class="price d-flex gap-5 align-item-center justify-content-center skeleton-deactivated">
                 <p class="current-price">
-                    <!-- <span *ngIf="product.discount">
-                        ₹{{ product.price - product.discount}}
-                    </span> -->
-                    
-                    <!-- <span *ngIf="!product.discount"> -->
-                        ₹{{ product.price}}
-                    <!-- </span> -->
-                    
-                </p>
+                        ₹{{ product.price}}    </p>
                 <p class="old-price" *ngIf="product?.discount">
-
-                    <!-- {{product.discount}} abcdisibsd  -->
                     ₹{{ product.oldPrice }} 
                 </p>
                 <p *ngIf="product.discountType!== 0" class="offer-percentage">
@@ -93,7 +83,9 @@
                 </div>
             </h2>
 
+
             <p id="description">{{productData.description}}</p>
+            
             <div class="price">
                 <h1 id="number-discount">₹{{ product.price - product.discount }}</h1>
                 <p id="number-full" *ngIf="product.price !== (undefined || 0)">₹{{product.price}}</p>

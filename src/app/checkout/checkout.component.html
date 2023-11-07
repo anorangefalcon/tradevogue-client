@@ -60,7 +60,7 @@
 
             </button>
 
-            <button *ngIf="CouponApplied && (BillingPageVisited)" class="d-flex justify-content-md-between">
+            <button *ngIf="CouponApplied && (!BillingPageVisited)" class="d-flex justify-content-md-between">
                 <span>
                     {{CouponApplied.couponcode}}
                 </span>

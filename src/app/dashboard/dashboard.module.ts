@@ -28,6 +28,7 @@ import { SocialsComponent } from './socials/socials.component';
 import { HomeModule } from '../home/home.module';
 import { MonetizationComponent } from './monetization/monetization.component';
 import { BannerComponent } from './banner/banner.component';
+import { DealComponent } from './deal/deal.component';
 @NgModule({
   declarations: [
     DashboardComponent,
@@ -47,7 +48,8 @@ import { BannerComponent } from './banner/banner.component';
     DateDisplayPipe,
     SocialsComponent,
     MonetizationComponent,
-    BannerComponent
+    BannerComponent,
+    DealComponent
   ],
 
   imports: [

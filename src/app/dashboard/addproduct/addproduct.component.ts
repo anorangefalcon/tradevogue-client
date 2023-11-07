@@ -265,6 +265,8 @@ export class AddproductComponent {
     return (<FormArray>this.productsForm.get('assets')?.get(String(index))?.get('stockQuantity'))?.controls;
   }
 
+
+
   deleteStockQuantityForm(formId: number, index: number) {
     (<FormArray>this.productsForm.get('assets')?.get(String(formId))?.get('stockQuantity'))?.removeAt(index);
   }

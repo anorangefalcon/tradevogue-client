@@ -1,43 +1,47 @@
-<div class="container">
+<div class="container d-flex flex-column gap-20">
     <h2>Coupon</h2>
-        
-    <button (click)="AddCoupon()">Add Coupon</button>
-    
 
-    <div class="table-list card">
+
+    <div class="d-flex justify-content-md-between">
+    <div class="d-flex align-item-center">
+        <app-search-bar [searchPlaceholder]="'Search by Name'" (searchQuery$)="updateFields($event)"></app-search-bar>
+    </div>
+
+    <div class="d-flex gap-10 align-item-center">
+    <button (click)="AddCoupon()">Add Coupon</button>
+
+    <button (click)="Delete_Offer()" [disabled]="!deleteList.length">Delete Button</button>
+</div>
+</div>
+    <div class="table-list">
         <table>
             <tr>
                 <th class="items item-check ">
-                    <input [(ngModel)]="selectAll" (change)="toggleSelectAll();  updateCheckList();"
-                        type="checkbox" id="all_product">
+                    <input [(ngModel)]="selectAll" (change)="toggleSelectAll();  updateCheckList();" type="checkbox"
+                        id="all_product">
                     <label for='all_product' class="d-flex flex-center">
                         <span class="d-flex flex-center material-symbols-outlined">done</span>
                     </label>
                 </th>
                 <th class="items">Discount Title / Coupon Code</th>
-                <th class="items">Title/Coupon Code</th>
                 <th class="items">OfferType</th>
-                <!-- <th>Coupon Type</th> -->
                 <th class="items">Discount Type</th>
                 <th class="items">Discount Amount</th>
                 <th class="items">Start Date</th>
                 <th class="items">End Date</th>
                 <th class="items">Status</th>
-                <!-- <th>Coupon User Limit</th> -->
                 <th class="items">Actions</th>
             </tr>
 
             <tr *ngFor="let data of allOffers; let i=index">
-                <!-- {{data.status.deleted}} akmfjnvf -->
                 <td class="items item-check">
-                    <input [(ngModel)]="data.checked" type="checkbox"
-                        (change)="checkboxChanged(); updateCheckList();"
+                    <input [(ngModel)]="data.checked" type="checkbox" (change)="checkboxChanged(i); updateCheckList();"
                         id="itemId_{{i}}">
                     <label class="d-flex flex-center" for='itemId_{{i}}'>
                         <span class="d-flex flex-center material-symbols-outlined">done</span>
                     </label>
                 </td>
-                    
+
                 <ng-container>
                     <td class="items">
                         <p *ngIf="!data.couponcode">{{data.Title}}</p>
@@ -49,232 +53,250 @@
                     <td class="items">{{data.discountAmount}}</td>
                     <td class="items">{{(data.startDate.split('T')[0])}}</td>
                     <td class="items">{{data.endDate.split('T')[0]}}</td>
-                    <td class="items text-capitalize">{{data.status.active}}</td>
-                    <td class="items action-btns">
-                        <div class="d-flex action__btns align-item-center">
-                            <a class="pointer tooltip" (click)="EditOffer(data,i)">
-                                <span class="tooltiptext" >Edit</span>
-                                <i class="action__btn-icon material-symbols-outlined">edit</i>
-                            </a>
-                            <a class="pointer tooltip">
-                                <span class="tooltiptext" >Delete</span>
-                                <i class="action__btn-icon material-symbols-outlined" (click)="DeleteOffer(data,i)">delete</i>
-                            </a>
+
+                    <td class="items slide-button tooggle__btn" >
+                        <input type="checkbox" [(ngModel)]="data.status.active" [id]="'statusCheck'+i" (change)="ActiveStatus($event,data)">
+                        <label [for]="'statusCheck'+i"></label>
+                    </td>
+                    <!-- <td class="items">
+                        <input type="radio" [attr.checked]="data.status.active">
+                    </td> -->
+                    <td class="items">
+                        <div class="d-flex action__btns align-item-center ">
+                            <button class="tooltip edit__btn" (click)="EditOffer(data,i)">
+                                <span class="tooltiptext">
+                                    Edit
+                                </span>
+                                <span class="material-symbols-outlined">
+                                    edit
+                                </span></button>
+                            <button class="tooltip delete__btn">
+                                <span class="material-symbols-outlined" (click)="DeleteOffer(data,i)">
+                                    delete
+                                </span>
+                            </button>
                         </div>
                     </td>
-                    </ng-container>
+                </ng-container>
 
             </tr>
         </table>
     </div>
 
 </div>
-<app-drawer [direction]="direction" [show]="show" (showChange)="ChangeHanlder($event)" (ParentClosedEmitter)="ParenClosedHandler($event)" [ParenClosed]="ParenClosed" [title]="title">
+<app-drawer [direction]="direction" [show]="show" (showChange)="ChangeHanlder($event)"
+    (ParentClosedEmitter)="ParenClosedHandler($event)" [ParenClosed]="ParenClosed" [title]="title">
 
-            <div class="CouponDiv d-flex flex-column" >
-                <div class="d-flex align-item-center justify-content-md-between header__addOffer">
-                        <p>Add your coupon and necessary information from here
-                        </p>    
+    <div class="CouponDiv d-flex flex-column">
+        <div class="d-flex align-item-center justify-content-md-between header__addOffer">
+            <p>Add your coupon and necessary information from here
+            </p>
+        </div>
+
+
+        <form [formGroup]="OfferForm" class="d-flex flex-column gap-15 OfferForm">
+
+            <div class="form__group d-flex">
+                <label class="form__label"> Offer Type <span>*</span></label>
+                <div class="custom__select">
+                    <app-custom-select [type]="''" [options]="OfferType"
+                        [selectedOption]="((OfferForm.get('OfferType')?.value) ? (OfferForm.get('OfferType')?.value) : 'Select Type')"
+                        (final_option)="OfferTypeHandler($event)"></app-custom-select>
                 </div>
-    
-    
-                <form [formGroup]="OfferForm" class="d-flex flex-column gap-15 OfferForm">
-    
-                    <div class="form__group d-flex">
-                        <label class="form__label"> Offer Type <span>*</span></label>
-                        <div class="custom__select">
-    
-                            <!-- {{OfferForm.get('OfferType')?.value }}  -->
-                            <app-custom-select [type]="''"  [options]="OfferType" [selectedOption]="((OfferForm.get('OfferType')?.value) ? (OfferForm.get('OfferType')?.value) : 'Select Type')"
-                                (final_option)="OfferTypeHandler($event)"></app-custom-select>
-                        </div>
-                    </div>
-    
-                    <div class="form__group d-flex">
-                        <label class="form__label"> Title<span>*</span></label>
-                        <input type="text" id="Title" class="form__input" formControlName="Title"
-                            placeholder="Enter  Title">
-                    </div>
-    
-                    <div class="form__group d-flex">
-                        <label class="form__label"> Description<span>*</span></label>
-                        <textarea type="" id="Description" class="form__input" formControlName="Description"
-                            placeholder="Enter Descirption"></textarea>
-                    </div>
-    
-    
-    
-    
-    
-                    <div class="form__group d-flex">
-                        <label class="form__label"> Discount Type<span>*</span></label>
-                        <div class="custom__select">
-                            <app-custom-select [type]="''" [options]="discountType" [selectedOption]="OfferForm.get('discountType')?.value ? OfferForm.get('discountType')?.value:'Select Type'"
-                                (final_option)="DiscountTypeHandler($event)"></app-custom-select>
-                        </div>
-    
-                    </div>
-    
-    
-    
-                    <!-- <div class="form__group d-flex" *ngIf="OfferForm.get('discountType')?.value=='percentage'">
-                        <label class="form__label"> Discount Percentage Type<span>*</span></label>
-                        <div class="custom__select">
-                            <app-custom-select [type]="''" [options]="DiscountPercentageType" [selectedOption]="(OfferForm.get('DiscountPercentageType')?.value ? OfferForm.get('DiscountPercentageType')?.value:'Select DiscountPercentageType')"
-                                (final_option)="DiscountPercentageHandler($event)"></app-custom-select>
-                        </div>
-                    </div> -->
-    
-    
-                    <div class="form__group d-flex">
-                        <label class="form__label"> discountAmount (%/Amount)<span>*</span></label>
-
-                        <div class="validation__div">
-                        <input type="number" id="discountAmount" class="form__input" formControlName="discountAmount"
-                            placeholder="Enter Discount Amount"
-                            [attr.min]="OfferForm.get('discountType')?.value=='percentage' ? 0 : null"
-                            [attr.max]="OfferForm.get('discountType')?.value=='percentage' ? 100 : null">
-
-                            <small *ngIf="OfferForm.get('discountAmount')?.hasError('error')"> must be between 0 and 100 is not
-                                valid</small>
-
-                            </div>
-                    </div>
-    
-                    <div class="form__group d-flex">
-                        <label class="form__label"> startDate <span>*</span></label>
-                        <div class="validation__div">
-                            <input type="date" id="startDate" class="form__input" formControlName="startDate"
-                                placeholder="Enter Start Date">
-                            <small *ngIf="OfferForm.get('startDate')?.hasError('format') && OfferForm.get('startDate')?.touched">Start Date should be greater than
-                                current Date</small>
-                        </div>
-    
-                    </div>
-    
-    
-                    <div class="form__group d-flex">
-                        <label class="form__label"> endDate <span>*</span></label>
-                        <div class="validation__div">
-    
-                            <input type="date" id="endDate" class="form__input" formControlName="endDate"
-                                placeholder="Enter End Date">
-                            <small *ngIf="OfferForm.get('endDate')?.hasError('format') &&  OfferForm.get('endDate')?.touched">end Date should be greater than
-                                start Date</small>
-                        </div>
-                    </div>
-    
-    
-                    <div *ngIf="OfferForm.get('OfferType')?.value=='coupon'" class="d-flex gap-15 flex-column">
-    
-                        <div class="form__group d-flex">
-                            <label class="form__label">Coupon Code<span>*</span></label>
-                            <div class="d-flex validation__div flex-column">
-                                <input type="text" id="couponcode" class="form__input" formControlName="couponcode"
-                                    placeholder="Enter Coupon Code" oninput="this.value = this.value.toUpperCase()">
-    
-                                <small *ngIf="OfferForm.get('couponcode')?.hasError('error')"> coupon code is not
-                                    valid</small>
-                            </div>
-                        </div>
-    
-                        <div class="form__group d-flex" *ngIf="OfferForm.get('OfferType')?.value=='coupon'">
-                            <label class="form__label"> minimumPurchaseAmount <span>*</span></label>
-                            <input type="number" id="minimumPurchaseAmount" class="form__input"
-                                formControlName="minimumPurchaseAmount" placeholder="Enter Minimum Purchased Amount">
-                        </div>
-    
-    
-                        <div class="form__group d-flex">
-                            <label class="form__label"> Coupon Type <span>*</span></label>
-                            <div class="custom__select">
-                                <app-custom-select [type]="''" [options]="couponType" [selectedOption]="OfferForm.get('couponType')?.value?OfferForm.get('couponType')?.value:'Select Coupon Type'"
-                                    (final_option)="CouponTypeHandler($event)"></app-custom-select>
-                            </div>
-                        </div>
-    
-                        <div class="form__group d-flex">
-                            <label class="form__label"> Coupon Users Limit <span>*</span></label>
-                            <input type="number" id="couponUsersLimit" class="form__input"
-                                formControlName="couponUsersLimit" placeholder="Enter Coupon Users Limit">
-                        </div>
-    
-                    </div>
-    
-    
-    
-                    <div class="d-flex form__group">
-                        <label class="form__label"> Maximum Discount <span>*</span></label>
-                        <input type="number" id="maximum__discount" min="0" class="form__input"
-                            formControlName="maximumDiscount" placeholder="Enter Maximum Discount">
-                    </div>
-    
-    
-    
-    
-                    <div formGroupName="ExtraInfo" class="d-flex flex-column gap-15"
-                        *ngIf="OfferForm?.get('OfferType')?.value=='discount'">
-    
-    
-                        <div class="form__group d-flex">
-    
-                            <label class="form__label"> Categories</label>
-                            <div class="custom__select">
-                                <app-custom-select [type]="'multiSelect'" [options]="Categories"
-                                    [selectedOption]="OfferForm.get('ExtraInfo')?.get('categories')?.value?OfferForm.get('ExtraInfo')?.get('categories')?.value:'Select Category'"
-                                    (SelectedList)="CategoriesHandler($event)"></app-custom-select>
-                            </div>
-    
-                        </div>
-    
-    
-                        <div class="form__group d-flex">
-    
-                            <label class="form__label"> Brands</label>
-                            <div class="custom__select">
-                                <app-custom-select [type]="'multiSelect'" [options]="Brands"
-                                    [selectedOption]="OfferForm.get('ExtraInfo')?.get('brands')?.value?OfferForm.get('ExtraInfo')?.get('brands')?.value:'Select Brand'"
-                                    (SelectedList)="BrandsHandler($event)"></app-custom-select>
-                            </div>
-    
-    
-                        </div>
-    
-    
-    
-                    </div>
-    
-    
-                    <div class="form__group d-flex" *ngIf="OfferForm.get('couponType')?.value=='custom'">
-                        <label class="form__label"> User Email <span>*</span></label>
-                        <input type="email" id="email" class="form__input" formControlName="email" placeholder="Enter Your Email">
-                    </div>
-    
-                </form>
-    
-                <div
-                    class="d-flex align-item-center justify-content-end btns footer__addOffer">
-                    <!-- <button class="" (click)="CancelCoupon()">Cancel</button>  -->
-                    
-                    <!-- "
-                        
-                    -->
-                    <!-- [disabled]="OfferForm.invalid"-->
-                    <button class="btn-primary" (click)="CouponSubmit()"  
-                        [ngClass]="{disabled:OfferForm.invalid}" >
-                        <span *ngIf="!EditRequest else add">Save</span>
-                        <ng-template #add>
-                            Update
-                          </ng-template>
-                    </button>
-                </div>
-     
             </div>
 
-            <app-pagination #pagination [collectionSize]="25" [pageSize]="5" [currentPage]="1" (activePage)="pageChange($event)"></app-pagination>
+            <div class="form__group d-flex">
+                <label class="form__label"> Title<span>*</span></label>
+                <input type="text" id="Title" class="form__input" formControlName="Title" placeholder="Enter  Title">
+            </div>
 
-    
-    
+            <div class="form__group d-flex">
+                <label class="form__label"> Description<span>*</span></label>
+                <textarea type="" id="Description" class="form__input" formControlName="Description"
+                    placeholder="Enter Descirption"></textarea>
+            </div>
+
+            <div class="form__group d-flex">
+                <label class="form__label"> Discount Type<span>*</span></label>
+                <div class="custom__select">
+                    <app-custom-select [type]="''" [options]="discountType"
+                        [selectedOption]="OfferForm.get('discountType')?.value ? OfferForm.get('discountType')?.value:'Select Type'"
+                        (final_option)="DiscountTypeHandler($event)"></app-custom-select>
+                </div>
+
+            </div>
+
+
+            <div class="form__group d-flex">
+                <label class="form__label"> discountAmount (%/Amount)<span>*</span></label>
+
+                <div class="validation__div">
+                    <input type="number" id="discountAmount" class="form__input" formControlName="discountAmount"
+                        placeholder="Enter Discount Amount"
+                        [attr.min]="OfferForm.get('discountType')?.value=='percentage' ? 0 : null"
+                        [attr.max]="OfferForm.get('discountType')?.value=='percentage' ? 100 : null">
+
+                    <small *ngIf="OfferForm.get('discountAmount')?.hasError('error')"> must be between 0 and 100 is not
+                        valid</small>
+
+                </div>
+            </div>
+
+            <div class="form__group d-flex">
+                <label class="form__label"> startDate <span>*</span></label>
+                <div class="validation__div">
+                    <input type="date" id="startDate" class="form__input" formControlName="startDate"
+                        placeholder="Enter Start Date"  [min]="CurrentDate()">
+                    <small
+                        *ngIf="OfferForm.get('startDate')?.hasError('format') && OfferForm.get('startDate')?.touched">Start
+                        Date should be greater than
+                        current Date</small>
+                </div>
+
+            </div>
+
+
+            <div class="form__group d-flex">
+                <label class="form__label"> endDate <span>*</span></label>
+                <div class="validation__div">
+
+                    <input type="date" id="endDate" class="form__input" formControlName="endDate"
+                        placeholder="Enter End Date">
+                    <small
+                        *ngIf="OfferForm.get('endDate')?.hasError('format') &&  OfferForm.get('endDate')?.touched">end
+                        Date should be greater than
+                        start Date</small>
+                </div>
+            </div>
+
+            <div *ngIf="OfferForm.get('OfferType')?.value=='coupon'" class="d-flex gap-15 flex-column">
+
+                <div class="form__group d-flex">
+                    <label class="form__label">Coupon Code<span>*</span></label>
+                    <div class="d-flex validation__div flex-column">
+                        <input type="text" id="couponcode" class="form__input" formControlName="couponcode"
+                            placeholder="Enter Coupon Code" oninput="this.value = this.value.toUpperCase()">
+
+                        <small *ngIf="OfferForm.get('couponcode')?.hasError('error')"> coupon code is not
+                            valid</small>
+                    </div>
+                </div>
+
+                <div class="form__group d-flex" *ngIf="OfferForm.get('OfferType')?.value=='coupon'">
+                    <label class="form__label"> minimumPurchaseAmount <span>*</span></label>
+                    <input type="number" id="minimumPurchaseAmount" class="form__input"
+                        formControlName="minimumPurchaseAmount" placeholder="Enter Minimum Purchased Amount">
+                </div>
+
+
+                <div class="form__group d-flex">
+                    <label class="form__label"> Coupon Type <span>*</span></label>
+                    <div class="custom__select">
+                        <app-custom-select [type]="''" [options]="couponType"
+                            [selectedOption]="OfferForm.get('couponType')?.value?OfferForm.get('couponType')?.value:'Select Coupon Type'"
+                            (final_option)="CouponTypeHandler($event)"></app-custom-select>
+                    </div>
+                </div>
+
  
-    
+                <div class="form__group d-flex" *ngIf="OfferForm.get('couponType')?.value!='custom'">
+                    <label class="form__label"> Coupon Users Limit <span>*</span></label>
+                    <input type="number" id="couponUsersLimit" class="form__input" formControlName="couponUsersLimit"
+                        placeholder="Enter Coupon Users Limit">
+                </div>
+
+            </div>
+
+            <div class="d-flex form__group" *ngIf="OfferForm.get('discountType')?.value=='percentage'">
+                <label class="form__label"> Maximum Discount <span>*</span></label>
+                <input type="number" id="maximum__discount" min="0" class="form__input"
+                    formControlName="maximumDiscount" placeholder="Enter Maximum Discount">
+            </div>
+
+            <div formGroupName="ExtraInfo" class="d-flex flex-column gap-15"
+                *ngIf="OfferForm?.get('OfferType')?.value=='discount'">
+
+                <div class="form__group d-flex">
+
+                    <label class="form__label"> Brands
+                        <span>*</span>
+                    </label>
+                    <div class="custom__select">
+                        <app-custom-select [type]="'multiSelect'" [options]="Brands"
+                            [selectedOption]="OfferForm.get('ExtraInfo')?.get('brands')?.value?OfferForm.get('ExtraInfo')?.get('brands')?.value:'Select Brand'"
+                            (SelectedList)="BrandsHandler($event)"></app-custom-select>
+                    </div>
+
+
+                </div>
+
+                <div class="form__group d-flex">
+
+                    <label class="form__label"> Categories 
+
+                        <span>*</span>
+                    </label>
+                    <div class="custom__select">
+                        <app-custom-select [type]="'multiSelect'" [options]="Categories"
+                            [selectedOption]="OfferForm.get('ExtraInfo')?.get('categories')?.value?OfferForm.get('ExtraInfo')?.get('categories')?.value:'Select Category'"
+                            (SelectedList)="CategoriesHandler($event)"></app-custom-select>
+                    </div>
+
+                </div>
+
+
+             
+
+
+
+            </div>
+
+            <div formArrayName="UserEmails" *ngIf="OfferForm.get('couponType')?.value=='custom'">
+                <ng-container *ngFor="let form of getEmailArray();let i=index" class="form__group d-flex">
+                    <div class="form__group d-flex" *ngIf="OfferForm.get('couponType')?.value=='custom'">
+                        <label class="form__label"> User Email <span>*</span></label>
+
+                        <div class="validation__div" [formGroupName]="i">
+                            <div class="d-flex" >
+                            <input type="email" id="email" class="form__input" [formControlName]="'email'"
+                                placeholder="Enter Your Email">
+                                <button (click)="AddEmailFormControl()" *ngIf="i==0" class="add_del_btn add__btn">
+                                    <span class="material-symbols-outlined ">
+                                        add
+                                        </span>
+                                </button>
+
+                                <!-- [disabled]="deleteList.length>0" -->
+                                <button (click)="RemoveEmailFormControl(i)" *ngIf="i!=0"  class="add_del_btn" >
+                                    <span class="material-symbols-outlined" >
+                                        delete
+                                        </span>
+                                </button>
+                               
+                               
+                            </div>
+                                <span *ngIf="getEmailFormControl(i).errors && getEmailFormControl(i).touched">email is
+                                    not valid</span>
+                            </div>
+
+                    </div>
+                </ng-container>
+            </div>
+        </form>
+
+        <div class="d-flex align-item-center justify-content-end btns footer__addOffer">
+            <!-- [disabled]="OfferForm.invalid" -->
+            <button class="btn-primary" (click)="CouponSubmit()"  [ngClass]="{disabled:OfferForm.invalid}">
+                <span *ngIf="!EditRequest else add">Save</span>
+                <ng-template #add>
+                    Update
+                </ng-template>
+            </button>
+        </div>
+
+    </div>
+
 </app-drawer>
+
+<app-pagination #pagination [collectionSize]="25" [pageSize]="5" [currentPage]="1"
+    (activePage)="pageChange($event)"></app-pagination>

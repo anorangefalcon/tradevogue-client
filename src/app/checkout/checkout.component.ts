@@ -41,8 +41,6 @@ export class CheckoutComponent implements OnInit {
 
       // Log route changes
       this.router.events.subscribe((event) => {
-        console.log('Current Route:', this.router.url);
-  
         if (this.router.url === '/cart/billing') {
           this.BillingPageVisited = true;
         } else {
@@ -332,5 +330,7 @@ if (paymentButton) {
   //     paymentButton.click(); 
   //   }
 }
+
+
 
 }

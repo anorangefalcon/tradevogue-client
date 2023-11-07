@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { ToastService } from '../shared/services/toast.service';
+import { ToastService } from './toast.service';
 import { Observable, Subject, filter, map, tap, BehaviorSubject, catchError } from 'rxjs';
-import { UtilsModule } from 'src/app/utils/utils.module';
+
 import { ActivatedRoute } from '@angular/router';
-import { error } from 'jquery';
+import { UtilsModule } from 'src/app/utils/utils.module';
 
 @Injectable({
   providedIn: 'root',
@@ -129,18 +129,10 @@ export class FetchDataService {
       params = new HttpParams();
       params = params.set(field, data); 
     }
-    return this.http.get(url, { params }).pipe(catchError((error:any):any=>{
-      this.toastService.errorToast(error);
-    }));
+    return this.http.get(url, { params });
   }
 
-
   HTTPPOST(url: any, body: any) {    
-    return this.http.post(url, body).pipe(
-      catchError((data):any =>{      
-      this.toastService.errorToast({
-        title: data.error.message
-      });
-    }));
+    return this.http.post(url, body);
   }
 }

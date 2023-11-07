@@ -65,7 +65,9 @@ export class LoginComponent {
         this.cookies.set('userName', data.firstName)
         this.router.navigate(['/']);
         this.loginService.LoginCheck.next(true);
-      }
+      },
+
+    
     )
     this.loading=false;
   }

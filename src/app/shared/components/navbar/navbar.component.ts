@@ -37,6 +37,9 @@ export class NavbarComponent implements OnInit {
     
       this.purchaser = userName;
     }
+
+   
+
   }
 
   async ngOnInit() {
