@@ -119,8 +119,7 @@ export class TicketsComponent {
     this.editItem = true;
     this.ticketTypeId = item._id;
     this.token = this.findUserToken(item.userEmail);
-    console.log(item.userEmail, "token is")
-    // this.popupService.openPopup();
+    console.log(item.userEmail, "token is", this.token)
   }
 
 

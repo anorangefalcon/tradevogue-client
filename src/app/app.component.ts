@@ -72,7 +72,6 @@ export class AppComponent {
   sendTokenToServer(currentToken: any) {
     if (currentToken) {
       this.cookie.set('fcmToken', currentToken);
-
     }
   }
 

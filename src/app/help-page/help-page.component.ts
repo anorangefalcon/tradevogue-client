@@ -41,17 +41,17 @@ export class HelpPageComponent {
   async onSubmit() {
     if (this.contactForm.valid) {
       console.log('Submitted Data:', this.contactForm.value);
-        try {
-          const body = {
-            email: this.contactForm.get('email')?.value,
-            status: 'open',
-            message: this.contactForm.get('message')?.value,
-          }
+      try {
+        const body = {
+          email: this.contactForm.get('email')?.value,
+          status: 'open',
+          message: this.contactForm.get('message')?.value,
+        }
         let data = await this.fetchDataService.httpPost(this.utils.URLs.ticketMail, body)
-        }
-        catch (error) {
-          console.log("Error in sending Subscribe Mail", error);
-        }
+      }
+      catch (error) {
+        console.log("Error in sending Subscribe Mail", error);
+      }
 
       this.fetchDataService.httpPost(this.utils.URLs.addTicket, this.contactForm.value)
         .then((response: any) => {
@@ -65,12 +65,12 @@ export class HelpPageComponent {
           console.log('Error adding ticket.', error);
         });
 
-        this.fetchDataService.httpPost(this.utils.URLs.webPushDetail, {token: this.cookie.get('fcmToken'), email: this.contactForm.get('email')?.value}).then((response: any) => {
-          if (response) {
-            console.log('Token added successfully.');
-          }
-        });
-        
+      this.fetchDataService.httpPost(this.utils.URLs.webPushDetail, { token: this.cookie.get('fcmToken'), email: this.contactForm.get('email')?.value }).then((response: any) => {
+        if (response) {
+          console.log('Token added successfully.');
+        }
+      });
+
 
       this.contactForm.reset();
 
