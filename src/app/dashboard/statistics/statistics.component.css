@@ -128,13 +128,14 @@
             }
 
             & label {
-                font-weight: 400;
-                padding: 5px 10px;
-                border-radius: 5px;
+                font-weight: 500;
+                padding: 5px 13px;
+                border-radius: 3px;
             }
 
             & input[type="radio"]:checked+label {
-                background-color: rgb(var(--primaryClr), 0.2);
+                background-color: rgb(var(--primaryClr), 1);
+                color: rgb(var(--whiteClr));
             }
 
             & .product__table{
@@ -198,6 +199,11 @@
             }
         }
     }
+}
+
+.refresh_icons{
+    font-size: 22px;
+    color: rgb(var(--text-gray));
 }
 
 @media screen and (max-width: 768px) {

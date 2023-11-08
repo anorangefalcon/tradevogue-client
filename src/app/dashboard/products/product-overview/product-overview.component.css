@@ -29,23 +29,11 @@
         border-radius: 10px;
     }
 
-    & .product .product-carousel{
-        gap: 18px;
-    }
-
-    & .product .products-imgs-container .gal-img {
-        height: 110px !important;
-    }
-
-    & .product .products-imgs-container{
-        width: 110px !important;
-        gap: 18px;
-    }
-
     & .product .main {
         background-color: rgb(var(--whiteClr)) !important;
         margin-inline-start: 0px !important;
         padding: 0px !important;
+        min-height: fit-content !important;
     }
 
     & .container {

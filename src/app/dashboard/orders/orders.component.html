@@ -47,13 +47,13 @@
             <input class="form__input fromdate" (input)="updateDateFields($event, 'datefrom')" type="date"
                 id="fromdate">
         </span>
-        <button class="btn-primary">Download All Orders</button>
+        <button class="btn-primary" (click)="downloadExcel()">Download All Orders</button>
     </div>
 
     <div class="order-list d-flex flex-column gap-20">
 
         <div class="order-table card table-list">
-            <table class="row-border hover">
+            <table class="row-border hover" id="order-excel-table">
                 <thead>
                     <tr>
                         <th class="items heading">Invoice ID</th>
@@ -67,43 +67,52 @@
                         <th class="items heading">Invoice</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr *ngFor="let item of orderData; let i = index">
-                        <ng-container *ngIf="i< pageSize">
-                            <td class="items">#{{item.invoiceId}}</td>
-                            <td class="items text-capitalize">{{item.customer}}</td>
-                            <td class="items">{{item.orderTime}}</td>
-                            <td class="items">{{item.quantity}}</td>
-                            <td class="items">&#8377; {{item.amount}}</td>
-                            <td class="items" style="font-weight: 500;">
-                                <span *ngIf="item.payment_status == 'success' || item.payment_status == 'Success'"
-                                    style="color: rgb(var(--success));">Success</span>
-                                <span *ngIf="item.payment_status == 'Pending' || item.payment_status == 'pending'"
-                                    style="color: rgba(255, 85, 0, 0.992);">Pending</span>
-                                <span *ngIf="item.payment_status == 'Canceled' || item.payment_status == 'canceled'"
-                                    style="color: rgb(var(--danger));">Canceled</span>
-                                <span *ngIf="item.payment_status == 'Failed' ||item.payment_status == 'failed'"
-                                    style="color: rgb(var(--danger));">Failed</span>
-                            </td>
-                            <td class="items">
-                                <div class="slide-button d-flex align-item-center">
-                                    <input type="checkbox" [(ngModel)]="item.invoice_status"
-                                        (change)="updateInvoice(i, item._id)" [name]="i + 'Available'"
-                                        [id]="i + 'Available'" />
-                                    <label [for]="i + 'Available'"></label>
-                                </div>
-                            </td>
-                            <!-- <td class="items">
-                                <span [routerLink]="['/dashboard/orderDetails', item.orderId]"
-                                    class="material-symbols-outlined">open_in_new</span>
-                            </td> -->
-                            <td class="items">
-                                <span [routerLink]="['/dashboard/orderDetails', item.invoiceId]"
-                                    class="pointer material-symbols-outlined">search</span>
-                            </td>
-                        </ng-container>
+
+                <tbody *ngIf="!orderData.length; else orderInfo">
+                    <tr *ngFor="let i of tableGenerator(pageSize)" >
+                        <td *ngFor="let i of tableGenerator(8)" class="items"><div class="skeleton" style="border-radius: 5px; color: transparent"> d</div></td>
                     </tr>
                 </tbody>
+
+                <ng-template #orderInfo>
+                    <tbody class="default-animation">
+                        <tr *ngFor="let item of orderData; let i = index">
+                            <ng-container *ngIf="i< pageSize">
+                                <td class="items">#{{item.orderID}}</td>
+                                <td class="items text-capitalize">{{item.customer}}</td>
+                                <td class="items">{{item.orderTime}}</td>
+                                <td class="items">{{item.quantity}}</td>
+                                <td class="items">&#8377; {{item.amount}}</td>
+                                <td class="items" style="font-weight: 500;">
+                                    <span *ngIf="item.payment_status == 'success' || item.payment_status == 'Success'"
+                                        style="color: rgb(var(--success));">Success</span>
+                                    <span *ngIf="item.payment_status == 'Pending' || item.payment_status == 'pending'"
+                                        style="color: rgba(255, 85, 0, 0.992);">Pending</span>
+                                    <span *ngIf="item.payment_status == 'Canceled' || item.payment_status == 'canceled'"
+                                        style="color: rgb(var(--danger));">Canceled</span>
+                                    <span *ngIf="item.payment_status == 'Failed' ||item.payment_status == 'failed'"
+                                        style="color: rgb(var(--danger));">Failed</span>
+                                </td>
+                                <td class="items">
+                                    <div class="slide-button d-flex align-item-center">
+                                        <input type="checkbox" [(ngModel)]="item.invoice_status"
+                                            (change)="updateInvoice(i, item._id)" [name]="i + 'Available'"
+                                            [id]="i + 'Available'" />
+                                        <label [for]="i + 'Available'"></label>
+                                    </div>
+                                </td>
+                                <!-- <td class="items">
+                                    <span [routerLink]="['/dashboard/orderDetails', item.orderId]"
+                                        class="material-symbols-outlined">open_in_new</span>
+                                </td> -->
+                                <td class="items">
+                                    <span [routerLink]="['/dashboard/orderDetails', item.invoiceId]"
+                                        class="pointer material-symbols-outlined">search</span>
+                                </td>
+                            </ng-container>
+                        </tr>
+                    </tbody>
+                </ng-template>
             </table>
         </div>
         <app-pagination [collectionSize]="12" [pageSize]="8" [currentPage]="currentPage"

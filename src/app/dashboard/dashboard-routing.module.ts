@@ -21,7 +21,7 @@ import { DealComponent } from './deal/deal.component';
 import { SalesComponent } from './sales/sales.component';
 import { CustomiseBannerComponent } from './customise-banner/customise-banner.component';
 
-const routes: Routes = [
+const routes: Routes = [ 
   {
     path: '', component: DashboardComponent,
     children: [

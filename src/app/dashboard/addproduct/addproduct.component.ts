@@ -18,6 +18,7 @@ export class AddproductComponent {
 
   reponseData!: any;
   isUpdateRequest: boolean = false;
+  editPage: boolean = false;
 
   // Array for Various Selects
   categories!: string[];
@@ -27,6 +28,8 @@ export class AddproductComponent {
   tags!: string[];
   orderQuantity!: number[];
   common_colors: string[] = ['#FFFFFF', '#000000', '#0000FF', '#808080', '#800080', '#00FF00', '#FFC0CB', '#ff0000'];
+  new_colors: string[] = [];
+  uploading: boolean = false;
 
   productsForm: FormGroup;
   current_form: string = '';
@@ -198,6 +201,8 @@ export class AddproductComponent {
           this.dataService.getProductDetails(data['sku']).subscribe({
             next: (data: any) => {
               data.basicinfo = {};
+              this.editPage = true;
+
               Object.keys(data).forEach((key: string) => {
                 if (key !== 'assets') {
                   data.basicinfo[key] = data[key];
@@ -206,11 +211,13 @@ export class AddproductComponent {
 
               this.deleteFormGroup(0);
               for (let i = 0; i < data.assets.length; i++) {
+                if( !(this.common_colors.filter((color: any) => color == data.assets[i].color)).length ) this.common_colors.push(data.assets[i].color)
                 this.addProductImageForm();
                 for (let j = 0; j < data.assets[i].stockQuantity.length - 1; j++) {
                   this.addStockQuantityForm(i);
                 }
               }
+
               this.productsForm.patchValue(data);
               this.reponseData = data;
               this.isUpdateRequest = true;
@@ -265,8 +272,6 @@ export class AddproductComponent {
     return (<FormArray>this.productsForm.get('assets')?.get(String(index))?.get('stockQuantity'))?.controls;
   }
 
-
-
   deleteStockQuantityForm(formId: number, index: number) {
     (<FormArray>this.productsForm.get('assets')?.get(String(formId))?.get('stockQuantity'))?.removeAt(index);
   }
@@ -275,7 +280,6 @@ export class AddproductComponent {
   ShowChangeHandler(event: any) {
     this.show = false;
   }
-
 
   addProductImageForm() {
     const template = this.fb.group({
@@ -419,6 +423,10 @@ export class AddproductComponent {
 
   updateColor(e: Event, index: number) {
     const color = (<HTMLInputElement>e.target).value;
+    if ((this.common_colors.filter((clr: any) => clr == color)).length == 0){
+      console.log(color)
+      this.new_colors[0] = color;
+    }
   }
 
   // Letter Counter for Paragraph
@@ -438,12 +446,13 @@ export class AddproductComponent {
     } else {
       const imageFormArray = this.productsForm.get('assets')?.value;
 
+      this.uploading = true; 
+
       // Iterate through Image Array
       await Promise.all(imageFormArray.map(async (imageArray: any, index: number) => {
         // Wait for Image Upload
         let res = await this.upload.fileupload(imageArray['photo'])
         this.productsForm.get('assets')?.get(String(index))?.get('photo')?.patchValue(res);
-        
         return res;
       }));
 
@@ -466,7 +475,7 @@ export class AddproductComponent {
         this.data_template.title = 'Product Uploaded';
         this.toastservice.successToast(this.data_template);
         this.router.navigate(['/dashboard/products']);
-
+        this.uploading = false;
       });
     }
   }

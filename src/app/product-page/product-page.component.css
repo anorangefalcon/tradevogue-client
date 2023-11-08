@@ -172,7 +172,7 @@
         & span {
             font-size: 22px;
             border: 1px solid transparent;
-            color: #fe9704;
+            color: rgb(var(--goldClr));
 
             font-variation-settings:
                 'wght' 400,
@@ -549,6 +549,14 @@
         padding-inline-start: 10px;
     }
 
+}
+
+.table-list{
+    border-radius: 4px;
+} 
+
+.inventory {
+    font-size: 11px !important;
 }
 
 .review-form {

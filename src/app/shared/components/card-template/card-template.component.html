@@ -1,8 +1,8 @@
 <div class="card-item-template card-template-structure">
     <a routerLink='/product/{{product.sku}}' class="pointer d-flex flex-column gap-10">
         <div class="card-item-header skeleton">
-            <img [src]=product.assets?.[0]?.photo[1] alt="Product Image">
-            <img class="hover-img" [src]=product.assets?.[0]?.photo[0] alt="Product Image">
+            <img loading="lazy" [src]=product.assets?.[0]?.photo[1] alt="Product Image">
+            <img loading="lazy" class="hover-img" [src]=product.assets?.[0]?.photo[0] alt="Product Image">
         </div>
 
         <div class="card-item-content d-flex flex-column align-item-center gap-5">

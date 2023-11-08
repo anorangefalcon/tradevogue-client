@@ -48,9 +48,6 @@ a:not([class]) {
     text-decoration-skip-ink: auto;
 }
 
-.default-animation {
-    animation: show-animation 0.3s ease-in-out;
-}
 
 /* Make images easier to work with */
 img,
@@ -120,6 +117,7 @@ select {
     --yellow-clr: 249, 165, 80;
     --green-clr: var(--success);
     --red-clr: var(--danger);
+    --goldClr: 254, 151, 4;
 
 }
 
@@ -884,6 +882,7 @@ button {
 
 
 /* Checkbox Toogle */
+
 .slide-button{
     & input[type="checkbox"]{
         appearance: none;
@@ -919,8 +918,11 @@ button {
       
     & input[type="checkbox"]:checked + label::before{
         transform: translateX(19px);
+    }
+    
+    & input[type="checkbox"]:checked + label{
         background-color: rgb(var(--success));
-      }
+    }
 }
 
 /* Button loading  */
@@ -936,15 +938,6 @@ button {
     border-top-color: rgb(var(--primaryClr));;
     animation: spinner .8s linear infinite;
 }
-
-
-.spinner{
-    color: transparent;
-}
-
-@keyframes spinner {
-    to {transform: rotate(360deg);}
-  }
 
 @media screen and (max-width: 450px) {
 
@@ -964,19 +957,6 @@ button {
 
     }
 }
-
-@keyframes show-animation {
-    0% {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-
-    100% {
-        opacity: 1;
-        transform: translateY(0px);
-    }
-}
-
 
 @media screen and (max-width: 768px) {
 
@@ -1015,6 +995,33 @@ button {
 
 
 /* loadings */
+/* animations */
+
+.spinner{
+    color: transparent;
+}
+
+@keyframes spinner {
+    to {transform: rotate(360deg);}
+  }
+
+.default-animation {
+    animation: show-animation 0.5s ease-in-out;
+}
+
+
+@keyframes show-animation {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0px);
+    }
+}
+
 
 .tv-loading{
     height: 70vh;
@@ -1069,7 +1076,6 @@ button {
     }
 }
 
-
 .skeleton{
     animation: skeleton-loading 1s linear infinite alternate;
 }
@@ -1085,6 +1091,8 @@ button {
 
     animation: skeleton-left-right 1s linear infinite;
 }
+
+
 
 @keyframes skeleton-loading {
     from{

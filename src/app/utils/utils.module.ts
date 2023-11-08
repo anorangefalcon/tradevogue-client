@@ -36,10 +36,16 @@ export class UtilsModule {
 
     // Dashboard
     fetchOverallData: 'http://localhost:1000/admin/getOverallInfo',
+    fetchSalesStats: 'http://localhost:1000/admin/fetchSalesData',
+    fetchCategoryStats: 'http://localhost:1000/admin/fetchCategoryData',
+    fetchReviewStats: 'http://localhost:1000/admin/fetchReviewData',
+    fetchPopularProducts: 'http://localhost:1000/admin/fetchPopularProducts',
+
     addproduct: 'http://localhost:1000/admin/addProduct',
     fetchProductInventory: 'http://localhost:1000/admin/fetchProducts',
     fetchProductDetails: 'http://localhost:1000/admin/fetchProductDetails',
     updateproduct: 'http://localhost:1000/admin/updateProduct',
+    highlightProduct: 'http://localhost:1000/admin/updatehighlightProduct',
     deleteproducts: 'http://localhost:1000/admin/deleteProducts',
     fetchFeatures: 'http://localhost:1000/admin/fetchProductFeatures',
     updateFeatures: 'http://localhost:1000/admin/updateProductFeature',

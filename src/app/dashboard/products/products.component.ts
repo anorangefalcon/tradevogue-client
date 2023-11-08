@@ -18,6 +18,7 @@ export class ProductsComponent implements OnInit {
   selectedColor: any = 0;
   totalCount: any;
   selectAll: boolean = false;
+  highlight: number = 0;
   deleteDataField: any = {};
 
   categoryOption!: any[];
@@ -56,7 +57,6 @@ export class ProductsComponent implements OnInit {
       if (res == true) {
         await this.fetchdata.httpPost(this.backendUrl.URLs.deleteproducts, this.deleteDataField);
         this.fetchData();
-        this.dialogBoxService.responseEmitter.next(false);
       }
     });
   }
@@ -65,13 +65,19 @@ export class ProductsComponent implements OnInit {
     try {
       this.fetchdata.HTTPPOST(this.backendUrl.URLs.fetchProductInventory, this.template).subscribe({
         next: (res) => {
+          console.log(res);
+
           this.productArray = res;
           this.productList = [];
           this.totalCount = this.productArray.pageInfo[0].count;
+          this.highlight = this.productArray.pageInfo[0].highlightCount;
+
           this.productArray.data.forEach((product: any) => {
+
             let item = {
               _id: product.productInfo._id,
               itemId: product.productInfo.sku,
+              highlight: product.productInfo.highlight,
               image: product.productInfo.assets[0].photo[0],
               name: product.productInfo.name,
               price: product.productInfo.price,
@@ -86,7 +92,8 @@ export class ProductsComponent implements OnInit {
               checked: false
             }
             this.productList.push(item);
-          })
+          });
+
         }
       });
     } catch (err) {
@@ -94,8 +101,28 @@ export class ProductsComponent implements OnInit {
     }
   }
 
-  // Check for tables
+  highlightProduct(e: Event, id: string, index: number) {
+    const status = (<HTMLInputElement>e.target).checked;
+    
+    // Purpose of Settime is to resolve the issue of delay as checkbox take time and function is called before
+    setTimeout(() => {
+      if (this.highlight >= 10 && status) {
+        this.productList[index].highlight = false;
+        this.toastService.notificationToast({ title: 'Maximum 10 Highlight Allowed' });
+        return;
+      }
 
+      const body = { '_id': id, 'status': status };
+      this.fetchdata.HTTPPOST(this.backendUrl.URLs.highlightProduct, body).subscribe({
+        next: (data: any) => {
+          this.highlight = data.highlightCount;
+          this.productList[index].highlight = status;
+        }
+      })
+    }, 0.1);
+  }
+
+  // Check for tables
   toggleSelectAll() {
     this.productList.forEach((product: any) => {
       product.checked = this.selectAll;
@@ -142,6 +169,11 @@ export class ProductsComponent implements OnInit {
         (data[1].trim(' ') == "Low to High") ? this.template.filter['stockQuantity'] = 1 : this.template.filter['stockQuantity'] = -1;
       }
     }
+
+    // reset Pagination
+    this.currentPage = 1
+    this.template.page = 1;
+
     this.fetchData();
   }
 
@@ -183,8 +215,6 @@ export class ProductsComponent implements OnInit {
   // Purpose to detemine the quantiy of product->color->size based upon orderQuantity
   filterData(array: any, limit: any) {
     let filteredArray = array.filter((item: any) => item <= limit);
-    // console.log(array, "   --  ", limit, " --> ", filteredArray);
-
     return filteredArray;
   }
 
@@ -222,7 +252,7 @@ export class ProductsComponent implements OnInit {
         type: 'bulk',
         data: excel.data
       };
-      
+
       this.fetchdata.HTTPPOST(this.backendUrl.URLs.addproduct, formData).subscribe({
         next: (res: any) => {
           this.toastService.successToast("Data Uploaded Successfuly");
@@ -253,5 +283,13 @@ export class ProductsComponent implements OnInit {
       // })
       // })
     })
+  }
+
+  tableGenerator(len: number){
+    let temp = []
+    for(let i=0;i<len;i++){
+      temp.push(0);
+    }
+    return temp;
   }
 }

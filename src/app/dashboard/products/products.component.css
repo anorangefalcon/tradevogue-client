@@ -1,20 +1,14 @@
-.search-bar{
-    width: auto    
+.search-bar {
+    width: auto
 }
 
-button:disabled{
+button:disabled {
     background-color: antiquewhite;
 }
 
 #product-section {
 
-    & .product-table {
-        gap: 25px;
-        border-radius: 10px;
-    }
-
     & .operational-buttons {
-        gap: 20px;
 
         & button {
             border: 1px solid rgba(var(--blackClr), 0.1);
@@ -35,9 +29,6 @@ button:disabled{
             font-size: 22px;
             font-weight: 300;
             transition: transform 0.3s ease-in-out;
-            /* &:is(:hover) {
-                transform: scale(1.1);
-            } */
         }
 
         & button:first-child .operational-buttons-icons {
@@ -47,13 +38,14 @@ button:disabled{
         & button:last-child .operational-buttons-icons {
             color: rgb(var(--red-clr));
         }
+
         & button:disabled:last-child .operational-buttons-icons {
             color: rgb(var(--red-clr), 0.5);
         }
     }
 
     & .file-section {
-        & input[type="file"] {
+        & input[type="f sile"] {
             display: none;
         }
 
@@ -89,7 +81,7 @@ button:disabled{
 
 }
 
-.items.displayInfo:hover > .popup {
+.items.displayInfo div:hover>.popup {
     opacity: 1;
     visibility: visible;
     pointer-events: all;
@@ -97,16 +89,15 @@ button:disabled{
 }
 
 
-
 .popup {
-    display: none;
     position: absolute;
+    inset-block-start: 100%;
     inset-inline-start: 50%;
     transform: translateX(-50%);
     z-index: 10;
     visibility: hidden;
+    opacity: 0;
     pointer-events: none;
-    opacity: 1;
     transition: all 0.3s ease-in-out;
     background-color: rgb(var(--whiteClr));
     margin-top: 12px;
@@ -147,10 +138,11 @@ button:disabled{
 
     & .popup_content {
         background-color: rgb(var(--whiteClr));
-        border: 1px solid rgba(var(--blackClr), 0.2);
+        /* border: 1px solid rgba(var(--blackClr), 0.2); */
+        box-shadow: 0px 0px 10px rgba(var(--blackClr), 0.3);
         padding: 8px;
         border-radius: 4px;
-
+        
     }
 
     & input[type="radio"] {
@@ -179,11 +171,37 @@ button:disabled{
         background-color: rgb(var(--whiteClr));
     }
 
-    & .items{
+    & .items {
         padding: 5px 10px !important;
         font-size: 10px !important;
     }
 
+}
+
+.items.action-btns {
+
+    & input[type="checkbox"]+label::before {
+        content: '\e838';
+        font-family: 'Material Symbols Outlined';
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 20px;
+        width: 20px;
+        font-size: 22px;
+        font-weight: 300;
+    }
+
+    & input[type="checkbox"]:checked+label::before {
+        content: '\e838';
+        font-size: 20px;
+        color: rgb(var(--goldClr));
+        font-variation-settings:
+            'FILL' 1,
+            'wght' 400,
+            'GRAD' 0,
+            'opsz' 24
+    }
 }
 
 .info__icon {
@@ -196,8 +214,8 @@ button:disabled{
     height: 40px;
     padding-block: 0;
     padding-inline: 16px;
-}                                     
-                                                          
+}
+
 @media screen and (max-width: 780px) {
 
     .popup {
@@ -213,7 +231,7 @@ button:disabled{
         background-color: rgb(var(--blackClr), 0.1);
         margin-top: 0;
 
-        &::before{
+        &::before {
             display: none;
         }
 

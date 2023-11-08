@@ -116,7 +116,7 @@ export class AddproductfeaturesComponent {
     console.log('deleted called');
     this.deleteObject.field = field;
     this.deleteObject.index = index;
-    this.DialogBoxService.confirmationDialogBox(this.field_data[field][index]);
+    this.DialogBoxService.confirmationDialogBox();
   }
 
   async addItem(item: any, field: string) {

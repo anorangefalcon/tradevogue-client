@@ -8,6 +8,11 @@
                 <span class="back_icon material-symbols-outlined">arrow_back_ios_new</span>
             </button>
 
+            <button *ngIf="editPage" class="previous d-flex flex-center pointer transition" [routerLink]="['/dashboard/products']"
+                [ngStyle]="{display: current_form == 'product_images'? 'none' : 'flex' }">
+                <span class="back_icon material-symbols-outlined">arrow_back_ios_new</span>
+            </button>
+
 
             <h2 *ngIf="current_form != 'product_images'; else title2">Basic Info</h2>
             <ng-template #title2>
@@ -19,10 +24,10 @@
 
         <div class="d-flex align-item-center gap-15">
 
-            <button class="btn-secondary d-flex flex-center gap-5" (click)="show = true"
+            <!-- <button class="btn-secondary d-flex flex-center gap-5" (click)="show = true"
                 [ngStyle]="{display: current_form == 'product_images'? 'none' : 'flex'}">
                 Add Product Features
-            </button>
+            </button> -->
 
             <button class="btn-primary d-flex flex-center gap-5" (click)="checkFormStatus()"
                 [ngStyle]="{display: current_form == 'product_images'? 'none' : 'flex', 'background-color': productsForm.get('basicinfo')?.invalid? 'rgb(var(--primaryClr), 0.8)' : 'rgb(var(--primaryClr))'}">
@@ -100,18 +105,36 @@
                                         </ng-template>
                                     </div>
                                 </div>
-
                             </div>
 
                             <div class="form__group ">
                                 <label for="colors" class="input__label">Colors<span class="important">*</span></label>
                                 <div class="color__picker grid gap-10">
-                                    <span *ngFor="let c of common_colors; let x=index">
-                                        <input type="radio" [name]="'color'" [id]="'color_'+i+x" style="display: none;"
+                                    <ng-container *ngFor="let c of common_colors; let x=index">
+                                        <input type="radio" [name]="'color'" [id]="'color_'+ i + c" style="display: none;"
                                             [value]="c" formControlName="color" />
-                                        <label class="  pointer d-flex flex-center" [for]="'color_'+i+x"
+                                        <label class="pointer d-flex flex-center" [for]="'color_'+ i + c"
                                             [style]="'background-color:'+c"></label>
+                                    </ng-container>
+                                    <span class="relative">
+                                        <input type="color" [id]="'color'+i+'p'" class="absolute" value="red"
+                                            (input)="updateColor($event, i)">
+                                        <label [for]="'color'+i+'p'" class="pointer picker__label d-flex flex-center">
+                                            <span
+                                                class="material-symbols-outlined color_picker_icon d-flex flex-center mh100">add</span>
+                                        </label>
                                     </span>
+                                    <!-- <ng-container *ngIf="new_colors.length != 0"> -->
+                                        <ng-container  *ngFor="let color of new_colors; let x=index">
+                                            <input type="radio" [name]="'color'" [id]="'color_'+ i + color" style="display: none;"
+                                                [value]="color" formControlName="color" />
+                                            <label class="pointer d-flex flex-center" [for]="'color_'+ i + color"
+                                                [style]="'background-color:'+ color"></label>
+                                        </ng-container>
+                                    <!-- </ng-container> -->
+
+
+
                                     <span class="error">
                                         <small
                                             *ngIf="form.get('colors')?.hasError('required') && form.get('colors')?.touched">*Field
@@ -121,7 +144,7 @@
                             </div>
                             <div formArrayName="stockQuantity" class="d-flex flex-column gap-20">
 
-                                <table>
+                                <table class="stock-table">
                                     <thead>
                                         <tr style="text-align: left;">
                                             <th>Size<span class="important">*</span></th>
@@ -129,7 +152,7 @@
                                             <th>
                                                 <div class="d-flex flex-column gap-10 ">
                                                     <i (click)="addStockQuantityForm(i)"
-                                                        class="material-symbols-outlined options_icon delete__icon d-flex flex-center pointer transition">add</i>
+                                                        class="material-symbols-outlined btn-secondary options_icon delete__icon d-flex flex-center pointer transition">add</i>
                                                 </div>
                                             </th>
                                         </tr>
@@ -143,9 +166,7 @@
 
                                                 <td>
                                                     <div class="form__group">
-
-
-
+                                                        
                                                         <app-custom-select [_id]=" '' + i + j"
                                                             [options]="sizes ? sizes: []" [type]="''"
                                                             [selectedOption]="(_form.get('size')?.value ? _form.get('size')?.value : 'Select Size')"
@@ -175,7 +196,7 @@
                                                 </td>
 
                                                 <td>
-                                                    <div class=" options d-flex flex-column gap-10 ">
+                                                    <div class="options d-flex flex-center transition gap-10 ">
                                                         <i (click)="deleteStockQuantityForm(i, j)"
                                                             [ngStyle]="{'display': j !=0 ? 'flex': 'none'}"
                                                             class="material-symbols-outlined options_icon delete__icon d-flex flex-center pointer transition">close</i>
@@ -382,6 +403,13 @@
         </ng-container>
     </form>
 </section>
+
+
+<div *ngIf="uploading" class="tv-loading uploading d-flex flex-center inset-inline-start-0 mh100 mw100">
+    <img src="../../../assets/logo-mobile.svg" alt="tradeVogue-loading">
+    <div class="circle-tv-loader"></div>
+</div>
+
 
 
 <!-- <app-drawer [direction]="'bottom'" [show]="show" (showChange)="ShowChangeHandler($event)">
