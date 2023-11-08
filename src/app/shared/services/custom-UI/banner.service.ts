@@ -16,4 +16,17 @@ export class BannerService {
   getBanners() {
     return this.http.get(this.backendUrls.URLs.getBanners);
   }
+
+  deleteBanner(data: any){
+    return this.http.post(this.backendUrls.URLs.deleteBanner, data)
+  }
+
+  updateBanner(data: any) {
+    return this.http.post(this.backendUrls.URLs.updateBanner, data)
+  }
+
+  toggleBanner(data: any){
+    return this.http.post(this.backendUrls.URLs.toggleBanner, data)
+  }
+  
 }

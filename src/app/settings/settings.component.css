@@ -614,12 +614,15 @@ label span {
 }
 
 .cart-btn {
-    /* padding-inline: 14px;
-    padding-block: 7px; */
-    font-size: 12px !important;
-}
+    padding-block: 10px;
+    padding-inline: 18px;
+    font-size: 14px !important;
 
-.cancelled {
-    display: flex;
-    justify-content: flex-end;
+    & span {
+        font-size: 18px;
+    }
+}
+.wishlist-name {
+    font-size: 15px !important;
+    font-weight: 500;
 }

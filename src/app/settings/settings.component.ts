@@ -12,6 +12,7 @@ import { StripPaymentService } from '../shared/services/stripe-Integration/strip
 import { WishlistService } from '../shared/services/wishlist.service';
 import { DialogBoxService } from '../shared/services/dialog-box.service';
 
+import { ToastService } from '../shared/services/toast.service';
 @Component({
   selector: 'app-settings',
   templateUrl: './settings.component.html',
@@ -55,14 +56,20 @@ export class SettingsComponent {
   TranslateData: boolean = false;
 
   // private toastService: ToastService
-  constructor(private backendURLs: UtilsModule, private wishlistService:WishlistService, private fetchDataService: FetchDataService, private fb: FormBuilder, private cartService: CartService, private route: ActivatedRoute, private stripePay: StripPaymentService, private dialogBox: DialogBoxService) {
+  constructor(private backendURLs: UtilsModule,
+     private wishlistService: WishlistService, 
+     private fetchDataService: FetchDataService, 
+     private fb: FormBuilder,
+     private cartService: CartService, 
+     private route: ActivatedRoute, 
+     private stripePay: StripPaymentService,
+     private toastService : ToastService,
+     private dialogBox : DialogBoxService) {
 
     this.route.queryParams.subscribe(params => {
       const redirectStatus = params['redirect_status'];
       if (redirectStatus === 'succeeded') {
         console.log("yes succeed")
-
-        
         this.stripePay.checkOrderStatus()
       }
     });
@@ -70,8 +77,6 @@ export class SettingsComponent {
     // if(this.route.url()=='/cart/billing'){
     //   this.getOrders();
     // }
-    
-    
 
     this.ProfileForm = fb.group(
       {
@@ -107,110 +112,6 @@ export class SettingsComponent {
     
   };
 
-  async changeComponent(el: string) {
-    this.showData = el;
-    this.TranslateData = true;
-    if (el == 'wishlist') {
-      this.showLists();
-    }
-  }
-
-  showLists() {
-    this.fetchDataService.HTTPGET(this.backendURLs.URLs.showWishlist).subscribe((data: any) => {
-      this.productsArray = data.wishlists;
-      console.log(this.productsArray, "djckdsb");
-    })
-  }
-
-  async showWishlistedProducts(wishlist: string, index: number) {
-
-
-    const body = {
-      wishlistName: wishlist
-    }
-
-    this.fetchDataService.HTTPPOST(this.backendURLs.URLs.showProducts, body).subscribe((data) => {
-      this.wishlistedProducts = data;
-      console.log(data, "products?/?");
-      
-      console.log(this.wishlistedProducts, "wishlisted products");
-
-    })
-
-
-
-    if (this.openedAccordionIndex === index) {
-      this.openedAccordionIndex = null; // Close the currently open accordion
-    } else {
-      this.openedAccordionIndex = index; // Open the selected accordion
-    }
-
-  }
-
-  removeWishlist(index: number) {
-    console.log("del dunc");
-
-    this.wishlistService.removeWishlist({ index }).subscribe((data) => {
-      console.log("am i called?");
-      this.showLists()
-    })
-  }
-
-  async removeFromWishlist(productId: any, wishlistName: string, index: number) {
-    // console.log(productId, "del");
-    const delProduct = {
-      wishlistName: wishlistName,
-      productId: productId
-    }
-    // console.log(delProduct);
-
-    let delData = await this.fetchDataService.httpPost(this.backendURLs.URLs.deleteFromWishlist, delProduct)
-
-    // console.log(delData, "del");
-    // this.showWishlistedProducts(wishlistName, index)
-
-    // console.log("del function");
-    // console.log(this.productsArray, "products array");
-
-    // this.productsArray.forEach((wishlists: any)=>{
-    //   if (wishlists.wishlistName == wishlistName){
-    //     console.log(wishlists, "before splice");
-
-    //     // wishlists.splice(productId, 1);
-    //     wishlists.products.splice(wishlists.products.indexOf(productId),1);
-    //     console.log(wishlists, "after splice");
-
-
-
-    //   }
-
-    // })
-
-
-    this.wishlistedProducts.forEach((product: any) => {
-      // console.log(product, "single product");
-      if (product.productDetails._id == productId) {
-        this.wishlistedProducts.splice(this.wishlistedProducts.indexOf(product), 1)
-        this.wishlistService.WishlistCount.next(this.wishlistService.WishlistCount.value - 1);
-      }
-
-
-    })
-
-
-
-    // this.wishlistService.removeFromWishlist(productId,wishlistName,index);
-    // this.wishlistService.delete$.subscribe((data)=)
-
-
-
-
-  }
-
-  moveToCart(sku: any) {
-    this.cartService.addToCart({ sku });
-  }
-
   async ngOnInit() {
     this.fetchDataService.HTTPGET(this.backendURLs.URLs.getDetails).subscribe((data: any) => {
       data.firstname = data.name.firstname;
@@ -222,6 +123,67 @@ export class SettingsComponent {
       this.ProfileForm.patchValue(data);
     })
   }
+
+  async changeComponent(el: string) {
+    this.showData = el;
+    this.TranslateData = true;
+    if (el == 'wishlist') {
+      this.showWishlists();
+    }
+  }
+
+  // wishlist work 
+  showWishlists() {
+    this.fetchDataService.HTTPGET(this.backendURLs.URLs.showWishlist).subscribe((data: any) => {
+      this.productsArray = data.wishlists;
+      console.log(this.productsArray, "wishlists");
+    })
+  }
+
+  showWishlistedProducts(wishlist: string) {
+    this.wishlistService.showWishlistedProducts(wishlist).subscribe((data) => {
+      this.wishlistedProducts = data;
+    })
+  }
+
+  toggleAccordian(index: any) {
+    if (this.openedAccordionIndex === index) {
+      this.openedAccordionIndex = null; 
+    } else {
+      this.openedAccordionIndex = index; 
+    }
+  }
+
+  removeWishlist(index: number) {
+    this.wishlistService.removeWishlist({ index }).subscribe((data: any) => {
+      const toast = {
+        title : data.message
+      }
+      this.toastService.warningToast(toast);
+      this.showWishlists()
+    })
+  }
+
+  removeFromWishlist(productId: any, wishlistName: string) {
+    this.wishlistService.removeFromWishlist(productId, wishlistName).subscribe((res: any)=>{
+      console.log(res, "del res"); 
+
+      if (res.response.modifiedCount) {
+        // this.deleteProduct.next(true);
+      }
+    })
+    this.wishlistedProducts.forEach((product: any) => {
+      if (product.productDetails._id == productId) {
+        this.wishlistedProducts.splice(this.wishlistedProducts.indexOf(product), 1)
+        this.wishlistService.WishlistCount.next(this.wishlistService.WishlistCount.value - 1);
+      }
+    })
+  }
+
+  moveToCart(sku: any) {
+    this.cartService.addToCart({ sku });
+  }
+
 
   getAddresses() {
     this.showData = 'addresses';

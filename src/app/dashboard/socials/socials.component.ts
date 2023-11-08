@@ -26,7 +26,7 @@ export class SocialsComponent {
     });
 
     this.socialsService.getSocials().subscribe((data: any) => {
-      console.log(data);
+      console.log(data, "social data");
       
       this.socialsForm.setValue({
         email: data.email,

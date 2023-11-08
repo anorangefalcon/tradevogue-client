@@ -72,39 +72,42 @@ export class WishlistService {
     }
     this.fetchDataService.HTTPPOST(this.utils.URLs.addToWishlist, body).subscribe((response: any) => {
       if (!response) return;
-      this.toastService.notificationToast(response.message);
+      console.log(response, "add response");
+      const toast = {
+        title : response.message
+      }
+      this.toastService.notificationToast(toast);
       this.WishlistCount.next(this.WishlistCount.value + 1);
     })
   }
 
-  async removeFromWishlist(productId: any, wishlistName: string, index: number) {
-    console.log("del service function");
-    console.log(productId, "del");
+removeFromWishlist(productId: any, wishlistName: string) {
     const delProduct = {
       wishlistName: wishlistName,
       productId: productId
     }
-    console.log(delProduct);
-
-    let delData = await this.fetchDataService.HTTPPOST(this.backendUrls.URLs.deleteFromWishlist, delProduct).subscribe((data: any) => {
+    return this.fetchDataService.HTTPPOST(this.backendUrls.URLs.deleteFromWishlist, delProduct);
+    let delData = this.fetchDataService.HTTPPOST(this.backendUrls.URLs.deleteFromWishlist, delProduct).subscribe((data: any) => {
       console.log(data, "deleted is ");
 
       if (data.modifiedCount) {
         this.deleteProduct.next(true);
-        
       }
 
     })
-
-    // this.showWishlistedProducts(wishlistName, index)
-
   }
 
   removeWishlist (index: any) {
     return this.http.post(this.backendUrls.URLs.removeWishlist, index);
+    
   }
 
-
+  showWishlistedProducts(wishlist: string){
+    const body = {
+      wishlistName : wishlist
+    }
+    return this.http.post(this.backendUrls.URLs.showProducts, body);
+  }
 
 
 }

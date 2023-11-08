@@ -1,0 +1,133 @@
+.form__card__head {
+    padding: 25px;
+    border: 1px solid rgb(var(--blackClr), 0.1);
+    background-color: rgb(var(--whiteClr));
+    border-radius: 10px;
+
+    & button {
+        border: 1px solid;
+        padding: 12px;
+        padding-block: 8px;
+        padding-inline: 18px;
+    }
+}
+
+.form__card {
+
+    & .image-upload-div {
+        width: 40%;
+    }
+
+    & .data-upload-div {
+        width: 60%;
+    }
+
+    & .internal-div {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+    }
+}
+
+.add-btn {
+    padding-block: 14px;
+    padding-inline: 18px;
+
+    & span {
+        font-size: 20px;
+    }
+}
+.remove-banner-btn {
+    right: -10px;
+    top: -10px;
+    padding: 4px;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+
+    & span {
+        font-size: 20px;
+    }
+}
+.image-upload-div {
+    background: rgb(var(--secondary));
+    border-radius: 10px;
+    /* border: 1px dashed rgb(var(--textClr), 0.5); */
+
+    & input[type="file"] {
+        display: none;
+
+        &::-webkit-file-upload-button {
+            display: none;
+        }
+    }
+
+    & .upload__block {
+        border-radius: 50%;
+      
+        padding: 50px;
+        font-size: 10px;
+        font-weight: 500;
+        color: rgb(var(--blackClr), 0.6);
+
+    }
+
+    & label {
+        background: #ffffff;
+        padding: 46px;
+        height: 40px;
+        width: 40px;
+        border-radius: 50%;
+    }
+
+    & .upload_icon {
+        font-size: 48px;
+        opacity: 0.7;
+    }
+
+}
+.preview-image {
+    width: 80%;
+    height : 80%;
+    border: none;
+}
+.remove-btn {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    background-color: rgb(var(--whiteClr), 0.6);
+    border-radius: 50%;
+    padding: 2px;
+    font-size: 18px;
+}
+.banner-label {
+    color: rgb(var(--blackClr), 0.7)
+}
+.banner-image {
+    position: absolute;
+    top: 0;
+    border-radius: 6px;
+}
+.loader {
+    position: absolute;
+    right: 20px;
+    bottom: 20px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 2px solid #ffffff;
+    border-top-color: rgb(var(--primaryClr));;
+    animation: spinner .8s linear infinite;
+}
+
+.color-circle {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 0.5px solid black;
+}
+
+@keyframes spinner {
+    to {transform: rotate(360deg);}
+  }
+

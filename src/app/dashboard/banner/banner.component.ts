@@ -13,7 +13,10 @@ export class BannerComponent {
   bannerForm!: FormGroup;
   alignment: string[] = ['Left', 'Right', 'Center'];
   previewImage: any;
-  
+  bannerData : any;
+  preview: any;
+  checked : boolean = false;
+
   constructor(private fb: FormBuilder, private bannerService: BannerService, private uploadService: ImageUploadService) {
 
     this.bannerForm = this.fb.group({
@@ -33,6 +36,37 @@ export class BannerComponent {
         })
       ])
     })
+
+  }
+
+
+  getBanners(){
+    this.bannerService.getBanners().subscribe((data: any) => {
+      this.bannerData=data;
+      const bannerFormArray = this.bannerData.map((banner: any) => this.fb.group({
+        backgroundImage: [banner.backgroundImage, Validators.required],
+        title: [banner.title, Validators.required],
+        subTitle: [banner.subTitle, Validators.required],
+        buttonText: [banner.buttonText, Validators.required],
+        buttonLink: [banner.buttonLink, Validators.required],
+        contentAlign: [banner.contentAlign, Validators.required],
+        colors: this.fb.group({
+          titleColor: banner.colors.titleColor,
+          subTitleColor: banner.colors.subTitleColor,
+          buttonColor: banner.colors.buttonColor
+        })
+      }));
+
+      this.bannerForm.setControl('banner', this.fb.array(bannerFormArray));
+      this.bannerForm.disable();
+    });
+  }
+
+  ngOnInit(){
+    // this.bannerService.getBanners().subscribe((data: any) => {
+      // console.log(data, "banners data");
+      // this.bannerData = data;
+    this.getBanners();
 
   }
 
@@ -61,41 +95,23 @@ export class BannerComponent {
   }
 
   onUpdate() {
-    // if (this.bannerForm.valid) {
-
-    //   // this.bannerForm?.get('banner')?.value.forEach((formgroup: any, index: number) => {
-
-    //   //   this.upload.fileupload([{ file: formgroup.backgroundImage }]).then((url: any) => {
-    //   //     console.log(url);
-    //   //     this.bannerForm.get('banner')?.get(String(index))?.get('backgroundImage')?.setValue(url[0]);
-
-    //   //   })
-
-    //   //   console.log(this.bannerForm.value);
-
-    //   // })
-
-    // }
-
     console.log(this.bannerForm.value, "valueeee");
-
     this.bannerService.setBanners(this.bannerForm.value).subscribe((data) => {
       console.log(data, "subscribed data");
-
+      this.bannerForm.disable();
     })
-
   }
 
   updateContentAlign(index: number, value: string) {
     // const bannerArray = this.bannerForm.get('banner') as FormArray;
     console.log(value, "njkn");
-    
+
     // const bannerGroup = bannerArray.at(index) as FormGroup;
     // bannerGroup.get('contentAlign')?.setValue(value);
     this.bannerForm.get('banner')?.get(String(index))?.get('contentAlign')?.setValue(value);
   }
 
-  preview: any;
+  
 
   getImages() {
     return this.bannerForm.get('backgroundImage')?.value;
@@ -111,8 +127,8 @@ export class BannerComponent {
       this.bannerForm.get('banner')?.get(String(formIndex))?.get('backgroundImage')?.setValue(url[0]);
       console.log("hiii?");
       console.log(this.bannerForm);
-      
-      
+
+
       this.getImagePreview(formIndex);
     })
   }
@@ -122,7 +138,7 @@ export class BannerComponent {
     return value;
   }
 
-  removeImage(index: any){
+  removeImage(index: any) {
     const bannerArray = this.bannerForm.get('banner') as FormArray;
     const bannerControl = bannerArray.at(index) as FormGroup;
     bannerControl.get('backgroundImage')?.reset('');

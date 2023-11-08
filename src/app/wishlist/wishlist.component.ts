@@ -17,18 +17,16 @@ export class WishlistComponent {
   direction: any = 'popup';
   show: boolean = false;
   new: string = "";
-  selectedWishlist: string = '';
+  newWishlist: string = '';
   productId: any;
   product: any;
   showTextField: boolean = false;
   showAddLabel: boolean = true;
   productName: string = "";
+  ParentClosed:boolean=false;
 
   constructor(private wishlistService: WishlistService,
-    private utils: UtilsModule,
-    private fetchDataService: FetchDataService,
     private toastService: ToastService) {
-  
   }
 
   async ngOnInit() {
@@ -42,18 +40,13 @@ export class WishlistComponent {
     })
   }
 
-
-  async addToWishlist(wishlistName: string = '') {
-    if(!wishlistName){
-      wishlistName=this.selectedWishlist
-    }
+  async addToWishlist(wishlistName: string) {
     this.wishlistService.AddtoWishlist(wishlistName);
     this.ParentClosed=true;
     this.showTextField=false;
+    this.newWishlist = "";
   }
   
-  ParentClosed:boolean=false;
-
   ParenClosedHandler(event:any){
   this.ParentClosed=event;
   }

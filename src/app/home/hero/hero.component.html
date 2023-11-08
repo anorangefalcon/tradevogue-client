@@ -3,85 +3,95 @@
         <owl-carousel-o [options]="customOptions">
             <ng-container *ngFor="let banner of bannerData">
                 <ng-template carouselSlide>
-                    <div class="banner-background" [ngStyle]="{
+                    <ng-container *ngIf="!banner.title; else bannerData1">
+                        <a [routerLink]="[getLink(banner.buttonLink)]">
+                            <div class="banner-background" [ngStyle]="{
+                            'background-image': 'url(' + banner.backgroundImage + ')',
+                            'background-size': 'cover',
+                            'background-position': 'center'
+                          }">
+                            </div>
+                        </a>
+                    </ng-container>
+                    <ng-template #bannerData1>
+                        <div class="banner-background" [ngStyle]="{
                         'background-image': 'url(' + banner.backgroundImage + ')',
                         'background-size': 'cover',
                         'background-position': 'center'
                       }">
-                        <div class="container hero-content d-flex flex-wrap default-animation">
-                            <ng-template *ngIf="banner.contentAlign === 'Left'">
-                                <div class="hero-text-container" style="margin-inline-start: 0;">
-                                    <h1 class="heading">
-                                        <p class="title" [ngStyle]="{'color' : banner.colors.subTitleColor}">
-                                            {{banner.subTitle}}</p>
-                                        <h3 [ngStyle]="{'color' : banner.colors.titleColor}">{{banner.title}}</h3>
-                                    </h1>
-                                    <a [routerLink]="['explore']">
-                                        <button class="heading-button" [ngStyle]="{'color' : banner.colors.buttonColor, 
+                            <div class="container hero-content d-flex flex-wrap default-animation">
+                                <ng-template *ngIf="banner.contentAlign === 'Left'">
+                                    <div class="hero-text-container" style="margin-inline-start: 0;">
+                                        <h1 class="heading">
+                                            <p class="title" [ngStyle]="{'color' : banner.colors.subTitleColor}">
+                                                {{banner.subTitle}}</p>
+                                            <h3 [ngStyle]="{'color' : banner.colors.titleColor}">{{banner.title}}</h3>
+                                        </h1>
+                                        <a [routerLink]="[getLink(banner.buttonLink)]">
+                                            <button class="heading-button" [ngStyle]="{'color' : banner.colors.buttonColor, 
                                         'border-color' : banner.colors.buttonColor}">Explore
-                                            More</button>
-                                    </a>
-                                </div>
-                            </ng-template>
-                            <ng-template *ngIf="banner.contentAlign === 'Center'">
-                                <div class="hero-text-container" style="margin-inline: auto">
-                                    <h1 class="heading">
-                                        <p class="title" [ngStyle]="{'color' : banner.colors.subTitleColor}">
-                                            {{banner.subTitle}}</p>
-                                        <h3 [ngStyle]="{'color' : banner.colors.titleColor}">{{banner.title}}</h3>
-                                    </h1>
-                                    <a [routerLink]="['explore']">
-                                        <button class="heading-button" [ngStyle]="{'color' : banner.colors.buttonColor, 
+                                                More</button>
+                                        </a>
+                                    </div>
+                                </ng-template>
+                                <ng-template *ngIf="banner.contentAlign === 'Center'">
+                                    <div class="hero-text-container" style="margin-inline: auto">
+                                        <h1 class="heading">
+                                            <p class="title" [ngStyle]="{'color' : banner.colors.subTitleColor}">
+                                                {{banner.subTitle}}</p>
+                                            <h3 [ngStyle]="{'color' : banner.colors.titleColor}">{{banner.title}}</h3>
+                                        </h1>
+                                        <a [routerLink]="[getLink(banner.buttonLink)]">
+                                            <button class="heading-button" [ngStyle]="{'color' : banner.colors.buttonColor, 
                                         'border-color' : banner.colors.buttonColor}">Explore
-                                            More</button>
-                                    </a>
-                                </div>
-                            </ng-template>
-                            <ng-template *ngIf="banner.contentAlign === 'Right'">
-                                <div class="hero-text-container" style="margin-inline-end: 0;">
-                                    <h1 class="heading">
-                                        <p class="title" [ngStyle]="{'color' : banner.colors.subTitleColor}">
-                                            {{banner.subTitle}}</p>
-                                        <h3 [ngStyle]="{'color' : banner.colors.titleColor}">{{banner.title}}</h3>
-                                    </h1>
-                                    <a [routerLink]="['explore']">
-                                        <button class="heading-button" [ngStyle]="{'color' : banner.colors.buttonColor, 
-                                        'border-color' : banner.colors.buttonColor}">Explore
-                                            More</button>
-                                    </a>
-                                </div>
-                            </ng-template>
+                                                More</button>
+                                        </a>
+                                    </div>
+                                </ng-template>
+                                <ng-template *ngIf="banner.contentAlign === 'Right'">
+                                    <div class="hero-text-container" style="margin-inline-end: 0;">
+                                        <h1 class="heading">
+                                            <p class="title" [ngStyle]="{'color' : banner.colors.subTitleColor}">
+                                                {{banner.subTitle}}</p>
+                                            <h3 [ngStyle]="{'color' : banner.colors.titleColor}">{{banner.title}}</h3>
+                                        </h1>
+                                        <a [routerLink]="[getLink(banner.buttonLink)]">
+                                            <button class="heading-button" [ngStyle]="{'color' : banner.colors.buttonColor, 
+                                        'border-color' : banner?.colors?.buttonColor}">Explore
+                                                More</button>
+                                        </a>
+                                    </div>
+                                </ng-template>
 
-                            <div class="hero-text d-flex flex-column hero-text-container">
-                                <div class="hero-text-container">
-                                    <h1 class="heading">
-                                        <p class="title" [ngStyle]="{'color' : banner.colors.subTitleColor}">
-                                            {{banner.subTitle}}</p>
-                                        <h3 [ngStyle]="{'color' : banner.colors.titleColor}">{{banner.title}}</h3>
-                                    </h1>
-                                    <a [routerLink]="['explore']">
-                                        <button class="heading-button" [ngStyle]="{'color' : banner.colors.buttonColor, 
-                                    'border-color' : banner.colors.buttonColor}">Explore
-                                            More</button>
-                                    </a>
+                                <div class="hero-text d-flex flex-column hero-text-container">
+                                    <div class="hero-text-container">
+                                        <h1 class="heading">
+                                            <p class="title" [ngStyle]="{'color' : banner?.colors?.subTitleColor}">
+                                                {{banner.subTitle}}</p>
+                                            <h3 [ngStyle]="{'color' : banner?.colors?.titleColor}">{{banner.title}}</h3>
+                                        </h1>
+                                        <a [routerLink]="[getLink(banner.buttonLink)]">
+                                            <button class="heading-button" [ngStyle]="{'color' : banner?.colors?.buttonColor, 
+                                    'border-color' : banner?.colors?.buttonColor}">Explore
+                                                More</button>
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </ng-template>
                 </ng-template>
             </ng-container>
         </owl-carousel-o>
     </div>
     <owl-carousel-o [options]="customOptions">
-
-
-        <!-- <ng-container *ngIf="bannerData !== ''">
+        <ng-container *ngIf="bannerData == ''">
             <ng-template carouselSlide>
                 <div class="bg1">
                     <div class="container hero-content d-flex flex-wrap default-animation">
                         <div class="hero-model-img">
                             <img src="../../../assets/girl.png" alt="" class="hero-img1">
-            
+
                         </div>
                         <div class="hero-text d-flex align-item-center justify-content-center flex-column">
                             <div class="hero-text-container">
@@ -118,7 +128,7 @@
                     </div>
                 </div>
             </ng-template>
-        </ng-container> -->
+        </ng-container>
 
     </owl-carousel-o>
 </section>

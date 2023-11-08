@@ -5,7 +5,6 @@ import { OwlOptions } from 'ngx-owl-carousel-o';
 import { BannerService } from 'src/app/shared/services/custom-UI/banner.service';
 import { CarouselModule } from 'ngx-owl-carousel-o';
 
-
 @Component({
   standalone: true,
   selector: 'app-hero',
@@ -24,11 +23,17 @@ export class HeroComponent {
     console.log("home init");
     
     this.bannerService.getBanners().subscribe((data: any) => {
-      this.bannerData = data;
-      console.log(this.bannerData, "banner data");
+      console.log(data, "before filter");
+      
+      this.bannerData = data.filter((banner: any)=> banner['active'] == true)
+      console.log(this.bannerData, "banner data in hero page");
     })
 
   }
+  getLink(link: string){
+    return link.split('/')[1]
+  }
+
 
   customOptions: OwlOptions = {
     loop: true,
@@ -36,7 +41,7 @@ export class HeroComponent {
     touchDrag: true,
     pullDrag: true,
     dots: false,
-    autoplay: false,
+    autoplay: true,
     navSpeed: 700,
     navText: ['', ''],
     responsive: {

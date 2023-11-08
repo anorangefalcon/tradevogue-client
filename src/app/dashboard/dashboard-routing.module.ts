@@ -19,6 +19,7 @@ import { NoPageComponent } from '../no-page/no-page.component';
 import { BannerComponent } from './banner/banner.component';
 import { DealComponent } from './deal/deal.component';
 import { SalesComponent } from './sales/sales.component';
+import { CustomiseBannerComponent } from './customise-banner/customise-banner.component';
 
 const routes: Routes = [
   {
@@ -45,6 +46,7 @@ const routes: Routes = [
       { path: 'monetization', component: MonetizationComponent },
       { path: 'socials', component: SocialsComponent },
       { path: 'banner', component: BannerComponent},
+      { path: 'customise-banner', component: CustomiseBannerComponent},
       { path: 'sales', component: SalesComponent},
       {
         path: 'customise-home', loadChildren: () => import('./edit-home/edit-home.module').then(m => m.EditHomeModule)

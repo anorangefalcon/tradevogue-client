@@ -19,9 +19,9 @@
                 </button>
             </div>
             <div class="d-flex justify-content-md-between add-div" *ngIf="showTextField==true">
-                <input type="text" [(ngModel)]="selectedWishlist" placeholder="Create new wishlist">
+                <input type="text" [(ngModel)]="newWishlist" placeholder="Create new wishlist">
                 <!-- (click)="addNewWishlist()" -->
-                <button class="btn-primary create-btn d-flex justify-content-center align-item-center" (click)="addToWishlist()" [disabled]="selectedWishlist==''">Add</button>
+                <button class="btn-primary create-btn d-flex justify-content-center align-item-center" (click)="addToWishlist(newWishlist)" [disabled]="newWishlist==''">Add</button>
             </div> 
         </div>
     </app-drawer>

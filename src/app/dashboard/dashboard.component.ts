@@ -29,6 +29,7 @@ export class DashboardComponent {
       name: 'Customise', route:'',icons: 'build', sublist: [
         { name: 'HomePage', route: '/dashboard/customise-home'},
         { name : 'Banner', route : '/dashboard/banner'},
+        { name : 'New Banner', route : '/dashboard/customise-banner'},
         { name: 'Socials', route: '/dashboard/socials' },
         { name: 'FAQs', route: '/dashboard/faq' },
         { name: 'Payment Keys' , route: '/dashboard/monetization'},

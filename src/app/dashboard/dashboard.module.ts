@@ -30,6 +30,7 @@ import { BannerComponent } from './banner/banner.component';
 import { DealComponent } from './deal/deal.component';
 import { SalesComponent } from './sales/sales.component';
 import { GalleryComponent } from '../home/gallery/gallery.component';
+import { CustomiseBannerComponent } from './customise-banner/customise-banner.component';
 
 @NgModule({
   declarations: [
@@ -52,7 +53,8 @@ import { GalleryComponent } from '../home/gallery/gallery.component';
     MonetizationComponent,
     BannerComponent,
     DealComponent,
-    SalesComponent
+    SalesComponent,
+    CustomiseBannerComponent
   ],
 
   imports: [

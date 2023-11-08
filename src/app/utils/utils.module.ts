@@ -130,6 +130,9 @@ export class UtilsModule {
     //banner
     setBanners : 'http://localhost:1000/banners/setBanners',
     getBanners : 'http://localhost:1000/banners/getBanners',
+    deleteBanner : 'http://localhost:1000/banners/deleteBanner',
+    updateBanner : 'http://localhost:1000/banners/updateBanner',
+    toggleBanner : 'http://localhost:1000/banners/toggleBanner',
 
     // deals
     setDeals:'http://localhost:1000/deals/set',
