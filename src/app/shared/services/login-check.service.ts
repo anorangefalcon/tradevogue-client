@@ -31,7 +31,8 @@ export class LoginCheckService {
   }
 
   loginUser(userObj: any) {
-
+    console.log('usreObjec is ',userObj);
+    
     this.cookieService.set('userToken', userObj.userToken);
     this.cookieService.set('name', userObj.name);
 
@@ -91,14 +92,13 @@ export class LoginCheckService {
   }
 
   redirectToPreviousRoute() {
-    // let previousUrl = '/';
-    // this.router.events
-    //   .pipe(filter((event): event is NavigationEnd => event instanceof NavigationEnd))
-    //   .subscribe((event: NavigationEnd) => {
-    //     console.log('prev:', event.url);
-    //     previousUrl = event.url;
-    //   });
+    let previousUrl = '/';
+    this.router.events
+      .pipe(filter((event): event is NavigationEnd => event instanceof NavigationEnd))
+      .subscribe((event: NavigationEnd) => {
+        previousUrl = event.url;
+      });
 
-    // this.router.navigate([previousUrl]);
+    this.router.navigate([previousUrl]);
   }
 }

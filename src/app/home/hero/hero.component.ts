@@ -19,9 +19,7 @@ export class HeroComponent {
 
   constructor (private bannerService: BannerService) {}
 
-  ngOnInit(){
-    console.log("home init");
-    
+  ngOnInit(){    
     this.bannerService.getBanners().subscribe((data: any) => {
       console.log(data, "before filter");
       

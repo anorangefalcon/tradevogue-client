@@ -12,12 +12,13 @@ export class ProductCardsComponent {
 
   products: any = [];
 
-  constructor(public fetchProducts: FetchDataService){
-  }
+  constructor(public fetchProducts: FetchDataService){}
 
   ngOnInit(){
-    this.fetchProducts.getProducts().subscribe((data:any)=>{
-      this.products = data.items.slice(0,5);
+    this.fetchProducts.getProducts('', 5).subscribe((data:any)=>{    
+      console.log(data.items);
+        
+      this.products = data.items;
     })
   }
 

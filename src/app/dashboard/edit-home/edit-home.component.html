@@ -1,6 +1,5 @@
 <div class="d-flex flex-column gap-20">
 
-
   <div class="card card__pd-25 form__card__head d-flex justify-content-md-between align-item-center">
     <h3>Customise Home-Page</h3>
     <!-- <div class="operation_button d-flex gap-10">
@@ -13,66 +12,190 @@
       </div> -->
   </div>
 
-  <div class="card-hero-app restrict-height">
-    <div>
-      <app-hero></app-hero>
-    </div>
-
-    <div class="controls">
-
-    </div>
-  </div>
+  <ng-container *ngFor="let item of Direction">
+    <ng-container *ngTemplateOutlet="getTemplate(item)" (click)="onItemClick(item)">
+    </ng-container>
+  </ng-container>
 
 
-  <div class="card restrict-height grid">
-    <div class="app-div">
-      <app-collections></app-collections>
-    </div>
-    <div class="controls">
+  <!-- templates -->
 
-    </div>
-  </div>
-
-
-  <div class="card restrict-height ">
-    <div class="app-div">
-      <app-deal-of-week></app-deal-of-week>
-    </div>
-
-    <div class="controls">
-
-    </div>
-
-  </div>
-
-  <div class="card restrict-height ">
-    <div class="app-div">
-      <app-product-cards></app-product-cards>
-    </div>
-
-  </div>
-
-
-  <div class="card restrict-height ">
-    <div class="app-div">
-      <app-offers></app-offers>
+  <ng-template #hero let-item>
+    <div class="card-hero-app restrict-height">
+      <div>
+        <app-hero></app-hero>
+      </div>
 
       <div class="controls">
 
+        <div class="d-flex flex-column align-item-center justify-content-md-between gap-15">
+
+          <span class="material-symbols-outlined pointer">
+            edit
+          </span>
+
+        </div>
+
       </div>
     </div>
-  </div>
+  </ng-template>
+
+  <ng-template #collection let-item>
+    <div class="card restrict-height grid">
+      <div class="app-div">
+        <app-collections></app-collections>
+      </div>
+
+      <div class="controls">
+
+        <div class="d-flex flex-column align-item-center justify-content-md-between gap-15">
+
+          <div class="slide-button d-flex align-item-center pointer">
+            <input type="checkbox" [name]="'Available'" [id]="'Available'" />
+            <label [for]="'Available'"></label>
+          </div>
+
+          <div>
+            <span class="material-symbols-outlined pointer">
+              arrow_upward
+            </span>
+            <span class="material-symbols-outlined pointer">
+              arrow_downward
+            </span>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+  </ng-template>
+
+  <ng-template #deal let-item>
+    <div class="card restrict-height ">
+      <div class="app-div">
+        <app-deal-of-week></app-deal-of-week>
+      </div>
+
+      <div class="controls">
+
+        <div class="d-flex flex-column align-item-center justify-content-md-between gap-15">
+
+          <span class="material-symbols-outlined pointer">
+            edit
+          </span>
+
+          <div class="slide-button d-flex align-item-center pointer">
+            <input type="checkbox" [name]="'Available'" [id]="'Available'" />
+            <label [for]="'Available'"></label>
+          </div>
+
+          <div>
+            <span class="material-symbols-outlined pointer">
+              arrow_upward
+            </span>
+            <span class="material-symbols-outlined pointer">
+              arrow_downward
+            </span>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+  </ng-template>
+
+  <ng-template #latestProducts let-item>
+    <div class="card restrict-height ">
+      <div class="app-div p-b-20">
+        <app-product-cards></app-product-cards>
+      </div>
+
+      <div class="controls">
+        <div class="d-flex flex-column align-item-center justify-content-md-between gap-15">
+
+          <div class="slide-button d-flex align-item-center pointer">
+            <input type="checkbox" [name]="'Available'" [id]="'Available'" />
+            <label [for]="'Available'"></label>
+          </div>
+
+          <div>
+            <span class="material-symbols-outlined pointer">
+              arrow_upward
+            </span>
+            <span class="material-symbols-outlined pointer">
+              arrow_downward
+            </span>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </ng-template>
+
+  <ng-template #offers let-item>
+
+    <div class="card restrict-height ">
+      <div class="app-div p-b-20">
+        <app-offers></app-offers>
+      </div>
+      <div class="controls">
+
+        <div class="d-flex flex-column align-item-center justify-content-md-between gap-15">
+
+          <span class="material-symbols-outlined pointer">
+            edit
+          </span>
+
+          <div class="slide-button d-flex align-item-center pointer">
+            <input type="checkbox" [name]="'Available'" [id]="'Available'" />
+            <label [for]="'Available'"></label>
+          </div>
+
+          <div>
+            <span class="material-symbols-outlined pointer">
+              arrow_upward
+            </span>
+            <span class="material-symbols-outlined pointer">
+              arrow_downward
+            </span>
+          </div>
+
+        </div>
 
 
-
-  <div class="card-hero-app restrict-height">
-    <div class="app-div">
-      <app-product-card-carousel></app-product-card-carousel>
+      </div>
     </div>
 
-    <div class="controls">
+  </ng-template>
 
+  <ng-template #productCarousel let-item>
+    <div class="card-hero-app restrict-height relative">
+      <div class="app-div p-b-20 p-i-20">
+        <app-product-card-carousel></app-product-card-carousel>
+      </div>
+
+      <div class="controls">
+        <div class="d-flex flex-column align-item-center justify-content-md-between gap-15">
+
+          <div class="slide-button d-flex align-item-center pointer">
+            <input type="checkbox" [name]="'Available'" [id]="'Available'" />
+            <label [for]="'Available'"></label>
+          </div>
+
+          <div>
+            <span class="material-symbols-outlined pointer">
+              arrow_upward
+            </span>
+            <span class="material-symbols-outlined pointer">
+              arrow_downward
+            </span>
+          </div>
+
+        </div>
+
+      </div>
     </div>
-  </div>
-
-</div>
+  </ng-template>

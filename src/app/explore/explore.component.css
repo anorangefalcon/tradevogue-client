@@ -42,10 +42,18 @@ input[type="checkbox"]:checked + label::after {
 .explore-cards {
     width: 100%;
     gap: 20px;
+    /* display: flex; */
     display: grid;
+    /* flex-wrap: wrap; */
     /* position: sticky; */
     grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
 }
+
+/* .card-temp{
+    & .card-item-template{
+        max-width: 400px;
+    }
+} */
 
 .head a {
     font-size: 12px;

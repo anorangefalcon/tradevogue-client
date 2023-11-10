@@ -20,7 +20,7 @@
 
 .card-template-structure {
     height: 100%;
-    width: 100%;
+    /* width: 100%; */
 }
 
 .card-item-header {
@@ -244,6 +244,7 @@ h2 {
 
 .card-item-header {
     max-height: 280px;
+    /* width: 215px; */
 }
 
 .skeleton{
