@@ -18,6 +18,7 @@ export class CustomiseBannerComponent {
   preview: any;
   checked: boolean = false;
   editValue: any = '';
+  showForm : boolean = false;
 
   constructor(private fb: FormBuilder,
     private bannerService: BannerService,

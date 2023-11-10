@@ -25,7 +25,7 @@ export class NavbarComponent implements OnInit {
 
   cartArr: any[] = [];
   navbar_scroll_style: boolean = false;
-  shadowed: boolean = false;
+  shadowed: boolean = true;
   categories: any = {
     men: [],
     women: []
@@ -68,7 +68,7 @@ export class NavbarComponent implements OnInit {
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
         if (this.router.url === '/' || this.router.url === '') {
-          this.shadowed = false;
+          this.shadowed = true;
         }
         else {
           this.shadowed = true;

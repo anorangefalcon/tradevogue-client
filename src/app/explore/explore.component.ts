@@ -23,7 +23,6 @@ export class ExploreComponent {
   filters: any[] = [];
   filterApplied: { [field: string]: any } = {};
 
-  // Object.preventExtensions(filterApplied);
   filtersOpen: boolean = false;
   filterKeys: any = {}
   data: any;
@@ -43,6 +42,9 @@ export class ExploreComponent {
   ngOnInit() {
 
     this.route.queryParams.subscribe((data: any) => {
+  
+      this.minPrice = data?.minPrice
+      this.maxPrice = data?.maxPrice    
       this.loading = true;
       this.filterApplied = JSON.parse(JSON.stringify(data));
       let actualParams = (Object.keys(this.filterApplied).length > 0) ? this.filterApplied : JSON.parse(JSON.stringify(data));
@@ -55,9 +57,12 @@ export class ExploreComponent {
             } 
           })
         })
+        console.log(data, "init data");
+        
         this.products = data.items;      
         this.totalProducts = data.total;
         this.loading = false;
+      
       });
     });
 
@@ -71,7 +76,18 @@ export class ExploreComponent {
   }
 
   onAdd(event: any, field: string) {
-    console.log(event, field);
+    console.log(event, field, "event field");
+    
+    if (this.minPrice && !this.maxPrice){
+      this.filterApplied['minPrice'] = this.minPrice 
+    }
+    else if (this.maxPrice && !this.minPrice){
+      this.filterApplied['maxPrice'] = this.maxPrice
+    }
+    else if (this.minPrice && this.maxPrice){ 
+      this.filterApplied['minPrice'] = this.minPrice 
+      this.filterApplied['maxPrice'] = this.maxPrice
+    }
     
     if (field == 'sort'){
       let index = this.sorting.titles.findIndex((title: string)=> title == event);
@@ -168,6 +184,8 @@ export class ExploreComponent {
 
     })
     this.filterApplied = {}
+    this.minPrice = ''
+    this.maxPrice = ''
   }
 
   onRemove(event: any, field: any) {
