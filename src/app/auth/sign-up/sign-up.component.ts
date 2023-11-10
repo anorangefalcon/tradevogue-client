@@ -4,7 +4,7 @@ import { passwordStrengthValidator, matchPasswordValidator, usernameValidator } 
 import { CookieService } from 'ngx-cookie-service';
 import { UserDataService } from '../user-data.service';
 import { UtilsModule } from 'src/app/utils/utils.module';
-import { FetchDataService } from 'src/app/faq-page/fetch-data.service';
+import { FetchDataService } from 'src/app/shared/services/fetch-data.service';
 import { Router } from '@angular/router';
 import { LoginCheckService } from 'src/app/shared/services/login-check.service';
 @Component({
@@ -49,12 +49,13 @@ constructor(private fb: FormBuilder, private router: Router,private loginService
   }
 
    CreateUser(body:any){
-    this.fetchDataService.HTTPPOST(this.backendURLs.URLs.signupUrl, body).subscribe((data:any)=>{
 
-      this.cookies.set('userToken', data.token)
-      this.cookies.set('userName',data.firstName)
-      this.router.navigate(['/']);
-      this.loginService.LoginCheck.next(true);
+    console.log('create user clicked------------> ');
+    
+    this.fetchDataService.HTTPPOST(this.backendURLs.URLs.signupUrl, body).subscribe((data:any)=>{
+      // this.cookies.set('userToken', data.token)
+      // this.cookies.set('userName',data.firstName)
+      this.loginService.loginUser(data);
       this.loading = false;
     })
   }

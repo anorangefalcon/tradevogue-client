@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { FetchDataService } from '../../faq-page/fetch-data.service';
+import { FetchDataService } from './fetch-data.service';
 
 @Injectable({
   providedIn: 'root',

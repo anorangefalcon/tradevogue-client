@@ -3,9 +3,10 @@ import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@ang
 import { ImageUploadService } from 'src/app/shared/services/image-upload.service';
 import { imageSizeValidator, invalidformat } from 'src/app/shared/validators/imageValidators.validator';
 import { ToastService } from 'src/app/shared/services/toast.service';
-import { FetchDataService } from 'src/app/faq-page/fetch-data.service';
+import { FetchDataService } from 'src/app/shared/services/fetch-data.service';
 import { UtilsModule } from 'src/app/utils/utils.module';
 import { ActivatedRoute, Router } from '@angular/router';
+import { HttpParams } from '@angular/common/http';
 
 @Component({
   selector: 'app-addproduct',
@@ -198,7 +199,8 @@ export class AddproductComponent {
     this.activeRoute.params.subscribe({
       next: (data) => {
         if (data['sku']) {
-          this.dataService.getProductDetails(data['sku']).subscribe({
+          let params: HttpParams = new HttpParams().set("sku",data['sku']);
+          this.dataService.HTTPGET(this.backendUrl.URLs.fetchProductUrl,params).subscribe({
             next: (data: any) => {
               data.basicinfo = {};
               this.editPage = true;

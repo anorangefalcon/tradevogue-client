@@ -45,16 +45,15 @@ const routes: Routes = [
       { path: 'tickets', component: TicketsComponent },
       { path: 'monetization', component: MonetizationComponent },
       { path: 'socials', component: SocialsComponent },
-      { path: 'banner', component: BannerComponent},
       { path: 'customise-banner', component: CustomiseBannerComponent},
       { path: 'sales', component: SalesComponent},
       {
         path: 'customise-home', loadChildren: () => import('./edit-home/edit-home.module').then(m => m.EditHomeModule)
       },
+      { path: 'customise-banner', component: BannerComponent },
+      { path: 'customise-deal', component: DealComponent },
 
-      {path:'deal',component:DealComponent},
-
-      { path: '**', component: NoPageComponent},
+      { path: '**', component: NoPageComponent },
     ]
   },
 ];

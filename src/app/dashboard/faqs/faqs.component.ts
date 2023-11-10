@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { PaginationService } from 'src/app/shared/services/pagination.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UtilsModule } from 'src/app/utils/utils.module';
-import { FetchDataService } from 'src/app/faq-page/fetch-data.service';
+import { FetchDataService } from 'src/app/shared/services/fetch-data.service';
 import { PopupService } from 'src/app/shared/services/popup.service';
 import { ToastService } from 'src/app/shared/services/toast.service';
 
@@ -139,7 +139,7 @@ export class FaqsComponent {
       };
 
       try {
-        const data: any = await this.fetchDataService.httpPost(this.bgURL.URLs.updateFaqData, updatedFaqItem);
+        const data: any = await this.fetchDataService.HTTPPOST(this.bgURL.URLs.updateFaqData, updatedFaqItem);
         if (data) {
           this.toast.successToast({ title: "FAQ updated successfully" });
         } else {

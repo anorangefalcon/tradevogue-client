@@ -1,7 +1,7 @@
 import { Component, HostListener, OnInit } from '@angular/core';
 import { CartService } from '../../services/cart.service';
 import { CookieService } from 'ngx-cookie-service';
-import { FetchDataService } from '../../../faq-page/fetch-data.service';
+import { FetchDataService } from '../../services/fetch-data.service';
 import { NavigationEnd, Router } from '@angular/router';
 import { WishlistService } from '../../services/wishlist.service';
 import { UtilsModule } from 'src/app/utils/utils.module';
@@ -21,7 +21,7 @@ export class NavbarComponent implements OnInit {
   purchaser: any = '';
   cart_count: number = 0;
   wishlistCount: number = 0;
-  isLogin : boolean = false;
+  isLogin: boolean = false;
 
   cartArr: any[] = [];
   navbar_scroll_style: boolean = false;
@@ -31,19 +31,20 @@ export class NavbarComponent implements OnInit {
     women: []
   }
 
-  constructor(private cartService: CartService, private checkLogin: LoginCheckService, private cookie: CookieService, private fetchDataService: FetchDataService, private router: Router, private wishlistService: WishlistService, private utils: UtilsModule) {
-    let userName = this.cookie.get('userName')
-    if (userName) {
-    
-      this.purchaser = userName;
-    }
+  constructor(private cartService: CartService, private userService: LoginCheckService, private BackendEndUrl: UtilsModule, private cookie: CookieService, private fetchDataService: FetchDataService, private router: Router, private wishlistService: WishlistService, private utils: UtilsModule) {
 
-   
+    this.userService.getUser('name').subscribe((name: any) => {
+      if (name) {
+        this.purchaser = name;
+      }
+    });
+
+
 
   }
 
-  async ngOnInit() {
-    if (this.checkLogin.loginCheckObservable$.subscribe((data) => {
+  ngOnInit() {
+    if (this.userService.getUser().subscribe((data) => {
       this.isUserLogin = data;
     }))
 
@@ -51,7 +52,7 @@ export class NavbarComponent implements OnInit {
         this.cart_count = item_count;
       })
 
-    this.wishlistService.getWishlistCount();
+    // this.wishlistService.getWishlistCount();
 
 
     this.wishlistService.WishlistCount$.subscribe((data) => {
@@ -59,11 +60,6 @@ export class NavbarComponent implements OnInit {
         this.wishlistCount = data;
       }
     })
-
-
-
-
-
 
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
@@ -80,7 +76,7 @@ export class NavbarComponent implements OnInit {
       parameter: "mix"
     }
 
-    this.fetchDataService.getUniqueProductFields(body).subscribe((data: any) => {
+    this.fetchDataService.HTTPPOST(this.BackendEndUrl.URLs.uniqueProductFields, body).subscribe((data: any) => {
       // console.log(data, "navbar data");
     })
 
@@ -90,7 +86,11 @@ export class NavbarComponent implements OnInit {
     this.router.navigateByUrl(`/explore?search=${query}`);
   }
 
- 
+  onLogout() {
+    this.userService.logoutUser();
+  }
+
+
   @HostListener('window:scroll', []) onScroll() {
     if (window.scrollY > 40) {
       this.navbar_scroll_style = true;
@@ -101,12 +101,6 @@ export class NavbarComponent implements OnInit {
   }
 
 
-onLogout() {
 
-  this.cookie.delete('userToken');
-  this.cookie.delete('userName');
-  this.router.navigate(['/']);
-  this.isUserLogin = false;
-}
 
 }

@@ -15,7 +15,6 @@ export class OffersComponent {
   constructor(private salesService: SalesService){
     this.salesService.getSales().subscribe((data: any) => {
       this.saleData = data;
-      console.log(this.saleData, "sale data");
     })
   }
 }

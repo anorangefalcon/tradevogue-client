@@ -1,15 +1,17 @@
 import { Injectable } from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
-import { FetchDataService } from '../../faq-page/fetch-data.service';
+import { FetchDataService } from './fetch-data.service';
 import { UtilsModule } from 'src/app/utils/utils.module';
 import { BehaviorSubject } from 'rxjs';
 import { Router } from '@angular/router';
 import { ToastService } from './toast.service';
 import { HttpClient } from '@angular/common/http';
+import { LoginCheckService } from './login-check.service';
 
 @Injectable({
   providedIn: 'root'
 })
+
 export class WishlistService {
 
   showWishlistPopup = new BehaviorSubject<any>('');
@@ -31,6 +33,7 @@ export class WishlistService {
     private fetchDataService: FetchDataService,
     private utils: UtilsModule,
     private http: HttpClient,
+    private userService:LoginCheckService,
     private toastService: ToastService,
     
 
@@ -38,30 +41,33 @@ export class WishlistService {
 
 
   ShowWishlist(productId: string) {
-    const IsLogin = this.cookie.get('userToken')
-    if (IsLogin) {
-      this.productId = productId;
-      this.fetchDataService.HTTPGET(this.backendUrls.URLs.showWishlist).subscribe((data: any) => {
-        this.showWishlistPopup.next(data);     
-      });
-    }
-    else {
-      this.router.navigate(['/auth/login']);
-    }
-
+    this.userService.getUser().subscribe((IsLogin)=>{
+      if (IsLogin) {
+        this.productId = productId;
+        this.fetchDataService.HTTPGET(this.backendUrls.URLs.showWishlist).subscribe((data: any) => {
+          this.showWishlistPopup.next(data);     
+        });
+      }
+      else {
+        this.router.navigate(['/auth/login']);
+      }
+    });
   }
 
   getWishlistCount() {
-    const IsLogin = this.cookie.get('userToken')
-    if (IsLogin) {
-      this.fetchDataService.HTTPGET(this.backendUrls.URLs.showWishlist).subscribe((data: any) => {
-        let newData = data.wishlists.map((el: any) => {
-          return el.products;
-        }).flat();
-        this.WishListedProducts.next(newData);
-        this.WishlistCount.next(data.count);
-      });
-    }
+    // const IsLogin = this.cookie.get('userToken')
+    this.userService.getUser().subscribe((IsLogin)=>{
+      if (IsLogin) {
+        this.fetchDataService.HTTPGET(this.backendUrls.URLs.showWishlist).subscribe((data: any) => {
+          let newData = data.wishlists.map((el: any) => {
+            return el.products;
+          }).flat();
+          this.WishListedProducts.next(newData);
+          this.WishlistCount.next(data.count);
+        });
+      }
+    })
+   
   }
 
   AddtoWishlist(wishlistName: string) {

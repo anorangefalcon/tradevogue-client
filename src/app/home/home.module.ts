@@ -10,7 +10,6 @@ import { DealOfWeekComponent } from './deal-of-week/deal-of-week.component';
 import { HeroComponent } from './hero/hero.component';
 import { GalleryComponent } from './gallery/gallery.component';
 
-
 @NgModule({
   declarations: [
     HomeComponent

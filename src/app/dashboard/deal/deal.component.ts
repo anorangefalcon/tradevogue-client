@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { FetchDataService } from 'src/app/faq-page/fetch-data.service';
+import { FetchDataService } from 'src/app/shared/services/fetch-data.service';
 import { ImageUploadService } from 'src/app/shared/services/image-upload.service';
 import { ToastService } from 'src/app/shared/services/toast.service';
 import { UtilsModule } from 'src/app/utils/utils.module';
@@ -12,6 +12,7 @@ import { UtilsModule } from 'src/app/utils/utils.module';
 })
 export class DealComponent {
   DealForm!:FormGroup;
+  Edit:boolean=false;
   alignments:any[]=['Left','Right'];
   constructor(private fetchService: FetchDataService,private imageuploadService:ImageUploadService, private toastService:ToastService, private backendURLs: UtilsModule, private fb: FormBuilder) {
     this.DealForm = fb.group(
@@ -30,44 +31,50 @@ export class DealComponent {
         })
       });
 
-    
-      this.fetchService.HTTPGET(this.backendURLs.URLs.getDealsDetails).subscribe((data:any)=>{
+    this.fetchService.HTTPGET(this.backendURLs.URLs.getDealsDetails).subscribe((data:any)=>{
           this.DealForm.patchValue(data);
       })
-
+      this.FormDisableEnable();
   }
-
-
 
   AlignmentHandler(event:any){
     this.DealForm.get('contentAlign')?.setValue(event);
   }
 
 
-  Save(){
+ 
 
-    console.log('value coming is--------------> ',this.DealForm.get('productImage')?.value);
-    
+  Save(){ 
     if(!this.DealForm.get('productImage')?.value){
-      this.toastService.errorToast({title:'error',body:'Image uploading...'});
+      this.toastService.errorToast({title:'Wait while image is still uploading'});
       return;
     }
-
-    return;
     this.fetchService.HTTPPOST(this.backendURLs.URLs.setDeals,this.DealForm.value).subscribe((data)=>{
-    this.toastService.successToast({title:'Sucess',body:'Form Submitted sucess'});
+    this.toastService.successToast({title:'Sucessfully Uploaded Deal Details'});
     })
-    
-    
+    this.EditClicked();
   }
 
   bannerImageUpload(event: any) {
-    console.log(event,"---------");
-    
     let file: any = (<HTMLInputElement>event.target)?.files![0];
     this.imageuploadService.fileupload([{ file: file }]).then((url: any) => {
-      console.log(url);
       this.DealForm.get('productImage')?.setValue(url[0]);
+      this.Edit=!this.Edit;
     })
   }
+
+  EditClicked(){
+    this.Edit=!this.Edit;
+    this.FormDisableEnable();
+  }
+
+  FormDisableEnable(){
+    if(!this.Edit){
+      this.DealForm.disable();
+      return;
+    }
+    this.DealForm.enable();
+  }
+  // Direction:any[]=['deal','home','popular']
+
 }

@@ -1,5 +1,5 @@
 import { Component, OnInit, ElementRef, ChangeDetectorRef, HostListener } from '@angular/core';
-import { FetchDataService } from 'src/app/faq-page/fetch-data.service';
+import { FetchDataService } from 'src/app/shared/services/fetch-data.service';
 import { UploadExcelService } from '../services/upload-excel.service';
 import { ToastService } from 'src/app/shared/services/toast.service';
 import { UtilsModule } from 'src/app/utils/utils.module';
@@ -55,8 +55,10 @@ export class ProductsComponent implements OnInit {
 
     this.dialogBoxService.responseEmitter.subscribe(async (res: boolean) => {
       if (res == true) {
-        await this.fetchdata.httpPost(this.backendUrl.URLs.deleteproducts, this.deleteDataField);
-        this.fetchData();
+         this.fetchdata.HTTPPOST(this.backendUrl.URLs.deleteproducts, this.deleteDataField).subscribe(()=>{
+           this.fetchData();
+           this.dialogBoxService.responseEmitter.next(false);
+         });
       }
     });
   }

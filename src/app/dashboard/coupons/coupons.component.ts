@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { FetchDataService } from 'src/app/shared/services/fetch-data.service';
+import { ImageUploadService } from 'src/app/shared/services/image-upload.service';
+import { ToastService } from 'src/app/shared/services/toast.service';
 
 import { UtilsModule } from 'src/app/utils/utils.module';
 
@@ -39,10 +41,10 @@ export class CouponsComponent {
 
 
 
-  constructor(private fb: FormBuilder, private fetchDateService: FetchDataService, private BackendUrls: UtilsModule) {
+  constructor(private fb: FormBuilder, private toastService:ToastService, private imageuploadService:ImageUploadService, private fetchDateService: FetchDataService, private BackendUrls: UtilsModule) {
     this.OfferForm = fb.group(
       {
-        // Image:fb.control('',[Validators.required]),
+        Image:fb.control('',[Validators.required]),
         OfferType: fb.control('', [Validators.required]),
         Title: fb.control('', [Validators.required]),
         Description: fb.control('', [Validators.required]),
@@ -156,8 +158,8 @@ export class CouponsComponent {
         this.OfferForm.removeControl(el.name);
       })
       let ExtraInfo = this.fb.group({
-        categories: ['',Validators.required],
-        brands: ['',Validators.required]
+        categories: [],
+        brands: []
       });
       this.OfferForm.addControl('ExtraInfo', ExtraInfo);
     }
@@ -275,11 +277,15 @@ export class CouponsComponent {
 
 
   async CouponSubmit() {
+    if(!this.OfferForm.get('Image')?.value){
+      this.toastService.errorToast('Image is still uploading please try again');
+      return;
+    }
     this.OfferForm.get('startDate')?.setValue(new Date(this.OfferForm.get('startDate')?.value));
-    let endDate: any = new Date((this.OfferForm.get('endDate')?.value)).getTime() + 60 * 60 * 24 * 1000;
+    // let endDate: any = new Date((this.OfferForm.get('endDate')?.value)).getTime() + 60 * 60 * 24 * 1000;
 
-    endDate = new Date(endDate);
-    this.OfferForm.get('endDate')?.setValue(endDate);
+    // endDate = new Date(endDate);
+    // this.OfferForm.get('endDate')?.setValue(endDate);
     let url;
     let body: any = this.OfferForm.value;
     if (this.EditRequest) {
@@ -388,5 +394,11 @@ export class CouponsComponent {
   }
 
 
+  bannerImageUpload(event:any){
+    let file: any = (<HTMLInputElement>event.target)?.files![0];
+    this.imageuploadService.fileupload([{ file: file }]).then((url: any) => {
+      this.OfferForm.get('Image')?.setValue(url[0]);
+    })
+  }
 
 }

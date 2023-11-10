@@ -1,6 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { FetchDataService } from '../faq-page/fetch-data.service';
 import { CartService } from '../shared/services/cart.service';
 import { OwlOptions } from 'ngx-owl-carousel-o';
 import { WishlistService } from '../shared/services/wishlist.service';
@@ -8,6 +7,8 @@ import { ReviewService } from './services/review.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToastService } from '../shared/services/toast.service';
 import { UtilsModule } from '../utils/utils.module';
+import { FetchDataService } from '../shared/services/fetch-data.service';
+import { HttpParams } from '@angular/common/http';
 
 @Component({
   selector: 'app-product-page',
@@ -37,7 +38,8 @@ export class ProductPageComponent implements OnInit {
 
   ratingForm!: FormGroup;
   userReview: any;
-  query: any = this.fetchService.getProductDetails(this.sku);
+  params: HttpParams = new HttpParams().set("sku", this.sku);
+  query: any = this.fetchService.HTTPGET(this.backendUrl.URLs.fetchProductUrl, this.params);
 
   constructor(
     private route: ActivatedRoute,
@@ -77,13 +79,16 @@ export class ProductPageComponent implements OnInit {
 
   fetchProductData() {
     this.loading = true;
+    let params = new HttpParams();
+    params = params.set("sku", this.sku);
+    
     if (this.productSku) {
-      this.fetchService.HTTPGET(this.backendUrl.URLs.fetchProductDetails, this.sku, 'data').subscribe((data: any) => {
+      this.fetchService.HTTPGET(this.backendUrl.URLs.fetchProductDetails, params).subscribe((data: any) => {
         this.updateDataFields(data);
       });
-    } 
+    }
     else {
-      this.fetchService.getProductDetails(this.sku).subscribe((data: any) => {
+      this.fetchService.HTTPGET(this.backendUrl.URLs.fetchProductUrl, params).subscribe((data: any) => {
         this.wishlistService.WishListedProducts.subscribe((response: any) => {
           if (response.includes(data._id)) {
             data.wishlisted = true;
@@ -102,6 +107,7 @@ export class ProductPageComponent implements OnInit {
     this.selectedSize = data.assets[this.assetIndex].stockQuantity[0].size;
 
     this.outOfStock = (this.data.assets[this.assetIndex].stockQuantity[this.sizeIndex].quantity <= 0) ? true : false;
+
     // if this user has already reviewed:
     if (data.userReview) {
       this.userReview = data.userReview;
@@ -185,7 +191,7 @@ export class ProductPageComponent implements OnInit {
       comment: this.ratingForm.controls['review'].value
     }
 
-    this.reviewService.addReview(review).subscribe(() => {
+    this.reviewService.addReview(review).subscribe(() => {      
       this.fetchProductData();
       this.showReview = false;
       this.toastService.successToast({

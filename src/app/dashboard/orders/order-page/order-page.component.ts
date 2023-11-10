@@ -1,6 +1,7 @@
+import { HttpParams } from '@angular/common/http';
 import { Component, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { FetchDataService } from 'src/app/faq-page/fetch-data.service';
+import { FetchDataService } from 'src/app/shared/services/fetch-data.service';
 import { UtilsModule } from 'src/app/utils/utils.module';
 
 @Component({
@@ -27,7 +28,8 @@ export class OrderPageComponent {
   }
 
   fetchOrderDetail() {
-    this.fetchDataService.HTTPGET(this.backendUrl.URLs.getSellerOrderDetails, this.orderId, 'orderID').subscribe({
+   let params: HttpParams = new HttpParams().set("orderID", this.orderId);
+    this.fetchDataService.HTTPGET(this.backendUrl.URLs.getSellerOrderDetails, params).subscribe({
       next: (data: any)=>{
         console.log(data);
         this.orderInfo = data;

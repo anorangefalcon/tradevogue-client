@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 import { CartService } from 'src/app/shared/services/cart.service';
 import { BillingResponseService } from '../billing-response.service';
+import { LoginCheckService } from 'src/app/shared/services/login-check.service';
 
 
 
@@ -14,7 +15,7 @@ import { BillingResponseService } from '../billing-response.service';
 
 export class CartComponent implements OnInit {
 
-  constructor(private cartService: CartService, private cookie: CookieService, private billingService:BillingResponseService, private router:Router) {
+  constructor(private cartService: CartService, private loginCheckService:LoginCheckService, private cookie: CookieService, private billingService:BillingResponseService, private router:Router) {
     // this.userService.PaymentUrlVisited.next(false);
     this.billingService.BillingPageVisited.next(false);
    }
@@ -74,15 +75,17 @@ export class CartComponent implements OnInit {
 
   async ProceedCheckOut(){
     const checkToken=this.cookie.get('userToken');
-    console.log('chcektoken is ',checkToken);
-    if(!checkToken){
-      // await this.userService.emittingValue('GoToPayment',1);
-      this.router.navigate(['/auth/login']);
-    }
-    
-    this.cartService.fetchCart().subscribe((data)=>{
-      console.log('cart coming is ',data);
+    this.loginCheckService.getUser().subscribe((checkToken)=>{
+      if(!checkToken){
+        // await this.userService.emittingValue('GoToPayment',1);
+        this.router.navigate(['/auth/login']);
+      }
+      
+      this.cartService.fetchCart().subscribe((data)=>{
+        console.log('cart coming is ',data);
+      })
     })
+
     
   }
 }

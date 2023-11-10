@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
-import { FetchDataService } from '../faq-page/fetch-data.service';
+import { FetchDataService } from '../shared/services/fetch-data.service';
 import { HttpParams } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { WishlistService } from '../shared/services/wishlist.service';
+import { UtilsModule } from '../utils/utils.module';
 
 @Component({
   selector: 'app-explore',
@@ -37,7 +38,7 @@ export class ExploreComponent {
   maxPrice : any;
   loading: boolean = false;
  
-  constructor(private fetchData: FetchDataService, private wishlistService:WishlistService, private route: ActivatedRoute, private location: Location) { }
+  constructor(private fetchData: FetchDataService,private BackendEndUrl:UtilsModule, private wishlistService:WishlistService, private route: ActivatedRoute, private location: Location) { }
 
   ngOnInit() {
 
@@ -70,7 +71,7 @@ export class ExploreComponent {
       parameter: "all"
     }
 
-    this.fetchData.getUniqueProductFields(body).subscribe((res: any) => {
+    this.fetchData.HTTPPOST(this.BackendEndUrl.URLs.uniqueProductFields,body).subscribe((res: any) => {
       this.uniqueData = res.data;
     })
   }

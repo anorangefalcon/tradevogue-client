@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { UtilsModule } from 'src/app/utils/utils.module';
-import { FetchDataService } from 'src/app/faq-page/fetch-data.service';
+import { FetchDataService } from 'src/app/shared/services/fetch-data.service';
 import { CookieService } from 'ngx-cookie-service';
+import { LoginCheckService } from '../../services/login-check.service';
 
 @Component({
   selector: 'app-support',
@@ -27,21 +28,25 @@ export class SupportComponent {
   previousOrders: any[] = [];
 
 
-  constructor(private util: UtilsModule, private fetchData: FetchDataService,private cookie: CookieService) {
+  constructor(private util: UtilsModule, private fetchData: FetchDataService,private loginCheckService:LoginCheckService, private cookie: CookieService) {
 
   }
 
   ngOnInit() {
-    setTimeout(() => {
-       this.fetchData.HTTPPOST(this.util.URLs.getLatestProductForBuyer, {buyerId: this.cookie.get('userToken')}).subscribe((data: any) => {
-        this.products = data.latestProduct.products;
-        this.orderDetails = data.latestProduct;
-        this.loadingProducts = false;
-        console.log(this.products, "products")
-        console.log(this.orderDetails, "order details");
-        }); 
-      this.showOrder = true;
-    }, 5000);
+
+      this.loginCheckService.getUser().subscribe((login)=>{
+        if(!login) return;
+        this.fetchData.HTTPPOST(this.util.URLs.getLatestProductForBuyer, {buyerId: this.cookie.get('userToken')}).subscribe((data: any) => {
+          this.products = data.latestProduct.products;
+          this.orderDetails = data.latestProduct;
+          this.loadingProducts = false;
+          console.log(this.products, "products")
+          console.log(this.orderDetails, "order details");
+          }); 
+        this.showOrder = true;
+      });
+      
+
   }
 
   responses: any = {

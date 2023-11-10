@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 declare var Stripe: any;
 import { UtilsModule } from 'src/app/utils/utils.module';
 import { CartService } from '../cart.service';
-import { FetchDataService } from '../../../faq-page/fetch-data.service';
+import { FetchDataService } from '../fetch-data.service';
 import { CookieService } from 'ngx-cookie-service';
 import { BillingResponseService } from 'src/app/checkout/billing-response.service';
 

@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UtilsModule } from 'src/app/utils/utils.module';
-import { FetchDataService } from 'src/app/faq-page/fetch-data.service';
+import { FetchDataService } from 'src/app/shared/services/fetch-data.service';
 import { CookieService } from 'ngx-cookie-service';
 import { HttpClient } from '@angular/common/http';
 import { PopupService } from 'src/app/shared/services/popup.service';
+import { LoginCheckService } from 'src/app/shared/services/login-check.service';
 
 @Component({
   selector: 'app-monetization',
@@ -18,7 +19,7 @@ export class MonetizationComponent {
   editItem: boolean = false;
   
 
-  constructor(private formBuilder: FormBuilder, private util: UtilsModule, private fetch: FetchDataService, private cookie: CookieService, private http: HttpClient, private popup: PopupService) { }
+  constructor(private formBuilder: FormBuilder,private loginCheckService:LoginCheckService, private util: UtilsModule, private fetch: FetchDataService, private cookie: CookieService, private http: HttpClient, private popup: PopupService) { }
 
   ngOnInit(): void {
     this.createForm();
@@ -87,14 +88,11 @@ export class MonetizationComponent {
         publicKey , privateKey , enable , id
       }
 
-      this.fetch.httpPost(this.util.URLs.updatePaymentKeys,body)
-        .then((response: any) => {
+      this.fetch.HTTPPOST(this.util.URLs.updatePaymentKeys,body)
+        .subscribe((response: any) => {
           console.log('Keys updated successfully:', response);
         })
-        .catch((error: any) => {
-          console.error('Error updating keys:', error);
-        });
-
+        
       if (publicKey !== null && privateKey !== null && enable !== null) {
         this.selectedItem.publicKey = publicKey;
         this.selectedItem.privateKey = privateKey;
@@ -116,13 +114,11 @@ export class MonetizationComponent {
         id
       }
 
-      this.fetch.httpPost(this.util.URLs.deletePaymentKeys,body)
-        .then((response: any) => {
+      this.fetch.HTTPPOST(this.util.URLs.deletePaymentKeys,body)
+        .subscribe((response: any) => {
           console.log('Keys deleted successfully:', response);
         })
-        .catch((error: any) => {
-          console.error('Error deleting keys:', error);
-        });
+        
     }
   }
   
@@ -131,23 +127,20 @@ export class MonetizationComponent {
   onSubmit() {
     if (this.stripeKeysForm.valid) {
       const keys = this.stripeKeysForm.value;
-      const tokenSegments = this.cookie.get('userToken').split('.');
-      const adminId = tokenSegments[1];
-      const body = {
-        "publicKey": keys.publicKey,
-        "privateKey": keys.privateKey,
-        "adminId": adminId
-      }
-
-      console.log(adminId,"adminId")
-      
-      this.fetch.httpPost(this.util.URLs.addPaymentKeys,body)
-        .then((response: any) => {
-          console.log('Keys added successfully:', response);
-        })
-        .catch((error: any) => {
-          console.error('Error adding keys:', error);
-        });
+      this.loginCheckService.getUser('token').subscribe((data:any)=>{
+        const tokenSegments = data.split('.');
+        const adminId = tokenSegments[1];
+        const body = {
+          "publicKey": keys.publicKey,
+          "privateKey": keys.privateKey,
+          "adminId": adminId
+        }
+  
+        this.fetch.HTTPPOST(this.util.URLs.addPaymentKeys,body).subscribe((response: any) => {
+            console.log('Keys added successfully:', response);
+          })
+      })
+     
     }
   }
 }

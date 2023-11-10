@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FetchDataService } from '../faq-page/fetch-data.service';
+import { FetchDataService } from '../shared/services/fetch-data.service';
 import { UtilsModule } from '../utils/utils.module';
 import { HttpClient } from '@angular/common/http';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
@@ -41,36 +41,34 @@ export class HelpPageComponent {
   async onSubmit() {
     if (this.contactForm.valid) {
       console.log('Submitted Data:', this.contactForm.value);
-      try {
-        const body = {
-          email: this.contactForm.get('email')?.value,
-          status: 'open',
-          message: this.contactForm.get('message')?.value,
+        try {
+          const body = {
+            email: this.contactForm.get('email')?.value,
+            status: 'open',
+            message: this.contactForm.get('message')?.value,
+          }
+     this.fetchDataService.HTTPPOST(this.utils.URLs.ticketMail, body)
         }
-        let data = await this.fetchDataService.httpPost(this.utils.URLs.ticketMail, body)
-      }
-      catch (error) {
-        console.log("Error in sending Subscribe Mail", error);
-      }
+        catch (error) {
+          console.log("Error in sending Subscribe Mail", error);
+        }
 
-      this.fetchDataService.httpPost(this.utils.URLs.addTicket, this.contactForm.value)
-        .then((response: any) => {
+      this.fetchDataService.HTTPPOST(this.utils.URLs.addTicket, this.contactForm.value)
+        .subscribe((response: any) => {
           if (response) {
             console.log('Ticket added successfully.');
           } else {
             console.log('Error adding ticket.');
           }
         })
-        .catch((error: any) => {
-          console.log('Error adding ticket.', error);
+       
+
+        this.fetchDataService.HTTPPOST(this.utils.URLs.webPushDetail, {token: this.cookie.get('fcmToken'), email: this.contactForm.get('email')?.value}).subscribe((response: any) => {
+          if (response) {
+            console.log('Token added successfully.');
+          }
         });
-
-      this.fetchDataService.httpPost(this.utils.URLs.webPushDetail, { token: this.cookie.get('fcmToken'), email: this.contactForm.get('email')?.value }).then((response: any) => {
-        if (response) {
-          console.log('Token added successfully.');
-        }
-      });
-
+        
 
       this.contactForm.reset();
 

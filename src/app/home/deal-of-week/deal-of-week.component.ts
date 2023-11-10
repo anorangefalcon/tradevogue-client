@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { FetchDataService } from 'src/app/faq-page/fetch-data.service';
+import { FetchDataService } from 'src/app/shared/services/fetch-data.service';
 import { UtilsModule } from 'src/app/utils/utils.module';
 import { RouterModule } from '@angular/router';
 
@@ -13,17 +13,13 @@ import { RouterModule } from '@angular/router';
 })
 export class DealOfWeekComponent {
 
-  Details:any;
-  constructor(private fetchDataService:FetchDataService,private backendURLs:UtilsModule){
-    console.log('construcotr called-------->');
-    
-this.fetchDataService.HTTPGET(this.backendURLs.URLs.getDealsDetails).subscribe((data)=>{
-  this.Details=data;
-  console.log('Detials comign is ',this.Details);
-  
-})
+  Details: any;
+  constructor(private fetchDataService: FetchDataService, private backendURLs: UtilsModule) {
+    this.fetchDataService.HTTPGET(this.backendURLs.URLs.getDealsDetails).subscribe((data) => {
+      this.Details = data;
+    })
   }
 
- 
+
 
 }

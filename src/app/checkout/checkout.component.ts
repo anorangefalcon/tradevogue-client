@@ -2,11 +2,12 @@ import { Component, HostListener, OnInit, ElementRef, ViewChild, Renderer2 } fro
 import { CartService } from '../shared/services/cart.service';
 import { Router } from '@angular/router';
 import { UtilsModule } from '../utils/utils.module';
-import { FetchDataService } from '../faq-page/fetch-data.service';
+import { FetchDataService } from '../shared/services/fetch-data.service';
 import { ToastService } from '../shared/services/toast.service';
 import { CookieService } from 'ngx-cookie-service';
 import { BillingResponseService } from './billing-response.service';
 import { StripPaymentService } from '../shared/services/stripe-Integration/strip-payment.service';
+import { LoginCheckService } from '../shared/services/login-check.service';
 
 
 @Component({
@@ -35,9 +36,8 @@ export class CheckoutComponent implements OnInit {
   @ViewChild('Proceed__btn') Proceed__btn!: ElementRef;
 
   BillingPageVisited: boolean = false;
-  constructor(private cartService: CartService, private cookie:CookieService,private billingService:BillingResponseService, private router: Router, private renderer: Renderer2, private toastService: ToastService, private BackendUrl: UtilsModule, private fetchService: FetchDataService, private route: Router, private el: ElementRef, private stripePay: StripPaymentService) {
-
-      // Log route changes
+  constructor(private cartService: CartService, private loginCheckService:LoginCheckService, private cookie:CookieService,private billingService:BillingResponseService, private router: Router, private renderer: Renderer2, private toastService: ToastService, private BackendUrl: UtilsModule, private fetchService: FetchDataService, private route: Router, private el: ElementRef, private stripePay: StripPaymentService) {
+      // route changes
       this.router.events.subscribe((event) => {
         if (this.router.url === '/cart/billing') {
           this.BillingPageVisited = true;
@@ -46,25 +46,6 @@ export class CheckoutComponent implements OnInit {
         }
       });
 
-    // if(this.route.url=='/cart/billing'){
-    //   // this.BillingPageVisited=true;
-    // }
-
-    // console.log('result is ',this.cookieService.get('CouponApplied'));
-    
-    // if(!this.cookieService.get('CouponApplied')){
-    //   this.CouponApplied=this.cookieService.get('CouponApplied');
-    // }
-
-
-
-
-
-  //  this.cookieService.get('DeliveryAddress');
-
-    // (this.userService.PaymentUrlVisited.subscribe((data)=>{
-    //   this.BillingPageVisited=data;
-    // }))
 this.billingService.BillingpageVisited$.subscribe((data:any)=>{
   this.BillingPageVisited=data;
 })
@@ -101,7 +82,6 @@ this.billingService.BillingpageVisited$.subscribe((data:any)=>{
   }
 
   DateParser(el: any) {
-    // console.log('el is ',(new Date(el).toDateString()).split(' ').splice(0,1));
     let date: any = (new Date(el).toDateString()).split(' ');
     date.splice(0, 1)
     date = String(date[0] + ' ' + date[1] + ', ' + date[2]);
@@ -160,9 +140,9 @@ this.billingService.BillingpageVisited$.subscribe((data:any)=>{
     this.cart.amounts.total = this.cart.amounts.subTotal;
   }
 
-  CloseCouponDialog() {
-    this.OpenCoupon = false;
-  }
+  // CloseCouponDialog() {
+  //   this.OpenCoupon = false;
+  // }
 
   CheckMinimumPurchase(coupon: any) {
     return coupon.minimumPurchaseAmount < this.cart.amounts.total;
@@ -170,8 +150,6 @@ this.billingService.BillingpageVisited$.subscribe((data:any)=>{
   }
 
   CalculateDiscount(coupon: any) {
-    console.log('coupn is ',coupon);
-    
     let totalAmount = (this.cart.amounts.total);
     if (coupon.discountType == 'flat') {
       return coupon.discountAmount <= coupon.maximumDiscount ? coupon.discountAmount : coupon.maximumDiscount;
@@ -181,15 +159,12 @@ this.billingService.BillingpageVisited$.subscribe((data:any)=>{
         let calculatedDiscount = (totalAmount / 100) * coupon.discountAmount;        
         return calculatedDiscount <= coupon.maximumDiscount ? calculatedDiscount : coupon.maximumDiscount;
       }
-
     }
-
   }
 
  async ApplyCoupon(coupon: any = '', event: any = '') {
     if (event) {
       let value = this.CouponCode.nativeElement.value;
-
       for (let coupon of this.AllCoupons) {
         if (coupon.couponcode == value) {
           if (!this.CheckMinimumPurchase(coupon)) {
@@ -268,19 +243,19 @@ this.billingService.BillingpageVisited$.subscribe((data:any)=>{
           result.CouponApplied = this.CouponApplied;
         }
 
-        const checkToken = this.cookie.get('userToken');
-        if (!checkToken) {
-          this.router.navigate(['/auth/login']);
-        }
-            else {
-        this.fetchService.HTTPPOST(this.BackendUrl.URLs.verifyOrderSummary, result).subscribe((response)=>{
-          this.cart.amounts = response;
-          this.router.navigate(['/cart/billing']);
-        });
-        }
-        
-      
-        
+        this.loginCheckService.getUser().subscribe((checkToken)=>{
+          if (!checkToken) {
+            this.router.navigate(['/auth/login']);
+          }
+              else {
+          this.fetchService.HTTPPOST(this.BackendUrl.URLs.verifyOrderSummary, result).subscribe((response)=>{
+            this.cart.amounts = response;
+            this.router.navigate(['/cart/billing']);
+          });
+          }
+          
+        })
+    
        }); 
   }
 

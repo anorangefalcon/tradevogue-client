@@ -12,11 +12,11 @@ export class CartService {
 
   constructor(private toastService: ToastService, private http: HttpClient, private backendUrls: UtilsModule, private loginCheckService: LoginCheckService) { 
     
-    this.loginCheckService.loginCheckObservable$.subscribe((loggedIn: any) => {      
+    this.loginCheckService.getUser().subscribe((loggedIn: any) => { 
       this.user = loggedIn;
     });
     this.fetchDetails();
-
+    
 
   }
 

@@ -14,6 +14,7 @@ import { HelpPageComponent } from './help-page/help-page.component';
 import { SettingsComponent } from './settings/settings.component';
 import { NoPageComponent } from './no-page/no-page.component';
 import { authGuard } from './auth.guard';
+import { OffersCarouselComponent } from './offers-carousel/offers-carousel.component';
 
 const routes: Routes = [
 
@@ -46,15 +47,17 @@ const routes: Routes = [
     ]
   },
   {
-    path: 'auth', data: { breadcrumb: 'Auth' }, loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule),canActivate: [authGuard]
-    
-  },
-  {
     path: 'dashboard', loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule),canActivate: [authGuard]
   },
   {
+    path: 'auth', data: { breadcrumb: 'Auth' }, loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule),canActivate: [authGuard]
+    
+  },
+  {path:'offerc',component:OffersCarouselComponent},
+  {
     path: '**', component: NoPageComponent, data: { breadcrumb: '404' } 
   },
+  
 
 ];
 

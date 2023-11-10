@@ -81,7 +81,7 @@ A Stripe Element will be inserted here.
                         <div class="d-flex functionality-btns">
                             <span *ngIf="address.defaultAddress">Default Address</span>
                             <button class="btn default__btn" (click)="MakeDefault(address,i)"
-                                *ngIf="!address.defaultAddress">Make this Default</button>
+                                *ngIf="i!=0">Make this Default</button>
                             <button class="edit__btn btn" (click)="EditAddress(address,i)">Edit</button>
                             <button class="remove__btn btn" (click)="RemoveAddress(address,i)">Remove</button>
                         </div>

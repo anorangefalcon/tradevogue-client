@@ -1,6 +1,6 @@
 import { Component, ElementRef, Input, Renderer2, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { FetchDataService } from '../faq-page/fetch-data.service';
+import { FetchDataService } from '../shared/services/fetch-data.service';
 import { RouterLinksService } from '../shared/services/router-links.service';
 import { UtilsModule } from 'src/app/utils/utils.module';
 import { passwordStrengthValidator, matchPasswordValidator } from '../auth/validators';
@@ -103,7 +103,7 @@ export class SettingsComponent {
 
     this.dialogBox.responseEmitter.subscribe(async (res: boolean) => {
       if (res == true) {
-        await this.fetchDataService.httpPost(this.backendURLs.URLs.cancelOrder, this.body);
+        await this.fetchDataService.HTTPPOST(this.backendURLs.URLs.cancelOrder, this.body);
         // this.fetchData();
         this.dialogBox.responseEmitter.next(false);
       }
@@ -272,8 +272,12 @@ export class SettingsComponent {
   async MakeDefault(address: any) {
     try {
       const body = { address: address };
-      const data: any = await this.fetchDataService.httpPost(this.backendURLs.URLs.setDefaultAddress, body);
-      this.userAddresses = data;
+      console.log('body coming is ==]=====',body);
+      
+      this.fetchDataService.HTTPPOST(this.backendURLs.URLs.setDefaultAddress, body).subscribe((data)=>{
+
+      });
+      // this.userAddresses = data;
 
     } catch (error) {
 

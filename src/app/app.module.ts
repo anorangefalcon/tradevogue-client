@@ -40,6 +40,7 @@ import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
 import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 import { AngularFireMessagingModule } from '@angular/fire/compat/messaging';
 import { MessagingService } from './shared/services/messaging-service';
+import { OffersCarouselComponent } from './offers-carousel/offers-carousel.component';
 
 
 initializeApp(environment.firebase);
@@ -58,6 +59,7 @@ initializeApp(environment.firebase);
     SidecartComponent,
     DialogBoxComponent,
     WishlistComponent,
+    OffersCarouselComponent,
   ],
   imports: [
     BrowserModule,

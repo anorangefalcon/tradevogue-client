@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { UtilsModule } from '../utils/utils.module';
-import { FetchDataService } from '../faq-page/fetch-data.service';
+import { FetchDataService } from '../shared/services/fetch-data.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
@@ -22,7 +22,7 @@ export class HomeComponent {
       const body = {
         email: this.subscribeForm.get('email')?.value
       }
-    let data = await this.fetchDataService.httpPost(this.backendUrls.URLs.subscribeMail, body)
+       this.fetchDataService.HTTPPOST(this.backendUrls.URLs.subscribeMail, body)
     }
     catch (error) {
       console.log("Error in sending Subscribe Mail", error);

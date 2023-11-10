@@ -23,8 +23,6 @@ export class CardTemplateComponent {
   selectedColor: string = "";
 
   ngOnInit(): void {
-    // console.log(this.product);
-    
     const sku = this.product.sku;
     this.avgRating = this.product.avgRating;
   }
@@ -37,7 +35,7 @@ export class CardTemplateComponent {
     return Array(newTotal).fill(0);
   }
 
-  async chooseWishlist() {  
+   chooseWishlist() {  
     this.wishlistService.ShowWishlist(this.product._id);
   }
   

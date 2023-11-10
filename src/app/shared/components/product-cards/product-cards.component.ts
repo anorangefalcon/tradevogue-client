@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FetchDataService } from '../../../faq-page/fetch-data.service';
+import { FetchDataService } from '../../services/fetch-data.service';
 import { OwlOptions } from 'ngx-owl-carousel-o';
 
 

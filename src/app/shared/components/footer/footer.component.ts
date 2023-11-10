@@ -2,7 +2,7 @@ import { Component, ElementRef, ViewChild } from '@angular/core';
 import { RouterLinksService } from '../../services/router-links.service';
 import { Router } from '@angular/router';
 import { SocialsService } from '../../services/custom-UI/socials.service';
-import { FetchDataService } from '../../../faq-page/fetch-data.service';
+import { FetchDataService } from '../../services/fetch-data.service';
 import { UtilsModule } from 'src/app/utils/utils.module';
 
 

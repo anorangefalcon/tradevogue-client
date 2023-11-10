@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { UtilsModule } from 'src/app/utils/utils.module';
 import { PopupService } from 'src/app/shared/services/popup.service';
-import { FetchDataService } from 'src/app/faq-page/fetch-data.service';
+import { FetchDataService } from 'src/app/shared/services/fetch-data.service';
 import { catchError, forkJoin } from 'rxjs';
 import { FormBuilder, Validators } from '@angular/forms';
 import { CookieService } from 'ngx-cookie-service';
@@ -136,8 +136,8 @@ export class TicketsComponent {
     const url1 = this.utils.URLs.updateTicketStatus;
     const url2 = this.utils.URLs.ticketMail;
 
-    const request1 = this.fetchDataService.httpPost(url1, body);
-    const request2 = this.fetchDataService.httpPost(url2, body);
+    const request1 = this.fetchDataService.HTTPPOST(url1, body);
+    const request2 = this.fetchDataService.HTTPPOST(url2, body);
 
     // Use forkJoin to send the requests in parallel
     forkJoin([request1, request2])
@@ -230,16 +230,14 @@ export class TicketsComponent {
 
     console.log(body);
 
-    this.fetchDataService.httpPost(this.utils.URLs.addTitleToTicketType, body)
-      .then((response: any) => {
+    this.fetchDataService.HTTPPOST(this.utils.URLs.addTitleToTicketType, body)
+      .subscribe((response: any) => {
         if (response.success) {
           this.ticketData
             .push(this.updatedItem);
         }
       })
-      .catch(error => {
-        console.error("Error adding item:", error);
-      });
+      
 
     this.loadData();
   }
@@ -263,16 +261,14 @@ export class TicketsComponent {
       newTitle: this.updatedItem
     }
 
-    this.fetchDataService.httpPost(this.utils.URLs.addTitleToTicketType, body)
-      .then((response: any) => {
+    this.fetchDataService.HTTPPOST(this.utils.URLs.addTitleToTicketType, body)
+      .subscribe((response: any) => {
         if (response.success) {
           this.ticketData
             .push(this.updatedItem);
         }
       })
-      .catch(error => {
-        console.error("Error pushing item:", error);
-      });
+     
 
     this.loadData()
   }
@@ -283,8 +279,8 @@ export class TicketsComponent {
       _id: this.ticketTypeId
     }
 
-    this.fetchDataService.httpPost(this.utils.URLs.deleteSupportTicket, body)
-      .then((response: any) => {
+    this.fetchDataService.HTTPPOST(this.utils.URLs.deleteSupportTicket, body)
+      .subscribe((response: any) => {
         if (response.success) {
           const deletedIndex = this.ticketData
             .findIndex(title => title === item);
@@ -294,9 +290,7 @@ export class TicketsComponent {
           }
         }
       })
-      .catch(error => {
-        console.error("Error deleting item:", error);
-      });
+     
 
     this.loadData()
   }

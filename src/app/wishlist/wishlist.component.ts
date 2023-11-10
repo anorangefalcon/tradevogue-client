@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { WishlistService } from '../shared/services/wishlist.service';
 import { UtilsModule } from '../utils/utils.module';
-import { FetchDataService } from '../faq-page/fetch-data.service';
+import { FetchDataService } from '../shared/services/fetch-data.service';
 import { ToastService } from '../shared/services/toast.service';
 
 @Component({
@@ -31,8 +31,6 @@ export class WishlistComponent {
 
   async ngOnInit() {
     this.wishlistService.wishlistPopupData.subscribe((data)=>{
-      console.log(data, "popup data");
-      
       if(!data) return;
       
       this.list=data.wishlists;

@@ -5,7 +5,7 @@ import { CookieService } from 'ngx-cookie-service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { UserDataService } from '../user-data.service';
 import { UtilsModule } from 'src/app/utils/utils.module';
-import { FetchDataService } from 'src/app/faq-page/fetch-data.service';
+import { FetchDataService } from 'src/app/shared/services/fetch-data.service';
 import { WishlistService } from 'src/app/shared/services/wishlist.service';
 import { LoginCheckService } from 'src/app/shared/services/login-check.service';
 
@@ -58,16 +58,13 @@ export class LoginComponent {
 
 
   LoginUser(body:any){ 
+    console.log('login clicked------------------->');
+    
     this.fetchDataService.HTTPPOST(this.backendUrls.URLs.loginUrl, body).subscribe(
       (data: any) => {
-        this.fetchDataService.subject.next(data.firstName);
-        this.cookies.set('userToken', data.token)
-        this.cookies.set('userName', data.firstName)
-        this.router.navigate(['/']);
-        this.loginService.LoginCheck.next(true);
-      },
-
-    
+        console.log('subscribe create user ');
+        this.loginService.loginUser({'userToken': data.token, 'name': data.firstName});
+      },    
     )
     this.loading=false;
   }

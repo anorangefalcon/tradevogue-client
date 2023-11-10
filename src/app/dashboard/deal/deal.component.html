@@ -9,19 +9,58 @@
     <h2 class="d-flex align-item-center">Customize Deal Section</h2>
     <div class="d-flex gap-10">
         <!--  [disabled]="DealForm.invalid" -->
-    <button  class="save__btn" (click)="Save()">Save</button>
+        <button class="Edit__btn" (click)="EditClicked()" *ngIf="!Edit">Edit</button>
+        <button class="cancel__btn" (click)="EditClicked()" *ngIf="Edit">Cancel</button>
+    <button  class="save__btn" (click)="Save()" *ngIf="Edit">Save</button>
     </div>
 </div>
 
     <form [formGroup]="DealForm" class="d-flex gap-15">
 
-        <div class="form__group relative d-flex flex-column">
-            <label class="form__label">Product Image<span>*</span></label>
-            <input type="file" id="productImage"  (input)="bannerImageUpload($event)" class="form__input product__image__input">
+        <div class="form__group width-40 relative d-flex flex-column img-upload justify-content-center align-item-center">
+
+                <img [src]="DealForm.get('productImage')?.value" alt="" class="product-image" *ngIf="!Edit">
+
+                <div *ngIf="Edit" class="d-flex flex-column align-item-center justify-content-center gap-10">
+                <label for="backgroundImage" class="upload__div">
+                <span class="upload_icon material-symbols-outlined">
+                    cloud_upload
+                </span>
+                </label>
+                <input type="file" id="backgroundImage" accept="image/jpg, image/jpeg, image/png"
+                (input)="bannerImageUpload($event)">
+                <small class="banner-label">Upload
+                    Banner Image</small>
+                </div>
+            <!-- <label class="form__label">Product Image<span>*</span></label> -->
         </div>
+         <!-- <div class="image-upload-div d-flex justify-content-center align-item-center relative">
+                        <div class="upload-image d-flex flex-column gap-10 align-item-center">
+                            <input type="file" [id]="'backgroundImage'+i" accept="image/jpg, image/jpeg, image/png"
+                                (input)="bannerImageUpload($event, i)" />
+                            <label [for]="'backgroundImage'+i"
+                                class="upload__block d-flex flex-column flex-center pointer">
+                                <span class="upload_icon material-symbols-outlined">
+                                    cloud_upload
+                                </span>
+                            </label>
+                            <small class="banner-label">Upload
+                                Banner Image</small>
+                            <img [src]="getImagePreview(i)" [style.display]="getImagePreview(i) ? 'flex' : 'none'"
+                                class="banner-iage">
+                            <span class="material-symbols-outlined remove-btn pointer"
+                                [style.display]="getImagePreview(i) ? 'flex' : 'none'" (click)="removeImage(i)">
+                                close
+                            </span>
+                            <div class="loader" *ngIf="showLoading(i)"></div>
+
+                        </div>
+                    </div>
+ -->
 
 
-
+    <div class="width-60 d-flex flex-wrap gap-20">
+    
         <div class="form__group relative d-flex flex-column">
             <label class="form__label">Title<span>*</span></label>
             <input type="text" id="title" formControlName="Title" placeholder="Enter Deal Title" class="form__input">
@@ -46,22 +85,22 @@
             </div>
         </div>
 
-        <div class="form__group relative d-flex flex-column" formGroupName="colors">
+        <div class="form__group relative d-flex flex-column colors__div" formGroupName="colors">
             <label class="form__label">Title Color<span>*</span></label>
             <input type="color" id="titleColor" formControlName="titleColor"  class="form__input">
         </div>
 
-        <div class="form__group relative d-flex flex-column" formGroupName="colors">
+        <div class="form__group relative d-flex flex-column colors__div" formGroupName="colors">
             <label class="form__label">SubTitle Color<span>*</span></label>
             <input type="color" id="titleColor" formControlName="subTitleColor" class="form__input">
         </div>
 
-        <div class="form__group relative d-flex flex-column" formGroupName="colors">
+        <div class="form__group relative d-flex flex-column colors__div" formGroupName="colors">
             <label class="form__label">Background Color<span>*</span></label>
             <input type="color" id="backgroundColor" formControlName="backgroundColor" class="form__input">
         </div>
 
-        <div class="form__group relative d-flex flex-column" formGroupName="colors">
+        <div class="form__group relative d-flex flex-column colors__div" formGroupName="colors">
             <label class="form__label">Button Color<span>*</span></label>
             <input type="color" id="titleColor" formControlName="buttonColor" class="form__input">
         </div>
@@ -71,8 +110,27 @@
             <input type="text" id="buttonText" formControlName="buttonText" placeholder="Enter Button Text" class="form__input">
         </div>
 
+    </div>
+
         </form>
 </div>
 
 
 </div>
+
+
+
+<!-- <div *ngFor="let i of Direction">
+    <div *ngIf="i=='home'">
+        <p>this is home</p>
+    </div>
+
+    <div *ngIf="i=='deal'">
+        <p>this is deal</p>
+    </div>
+
+    <div *ngIf="i=='popular'">
+        <p>this is popular</p>
+    </div>
+
+</div> -->

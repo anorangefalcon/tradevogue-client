@@ -1,9 +1,10 @@
 import { Component, OnInit, Renderer2 } from '@angular/core';
 import { getMessaging, getToken, onMessage } from 'firebase/messaging';
-import { FetchDataService } from './faq-page/fetch-data.service';
+import { FetchDataService } from './shared/services/fetch-data.service';
 import { CookieService } from 'ngx-cookie-service';
 import { FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
+import { LoginCheckService } from './shared/services/login-check.service';
 
 
 @Component({
@@ -41,7 +42,7 @@ export class AppComponent {
   voices: any;
 
   title = 'eCommerce-frontend';
-  showWishlistsDialog: boolean = false;
+ 
   messages: any = getToken(getMessaging(), { vapidKey: 'BPgBPO552gWCPJ_rUhzgn02bC3EFAIh1EWhlyib11X58vriYlQXmqeGX9_NJ8Z1h8KjtIDpstdWTgFuC01pdFbw' });
 
 
@@ -49,34 +50,29 @@ export class AppComponent {
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('./firebase-messaging-sw.js')
         .then(function (registration) {
-          console.log('Registration successful, scope is:', registration.scope);
         }).catch(function (err) {
-          console.log('Service worker registration failed, error:', err);
         });
     }
 
     const messaging = getMessaging();
     getToken(messaging, { vapidKey: 'BPgBPO552gWCPJ_rUhzgn02bC3EFAIh1EWhlyib11X58vriYlQXmqeGX9_NJ8Z1h8KjtIDpstdWTgFuC01pdFbw' }).then((currentToken) => {
       if (currentToken) {
-        console.log('current tokens for client: ', currentToken);
         this.sendTokenToServer(currentToken);
       } else {
-        console.log('No registration token available. Request permission to generate one.');
       }
     }).catch((err) => {
-      console.log('An error occurred while retrieving token. ', err);
     });
   }
 
 
   sendTokenToServer(currentToken: any) {
     if (currentToken) {
-      this.cookie.set('fcmToken', currentToken);
+      this.userService.setFcmToken(currentToken);
     }
   }
 
 
-  constructor(private fetchdata: FetchDataService, private cookie: CookieService, private formBuilder: FormBuilder) {
+  constructor(private fetchdata: FetchDataService, private cookie: CookieService, private formBuilder: FormBuilder, private userService: LoginCheckService) {
 
 
 
@@ -92,7 +88,6 @@ export class AppComponent {
   subscribeToMessages() {
     const messaging = getMessaging();
     onMessage(messaging, (payload) => {
-      console.log('FCM message received:', payload);
       this.handleNotificationPayload(payload);
     });
   }
@@ -102,10 +97,6 @@ export class AppComponent {
       const endpoint = payload.data.endpoint;
       const notificationPayload = payload.data.payload;
       const p256d = payload.data.p256d;
-
-      console.log('Endpoint:', endpoint);
-      console.log('Notification Payload:', notificationPayload);
-      console.log('P-256D:', p256d);
     }
   }
 }
