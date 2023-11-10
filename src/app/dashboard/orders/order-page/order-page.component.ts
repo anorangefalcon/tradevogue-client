@@ -38,7 +38,7 @@ export class OrderPageComponent {
         data.products.forEach((product: any)=>{
             totalQty += product.quantity;
             totalAmount += product.amount;
-        })
+        });
 
         this.orderInfo.orderDate = new Date(this.orderInfo.orderDate).toDateString()
 

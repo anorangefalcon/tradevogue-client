@@ -1,0 +1,90 @@
+.invoice__heading {
+    height: 60px;
+    overflow: hidden;
+}
+/* 
+.basic__info{
+    padding-inline: 10px;
+} */
+
+.basic__info h4{
+    margin-bottom: 5px;
+}
+
+.payment__info{
+    padding: 15px 30px;
+    border: 1px solid rgb(var(--blackClr), 0.1);
+}
+
+.invoice__sub-title {
+    font-size: 14px !important;
+    font-weight: 600;
+    margin-bottom: 3px;
+}
+
+.invoice__sub-text {
+    font-size: 12px !important;
+    font-weight: 500;
+}
+
+.invoice-template {
+    padding: 40px;
+    background-color: rgb(var(--whiteClr));
+    border: 1px solid rgba(var(--blackClr), 0.1);
+    border-radius: 10px;
+}
+
+.total td.items, th.items {
+    font-weight: 700 !important;
+    padding: 8px 10px !important;
+    background-color: #f4f5f778;
+    color: rgb(var(--blackClr), 0.9);
+}
+
+
+@media print {
+    
+    @page {
+        size: auto;  
+        margin: 0; 
+    }
+
+    /* header.header,
+    div.sidebar {
+        display: none !important;
+    } */
+
+
+    .invoice-template {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        padding: 40px;
+        z-index: 99;
+        background-color: rgb(var(--whiteClr));
+        border: 0px solid rgba(var(--blackClr), 0.1);
+        border-radius: 0px;
+    }
+
+    .main {
+
+        margin-inline-start: 0px !important;
+        padding: 0px !important;
+        min-height: max-content !important;
+    }
+
+    .table-list {
+        overflow-x: hidden !important;
+    }
+
+    .items {
+        white-space: wrap !important;
+    }
+
+    .btn-primary {
+        display: none;
+    }
+
+}

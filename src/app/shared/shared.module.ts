@@ -70,6 +70,7 @@ import { HeroComponent } from '../home/hero/hero.component';
     LessThanOrEqualPipe,
     PaginationComponent,
     DrawerComponent,
+    InvoiceTemplateComponent
   ],
 
 })

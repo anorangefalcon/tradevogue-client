@@ -228,7 +228,6 @@ export class StatisticsComponent implements OnInit {
           hoverOffset: 10,
           borderWidth: 2,
           borderRadius: 5,
-
         }]
 
       },
