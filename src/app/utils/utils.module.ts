@@ -127,6 +127,11 @@ export class UtilsModule {
     ticketMail: 'http://localhost:1000/ticketStatus',
     webPushDetail: 'http://localhost:1000/user/webPushDetails',
 
+    // notifications
+    getFCMtoken :'http://localhost:1000/admin/getFcmTokens',
+    getNotificationDetail: 'http://localhost:1000/admin/getNotificationDetail',
+    setNotifications: 'http://localhost:1000/sales/setNotifications',
+
     // ------ custom-UI ------
 
     // Socials:http://localhost:1000/admin/getPaymentKeys

@@ -32,18 +32,18 @@ import { BreadcrumbComponent } from './shared/breadcrumb/breadcrumb.component';
 import { ToastComponent } from './toast/toast.component';
 import { SidecartComponent } from './shared/sidecart/sidecart.component';
 import { DialogBoxComponent } from './dialog-box/dialog-box.component';
-import { environment } from 'src/environments/environment';
+// import { environment } from 'src/environments/environment';
 import { WishlistComponent } from './wishlist/wishlist.component';
-import { initializeApp } from 'firebase/app';
-import { AngularFireModule } from '@angular/fire/compat';
-import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
-import { AngularFireAuthModule } from '@angular/fire/compat/auth';
-import { AngularFireMessagingModule } from '@angular/fire/compat/messaging';
+// import { initializeApp } from 'firebase/app';
+// import { AngularFireModule } from '@angular/fire/compat';
+// import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
+// import { AngularFireAuthModule } from '@angular/fire/compat/auth';
+// import { AngularFireMessagingModule } from '@angular/fire/compat/messaging';
 import { MessagingService } from './shared/services/messaging-service';
 import { OffersCarouselComponent } from './offers-carousel/offers-carousel.component';
 
 
-initializeApp(environment.firebase);
+// initializeApp(environment.firebase);
 
 @NgModule({
   declarations: [
@@ -78,10 +78,10 @@ initializeApp(environment.firebase);
     CheckoutModule,
     HttpClientModule,
     UtilsModule,
-    AngularFireDatabaseModule,
-    AngularFireAuthModule,
-    AngularFireMessagingModule,
-    AngularFireModule.initializeApp(environment.firebase),
+    // AngularFireDatabaseModule,
+    // AngularFireAuthModule,
+    // AngularFireMessagingModule,
+    // AngularFireModule.initializeApp(environment.firebase),
   ],
   exports: [
   ],

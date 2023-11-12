@@ -47,7 +47,9 @@ export class HelpPageComponent {
             status: 'open',
             message: this.contactForm.get('message')?.value,
           }
-     this.fetchDataService.HTTPPOST(this.utils.URLs.ticketMail, body)
+     this.fetchDataService.HTTPPOST(this.utils.URLs.ticketMail, body).subscribe((res => {
+      console.log(res , "response send ")
+     }))
         }
         catch (error) {
           console.log("Error in sending Subscribe Mail", error);
@@ -70,7 +72,7 @@ export class HelpPageComponent {
         });
         
 
-      this.contactForm.reset();
+      // this.contactForm.reset();
 
     } else {
       console.log('Form is not valid. Please check the fields.');

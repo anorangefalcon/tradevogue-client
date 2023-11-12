@@ -8,7 +8,8 @@ import { passwordStrengthValidator, matchPasswordValidator } from '../auth/valid
 import { MobileNoValidator } from './validators';
 import { CartService } from '../shared/services/cart.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { StripPaymentService } from '../shared/services/stripe-Integration/strip-payment.service';
+// import { StripPaymentService } from '../shared/services/stripe-Integration/strip-payment.service';
+import { CheckoutService } from '../checkout/checkout.service';
 import { WishlistService } from '../shared/services/wishlist.service';
 import { DialogBoxService } from '../shared/services/dialog-box.service';
 
@@ -62,7 +63,7 @@ export class SettingsComponent {
      private fb: FormBuilder,
      private cartService: CartService, 
      private route: ActivatedRoute, 
-     private stripePay: StripPaymentService,
+     private stripePay: CheckoutService,
      private toastService : ToastService,
      private dialogBox : DialogBoxService) {
 

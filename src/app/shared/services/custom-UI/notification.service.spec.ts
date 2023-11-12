@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { StripPaymentService } from './strip-payment.service';
+import { NotificationService } from './notification.service';
 
-describe('StripPaymentService', () => {
-  let service: StripPaymentService;
+describe('NotificationService', () => {
+  let service: NotificationService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(StripPaymentService);
+    service = TestBed.inject(NotificationService);
   });
 
   it('should be created', () => {

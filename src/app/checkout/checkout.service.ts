@@ -1,19 +1,17 @@
 import { Injectable } from '@angular/core';
-declare var Stripe: any;
-import { UtilsModule } from 'src/app/utils/utils.module';
-import { CartService } from '../cart.service';
-import { FetchDataService } from '../fetch-data.service';
+import { UtilsModule } from '../utils/utils.module';
 import { CookieService } from 'ngx-cookie-service';
-import { BillingResponseService } from 'src/app/checkout/billing-response.service';
+import { FetchDataService } from '../shared/services/fetch-data.service';
+declare var Stripe: any;
 
 @Injectable({
   providedIn: 'root'
 })
-export class StripPaymentService {
+export class CheckoutService {
   publicKey: any;
   stripe: any;
 
-  constructor(private backendUri: UtilsModule, private billingService: BillingResponseService, private CartService: CartService, private fetchData: FetchDataService, private cookie: CookieService) { }
+  constructor(private backendUri: UtilsModule, private fetchData: FetchDataService, private cookie: CookieService) { }
 
   async showMessage(messageText: any) {
     const messageContainer = document.querySelector("#payment-message");
@@ -21,6 +19,7 @@ export class StripPaymentService {
     if (messageContainer) {
       messageContainer.classList.remove("hidden");
       messageContainer.textContent = messageText;
+      console.log(messageContainer, "message container is ")
 
       setTimeout(function () {
         messageContainer.classList.add("hidden");
@@ -70,6 +69,7 @@ export class StripPaymentService {
 
 
     console.log("response is public key ", publicKey);
+
 
     const clientSecret = new URLSearchParams(window.location.search).get(
       "payment_intent_client_secret"
@@ -144,11 +144,11 @@ export class StripPaymentService {
         console.log("An unexpected error occurred. Payment Intent Status:", paymentIntent.status);
         break;
     }
-  }
+  } 
 
 
 
-  
+
   async checkStatus(stripe: any): Promise<void> {
     const clientSecret = new URLSearchParams(window.location.search).get(
       "payment_intent_client_secret"
@@ -203,22 +203,22 @@ export class StripPaymentService {
   }
 }
 
-  // async ngOnInit(): Promise<any> {
+// async ngOnInit(): Promise<any> {
 
-  //   try {
-  //     const response = await fetch('http://localhost:1000/getPaymentKeys');
+//   try {
+//     const response = await fetch('http://localhost:1000/getPaymentKeys');
 
-  //     const data = await response.json();
+//     const data = await response.json();
 
-  //     this.publicKey = data[0]?.keys[0]?.publicKey;
+//     this.publicKey = data[0]?.keys[0]?.publicKey;
 
-  //     this.stripe = Stripe(this.publicKey);
+//     this.stripe = Stripe(this.publicKey);
 
-  //     console.log("service payment key ", this.publicKey)
+//     console.log("service payment key ", this.publicKey)
 
 
-  //   } catch (error) {
-  //     console.error('Error loading Stripe scripts:', error);
-  //   }
+//   } catch (error) {
+//     console.error('Error loading Stripe scripts:', error);
+//   }
 
-  // }
+// }

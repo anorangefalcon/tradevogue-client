@@ -20,6 +20,7 @@ import { BannerComponent } from './banner/banner.component';
 import { DealComponent } from './deal/deal.component';
 import { SalesComponent } from './sales/sales.component';
 import { CustomiseBannerComponent } from './customise-banner/customise-banner.component';
+import { NotificationsComponent } from './notifications/notifications.component';
 
 const routes: Routes = [ 
   {
@@ -52,6 +53,7 @@ const routes: Routes = [
       },
       { path: 'customise-banner', component: BannerComponent },
       { path: 'customise-deal', component: DealComponent },
+      { path: 'notification' , component: NotificationsComponent },
 
       { path: '**', component: NoPageComponent },
     ]

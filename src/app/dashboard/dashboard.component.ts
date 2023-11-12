@@ -45,6 +45,9 @@ export class DashboardComponent {
         // {name: 'Monetization', route: '/dashboard/monetization'}
       ]
     },
+    {
+      name: 'Notifications' , route: '/dashboard/notification' , icons: 'notifications'
+    },
     { name: 'Logout', icons: 'logout', route: '' }
   ]
 

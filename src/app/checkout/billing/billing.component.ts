@@ -6,7 +6,8 @@ import { CartService } from 'src/app/shared/services/cart.service';
 import { ActivatedRoute } from '@angular/router';
 import { BillingResponseService } from '../billing-response.service';
 declare var Stripe: any;
-import { StripPaymentService } from 'src/app/shared/services/stripe-Integration/strip-payment.service';
+// import { StripPaymentService } from 'src/app/shared/services/stripe-Integration/strip-payment.service';
+import { CheckoutService } from '../checkout.service';
 
 @Component({
   selector: 'app-billing',
@@ -185,7 +186,7 @@ export class BillingComponent {
     }
   }
 
-  constructor(private cartService: CartService, private billingService: BillingResponseService, private fetchDataService: FetchDataService, private backendURLs: UtilsModule, private renderer: Renderer2, private elementRef: ElementRef, private cookie: CookieService, private route: ActivatedRoute, private stripePay: StripPaymentService) {
+  constructor(private cartService: CartService, private billingService: BillingResponseService, private fetchDataService: FetchDataService, private backendURLs: UtilsModule, private renderer: Renderer2, private elementRef: ElementRef, private cookie: CookieService, private route: ActivatedRoute, private stripePay: CheckoutService) {
 
     // this.userService.totalAmount$.subscribe((data: any) => {
     //   this.totalAmount = data;

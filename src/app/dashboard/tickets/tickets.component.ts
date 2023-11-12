@@ -137,7 +137,9 @@ export class TicketsComponent {
     const url2 = this.utils.URLs.ticketMail;
 
     const request1 = this.fetchDataService.HTTPPOST(url1, body);
-    const request2 = this.fetchDataService.HTTPPOST(url2, body);
+    const request2 = this.fetchDataService.HTTPPOST(url2, body).subscribe((res=> {
+      console.log(res , "res is========> ")
+    }));
 
     // Use forkJoin to send the requests in parallel
     forkJoin([request1, request2])
@@ -174,7 +176,7 @@ export class TicketsComponent {
       this.cookie.set('fcmToken', this.token)
       const fcmToken = this.token;
 
-      const apiUrl = 'http://localhost:1000/send-notification';
+      const apiUrl = 'http://localhost:3000/send-notification';
 
       this.http.post(apiUrl, data).subscribe(
         (response) => {

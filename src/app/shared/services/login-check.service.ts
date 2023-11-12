@@ -92,13 +92,13 @@ export class LoginCheckService {
   }
 
   redirectToPreviousRoute() {
-    let previousUrl = '/';
-    this.router.events
-      .pipe(filter((event): event is NavigationEnd => event instanceof NavigationEnd))
-      .subscribe((event: NavigationEnd) => {
-        previousUrl = event.url;
-      });
+    // let previousUrl = '/';
+    // this.router.events
+    //   .pipe(filter((event): event is NavigationEnd => event instanceof NavigationEnd))
+    //   .subscribe((event: NavigationEnd) => {
+    //     previousUrl = event.url;
+    //   });
 
-    this.router.navigate([previousUrl]);
+    // this.router.navigate([previousUrl]);
   }
 }

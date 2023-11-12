@@ -24,7 +24,7 @@ export class PaginationComponent implements OnInit {
 
   /** Display the First/Last buttons */
   @Input()
-  firstLastButtons = false;
+  firstLastButtons = true;
 
   /** Display the Next/Previous buttons */
   @Input()

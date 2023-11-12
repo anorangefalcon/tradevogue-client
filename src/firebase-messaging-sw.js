@@ -1,15 +1,28 @@
-// Give the service worker access to Firebase Messaging.
-// Note that you can only use Firebase Messaging here, other Firebase libraries
-// are not available in the service worker.
+import { CookieService } from "ngx-cookie-service";
+
 importScripts('https://www.gstatic.com/firebasejs/5.5.0/firebase-app.js');
 importScripts('https://www.gstatic.com/firebasejs/5.5.0/firebase-messaging.js');
 
-// Initialize the Firebase app in the service worker by passing in the
-// messagingSenderId.
 firebase.initializeApp({
   'messagingSenderId': '271891465540'
 });
 
-// Retrieve an instance of Firebase Messaging so that it can handle background
-// messages.
 const messaging = firebase.messaging();
+
+self.addEventListener('push', (event) => {
+  if (event.data) {
+    const payload = event.data.json();
+    console.log('Push event received with payload:', payload);
+
+    // const url = payload.data['gcm.notification.url']; // Move this line inside the if block
+
+    const options = {
+      body: payload.notification.body,
+      icon: payload.notification.icon,
+    };
+
+    event.waitUntil(
+      self.registration.showNotification(payload.notification.title, options)
+    );
+  }
+});
