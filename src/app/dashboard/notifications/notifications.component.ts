@@ -76,16 +76,16 @@ export class NotificationsComponent {
     this.selectedItem = key;
     if (this.selectedItem) {
       const id = this.selectedItem._id;
-      const enable = !this.selectedItem.enable;
-      console.log("id is ", id , "enable is ", enable)
+      const state = !this.selectedItem.state;
+      console.log("id is ", id , "enable is ", state)
       const body = {
-        id , enable
+        id , state
       }
 
       console.log(body , "toggle body")
 
-      this.fetch.HTTPPOST(this.util.URLs.toggleSales , body).subscribe((res)=> {
-        console.log(res , "sales is ")
+      this.fetch.HTTPPOST(this.util.URLs.toggleNotifications , body).subscribe((res)=> {
+        console.log(res , "notifications is ")
       })
 
     }
@@ -186,7 +186,7 @@ export class NotificationsComponent {
 
         console.log(body , "updated data ")
 
-        this.fetch.HTTPPOST(this.util.URLs.updateSales , body).subscribe((res)=> {
+        this.fetch.HTTPPOST(this.util.URLs.updateNotifications , body).subscribe((res)=> {
           console.log(res , "updated sales is ")
         })
         

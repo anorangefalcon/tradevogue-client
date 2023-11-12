@@ -1,6 +1,6 @@
 <div id="chat-bots" #chatBots>
     <div class="messengers">
-      <div class="notification-container" *ngIf="notifications.length > 0">
+      <div class="notification-container" *ngIf="notifications.length > 0 && hasVisibleNotifications()">
         <div class="notification-header">
           <span class="notification-title">Latest Notifications</span>
           <button class="remove-btn d-flex align-item-center" (click)="toggle()">
@@ -10,23 +10,22 @@
           </button>
         </div>
         <div class="notification-scroll">
-          <div *ngFor="let notification of notifications" class="notification-item">
+          <div *ngFor="let notification of visibleNotifications()" class="notification-item" (click)="redirectToUrl(notification.notification.url)">
             <div class="notification-icon">
-              <img src="https://via.placeholder.com/30" alt="Notification Icon">
+              <img [src]="notification.notification.icon" alt="Notification Icon">
             </div>
             <div class="notification-details">
-              <div class="notification-title">{{ notification.title }}</div>
-              <div class="notification-body">{{ notification.body }}</div>
+              <div class="notification-title">{{ notification.notification.title }}</div>
+              <div class="notification-body">{{ notification.notification.body }}</div>
             </div>
           </div>
         </div>
-  
         <!-- Subscribe to Notification Button -->
         <div *ngIf="!fcmToken && !notification.hasPermission">
-            <button class="subscribe-button" (click)="subscribeToNotifications()">
-              <i class="bi bi-bell"></i> Subscribe to Notifications
-            </button>
-          </div>
+          <button class="subscribe-button" (click)="subscribeToNotifications()">
+            <i class="bi bi-bell"></i> Subscribe to Notifications
+          </button>
+        </div>
       </div>
     </div>
     <div class="icon-supports" (click)="toggle()" style="font-size: 15px; text-align: center;">

@@ -130,7 +130,10 @@ export class UtilsModule {
     // notifications
     getFCMtoken :'http://localhost:1000/admin/getFcmTokens',
     getNotificationDetail: 'http://localhost:1000/admin/getNotificationDetail',
-    setNotifications: 'http://localhost:1000/sales/setNotifications',
+    setNotifications: 'http://localhost:1000/admin/setNotifications',
+    updateNotifications: 'http://localhost:1000/admin/updateNotifications',
+    toggleNotifications: 'http://localhost:1000/admin/toggleNotifications',
+    comingNotifications: 'http://localhost:1000/user/comingNotifications',
 
     // ------ custom-UI ------
 

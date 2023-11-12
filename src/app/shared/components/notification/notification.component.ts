@@ -1,67 +1,42 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { SupportNotificationService } from '../../services/support-notification.service';
 import { FetchDataService } from '../../services/fetch-data.service';
-import { UtilsModule } from 'src/app/utils/utils.module';
 import { CookieService } from 'ngx-cookie-service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-notification',
   templateUrl: './notification.component.html',
   styleUrls: ['./notification.component.css']
 })
-export class NotificationComponent {
-  latestOrder: any; 
-  showOrder: boolean = false;
-  selectedTabIndexs = 0;
-  products: any[] = [];
-  showTextView: boolean = false;
-  messages: any[] = [];
-  newMessage: string = '';
-  orderDetails: any;
-  selectedOrder: any;
-  public loadingProducts: boolean = true;
-  showNewSection: boolean = false;
-  Clicked: boolean = false;
-  selectedProduct: any;
-  buttonsHidden: boolean = false;
-  previousOrders: any[] = [];
+export class NotificationComponent implements OnInit {
   showBellIcon: boolean = true;
-  message: any;
-  notificationOptions: any;
-  fcmToken = this.cookie.get('fcmToken')
+  fcmToken = this.cookie.get('fcmToken');
+  notifications: any[] = [];
 
-  // In your component class
-notifications = [
-  { title: 'New Message', body: 'You have a new message.' },
-  { title: 'Notification', body: 'This is a notification.' },
-  // Add more demo notifications as needed
-];
+  constructor(
+    public notification: SupportNotificationService,
+    private fetchService: FetchDataService,
+    private cookie: CookieService,
+    private router: Router
+  ) {}
 
+  ngOnInit(): void {
+    this.notification.notificationOptions$.subscribe((options) => {
+      console.log(options, "Notification Options");
+    });
 
-ngOnInit(): void {
-  this.notification.notificationOptions$.subscribe((options) => {
-    this.notificationOptions = options;
-    // Do something with the received options
-    console.log(this.notificationOptions, "dfdfdfd->.>>>")
-  });
-}
-
-
-  constructor(public notification: SupportNotificationService, private fetchService: FetchDataService, private utils: UtilsModule, private cookie: CookieService) {
-
+    this.fetchService.HTTPGET('http://localhost:1000/user/comingNotifications')
+      .subscribe((res: any) => {
+        console.log(res, "Notifications from Server");
+        this.notifications = res;
+      });
   }
-
-  // ngOnInit(): void {
-  //   this.notification.requestPermission();
-  //   this.notification.subscribeToMessages();
-  //   this.message = this.notification.message;
-  // }
 
   async subscribeToNotifications() {
-    
-     this.notification.initialize()
+    // Add your subscribe logic here if needed
+    // this.notification.initialize();
   }
-  
 
   toggle() {
     const chatBox = document.querySelector('.messengers');
@@ -72,7 +47,18 @@ ngOnInit(): void {
       }, 100);
     }
   }
-  
-  
-}
 
+  // Helper method to filter visible notifications
+  visibleNotifications(): any[] {
+    return this.notifications.filter(notification => notification.state);
+  }
+
+  // Helper method to check if there are any visible notifications
+  hasVisibleNotifications(): boolean {
+    return this.notifications.some(notification => notification.state);
+  }
+
+  redirectToUrl(url: string) {
+    this.router.navigate([url]);
+  }
+}

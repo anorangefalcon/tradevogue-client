@@ -10,7 +10,7 @@ export class NotificationService {
   constructor(private backendUrls : UtilsModule, private http: HttpClient) { }
 
   setNotifications(data : any) {
-    return this.http.post(this.backendUrls.URLs.setSales, data);
+    return this.http.post(this.backendUrls.URLs.setNotifications, data);
   }
 
   getRegistrationIDs() {
@@ -19,6 +19,10 @@ export class NotificationService {
 
   getNotifications() {
     return this.http.get(this.backendUrls.URLs.getNotificationDetail);
+  }
+
+  getComingNotification() {
+    return this.http.get(this.backendUrls.URLs.comingNotifications);
   }
 
   updateItem(updatedItem: any) {

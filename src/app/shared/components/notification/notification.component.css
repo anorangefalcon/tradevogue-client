@@ -240,6 +240,11 @@ p {
   background-color: #2980b9;
 }
 
+.notification-item {
+    cursor: pointer;
+  }
+  
+
 .heading-button{
     border: none;
     /* background-color: rgb(var(--secondary), 0.05); */
@@ -697,10 +702,9 @@ p {
 }
 
 .notification-icon img {
-    width: 30px; /* Adjust as needed */
-    height: 30px; /* Adjust as needed */
-    border-radius: 50%;
-    margin-right: 10px; /* Add some margin between icon and text */
+    width: 43px;
+    height: 44px;
+    margin-right: 15px;
 }
 
 .notification-details {
