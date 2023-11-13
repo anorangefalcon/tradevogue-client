@@ -165,6 +165,9 @@ export class UtilsModule {
     deletePaymentKeys: 'http://localhost:1000/paymentKeys/delete',
     getPaymentKeys: 'http://localhost:1000/paymentKeys/get',
 
+    // razorpay
+    razorpayPayment: 'http://localhost:1000/razorpay/createUpiPayment',
+
     // update the order status 
     updateOrderStatus: 'http://localhost:1000/orders/updateOrderStatus',
     getLatestProductForBuyer: 'http://localhost:1000/orders/latestOrder'

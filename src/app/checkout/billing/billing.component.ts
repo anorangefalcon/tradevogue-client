@@ -5,8 +5,8 @@ import { UtilsModule } from 'src/app/utils/utils.module';
 import { CartService } from 'src/app/shared/services/cart.service';
 import { ActivatedRoute } from '@angular/router';
 import { BillingResponseService } from '../billing-response.service';
+import { HttpClient } from '@angular/common/http';
 declare var Stripe: any;
-// import { StripPaymentService } from 'src/app/shared/services/stripe-Integration/strip-payment.service';
 import { CheckoutService } from '../checkout.service';
 
 @Component({
@@ -26,33 +26,12 @@ export class BillingComponent {
   elements: any;
   emailAddress: any;
   stripe: any;
+  items:any;
+  selectedPaymentMethod: string = 'stripe';
+  
 
   async ngOnInit(): Promise<void> {
     try {
-
-      window.onload = async () => {
-        try {
-
-          if (this.stripePay.publicKey) {
-            this.stripe = Stripe(this.stripePay.publicKey);
-
-            this.initialize(this.stripe);
-
-            const paymentForm = document.querySelector("#payment-form");
-
-            if (paymentForm) {
-              paymentForm.addEventListener("submit", this.handleSubmit);
-            } else {
-              console.error("Payment form not found");
-            }
-          } else {
-            console.log("No Public keys found");
-          }
-        } catch (error) {
-          console.error('Error occurred:', error);
-        }
-      };
-
       this.route.queryParams.subscribe(params => {
         const redirectStatus = params['redirect_status'];
 
@@ -68,8 +47,104 @@ export class BillingComponent {
     }
   }
 
-  async proceedToPayment() {
+  initializeStripe() {
+    try {
+      if (this.stripePay.publicKey) {
+        this.stripe = Stripe(this.stripePay.publicKey);
+        this.initialize(this.stripe);
+  
+        const paymentForm = document.querySelector("#payment-form");
+  
+        if (paymentForm) {
+          paymentForm.removeEventListener("submit", this.handleSubmit); 
+          paymentForm.addEventListener("submit", this.handleSubmit);
+        } else {
+          console.error("Payment form not found");
+        }
+      } else {
+        console.log("No Public keys found");
+      }
+    } catch (error) {
+      console.error('Error occurred:', error);
+    }
+  }
+  
+ async onStripeButtonClick() {   
+    this.selectedPaymentMethod = 'stripe';
+    this.initializeStripe();
+  }
+  
+  
 
+
+  submitForm(item: any) {
+    const body = {
+      'amount': item.price.toString(),
+      'items': item,
+      'token': this.cookie.get('userToken')
+    }
+
+    this.http.post<any>('http://localhost:1000/razorpay/createUpiPayment', body).subscribe(
+      (res) => {
+        if (res.success) {
+          const options = {
+            key: res.key_id,
+            amount: res.amount,
+            currency: 'INR',
+            name: res.product_name,
+            description: res.description,
+            image: 'https://dummyimage.com/600x400/000/fff',
+            order_id: res.order_id,
+            handler: (response: any) => {
+              console.log(response.razorpay_payment_id)
+
+              let body: any = {
+                buyerId: this.cookie.get('userToken'),
+                newPaymentStatus: 'success',
+                transactionId: response.razorpay_payment_id,
+                MOP: 'razorpay',
+              };
+      
+              // this.billingService.PaymentResponse.next(true);
+      
+      
+              this.fetchDataService.HTTPPOST(this.backendURLs.URLs.updateOrderStatus, body).subscribe((data: any) => {
+                console.log('status updated ', data);
+              });
+
+              alert('Payment Succeeded');
+              // window.open('/', '_self');
+            },
+            prefill: {
+              contact: res.contact,
+              name: res.name,
+              email: res.email,
+            },
+            notes: {
+              description: res.description,
+            },
+            theme: {
+              color: '#2300a3',
+            },
+          };
+
+          const razorpayObject = new (window as any).Razorpay(options);
+          razorpayObject.on('payment.failed', (response: any) => {
+            alert('Payment Failed');
+          });
+          razorpayObject.open();
+        } else {
+          alert(res.msg);
+        }
+      },
+      (error: any) => {
+        console.error('Error creating order:', error);
+      }
+    );
+  }
+
+  async proceedToPayment() {
+   
     try {
       const response = await fetch(this.backendURLs.URLs.getPaymentKeys);
 
@@ -186,8 +261,8 @@ export class BillingComponent {
     }
   }
 
-  constructor(private cartService: CartService, private billingService: BillingResponseService, private fetchDataService: FetchDataService, private backendURLs: UtilsModule, private renderer: Renderer2, private elementRef: ElementRef, private cookie: CookieService, private route: ActivatedRoute, private stripePay: CheckoutService) {
-
+  constructor(private cartService: CartService, private billingService: BillingResponseService, private fetchDataService: FetchDataService, private backendURLs: UtilsModule, private renderer: Renderer2, private elementRef: ElementRef, private cookie: CookieService, private route: ActivatedRoute, private stripePay: CheckoutService, private http: HttpClient) {
+    this.items = JSON.parse(localStorage.getItem('paymentIntent') || '[]');
     // this.userService.totalAmount$.subscribe((data: any) => {
     //   this.totalAmount = data;
     // })

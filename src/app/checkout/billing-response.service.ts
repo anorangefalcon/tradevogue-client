@@ -15,6 +15,13 @@ export class BillingResponseService {
 
   private PaymentResponse=new BehaviorSubject(false);
   PaymentResponse$=this.PaymentResponse.asObservable();
+
+  private selectedPaymentMethodSubject = new BehaviorSubject<string>(''); // Initial value is an empty string
+  selectedPaymentMethod$ = this.selectedPaymentMethodSubject.asObservable();
+
+  setSelectedPaymentMethod(paymentMethod: string) {
+    this.selectedPaymentMethodSubject.next(paymentMethod);
+  }
   constructor() { }
   
 

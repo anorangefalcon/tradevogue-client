@@ -146,9 +146,6 @@ export class CheckoutService {
     }
   } 
 
-
-
-
   async checkStatus(stripe: any): Promise<void> {
     const clientSecret = new URLSearchParams(window.location.search).get(
       "payment_intent_client_secret"

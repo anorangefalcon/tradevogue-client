@@ -35,7 +35,7 @@ export class NotificationComponent implements OnInit {
 
   async subscribeToNotifications() {
     // Add your subscribe logic here if needed
-    // this.notification.initialize();
+    this.notification.initialize();
   }
 
   toggle() {
@@ -59,6 +59,27 @@ export class NotificationComponent implements OnInit {
   }
 
   redirectToUrl(url: string) {
-    this.router.navigate([url]);
+    const baseUrl = window.location.origin;
+    if (url.startsWith(baseUrl)) {
+      const path = url.substring(baseUrl.length);
+      this.router.navigate([path]);
+    } else {
+      this.router.navigate([url]);
+    }
+  }
+
+  shareNotification(notification: any) {
+    if (navigator.share) {
+      navigator.share({
+        title: notification.notification.title,
+        text: notification.notification.body,
+        url: notification.notification.url
+      })
+        .then(() => console.log('Shared successfully'))
+        .catch((error) => console.error('Error sharing:', error));
+    } else {
+      // Fallback for browsers that do not support Web Share API
+      console.log('Web Share API not supported');
+    }
   }
 }

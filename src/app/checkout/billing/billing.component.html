@@ -1,3 +1,9 @@
+<div class="payment-method-buttons">
+    <button (click)="onStripeButtonClick()" [class.selected]="selectedPaymentMethod === 'stripe'">Pay with Stripe</button>
+    <button (click)="selectedPaymentMethod = 'razorpay'" [class.selected]="selectedPaymentMethod === 'razorpay'">Pay with Razorpay</button>
+  </div>
+  
+<div *ngIf="selectedPaymentMethod === 'stripe'" class="payment-form">
 <form id="payment-form">
     <h3 style="align-items: center; text-align: center;">Place Your Order</h3>
     <!-- gpay
@@ -26,6 +32,21 @@ A Stripe Element will be inserted here.
     </button>
     <div id="payment-message" class="hidden"></div>
 </form>
+</div>
+
+<div *ngIf="selectedPaymentMethod === 'razorpay'">
+    <!-- Your Razorpay form goes here -->
+    <div *ngFor="let item of items">
+      <div class="btn-primary">
+        Payment Method Selected Proceed To Payment
+        <form class="hidden btn-primary" (click)="submitForm(item)">
+          <input type="hidden" name="amount" [value]="item.price">
+          <button class="hidden" id='razorSubmit' type="submit">pay</button>
+          <!-- <input type="submit" value="Pay Now" style="cursor: pointer;"> -->
+        </form>
+      </div>
+    </div>
+  </div>
 
 
 <div class="address">

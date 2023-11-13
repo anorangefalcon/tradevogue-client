@@ -273,8 +273,13 @@ this.billingService.BillingpageVisited$.subscribe((data:any)=>{
 console.log("proceed to payment called")
 
 const paymentButton = document.getElementById('submit') as HTMLButtonElement;
+const razorpayButton = document.getElementById('razorSubmit') as HTMLButtonElement;
 if (paymentButton) {
   paymentButton.click(); 
+}
+
+if(razorpayButton) {
+  razorpayButton.click();
 }
 
 

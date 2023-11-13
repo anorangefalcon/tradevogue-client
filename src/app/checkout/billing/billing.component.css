@@ -448,9 +448,9 @@ button:disabled {
 } */
 
 
-input {
+/* input {
   display: none;
-}
+} */
 
 .btn-deliver {
   width: 148px;
@@ -959,4 +959,58 @@ button:disabled {
 
 #submit {
   display: none;
+}
+
+.payment-method-buttons {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.payment-method-buttons button {
+  padding: 10px;
+  margin: 0 10px;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  cursor: pointer;
+}
+
+.payment-method-buttons button.selected {
+  border: 1px solid rgb(var(--primaryClr));
+  background-color: rgb(var(--primaryClr));
+  color: rgb(var(--whiteClr));
+  color: #fff;
+}
+
+.payment-form {
+  margin-top: 20px;
+}
+
+.pay-form {
+  display: inline-block;
+  margin: 10px;
+  border: 1px solid #ccc;
+  padding: 10px;
+}
+
+.pay-form-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.pay-form button {
+  cursor: pointer;
+  padding: 5px 10px;
+  border: 1px solid rgb(var(--primaryClr));
+  background-color: rgb(var(--primaryClr));
+  color: rgb(var(--whiteClr));
+  color: #fff;
+  border: none;
+}
+
+.pay-form button:hover {
+  border: 1px solid rgb(var(--primaryClr));
+  background-color: rgb(var(--primaryClr));
+  color: rgb(var(--whiteClr));
 }
