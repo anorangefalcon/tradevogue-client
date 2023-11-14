@@ -90,8 +90,18 @@
     </tbody>
   </table>
 </div>
-<app-pagination #pagination [collectionSize]="selectedCategory.childrens.length" [pageSize]="5"
-  [firstLastButtons]="true" [maxSize]="5"></app-pagination>
+
+<app-pagination #pagination
+  [collectionSize]="selectedCategory.childrens.length"
+  [pageSize]="3"
+  [currentPage]="currentPage"
+  (activePage)="handlePageChange($event)"
+  [firstLastButtons]="true"
+  [nextPreviousButtons]="true"
+  [small]="true"
+></app-pagination>
+
+
 
 <app-pop-up>
   <div *ngIf="selectedItem" class="details-container">

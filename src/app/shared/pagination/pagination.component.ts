@@ -20,7 +20,7 @@ export class PaginationComponent implements OnInit {
 
   /** The number of buttons to show either side of the current page */
   @Input()
-  maxSize = 3;
+  maxSize = 1;
 
   /** Display the First/Last buttons */
   @Input()
@@ -43,6 +43,38 @@ export class PaginationComponent implements OnInit {
   ngOnInit(): void {
     this.totalPages = new Array(Math.ceil(this.collectionSize / this.pageSize));
   }
+
+  get maxVisiblePages(): number {
+    return Math.min(this.totalPages.length, this.maxSize * 2 + 1);
+  }
+  
+  showEllipsisBefore(index: number): boolean {
+    const totalPages = this.totalPages.length;
+    const shouldShow = totalPages > 1;
+    return (index === 1 && shouldShow && this.currentPage > 1);
+  }
+  
+  showEllipsisAfter(index: number): boolean {
+    const totalPages = this.totalPages.length;
+    const shouldShow = totalPages > 1;
+    return (index === totalPages - 1 && shouldShow && this.currentPage < totalPages - 1);
+  }
+  
+  shouldShowPage(index: number): boolean {
+    return (
+      index + 1 >= this.currentPage - this.maxSize &&
+      index + 1 <= this.currentPage + this.maxSize
+    );
+  }
+
+  showFirstEllipsis(): boolean {
+    return this.currentPage > 3;
+  }
+  
+  showLastEllipsis(): boolean {
+    return this.currentPage < this.totalPages.length - 2;
+  }
+  
 
   ngOnChanges(changes: SimpleChanges) {
     this.totalPages = new Array(Math.ceil(this.collectionSize / this.pageSize));

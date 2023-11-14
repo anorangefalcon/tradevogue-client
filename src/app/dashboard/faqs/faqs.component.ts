@@ -189,6 +189,10 @@ export class FaqsComponent {
     this.isMenuActive = !this.isMenuActive;
   }
 
+  handlePageChange(pageNumber: number) {
+    this.currentPage = pageNumber;
+    this.loadData();
+  }
 }
 
 

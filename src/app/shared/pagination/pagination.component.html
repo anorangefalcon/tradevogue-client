@@ -1,35 +1,45 @@
 <nav class="pagination-container">
-    <ul class="pagination" class="d-flex flex-center" [ngClass]="small ? 'pagination-sm' : ''">
+  <ul class="pagination" class="d-flex flex-center" [ngClass]="small ? 'pagination-sm' : ''">
 
-      <!-- first button -->
-      <li class="page-item " [ngClass]="currentPage === 1 ? 'disabled' : ''" *ngIf="firstLastButtons">
-        <button class="page-link" (click)="selectPageNumber(1)">««</button>
-      </li>
+    <!-- first button -->
+    <li class="page-item" [ngClass]="currentPage === 1 ? 'disabled' : ''" *ngIf="firstLastButtons">
+      <button class="page-link" (click)="selectPageNumber(1)">««</button>
+    </li>
 
-      <!-- previous button -->
-      <li [ngClass]="currentPage === 1 ? 'page-item disabled' : 'page-item'" *ngIf="nextPreviousButtons">
-        <button class="page-link" (click)="previous()">«</button>
-      </li>
+    <!-- previous button -->
+    <li [ngClass]="currentPage === 1 ? 'page-item disabled' : 'page-item'" *ngIf="nextPreviousButtons">
+      <button class="page-link" (click)="previous()">«</button>
+    </li>
 
-      <!-- page numbers -->
-      <ng-container *ngFor="let p of totalPages; index as i">
-        <li class="page-item" *ngIf="i + 1 >= currentPage - maxSize && i + 1 <= currentPage + maxSize"
-          [ngClass]="currentPage === i + 1 ? ' active' : ''">
-          <button class="page-link" (click)="selectPageNumber(i + 1)">
-            {{ i + 1 }}
-          </button>
+    <!-- page numbers with ellipsis -->
+    <ng-container *ngFor="let p of totalPages; index as i">
+      <ng-container *ngIf="showEllipsisBefore(i)">
+        <li class="page-item">
+          <button class="page-link ellipsis">...</button>
         </li>
       </ng-container>
-
-      <!-- next button -->
-      <li class="page-item" [ngClass]="currentPage === totalPages.length ? 'disabled' : ''" *ngIf="nextPreviousButtons">
-        <button class="page-link" (click)="next()">»</button>
+      
+      <li class="page-item" *ngIf="shouldShowPage(i)"
+          [ngClass]="currentPage === i + 1 ? 'active' : ''">
+        <button class="page-link" (click)="selectPageNumber(i + 1)">
+          {{ i + 1 }}
+        </button>
       </li>
+ <ng-container *ngIf="showEllipsisAfter(i)">
+  <li class="page-item">
+    <button class="page-link ellipsis">...</button>
+  </li>
+</ng-container>
+    </ng-container>
 
-      <!-- last button -->
-      <li class="page-item" [ngClass]=" currentPage === totalPages.length ? ' disabled' : ''" *ngIf="firstLastButtons">
-        <button class="page-link" (click)="selectPageNumber(totalPages.length)">»»</button>
-      </li>
-    </ul>
-  </nav>
-  
+    <!-- next button -->
+    <li class="page-item" [ngClass]="currentPage === totalPages.length ? 'disabled' : ''" *ngIf="nextPreviousButtons">
+      <button class="page-link" (click)="next()">»</button>
+    </li>
+
+    <!-- last button -->
+    <li class="page-item" [ngClass]="currentPage === totalPages.length ? 'disabled' : ''" *ngIf="firstLastButtons">
+      <button class="page-link" (click)="selectPageNumber(totalPages.length)">»»</button>
+    </li>
+  </ul>
+</nav>
