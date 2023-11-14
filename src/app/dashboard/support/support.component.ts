@@ -21,7 +21,7 @@ export class SupportComponent {
   }
 
   loadData() {
-    const url = this.utils.URLs.getTicketTitle;
+    const url = this.utils.URLs.getTicketStatus;
     this.http.get(url).toPromise()
       .then((data: any) => {
         this.titleData = data[0].title;
@@ -45,7 +45,7 @@ export class SupportComponent {
       newTitle: this.updatedItem
     }
 
-    this.fetchDataService.HTTPPOST(this.utils.URLs.updateTicketTitle, body)
+    this.fetchDataService.HTTPPOST(this.utils.URLs.updateTitle, body)
       .subscribe((response: any) => {
         if (response.success) {
           const updatedIndex = this.titleData.findIndex(title => title === this.selectedItem);
@@ -66,7 +66,7 @@ export class SupportComponent {
       newTitle: this.updatedItem
     }
 
-    this.fetchDataService.HTTPPOST(this.utils.URLs.addTitleToTicketType, body)
+    this.fetchDataService.HTTPPOST(this.utils.URLs.addTicketTitle, body)
       .subscribe((response: any) => {
         if (response.success) {
           this.titleData.push(this.updatedItem);
@@ -95,7 +95,7 @@ export class SupportComponent {
       newTitle: this.updatedItem
     }
 
-    this.fetchDataService.HTTPPOST(this.utils.URLs.addTitleToTicketType, body)
+    this.fetchDataService.HTTPPOST(this.utils.URLs.addTicketTitle, body)
       .subscribe((response: any) => {
         if (response.success) {
           this.titleData.push(this.updatedItem);
@@ -111,7 +111,7 @@ export class SupportComponent {
       title: item
     }
 
-    this.fetchDataService.HTTPPOST(this.utils.URLs.deleteTicketTitle, body)
+    this.fetchDataService.HTTPPOST(this.utils.URLs.deleteTitle, body)
       .subscribe((response: any) => {
         if (response.success) {
           const deletedIndex = this.titleData.findIndex(title => title === item);

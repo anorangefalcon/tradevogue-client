@@ -30,7 +30,7 @@ export class NotificationsComponent {
       console.log(this.registrationIds)
     })
 
-    this.fetch.HTTPGET(this.util.URLs.getFCMtoken).subscribe((res)=> {
+    this.fetch.HTTPGET(this.util.URLs.getFcmToken).subscribe((res)=> {
       this.fcmTokens= res;
       console.log(res, "fcmTokens");
     })
@@ -84,7 +84,7 @@ export class NotificationsComponent {
 
       console.log(body , "toggle body")
 
-      this.fetch.HTTPPOST(this.util.URLs.toggleNotifications , body).subscribe((res)=> {
+      this.fetch.HTTPPOST(this.util.URLs.toggleNotification , body).subscribe((res)=> {
         console.log(res , "notifications is ")
       })
 
@@ -186,7 +186,7 @@ export class NotificationsComponent {
 
         console.log(body , "updated data ")
 
-        this.fetch.HTTPPOST(this.util.URLs.updateNotifications , body).subscribe((res)=> {
+        this.fetch.HTTPPOST(this.util.URLs.updateNotification , body).subscribe((res)=> {
           console.log(res , "updated sales is ")
         })
         

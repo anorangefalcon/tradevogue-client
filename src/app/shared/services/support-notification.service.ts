@@ -80,7 +80,7 @@ export class SupportNotificationService {
       .then((currentToken) => {
         if (currentToken) {
           console.log('FCM Token:', currentToken);
-           this.fetchData.HTTPPOST(this.utils.URLs.webPushDetail, {'token': currentToken}).subscribe((response: any) => {
+           this.fetchData.HTTPPOST(this.utils.URLs.webPushTokenDetail, {'token': currentToken}).subscribe((response: any) => {
             if (response) {
               console.log('Token added successfully.', response);
             }

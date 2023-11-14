@@ -3,6 +3,7 @@ import { SupportNotificationService } from '../../services/support-notification.
 import { FetchDataService } from '../../services/fetch-data.service';
 import { CookieService } from 'ngx-cookie-service';
 import { Router } from '@angular/router';
+import { UtilsModule } from 'src/app/utils/utils.module';
 
 @Component({
   selector: 'app-notification',
@@ -18,7 +19,8 @@ export class NotificationComponent implements OnInit {
     public notification: SupportNotificationService,
     private fetchService: FetchDataService,
     private cookie: CookieService,
-    private router: Router
+    private router: Router,
+    private util: UtilsModule
   ) {}
 
   ngOnInit(): void {
@@ -26,7 +28,7 @@ export class NotificationComponent implements OnInit {
       console.log(options, "Notification Options");
     });
 
-    this.fetchService.HTTPGET('http://localhost:1000/user/comingNotifications')
+    this.fetchService.HTTPGET(this.util.URLs.comingNotification)
       .subscribe((res: any) => {
         console.log(res, "Notifications from Server");
         this.notifications = res;

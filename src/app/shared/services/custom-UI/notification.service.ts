@@ -14,11 +14,11 @@ export class NotificationService {
   }
 
   getRegistrationIDs() {
-    return this.http.get(this.backendUrls.URLs.getFCMtoken);
+    return this.http.get(this.backendUrls.URLs.getFcmToken);
   }
 
   getNotifications() {
-    return this.http.get(this.backendUrls.URLs.getNotificationDetail);
+    return this.http.get(this.backendUrls.URLs.getNotification);
   }
 
   getComingNotification() {

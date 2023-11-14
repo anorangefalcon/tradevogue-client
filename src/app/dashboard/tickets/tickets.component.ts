@@ -41,18 +41,22 @@ export class TicketsComponent {
   }
 
   loadData() {
-    const url = this.utils.URLs.getAllTickets;
-    this.http.get(url)
-      .pipe(
-        catchError((error) => {
-          console.error("Error loading data:", error);
-          throw error;
-        })
-      )
-      .subscribe((data: any) => {
-        console.log(data, "data is");
-        this.processTicketData(data);
-      });
+    // const url = this.utils.URLs.getAllTicket;
+    // this.http.get(url)
+    //   .pipe(
+    //     catchError((error) => {
+    //       console.error("Error loading data:", error);
+    //       throw error;
+    //     })
+    //   )
+    //   .subscribe((data: any) => {
+    //     console.log(data, "data is");
+    //     this.processTicketData(data);
+    //   });
+    this.fetchDataService.HTTPGET(this.utils.URLs.getAllTicket).subscribe((data)=> {
+      console.log(data, "data is ")
+      this.processTicketData(data);
+    })
   }
 
   private processTicketData(data: any): void {
@@ -63,7 +67,7 @@ export class TicketsComponent {
       userEmail: item.userEmail,
       status: item.status,
       action: item.action,
-      statusChangeable: [...new Set(item.ticketType[0]?.title.status || [])].map(String),
+      statusChangeable: [...new Set(item.TicketStatus[0]?.title.status || [])].map(String),
       ticketType: item.ticketTypes,
       notificationDetails: item.notificationDetails,
       dateCreated: new Date(item.dateCreated),
@@ -133,7 +137,7 @@ export class TicketsComponent {
       message: this.messageInput,
     };
 
-    const url1 = this.utils.URLs.updateTicketStatus;
+    const url1 = this.utils.URLs.updateTicket;
     const url2 = this.utils.URLs.ticketMail;
 
     const request1 = this.fetchDataService.HTTPPOST(url1, body);
@@ -232,7 +236,7 @@ export class TicketsComponent {
 
     console.log(body);
 
-    this.fetchDataService.HTTPPOST(this.utils.URLs.addTitleToTicketType, body)
+    this.fetchDataService.HTTPPOST(this.utils.URLs.addTicketTitle, body)
       .subscribe((response: any) => {
         if (response.success) {
           this.ticketData
@@ -263,7 +267,7 @@ export class TicketsComponent {
       newTitle: this.updatedItem
     }
 
-    this.fetchDataService.HTTPPOST(this.utils.URLs.addTitleToTicketType, body)
+    this.fetchDataService.HTTPPOST(this.utils.URLs.addTicketTitle, body)
       .subscribe((response: any) => {
         if (response.success) {
           this.ticketData
@@ -281,7 +285,7 @@ export class TicketsComponent {
       _id: this.ticketTypeId
     }
 
-    this.fetchDataService.HTTPPOST(this.utils.URLs.deleteSupportTicket, body)
+    this.fetchDataService.HTTPPOST(this.utils.URLs.deleteTicket, body)
       .subscribe((response: any) => {
         if (response.success) {
           const deletedIndex = this.ticketData

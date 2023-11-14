@@ -99,6 +99,7 @@ export class UtilsModule {
 
     // pagination common
     getPaginatedData: 'http://localhost:1000/getPaginatedData',
+    
     //wishlists
     showWishlist: 'http://localhost:1000/wishlist/showWishlist',
     addNewWishlist: 'http://localhost:1000/wishlist/addWishlist',
@@ -114,26 +115,26 @@ export class UtilsModule {
     getParticularUserOrders: 'http://localhost:1000/orders/getparticularUserOrders',
     cancelOrder: 'http://localhost:1000/orders/cancelOrder',
 
-    // support chat
-    getTicketTitle: 'http://localhost:1000/user/getTicketTitle',
-    updateTicketTitle: 'http://localhost:1000/admin/updateTicketTitle',
-    addTitleToTicketType: 'http://localhost:1000/admin/addTitleToTicketType',
-    deleteTicketTitle: 'http://localhost:1000/admin/deleteTicketTitle',
-    getTicketType: 'http://localhost:1000/user/getTicketTitle',
-    addTicket: 'http://localhost:1000/user/sendTicket',
-    getAllTickets: 'http://localhost:1000/admin/getAllTicket',
-    updateTicketStatus: 'http://localhost:1000/admin/updateTicketStatus',
-    deleteSupportTicket: 'http://localhost:1000/admin/deleteSupportTicket',
+    // support, ticket 
+    getTicketStatus: 'http://localhost:1000/ticket/get',
+    webPushTokenDetail: 'http://localhost:1000/ticket/tokenDetails',
+    saveTicket: 'http://localhost:1000/ticket/send',
+    updateTitle: 'http://localhost:1000/ticket/updateTitle',
+    addTicketTitle: 'http://localhost:1000/ticket/addTitle',
+    deleteTitle: 'http://localhost:1000/ticket/deleteTitle',
+    getAllTicket: 'http://localhost:1000/ticket/getall',
+    updateTicket: 'http://localhost:1000/ticket/updateTicket',
+    deleteTicket: 'http://localhost:1000/ticket/deleteTicket',
     ticketMail: 'http://localhost:1000/ticketStatus',
-    webPushDetail: 'http://localhost:1000/user/webPushDetails',
+
 
     // notifications
-    getFCMtoken :'http://localhost:1000/admin/getFcmTokens',
-    getNotificationDetail: 'http://localhost:1000/admin/getNotificationDetail',
-    setNotifications: 'http://localhost:1000/admin/setNotifications',
-    updateNotifications: 'http://localhost:1000/admin/updateNotifications',
-    toggleNotifications: 'http://localhost:1000/admin/toggleNotifications',
-    comingNotifications: 'http://localhost:1000/user/comingNotifications',
+    getFcmToken: 'http://localhost:1000/notification/getfcmToken',
+    getNotification: 'http://localhost:1000/notification/get',
+    setNotifications: 'http://localhost:1000/notification/set',
+    updateNotification: 'http://localhost:1000/notification/update',
+    toggleNotification: 'http://localhost:1000/notification/toggle',
+    comingNotification: 'http://localhost:1000/notification/coming',
 
     // ------ custom-UI ------
 

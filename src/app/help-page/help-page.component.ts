@@ -21,15 +21,9 @@ export class HelpPageComponent {
     private formBuilder: FormBuilder,
     private cookie: CookieService
   ) {
-    const url = this.utils.URLs.getTicketType;
-    this.http.get(url).toPromise()
-      .then((data: any) => {
+      this.fetchDataService.HTTPGET(this.utils.URLs.getTicketStatus).subscribe((data: any)=> {
         this.ticketData = data[0].title;
       })
-      .catch(error => {
-        console.error("Error loading data:", error);
-      });
-
     this.contactForm = this.formBuilder.group({
       name: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
@@ -55,17 +49,17 @@ export class HelpPageComponent {
           console.log("Error in sending Subscribe Mail", error);
         }
 
-      this.fetchDataService.HTTPPOST(this.utils.URLs.addTicket, this.contactForm.value)
+      this.fetchDataService.HTTPPOST(this.utils.URLs.saveTicket, this.contactForm.value)
         .subscribe((response: any) => {
           if (response) {
-            console.log('Ticket added successfully.');
+            console.log('Ticket added successfullsy.');
           } else {
             console.log('Error adding ticket.');
           }
         })
        
 
-        this.fetchDataService.HTTPPOST(this.utils.URLs.webPushDetail, {token: this.cookie.get('fcmToken'), email: this.contactForm.get('email')?.value}).subscribe((response: any) => {
+        this.fetchDataService.HTTPPOST(this.utils.URLs.webPushTokenDetail, {token: this.cookie.get('fcmToken'), email: this.contactForm.get('email')?.value}).subscribe((response: any) => {
           if (response) {
             console.log('Token added successfully.');
           }
