@@ -32,7 +32,7 @@ export class HomeComponent {
     this.loading = true;
     this.fetchDataService.HTTPGET(this.backendUrls.URLs.getHomeLayout)
     .subscribe((data: any)=>{
-      this.layout = data.layout;
+      this.layout = (data.layout).filter((item: any) => item.active);
       this.loading = false;
     });
     

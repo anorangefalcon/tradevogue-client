@@ -27,11 +27,6 @@
             object-position: center !important;
         }
     }
-
-    /* & .hero-content{
-        transform: translateY(-80px);
-    } */
-
 }
 
 
@@ -54,7 +49,6 @@
 
 .app-div {
     pointer-events: none;
-
 }
 
 .card {
