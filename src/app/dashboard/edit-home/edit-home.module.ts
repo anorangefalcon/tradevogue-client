@@ -8,6 +8,7 @@ import { CollectionsComponent } from 'src/app/home/collections/collections.compo
 import { SharedModule } from 'src/app/shared/shared.module';
 import { DealOfWeekComponent } from 'src/app/home/deal-of-week/deal-of-week.component';
 import { OffersComponent } from 'src/app/home/offers/offers.component';
+import { FormsModule } from '@angular/forms';
 
 const routes: Routes = [
   {
@@ -30,6 +31,7 @@ const routes: Routes = [
     CollectionsComponent,
     SharedModule,
     OffersComponent,
+    FormsModule,
     [RouterModule.forChild(routes)],
   ],
   exports: [RouterModule]

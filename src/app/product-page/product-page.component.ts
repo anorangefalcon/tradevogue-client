@@ -33,6 +33,10 @@ export class ProductPageComponent implements OnInit {
   isLogin: boolean = false;
   sku: any = "";
   fetchSimilarProducts: any = {};
+  carouselTitles: any = {
+    title: 'Similar Products',
+    subTitle: 'Explore our most similar products.'
+  };
   outOfStock: boolean = false;
   loading: boolean = false;
 
@@ -117,7 +121,9 @@ export class ProductPageComponent implements OnInit {
         review: data.userReview.comment
       })
     }
-    this.fetchSimilarProducts = { 'tags': this.data.info.tags };
+    this.fetchSimilarProducts = { 
+      'tags': this.data.info.tags
+    };
     this.loading = false;
   }
 

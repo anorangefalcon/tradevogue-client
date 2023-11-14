@@ -7,7 +7,7 @@ import { FetchDataService } from 'src/app/shared/services/fetch-data.service';
 @Injectable()
 export class ReviewService {
 
-  constructor(private http: HttpClient, private backendUrls: UtilsModule,private fetchDataService:FetchDataService) { }
+  constructor(private http: HttpClient, private backendUrls: UtilsModule, private fetchDataService:FetchDataService) { }
 
   addReview(data: any){    
     return this.fetchDataService.HTTPPOST(this.backendUrls.URLs.addOrUpdateReview, data);

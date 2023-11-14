@@ -94,8 +94,7 @@ export class ProductsComponent implements OnInit {
               checked: false
             }
             this.productList.push(item);
-          });
-
+          });          
         }
       });
     } catch (err) {

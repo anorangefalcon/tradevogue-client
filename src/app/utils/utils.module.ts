@@ -137,7 +137,12 @@ export class UtilsModule {
 
     // ------ custom-UI ------
 
-    // Socials:http://localhost:1000/admin/getPaymentKeys
+    // Home-Layout
+    getHomeLayout: 'http://localhost:1000/homeLayout/get',
+    getAllHomeLayouts: 'http://localhost:1000/homeLayout/getAll',
+    createOrUpdateHomeLayout: 'http://localhost:1000/homeLayout/updateOrCreate',
+    
+    // Socials
     setSocials: 'http://localhost:1000/socials/set',
     getSocials: 'http://localhost:1000/socials/get',
 

@@ -1,26 +1,54 @@
-<div class="d-flex flex-column gap-20">
+<div *ngIf="loadingData" class="tv-loading">
+  <img src="../../assets/logo-mobile.svg" alt="tradeVogue-loading">
+  <div class="circle-tv-loader"></div>
+</div>
+
+<div *ngIf="!loadingData" class="d-flex flex-column gap-20 relative default-animation">
 
   <div class="card card__pd-25 form__card__head d-flex justify-content-md-between align-item-center">
     <h3>Customise Home-Page</h3>
-    <!-- <div class="operation_button d-flex gap-10">
-        <button class="btn-primary" [ngStyle]="{'display': !socialsForm.disabled? 'none': 'block'}"
-          (click)="socialsForm.enable()">Edit</button>
-        <button class="btn-secondary" [ngStyle]="{'display': socialsForm.disabled? 'none': 'block'}"
-          (click)="socialsForm.disable()">Cancel</button>
-        <button class="btn-primary" [ngStyle]="{'display': socialsForm.disabled? 'none': 'block'}"
-          (click)="onSubmit()">Update</button>
-      </div> -->
+
+    <div class="d-flex gap-10">
+
+      <div class="d-flex justify-content-md-between align-item-center gap-10">
+
+          <span class="add-layout pointer btn-secondary material-symbols-outlined"
+          (click)="createNewLayout()">
+            add
+          </span>
+
+        <div class="customSelect relative">
+          <app-custom-select [selectedOption]="currentLayout.name" (final_option)="selectLayout($event)"
+            [options]="getLayoutsNames()">
+          </app-custom-select>
+
+          <span class="edit-name pointer material-symbols-outlined absolute">
+            edit
+          </span>
+        </div>
+
+      </div>
+
+      <div class="operation_button d-flex gap-10">
+        <button class="btn-secondary" [ngStyle]="{'display': currentLayout.active ? 'none': 'block'}"
+        (click)="activateLayout()">Activate</button>
+        <button class="btn-primary" [ngStyle]="{'display': !edited ? 'none': 'block'}"
+          (click)="updateLayout()">Save</button>
+
+      </div>
+    </div>
+
   </div>
 
-  <ng-container *ngFor="let item of Direction">
-    <ng-container *ngTemplateOutlet="getTemplate(item)" (click)="onItemClick(item)">
+  <ng-container *ngFor="let item of currentLayout.layout">
+    <ng-container *ngTemplateOutlet="getTemplate(item.name); context: { item: item }">
     </ng-container>
   </ng-container>
 
 
   <!-- templates -->
 
-  <ng-template #hero let-item>
+  <ng-template #hero let-item="item">
     <div class="card-hero-app restrict-height">
       <div>
         <app-hero></app-hero>
@@ -40,8 +68,8 @@
     </div>
   </ng-template>
 
-  <ng-template #collection let-item>
-    <div class="card restrict-height grid">
+  <ng-template #collection let-item="item">
+    <div class="card restrict-height grid" [ngClass]="!item.active ? 'disabledElement' : ''">
       <div class="app-div">
         <app-collections></app-collections>
       </div>
@@ -51,15 +79,18 @@
         <div class="d-flex flex-column align-item-center justify-content-md-between gap-15">
 
           <div class="slide-button d-flex align-item-center pointer">
-            <input type="checkbox" [name]="'Available'" [id]="'Available'" />
-            <label [for]="'Available'"></label>
+            <input type="checkbox" [name]="'collectionSwitch'" [id]="'collectionSwitch'" [(ngModel)]="item.active"
+              (change)="switchStatus($event, item.name)" />
+            <label [for]="'collectionSwitch'"></label>
           </div>
 
           <div>
-            <span class="material-symbols-outlined pointer">
+            <span *ngIf="getIndexFromName(item.name) > 1" class="material-symbols-outlined pointer"
+              (click)="moveUp(item.name)">
               arrow_upward
             </span>
-            <span class="material-symbols-outlined pointer">
+            <span *ngIf="getIndexFromName(item.name) < (currentLayout.layout.length - 1)"
+              class="material-symbols-outlined pointer" (click)="moveDown(item.name)">
               arrow_downward
             </span>
           </div>
@@ -71,8 +102,8 @@
     </div>
   </ng-template>
 
-  <ng-template #deal let-item>
-    <div class="card restrict-height ">
+  <ng-template #deal let-item="item">
+    <div class="card restrict-height" [ngClass]="!item.active ? 'disabledElement' : ''">
       <div class="app-div">
         <app-deal-of-week></app-deal-of-week>
       </div>
@@ -86,15 +117,18 @@
           </span>
 
           <div class="slide-button d-flex align-item-center pointer">
-            <input type="checkbox" [name]="'Available'" [id]="'Available'" />
-            <label [for]="'Available'"></label>
+            <input type="checkbox" [name]="'dealSwitch'" [id]="'dealSwitch'" [(ngModel)]="item.active"
+              (change)="switchStatus($event, item.name)" />
+            <label [for]="'dealSwitch'"></label>
           </div>
 
           <div>
-            <span class="material-symbols-outlined pointer">
+            <span *ngIf="getIndexFromName(item.name) > 1" class="material-symbols-outlined pointer"
+              (click)="moveUp(item.name)">
               arrow_upward
             </span>
-            <span class="material-symbols-outlined pointer">
+            <span *ngIf="getIndexFromName(item.name) < (currentLayout.layout.length - 1)"
+              class="material-symbols-outlined pointer" (click)="moveDown(item.name)">
               arrow_downward
             </span>
           </div>
@@ -106,8 +140,8 @@
     </div>
   </ng-template>
 
-  <ng-template #latestProducts let-item>
-    <div class="card restrict-height ">
+  <ng-template #latestProducts let-item="item">
+    <div class="card restrict-height " [ngClass]="!item.active ? 'disabledElement' : ''">
       <div class="app-div p-b-20">
         <app-product-cards></app-product-cards>
       </div>
@@ -116,15 +150,18 @@
         <div class="d-flex flex-column align-item-center justify-content-md-between gap-15">
 
           <div class="slide-button d-flex align-item-center pointer">
-            <input type="checkbox" [name]="'Available'" [id]="'Available'" />
-            <label [for]="'Available'"></label>
+            <input type="checkbox" [name]="'latestProductsSwitch'" [id]="'latestProductsSwitch'"
+              [(ngModel)]="item.active" (change)="switchStatus($event, item.name)" />
+            <label [for]="'latestProductsSwitch'"></label>
           </div>
 
           <div>
-            <span class="material-symbols-outlined pointer">
+            <span *ngIf="getIndexFromName(item.name) > 1" class="material-symbols-outlined pointer"
+              (click)="moveUp(item.name)">
               arrow_upward
             </span>
-            <span class="material-symbols-outlined pointer">
+            <span *ngIf="getIndexFromName(item.name) < (currentLayout.layout.length - 1)"
+              class="material-symbols-outlined pointer" (click)="moveDown(item.name)">
               arrow_downward
             </span>
           </div>
@@ -135,9 +172,9 @@
     </div>
   </ng-template>
 
-  <ng-template #offers let-item>
+  <ng-template #offers let-item="item">
 
-    <div class="card restrict-height ">
+    <div class="card restrict-height " [ngClass]="!item.active ? 'disabledElement' : ''">
       <div class="app-div p-b-20">
         <app-offers></app-offers>
       </div>
@@ -150,15 +187,18 @@
           </span>
 
           <div class="slide-button d-flex align-item-center pointer">
-            <input type="checkbox" [name]="'Available'" [id]="'Available'" />
-            <label [for]="'Available'"></label>
+            <input type="checkbox" [name]="'offersSwitch'" [id]="'offersSwitch'" [(ngModel)]="item.active"
+              (change)="switchStatus($event, item.name)" />
+            <label [for]="'offersSwitch'"></label>
           </div>
 
           <div>
-            <span class="material-symbols-outlined pointer">
+            <span *ngIf="getIndexFromName(item.name) > 1" class="material-symbols-outlined pointer"
+              (click)="moveUp(item.name)">
               arrow_upward
             </span>
-            <span class="material-symbols-outlined pointer">
+            <span *ngIf="getIndexFromName(item.name) < (currentLayout.layout.length - 1)"
+              class="material-symbols-outlined pointer" (click)="moveDown(item.name)">
               arrow_downward
             </span>
           </div>
@@ -171,8 +211,8 @@
 
   </ng-template>
 
-  <ng-template #productCarousel let-item>
-    <div class="card-hero-app restrict-height relative">
+  <ng-template #productCarousel let-item="item">
+    <div class="card-hero-app restrict-height relative" [ngClass]="!item.active ? 'disabledElement' : ''">
       <div class="app-div p-b-20 p-i-20">
         <app-product-card-carousel></app-product-card-carousel>
       </div>
@@ -181,15 +221,18 @@
         <div class="d-flex flex-column align-item-center justify-content-md-between gap-15">
 
           <div class="slide-button d-flex align-item-center pointer">
-            <input type="checkbox" [name]="'Available'" [id]="'Available'" />
-            <label [for]="'Available'"></label>
+            <input type="checkbox" [name]="'productCarouselSwitch'" [id]="'productCarouselSwitch'"
+              [(ngModel)]="item.active" (change)="switchStatus($event, item.name)" />
+            <label [for]="'productCarouselSwitch'"></label>
           </div>
 
           <div>
-            <span class="material-symbols-outlined pointer">
+            <span *ngIf="getIndexFromName(item.name) > 1" class="material-symbols-outlined pointer"
+              (click)="moveUp(item.name)">
               arrow_upward
             </span>
-            <span class="material-symbols-outlined pointer">
+            <span *ngIf="getIndexFromName(item.name) < (currentLayout.layout.length - 1)"
+              class="material-symbols-outlined pointer" (click)="moveDown(item.name)">
               arrow_downward
             </span>
           </div>

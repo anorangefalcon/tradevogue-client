@@ -1,5 +1,49 @@
-<div class="home">
-    <!-- <app-hero></app-hero> -->
+<div *ngIf="loading" class="tv-loading">
+    <img src="../../assets/logo-mobile.svg" alt="tradeVogue-loading">
+    <div class="circle-tv-loader"></div>
+</div>
+
+<div *ngIf="!loading" class="home default-animation">
+
+    <ng-container *ngFor="let item of layout">
+        <ng-container *ngTemplateOutlet="getTemplate(item.name); context: { item: item }">
+        </ng-container>
+    </ng-container>
+
+    <section id="newsletter" class="newsletter">
+        <div class="container d-flex flex-column align-item-center gap-20 mgap-15 sm-gap-10">
+            <h2>Subscribe and get discount 25% Off</h2>
+            <form class="d-flex gap-10" [formGroup]="subscribeForm">
+                <input type="text" placeholder="Your email address" formControlName="email">
+                <button class="btn-primary">
+                    <span class="text" (click)="onSubscribe()">SUBSCRIBE</span>
+                    <i class="send-icon fa-solid fa-paper-plane"></i>
+                </button>
+            </form>
+            <div class="medias d-flex gap-30">
+                <a href="#">
+                    <i class="fa-brands fa-facebook-f"></i>
+                </a>
+                <a href="#">
+                    <i class="fa-brands fa-instagram"></i>
+                </a>
+                <a href="#">
+                    <i class="fa-brands fa-twitter"></i>
+                </a>
+                <a href="#">
+                    <i class="fa-brands fa-pinterest-p"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+    <section id="gallery" class="py-100">
+        <app-gallery></app-gallery>
+    </section>
+</div>
+
+
+<ng-template #hero let-item="item">
+    <app-hero></app-hero>
     <section id="facilites" class="facilities py-100">
         <div class="container d-flex justify-content-center flex-wrap">
             <div class="facility d-flex  justify-content-center align-item-center gap-30 ">
@@ -35,57 +79,35 @@
             </div>
         </div>
     </section>
+</ng-template>
+
+
+<ng-template #collection let-item="item">
     <section id="collection" class="pb-100">
         <app-collections></app-collections>
     </section>
+</ng-template>
+
+<ng-template #deal let-item="item">
     <section id="deals">
         <app-deal-of-week></app-deal-of-week>
     </section>
+</ng-template>
+
+<ng-template #latestProducts let-item="item">
     <section id="products" class="py-100">
         <app-product-cards></app-product-cards>
     </section>
+</ng-template>
+
+<ng-template #offers let-item="item">
     <section id="offers">
         <app-offers></app-offers>
     </section>
+</ng-template>
 
+<ng-template #productCarousel let-item="item">
     <div class="container home-carousel d-flex flex-column gap-30">
-        <div class="container section-header">
-            <h3 class="section-heading">
-                Popular Products
-            </h3>
-            <p class="section-sub-heading">
-                Products on high demand!
-            </p>
-        </div>
         <app-product-card-carousel></app-product-card-carousel>
     </div>
-    <section id="newsletter" class="newsletter">
-        <div class="container d-flex flex-column align-item-center gap-20 mgap-15 sm-gap-10">
-            <h2>Subscribe and get discount 25% Off</h2>
-            <form class="d-flex gap-10" [formGroup]="subscribeForm">
-                <input type="text" placeholder="Your email address" formControlName="email">
-                <button class="btn-primary">
-                    <span class="text" (click)="onSubscribe()">SUBSCRIBE</span>
-                    <i class="send-icon fa-solid fa-paper-plane"></i>
-                </button>
-            </form>
-            <div class="medias d-flex gap-30">
-                <a href="#">
-                    <i class="fa-brands fa-facebook-f"></i>
-                </a>
-                <a href="#">
-                    <i class="fa-brands fa-instagram"></i>
-                </a>
-                <a href="#">
-                    <i class="fa-brands fa-twitter"></i>
-                </a>
-                <a href="#">
-                    <i class="fa-brands fa-pinterest-p"></i>
-                </a>
-            </div>
-        </div>
-    </section>
-    <section id="gallery" class="py-100">
-        <app-gallery></app-gallery>
-    </section>
-</div> 
+</ng-template>

@@ -335,15 +335,9 @@
             </ng-container>
         </div>
 
-        <div *ngIf="!productSku" class="next">
-            <h2 class="section-heading">Similar Products</h2>
-            <p class="section-sub-heading">
-                Explore our most similar products.
-            </p>
-        </div>
-
+       
         <div *ngIf="!productSku" style="padding-block-end: 50px;">
-            <app-product-card-carousel [whatToFetch]="fetchSimilarProducts"></app-product-card-carousel>
+            <app-product-card-carousel [titles] = carouselTitles [whatToFetch]="fetchSimilarProducts"></app-product-card-carousel>
         </div>
     </div>
 </section>
