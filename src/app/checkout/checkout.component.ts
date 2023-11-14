@@ -37,19 +37,19 @@ export class CheckoutComponent implements OnInit {
   @ViewChild('Proceed__btn') Proceed__btn!: ElementRef;
 
   BillingPageVisited: boolean = false;
-  constructor(private cartService: CartService, private loginCheckService:LoginCheckService, private cookie:CookieService,private billingService:BillingResponseService, private router: Router, private renderer: Renderer2, private toastService: ToastService, private BackendUrl: UtilsModule, private fetchService: FetchDataService, private route: Router, private el: ElementRef, private stripePay: CheckoutService) {
-      // route changes
-      this.router.events.subscribe((event) => {
-        if (this.router.url === '/cart/billing') {
-          this.BillingPageVisited = true;
-        } else {
-          this.BillingPageVisited = false;
-        }
-      });
+  constructor(private cartService: CartService, private loginCheckService: LoginCheckService, private cookie: CookieService, private billingService: BillingResponseService, private router: Router, private renderer: Renderer2, private toastService: ToastService, private BackendUrl: UtilsModule, private fetchService: FetchDataService, private route: Router, private el: ElementRef, private stripePay: CheckoutService) {
+    // route changes
+    this.router.events.subscribe((event) => {
+      if (this.router.url === '/cart/billing') {
+        this.BillingPageVisited = true;
+      } else {
+        this.BillingPageVisited = false;
+      }
+    });
 
-this.billingService.BillingpageVisited$.subscribe((data:any)=>{
-  this.BillingPageVisited=data;
-})
+    this.billingService.BillingpageVisited$.subscribe((data: any) => {
+      this.BillingPageVisited = data;
+    })
 
   }
 
@@ -65,11 +65,11 @@ this.billingService.BillingpageVisited$.subscribe((data:any)=>{
 
     });
 
-    this.fetchService.HTTPGET(this.BackendUrl.URLs.getCoupons).subscribe((data:any)=>{
-      this.AllCoupons=data;
+    this.fetchService.HTTPGET(this.BackendUrl.URLs.getCoupons).subscribe((data: any) => {
+      this.AllCoupons = data;
       this.loading = false;
     });
- 
+
 
 
   }
@@ -156,14 +156,14 @@ this.billingService.BillingpageVisited$.subscribe((data:any)=>{
       return coupon.discountAmount <= coupon.maximumDiscount ? coupon.discountAmount : coupon.maximumDiscount;
     }
     else {
-      if (coupon.discountType == 'percentage'){
-        let calculatedDiscount = (totalAmount / 100) * coupon.discountAmount;        
+      if (coupon.discountType == 'percentage') {
+        let calculatedDiscount = (totalAmount / 100) * coupon.discountAmount;
         return calculatedDiscount <= coupon.maximumDiscount ? calculatedDiscount : coupon.maximumDiscount;
       }
     }
   }
 
- async ApplyCoupon(coupon: any = '', event: any = '') {
+  async ApplyCoupon(coupon: any = '', event: any = '') {
     if (event) {
       let value = this.CouponCode.nativeElement.value;
       for (let coupon of this.AllCoupons) {
@@ -194,12 +194,12 @@ this.billingService.BillingpageVisited$.subscribe((data:any)=>{
       this.CouponValid = 'valid';
     }
 
-    if(this.CouponValid == 'valid'){
+    if (this.CouponValid == 'valid') {
       this.toastService.successToast({
         title: 'Coupon applied successfully'
       })
     }
-    else if(this.CouponValid == 'invalid'){
+    else if (this.CouponValid == 'invalid') {
       this.toastService.errorToast({
         title: 'Coupon not valid'
       })
@@ -207,7 +207,7 @@ this.billingService.BillingpageVisited$.subscribe((data:any)=>{
     this.CouponCode.nativeElement.value = ''; // change input field to ''
     this.cart.amounts.savings = this.CalculateDiscount(coupon);
     console.log('savinf is ', this.CalculateDiscount(coupon));
-    
+
     // this.cookieService.set('coupon',this.CalculateDiscount(coupon));
     this.cart.amounts.total -= this.cart.amounts.savings;
     // this.cookieService.set('total',this.cart.amounts.total);
@@ -237,82 +237,82 @@ this.billingService.BillingpageVisited$.subscribe((data:any)=>{
 
 
 
-  async verifyOrderSummary() { 
-      this.cartService.fetchCart().subscribe(async (res) => {
-        let result = JSON.parse(JSON.stringify(res));
-        if (this.CouponApplied) {
-          result.CouponApplied = this.CouponApplied;
-        }
+  async verifyOrderSummary() {
+    this.cartService.fetchCart().subscribe(async (res) => {
+      let result = JSON.parse(JSON.stringify(res));
+      if (this.CouponApplied) {
+        result.CouponApplied = this.CouponApplied;
+      }
 
-        this.loginCheckService.getUser().subscribe((checkToken)=>{
-          if (!checkToken) {
-            this.router.navigate(['/auth/login']);
-          }
-              else {
-          this.fetchService.HTTPPOST(this.BackendUrl.URLs.verifyOrderSummary, result).subscribe((response)=>{
+      this.loginCheckService.getUser().subscribe((checkToken) => {
+        if (!checkToken) {
+          this.router.navigate(['/auth/login']);
+        }
+        else {
+          this.fetchService.HTTPPOST(this.BackendUrl.URLs.verifyOrderSummary, result).subscribe((response) => {
             this.cart.amounts = response;
             this.router.navigate(['/cart/billing']);
           });
-          }
-          
-        })
-    
-       }); 
-  }
+        }
 
+      })
 
- async ProceedToPayment() {
-
-  
-  if(!this.billingService.Address) {
-    this.toastService.errorToast({title:'Please select Address'});
-    return;
-  }
-
-// response of payment here 
-console.log("proceed to payment called")
-
-const paymentButton = document.getElementById('submit') as HTMLButtonElement;
-const razorpayButton = document.getElementById('razorSubmit') as HTMLButtonElement;
-if (paymentButton) {
-  paymentButton.click(); 
-}
-
-if(razorpayButton) {
-  razorpayButton.click();
-}
-
-
-  this.billingService.PaymentResponse$.subscribe((data)=>{
-    console.log('data coming is ',data);
-    
-  })
-
-  console.log(this.billingService.Address);
-  this.cartService.fetchCart().subscribe((data)=>{
-    console.log('data coming is davin ',data);
-    let body:any={};
-    if (this.CouponApplied) {
-      body.coupon = this.CouponApplied;
-      body.discount = data.amounts.savings;
-    }
-    body.products=data.details;   
-    body.address=this.billingService.Address;
-    // body.payment_status = "succeeded"
-
-    
-    this.fetchService.HTTPPOST(this.BackendUrl.URLs.createOrder,body).subscribe((data:any)=>{
-      console.log('daa coming is ',data);      
     });
-  })
+  }
 
-  console.log("its working")
 
-  // const paymentButton = document.getElementById('submit') as HTMLButtonElement;
-  //   if (paymentButton) {
-  //     paymentButton.click(); 
-  //   }
-}
+  async ProceedToPayment() {
+
+
+    if (!this.billingService.Address) {
+      this.toastService.errorToast({ title: 'Please select Address' });
+      return;
+    }
+
+    // response of payment here 
+    console.log("proceed to payment called")
+
+    const paymentButton = document.getElementById('submit') as HTMLButtonElement;
+    const razorpayButton = document.getElementById('razorSubmit') as HTMLButtonElement;
+    if (paymentButton) {
+      paymentButton.click();
+    }
+
+    if (razorpayButton) {
+      razorpayButton.click();
+    }
+
+
+    this.billingService.PaymentResponse$.subscribe((data) => {
+      console.log('data coming is ', data);
+
+    })
+
+    console.log(this.billingService.Address);
+    this.cartService.fetchCart().subscribe((data) => {
+      console.log('data coming is davin ', data);
+      let body: any = {};
+      if (this.CouponApplied) {
+        body.coupon = this.CouponApplied;
+        body.discount = data.amounts.savings;
+      }
+      body.products = data.details;
+      body.address = this.billingService.Address;
+      // body.payment_status = "succeeded"
+
+
+      this.fetchService.HTTPPOST(this.BackendUrl.URLs.createOrder, body).subscribe((data: any) => {
+        console.log('daa coming is ', data);
+      });
+    })
+
+    console.log("its working")
+
+    // const paymentButton = document.getElementById('submit') as HTMLButtonElement;
+    //   if (paymentButton) {
+    //     paymentButton.click(); 
+    //   }
+  }
 
 
 

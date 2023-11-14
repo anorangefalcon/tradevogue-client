@@ -1,4 +1,4 @@
-import { Component, ElementRef, Renderer2, ViewChild } from '@angular/core';
+import { Component, ElementRef, Renderer2, ViewChild, OnInit } from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
 import { FetchDataService } from 'src/app/shared/services/fetch-data.service';
 import { UtilsModule } from 'src/app/utils/utils.module';
@@ -9,34 +9,54 @@ import { HttpClient } from '@angular/common/http';
 declare var Stripe: any;
 import { CheckoutService } from '../checkout.service';
 
+interface PaymentOptions {
+  key: string;
+  amount: number;
+  currency: string;
+  name: string;
+  description: string;
+  image: string;
+  order_id: string;
+  handler: (response: any) => void;
+  prefill: {
+    contact: string;
+    name: string;
+    email: string;
+  };
+  notes: {
+    description: string;
+  };
+  theme: {
+    color: string;
+  };
+}
+
 @Component({
   selector: 'app-billing',
   templateUrl: './billing.component.html',
   styleUrls: ['./billing.component.css']
 })
-export class BillingComponent {
-
-  checkoutHtml: string = '';
-  checkoutCss: string = '';
+export class BillingComponent implements OnInit {
+  checkoutHtml = '';
+  checkoutCss = '';
   item: any = {};
-  cartitems: any = {}
-  total: any = {}
-  quantity: any = {}
+  cartitems: any = {};
+  total: any = {};
+  quantity: any = {};
   totalAmount!: number;
   elements: any;
   emailAddress: any;
   stripe: any;
-  items:any;
-  selectedPaymentMethod: string = 'stripe';
-  
+  items: any;
+  selectedPaymentMethod = 'stripe';
 
-  async ngOnInit(): Promise<void> {
+  ngOnInit(): void {
     try {
-      this.route.queryParams.subscribe(params => {
+      this.route.queryParams.subscribe(async params => {
         const redirectStatus = params['redirect_status'];
 
         if (redirectStatus === 'succeeded') {
-          this.proceedToPayment();
+          await this.proceedToPayment();
         }
       });
 
@@ -47,16 +67,16 @@ export class BillingComponent {
     }
   }
 
-  initializeStripe() {
+  async initializeStripe(): Promise<void> {
     try {
       if (this.stripePay.publicKey) {
         this.stripe = Stripe(this.stripePay.publicKey);
-        this.initialize(this.stripe);
-  
+        await this.initialize(this.stripe);
+
         const paymentForm = document.querySelector("#payment-form");
-  
+
         if (paymentForm) {
-          paymentForm.removeEventListener("submit", this.handleSubmit); 
+          paymentForm.removeEventListener("submit", this.handleSubmit);
           paymentForm.addEventListener("submit", this.handleSubmit);
         } else {
           console.error("Payment form not found");
@@ -68,103 +88,89 @@ export class BillingComponent {
       console.error('Error occurred:', error);
     }
   }
-  
- async onStripeButtonClick() {   
+
+  async onStripeButtonClick(): Promise<void> {   
     this.selectedPaymentMethod = 'stripe';
-    this.initializeStripe();
+    await this.initializeStripe();
   }
-  
-  
 
-
-  submitForm(item: any) {
+  async submitForm(item: any): Promise<void> {
     const body = {
       'amount': item.price.toString(),
       'items': item,
       'token': this.cookie.get('userToken')
-    }
+    };
 
-    this.http.post<any>('http://localhost:1000/razorpay/createUpiPayment', body).subscribe(
-      (res) => {
-        if (res.success) {
-          const options = {
-            key: res.key_id,
-            amount: res.amount,
-            currency: 'INR',
-            name: res.product_name,
+    try {
+      const res = await this.http.post<any>('http://localhost:1000/razorpay/createUpiPayment', body).toPromise();
+
+      if (res.success) {
+        const options: PaymentOptions = {
+          key: res.key_id,
+          amount: res.amount,
+          currency: 'INR',
+          name: res.product_name,
+          description: res.description,
+          image: 'https://dummyimage.com/600x400/000/fff',
+          order_id: res.order_id,
+          handler: (response: any) => {
+            console.log(response.razorpay_payment_id);
+
+            const paymentBody: any = {
+              buyerId: this.cookie.get('userToken'),
+              newPaymentStatus: 'success',
+              transactionId: response.razorpay_payment_id,
+              MOP: 'razorpay',
+            };
+      
+            this.fetchDataService.HTTPPOST(this.backendURLs.URLs.updateOrderStatus, paymentBody).subscribe((data: any) => {
+              console.log('status updated ', data);
+            });
+
+            alert('Payment Succeeded');
+          },
+          prefill: {
+            contact: res.contact,
+            name: res.name,
+            email: res.email,
+          },
+          notes: {
             description: res.description,
-            image: 'https://dummyimage.com/600x400/000/fff',
-            order_id: res.order_id,
-            handler: (response: any) => {
-              console.log(response.razorpay_payment_id)
+          },
+          theme: {
+            color: '#2300a3',
+          },
+        };
 
-              let body: any = {
-                buyerId: this.cookie.get('userToken'),
-                newPaymentStatus: 'success',
-                transactionId: response.razorpay_payment_id,
-                MOP: 'razorpay',
-              };
-      
-              // this.billingService.PaymentResponse.next(true);
-      
-      
-              this.fetchDataService.HTTPPOST(this.backendURLs.URLs.updateOrderStatus, body).subscribe((data: any) => {
-                console.log('status updated ', data);
-              });
-
-              alert('Payment Succeeded');
-              // window.open('/', '_self');
-            },
-            prefill: {
-              contact: res.contact,
-              name: res.name,
-              email: res.email,
-            },
-            notes: {
-              description: res.description,
-            },
-            theme: {
-              color: '#2300a3',
-            },
-          };
-
-          const razorpayObject = new (window as any).Razorpay(options);
-          razorpayObject.on('payment.failed', (response: any) => {
-            alert('Payment Failed');
-          });
-          razorpayObject.open();
-        } else {
-          alert(res.msg);
-        }
-      },
-      (error: any) => {
-        console.error('Error creating order:', error);
+        const razorpayObject = new (window as any).Razorpay(options);
+        razorpayObject.on('payment.failed', (response: any) => {
+          alert('Payment Failed');
+        });
+        razorpayObject.open();
+      } else {
+        alert(res.msg);
       }
-    );
+    } catch (error) {
+      console.error('Error creating order:', error);
+    }
   }
 
-  async proceedToPayment() {
-   
+
+  async proceedToPayment(): Promise<void> {
     try {
       const response = await fetch(this.backendURLs.URLs.getPaymentKeys);
-
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
-
+  
       const data = await response.json();
-
-      console.log("response is public key ", data[0]?.keys[0]?.publicKey);
-
-      if (Array.isArray(data) && data.length > 0 && data[0]?.keys && data[0].keys.length > 0) {
-        const publicKey = data[0].keys[0].publicKey;
-        console.log("service payment key", this.stripePay.publicKey);
+      const publicKey = data[0]?.keys?.[0]?.publicKey;
+  
+      if (publicKey) {
         this.stripe = Stripe(publicKey);
-
         this.initialize(this.stripe);
-
+  
         const paymentForm = document.querySelector("#payment-form");
-
         if (paymentForm) {
           paymentForm.addEventListener("submit", this.handleSubmit);
         } else {
@@ -176,22 +182,15 @@ export class BillingComponent {
     } catch (error) {
       console.error('Error loading Stripe scripts:', error);
     }
-
-    await this.route.queryParams.subscribe(params => {
+  
+    this.route.queryParams.subscribe(params => {
       const redirectStatus = params['redirect_status'];
-
       if (redirectStatus === 'succeeded') {
         console.log('Success from vivek');
-
       }
     });
   }
-  // constructor(private cookie: CookieService, private fetchDataService: FetchDataService, private cartService:CartService, private userService: UserServiceService, private backendURLs: UtilsModule) {
-  // this.userService.PaymentUrlVisited.next(true);
-  //   this.getAddresses();
-  // }
-
-
+  
   async initialize(stripe: any): Promise<void> {
     const items = JSON.parse(localStorage.getItem('paymentIntent') || '[]');
     const response = await fetch("http://localhost:1000/create-payment-intent", {
@@ -199,10 +198,10 @@ export class BillingComponent {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ items }),
     });
-
+  
     const { clientSecret } = await response.json();
     console.log("Client Secret:", clientSecret);
-
+  
     const appearance = {
       theme: 'stripe',
       variables: {
@@ -216,29 +215,26 @@ export class BillingComponent {
       },
       //  labels: 'floating',
     };
+  
     this.elements = stripe.elements({ clientSecret, appearance });
-
+  
     const linkAuthenticationElement = this.elements.create("linkAuthentication");
     linkAuthenticationElement.mount("#link-authentication-element");
-
+  
     linkAuthenticationElement.on('change', (event: any) => {
       this.emailAddress = event.value.email;
     });
-
-    const paymentElementOptions = {
-      layout: "tabs",
-    };
-
+  
+    const paymentElementOptions = { layout: "tabs" };
     const paymentElement = this.elements.create("payment", paymentElementOptions);
     paymentElement.mount("#payment-element");
   }
-
+  
   async handleSubmit(e: Event): Promise<void> {
     try {
-
       e.preventDefault();
       await this.stripePay.setLoading(true);
-
+  
       const { error } = await this.stripe.confirmPayment({
         elements: this.elements,
         confirmParams: {
@@ -246,26 +242,33 @@ export class BillingComponent {
           receipt_email: this.emailAddress,
         },
       });
-
-      if (error.type === "card_error" || error.type === "validation_error") {
+  
+      if (error && (error.type === "card_error" || error.type === "validation_error")) {
         this.stripePay.showMessage(error.message);
       } else {
         this.stripePay.showMessage("An unexpected error occurred.");
       }
-
+  
       this.stripePay.setLoading(false);
-
     } catch (error) {
       console.log("error is ", error);
-
     }
-  }
+  }  
 
-  constructor(private cartService: CartService, private billingService: BillingResponseService, private fetchDataService: FetchDataService, private backendURLs: UtilsModule, private renderer: Renderer2, private elementRef: ElementRef, private cookie: CookieService, private route: ActivatedRoute, private stripePay: CheckoutService, private http: HttpClient) {
+  constructor(
+    private cartService: CartService,
+    private billingService: BillingResponseService,
+    private fetchDataService: FetchDataService,
+    private backendURLs: UtilsModule,
+    private renderer: Renderer2,
+    private elementRef: ElementRef,
+    private cookie: CookieService,
+    private route: ActivatedRoute,
+    private stripePay: CheckoutService,
+    private http: HttpClient
+  ) {
     this.items = JSON.parse(localStorage.getItem('paymentIntent') || '[]');
-    // this.userService.totalAmount$.subscribe((data: any) => {
-    //   this.totalAmount = data;
-    // })
+
     this.billingService.BillingPageVisited.next(true);
     this.proceedToPayment();
 
@@ -275,36 +278,34 @@ export class BillingComponent {
     this.initialize = this.initialize.bind(this);
 
     this.cartService.fetchCart().subscribe((data) => {
-
       this.cartitems = data;
       console.log("cart items are: ", this.cartitems)
     });
+
     const checkSubTotal = () => {
       if (this.cartitems.amounts.subTotal !== 0) {
         this.total = this.totalAmount;
         this.quantity = this.cartitems.details.map((item: { Quantity: any; }) => item.Quantity);
         console.log("Total:", this.total, "Quantity:", this.quantity);
 
-        {
-          this.item = [
-            {
-              "id": this.cartitems.details.map((item: { sku: any; }) => item.sku),
-              "name": this.cartitems.details.map((item: { name: any; }) => item.name),
-              "price": this.cartitems.amounts.total,
-              "quantity": this.cartitems.details.map((item: { Quantity: any; }) => item.Quantity),
-            }
-          ]
-        }
+        this.item = [
+          {
+            "id": this.cartitems.details.map((item: { sku: any; }) => item.sku),
+            "name": this.cartitems.details.map((item: { name: any; }) => item.name),
+            "price": this.cartitems.amounts.total,
+            "quantity": this.cartitems.details.map((item: { Quantity: any; }) => item.Quantity),
+          }
+        ];
         localStorage.setItem('paymentIntent', JSON.stringify(this.item));
       } else {
         setTimeout(checkSubTotal, 1000);
       }
-    }
+    };
 
     checkSubTotal();
     // this.userService.PaymentUrlVisited.next(true);
-
   }
+
 
   @ViewChild('mydiv') my_div: ElementRef | undefined;
   search_text: any = '';

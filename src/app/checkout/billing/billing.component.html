@@ -1,52 +1,52 @@
 <div class="payment-method-buttons">
-    <button (click)="onStripeButtonClick()" [class.selected]="selectedPaymentMethod === 'stripe'">Pay with Stripe</button>
-    <button (click)="selectedPaymentMethod = 'razorpay'" [class.selected]="selectedPaymentMethod === 'razorpay'">Pay with Razorpay</button>
-  </div>
-  
+    <button (click)="onStripeButtonClick()" [class.selected]="selectedPaymentMethod === 'stripe'">Pay with
+        Stripe</button>
+    <button (click)="selectedPaymentMethod = 'razorpay'" [class.selected]="selectedPaymentMethod === 'razorpay'">Pay
+        with Razorpay</button>
+</div>
+
 <div *ngIf="selectedPaymentMethod === 'stripe'" class="payment-form">
-<form id="payment-form">
-    <h3 style="align-items: center; text-align: center;">Place Your Order</h3>
-    <!-- gpay
+    <form id="payment-form">
+        <h3 style="align-items: center; text-align: center;">Place Your Order</h3>
+        <!-- gpay
     <div id="payment-request-button">
 A Stripe Element will be inserted here.
    </div> -->
 
-    <div id="link-authentication-element">
-        <!-- Stripe.js injects the Link Authentication Element -->
-    </div>
+        <div id="link-authentication-element">
+            <!-- Stripe.js injects the Link Authentication Element -->
+        </div>
 
-    <!-- <div id="shipping-address-element">
+        <!-- <div id="shipping-address-element">
        
     </div> -->
 
-    <div id="payment-element">
-        <!-- Stripe.js injects the Payment Element -->
-    </div>
+        <div id="payment-element">
+            <!-- Stripe.js injects the Payment Element -->
+        </div>
 
-    <!-- <div id="address-element">
+        <!-- <div id="address-element">
         Stripe.js injects the Address Element
     </div> -->
-    <button id="submit" class="btn-primary">
-        <div class="spinner hidden" id="spinner"></div>
-        <span id="button-text">Pay now</span>
-    </button>
-    <div id="payment-message" class="hidden"></div>
-</form>
+        <button id="submit" class="btn-primary">
+            <div class="spinner hidden" id="spinner"></div>
+            <span id="button-text">Pay now</span>
+        </button>
+        <div id="payment-message" class="hidden"></div>
+    </form>
 </div>
 
 <div *ngIf="selectedPaymentMethod === 'razorpay'">
-    <!-- Your Razorpay form goes here -->
     <div *ngFor="let item of items">
-      <div class="btn-primary">
-        Payment Method Selected Proceed To Payment
-        <form class="hidden btn-primary" (click)="submitForm(item)">
-          <input type="hidden" name="amount" [value]="item.price">
-          <button class="hidden" id='razorSubmit' type="submit">pay</button>
-          <!-- <input type="submit" value="Pay Now" style="cursor: pointer;"> -->
-        </form>
-      </div>
+        <div class="btn-primary">
+            Payment Method Selected Proceed To Payment
+            <form class="hidden btn-primary" (click)="submitForm(item)">
+                <input type="hidden" name="amount" [value]="item.price">
+                <button class="hidden" id='razorSubmit' type="submit">pay</button>
+            </form>
+        </div>
     </div>
-  </div>
+</div>
 
 
 <div class="address">
@@ -101,8 +101,8 @@ A Stripe Element will be inserted here.
                         <p class="name pointer-none">{{address.firstname}} {{address.lastname}}</p>
                         <div class="d-flex functionality-btns">
                             <span *ngIf="address.defaultAddress">Default Address</span>
-                            <button class="btn default__btn" (click)="MakeDefault(address,i)"
-                                *ngIf="i!=0">Make this Default</button>
+                            <button class="btn default__btn" (click)="MakeDefault(address,i)" *ngIf="i!=0">Make this
+                                Default</button>
                             <button class="edit__btn btn" (click)="EditAddress(address,i)">Edit</button>
                             <button class="remove__btn btn" (click)="RemoveAddress(address,i)">Remove</button>
                         </div>
