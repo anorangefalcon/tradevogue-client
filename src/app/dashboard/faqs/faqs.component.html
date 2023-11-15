@@ -1,10 +1,12 @@
-<section class="card card__pd-20  d-flex flex-column gap-20">
-  <div class="d-flex justify-content-md-between">
+<section class="card  d-flex flex-column gap-20">
+  <div style="  align-items: center;
+  padding-inline: 17px; padding: 11px;" class="d-flex justify-content-md-between">
     <h2 style="font-size: 24px; color: #333; font-weight: bold;">FAQs</h2>
-    <div class="custom-select">
-      <select [(ngModel)]="selectedOption" (change)="retrieveContent()">
+    <div>
+      <!-- <select [(ngModel)]="selectedOption" (change)="retrieveContent()">
         <option *ngFor="let item of faqData">{{item.title}}</option>
-      </select>
+      </select> -->
+      <app-custom-select [selectedOption]="'select Category'" (final_option)="retrieveContent($event)" [options]="faq"></app-custom-select>
     </div>
     <button (click)="openDrawer()" class="btn-primary d-flex align-item-center gap-5">
       <i class="material-symbols-outlined operational-buttons-icons">add</i>
@@ -23,12 +25,20 @@
   </div>
 
   <form [formGroup]="faqForm">
-    <div class="custom-select" style="width:200px;">
+    <div style="width:200px;">
       <select formControlName="selectedOption">
         <option value="" disabled>Select a Category</option>
         <option *ngFor="let item of faqData" [value]="item.title">{{item.title}}</option>
       </select>
+
     </div>
+
+    <!-- <app-custom-select
+    [type]="''"
+    [options]="faqData"
+    [(ngModel)]="selectedItem.status"
+    [selectedOption]="'select Ticket'"
+  ></app-custom-select> -->
 
     <!-- <div class="form__group" formGroupName="faqForm">
       <label for="ticket">Select Ticket</label>

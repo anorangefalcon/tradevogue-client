@@ -1,3 +1,27 @@
+.card {
+  margin-bottom: 25px;
+  & h2 {
+    font-size: 24px;
+    color: #333;
+    font-weight: 500;
+    text-align: center;
+    align-items: center;
+    display: flex;
+    margin: 14px;
+  }
+
+  & button {
+    border: 1px solid rgba(var(--blackClr), 0.1);
+    border-radius: 5px;
+    background: none;
+    padding: 4px;
+    cursor: pointer;
+    padding: 10px 24px;
+    font-weight: 400;
+    margin-right: 15px;
+  }
+}
+
 .operational-buttons {
     gap: 20px;
   
@@ -34,18 +58,21 @@
 
   .drawer {
     position: fixed;
+    border: 1px solid rgba(var(--blackClr), 0.1);
     z-index: 10000000000;
-    top: 0;
-    right: -100%;
-    width: 500px;
-    height: 100%;
+    bottom: -100%;
+    left: 80%;
+    transform: translateX(-50%);
+    width: 25%;
+    height: 34%;
     background-color: #fff;
-    transition: right 0.3s ease-in-out;
+    transition: bottom 0.3s ease-in-out;
     overflow: auto;
+    border-radius: 5px 5px 0 0;
   }
-
+  
   .drawer.open {
-    right: 0;
+    bottom: 0; /* Move the drawer to the bottom when open */
   }
 
   .material-symbols-outlined {
@@ -60,20 +87,63 @@
     font-size: 18px; /* Change the font size to make the icons smaller */
   }
   
-  /* Rest of the styling remains the same */
-  
-  .edit-button {
-    background-color: #00bcd4; /* Edit button background color */
-    color: #fff; /* Edit button icon color */
-  }
-  
-  .delete-button {
-    background-color: #f44336; /* Delete button background color */
-    color: #fff; /* Delete button icon color */
-  }
-  
   .material-symbols-outlined:hover {
     background-color: #333; /* Background color on hover */
     color: #fff; /* Icon color on hover */
+  }
+
+  .details-container {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 9px;
+
+    & button {
+      padding-block: 7px;
+      padding-inline: 20px;
+  }
+  
+
+  }
+  
+  .close-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  .ticket {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    gap: 12px;
+    padding: 39px;
+
+    & button {
+      padding-block: 7px;
+      padding-inline: 20px;
+    }
+
+  }
+  
+  .close-button {
+    /* (Existing styles) */
+    background: #fff;
+    /* (Existing styles) */
+  }
+  
+  .close-button:hover {
+    background: #ffcccc; /* Light red */
+    /* (Existing styles) */
   }
   

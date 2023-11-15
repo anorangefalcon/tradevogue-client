@@ -14,21 +14,50 @@ import { LoginCheckService } from 'src/app/shared/services/login-check.service';
 })
 export class MonetizationComponent {
   stripeKeysForm!: FormGroup;
+  razorpayKeysForm!: FormGroup;
   paymentKeys: any[] = [];
+  razorpayPaymentKeys: any[] = []
   selectedItem: any;
   editItem: boolean = false;
-  
 
-  constructor(private formBuilder: FormBuilder,private loginCheckService:LoginCheckService, private util: UtilsModule, private fetch: FetchDataService, private cookie: CookieService, private http: HttpClient, private popup: PopupService) { }
+
+  constructor(private formBuilder: FormBuilder, private loginCheckService: LoginCheckService, private util: UtilsModule, private fetch: FetchDataService, private cookie: CookieService, private http: HttpClient, private popup: PopupService) { }
 
   ngOnInit(): void {
     this.createForm();
+    this.createRazorpayForm();
     this.http.get<any[]>('http://localhost:1000/paymentKeys/getAll').subscribe((data) => {
       this.paymentKeys = data;
+      this.razorpayPaymentKeys = data;
     });
   }
 
-  
+  createRazorpayForm(): void {
+    this.razorpayKeysForm = this.formBuilder.group({
+      rzpPublicKey: ['', [Validators.required]],
+      rzpPrivateKey: ['', [Validators.required]],
+      rzpEnableDropdown: ['true'],
+    });
+  }
+  toggleRazorpayPayment(key: any) {
+
+  }
+
+  viewRazorpay(key: any) {
+
+  }
+
+  editRazorpay(key: any) {
+
+  }
+
+  deleteRazorpay(key: any) { }
+
+  onRazorpaySubmit() {
+
+  }
+
+
 
   createForm(): void {
     this.stripeKeysForm = this.formBuilder.group({
@@ -36,7 +65,7 @@ export class MonetizationComponent {
       privateKey: ['', [Validators.required]],
       enableDropdown: ['true'],
     });
-    
+
   }
 
   view(key: any) {
@@ -52,7 +81,7 @@ export class MonetizationComponent {
       this.stripeKeysForm.patchValue({
         publicKey: this.selectedItem.publicKey,
         privateKey: this.selectedItem.privateKey,
-        enableDropdown: this.selectedItem.enable ? 'true' : 'false', 
+        enableDropdown: this.selectedItem.enable ? 'true' : 'false',
       });
     }
   }
@@ -63,15 +92,15 @@ export class MonetizationComponent {
       const id = this.selectedItem._id;
       const enable = !this.selectedItem.enable;
       const body = {
-        id , enable
+        id, enable
       }
 
-      this.fetch.HTTPPOST(this.util.URLs.updatePaymentKeys,body).subscribe((response: any) => {
+      this.fetch.HTTPPOST(this.util.URLs.updatePaymentKeys, body).subscribe((response: any) => {
         console.log('Keys updated successfully:', response);
       }
-      ,(error: any) => {
-        console.error('Error updating keys:', error);
-      });
+        , (error: any) => {
+          console.error('Error updating keys:', error);
+        });
     }
 
   }
@@ -85,19 +114,21 @@ export class MonetizationComponent {
       const id = this.selectedItem._id;
 
       const body = {
-        publicKey , privateKey , enable , id
+        publicKey, privateKey, enable, id
       }
 
-      this.fetch.HTTPPOST(this.util.URLs.updatePaymentKeys,body)
+      this.fetch.HTTPPOST(this.util.URLs.updatePaymentKeys, body)
         .subscribe((response: any) => {
           console.log('Keys updated successfully:', response);
         })
-        
+
       if (publicKey !== null && privateKey !== null && enable !== null) {
         this.selectedItem.publicKey = publicKey;
         this.selectedItem.privateKey = privateKey;
         this.selectedItem.enable = enable;
       }
+    } else if (this.razorpayKeysForm.valid) {
+
     }
   }
 
@@ -114,20 +145,20 @@ export class MonetizationComponent {
         id
       }
 
-      this.fetch.HTTPPOST(this.util.URLs.deletePaymentKeys,body)
+      this.fetch.HTTPPOST(this.util.URLs.deletePaymentKeys, body)
         .subscribe((response: any) => {
           console.log('Keys deleted successfully:', response);
         })
-        
+
     }
   }
-  
-  
+
+
 
   onSubmit() {
     if (this.stripeKeysForm.valid) {
       const keys = this.stripeKeysForm.value;
-      this.loginCheckService.getUser('token').subscribe((data:any)=>{
+      this.loginCheckService.getUser('token').subscribe((data: any) => {
         const tokenSegments = data.split('.');
         const adminId = tokenSegments[1];
         const body = {
@@ -135,12 +166,29 @@ export class MonetizationComponent {
           "privateKey": keys.privateKey,
           "adminId": adminId
         }
-  
-        this.fetch.HTTPPOST(this.util.URLs.addPaymentKeys,body).subscribe((response: any) => {
-            console.log('Keys added successfully:', response);
-          })
+
+        this.fetch.HTTPPOST(this.util.URLs.addPaymentKeys, body).subscribe((response: any) => {
+          console.log('Stripe Keys added successfully:', response);
+        });
+      });
+    } else if (this.razorpayKeysForm.valid) {
+      console.log('Razorpay form is valid.');
+      const razorKeys = this.razorpayKeysForm.value;
+      this.loginCheckService.getUser('token').subscribe((data: any) => {
+        const tokenSegments = data.split('.');
+        const adminId = tokenSegments[1];
+
+        const razorpayBody = {
+          "rzpPublicKey": razorKeys.rzpPublicKey,
+          "rzpPrivateKey": razorKeys.rzpPrivateKey,
+          "adminId": adminId,
+        };
+
+        console.log('Razorpay body:', razorpayBody);
+        this.fetch.HTTPPOST(this.util.URLs.addPaymentKeys, razorpayBody).subscribe((response: any) => {
+          console.log('Razorpay Keys added successfully:', response);
+        });
       })
-     
     }
   }
-}
+}  

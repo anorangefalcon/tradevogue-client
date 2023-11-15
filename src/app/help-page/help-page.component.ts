@@ -66,7 +66,7 @@ export class HelpPageComponent {
         });
         
 
-      // this.contactForm.reset();
+      this.contactForm.reset();
 
     } else {
       console.log('Form is not valid. Please check the fields.');

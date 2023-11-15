@@ -16,6 +16,11 @@ export class CustomSelectComponent {
   @Input() type: string = ''; // multiSelect //select //searchSelect
   @Output() final_option = new EventEmitter<string>();
   @Output() SelectedList = new EventEmitter<any>();
+  @Output() selectionChanged = new EventEmitter<any>();
+
+  onSelectionChange(event: any) {
+    this.selectionChanged.emit(this.selectedOption);
+  }
 
   selected: any = '';
   multiSelected: any[] = [];

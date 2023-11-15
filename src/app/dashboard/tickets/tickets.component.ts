@@ -40,19 +40,12 @@ export class TicketsComponent {
     });
   }
 
+  updateFormFields(field: string) {
+    this.selectedItem.status = field;
+    this.notificationForm.get('title')?.patchValue(field);
+  }
+
   loadData() {
-    // const url = this.utils.URLs.getAllTicket;
-    // this.http.get(url)
-    //   .pipe(
-    //     catchError((error) => {
-    //       console.error("Error loading data:", error);
-    //       throw error;
-    //     })
-    //   )
-    //   .subscribe((data: any) => {
-    //     console.log(data, "data is");
-    //     this.processTicketData(data);
-    //   });
     this.fetchDataService.HTTPGET(this.utils.URLs.getAllTicket).subscribe((data)=> {
       console.log(data, "data is ")
       this.processTicketData(data);
@@ -167,8 +160,6 @@ export class TicketsComponent {
   }
 
   sendNotification() {
-
-
     if (this.notificationForm.valid) {
       // Create the data object with the desired structure
       const data = {
@@ -195,37 +186,6 @@ export class TicketsComponent {
       );
     }
   }
-
-
-
-  // updateItem() {
-  //   this.loadData()
-  //   const body = {
-  //     _id: this.ticketTypeId,
-  //     status: this.selectedItem.status,
-  //     email: this.selectedItem.userEmail,
-  //     message: this.messageInput
-  //     };
-
-  //   console.log(body);
-
-  //   this.fetchDataService.httpPost(this.utils.URLs.updateTicketStatus, body)
-  //     .then((response: any) => {
-  //       if (response.success) {
-  //         const updatedIndex = this.ticketData
-  //     .findIndex(title => title === this.selectedItem);
-  //         if (updatedIndex !== -1) {
-  //           this.ticketData
-  //       [updatedIndex] = this.updatedItem;
-  //         }
-  //         this.selectedItem = null;
-  //       }
-  //     })
-  //     .catch(error => {
-  //       console.error("Error updating item:", error);
-  //     });
-  //     this.loadData();
-  // }
 
   addNewItem() {
     this.loadData()

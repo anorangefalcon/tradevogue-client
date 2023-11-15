@@ -117,5 +117,62 @@
     </div>
   </div>
   
+  <div class="form-container">
+    <h2 class="form-heading">Razorpay Payment Keys</h2>
+    <form [formGroup]="razorpayKeysForm" (ngSubmit)="onSubmit()" class="form">
+      <div class="form-group">
+        <label for="rzpPublicKey">Razorpay Public Key</label>
+        <input type="text" id="rzpPublicKey" formControlName="rzpPublicKey" class="form-control">
+        <div *ngIf="razorpayKeysForm.get('rzpPublicKey')?.invalid && razorpayKeysForm.get('rzpPublicKey')?.touched" class="error-message">
+          Razorpay Public Key is required.
+        </div>
+      </div>
   
+      <div class="form-group">
+        <label for="rzpPrivateKey">Razorpay Private Key</label>
+        <input type="text" id="rzpPrivateKey" formControlName="rzpPrivateKey" class="form-control">
+        <div *ngIf="razorpayKeysForm.get('rzpPrivateKey')?.invalid && razorpayKeysForm.get('rzpPrivateKey')?.touched" class="error-message">
+          Razorpay Private Key is required.
+        </div>
+      </div>
+  
+      <button type="submit" [disabled]="!razorpayKeysForm.valid" class="submit-button btn-primary">Submit</button>
+    </form>
+  </div>
+  
+  
+  <div class="table-container">
+    <h2 class="form-heading">Razorpay Keys Table</h2>
+    <div class="table-wrapper table-list">
+      <table class="keys-table">
+        <thead>
+          <tr>
+            <th class="items">Seller Email</th>
+            <th class="items">Razorpay Public Key</th>
+            <th class="items">Razorpay Private Key</th>
+            <th class="items">Enable</th>
+            <th class="items">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let key of razorpayPaymentKeys[0]?.razorKey; let i = index">
+            <td class="items">{{ key.adminId?.email }}</td>
+            <td class="items">{{ key.rzpIdKey }}</td>
+            <td class="items">{{ key.rzpSecretKey }}</td>
+            <td class="items">
+              <div class="slide-button d-flex align-item-center">
+                <input type="checkbox" [checked]="key.enable" (change)="toggleRazorpayPayment(key)" [name]="i + 'Available'" [id]="i + 'Available'" />
+                <label [for]="i + 'Available'"></label>
+              </div>
+            </td>
+            <td>
+              <span class="material-symbols-outlined view-button material-icons" (click)="viewRazorpay(key)">visibility</span>
+              <span class="material-symbols-outlined edit-button material-icons" (click)="editRazorpay(key)">edit</span>
+              <span class="material-symbols-outlined delete-button material-icons" (click)="deleteRazorpay(key)">delete</span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
   

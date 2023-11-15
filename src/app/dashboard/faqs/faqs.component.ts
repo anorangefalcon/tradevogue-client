@@ -20,6 +20,7 @@ interface FaqItem {
 })
 export class FaqsComponent {
   faqData: any[] = [];
+  faq:any[] = [];
   selectedOption: string = '';
   faqForm!: FormGroup;
   selectedCategory: { title: string; childrens: any[] } = { title: '', childrens: [] };
@@ -62,13 +63,21 @@ export class FaqsComponent {
   loadData() {
     this.pagination.paginateBackend(`${this.bgURL.URLs.getPaginatedData}/faq`, this.currentPage, this.pageSize).subscribe((data) => {
       this.faqData = data;
+      this.faq = this.faqData.map((name)=> {
+        return name.title
+      });
     });
   }
 
-  retrieveContent() {
-    console.log(this.selectedOption);
+  retrieveContent(selectedOption: any) {
+    this.selectedOption = selectedOption;
     this.selectedCategory = this.faqData.find((category: any) => category.title === this.selectedOption);
   }
+
+  updateFormFields(event: any) {
+    console.log(event)
+  }
+  
 
   async addCategory() {
     if (this.faqForm.valid) {
@@ -127,6 +136,8 @@ export class FaqsComponent {
 
       const itemIndex = this.selectedCategory.childrens.findIndex((child: any) => child._id === updatedItem._id);
 
+      console.log(itemIndex, "item is ")
+
       if (itemIndex !== -1) {
         this.selectedCategory.childrens[itemIndex] = updatedItem;
       }
@@ -138,8 +149,12 @@ export class FaqsComponent {
         expanded: updatedItem.expanded,
       };
 
+      console.log(updatedFaqItem, "updated item ");
+
       try {
-        const data: any = await this.fetchDataService.HTTPPOST(this.bgURL.URLs.updateFaqData, updatedFaqItem);
+        const data: any = await this.fetchDataService.HTTPPOST(this.bgURL.URLs.updateFaqData, updatedFaqItem).subscribe((res)=> {
+          console.log(res)
+        });
         if (data) {
           this.toast.successToast({ title: "FAQ updated successfully" });
         } else {
