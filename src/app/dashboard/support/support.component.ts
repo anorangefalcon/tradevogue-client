@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { UtilsModule } from 'src/app/utils/utils.module';
 import { PopupService } from 'src/app/shared/services/popup.service';
 import { FetchDataService } from 'src/app/shared/services/fetch-data.service';
+import { ToastService } from 'src/app/shared/services/toast.service';
 
 @Component({
   selector: 'app-support',
@@ -16,19 +17,24 @@ export class SupportComponent {
   ticketTypeId: string = '';
   isDrawerOpen: boolean = false;
 
-  constructor(private utils: UtilsModule, private http: HttpClient, private popupService: PopupService, private fetchDataService: FetchDataService) {
+  constructor(private utils: UtilsModule, private http: HttpClient, private popupService: PopupService, private fetchDataService: FetchDataService, private toast: ToastService) {
     this.loadData();
   }
 
   loadData() {
-    const url = this.utils.URLs.getTicketStatus;
-    this.http.get(url).toPromise()
-      .then((data: any) => {
+    // const url = this.utils.URLs.getTicketStatus;
+    // this.http.get(url).toPromise()
+    //   .then((data: any) => {
+    //     this.titleData = data[0].title;
+    //     this.ticketTypeId = data[0]._id;
+    //   })
+    //   .catch(error => {
+    //   });
+
+      const url: any = this.fetchDataService.HTTPGET(this.utils.URLs.getTicketStatus).subscribe((data: any)=> {
         this.titleData = data[0].title;
-        this.ticketTypeId = data[0]._id;
+       this.ticketTypeId = data[0]._id;
       })
-      .catch(error => {
-      });
   }
 
   showItemDetails(item: any) {
@@ -47,7 +53,8 @@ export class SupportComponent {
 
     this.fetchDataService.HTTPPOST(this.utils.URLs.updateTitle, body)
       .subscribe((response: any) => {
-        if (response.success) {
+        if (response) {
+          this.toast.successToast({ title: "Ticket Updated Successfully" });
           const updatedIndex = this.titleData.findIndex(title => title === this.selectedItem);
           if (updatedIndex !== -1) {
             this.titleData[updatedIndex] = this.updatedItem;
@@ -68,7 +75,8 @@ export class SupportComponent {
 
     this.fetchDataService.HTTPPOST(this.utils.URLs.addTicketTitle, body)
       .subscribe((response: any) => {
-        if (response.success) {
+        if (response) {
+          this.toast.successToast({title: 'Ticket Added Successfully'})
           this.titleData.push(this.updatedItem);
         }
       })
@@ -97,7 +105,9 @@ export class SupportComponent {
 
     this.fetchDataService.HTTPPOST(this.utils.URLs.addTicketTitle, body)
       .subscribe((response: any) => {
-        if (response.success) {
+        this.toast.successToast({title: 'Ticket Added Successfully'})
+        if (response) {
+          
           this.titleData.push(this.updatedItem);
         }
       })
@@ -113,7 +123,8 @@ export class SupportComponent {
 
     this.fetchDataService.HTTPPOST(this.utils.URLs.deleteTitle, body)
       .subscribe((response: any) => {
-        if (response.success) {
+        if (response) {
+          this.toast.successToast({title: 'Deleted SuccessFully'})
           const deletedIndex = this.titleData.findIndex(title => title === item);
           if (deletedIndex !== -1) {
             this.titleData.splice(deletedIndex, 1);
