@@ -49,6 +49,8 @@ export class CustomiseBannerComponent {
   }
 
   isChecked() {
+    console.log(this.checked, "chcked");
+    
     if (this.checked == true) {
       this.bannerForm.get('title')?.disable()
       this.bannerForm.get('subTitle')?.disable()

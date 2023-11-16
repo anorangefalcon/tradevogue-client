@@ -21,7 +21,7 @@ export class HeroComponent {
 
   ngOnInit(){    
     this.bannerService.getBanners().subscribe((data: any) => {
-      console.log(data, "before filter");
+      console.log(data, "before filter in hero");
       
       this.bannerData = data.filter((banner: any)=> banner['active'] == true)
       console.log(this.bannerData, "banner data in hero page");

@@ -548,7 +548,7 @@ ul {
 /* Buttons Style */
 
 .heading-button {
-    border: none;
+    border: 0.5px solid rgb(var(--primaryClr));
     background-color: transparent;
     position: relative;
     overflow: hidden;
@@ -561,7 +561,7 @@ ul {
         z-index: 1;
     }
 
-    &::after {
+    /* &::after {
         content: "";
         width: 50%;
         height: 50%;
@@ -585,7 +585,7 @@ ul {
         border-right: 1px solid rgb(var(--primaryClr));
         border-bottom: 1px solid rgb(var(--primaryClr));
         transition: all 0.3s ease;
-    }
+    } */
 
     &:hover {
         &::after {

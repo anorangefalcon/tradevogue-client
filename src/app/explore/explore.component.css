@@ -11,9 +11,6 @@ input[type="checkbox"] {
     height: 16px;
     border: 1px solid rgb(var(--blackClr), 0.4);
 }
-/* .cards {
-    width: calc(100% - 180px);
-} */
 input[type="checkbox"]:checked {
     background-color: rgb(var(--primaryClr));
     border-color: rgb(var(--primaryClr));

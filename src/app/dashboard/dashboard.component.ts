@@ -28,8 +28,6 @@ export class DashboardComponent {
     {
       name: 'Customise', route:'',icons: 'build', sublist: [
         { name: 'HomePage', route: '/dashboard/customise-home'},
-        { name : 'Banner', route : '/dashboard/banner'},
-        { name : 'New Banner', route : '/dashboard/customise-banner'},
         { name: 'Banner', route: '/dashboard/customise-banner'},
         { name: 'Deal', route: '/dashboard/customise-deal'},
         { name: 'Socials', route: '/dashboard/socials' },

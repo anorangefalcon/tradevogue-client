@@ -33,7 +33,7 @@ export class ExploreComponent {
     titles:  ["Fresh Arrivals", "Highest Rated", "Price: High to Low", "Price: Low to High"],
     value: ['createdAt:-1','avgRating:-1', 'price:-1', 'price:1']
   }
-  genders : string[] = ['Male', 'Female'];
+  // genders : string[] = ['male', 'Female'];
   minPrice : any;
   maxPrice : any;
   loading: boolean = false;
@@ -77,7 +77,6 @@ export class ExploreComponent {
   }
 
   onAdd(event: any, field: string) {
-    console.log(event, field, "event field");
     
     if (this.minPrice && !this.maxPrice){
       this.filterApplied['minPrice'] = this.minPrice 

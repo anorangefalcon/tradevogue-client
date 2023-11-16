@@ -127,6 +127,40 @@
     border: 0.5px solid black;
 }
 
+.checkbox label {
+    font-size: 12px;
+    font-style: italic;
+    /* color: rgb(var(--primaryClr)); */
+
+}
+.custom-check {
+    appearance: none;
+    width: 15px;
+    height: 15px;
+    border: 1px solid rgb(var(--blackClr), 0.4);
+    /* border-radius: 4px; */
+}
+.custom-check:checked {
+    background-color: rgb(var(--primaryClr));
+    border-color: rgb(var(--primaryClr));
+}
+.custom-check:checked + label{
+    position: relative;
+}
+
+.custom-check:checked + label::after {
+    content: "\e5ca";
+    font-family: 'Material Symbols Outlined';
+    height: 10px;
+    width: 6px;
+    color: white;
+    position: absolute;
+    font-size: 18px;
+    font-weight: 300;
+    left: -25px;
+    top: -5px;
+}
+
 @keyframes spinner {
     to {transform: rotate(360deg);}
   }

@@ -16,7 +16,6 @@ import { TicketsComponent } from './tickets/tickets.component';
 import { SocialsComponent } from './socials/socials.component';
 import { MonetizationComponent } from './monetization/monetization.component';
 import { NoPageComponent } from '../no-page/no-page.component';
-import { BannerComponent } from './banner/banner.component';
 import { DealComponent } from './deal/deal.component';
 import { SalesComponent } from './sales/sales.component';
 import { CustomiseBannerComponent } from './customise-banner/customise-banner.component';
@@ -51,7 +50,6 @@ const routes: Routes = [
       {
         path: 'customise-home', loadChildren: () => import('./edit-home/edit-home.module').then(m => m.EditHomeModule)
       },
-      { path: 'customise-banner', component: BannerComponent },
       { path: 'customise-deal', component: DealComponent },
       { path: 'notification' , component: NotificationsComponent },
 

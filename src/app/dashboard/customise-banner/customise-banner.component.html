@@ -2,82 +2,85 @@
     <div class="form__card__head d-flex justify-content-md-between align-item-center">
         <h3>Customise Banner</h3>
         <div class="operation_button d-flex gap-10">
-            <button class="btn-primary" [ngStyle]="{'display': !bannerForm.disabled? 'none': 'block'}"
-            (click)="bannerForm.enable()">Edit</button>
-            <!-- <button class="btn-secondary" [ngStyle]="{'display': bannerForm.disabled? 'none': 'block'}"
-            (click)="bannerForm.disable()">Cancel</button> -->
-            <button class="btn-secondary" [ngStyle]="{'display': bannerForm.disabled? 'none': 'flex'}"
-                (click)="showForm = !showForm" >Add banner</button>
-            <button class="btn-primary" [ngStyle]="{'display': bannerForm.disabled? 'none': 'flex'}"
-                (click)="onSave()" [disabled]="this.bannerForm.invalid">Save</button>
+            <!-- <button class="btn-primary" (click)="bannerForm.enable()">Edit</button> -->
+            <button class="btn-secondary" (click)="showForm = true" *ngIf="showForm==false">Add banner</button>
+            <button class="btn-secondary" (click)="showForm = false" *ngIf="showForm==true">Cancel</button>
+            <button class="btn-primary"  (click)="onSave()" *ngIf="showForm == true" [ngClass]="{'disabled':bannerForm.invalid}"
+                [disabled]="this.bannerForm.invalid">Save</button>
         </div>
     </div>
-    <input type="checkbox" name="layput" id="layout" [(ngModel)]="checked" (change)="isChecked()">
     <form class="form__card d-flex gap-15 flex-column" [formGroup]="bannerForm" *ngIf="showForm === true">
-        <div class=" d-flex gap-15 card card__pd-25 mw100 relative">
-            <div class="image-upload-div d-flex justify-content-center align-item-center relative">
-                <div class="upload-image d-flex flex-column gap-10 align-item-center">
-                    <input type="file" [id]="'backgroundImage'" accept="image/jpg, image/jpeg, image/png"
-                        (input)="bannerImageUpload($event)" />
-                    <label [for]="'backgroundImage'" class="upload__block d-flex flex-column flex-center pointer">
-                        <span class="upload_icon material-symbols-outlined">
-                            cloud_upload
+        <div class="card card__pd-25 mw100 relative d-flex flex-column gap-20">
+            <div class="d-flex gap-15">
+                <div class="image-upload-div d-flex justify-content-center align-item-center relative">
+                    <div class="upload-image d-flex flex-column gap-10 align-item-center">
+                        <input type="file" [id]="'backgroundImage'" accept="image/jpg, image/jpeg, image/png"
+                            (input)="bannerImageUpload($event)" />
+                        <label [for]="'backgroundImage'" class="upload__block d-flex flex-column flex-center pointer">
+                            <span class="upload_icon material-symbols-outlined">
+                                cloud_upload
+                            </span>
+                        </label>
+                        <small class="banner-label">Upload
+                            Banner Image</small>
+                        <img [src]="getImagePreview()" [style.display]="getImagePreview() ? 'flex' : 'none'"
+                            class="banner-image">
+                        <span class="material-symbols-outlined remove-btn pointer"
+                            [style.display]="getImagePreview() ? 'flex' : 'none'">
+                            close
                         </span>
-                    </label>
-                    <small class="banner-label">Upload
-                        Banner Image</small>
-                    <img [src]="getImagePreview()" [style.display]="getImagePreview() ? 'flex' : 'none'"
-                        class="banner-image">
-                    <span class="material-symbols-outlined remove-btn pointer"
-                        [style.display]="getImagePreview() ? 'flex' : 'none'">
-                        close
-                    </span>
-                    <!-- <div class="loader" ></div> -->
+                        <!-- <div class="loader" ></div> -->
+                    </div>
+                </div>
+                <div class="data-upload-div d-flex gap-15">
+                    <div class="d-flex flex-column mw100 gap-10">
+                        <div class="internal-div">
+                            <label class="form__title" for="title">Title</label>
+                            <input class="form__input" type="text" id="title" formControlName="title" />
+                        </div>
+                        <div class="internal-div">
+                            <label class="form__title" for="subTitle">Description</label>
+                            <input class="form__input" type="text" id="subTitle" formControlName="subTitle" />
+                        </div>
+                        <div class="internal-div">
+                            <label class="form__title" for="buttonText">Button</label>
+                            <input class="form__input" type="text" id="buttonText" formControlName="buttonText" />
+                        </div>
+                        <div class="internal-div">
+                            <label class="form__title" for="buttonLink">Button Link</label>
+                            <input class="form__input" type="text" id="buttonLink" formControlName="buttonLink" />
+                        </div>
+                    </div>
+                    <div class="d-flex flex-column mw100 gap-10">
+                        <div class="internal-div">
+                            <label class="form__title" for="contentAlign">Content Align</label>
+                            <app-custom-select [_id]="'alignment'" [options]="alignment"
+                                [selectedOption]="(bannerForm.get('contentAlign')?.value ? bannerForm.get('contentAlign')?.value : 'Select..')"></app-custom-select>
+                        </div>
+                        <ng-container formGroupName="colors">
+                            <div class="internal-div">
+                                <label class="form__title" [for]="'titleText'">Title Color</label>
+                                <input class="form__input" type="color" name="" [id]="'titleText'"
+                                    formControlName="titleColor">
+                            </div>
+                            <div class="internal-div">
+                                <label class="form__title" [for]="'subTitleText'">Subtitle Color</label>
+                                <input class="form__input" type="color" [id]="'subTitleText'"
+                                    formControlName="subTitleColor" />
+                            </div>
+                            <div class="internal-div">
+                                <label class="form__title" [for]="'buttonText'">Button Color</label>
+                                <input class="form__input" type="color" [id]="'buttonText'"
+                                    formControlName="buttonColor" />
+                            </div>
+                        </ng-container>
+                    </div>
                 </div>
             </div>
-            <div class="data-upload-div d-flex gap-15">
-                <div class="d-flex flex-column mw100 gap-10">
-                    <div class="internal-div">
-                        <label class="form__title" for="title">Title</label>
-                        <input class="form__input" type="text" id="title" formControlName="title" />
-                    </div>
-                    <div class="internal-div">
-                        <label class="form__title" for="subTitle">Description</label>
-                        <input class="form__input" type="text" id="subTitle" formControlName="subTitle" />
-                    </div>
-                    <div class="internal-div">
-                        <label class="form__title" for="buttonText">Button</label>
-                        <input class="form__input" type="text" id="buttonText" formControlName="buttonText" />
-                    </div>
-                    <div class="internal-div">
-                        <label class="form__title" for="buttonLink">Button Link</label>
-                        <input class="form__input" type="text" id="buttonLink" formControlName="buttonLink" />
-                    </div>
-                </div>
-                <div class="d-flex flex-column mw100 gap-10">
-                    <div class="internal-div">
-                        <label class="form__title" for="contentAlign">Content Align</label>
-                        <app-custom-select [_id]="'alignment'" [options]="alignment"
-                        [selectedOption]="(bannerForm.get('contentAlign')?.value ? bannerForm.get('contentAlign')?.value : 'Select..')"
-                            ></app-custom-select>
-                    </div>
-                    <ng-container formGroupName="colors">
-                        <div class="internal-div">
-                            <label class="form__title" [for]="'titleText'">Title Color</label>
-                            <input class="form__input" type="color" name="" [id]="'titleText'"
-                                formControlName="titleColor">
-                        </div>
-                        <div class="internal-div">
-                            <label class="form__title" [for]="'subTitleText'">Subtitle Color</label>
-                            <input class="form__input" type="color" [id]="'subTitleText'"
-                                formControlName="subTitleColor" />
-                        </div>
-                        <div class="internal-div">
-                            <label class="form__title" [for]="'buttonText'">Button Color</label>
-                            <input class="form__input" type="color" [id]="'buttonText'" formControlName="buttonColor" />
-                        </div>
-                    </ng-container>
-                </div>
+            <div class="d-flex gap-5 checkbox align-item-center">
+                <input type="checkbox" name="layput" id="layout" [(ngModel)]="checked" (change)="isChecked()"
+                    class="custom-check">
+                <label for="layout">Add only banner and link</label>
             </div>
         </div>
     </form>
@@ -105,9 +108,11 @@
                         <td class="ellipsis items serial-number">
                             <div class="d-flex justify-content-center">
                                 {{i+1}}
-                            </div></td>
+                            </div>
+                        </td>
                         <td class="ellipsis items">
-                            <a [href]="banner.backgroundImage" style="color: rgb(0, 119, 255); text-decoration: underline;">
+                            <a [href]="banner.backgroundImage"
+                                style="color: rgb(0, 119, 255); text-decoration: underline;">
                                 Link
                             </a>
                         </td>
@@ -115,37 +120,43 @@
                         <td class="ellipsis items">
 
                             {{banner.title ? banner.title : '-'}}
-              
+
                         </td>
-                        <td class="ellipsis items" >{{banner.subTitle ? banner.subTitle : '-'}}</td>
+                        <td class="ellipsis items">{{banner.subTitle ? banner.subTitle : '-'}}</td>
                         <td class="ellipsis items">{{banner.buttonText ? banner.buttonText : '-'}}</td>
                         <td class="ellipsis items">{{banner.buttonLink}}</td>
                         <td class="ellipsis items">{{banner.contentAlign ? banner.contentAlign : '-'}}</td>
                         <td class="items">
-                            <div [class.color-circle] = "banner?.colors?.titleColor" [style.background-color]="banner?.colors?.titleColor">
+                            <div [class.color-circle]="banner?.colors?.titleColor"
+                                [style.background-color]="banner?.colors?.titleColor">
                                 {{banner?.colors?.titleColor ? "" : '-'}}
                             </div>
                         </td>
                         <td class="items">
-                            <div [class.color-circle] = "banner?.colors?.subTitleColor" [style.background-color]="banner?.colors?.subTitleColor">
+                            <div [class.color-circle]="banner?.colors?.subTitleColor"
+                                [style.background-color]="banner?.colors?.subTitleColor">
                                 {{banner?.colors?.subTitleColor ? "" : '-'}}
                             </div>
                         </td>
                         <td class="items">
-                            <div [class.color-circle] = "banner?.colors?.buttonColor" [style.background-color]="banner?.colors?.buttonColor">
+                            <div [class.color-circle]="banner?.colors?.buttonColor"
+                                [style.background-color]="banner?.colors?.buttonColor">
                                 {{banner?.colors?.buttonColor ? "" : '-'}}
                             </div>
                         </td>
                         <td class="items">
                             <div class="slide-button d-flex align-item-center">
-                                <input type="checkbox" [checked]="banner.active" (change)="toggleBanner(banner._id, $event)"  [id]="i + 'Available'" />
+                                <input type="checkbox" [checked]="banner.active"
+                                    (change)="toggleBanner(banner._id, $event)" [id]="i + 'Available'" />
                                 <label [for]="i + 'Available'"></label>
                             </div>
                         </td>
                         <td class="items actions">
                             <div class="action-buttons">
-                                <span class="material-symbols-outlined edit-button material-icons pointer" (click)="edit(i)">edit</span>
-                                <span class="material-symbols-outlined delete-button material-icons pointer" (click)="delete(banner._id)">delete</span>
+                                <span class="material-symbols-outlined edit-button material-icons pointer"
+                                    (click)="showForm = true; edit(i)">edit</span>
+                                <span class="material-symbols-outlined delete-button material-icons pointer"
+                                    (click)="delete(banner._id)">delete</span>
                             </div>
                         </td>
                     </tr>

@@ -103,7 +103,7 @@ footer {
     }
     .copyright-footer {
         padding-block: 20px;
-        border-block-start: 0.05px solid rgba(0, 0, 0, 0.177);
+        border-block-start: 0.05px solid rgba(0, 0, 0, 0.5);
         & p{
             color: rgb(var(--text-gray));
             

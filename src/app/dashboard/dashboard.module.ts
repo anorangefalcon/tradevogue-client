@@ -26,7 +26,6 @@ import { DateDisplayPipe } from '../shared/Pipe/date-display.pipe';
 import { ProductPageModule } from '../product-page/product-page.module';
 import { SocialsComponent } from './socials/socials.component';
 import { MonetizationComponent } from './monetization/monetization.component';
-import { BannerComponent } from './banner/banner.component';
 import { DealComponent } from './deal/deal.component';
 import { SalesComponent } from './sales/sales.component';
 import { GalleryComponent } from '../home/gallery/gallery.component';
@@ -52,7 +51,6 @@ import { NotificationsComponent } from './notifications/notifications.component'
     DateDisplayPipe,
     SocialsComponent,
     MonetizationComponent,
-    BannerComponent,
     DealComponent,
     SalesComponent,
     CustomiseBannerComponent,

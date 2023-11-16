@@ -1,5 +1,5 @@
 <section class="hero-section">
-    <div *ngIf="bannerData | async">
+    <div *ngIf="bannerData">
         <owl-carousel-o [options]="customOptions">
             <ng-container *ngFor="let banner of bannerData">
                 <ng-template carouselSlide>
@@ -20,7 +20,7 @@
                         'background-position': 'center'
                       }">
                             <div class="overlay absolute mh100 mw100"></div>
-                            <ng-container *ngIf="banner.contentAlign">
+                            <!-- <ng-container *ngIf="banner.contentAlign">
                                 <div class="container d-flex align-item-center default-animation mh100"
                                     [ngStyle]="{ 'justify-content': banner.contentAlign === 'Center' ? 'center' : banner.contentAlign === 'Right' ? 'flex-end' : 'flex-start' }">
                                     <div class="hero-text-container d-flex flex-column gap-10"
@@ -39,9 +39,9 @@
                                         </a>
                                     </div>
                                 </div>
-                            </ng-container>
+                            </ng-container> -->
 
-                            <!-- <ng-container *ngIf="banner.contentAlign == 'Left'">
+                            <ng-container *ngIf="banner.contentAlign == 'Left'">
                                 <div class="container d-flex align-item-center default-animation mh100"
                                     style="justify-content: flex-start;">
                                     <div class="hero-text-container d-flex flex-column gap-10">
@@ -90,7 +90,7 @@
                                         </a>
                                     </div>
                                 </div>
-                            </ng-container> -->
+                            </ng-container>
 
                         </div>
                     </ng-template>

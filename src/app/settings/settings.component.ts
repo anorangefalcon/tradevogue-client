@@ -1,7 +1,6 @@
-import { Component, ElementRef, Input, Renderer2, ViewChild } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Component } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FetchDataService } from '../shared/services/fetch-data.service';
-import { RouterLinksService } from '../shared/services/router-links.service';
 import { UtilsModule } from 'src/app/utils/utils.module';
 import { passwordStrengthValidator, matchPasswordValidator } from '../auth/validators';
 // import { ToastService } from '../shared/services/toast.service';
@@ -12,7 +11,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { CheckoutService } from '../checkout/checkout.service';
 import { WishlistService } from '../shared/services/wishlist.service';
 import { DialogBoxService } from '../shared/services/dialog-box.service';
-
 import { ToastService } from '../shared/services/toast.service';
 @Component({
   selector: 'app-settings',
@@ -66,7 +64,6 @@ export class SettingsComponent {
      private stripePay: CheckoutService,
      private toastService : ToastService,
      private dialogBox : DialogBoxService) {
-
     this.route.queryParams.subscribe(params => {
       const redirectStatus = params['redirect_status'];
       if (redirectStatus === 'succeeded') {
@@ -78,6 +75,7 @@ export class SettingsComponent {
     // if(this.route.url()=='/cart/billing'){
     //   this.getOrders();
     // }
+
 
     this.ProfileForm = fb.group(
       {

@@ -1,3 +1,7 @@
+.container {
+    padding-block-start: 30px;
+    padding-block-end: 50px;
+}
 .content {
     width: calc(100% - 260px);
 }
@@ -146,7 +150,7 @@ form {
 }
 
 .nav-links a span:hover {
-    color: #d63242;
+    color: rgb(var(--primaryClr))
 }
 
 .profile,
