@@ -15,7 +15,8 @@ export class CardTemplateComponent {
   showPopup: boolean = false;
   selectedItem: boolean = false;
 
-  constructor(private cartService: CartService, private popupService: PopupService, private wishlistService : WishlistService) { }
+  constructor(private cartService: CartService, private popupService: PopupService, private wishlistService : WishlistService) {    
+   }
 
   avgRating: number = 0;
   productData: any = [];
@@ -38,6 +39,17 @@ export class CardTemplateComponent {
    chooseWishlist() {  
     this.wishlistService.ShowWishlist(this.product._id);
   }
+
+  RemoveOrAddToWishlist(event:any=null){
+    if(!event){
+      this.wishlistService.ShowWishlist(this.product._id);
+    }
+    else{
+      this.wishlistService.removeFromWishlist(this.product._id).subscribe((data)=>{        
+      });
+    }
+  }
+
   
   addToCart(){
     console.log(this.product);

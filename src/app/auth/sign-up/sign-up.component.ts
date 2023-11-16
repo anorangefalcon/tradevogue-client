@@ -48,13 +48,8 @@ constructor(private fb: FormBuilder, private router: Router,private loginService
     this.renderer.appendChild(document.body, this.script);
   }
 
-   CreateUser(body:any){
-
-    console.log('create user clicked------------> ');
-    
+   CreateUser(body:any){    
     this.fetchDataService.HTTPPOST(this.backendURLs.URLs.signupUrl, body).subscribe((data:any)=>{
-      // this.cookies.set('userToken', data.token)
-      // this.cookies.set('userName',data.firstName)
       this.loginService.loginUser(data);
       this.loading = false;
     })

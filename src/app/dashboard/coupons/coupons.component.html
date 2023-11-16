@@ -8,9 +8,9 @@
     </div>
 
     <div class="d-flex gap-10 align-item-center">
-    <button (click)="AddCoupon()">Add Coupon</button>
+    <button (click)="AddCoupon()" class="add__coupon">Add Coupon</button>
 
-    <button (click)="Delete_Offer()" [disabled]="!deleteList.length">Delete Button</button>
+    <button (click)="Delete_Offer()" class="mutiple__delete" [disabled]="!deleteList.length">Delete</button>
 </div>
 </div>
     <div class="table-list">

@@ -9,6 +9,7 @@ import { BillingResponseService } from './billing-response.service';
 // import { StripPaymentService } from '../shared/services/stripe-Integration/strip-payment.service';
 import { CheckoutService } from './checkout.service';
 import { LoginCheckService } from '../shared/services/login-check.service';
+import { retry } from 'rxjs';
 
 
 @Component({
@@ -17,13 +18,11 @@ import { LoginCheckService } from '../shared/services/login-check.service';
   styleUrls: ['./checkout.component.css']
 })
 export class CheckoutComponent implements OnInit {
-  showMore: boolean = false;
-  CouponValid: string = 'hidden';
-  CouponApplied: any = '';
+
   // CouponAppliedBtnClicked:any='hidden';
   navbar_scroll_style: boolean = false;
   cartCount: number = 0;
-  OpenCoupon: boolean = false;
+  // OpenCoupon: boolean = false;
   AllCoupons: any;
   updateBoolean: boolean = false;
   cart: any = {};
@@ -74,9 +73,7 @@ export class CheckoutComponent implements OnInit {
 
   }
 
-  ChangeHanlder(event: any) {
-    this.show = event;
-  }
+
 
   ParentClosedFun(event: any) {
     this.ParenClosed = event;
@@ -104,21 +101,7 @@ export class CheckoutComponent implements OnInit {
         });
     }
   }
-  checkLogin() {
-    const cookieExists = document.cookie.indexOf('loginDetails') !== -1;
 
-
-    // cookieExists == true ? this.updateBoolean = false : this.updateBoolean = true;
-
-    if (!cookieExists) {
-      // this.redirectToLogin();
-      this.route.navigate(['/cart/billing']);
-
-    } else {
-
-      this.route.navigate(['/cart/billing']);
-    }
-  }
 
 
 
@@ -135,93 +118,9 @@ export class CheckoutComponent implements OnInit {
 
 
 
-  RemoveAppliedCoupon() {
-    this.CouponApplied = false;
-    this.cart.amounts.savings = 0;
-    this.cart.amounts.total = this.cart.amounts.subTotal;
-  }
-
-  // CloseCouponDialog() {
-  //   this.OpenCoupon = false;
-  // }
-
-  CheckMinimumPurchase(coupon: any) {
-    return coupon.minimumPurchaseAmount < this.cart.amounts.total;
-
-  }
-
-  CalculateDiscount(coupon: any) {
-    let totalAmount = (this.cart.amounts.total);
-    if (coupon.discountType == 'flat') {
-      return coupon.discountAmount <= coupon.maximumDiscount ? coupon.discountAmount : coupon.maximumDiscount;
-    }
-    else {
-      if (coupon.discountType == 'percentage') {
-        let calculatedDiscount = (totalAmount / 100) * coupon.discountAmount;
-        return calculatedDiscount <= coupon.maximumDiscount ? calculatedDiscount : coupon.maximumDiscount;
-      }
-    }
-  }
-
-  async ApplyCoupon(coupon: any = '', event: any = '') {
-    if (event) {
-      let value = this.CouponCode.nativeElement.value;
-      for (let coupon of this.AllCoupons) {
-        if (coupon.couponcode == value) {
-          if (!this.CheckMinimumPurchase(coupon)) {
-            this.toastService.errorToast({ title: 'Coupon', body: `minimum purchase amount is ${coupon.minimumPurchaseAmount}` });
-            this.OpenCoupon = false;
-            return;
-          }
-          this.CouponApplied = coupon;
-          this.CouponValid = 'valid';
-          break;
-        }
-      }
-      if (this.CouponValid != 'valid') {
-        this.CouponValid = 'invalid';
-        return;
-      }
-    }
-
-    else {
-      if (!this.CheckMinimumPurchase(coupon)) {
-        this.toastService.errorToast({ title: 'Coupon', body: `minimum purchase amount is ${coupon.minimumPurchaseAmount}` });
-        this.OpenCoupon = false;
-        return;
-      }
-      this.CouponApplied = coupon;
-      this.CouponValid = 'valid';
-    }
-
-    if (this.CouponValid == 'valid') {
-      this.toastService.successToast({
-        title: 'Coupon applied successfully'
-      })
-    }
-    else if (this.CouponValid == 'invalid') {
-      this.toastService.errorToast({
-        title: 'Coupon not valid'
-      })
-    }
-    this.CouponCode.nativeElement.value = ''; // change input field to ''
-    this.cart.amounts.savings = this.CalculateDiscount(coupon);
-    console.log('savinf is ', this.CalculateDiscount(coupon));
-
-    // this.cookieService.set('coupon',this.CalculateDiscount(coupon));
-    this.cart.amounts.total -= this.cart.amounts.savings;
-    // this.cookieService.set('total',this.cart.amounts.total);
-    this.ParenClosed = true;
-  }
-
-  InputChange() {
-    this.CouponValid = 'hidden';
-  }
 
 
-  CouponOpener() {
-    this.show = true;
-  }
+ 
 
 
   // cartArr: any[] = [];
@@ -235,6 +134,94 @@ export class CheckoutComponent implements OnInit {
 
   }
 
+
+
+
+// COUPONS CODE STARTS
+CouponValid: string = 'hidden';
+CouponApplied: any = '';
+CouponOpener() {
+  this.show = true;
+}
+
+InputChange() {
+  this.CouponValid = '';
+}
+
+
+RemoveAppliedCoupon() {
+  this.CouponApplied = false;
+  this.cart.amounts.savings = 0;
+  this.cart.amounts.total = this.cart.amounts.subTotal;
+}
+
+
+CheckMinimumPurchase(coupon: any) {
+  return coupon.minimumPurchaseAmount < this.cart.amounts.total;
+}
+
+CalculateDiscount(coupon: any) {
+  let totalAmount = (this.cart.amounts.total);
+  if (coupon.discountType == 'flat') {
+    return coupon.discountAmount<totalAmount?coupon.discountAmount:0;
+  }
+  else {
+    if (coupon.discountType == 'percentage') {
+      let calculatedDiscount = (totalAmount / 100) * coupon.discountAmount;
+      calculatedDiscount <= coupon.maximumDiscount ? calculatedDiscount : coupon.maximumDiscount;
+      return calculatedDiscount<totalAmount?calculatedDiscount:0;
+    }
+  }
+}
+
+async ApplyCoupon(coupon: any = '', event: any = '') {
+  if (event) {
+    let value = this.CouponCode.nativeElement.value;
+    for (let coupon of this.AllCoupons) {
+      if (coupon.couponcode == value) {
+        if (!this.CheckMinimumPurchase(coupon)) {
+          this.toastService.errorToast({ title: 'Coupon', body: `minimum purchase amount is ${coupon.minimumPurchaseAmount}` });
+          return;
+        }
+        this.CouponApplied = coupon;
+        this.CouponValid = 'valid';
+        break;
+      }
+    }
+    if (this.CouponValid != 'valid') {
+      this.CouponValid = 'invalid';
+      return;
+    }
+  }
+
+  else {
+    this.CouponApplied = coupon;
+    this.CouponValid = 'valid';
+  }
+
+  if (this.CouponApplied?.discountType=='percentage' && !this.CheckMinimumPurchase(this.CouponApplied)) {
+    this.toastService.errorToast({ title: 'Coupon', body: `minimum purchase amount is ${coupon.minimumPurchaseAmount}` });
+    return;
+  }
+
+
+  if (this.CouponValid == 'valid') {
+    this.toastService.successToast({
+      title: 'Coupon applied successfully'
+    })
+  }
+  else if (this.CouponValid == 'invalid') {
+    this.toastService.errorToast({
+      title: 'Coupon not valid'
+    })
+    return;
+  }
+
+  this.CouponCode.nativeElement.value = ''; // change input field to ''
+  this.cart.amounts.savings = this.CalculateDiscount(this.CouponApplied);
+  this.cart.amounts.total -= this.cart.amounts.savings;
+  this.ParenClosed = true;
+}
 
 
   async verifyOrderSummary() {
@@ -260,6 +247,12 @@ export class CheckoutComponent implements OnInit {
     });
   }
 
+  ChangeHanlder(event: any) {
+    this.show = event;
+    this.CouponCode.nativeElement.value='';
+  }
+  
+  // COUPONS CODE FINSIH
 
   async ProceedToPayment() {
 

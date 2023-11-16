@@ -130,8 +130,10 @@
 
             <button class="btn-primary apply__btn" (click)="ApplyCoupon(null,$event)"
                 [disabled]="CouponValid=='invalid'" [ngClass]="{'disabled':CouponValid=='invalid'}">APPLY</button>
-            <span *ngIf="CouponValid=='invalid'">Coupon is not valid</span>
+                
+            
         </div>
+        <span *ngIf="CouponValid=='invalid'">Coupon is not valid</span>
         <div class="all-coupons">
 
             <div class="coupon d-flex flex-column gap-10" *ngFor="let coupon of AllCoupons">
@@ -178,53 +180,11 @@
                     </ul>
                 </div>
 
-                <!-- <button class="d-flex align-item-center more-btn pointer" (click)="showMore=!showMore" *ngIf="showMore==false">
-                    <span class="material-symbols-outlined">
-                        add
-                    </span>
-                    <p>MORE</p>
-                </button>
-                <ul class="d-flex gap-10 flex-column list" *ngIf="showMore==true">
-                    
-                </ul>
-                <small>Lorem ipsum, dolor sit amet consectetur adipisicing elit.</small> -->
+
 
                 <button (click)="ApplyCoupon(coupon)" class="coupon__btns">Apply Coupon</button>
             </div>
-            <!-- <div class="coupon d-flex flex-column gap-10">
-                <div class="coupon-name">
-                    <h2>COUPON CODE</h2>
-                </div>
-               
-                <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quidem unde ab laudantium nulla rem consequatur ipsam eveniet consequuntur earum! Minima.</p>
-            
-                <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Architecto, nostrum.</p>
-                <button class="d-flex align-item-center more-btn pointer" (click)="showMore=!showMore" *ngIf="showMore==false">
-                    <span class="material-symbols-outlined">
-                        add
-                    </span>
-                    <p>MORE</p>
-                </button>
-                <ul class="d-flex gap-10 flex-column list" *ngIf="showMore==true">
-                    <li>
-                        Lorem ipsum dolor sit amet.
-                    </li>
-                    <li>
-                        Lorem ipsum dolor sit amet.
-                    </li>
-                    <li>
-                        Lorem ipsum dolor sit amet.
-                    </li>
-                    <li>
-                        Lorem ipsum dolor sit amet.
-                    </li>
-                    <li>
-                        Lorem ipsum dolor sit amet.
-                    </li>
-                </ul>
-                <small>Lorem ipsum, dolor sit amet consectetur adipisicing elit.</small>
 
-            </div> -->
         </div>
 
 

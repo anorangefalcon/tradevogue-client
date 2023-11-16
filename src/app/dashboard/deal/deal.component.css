@@ -154,3 +154,13 @@ form {
 #backgroundImage{
     display: none;
 }
+
+
+.product-uploaded-image{
+    right: 20px;
+    position: absolute;
+    height: 100px;
+    width: 100px !important;
+    bottom: 20px;
+
+}

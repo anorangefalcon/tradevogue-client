@@ -19,9 +19,7 @@ export class CouponsComponent {
   show: boolean = false;
   todayDate: any = Date.now();
 
-  // ShowDrawer() {
-  //   this.show = true;
-  // }
+
 
   ChangeHanlder(event: any) {
     this.show = event;
@@ -32,6 +30,7 @@ export class CouponsComponent {
   couponType = ['global', 'custom', 'new'];
   Brands: any;
   EditIndex: any;
+  EditRequest: any;
   allOffers: any;
   Categories: any;
   // Filters = ['categories', 'brands'];
@@ -67,7 +66,6 @@ export class CouponsComponent {
 
   CurrentDate() {
     let dtToday = new Date();
-
     let month: any = dtToday.getMonth() + 1;
     let day: any = dtToday.getDate();
     let year: any = dtToday.getFullYear();
@@ -94,7 +92,6 @@ export class CouponsComponent {
 
   updateCheckList() {
     this.deleteList = [];
-    // this.OffersToDelted=[];
     this.allOffers.forEach((offer: any) => {
       if (offer.checked) this.deleteList.push(offer._id);
     });
@@ -138,7 +135,7 @@ export class CouponsComponent {
     if (event == 'coupon') {
       if (this.OfferForm.get('ExtraInfo')) {
         this.OfferForm.removeControl('ExtraInfo');
-        this.OfferForm.removeControl('DiscountPercentageHandler');
+        this.OfferForm.removeControl('DiscountPercentageHandler');        
       }
       controls.forEach((el: any) => {
         if (el.validator) {
@@ -203,8 +200,6 @@ export class CouponsComponent {
 
 
   RemoveEmailFormControl(i: any) {
-    console.log('hi called------->------>---->');
-    return;
     (<FormArray>this.OfferForm.get('UserEmails')).removeAt(i);
   }
 
@@ -217,8 +212,6 @@ export class CouponsComponent {
   getAllOffers(){
     this.fetchDateService.HTTPGET(this.BackendUrls.URLs.getOffers).subscribe((data) => {
       this.allOffers = data;
-      console.log('ALLOFfer sis ',this.allOffers);
-      
     });
   }
 
@@ -237,9 +230,9 @@ export class CouponsComponent {
     this.EditRequest = false;
   }
 
-  CancelCoupon() {
-    this.CouponRequest = false;
-  }
+  // CancelCoupon() {
+  //   this.CouponRequest = false;
+  // }
 
 
 
@@ -282,10 +275,13 @@ export class CouponsComponent {
       return;
     }
     this.OfferForm.get('startDate')?.setValue(new Date(this.OfferForm.get('startDate')?.value));
-    // let endDate: any = new Date((this.OfferForm.get('endDate')?.value)).getTime() + 60 * 60 * 24 * 1000;
 
-    // endDate = new Date(endDate);
-    // this.OfferForm.get('endDate')?.setValue(endDate);
+    let endDate: any = new Date((this.OfferForm.get('endDate')?.value));
+    endDate.setDate(endDate.getDate() + 1);
+endDate.setMinutes(endDate.getMinutes() - 1);
+    this.OfferForm.get('endDate')?.setValue(endDate);
+
+
     let url;
     let body: any = this.OfferForm.value;
     if (this.EditRequest) {
@@ -296,8 +292,6 @@ export class CouponsComponent {
       url = this.BackendUrls.URLs.createOffer;
     }
     this.fetchDateService.HTTPPOST(url, body).subscribe((data) => {
-      console.log('RESONSE comes is ----------------->',data);
-      
       if (this.EditRequest) {
         this.allOffers[this.EditIndex] = data;
         this.EditRequest = false;
@@ -317,15 +311,10 @@ export class CouponsComponent {
 
     const body = { id: element._id };
     this.fetchDateService.HTTPPOST(this.BackendUrls.URLs.deleteOffer, body).subscribe((data) => {
-      // this.allOffers.splice(index, 1);
       this.allOffers=data;
     });
 
   }
-
-
-  // function 
-  EditRequest: any;
 
 
   CustomTypeHandler(value:any){
@@ -377,7 +366,6 @@ export class CouponsComponent {
   ActiveStatus(event:any,data:any){
     const body={data,status:event.target.checked};
       this.fetchDateService.HTTPPOST(this.BackendUrls.URLs.updateOfferStatus,body).subscribe((data)=>{
-
       })
 
   }

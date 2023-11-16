@@ -58,11 +58,8 @@ export class LoginComponent {
 
 
   LoginUser(body:any){ 
-    console.log('login clicked------------------->');
-    
     this.fetchDataService.HTTPPOST(this.backendUrls.URLs.loginUrl, body).subscribe(
       (data: any) => {
-        console.log('login res', data);
         this.loginService.loginUser({'userToken': data.token, 'name': data.firstName});
       },    
     )

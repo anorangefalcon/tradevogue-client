@@ -20,7 +20,7 @@
         <div class="form__group width-40 relative d-flex flex-column img-upload justify-content-center align-item-center">
 
                 <img [src]="DealForm.get('productImage')?.value" alt="" class="product-image" *ngIf="!Edit">
-
+                <img [src]="DealForm.get('productImage')?.value" alt="" class="product-uploaded-image" *ngIf="Edit">
                 <div *ngIf="Edit" class="d-flex flex-column align-item-center justify-content-center gap-10">
                 <label for="backgroundImage" class="upload__div">
                 <span class="upload_icon material-symbols-outlined">
@@ -32,33 +32,8 @@
                 <small class="banner-label">Upload
                     Banner Image</small>
                 </div>
-            <!-- <label class="form__label">Product Image<span>*</span></label> -->
         </div>
-         <!-- <div class="image-upload-div d-flex justify-content-center align-item-center relative">
-                        <div class="upload-image d-flex flex-column gap-10 align-item-center">
-                            <input type="file" [id]="'backgroundImage'+i" accept="image/jpg, image/jpeg, image/png"
-                                (input)="bannerImageUpload($event, i)" />
-                            <label [for]="'backgroundImage'+i"
-                                class="upload__block d-flex flex-column flex-center pointer">
-                                <span class="upload_icon material-symbols-outlined">
-                                    cloud_upload
-                                </span>
-                            </label>
-                            <small class="banner-label">Upload
-                                Banner Image</small>
-                            <img [src]="getImagePreview(i)" [style.display]="getImagePreview(i) ? 'flex' : 'none'"
-                                class="banner-iage">
-                            <span class="material-symbols-outlined remove-btn pointer"
-                                [style.display]="getImagePreview(i) ? 'flex' : 'none'" (click)="removeImage(i)">
-                                close
-                            </span>
-                            <div class="loader" *ngIf="showLoading(i)"></div>
-
-                        </div>
-                    </div>
- -->
-
-
+      
     <div class="width-60 d-flex flex-wrap gap-20">
     
         <div class="form__group relative d-flex flex-column">

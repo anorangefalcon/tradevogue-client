@@ -158,6 +158,9 @@ export class UtilsModule {
     setDeals:'http://localhost:1000/deals/set',
     getDealsDetails:'http://localhost:1000/deals/getDetails',
 
+    // about
+    setAboutDetails:'http://localhost:1000/about/setDetails',
+    getAboutDetails:'http://localhost:1000/about/getDetails',
     // sale 
     setSales: 'http://localhost:1000/sales/setSales',
     getSales: 'http://localhost:1000/sales/getSales',

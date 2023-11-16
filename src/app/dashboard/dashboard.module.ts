@@ -31,6 +31,7 @@ import { SalesComponent } from './sales/sales.component';
 import { GalleryComponent } from '../home/gallery/gallery.component';
 import { CustomiseBannerComponent } from './customise-banner/customise-banner.component';
 import { NotificationsComponent } from './notifications/notifications.component';
+import { AboutComponent } from './about/about.component';
 
 @NgModule({
   declarations: [
@@ -54,7 +55,8 @@ import { NotificationsComponent } from './notifications/notifications.component'
     DealComponent,
     SalesComponent,
     CustomiseBannerComponent,
-    NotificationsComponent
+    NotificationsComponent,
+    AboutComponent
   ],
 
   imports: [

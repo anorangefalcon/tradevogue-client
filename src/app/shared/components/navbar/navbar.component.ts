@@ -52,9 +52,7 @@ export class NavbarComponent implements OnInit {
         this.cart_count = item_count;
       })
 
-    // this.wishlistService.getWishlistCount();
-
-
+    this.wishlistService.getWishlistCount();
     this.wishlistService.WishlistCount$.subscribe((data) => {
       if (data) {
         this.wishlistCount = data;

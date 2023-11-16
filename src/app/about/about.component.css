@@ -392,8 +392,9 @@ button {
 
 .team-members {
     padding-block: 50px;
-    background-color: rgb(var(--primaryClr), 0.1);
-    background-image: url(../../assets/deal-of-week-component/dealOfWeek-homeBg.png);
+    /* background-color: rgb(var(--primaryClr), 0.1); */
+    background-color: rgba(var(--whiteClr), 1);
+    /* background-image: url(../../assets/deal-of-week-component/dealOfWeek-homeBg.png); */
     background-repeat: no-repeat;
     background-size: cover;
 

@@ -111,6 +111,7 @@ export class SettingsComponent {
     
   };
 
+
   async ngOnInit() {
     this.fetchDataService.HTTPGET(this.backendURLs.URLs.getDetails).subscribe((data: any) => {
       data.firstname = data.name.firstname;
@@ -123,12 +124,21 @@ export class SettingsComponent {
     })
   }
 
+  TranslateBack() {
+    this.TranslateData = false;
+  }
+
   async changeComponent(el: string) {
     this.showData = el;
     this.TranslateData = true;
     if (el == 'wishlist') {
       this.showWishlists();
     }
+  }
+
+  // SETTING PAGE
+  editClick() {
+    this.isReadOnly = !this.isReadOnly;
   }
 
   // wishlist work 
@@ -183,7 +193,11 @@ export class SettingsComponent {
     this.cartService.addToCart({ sku });
   }
 
+//  WISHLIST DONE
 
+
+
+//  ADDRESS
   getAddresses() {
     this.showData = 'addresses';
     this.TranslateData = true;
@@ -221,11 +235,8 @@ export class SettingsComponent {
   }
 
   RemoveAddress(address: any, index: any) {
-    console.log('address coming is ', address);
     const body = { address_id: address._id }
     this.fetchDataService.HTTPPOST(this.backendURLs.URLs.deleteAddress, body).subscribe((data) => {
-      console.log('data comes is after deletion', data);
-
       this.userAddresses.splice(index, 1);
     })
   }
@@ -236,9 +247,7 @@ export class SettingsComponent {
     this.ShowComponent = true;
   }
 
-  TranslateBack() {
-    this.TranslateData = false;
-  }
+  
 
   onPasswordChange() {
     const body = {
@@ -250,9 +259,7 @@ export class SettingsComponent {
     });
   }
 
-  editClick() {
-    this.isReadOnly = !this.isReadOnly;
-  }
+
 
   async saveDetails() {
     let body = {
@@ -268,25 +275,27 @@ export class SettingsComponent {
 
   }
 
-  async MakeDefault(address: any) {
+  async MakeDefault(address: any,index:any) {
     try {
-      const body = { address: address };
-      console.log('body coming is ==]=====',body);
-      
+      const body = { address: address ,index};
       this.fetchDataService.HTTPPOST(this.backendURLs.URLs.setDefaultAddress, body).subscribe((data)=>{
-
+        this.userAddresses = data;
       });
-      // this.userAddresses = data;
-
+      
     } catch (error) {
 
     }
   }
 
+  //  ADDRESS COMPLETE
+  
+
   //  ORDERS TS
    getOrders(){
     this.showData='orders';
-    this.TranslateData=true;
+    setTimeout(()=>{
+      this.TranslateData=true;
+    },300)
      this.fetchDataService.HTTPGET(this.backendURLs.URLs.getParticularUserOrders).subscribe((data:any)=>{
       console.log('allOrders is ',this.AllOrders);
       

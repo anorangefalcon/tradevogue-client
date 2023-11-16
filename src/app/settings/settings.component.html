@@ -169,7 +169,7 @@
                             <p class="name text-capitalize">{{address.firstname}} {{address.lastname}}</p>
                             <div class="d-flex">
                                 <span *ngIf="address.defaultAddress">Default Address</span>
-                                <button class="btn default__btn" (click)="MakeDefault(address)" *ngIf="i!=0">Make this
+                                <button class="btn default__btn" (click)="MakeDefault(address,i)" *ngIf="i!=0">Make this
                                     Defult</button>
 
                                 <button class="edit__btn d-flex align-item-center"

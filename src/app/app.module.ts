@@ -44,6 +44,9 @@ import { OffersCarouselComponent } from './offers-carousel/offers-carousel.compo
 
 
 // initializeApp(environment.firebase);
+import { CarouselModule } from 'ngx-owl-carousel-o';
+import { AboutComponent } from './about/about.component';
+
 
 @NgModule({
   declarations: [
@@ -60,8 +63,10 @@ import { OffersCarouselComponent } from './offers-carousel/offers-carousel.compo
     DialogBoxComponent,
     WishlistComponent,
     OffersCarouselComponent,
+    AboutComponent,
   ],
   imports: [
+    CarouselModule,
     BrowserModule,
     CommonModule,
     NgxPaginationModule,

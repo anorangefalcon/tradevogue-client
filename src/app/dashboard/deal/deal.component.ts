@@ -59,7 +59,7 @@ export class DealComponent {
     let file: any = (<HTMLInputElement>event.target)?.files![0];
     this.imageuploadService.fileupload([{ file: file }]).then((url: any) => {
       this.DealForm.get('productImage')?.setValue(url[0]);
-      this.Edit=!this.Edit;
+      // this.Edit=!this.Edit;
     })
   }
 

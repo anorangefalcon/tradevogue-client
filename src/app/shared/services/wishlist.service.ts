@@ -21,6 +21,7 @@ export class WishlistService {
   WishlistCount = new BehaviorSubject<any>('');
   WishlistCount$ = this.WishlistCount.asObservable();
 
+
   deleteProduct = new BehaviorSubject<any>('');
   delete$ = this.deleteProduct.asObservable();
 
@@ -87,11 +88,11 @@ export class WishlistService {
     })
   }
 
-removeFromWishlist(productId: any, wishlistName: string) {
-    const delProduct = {
-      wishlistName: wishlistName,
+removeFromWishlist(productId: any, wishlistName: string='') {
+    const delProduct:any = {
       productId: productId
     }
+    if(wishlistName) delProduct.wishlistName=wishlistName;
     return this.fetchDataService.HTTPPOST(this.backendUrls.URLs.deleteFromWishlist, delProduct);
     let delData = this.fetchDataService.HTTPPOST(this.backendUrls.URLs.deleteFromWishlist, delProduct).subscribe((data: any) => {
       console.log(data, "deleted is ");

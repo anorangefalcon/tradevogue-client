@@ -333,6 +333,7 @@ export class BillingComponent implements OnInit {
 
 
   // ADDRESS TS FILE---------------------
+
   userAddresses: any[] = [];
   receiveData: any;
   navbar_scroll_style: boolean = false;
@@ -356,24 +357,6 @@ export class BillingComponent implements OnInit {
   }
 
 
-  // async getAddresses() {;
-  //   let Addresses = await this.userService.SubscribingValue('userAddresses');
-  //   if (!Addresses) {
-  //     let data: any = await this.fetchDataService.httpGet(this.backendURLs.URLs.getAddress);
-  //     data = data.addresses;
-  //     this.userAddresses = data;
-  //     if (data.length != 0) {
-  //       await this.userService.emittingValue('userAddresses', data);
-  //       this.userAddresses = data;
-  //     }
-  //   }
-
-  //   else {
-  //     this.userAddresses = Addresses;
-  //   }
-
-
-  // }
 
 
 
@@ -423,10 +406,16 @@ export class BillingComponent implements OnInit {
     this.DeliveredAddress = false;
   }
 
-  async MakeDefault(address: any, i: any) {
-    const body = { address_id: address._id };
-    this.fetchDataService.HTTPPOST(this.backendURLs.URLs.setDefaultAddress, body).subscribe((update: any) => {
-      this.userAddresses = update[0].info.address;
-    });
+  async MakeDefault(address: any,index:any) {
+    try {
+      const body = { address: address ,index};
+      this.fetchDataService.HTTPPOST(this.backendURLs.URLs.setDefaultAddress, body).subscribe((data:any)=>{
+        this.userAddresses = data;
+      });
+      
+    } catch (error) {
+
+    }
   }
+
 }

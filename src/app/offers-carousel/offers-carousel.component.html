@@ -1,10 +1,39 @@
-<!-- <div class="container d-flex">
-    <ng-container *ngFor="let offer of allOffers">
-        <img [src]="offer.Image" style="width: 100%;">
+<!-- <div class="container d-flex flex-column gap-20">
+
+    <div class="d-flex">
+    <div class="left__part">
+    <ng-container *ngFor="let i of Previousarray">
+
+      <img [src]="allOffers[i]?.Image">     
     </ng-container>
-    <owl-carousel-o [options]="customOptions">
-        <ng-template carouselSlide>
-            jlncelwvclw 
-        </ng-template>
-    </owl-carousel-o>
+</div>
+    <div class="center__part">
+        <img [src]="allOffers[currentIndex]?.Image">
+    </div>
+
+    <div class="right__part">
+    <ng-container *ngFor="let offer of RightArray;let i =index">
+        <img [src]="allOffers[currentIndex+i+1]?.Image">
+    </ng-container>
+</div>
+
+</div>
+
+  <div class="d-flex gap-5 justify-content-center">
+  <ng-container *ngFor="let offer of allOffers;let i=index">
+    <button class="circle__btn" (click)="ChangeIndex(i)">
+        <div class="circle" [ngClass]="{'selected':i==currentIndex}"></div>
+    </button>
+  </ng-container>
+</div>
 </div>   -->
+
+
+
+<div>Some tags before</div>
+<owl-carousel-o [options]="customOptions">
+  <ng-template carouselSlide>Slide 1</ng-template>  
+  <ng-template carouselSlide>Slide 2</ng-template>  
+  <ng-template carouselSlide>Slide 3</ng-template>  
+</owl-carousel-o>
+<div>Some tags after</div>

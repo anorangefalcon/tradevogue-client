@@ -15,9 +15,9 @@ import { LoginCheckService } from 'src/app/shared/services/login-check.service';
 
 export class CartComponent implements OnInit {
 
-  constructor(private cartService: CartService, private loginCheckService:LoginCheckService, private cookie: CookieService, private billingService:BillingResponseService, private router:Router) {
+  constructor(private cartService: CartService, private loginCheckService:LoginCheckService,private LoginCheckService:LoginCheckService, private cookie: CookieService, private billingService:BillingResponseService, private router:Router) {
     // this.userService.PaymentUrlVisited.next(false);
-    this.billingService.BillingPageVisited.next(false);
+    // this.billingService.BillingPageVisited.next(false);
    }
   cartArr: any[] = [];
   userToken: any = this.cookie.get("userToken");
@@ -74,18 +74,16 @@ export class CartComponent implements OnInit {
   }
 
   async ProceedCheckOut(){
-    const checkToken=this.cookie.get('userToken');
-    this.loginCheckService.getUser().subscribe((checkToken)=>{
+    // const checkToken=this.cookie.get('userToken');
+    const checkToken=this.LoginCheckService.getUser().subscribe((checkToken:any)=>{
       if(!checkToken){
-        // await this.userService.emittingValue('GoToPayment',1);
         this.router.navigate(['/auth/login']);
       }
-      
       this.cartService.fetchCart().subscribe((data)=>{
-        console.log('cart coming is ',data);
+        // console.log('cart coming is ',data);
       })
     })
 
-    
+  
   }
 }
