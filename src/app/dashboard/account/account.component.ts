@@ -102,8 +102,6 @@ export class AccountComponent implements OnInit {
 
     var adminData = this.sellerFetchDataService.getSellerInfo().subscribe((data: any) => {
       const formattedDob = this.datePipe.transform(data[0].info.dob, 'yyyy-MM-dd');
-
-      console.log(data, "data is coming");
       this.profileForm.patchValue({
         firstName: data[0].name.firstname,
         lastName: data[0].name.lastname,
@@ -193,7 +191,6 @@ export class AccountComponent implements OnInit {
   }
 
   async updateDetails(form: {[key: string]: string}) {
-    console.log(form, "form is coming");
     const body = {
       "email": form['email'],
       "name": {
@@ -232,7 +229,6 @@ export class AccountComponent implements OnInit {
     }
 
     await this.sellerFetchDataService.sendPinInfo(pinData).subscribe((data: any) => {
-      console.log(data, "pincode data is coming");
     });
   }
 

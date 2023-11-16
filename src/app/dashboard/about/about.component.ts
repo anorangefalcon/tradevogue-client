@@ -144,7 +144,6 @@ export class AboutComponent {
 
   ImageUploadHandler(event:any,FormGroupName:any,index:any){
     let imgArray:any;
-    console.log('event ',FormGroupName,"index is ",index);
     
     if(FormGroupName=='BasicInfo'){
        imgArray = this.AboutPageForm.get('BasicInfo.StoreImages.img') as FormArray;
@@ -155,8 +154,7 @@ export class AboutComponent {
     }
     else if(FormGroupName=='TeamMembers'){
       imgArray = this.AboutPageForm.get('TeamMembers')?.get('memberInfo') as FormArray;
-      console.log('vale us ---->',imgArray.at(index-1)?.value.imgLink);
-
+     
       if(index!=0 && !imgArray.at(index-1)?.value.imgLink){
         this.toastService.errorToast('Please upload another images first');
         return;
@@ -187,7 +185,6 @@ export class AboutComponent {
   check:Boolean=true;
   ActiveStatus(event:any,data:any){
     this.AboutPageForm?.get(data)?.get('active')?.setValue(false);
-    console.log('About form is ----->',this.AboutPageForm.value);
     
   }
 

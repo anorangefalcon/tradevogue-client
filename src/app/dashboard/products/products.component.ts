@@ -67,8 +67,6 @@ export class ProductsComponent implements OnInit {
     try {
       this.fetchdata.HTTPPOST(this.backendUrl.URLs.fetchProductInventory, this.template).subscribe({
         next: (res) => {
-          console.log(res);
-
           this.productArray = res;
           this.productList = [];
           this.totalCount = this.productArray.pageInfo[0].count;
@@ -98,7 +96,6 @@ export class ProductsComponent implements OnInit {
         }
       });
     } catch (err) {
-      console.log(err);
     }
   }
 
@@ -220,11 +217,9 @@ export class ProductsComponent implements OnInit {
   }
 
   displayInfo(e: Event) {
-    console.log(<HTMLDivElement>(<HTMLDivElement>e.target));
     (<HTMLDivElement>(<HTMLDivElement>e.target)?.parentElement?.nextSibling)?.classList.add('active');
   }
   closeInfo(e: Event) {
-    console.log(<HTMLDivElement>(<HTMLSpanElement>e.target).parentElement);
     (<HTMLDivElement>(<HTMLSpanElement>e.target).parentElement).parentElement?.classList.remove('active');
   }
 
@@ -232,8 +227,6 @@ export class ProductsComponent implements OnInit {
   uploadFile(event: Event) {
     let excelData = this.excelService.handleFileInput(event);
     (<HTMLInputElement>event.target).value = '';
-
-    console.log("HEllo");
     excelData.then((excel: any) => {
 
       if (excel.errors) {
@@ -248,7 +241,6 @@ export class ProductsComponent implements OnInit {
 
         this.toastService.errorToast(errorObj);
       }
-      console.log("Excel Data", excel.data); // fine products
       const formData = {
         type: 'bulk',
         data: excel.data
@@ -260,29 +252,6 @@ export class ProductsComponent implements OnInit {
           this.fetchData();
         }
       })
-
-      // let product_keys = Object.keys(products['errors']);
-      // this.toastService.errorToast({
-      //   title: 'Errors found in Excel',
-      //   body: ['In sheet First, Second']
-      // })
-
-      // product_keys.forEach((sheet) => {
-      //   let sheets_keys = Object.keys(products['errors'][sheet]);
-      // console.log(sheets_keys);
-
-      // sheets_keys.forEach((errors) => {
-
-      //   let error_list = Object.keys(products['errors'][sheet][errors]);
-      //   console.log(error_list);
-
-      // console.log(error_list); 
-
-      // error_list.forEach((detail) => {
-      //   console.log(detail);
-      // })
-      // })
-      // })
     })
   }
 

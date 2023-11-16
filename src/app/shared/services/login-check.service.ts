@@ -30,10 +30,7 @@ export class LoginCheckService {
     }
   }
 
-  loginUser(userObj: any) {
-    console.log("here?");
-    
-  
+  loginUser(userObj: any) {  
     this.cookieService.set('userToken', userObj.userToken);
     this.cookieService.set('name', userObj.name);
 

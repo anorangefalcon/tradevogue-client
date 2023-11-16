@@ -168,7 +168,6 @@ export class CouponsComponent {
   CouponTypeHandler(event: any) {
     this?.OfferForm?.get('couponType')?.patchValue(event);
     if (event == 'custom') {
-      console.log(this.OfferForm);
       this.OfferForm.addControl('UserEmails', this.fb.array([]));
 
       (<FormArray>this.OfferForm.get('UserEmails')).push(this.fb.group({

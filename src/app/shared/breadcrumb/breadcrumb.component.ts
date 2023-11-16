@@ -49,9 +49,6 @@ export class BreadcrumbComponent implements OnInit {
   ): Array<{ label: string; url: string }> {
     const snapshot = route.snapshot;
     this.activeSku = route.snapshot.params['sku'];
-    
-    // console.log('snapshot', snapshot);
-    // console.log('children', route.children);
 
     const breadcrumbLabel: string = snapshot.data['breadcrumb'];
 

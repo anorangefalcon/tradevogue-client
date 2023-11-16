@@ -80,7 +80,7 @@ export class CartComponent implements OnInit {
         this.router.navigate(['/auth/login']);
       }
       this.cartService.fetchCart().subscribe((data)=>{
-        // console.log('cart coming is ',data);
+   
       })
     })
 

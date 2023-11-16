@@ -16,11 +16,9 @@ export class OffersCarouselComponent {
 //   Previousarray:any[]=[];
 //   RightArray:any[]=[];
 //   createArray(){
-//     console.log('currentIndex is ',this.currentIndex);
     
 //     this.Previousarray=new Array(this.currentIndex).fill(0);
 //     this.RightArray=new Array(this.allOffers.length-(this.currentIndex+this.Previousarray.length));
-//     console.log('right array length is ',this.RightArray);
     
 //   }
 
@@ -30,7 +28,6 @@ export class OffersCarouselComponent {
 //   constructor(private fetchdataService:FetchDataService,private BackendUrls:UtilsModule){
 //     this.fetchdataService.HTTPGET(this.BackendUrls.URLs.getOffers).subscribe((data:any) => {
 //       this.allOffers = data;
-//       console.log('ALLOFfer sis ',this.allOffers);
 //       this.createArray();
       
 //     });
@@ -38,7 +35,6 @@ export class OffersCarouselComponent {
 
 
 //   ChangeIndex(index:any){
-//     console.log('hello---->');
     
 //     this.translate=true;
 //     setTimeout(()=>{

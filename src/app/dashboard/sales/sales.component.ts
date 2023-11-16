@@ -22,7 +22,6 @@ export class SalesComponent {
   constructor(private fb: FormBuilder, private salesService: SalesService, private uploadService: ImageUploadService, private fetch: FetchDataService, private util : UtilsModule) {
 
     this.salesService.getSales().subscribe((res)=> {
-      console.log(res, "res is")
       this.tableData = res;
     })
 
@@ -48,14 +47,12 @@ export class SalesComponent {
     this.selectedItem = key;
     if(this.selectedItem) {
       const id = this.selectedItem._id;
-      console.log(id);
 
       const body = {
         _id: id
       }
 
       this.fetch.HTTPPOST(this.util.URLs.deleteSales, body).subscribe((data=> {
-        console.log("delete data is ", data);
       }))
       
     }
@@ -66,15 +63,11 @@ export class SalesComponent {
     if (this.selectedItem) {
       const id = this.selectedItem._id;
       const enable = !this.selectedItem.enable;
-      console.log("id is ", id , "enable is ", enable)
       const body = {
         id , enable
       }
 
-      console.log(body , "toggle body")
-
       this.fetch.HTTPPOST(this.util.URLs.toggleSales , body).subscribe((res)=> {
-        console.log(res , "sales is ")
       })
 
     }
@@ -84,7 +77,6 @@ export class SalesComponent {
     this.selectedItem = item;
     this.itemId = item._id;
     this.editingIndex = index;
-    console.log(index, "index is ")
     
   
     this.salesForm.patchValue({
@@ -136,26 +128,20 @@ export class SalesComponent {
   onUpdate() {
     if (this.salesForm.dirty) { 
       if (this.editingIndex !== undefined) {
-        console.log("done is done")
         const body = {
           index: this.editingIndex,
           id: this.itemId,
           data: this.salesForm.value
         }
 
-        console.log(body , "updated data ")
-
         this.fetch.HTTPPOST(this.util.URLs.updateSales , body).subscribe((res)=> {
-          console.log(res , "updated sales is ")
         })
         
       } else {
         this.salesService.setSales(this.salesForm.value).subscribe((data) => {
-          console.log(data, "subscribed data - New Item added");
         });
       }
     } else {
-      console.log('No changes to update.');
     }
   }
 
@@ -175,7 +161,6 @@ export class SalesComponent {
 
     this.uploadService.fileupload([{ file: file }]).then((url: any) => {
       this.salesForm.get('sale')?.get(String(formIndex))?.get('backgroundImage')?.setValue(url[0]);
-      console.log(this.salesForm);
       this.getImagePreview(formIndex);
     })
   }

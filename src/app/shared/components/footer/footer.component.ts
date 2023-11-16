@@ -27,8 +27,6 @@ export class FooterComponent {
     }
     this.fetchDataService.HTTPPOST(this.backendUrls.URLs.uniqueProductFields, body).subscribe(
       (data: any) => {
-        // console.log(data, "unique data");``
-        
         this.categories = data.data.category;
       }
     )
@@ -37,30 +35,12 @@ export class FooterComponent {
   @ViewChild('cancellation') cancellation!: ElementRef;
 
   categories : [] = [];
-
-
-  scrollToElementInComponentB() {  
-    console.log(this.cancellation.nativeElement);
-    
-    // if (this.cancellation) {
-    //   console.log("inside");
-      
-    //   this.cancellation.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    // }
-  }
-
-  
   show(el: any) {
     if (el == 'profile') {
-      
       this.routerService.updateShowData('profile');
-      console.log("show data called by order history")
     }
-
     else {
-    
       this.routerService.updateShowData('orders');
-      console.log("show data called by order history")
     }
     
   }

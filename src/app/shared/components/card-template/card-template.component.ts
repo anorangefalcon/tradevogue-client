@@ -52,7 +52,6 @@ export class CardTemplateComponent {
 
   
   addToCart(){
-    console.log(this.product);
     
     const cartItem = {
       sku: this.product.sku,

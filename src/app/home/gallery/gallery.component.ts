@@ -37,7 +37,6 @@ export class GalleryComponent {
       for (let postID of data.media.data) {
         this.http.get('https://graph.instagram.com/' + postID.id + '?fields=media_type,media_url,permalink&access_token=' + this.access_token)
           .subscribe((data: any) => {
-            console.log();
 
             if (i > 8) {
               return;

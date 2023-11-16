@@ -20,11 +20,8 @@ export class HeroComponent {
   constructor (private bannerService: BannerService) {}
 
   ngOnInit(){    
-    this.bannerService.getBanners().subscribe((data: any) => {
-      console.log(data, "before filter in hero");
-      
+    this.bannerService.getBanners().subscribe((data: any) => {      
       this.bannerData = data.filter((banner: any)=> banner['active'] == true)
-      console.log(this.bannerData, "banner data in hero page");
     })
 
   }

@@ -57,7 +57,6 @@ export class ForgetPasswordComponent {
     }
   }
   async onReset() {
-    // console.log(this.resetPasswordForm.value)
 
     // try {
     const body = {
@@ -69,7 +68,6 @@ export class ForgetPasswordComponent {
 
     this.fetchDataService.HTTPPOST(this.backendUrls.URLs.updatePasswordUrl, body).subscribe(
       (data: any) => {
-        console.log(data, "update data");
         const toastData = {
           title: data.message,
         }

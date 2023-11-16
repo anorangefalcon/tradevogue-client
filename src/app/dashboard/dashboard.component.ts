@@ -52,10 +52,10 @@ export class DashboardComponent {
   ngOnInit() {
     window.addEventListener("resize", () => {
       let check = window.matchMedia("(max-width: 992px)");
-      // console.log(check.matches);
+  
       if (check.matches) {
         this.isCollapse = true;
-        console.log(this.isCollapse);
+    
         return;
       }
       this.isCollapse = false;

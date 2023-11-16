@@ -25,19 +25,15 @@ export class NotificationsComponent {
   constructor(private fb: FormBuilder, private notificationService: NotificationService, private uploadService: ImageUploadService, private fetch: FetchDataService, private util : UtilsModule, private http: HttpClient) {
 
     this.notificationService.getRegistrationIDs().subscribe((res)=> {
-      console.log(res, "res is")
       this.registrationIds = res;
-      console.log(this.registrationIds)
     })
 
     this.fetch.HTTPGET(this.util.URLs.getFcmToken).subscribe((res)=> {
       this.fcmTokens= res;
-      console.log(res, "fcmTokens");
     })
 
 
     this.notificationService.getNotifications().subscribe((res)=> {
-      console.log(res, "res is")
       this.tableData = res;
     })
 
@@ -59,14 +55,12 @@ export class NotificationsComponent {
     this.selectedItem = key;
     if(this.selectedItem) {
       const id = this.selectedItem._id;
-      console.log(id);
 
       const body = {
         _id: id
       }
 
       this.fetch.HTTPPOST(this.util.URLs.deleteSales, body).subscribe((data=> {
-        console.log("delete data is ", data);
       }))
       
     }
@@ -77,15 +71,12 @@ export class NotificationsComponent {
     if (this.selectedItem) {
       const id = this.selectedItem._id;
       const state = !this.selectedItem.state;
-      console.log("id is ", id , "enable is ", state)
+      
       const body = {
         id , state
       }
 
-      console.log(body , "toggle body")
-
       this.fetch.HTTPPOST(this.util.URLs.toggleNotification , body).subscribe((res)=> {
-        console.log(res , "notifications is ")
       })
 
     }
@@ -95,7 +86,7 @@ export class NotificationsComponent {
     this.selectedItem = item;
     this.itemId = item._id;
     this.editingIndex = index;
-    console.log(item, "index is ");
+
   
     const notificationArray = this.notificationForm.get('notification') as FormArray;
     notificationArray.clear();
@@ -147,7 +138,6 @@ export class NotificationsComponent {
   }
 
   sendNotification(item: any) {
-    console.log(item);
       const data = {
         title: item.notification.title,
         body: item.notification.body,
@@ -156,13 +146,12 @@ export class NotificationsComponent {
         registration_ids: this.fcmTokens
       };
 
-      console.log(data, "data is ")
+
 
       const apiUrl = 'http://localhost:3000/send-notification';
 
       this.http.post(apiUrl, data).subscribe(
         (response:  any) => {
-          console.log('Notification sent successfully:', response);
           // Reset the form and close the popup
           this.notificationForm.reset();
           // this.selectedTicket = {};
@@ -177,26 +166,21 @@ export class NotificationsComponent {
   onUpdate() {
     if (this.notificationForm.dirty) { 
       if (this.editingIndex !== undefined) {
-        console.log("done is done")
+
         const body = {
           index: this.editingIndex,
           id: this.itemId,
           data: this.notificationForm.value
         }
 
-        console.log(body , "updated data ")
-
         this.fetch.HTTPPOST(this.util.URLs.updateNotification , body).subscribe((res)=> {
-          console.log(res , "updated sales is ")
         })
         
       } else {
         this.notificationService.setNotifications(this.notificationForm.value).subscribe((data) => {
-          console.log(data, "subscribed data - New Item added");
         });
       }
     } else {
-      console.log('No changes to update.');
     }
   }
 
@@ -216,7 +200,6 @@ export class NotificationsComponent {
 
     this.uploadService.fileupload([{ file: file }]).then((url: any) => {
       this.notificationForm.get('notification')?.get(String(formIndex))?.get('icon')?.setValue(url[0]);
-      console.log(this.notificationForm);
       this.getImagePreview(formIndex);
     })
   }

@@ -47,7 +47,6 @@ export class TicketsComponent {
 
   loadData() {
     this.fetchDataService.HTTPGET(this.utils.URLs.getAllTicket).subscribe((data)=> {
-      console.log(data, "data is ")
       this.processTicketData(data);
     })
   }
@@ -67,7 +66,6 @@ export class TicketsComponent {
       userToken: this.findUserToken(item.userEmail),
     }));
 
-    console.log(this.ticketData, "TICKET DATA")
 
 
     this.uniqueStatusValues = this.extractUniqueStatusValues(this.ticketData);
@@ -77,13 +75,11 @@ export class TicketsComponent {
   findUserToken(userEmail: string): string | undefined {
     
     for (const item of this.ticketData) {
-      console.log(item, "item is")
       if (item.notificationDetails) {
         for (const notification of item.notificationDetails) {
           const user = notification.tokenDetail.find((user: any) => user.email === userEmail);
           if (user) {
             const userToken = user.token;
-            console.log(`Found token for email ${userEmail}: ${userToken}`);
             return userToken;
           }
         }
@@ -104,7 +100,6 @@ export class TicketsComponent {
   }
 
   showItemDetails(item: any) {
-    console.log(item)
     this.selectedItem = item;
     this.ticketTypeId = item._id;
     this.popupService.openPopup();
@@ -116,7 +111,6 @@ export class TicketsComponent {
     this.editItem = true;
     this.ticketTypeId = item._id;
     this.token = this.findUserToken(item.userEmail);
-    console.log(item.userEmail, "token is", this.token)
   }
 
 
@@ -135,7 +129,6 @@ export class TicketsComponent {
 
     const request1 = this.fetchDataService.HTTPPOST(url1, body);
     const request2 = this.fetchDataService.HTTPPOST(url2, body).subscribe((res=> {
-      console.log(res , "res is========> ")
     }));
 
     // Use forkJoin to send the requests in parallel
@@ -175,7 +168,6 @@ export class TicketsComponent {
 
       this.http.post(apiUrl, data).subscribe(
         (response) => {
-          console.log('Notification sent successfully:', response);
           // Reset the form and close the popup
           this.notificationForm.reset();
           this.selectedTicket = {};
@@ -193,8 +185,6 @@ export class TicketsComponent {
       _id: this.ticketTypeId,
       newTitle: this.updatedItem
     }
-
-    console.log(body);
 
     this.fetchDataService.HTTPPOST(this.utils.URLs.addTicketTitle, body)
       .subscribe((response: any) => {

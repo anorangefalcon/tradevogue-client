@@ -57,9 +57,7 @@ export class ExploreComponent {
               el.wishlisted=true;
             } 
           })
-        })
-        console.log(data, "init data");
-        
+        })     
         this.products = data.items;      
         this.totalProducts = data.total;
         this.loading = false;
@@ -106,7 +104,6 @@ export class ExploreComponent {
       if(event){
       this.filterApplied[field] = event[0]}
     }
-    console.log(this.filterApplied, "when setting params");
     
     this.setParams()
   }
@@ -121,9 +118,7 @@ export class ExploreComponent {
     }
   }
 
-  onChecked(event: any, field: string) {
-    console.log(event, field, "gender aaya?");
-    
+  onChecked(event: any, field: string) { 
     const value = field === 'price' ? Number(event.target.value) : event.target.value;
     if (event.target.checked) {
       if (this.filterApplied.hasOwnProperty(field)) {
@@ -205,9 +200,7 @@ export class ExploreComponent {
     let param = new HttpParams();
     this.loading = true;
     (Object.keys(this.filterApplied)).forEach(key => {
-
-      console.log(this.filterApplied, "plis");
-      
+   
       if (Array.isArray(this.filterApplied[key])) {
         this.filterApplied[key].forEach((element: any) => {
           param = param.append(key, element);
@@ -223,9 +216,6 @@ export class ExploreComponent {
     this.location.replaceState(finalURL);
 
     let actualParams = (Object.keys(this.filterApplied).length > 0) ? this.filterApplied : JSON.parse(JSON.stringify(this.filterApplied));
-    console.log(actualParams, "actual params???");
-    
-
     this.fetchData.getProducts(actualParams, this.limit, this.pageNumber).subscribe((data: any) => {
       this.products = data.items
       this.loading = false;

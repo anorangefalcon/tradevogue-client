@@ -42,15 +42,12 @@ export class CustomiseBannerComponent {
 
   ngOnInit() {
     this.bannerService.getBanners().subscribe((data: any) => {
-      console.log(data, "banners data");
       this.bannerData = data;
     }
     )
   }
 
-  isChecked() {
-    console.log(this.checked, "chcked");
-    
+  isChecked() {  
     if (this.checked == true) {
       this.bannerForm.get('title')?.disable()
       this.bannerForm.get('subTitle')?.disable()
@@ -95,13 +92,10 @@ export class CustomiseBannerComponent {
     (this.bannerForm.get('banner') as FormArray).removeAt(index);
   }
 
-  onSave() {
-    console.log(this.bannerForm.value, "valueeee");
-    console.log(this.editValue, "edit value");
-    
+  onSave() {    
     if (!this.editValue) {
       this.bannerService.setBanners(this.bannerForm.value).subscribe((data: any) => {
-        console.log(data, "subscribed data");
+  
         const toast = {
           title: data.message
         }
@@ -116,10 +110,8 @@ export class CustomiseBannerComponent {
         id : this.editValue._id,
         data : this.bannerForm.value
       }
-      console.log(body, "update body");
       
       this.bannerService.updateBanner(body).subscribe((res : any)=>{
-        console.log(res, "update response");
         const toast = {
           title : res.message
         }
@@ -138,14 +130,12 @@ export class CustomiseBannerComponent {
   }
 
   bannerImageUpload(event: any) {
-    console.log('formindex is --------> ');
+   
 
     let file: any = (<HTMLInputElement>event.target)?.files![0];
 
     this.uploadService.fileupload([{ file: file }]).then((url: any) => {
-      console.log(url);
       this.bannerForm.get('backgroundImage')?.setValue(url[0]);
-      console.log(this.bannerForm);
       this.getImagePreview();
     })
   }
@@ -166,7 +156,6 @@ export class CustomiseBannerComponent {
   delete(id: any) {
     const data = { id }
     this.bannerService.deleteBanner(data).subscribe((res: any) => {
-      console.log(res, "del res");
       const toast = {
         title: res.message
       }
@@ -177,23 +166,18 @@ export class CustomiseBannerComponent {
 
   toggleBanner(id : any, event: any){
     let val =  (<HTMLInputElement>event.target).checked
-    console.log(id, "id to be toggled", (<HTMLInputElement>event.target).checked, "event");
     const data = {
       id, active : val
     }
-    console.log(data, "bodyyy");
     
     this.bannerService.toggleBanner(data).subscribe((res: any)=>{
-      console.log(res);
       this.ngOnInit()
     })
   }
 
   edit(index: any) {
     const value = this.bannerData[index]
-    console.log("baner value", value);
-    console.log(value.title, "value.title");
-
+  
     if (value.title) {
       this.bannerForm.patchValue({
         backgroundImage: value.backgroundImage,

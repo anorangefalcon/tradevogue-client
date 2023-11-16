@@ -33,7 +33,6 @@ export class OrderPageComponent {
    let params: HttpParams = new HttpParams().set("orderID", this.orderId);
     this.fetchDataService.HTTPGET(this.backendUrl.URLs.getSellerOrderDetails, params).subscribe({
       next: (data: any)=>{
-        console.log(data);
         this.orderInfo = data;
 
         let totalQty = 0;

@@ -32,6 +32,5 @@ export class FaqPageComponent implements OnInit {
 
   toggleChild(child: any): void {
     child.expanded = !child.expanded;
-    console.log("child is ", child.expanded);
   }
 }

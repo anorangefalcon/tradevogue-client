@@ -10,8 +10,6 @@ const messaging = firebase.messaging();
 self.addEventListener('push', (event) => {
   if (event.data) {
     const payload = event.data.json();
-    console.log('Push event received with payload:', payload);
-
     // const url = payload.data['gcm.notification.url']; // Move this line inside the if block
 
     const options = {

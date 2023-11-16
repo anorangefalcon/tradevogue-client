@@ -25,12 +25,10 @@ export class NotificationComponent implements OnInit {
 
   ngOnInit(): void {
     this.notification.notificationOptions$.subscribe((options) => {
-      console.log(options, "Notification Options");
     });
 
     this.fetchService.HTTPGET(this.util.URLs.comingNotification)
       .subscribe((res: any) => {
-        console.log(res, "Notifications from Server");
         this.notifications = res;
       });
   }
@@ -77,11 +75,9 @@ export class NotificationComponent implements OnInit {
         text: notification.notification.body,
         url: notification.notification.url
       })
-        .then(() => console.log('Shared successfully'))
         .catch((error) => console.error('Error sharing:', error));
     } else {
       // Fallback for browsers that do not support Web Share API
-      console.log('Web Share API not supported');
     }
   }
 }

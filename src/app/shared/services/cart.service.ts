@@ -147,7 +147,6 @@ export class CartService {
 
     if (this.user) {
       this.http.post(this.backendUrls.URLs.removeItemFromCart, { itemId: identifier }).subscribe((message: any) => {
-        console.log(message);
         // this.ItemDeleted=true;
         this.fetchDetails();
       });
@@ -157,7 +156,6 @@ export class CartService {
 
       if (localStorageData) {
         this.cartStorage = JSON.parse(localStorageData);
-        console.log(identifier, this.cartStorage);
 
         this.cartStorage.splice(identifier, 1);
       }
@@ -202,7 +200,6 @@ export class CartService {
     if (!which) {
       if (this.user) {
         this.http.get(this.backendUrls.URLs.clearCart).subscribe((message: any) => {
-          console.log(message);
         });
       }
     }

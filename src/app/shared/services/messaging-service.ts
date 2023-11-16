@@ -16,7 +16,6 @@ export class MessagingService {
         Notification.requestPermission()
           .then(() => getToken(messaging))
           .then(token => {
-            console.log('Token:', token);
             // Do something with the token, e.g., update it in the database
           })
           .catch(error => {
@@ -27,7 +26,6 @@ export class MessagingService {
     
         // Listen for messages
         onMessage(messaging, (payload) => {
-          console.log('Message received:', payload);
           // Handle incoming messages
         });
       }

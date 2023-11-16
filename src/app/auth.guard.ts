@@ -5,7 +5,6 @@ import { UtilsModule } from './utils/utils.module';
 import { lastValueFrom } from 'rxjs';
 
 export const authGuard: CanActivateFn = async (route, state) => {
-  console.log("HEllo");
   return true;
   const currentRoutes = state.url.split('/')[1];
   // const service = inject(userService);

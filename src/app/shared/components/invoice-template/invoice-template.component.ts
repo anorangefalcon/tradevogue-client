@@ -17,7 +17,6 @@ export class InvoiceTemplateComponent {
   @ViewChild('invoicePage') content!: ElementRef;
   
   ngOnInit(){
-    console.log("HELLO", this.orderInfo);
   }
 
   printInvoice(){

@@ -54,7 +54,6 @@ export class StatisticsComponent implements OnInit {
 
   fetchSalesProfitStats() {
     this.fetchdata.HTTPGET(this.backendUrl.URLs.fetchSalesStats).subscribe((res: any) => {
-      console.log(res);
       this.salesDataUpdate(res);
       // this.revenue = 0;
       // res.salesStats.forEach((sale: any)=>{
@@ -100,7 +99,6 @@ export class StatisticsComponent implements OnInit {
     const date = new Date();
     let year = date.getFullYear();
 
-    console.log("sales Data", data);
     data.forEach((saleData: any) => {
       if (saleData._id.year = year) {
         date.setMonth(saleData._id.month - 1);
@@ -117,7 +115,6 @@ export class StatisticsComponent implements OnInit {
 
   fetchData() {
     this.fetchdata.HTTPGET(this.backendUrl.URLs.fetchOverallData).subscribe((data: any) => {
-      console.log("Data", data);
 
       this.inventoryAlert = data.alertCount;
 

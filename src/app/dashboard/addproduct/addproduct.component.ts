@@ -85,7 +85,6 @@ export class AddproductComponent {
     private activeRoute: ActivatedRoute,
     private router: Router) {
 
-    // console.log('ADDPRDOUCT CALLEC-------->');
 
     this.productsForm = this.fb.group({
 
@@ -359,14 +358,13 @@ export class AddproductComponent {
 
     // Reading Files using File Reader and displaying visual Data to user
     this.fileReader(file, formControl?.value).then((res) => {
-      console.log(res);
+   
 
       formControl?.patchValue(res);
       let productImages = formControl?.value;
 
       // Handling Image Exceeding the Length Limit of 6
       if (formControl?.hasError('maxlength')) {
-        console.log("inside maxlength");
         productImages = productImages.slice(0, 6);
         formControl?.patchValue(productImages);
 
@@ -419,7 +417,7 @@ export class AddproductComponent {
       return;
     }
     this.upload.delete(productImages[imageIndex]).subscribe((res) => {
-      console.log(res);
+     
     })
   }
 
@@ -431,7 +429,6 @@ export class AddproductComponent {
   updateColor(e: Event, index: number) {
     const color = (<HTMLInputElement>e.target).value;
     if ((this.common_colors.filter((clr: any) => clr == color)).length == 0){
-      console.log(color)
       this.new_colors[0] = color;
     }
   }
@@ -476,7 +473,6 @@ export class AddproductComponent {
       }
 
       let url = !this.isUpdateRequest ? this.backendUrl.URLs.addproduct : this.backendUrl.URLs.updateproduct;
-      console.log(url);
       this.dataService.HTTPPOST(url, formData).subscribe((res: any) => {
         //Success Message
         this.data_template.title = 'Product Uploaded';

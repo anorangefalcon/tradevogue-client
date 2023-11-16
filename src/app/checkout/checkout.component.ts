@@ -263,7 +263,6 @@ async ApplyCoupon(coupon: any = '', event: any = '') {
     }
 
     // response of payment here 
-    console.log("proceed to payment called")
 
     const paymentButton = document.getElementById('submit') as HTMLButtonElement;
     const razorpayButton = document.getElementById('razorSubmit') as HTMLButtonElement;
@@ -277,13 +276,9 @@ async ApplyCoupon(coupon: any = '', event: any = '') {
 
 
     this.billingService.PaymentResponse$.subscribe((data) => {
-      console.log('data coming is ', data);
 
     })
-
-    console.log(this.billingService.Address);
     this.cartService.fetchCart().subscribe((data) => {
-      console.log('data coming is davin ', data);
       let body: any = {};
       if (this.CouponApplied) {
         body.coupon = this.CouponApplied;
@@ -295,11 +290,8 @@ async ApplyCoupon(coupon: any = '', event: any = '') {
 
 
       this.fetchService.HTTPPOST(this.BackendUrl.URLs.createOrder, body).subscribe((data: any) => {
-        console.log('daa coming is ', data);
       });
     })
-
-    console.log("its working")
 
     // const paymentButton = document.getElementById('submit') as HTMLButtonElement;
     //   if (paymentButton) {

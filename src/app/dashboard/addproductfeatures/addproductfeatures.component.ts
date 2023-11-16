@@ -66,10 +66,9 @@ export class AddproductfeaturesComponent {
   async ngOnInit() {
 
     this.DialogBoxService.responseEmitter.subscribe(async (res) => {
-      console.log("Inside Subscrive")
+
       if (res == true) {
         this.field_data[this.deleteObject.field].splice(this.deleteObject.index, 1);
-        console.log("After Delete: ", this.field_data[this.deleteObject.field]);
 
         const data = {
           'field': this.deleteObject.field,
@@ -96,14 +95,10 @@ export class AddproductfeaturesComponent {
   uploadFile(event: Event, field: string) {
     const fieldList = field.toLowerCase() + 'List';
     const dataObserver = this.uploadExcel.handleFileInput(event, field);
-    console.log(field);
-    console.log("File");
-
+   
     dataObserver.then((resolve) => {
-      console.log('data + errors', resolve);
-
+     
       let items = resolve['data'];
-      console.log(items, 'data', fieldList);
 
       items.forEach((item: any) => {
         if (!this.dataList[fieldList].includes(item))
@@ -113,7 +108,6 @@ export class AddproductfeaturesComponent {
   }
 
   deleteItem(field: string, index: number) {
-    console.log('deleted called');
     this.deleteObject.field = field;
     this.deleteObject.index = index;
     this.DialogBoxService.confirmationDialogBox();
@@ -138,7 +132,7 @@ export class AddproductfeaturesComponent {
         });
       }
     } catch (err) {
-      console.log(err);
+  
     }
   }
 }

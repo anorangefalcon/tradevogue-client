@@ -34,7 +34,6 @@ export class HelpPageComponent {
 
   async onSubmit() {
     if (this.contactForm.valid) {
-      console.log('Submitted Data:', this.contactForm.value);
         try {
           const body = {
             email: this.contactForm.get('email')?.value,
@@ -42,26 +41,20 @@ export class HelpPageComponent {
             message: this.contactForm.get('message')?.value,
           }
      this.fetchDataService.HTTPPOST(this.utils.URLs.ticketMail, body).subscribe((res => {
-      console.log(res , "response send ")
      }))
         }
         catch (error) {
-          console.log("Error in sending Subscribe Mail", error);
         }
 
       this.fetchDataService.HTTPPOST(this.utils.URLs.saveTicket, this.contactForm.value)
         .subscribe((response: any) => {
-          if (response) {
-            console.log('Ticket added successfullsy.');
-          } else {
-            console.log('Error adding ticket.');
-          }
+        
         })
        
 
         this.fetchDataService.HTTPPOST(this.utils.URLs.webPushTokenDetail, {token: this.cookie.get('fcmToken'), email: this.contactForm.get('email')?.value}).subscribe((response: any) => {
           if (response) {
-            console.log('Token added successfully.');
+
           }
         });
         
@@ -69,7 +62,6 @@ export class HelpPageComponent {
       this.contactForm.reset();
 
     } else {
-      console.log('Form is not valid. Please check the fields.');
     }
   }
 

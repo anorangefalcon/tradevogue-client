@@ -90,7 +90,6 @@ export class OrdersComponent {
   fetchOrders(){
     this.fetchData.HTTPPOST(this.backendUrl.URLs.getSellerOrders, this.template).subscribe({
       next: (data: any)=>{
-        console.log(data);
         if(!data.length){
           this.orderData = [0]
           return;
@@ -127,7 +126,6 @@ export class OrdersComponent {
     }else{
       this.dialogTemplate.title = 'Want to make Invoice Unavailable?';
     }
-    console.log("hello");
     this.dialogService.confirmationDialogBox(this.dialogTemplate);
     this.updateIndex = index;
   }
@@ -146,7 +144,6 @@ export class OrdersComponent {
   updateDateFields(e: Event, field: string){
     
     this.template.filter[field] = (<HTMLInputElement>e.target).value;
-    console.log(this.template);
     this.fetchOrders();
   }
 

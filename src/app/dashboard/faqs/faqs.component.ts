@@ -75,7 +75,7 @@ export class FaqsComponent {
   }
 
   updateFormFields(event: any) {
-    console.log(event)
+  
   }
   
 
@@ -102,11 +102,8 @@ export class FaqsComponent {
         } else {
           this.toast.errorToast({ title: "FAQ not added" });
         }
-        console.log("data", data);
         this.loadData();
       });
-
-      console.log(selectedCategoryId, query, content);
       this.faqForm.reset();
     }
   }
@@ -129,14 +126,11 @@ export class FaqsComponent {
   async updateDetails() {
     if (this.selectedItem) {
       const updatedItem = { ...this.selectedItem };
-      console.log("updated items ", updatedItem)
-
+     
       updatedItem.query = this.faqForm.get('query')?.value;
       updatedItem.content = this.faqForm.get('content')?.value;
 
       const itemIndex = this.selectedCategory.childrens.findIndex((child: any) => child._id === updatedItem._id);
-
-      console.log(itemIndex, "item is ")
 
       if (itemIndex !== -1) {
         this.selectedCategory.childrens[itemIndex] = updatedItem;
@@ -149,20 +143,15 @@ export class FaqsComponent {
         expanded: updatedItem.expanded,
       };
 
-      console.log(updatedFaqItem, "updated item ");
-
       try {
         const data: any = await this.fetchDataService.HTTPPOST(this.bgURL.URLs.updateFaqData, updatedFaqItem).subscribe((res)=> {
-          console.log(res)
         });
         if (data) {
           this.toast.successToast({ title: "FAQ updated successfully" });
         } else {
           this.toast.errorToast({ title: "FAQ not updated" });
         }
-        console.log("Item updated successfully.", data);
       } catch (error) {
-        console.error("Error updating item:", error);
       }
     }
   }

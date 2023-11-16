@@ -34,36 +34,8 @@ export class SellerFetchDataService {
   
 
   sendSellerInfo(data: any){
-    this.http.post(this.backendUrl.URLs.updateAccount, {'data': data}).subscribe({
-      next: (data) => {
-        console.log('DATA INSIDE');
-        console.log(data);
-      },
-      error: (err) => {
-        console.log('ERROR INSIDE');
-        console.log(err);
-      },
-      complete: () => {
-        console.log('COMPLETE INSIDE');
-      }
-    });
+    this.http.post(this.backendUrl.URLs.updateAccount, {'data': data}).subscribe();
   }
-
-  // sendPinInfo(data: any){
-  //   this.http.post('http://localhost:4000/api/purchaser/sendPinInfo', {data}).subscribe({
-  //     next: (data) => {
-  //       console.log('DATA PIN INSIDE');
-  //       console.log(data);
-  //     },
-  //     error: (err) => {
-  //       console.log('ERROR PIN INSIDE');
-  //       console.log(err);
-  //     },
-  //     complete: () => {
-  //       console.log('COMPLETE PIN INSIDE');
-  //     }
-  //   });
-  // }
 
   sendPinInfo(data: any): Observable<any> {
     const httpOptions = {

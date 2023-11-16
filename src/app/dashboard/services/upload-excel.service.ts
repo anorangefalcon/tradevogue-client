@@ -272,7 +272,6 @@ constructor(private uploadExcelService: UploadExcelService) { }
   fileUpload(event: any) {
     const errors = this.uploadExcelService.handleFileInput(event);
     errors.then((data: any) => {
-      console.log("data-> ", data);
     });
   }
 
@@ -280,7 +279,6 @@ constructor(private uploadExcelService: UploadExcelService) { }
   fileUpload(event: any) {
     const errors = this.uploadExcelService.handleFileInput(event, 'brand');
     errors.then((data: any) => {
-      console.log("data-> ", data);
     });
   }
 

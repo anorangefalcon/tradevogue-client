@@ -75,7 +75,6 @@ export class NavbarComponent implements OnInit {
     }
 
     this.fetchDataService.HTTPPOST(this.BackendEndUrl.URLs.uniqueProductFields, body).subscribe((data: any) => {
-      // console.log(data, "navbar data");
     })
 
   }

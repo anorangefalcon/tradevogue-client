@@ -29,6 +29,7 @@ export class LoginComponent {
   loading : boolean = false;
 
   constructor(private fb: FormBuilder,private loginService:LoginCheckService, private wishlistService:WishlistService, private cookies: CookieService, private router: Router, private userData: UserDataService, private route: ActivatedRoute, private backendUrls: UtilsModule, private fetchDataService: FetchDataService, private renderer: Renderer2) {
+   
     this.loginForm = fb.group(
       {
         email: fb.control('', [Validators.required, Validators.email]),
@@ -66,7 +67,7 @@ export class LoginComponent {
     this.loading=false;
   }
 
-  async onLogin() {
+  onLogin() {
     this.loading = true;
     const body = {
       email: this.loginForm.get('email')?.value,
@@ -81,7 +82,6 @@ export class LoginComponent {
       }
       this.fetchDataService.HTTPPOST(this.backendUrls.URLs.forgetPasswordUrl, body).subscribe(
         (data: any) => {
-          console.log(data, "forget password data");
           this.isactive = true;
         }
       )

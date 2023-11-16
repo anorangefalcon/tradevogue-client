@@ -208,7 +208,6 @@ export class ProductPageComponent implements OnInit {
 
   deleteReview() {
     this.reviewService.deleteReview(this.data._id).subscribe((data: any) => {
-      console.log(data.message);
       this.userReview = '';
       this.fetchProductData();
       this.toastService.notificationToast({

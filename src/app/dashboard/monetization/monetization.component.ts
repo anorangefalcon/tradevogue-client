@@ -96,17 +96,16 @@ export class MonetizationComponent {
       }
 
       this.fetch.HTTPPOST(this.util.URLs.updatePaymentKeys, body).subscribe((response: any) => {
-        console.log('Keys updated successfully:', response);
+      
       }
         , (error: any) => {
-          console.error('Error updating keys:', error);
+         
         });
     }
 
   }
 
   onUpdate() {
-    // console.log(this.selectedItem)
     if (this.selectedItem && this.stripeKeysForm) {
       const publicKey = this.stripeKeysForm.get('publicKey')?.value;
       const privateKey = this.stripeKeysForm.get('privateKey')?.value;
@@ -119,7 +118,6 @@ export class MonetizationComponent {
 
       this.fetch.HTTPPOST(this.util.URLs.updatePaymentKeys, body)
         .subscribe((response: any) => {
-          console.log('Keys updated successfully:', response);
         })
 
       if (publicKey !== null && privateKey !== null && enable !== null) {
@@ -147,7 +145,6 @@ export class MonetizationComponent {
 
       this.fetch.HTTPPOST(this.util.URLs.deletePaymentKeys, body)
         .subscribe((response: any) => {
-          console.log('Keys deleted successfully:', response);
         })
 
     }
@@ -168,11 +165,9 @@ export class MonetizationComponent {
         }
 
         this.fetch.HTTPPOST(this.util.URLs.addPaymentKeys, body).subscribe((response: any) => {
-          console.log('Stripe Keys added successfully:', response);
         });
       });
     } else if (this.razorpayKeysForm.valid) {
-      console.log('Razorpay form is valid.');
       const razorKeys = this.razorpayKeysForm.value;
       this.loginCheckService.getUser('token').subscribe((data: any) => {
         const tokenSegments = data.split('.');
@@ -183,10 +178,7 @@ export class MonetizationComponent {
           "rzpPrivateKey": razorKeys.rzpPrivateKey,
           "adminId": adminId,
         };
-
-        console.log('Razorpay body:', razorpayBody);
         this.fetch.HTTPPOST(this.util.URLs.addPaymentKeys, razorpayBody).subscribe((response: any) => {
-          console.log('Razorpay Keys added successfully:', response);
         });
       })
     }

@@ -78,7 +78,6 @@ export class ProductsFilterService {
 
   async Filter(filteredObject: any, OriginalArray: any) {
     
-    // console.log("porgiala array i s ",OriginalArray)
     this.removeEmptyKeys(filteredObject);
 
     

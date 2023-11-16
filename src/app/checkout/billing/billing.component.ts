@@ -82,7 +82,6 @@ export class BillingComponent implements OnInit {
           console.error("Payment form not found");
         }
       } else {
-        console.log("No Public keys found");
       }
     } catch (error) {
       console.error('Error occurred:', error);
@@ -114,8 +113,7 @@ export class BillingComponent implements OnInit {
           image: 'https://dummyimage.com/600x400/000/fff',
           order_id: res.order_id,
           handler: (response: any) => {
-            console.log(response.razorpay_payment_id);
-
+        
             const paymentBody: any = {
               buyerId: this.cookie.get('userToken'),
               newPaymentStatus: 'success',
@@ -123,9 +121,7 @@ export class BillingComponent implements OnInit {
               MOP: 'razorpay',
             };
       
-            this.fetchDataService.HTTPPOST(this.backendURLs.URLs.updateOrderStatus, paymentBody).subscribe((data: any) => {
-              console.log('status updated ', data);
-            });
+            this.fetchDataService.HTTPPOST(this.backendURLs.URLs.updateOrderStatus, paymentBody).subscribe((data: any) => {});
 
             alert('Payment Succeeded');
           },
@@ -177,7 +173,6 @@ export class BillingComponent implements OnInit {
           console.error("Payment form not found");
         }
       } else {
-        console.log("No Public keys found");
       }
     } catch (error) {
       console.error('Error loading Stripe scripts:', error);
@@ -186,7 +181,7 @@ export class BillingComponent implements OnInit {
     this.route.queryParams.subscribe(params => {
       const redirectStatus = params['redirect_status'];
       if (redirectStatus === 'succeeded') {
-        console.log('Success from vivek');
+      
       }
     });
   }
@@ -200,7 +195,6 @@ export class BillingComponent implements OnInit {
     });
   
     const { clientSecret } = await response.json();
-    console.log("Client Secret:", clientSecret);
   
     const appearance = {
       theme: 'stripe',
@@ -251,7 +245,7 @@ export class BillingComponent implements OnInit {
   
       this.stripePay.setLoading(false);
     } catch (error) {
-      console.log("error is ", error);
+
     }
   }  
 
@@ -279,14 +273,12 @@ export class BillingComponent implements OnInit {
 
     this.cartService.fetchCart().subscribe((data) => {
       this.cartitems = data;
-      console.log("cart items are: ", this.cartitems)
     });
 
     const checkSubTotal = () => {
       if (this.cartitems.amounts.subTotal !== 0) {
         this.total = this.totalAmount;
         this.quantity = this.cartitems.details.map((item: { Quantity: any; }) => item.Quantity);
-        console.log("Total:", this.total, "Quantity:", this.quantity);
 
         this.item = [
           {
@@ -320,14 +312,12 @@ export class BillingComponent implements OnInit {
   }
 
   add_data(el: any) {
-    console.log("el is ", el);
     this.visible_data.push(el);
     this.not_visible_data = this.not_visible_data.filter((e) => { return el != e })
 
   }
 
   clicked() {
-    console.log("my div is ", this.my_div);
     this.my_div?.nativeElement.classList.toggle('display_none');
   }
 

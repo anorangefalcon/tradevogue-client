@@ -79,7 +79,6 @@ export class WishlistService {
     }
     this.fetchDataService.HTTPPOST(this.utils.URLs.addToWishlist, body).subscribe((response: any) => {
       if (!response) return;
-      console.log(response, "add response");
       const toast = {
         title : response.message
       }
@@ -95,7 +94,6 @@ removeFromWishlist(productId: any, wishlistName: string='') {
     if(wishlistName) delProduct.wishlistName=wishlistName;
     return this.fetchDataService.HTTPPOST(this.backendUrls.URLs.deleteFromWishlist, delProduct);
     let delData = this.fetchDataService.HTTPPOST(this.backendUrls.URLs.deleteFromWishlist, delProduct).subscribe((data: any) => {
-      console.log(data, "deleted is ");
 
       if (data.modifiedCount) {
         this.deleteProduct.next(true);

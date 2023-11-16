@@ -40,8 +40,6 @@ export class SupportComponent {
           this.products = data.latestProduct.products;
           this.orderDetails = data.latestProduct;
           this.loadingProducts = false;
-          console.log(this.products, "products")
-          console.log(this.orderDetails, "order details");
           }); 
         this.showOrder = true;
       });
@@ -98,7 +96,6 @@ checkKeywords(message: string): string {
 
   showProductDetails(product: any) {
     this.selectedProduct = product;
-    console.log('Clicked Product:', this.selectedProduct);
   }
 
   showProductDetail(order: any, product: any) {
@@ -118,10 +115,9 @@ checkKeywords(message: string): string {
   onConfirmation(confirmed: boolean) {
     if (confirmed) {
       // Logic for confirmed order
-      console.log('Order confirmed');
     } else {
       // Logic for something else
-      console.log('User wants something else');
+
     }
   }
 
@@ -178,7 +174,6 @@ checkKeywords(message: string): string {
   loadPreviousOrders() {
     this.fetchData.HTTPGET(this.util.URLs.getParticularUserOrders).subscribe((data:any)=>{
       this.previousOrders=data; 
-      console.log(this.previousOrders, "previous orders")  
   });  
     return this.previousOrders;
   }

@@ -46,7 +46,6 @@ export class HomeComponent {
        this.fetchDataService.HTTPPOST(this.backendUrls.URLs.subscribeMail, body)
     }
     catch (error) {
-      console.log("Error in sending Subscribe Mail", error);
     }
   }
 

@@ -60,7 +60,6 @@ export class CheckoutService {
       const publicKey = data[0]?.keys[0]?.publicKey;
 
       this.stripe = Stripe(publicKey);
-      console.log("response is public key ", publicKey);
 
       const clientSecret = new URLSearchParams(window.location.search).get("payment_intent_client_secret");
       if (!clientSecret) return;
@@ -79,16 +78,12 @@ export class CheckoutService {
       case "succeeded":
         await this.updateOrderStatus(paymentIntent);
         await this.sendInvoiceData(paymentIntent);
-        console.log("Payment succeeded. Payment Intent Status:", paymentIntent);
         break;
       case "processing":
-        console.log("Payment is processing. Payment Intent Status:", paymentIntent.status);
         break;
       case "requires_payment_method":
-        console.log("Payment requires a valid payment method. Payment Intent Status:", paymentIntent.status);
         break;
       default:
-        console.log("An unexpected error occurred. Payment Intent Status:", paymentIntent.status);
         break;
     }
   }
@@ -102,7 +97,7 @@ export class CheckoutService {
     };
 
     await this.fetchData.HTTPPOST(this.backendUri.URLs.updateOrderStatus, body)
-      .subscribe((data: any) => console.log('status updated ', data));
+      .subscribe();
   }
 
   private async sendInvoiceData(paymentIntent: any) {
@@ -115,11 +110,5 @@ export class CheckoutService {
       if (response.ok) return response.json();
       throw new Error('Network response was not ok.');
     })
-    .then(data => {
-      console.log("Invoice data sent:", data);
-    })
-    .catch(error => {
-      console.error("Error sending invoice data:", error);
-    });
   }
 }

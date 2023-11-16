@@ -67,7 +67,6 @@ export class SettingsComponent {
     this.route.queryParams.subscribe(params => {
       const redirectStatus = params['redirect_status'];
       if (redirectStatus === 'succeeded') {
-        console.log("yes succeed")
         this.stripePay.checkOrderStatus()
       }
     });
@@ -94,8 +93,6 @@ export class SettingsComponent {
     })
 
     this.route.paramMap.subscribe((params: any) => {
-      console.log('params.page is ', params, " page is ", params.get('page'));
-
       this.changeComponent(params.get('page'));
 
     });
@@ -145,7 +142,6 @@ export class SettingsComponent {
   showWishlists() {
     this.fetchDataService.HTTPGET(this.backendURLs.URLs.showWishlist).subscribe((data: any) => {
       this.productsArray = data.wishlists;
-      console.log(this.productsArray, "wishlists");
     })
   }
 
@@ -175,7 +171,6 @@ export class SettingsComponent {
 
   removeFromWishlist(productId: any, wishlistName: string) {
     this.wishlistService.removeFromWishlist(productId, wishlistName).subscribe((res: any)=>{
-      console.log(res, "del res"); 
 
       if (res.response.modifiedCount) {
         // this.deleteProduct.next(true);
@@ -297,7 +292,6 @@ export class SettingsComponent {
       this.TranslateData=true;
     },300)
      this.fetchDataService.HTTPGET(this.backendURLs.URLs.getParticularUserOrders).subscribe((data:any)=>{
-      console.log('allOrders is ',this.AllOrders);
       
         this.AllOrders=data;   
     });      
