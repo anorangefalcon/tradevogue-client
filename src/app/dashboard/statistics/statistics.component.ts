@@ -105,7 +105,7 @@ export class StatisticsComponent implements OnInit {
         this.SPLabel.push(date.toDateString().split(' ')[1]);
         this.salesData.push(saleData.totalSales);
         this.profitData.push(saleData.totalProfit);
-        // this.salesData[saleData._id.month - 1] = saleData.totalSales;
+        // this.sales Data[saleData._id.month - 1] = saleData.totalSales;
         // this.profitData[saleData._id.month - 1] = saleData.totalProfit;
       }
     });

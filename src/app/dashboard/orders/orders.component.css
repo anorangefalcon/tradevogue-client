@@ -13,12 +13,6 @@
     grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
 }
 
-.btn-primary {
-    height: 40px;
-    padding-block: 0px;
-    margin-top: auto;
-}
-
 .form__title {
     position: absolute;
     left: 0;

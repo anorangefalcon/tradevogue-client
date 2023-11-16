@@ -1,12 +1,14 @@
 <div class="d-flex flex-column gap-20">
-    <div class="form__card__head d-flex justify-content-md-between align-item-center">
+    <div class="card card__pd-20 d-flex justify-content-md-between align-item-center">
         <h3>Customise Banner</h3>
         <div class="operation_button d-flex gap-10">
             <!-- <button class="btn-primary" (click)="bannerForm.enable()">Edit</button> -->
-            <button class="btn-secondary" (click)="showForm = true" *ngIf="showForm==false">Add banner</button>
-            <button class="btn-secondary" (click)="showForm = false" *ngIf="showForm==true">Cancel</button>
-            <button class="btn-primary"  (click)="onSave()" *ngIf="showForm == true" [ngClass]="{'disabled':bannerForm.invalid}"
-                [disabled]="this.bannerForm.invalid">Save</button>
+            <button class="btn btn-xs fw-500 btn-rounded btn-primary" (click)="showForm = true"
+                *ngIf="showForm==false">Add banner</button>
+            <button class="btn btn-xs fw-500 btn-rounded btn-secondary" (click)="showForm = false"
+                *ngIf="showForm==true">Cancel</button>
+            <button class="btn btn-xs fw-500 btn-rounded btn-primary" (click)="onSave()" *ngIf="showForm == true"
+                [ngClass]="{'disabled':bannerForm.invalid}" [disabled]="this.bannerForm.invalid">Save</button>
         </div>
     </div>
     <form class="form__card d-flex gap-15 flex-column" [formGroup]="bannerForm" *ngIf="showForm === true">
@@ -21,8 +23,7 @@
                                 cloud_upload
                             </span>
                         </label>
-                        <small class="banner-label">Upload
-                            Banner Image</small>
+                        <small class="banner-label">Upload Banner Image</small>
                         <img [src]="getImagePreview()" [style.display]="getImagePreview() ? 'flex' : 'none'"
                             class="banner-image">
                         <span class="material-symbols-outlined remove-btn pointer"
@@ -84,84 +85,93 @@
             </div>
         </div>
     </form>
-    <div class="d-flex" style="justify-content: flex-start;">
-        <div class="table-list card">
-            <table class="selected-category-table">
-                <thead>
-                    <tr>
-                        <th class="items">Sr. No.</th>
-                        <th class="items">Image</th>
-                        <th class="items">Title</th>
-                        <th class="items">Subtitle</th>
-                        <th class="items">Button Text</th>
-                        <th class="items">Link</th>
-                        <th class="items">Content Align</th>
-                        <th class="items">Title color</th>
-                        <th class="items">Subtitle color</th>
-                        <th class="items">Button Color</th>
-                        <th class="items">Active</th>
-                        <th class="items">Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr *ngFor="let banner of bannerData; let i = index">
-                        <td class="ellipsis items serial-number">
-                            <div class="d-flex justify-content-center">
-                                {{i+1}}
-                            </div>
-                        </td>
-                        <td class="ellipsis items">
-                            <a [href]="banner.backgroundImage"
-                                style="color: rgb(0, 119, 255); text-decoration: underline;">
-                                Link
-                            </a>
-                        </td>
 
-                        <td class="ellipsis items">
+    <div class="table-list card">
+        <table class="mw100">
+            <thead>
+                <tr>
+                    <th class="items">Sr.</th>
+                    <th class="items">Image</th>
+                    <th class="items">Title</th>
+                    <th class="items">Subtitle</th>
+                    <th class="items">Button Text</th>
+                    <th class="items">Link</th>
+                    <th class="items">Align</th>
+                    <th class="items">Title color</th>
+                    <th class="items">Subtitle color</th>
+                    <th class="items">Button Color</th>
+                    <th class="items">Active</th>
+                    <th class="items">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let banner of bannerData; let i = index">
+                    <td class="ellipsis items serial-number">
+                        <div class="d-flex justify-content-center">
+                            {{i+1}}
+                        </div>
+                    </td>
+                    <td class="ellipsis items">
+                        <a [href]="banner.backgroundImage" style="color: rgb(0, 119, 255); text-decoration: underline;">
+                            Link
+                        </a>
+                    </td>
 
+                    <td class="items">
+                        <div class="text-ellipsis">
                             {{banner.title ? banner.title : '-'}}
+                        </div>
+                    </td>
+                    <td class="items">
+                        <div class="text-ellipsis">{{banner.subTitle ? banner.subTitle : '-'}}</div>
+                    </td>
+                    <td class="items">{{banner.buttonText ? banner.buttonText : '-'}}</td>
+                    <td class="items">
+                        <div class="text-ellipsis">{{banner.buttonLink}}</div>
+                    </td>
+                    <td class="items">{{banner.contentAlign ? banner.contentAlign : '-'}}</td>
+                    <td class="items">
+                        <div [class.color-circle]="banner?.colors?.titleColor"
+                            [style.background-color]="banner?.colors?.titleColor">
+                            {{banner?.colors?.titleColor ? "" : '-'}}
+                        </div>
+                    </td>
+                    <td class="items">
+                        <div [class.color-circle]="banner?.colors?.subTitleColor"
+                            [style.background-color]="banner?.colors?.subTitleColor">
+                            {{banner?.colors?.subTitleColor ? "" : '-'}}
+                        </div>
+                    </td>
+                    <td class="items">
+                        <div [class.color-circle]="banner?.colors?.buttonColor"
+                            [style.background-color]="banner?.colors?.buttonColor">
+                            {{banner?.colors?.buttonColor ? "" : '-'}}
+                        </div>
+                    </td>
+                    <td class="items">
+                        <div class="slide-button d-flex align-item-center">
+                            <input type="checkbox" [checked]="banner.active" (change)="toggleBanner(banner._id, $event)"
+                                [id]="i + 'Available'" />
+                            <label [for]="i + 'Available'"></label>
+                        </div>
+                    </td>
+                    <td class="items action-btns">
+                        <span class="d-flex align-item-center gap-5 transition">
 
-                        </td>
-                        <td class="ellipsis items">{{banner.subTitle ? banner.subTitle : '-'}}</td>
-                        <td class="ellipsis items">{{banner.buttonText ? banner.buttonText : '-'}}</td>
-                        <td class="ellipsis items">{{banner.buttonLink}}</td>
-                        <td class="ellipsis items">{{banner.contentAlign ? banner.contentAlign : '-'}}</td>
-                        <td class="items">
-                            <div [class.color-circle]="banner?.colors?.titleColor"
-                                [style.background-color]="banner?.colors?.titleColor">
-                                {{banner?.colors?.titleColor ? "" : '-'}}
-                            </div>
-                        </td>
-                        <td class="items">
-                            <div [class.color-circle]="banner?.colors?.subTitleColor"
-                                [style.background-color]="banner?.colors?.subTitleColor">
-                                {{banner?.colors?.subTitleColor ? "" : '-'}}
-                            </div>
-                        </td>
-                        <td class="items">
-                            <div [class.color-circle]="banner?.colors?.buttonColor"
-                                [style.background-color]="banner?.colors?.buttonColor">
-                                {{banner?.colors?.buttonColor ? "" : '-'}}
-                            </div>
-                        </td>
-                        <td class="items">
-                            <div class="slide-button d-flex align-item-center">
-                                <input type="checkbox" [checked]="banner.active"
-                                    (change)="toggleBanner(banner._id, $event)" [id]="i + 'Available'" />
-                                <label [for]="i + 'Available'"></label>
-                            </div>
-                        </td>
-                        <td class="items actions">
-                            <div class="action-buttons">
-                                <span class="material-symbols-outlined edit-button material-icons pointer"
-                                    (click)="showForm = true; edit(i)">edit</span>
-                                <span class="material-symbols-outlined delete-button material-icons pointer"
-                                    (click)="delete(banner._id)">delete</span>
-                            </div>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+                            <span class="tooltip">
+                                <i class="fs-18 action__btn-icon pointer material-symbols-outlined"
+                                    (click)="showForm = true; edit(i)">edit</i>
+                                <span class="tooltiptext">Edit</span>
+                            </span>
+                            <span class="tooltip">
+                                <i class="fs-18 action__btn-icon pointer material-symbols-outlined">delete</i>
+                                <span class="tooltiptext" (click)="delete(banner._id)">Remove</span>
+                            </span>
+                        </span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
     </div>
+
 </div>

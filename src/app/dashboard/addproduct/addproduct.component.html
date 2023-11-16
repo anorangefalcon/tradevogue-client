@@ -29,19 +29,19 @@
                 Add Product Features
             </button> -->
 
-            <button class="btn-primary d-flex flex-center gap-5" (click)="checkFormStatus()"
+            <button class="btn btn-xs btn-rounded fw-500 btn-primary d-flex flex-center gap-5" (click)="checkFormStatus()"
                 [ngStyle]="{display: current_form == 'product_images'? 'none' : 'flex', 'background-color': productsForm.get('basicinfo')?.invalid? 'rgb(var(--primaryClr), 0.8)' : 'rgb(var(--primaryClr))'}">
                 Continue
                 <span class="next_icon material-symbols-outlined">arrow_forward_ios</span>
             </button>
 
-            <button class="btn-secondary d-flex flex-center gap-5" (click)="addProductImageForm()"
+            <button class="btn btn-xs btn-rounded fw-500 btn-secondary d-flex flex-center gap-5" (click)="addProductImageForm()"
                 [ngStyle]="{display: current_form != 'product_images'? 'none' : 'flex' }">
                 <span class="form_icon material-symbols-outlined">add</span>
                 Add Color Variant
             </button>
 
-            <button class="btn-primary d-flex align-item-center" (click)="onsubmit()"
+            <button class="btn btn-xs btn-rounded fw-500 btn-primary d-flex align-item-center" (click)="onsubmit()"
                 [ngStyle]="{display: current_form != 'product_images'? 'none' : 'flex','background-color': productsForm.invalid? 'rgb(var(--primaryClr), 0.8)' : 'rgb(var(--primaryClr))'}">
                 {{isUpdateRequest? 'Update Product':'Submit Product'}}
             </button>

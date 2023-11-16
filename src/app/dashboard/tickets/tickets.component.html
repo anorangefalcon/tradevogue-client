@@ -1,85 +1,90 @@
-<section class="card  d-flex flex-column gap-20">
-  <div class="d-flex justify-content-md-between align-item-center">
+<section class="d-flex flex-column gap-20">
+  <div class="card card__pd-20 d-flex justify-content-md-between align-item-center">
     <h2>Ticket Table</h2>
   </div>
-</section>
 
-<div class="table-list card">
-  <table class="selected-category">
-    <thead>
-      <tr>
-        <th class="items">Serial Number</th>
-        <th class="items">Ticket Type</th>
-        <th class="items">Ticket Title</th>
-        <th class="items">User Name</th>
-        <th class="items">User Email</th>
-        <th class="items">Status</th>
-        <th class="items">Date Created</th>
-        <th class="items">Actions</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let item of ticketData; let i = index;">
-        <td class="items ellipsis">{{i+1}}</td>
-        <td class="items">{{ item.ticketType }}</td>
-        <td class="items">{{ item.ticketTitle }}</td>
-        <td class="items">{{ item.userName }}</td>
-        <td class="items">{{ item.userEmail }}</td>
-        <td class="items">{{ item.status }}</td>
-        <td class="items">{{ item.dateCreated | date: 'dd/MM/yyyy' }}</td>
-        <td class="items">
-          <span class="material-symbols-outlined edit-button material-icons pointer" (click)="showItemDetails(item)">
-            confirmation_number
+  <div class="table-list card">
+    <table class="selected-category">
+      <thead>
+        <tr>
+          <th class="items">Sr.</th>
+          <th class="items">Ticket Type</th>
+          <th class="items">Ticket Title</th>
+          <th class="items">User Name</th>
+          <th class="items">User Email</th>
+          <th class="items">Status</th>
+          <th class="items">Date Created</th>
+          <th class="items">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of ticketData; let i = index;">
+          <td class="items ellipsis">{{i+1}}</td>
+          <td class="items">{{ item.ticketType }}</td>
+          <td class="items">{{ item.ticketTitle }}</td>
+          <td class="items">{{ item.userName }}</td>
+          <td class="items">{{ item.userEmail }}</td>
+          <td class="items">{{ item.status }}</td>
+          <td class="items">{{ item.dateCreated | date: 'dd/MM/yyyy' }}</td>
+          <td class="items action-btns">
+
+            <span class="d-flex align-item-center transition">
+
+              <span class="tooltip">
+                <i class="fs-20 action__btn-icon pointer material-symbols-outlined"
+                (click)="showItemDetails(item)">confirmation_number</i>
+                <span class="tooltiptext">Replay</span>
+              </span>
+
+              <span class="tooltip">
+                <i class="fs-20 action__btn-icon pointer material-symbols-outlined"
+                  (click)="webPush(item)">notifications</i>
+                <span class="tooltiptext">Alerts</span>
+              </span>
+
+              <span class="tooltip">
+                <i class="fs-20 action__btn-icon pointer material-symbols-outlined">delete</i>
+                <span class="tooltiptext" (click)="deleteTicketTitle(item)">Remove</span>
+              </span>
+
             </span>
-          <span class="material-symbols-outlined delete-button material-icons pointer"
-            (click)="webPush(item)">notifications</span>
-          <span class="material-symbols-outlined delete-button material-icons pointer"
-            (click)="deleteTicketTitle(item)">delete</span>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-</div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 
   <app-pop-up *ngIf="selectedItem">
-  <div class="details-container">
-  <!-- Table heading -->
-  <div class="table-like">
-    <div class="table-cell"><strong>Reply Ticket</strong></div>
-  </div>
+    <div class="details-container">
+      <!-- Table heading -->
+      <div class="table-like">
+        <div class="table-cell"><strong>Reply Ticket</strong></div>
+      </div>
 
-  <!-- Table body -->
-  <div class="table-like">
-    <div class="table-row">
-      <div class="table-cell"><strong>Email:</strong></div>
-      <div class="table-cell">{{ selectedItem.userEmail }}</div>
-    </div>
-    <div class="table-row">
-      <div class="table-cell"><strong>User Query:</strong></div>
-      <div class="table-cell">{{ selectedItem.ticketTitle }}</div>
-    </div>
-    <!-- Add more rows as needed -->
-  </div>
-    <div class="custom-select" style="width:200px;">
-      <!-- <select [(ngModel)]="selectedItem.status">
+      <!-- Table body -->
+      <div class="table-like">
+        <div class="table-row">
+          <div class="table-cell"><strong>Email:</strong></div>
+          <div class="table-cell">{{ selectedItem.userEmail }}</div>
+        </div>
+        <div class="table-row">
+          <div class="table-cell"><strong>User Query:</strong></div>
+          <div class="table-cell">{{ selectedItem.ticketTitle }}</div>
+        </div>
+        <!-- Add more rows as needed -->
+      </div>
+      <div class="custom-select" style="width:200px;">
+        <!-- <select [(ngModel)]="selectedItem.status">
         <option value="" disabled>Select a Status</option>
         <ng-container *ngFor="let status of uniqueStatusValues">
           <option [value]="status">{{ status }}</option>
         </ng-container>
       </select> -->
 
-      <app-custom-select
-      [type]="''"
-      [options]="uniqueStatusValues"
-      [(ngModel)]="selectedItem.status"
-      [selectedOption]="'select Ticket'"
-      (final_option)="updateFormFields($event)"
-    ></app-custom-select>
-    
-    <textarea
-    [(ngModel)]="messageInput"
-    placeholder="Enter your message"
-    style="
+        <app-custom-select [type]="''" [options]="uniqueStatusValues" [(ngModel)]="selectedItem.status"
+          [selectedOption]="'select Ticket'" (final_option)="updateFormFields($event)"></app-custom-select>
+
+        <textarea [(ngModel)]="messageInput" placeholder="Enter your message" style="
       margin-top: 10px;
       width: 100%;
       padding: 10px;
@@ -90,41 +95,45 @@
       font-size: 14px; /* Adjust the font size */
       line-height: 1.5; /* Increase line height for readability */
       transition: border-color 0.3s;
-    "
-  ></textarea>
-  
+    "></textarea>
+
+      </div>
+
+
+      <button class="btn-primary" (click)="updateItem()">Update</button>
     </div>
-    
-    
-    <button class="btn-primary" (click)="updateItem()">Update</button>
-  </div>
-</app-pop-up>
+  </app-pop-up>
 
-<section  *ngIf="editItem"  class="card d-flex flex-column gap-20">
-  <div class="d-flex justify-content-md-between align-item-center">
-    <h2>Create Notification</h2>
-  </div>
+  <div *ngIf="editItem" class="card card__pd-20 d-flex flex-column gap-20">
+    <div class="d-flex justify-content-md-between align-item-center">
+      <h2>Create Notification</h2>
+    </div>
 
-  
-  <div class="slider">
-    <h5>User Token: {{ token }}</h5>
+
+    <div class="slider">
+      <h5>User Token: {{ token }}</h5>
       <form [formGroup]="notificationForm" (ngSubmit)="sendNotification()">
         <div class="form-group">
-          <label for="title">Title:</label>
-          <input type="text" id="title" formControlName="title" [(ngModel)]="selectedTicket.title" required>
+          <label class="form__label" for="title">Title:</label>
+          <input type="text" class="form__input" id="title" formControlName="title" [(ngModel)]="selectedTicket.title"
+            required>
         </div>
-      
+
         <div class="form-group">
-          <label for="body">Body:</label>
-          <textarea id="body" formControlName="body" [(ngModel)]="selectedTicket.body" required></textarea>
+          <label class="form__label" for="body">Body:</label>
+          <textarea id="body" class="form__textarea" formControlName="body" [(ngModel)]="selectedTicket.body"
+            required></textarea>
         </div>
-      
+
         <div class="form-group">
-          <label for="icon">Icon URL:</label>
-          <input type="text" id="icon" formControlName="icon" [(ngModel)]="selectedTicket.icon" required>
+          <label class="form__label" for="icon">Icon URL:</label>
+          <input type="text" class="form__input" id="icon" formControlName="icon" [(ngModel)]="selectedTicket.icon"
+            required>
         </div>
 
         <button type="submit" class="btn-secondary">Send</button>
       </form>
     </div>
+  </div>
+
 </section>

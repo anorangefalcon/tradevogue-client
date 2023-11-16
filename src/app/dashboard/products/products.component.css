@@ -2,10 +2,6 @@
     width: auto
 }
 
-button:disabled {
-    background-color: antiquewhite;
-}
-
 #product-section {
 
     & .operational-buttons {
@@ -14,9 +10,6 @@ button:disabled {
             border: 1px solid rgba(var(--blackClr), 0.1);
             border-radius: 5px;
             background: none;
-            padding: 4px;
-            cursor: pointer;
-            padding: 10px 24px;
             font-weight: 400;
 
             &:not(:disabled):hover {
@@ -45,7 +38,7 @@ button:disabled {
     }
 
     & .file-section {
-        & input[type="f sile"] {
+        & input[type="file"] {
             display: none;
         }
 
@@ -55,11 +48,11 @@ button:disabled {
             border-radius: 5px;
             letter-spacing: 0.5px;
             padding: 10px 24px;
-
+            transition: all 0.3s ease-in-out;
 
             &:hover {
                 border: 1px solid rgba(var(--blackClr), 0);
-                background-color: rgb(var(--blackClr), 0.02);
+                background-color: rgb(var(--blackClr), 0.03);
             }
         }
 
@@ -67,7 +60,6 @@ button:disabled {
             font-size: 22px;
             font-weight: 300;
             transition: transform 0.3s ease-in-out;
-
         }
 
         & .uploadbtn span {
@@ -82,9 +74,9 @@ button:disabled {
 }
 
 .items.displayInfo div:hover>.popup {
-    opacity: 1;
+    /* opacity: 1;
     visibility: visible;
-    pointer-events: all;
+    pointer-events: all; */
     display: flex;
 }
 
@@ -95,9 +87,8 @@ button:disabled {
     inset-inline-start: 50%;
     transform: translateX(-50%);
     z-index: 10;
-    visibility: hidden;
-    opacity: 0;
-    pointer-events: none;
+    display: none;
+    /* pointer-events: none; */
     transition: all 0.3s ease-in-out;
     background-color: rgb(var(--whiteClr));
     margin-top: 12px;

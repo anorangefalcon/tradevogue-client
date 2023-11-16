@@ -46,23 +46,6 @@ form {
   border-radius: 4px;
 }
 
-.form-group {
-  margin-bottom: 20px;
-}
-
-.form-group label {
-  display: block;
-  font-weight: bold;
-  margin-bottom: 5px;
-}
-
-.form-group input {
-  width: 100%;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  box-sizing: border-box;
-}
 
 .error-message {
   color: #ff0000;
@@ -216,28 +199,6 @@ justify-content: center;
 /* General styles for form */
 .slider {
   margin-top: 20px; /* Adjust margin value */
-}
-
-.details-container {
-  background-color: #f9f9f9; /* Light background color */
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
-}
-
-/* Heading styles */
-.form__card h3 {
-  font-size: 24px;
-  color: #333;
-}
-
-.btn-primary {
-  font-weight: 500;
-  padding-block: 7px;
-  padding-inline: 15px;
-  height: 40px;
-  /* border-radius: 0px 4px 4px 0px; */
-  background-color: rgb(var(--primaryClr));
 }
 
 /* Form Input Fields */

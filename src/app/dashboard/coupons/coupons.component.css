@@ -1,76 +1,17 @@
 
-.container{
-    overflow: hidden;
-    
-}
-
-
-
-.CouponDiv{
-    /* transform: translateX(500px); */
-    justify-content: space-between;
-
-  /* padding: 10px 20px; */
-
-  & .header__addOffer{
-
-  }
-}
-
-/* 
-.wrapper{
-
-    height: 100%;
-    position: fixed;
-
-    & .CouponDiv{
-        display: flex;
-      
-        transition: transform 0.4s cubic-bezier(0, 0.59, 0.25, 1), -webkit-transform 0.4s cubic-bezier(0, 0.59, 0.25, 1);
-    }
-    z-index: 3;
-    opacity: 0;
-    visibility: hidden;
-
-    justify-content: flex-end;
-    width: 100%;
-    background-color: rgba(0, 0, 0, 0.4); 
-    inset-block-start: 0;
-    inset-inline-start: 0;
-    
-} */
 
 .translateBack{
-    /* transform: translateX(0%); */
     opacity: 1;
     visibility: initial;   
-    
-
-}
-
-
-
-
-.CouponDiv{
-    display: flex;
-    flex-direction: column;
-    gap: 25px;
-}
-
-
-.Extrainfo{
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
 }
 
 form {
     row-gap: 15px;
-    width: 100%;
 
     & .form__group {
         align-items: center;
         gap:20px;
+
         & input, & .custom__select, & textarea {
             width: calc(100% - 220px);
         }
@@ -201,10 +142,6 @@ tr:hover {
     border-radius: 10px;
     overflow: hidden;
 
-}
-
-textarea{
-    padding: 10px;
 }
 
 .add_del_btn{

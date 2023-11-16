@@ -197,6 +197,15 @@ export class FaqsComponent {
     this.currentPage = pageNumber;
     this.loadData();
   }
+
+  tableGenerator(len: number){
+    let temp = []
+    for(let i=0;i<len;i++){
+      temp.push(0);
+    }
+    return temp;
+  }
+
 }
 
 

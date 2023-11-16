@@ -1,35 +1,23 @@
-.form__card__head {
-    padding: 25px;
-    border: 1px solid rgb(var(--blackClr), 0.1);
-    background-color: rgb(var(--whiteClr));
-    border-radius: 10px;
-
-    & button {
-        border: 1px solid;
-        padding: 12px;
-        padding-block: 8px;
-        padding-inline: 18px;
-    }
-}
-
 .ellipsis {
     white-space: nowrap !important;
     overflow: hidden !important;
     text-overflow: ellipsis !important;
-  }
+}
 
-  td {
-    max-width: 200px; /* Adjust the max-width to your preference */
+td:not(:last-child) {
+    max-width: 200px;
+    /* Adjust the max-width to your preference */
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-  }
+}
 
-  img, picture {
+img,
+picture {
     max-width: 30% !important;
     display: block !important;
 }
-  
+
 
 .form__card {
 
@@ -48,14 +36,6 @@
     }
 }
 
-.add-btn {
-    padding-block: 14px;
-    padding-inline: 18px;
-
-    & span {
-        font-size: 20px;
-    }
-}
 
 .remove-banner-btn {
     right: -10px;
@@ -133,7 +113,7 @@
     border-radius: 6px;
 }
 
-.loader {
+/* .loader {
     position: absolute;
     right: 20px;
     bottom: 20px;
@@ -144,7 +124,7 @@
     border-top-color: rgb(var(--primaryClr));
     ;
     animation: spinner .8s linear infinite;
-}
+} */
 
 @keyframes spinner {
     to {

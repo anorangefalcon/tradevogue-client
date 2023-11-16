@@ -1,15 +1,13 @@
 <div class="d-flex flex-column gap-20">
-    <div class="form__card__head d-flex justify-content-md-between align-item-center">
+    <div class="card card__pd-25 d-flex justify-content-md-between align-item-center">
         <h3>Customise Sales</h3>
         <div class="operation_button d-flex gap-10">
-            <button class="btn-secondary d-flex align-item-center gap-10"
+            <button class="btn btn-rounded btn-xs fw-500 fs-14 btn-secondary d-flex align-item-center gap-5"
                 [ngStyle]="{'display': salesForm.disabled? 'none': 'flex'}" (click)="addSale()">
-                <span class="material-symbols-outlined">
-                    add
-                </span>
-                <p> Add Sales</p>
+                <span class="material-symbols-outlined fs-20 ">add</span>
+                Add Sales
             </button>
-            <button class="btn-primary" [ngStyle]="{'display': salesForm.disabled? 'none': 'flex'}"
+            <button class="btn btn-rounded btn-xs btn-primary" [ngStyle]="{'display': salesForm.disabled? 'none': 'inline-block'}"
                 (click)="onUpdate()">Update</button>
         </div>
     </div>
@@ -89,50 +87,62 @@
             </ng-container>
         </ng-container>
     </form>
-    <div class="d-flex" style="justify-content: flex-start;">
-        <div class="table-list card">
-            <table class="selected-category-table">
-                <thead>
-                    <tr>
-                        <th class="items">Serial Number</th>
-                        <th class="items">Sale Type</th>
-                        <th class="items">Sale Type Color</th>
-                        <th class="items">Sub Title</th>
-                        <th class="items">Sub Title Color</th>
-                        <th class="items">Button</th>
-                        <th class="items">Button Color</th>
-                        <th class="items">Button Link</th>
-                        <th class="items">Link</th>
-                        <th class="items">Enable</th>
-                        <th class="items">Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr *ngFor="let item of tableData; let i = index">
-                        <td class="ellipsis items serial-number">1</td>
-                        <td class="ellipsis items">{{item.title}}</td>
-                        <td class="ellipsis items">{{item.colors.titleColor}}</td>
-                        <td class="ellipsis items">{{item.subTitle}}</td>
-                        <td class="ellipsis items">{{item.colors.subTitleColor}}</td>
-                        <td class="ellipsis items">{{item.buttonText}}</td>
-                        <td class="ellipsis items">{{item.colors.buttonColor}}</td>
-                        <td class="items">{{item.buttonLink}}</td>
-                        <td class="ellipsis items">{{item.backgroundImage}}</td>
-                        <td class="items">
-                            <div class="slide-button d-flex align-item-center">
-                                <input type="checkbox" [checked]="item.enable" (change)="toggle(item)"  [name]="i + 'Available'" [id]="i + 'Available'" />
-                                <label [for]="i + 'Available'"></label>
-                            </div>
-                        </td>
-                        <td class="items actions">
-                            <div class="action-buttons">
-                                <span class="material-symbols-outlined edit-button material-icons"  (click)="showItemDetails(item , i)">edit</span>
-                                <span class="material-symbols-outlined delete-button material-icons" (click)="deleteItem(item)">delete</span>
-                            </div>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+
+    <div class="table-list card">
+        <table class="mw100">
+            <thead>
+                <tr>
+                    <th class="items">Sr.</th>
+                    <th class="items">Image</th>
+                    <th class="items">Sale Type</th>
+                    <th class="items">Sale Type Color</th>
+                    <th class="items">Sub Title</th>
+                    <th class="items">Sub Title Color</th>
+                    <th class="items">Button</th>
+                    <th class="items">Button Color</th>
+                    <th class="items">Button Link</th>
+                    <th class="items">Enable</th>
+                    <th class="items">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of tableData; let i = index">
+                    <td class="ellipsis items serial-number">{{i+1}}</td>
+                    <td class="ellipsis items">
+                        <a [href]="item.backgroundImage">Link</a>
+                    </td>
+                    <td class="ellipsis items">{{item.title}}</td>
+                    <td class="ellipsis items">{{item.colors.titleColor}}</td>
+                    <td class="ellipsis items">{{item.subTitle}}</td>
+                    <td class="ellipsis items">{{item.colors.subTitleColor}}</td>
+                    <td class="ellipsis items">{{item.buttonText}}</td>
+                    <td class="ellipsis items">{{item.colors.buttonColor}}</td>
+                    <td class="items">{{item.buttonLink}}</td>
+                    <td class="items">
+                        <div class="slide-button d-flex align-item-center">
+                            <input type="checkbox" [checked]="item.enable" (change)="toggle(item)"
+                                [name]="i + 'Available'" [id]="i + 'Available'" />
+                            <label [for]="i + 'Available'"></label>
+                        </div>
+                    </td>
+
+                    <td class="items actions">
+                        <div class="action-buttons">
+
+                            <span class="tooltip">
+                                <i (click)="showItemDetails(item , i)"
+                                    class="fs-18 action__btn-icon material-symbols-outlined">edit</i>
+                                <span class="tooltiptext">Edit</span>
+                            </span>
+                            <span class="tooltip">
+                                <i (click)="deleteItem(item)"
+                                    class="fs-18 action__btn-icon material-symbols-outlined">delete</i>
+                                <span class="tooltiptext">Delete</span>
+                            </span>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
     </div>
 </div>

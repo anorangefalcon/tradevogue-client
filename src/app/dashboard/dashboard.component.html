@@ -1,6 +1,6 @@
 <section id="dashboard" class="relative">
 
-    <header class="header sticky inset-inline-0 inset-block-start-0 transition" [class.active]="isCollapse">
+    <header class="header fixed inset-inline-0 inset-block-start-0 transition" [class.active]="isCollapse">
         <div class="mh100 header_container d-flex align-item-center justify-content-md-between">
             <div class="toogle-section d-flex gap-10 align-item-center">
                 <a (click)="isCollapse = !isCollapse" class="pointer d-flex align-item-center mh100"><span
@@ -21,6 +21,7 @@
                         <span class="count d-flex flex-center text-center absolute">{{0}}</span>
                     </span>
                 </li> -->
+
                 <li class="header_links profile d-flex align-item-center gap-10 pointer"
                     [routerLink]="'/dashboard/account'">
                     <span class="photo-section relative d-flex justify-content-center align-item-center">

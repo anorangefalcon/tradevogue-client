@@ -12,6 +12,7 @@
                     <span class="material-symbols-outlined operation-icon">upload_file</span>
                     Import
                 </label>
+                
                 <a class="downloadBtn d-flex flex-center pointer gap-5"
                     href="../../../assets/ExcelSampleFile/sampleFullData.xlsx" download>
                     <span class="material-symbols-outlined operation-icon">download</span>
@@ -20,11 +21,11 @@
             </div>
 
             <div class="operational-buttons d-flex  flex-wrap gap-20">
-                <button routerLink="/dashboard/addproduct" class=" d-flex align-item-center gap-5">
+                <button routerLink="/dashboard/addproduct" class="btn btn-md btn-rounded d-flex align-item-center gap-5">
                     <i class="material-symbols-outlined operational-buttons-icons">add</i>
                     Add Product
                 </button>
-                <button class="d-flex align-item-center gap-5" [disabled]="!deleteList.length"
+                <button class="btn btn-md btn-rounded d-flex align-item-center gap-5" [disabled]="!deleteList.length"
                     [ngStyle]="{'cursor': deleteList.length? 'pointer': 'no-drop'}"
                     (click)="deleteItem(deleteList, 'bulk')">
                     <i class="material-symbols-outlined operational-buttons-icons">delete</i>
@@ -219,18 +220,15 @@
                                             <span class="tooltiptext">Highlight Product</span>
                                         </span>
 
-                                        <a href="javascript:void(0);" class="tooltip"
-                                            [routerLink]="['/dashboard/product-overview', item.itemId]">
-                                            <i class="fs-20 action__btn-icon material-symbols-outlined">zoom_in</i>
+                                        <a class="tooltip" [routerLink]="['/dashboard/product-overview', item.itemId]">
+                                            <i class="fs-18 action__btn-icon material-symbols-outlined">zoom_in</i>
                                             <span class="tooltiptext">View</span>
                                         </a>
-                                        <a href="javascript:void(0);" class="tooltip"
-                                            [routerLink]="['/dashboard/editproduct', item.itemId]">
+                                        <a class="tooltip" [routerLink]="['/dashboard/editproduct', item.itemId]">
                                             <i class="action__btn-icon fa-regular fa-pen-to-square"></i>
                                             <span class="tooltiptext">Edit</span>
                                         </a>
-                                        <a href="javascript:void(0);" class="tooltip"
-                                            (click)="deleteItem(item._id, item.name)">
+                                        <a class="tooltip" (click)="deleteItem(item._id, item.name)">
                                             <i class="action__btn-icon fa-regular fa-trash-can"></i>
                                             <span class="tooltiptext">Delete</span>
                                         </a>

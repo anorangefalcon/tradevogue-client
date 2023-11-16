@@ -1,96 +1,93 @@
-
 <div class="deal__container d-flex flex-column gap-20">
-<!-- <div>
-    <app-deal-of-week></app-deal-of-week>
-</div> -->
+        <div class="d-flex justify-content-md-between card card__pd-20">
+            <h2 class="d-flex align-item-center">Customize Deal Section</h2>
+            <div class="d-flex gap-10">
+                <!--  [disabled]="DealForm.invalid" -->
+                <button class="btn btn-xs fw-500 btn-rounded btn-primary" (click)="EditClicked()"
+                    *ngIf="!Edit">Edit</button>
+                <button class="btn btn-xs fw-500 btn-rounded btn-secondary" (click)="EditClicked()"
+                    *ngIf="Edit">Cancel</button>
+                <button class="btn btn-xs fw-500 btn-rounded btn-primary" (click)="Save()" *ngIf="Edit">Save</button>
+            </div>
+        </div>
 
-<div class="d-flex flex-column gap-10">
-    <div class="d-flex justify-content-md-between heading__section">
-    <h2 class="d-flex align-item-center">Customize Deal Section</h2>
-    <div class="d-flex gap-10">
-        <!--  [disabled]="DealForm.invalid" -->
-        <button class="Edit__btn" (click)="EditClicked()" *ngIf="!Edit">Edit</button>
-        <button class="cancel__btn" (click)="EditClicked()" *ngIf="Edit">Cancel</button>
-    <button  class="save__btn" (click)="Save()" *ngIf="Edit">Save</button>
-    </div>
-</div>
+        <form [formGroup]="DealForm" class="d-flex gap-15 card card__pd-20">
 
-    <form [formGroup]="DealForm" class="d-flex gap-15">
-
-        <div class="form__group width-40 relative d-flex flex-column img-upload justify-content-center align-item-center">
+            <div class="form__group width-40 relative d-flex flex-column img-upload justify-content-center align-item-center">
 
                 <img [src]="DealForm.get('productImage')?.value" alt="" class="product-image" *ngIf="!Edit">
                 <img [src]="DealForm.get('productImage')?.value" alt="" class="product-uploaded-image" *ngIf="Edit">
                 <div *ngIf="Edit" class="d-flex flex-column align-item-center justify-content-center gap-10">
-                <label for="backgroundImage" class="upload__div">
-                <span class="upload_icon material-symbols-outlined">
-                    cloud_upload
-                </span>
-                </label>
-                <input type="file" id="backgroundImage" accept="image/jpg, image/jpeg, image/png"
-                (input)="bannerImageUpload($event)">
-                <small class="banner-label">Upload
-                    Banner Image</small>
+                    <label for="backgroundImage" class="upload__div">
+                        <span class="upload_icon material-symbols-outlined">
+                            cloud_upload
+                        </span>
+                    </label>
+                    <input type="file" id="backgroundImage" accept="image/jpg, image/jpeg, image/png"
+                        (input)="bannerImageUpload($event)">
+                    <small class="banner-label">Upload
+                        Banner Image</small>
                 </div>
-        </div>
-      
-    <div class="width-60 d-flex flex-wrap gap-20">
-    
-        <div class="form__group relative d-flex flex-column">
-            <label class="form__label">Title<span>*</span></label>
-            <input type="text" id="title" formControlName="Title" placeholder="Enter Deal Title" class="form__input">
-        </div>
-        
-        <div class="form__group relative d-flex flex-column">
-            <label class="form__label">Sub Title<span>*</span></label>
-            <input type="text" id="subTitle" formControlName="subTitle" placeholder="Enter SubTitle" class="form__input">
-        </div>
-        <div class="form__group relative d-flex flex-column">
-            <label class="form__label">Button Link<span>*</span></label>
-            <input type="text" id="buttonLink" formControlName="buttonLink" placeholder="Enter Button Link" class="form__input">
-        </div>
-        
-
-        <div class="form__group d-flex flex-column">
-            <label class="form__label"> Content Alignment <span>*</span></label>
-            <div class="custom__select">
-                <app-custom-select [type]="''" [options]="alignments"
-                    [selectedOption]="((DealForm.get('contentAlign')?.value) ? (DealForm.get('contentAlign')?.value) : 'Select Alignment')"
-                    (final_option)="AlignmentHandler($event)"></app-custom-select>
             </div>
-        </div>
 
-        <div class="form__group relative d-flex flex-column colors__div" formGroupName="colors">
-            <label class="form__label">Title Color<span>*</span></label>
-            <input type="color" id="titleColor" formControlName="titleColor"  class="form__input">
-        </div>
+            <div class="width-60 d-flex flex-wrap gap-20">
 
-        <div class="form__group relative d-flex flex-column colors__div" formGroupName="colors">
-            <label class="form__label">SubTitle Color<span>*</span></label>
-            <input type="color" id="titleColor" formControlName="subTitleColor" class="form__input">
-        </div>
+                <div class="form__group relative d-flex flex-column">
+                    <label class="form__label">Title<span>*</span></label>
+                    <input type="text" id="title" formControlName="Title" placeholder="Enter Deal Title"
+                        class="form__input">
+                </div>
 
-        <div class="form__group relative d-flex flex-column colors__div" formGroupName="colors">
-            <label class="form__label">Background Color<span>*</span></label>
-            <input type="color" id="backgroundColor" formControlName="backgroundColor" class="form__input">
-        </div>
+                <div class="form__group relative d-flex flex-column">
+                    <label class="form__label">Sub Title<span>*</span></label>
+                    <input type="text" id="subTitle" formControlName="subTitle" placeholder="Enter SubTitle"
+                        class="form__input">
+                </div>
+                <div class="form__group relative d-flex flex-column">
+                    <label class="form__label">Button Link<span>*</span></label>
+                    <input type="text" id="buttonLink" formControlName="buttonLink" placeholder="Enter Button Link"
+                        class="form__input">
+                </div>
 
-        <div class="form__group relative d-flex flex-column colors__div" formGroupName="colors">
-            <label class="form__label">Button Color<span>*</span></label>
-            <input type="color" id="titleColor" formControlName="buttonColor" class="form__input">
-        </div>
 
-        <div class="form__group relative d-flex flex-column">
-            <label class="form__label">Button Text<span>*</span></label>
-            <input type="text" id="buttonText" formControlName="buttonText" placeholder="Enter Button Text" class="form__input">
-        </div>
+                <div class="form__group d-flex flex-column">
+                    <label class="form__label"> Content Alignment <span>*</span></label>
+                    <div class="custom__select">
+                        <app-custom-select [type]="''" [options]="alignments"
+                            [selectedOption]="((DealForm.get('contentAlign')?.value) ? (DealForm.get('contentAlign')?.value) : 'Select Alignment')"
+                            (final_option)="AlignmentHandler($event)"></app-custom-select>
+                    </div>
+                </div>
 
-    </div>
+                <div class="form__group relative d-flex flex-column colors__div" formGroupName="colors">
+                    <label class="form__label">Title Color<span>*</span></label>
+                    <input type="color" id="titleColor" formControlName="titleColor" class="form__input">
+                </div>
+
+                <div class="form__group relative d-flex flex-column colors__div" formGroupName="colors">
+                    <label class="form__label">SubTitle Color<span>*</span></label>
+                    <input type="color" id="titleColor" formControlName="subTitleColor" class="form__input">
+                </div>
+
+                <div class="form__group relative d-flex flex-column colors__div" formGroupName="colors">
+                    <label class="form__label">Background Color<span>*</span></label>
+                    <input type="color" id="backgroundColor" formControlName="backgroundColor" class="form__input">
+                </div>
+
+                <div class="form__group relative d-flex flex-column colors__div" formGroupName="colors">
+                    <label class="form__label">Button Color<span>*</span></label>
+                    <input type="color" id="titleColor" formControlName="buttonColor" class="form__input">
+                </div>
+
+                <div class="form__group relative d-flex flex-column">
+                    <label class="form__label">Button Text<span>*</span></label>
+                    <input type="text" id="buttonText" formControlName="buttonText" placeholder="Enter Button Text"
+                        class="form__input">
+                </div>
+
+            </div>
 
         </form>
-</div>
-
-
 </div>
 
 

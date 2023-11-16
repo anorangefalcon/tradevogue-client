@@ -262,11 +262,9 @@ app-custom-select {
 
 }
 
+
 .btn-primary,
 .btn-secondary {
-    padding-inline: 15px;
-    padding-block: 8px;
-    font-weight: 500;
 
     & .form_icon {
         font-size: 21px;
@@ -277,22 +275,6 @@ app-custom-select {
         font-size: 10px;
     }
 }
-
-/* .submit_btn {
-    color: rgb(var(--primaryClr));
-    background-color: rgb(var(--primaryClr), 0.1);
-    font-weight: 600;
-    transition: all 0.3 ease-in-out;
-
-    & span {
-        font-size: 21px;
-    }
-
-    &:hover {
-        color: rgb(var(--whiteClr));
-        background-color: rgb(var(--primaryClr));
-    }
-} */
 
 .note {
     font-weight: 500;
@@ -397,14 +379,8 @@ input[type="file"]+label:hover, .file-section span:hover {
     border-color: rgb(var(--whiteClr));
 }
 
-.btn-primary {
-    font-weight: 500;
-    padding-block: 7px;
-    padding-inline: 8px;
-    height: 40px;
-    /* border-radius: 0px 4px 4px 0px; */
-    background-color: rgb(var(--primaryClr));
-}
+
+
 
 @media (max-width: 768px) {
     .form_container {
