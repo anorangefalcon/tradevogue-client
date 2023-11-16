@@ -143,13 +143,14 @@
                     <ng-container *ngFor="let filter of filterApplied | keyvalue">
                         <span class="d-flex gap-10" >
 
-                            <div   class="d-flex gap-10" *ngIf="filter.key !== 'sort' && filter.key !== 'size' && filter.key !== 'minPrice' && filter.key !== 'maxPrice' && filter.key !== 'search'" >
+                            <div   class="d-flex gap-10" *ngIf="filter.key !== 'sort' && filter.key !== 'size' && filter.key !== 'minPrice' && filter.key!='color' && filter.key !== 'maxPrice' && filter.key !== 'search'" >
                                 <div *ngIf="isString(filter.value)">
                                     <div class="d-flex tags align-item-center justify-content-center ">
                                         <p>{{filter.value}}</p>
                                         <a class="d-flex justify-content-center align-item-center">
                                             <span class="material-symbols-outlined pointer"
-                                                (click)="onRemove($event, filter.key)">
+                                                (click)="onChecked(false, filter.key,filter.value)">
+                                                <!-- "onChecked($event, 'color')" -->
                                                 close
                                             </span>
                                         </a>
@@ -157,12 +158,13 @@
                                 </div>
     
                                 <div class="d-flex gap-10 tags align-item-center justify-content-center "
-                                    *ngFor="let val of filter.value  ">
+                                    *ngFor="let val of filter?.value  ">
                                     <!-- {{val}} -->
                                     <p>{{val}}</p>
                                     <a class="d-flex justify-content-center align-item-center">
+                                        <!-- {{filter | json}} -->
                                         <span class="material-symbols-outlined pointer"
-                                            (click)="onRemove($event, filter.key)">
+                                            (click)="onChecked(false, filter.key,val)">
                                             close
                                         </span>
                                     </a>

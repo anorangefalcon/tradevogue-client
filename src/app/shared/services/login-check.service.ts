@@ -26,7 +26,7 @@ export class LoginCheckService {
       this.loginUser(userObj);
     }
     else {
-      this.logoutUser();
+      // this.logoutUser();
     }
   }
 

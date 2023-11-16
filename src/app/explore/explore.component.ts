@@ -15,8 +15,8 @@ import { UtilsModule } from '../utils/utils.module';
 export class ExploreComponent {
 
   products: any = [];
-  totalProducts: number = 0;
   limit: number = 8;
+  totalProducts: number = 0;
   pageNumber: number = 1;
   
   OriginalData: any = [];
@@ -118,9 +118,19 @@ export class ExploreComponent {
     }
   }
 
-  onChecked(event: any, field: string) { 
-    const value = field === 'price' ? Number(event.target.value) : event.target.value;
-    if (event.target.checked) {
+  onChecked(event: any, field: string,extraParameter:any='') { 
+    // if(extraParameter && !event){
+    //   event={
+    //     target:{}
+    //   };
+    //   event.target.value=extraParameter;
+    //   event.target.checked=false;
+    // }
+    let value;
+    if(event){
+       value = field === 'price' ? Number(event?.target?.value) : event.target.value;
+    }
+    if ( event && event.target.checked) {
       if (this.filterApplied.hasOwnProperty(field)) {
         if (Array.isArray(this.filterApplied[field])) {
           this.filterApplied[field].push(value); 
@@ -133,6 +143,8 @@ export class ExploreComponent {
 
       else {
 
+        console.log('abcd is ----->');
+        
         // this.filterApplied[field]=value;
         if (Object.keys(this.filterApplied).length > 0) {
           this.filterApplied[field] = {};
@@ -148,11 +160,15 @@ export class ExploreComponent {
 
     }
 
-    else {
+    else {      
       if (Array.isArray(this.filterApplied[field])) {
-
-        let index = this.filterApplied[field].indexOf(event.target.value);
-
+        let index;
+        if(!event){
+           index = this.filterApplied[field].indexOf(extraParameter);
+        }
+        else{
+           index = this.filterApplied[field].indexOf(event.target.value);
+        }
         this.filterApplied[field].splice(index, 1);
       }
       else {
@@ -160,15 +176,15 @@ export class ExploreComponent {
       }
     }
 
+    console.log('filter Applied is ',this.filterApplied);
+    
+
     this.setParams()
   }
 
   clearAll() {
     let checkboxes: any = document.querySelectorAll('.checkboxes');
-    //returns nodelist and type is object
-
     checkboxes = Array.from(checkboxes)
-
     checkboxes.forEach(function (checkbox: any) {
       checkbox.checked = false;
     });
@@ -184,6 +200,8 @@ export class ExploreComponent {
   }
 
   onRemove(event: any, field: any) {
+    console.log('event coming up is ',event.target.value," field is ",field);
+    
     if (Array.isArray(this.filterApplied[field])) {
 
       let index = this.filterApplied[field].indexOf(event.target.value);
@@ -219,6 +237,8 @@ export class ExploreComponent {
     this.fetchData.getProducts(actualParams, this.limit, this.pageNumber).subscribe((data: any) => {
       this.products = data.items
       this.loading = false;
+      this.totalProducts = data.total;
+      // this.totalProducts=data.items;
     });
   }
 

@@ -2,6 +2,7 @@ import { Component, TemplateRef, ViewChild } from '@angular/core';
 import { UtilsModule } from '../utils/utils.module';
 import { FetchDataService } from '../shared/services/fetch-data.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { SocialsService } from '../shared/services/custom-UI/socials.service';
 
 @Component({
   selector: 'app-home',
@@ -19,10 +20,10 @@ export class HomeComponent {
 
   layout: any[] = [];
   subscribeForm: FormGroup;
-
+  socialsData! : any;
   loading: Boolean = false;
 
-  constructor(private fb: FormBuilder, private backendUrls: UtilsModule, private fetchDataService: FetchDataService) {
+  constructor(private fb: FormBuilder, private backendUrls: UtilsModule, private fetchDataService: FetchDataService, private socialsService: SocialsService) {
     this.subscribeForm = fb.group({
       email: fb.control('', [Validators.required, Validators.email]),
     })
@@ -34,6 +35,10 @@ export class HomeComponent {
     .subscribe((data: any)=>{
       this.layout = (data.layout).filter((item: any) => item.active);
       this.loading = false;
+    });
+
+    this.socialsService.getSocials().subscribe((res:any)=>{
+      this.socialsData = res;
     });
     
   }

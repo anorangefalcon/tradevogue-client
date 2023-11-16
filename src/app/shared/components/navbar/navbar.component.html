@@ -1,4 +1,4 @@
-<header [ngClass]="shadowed ? 'header-shadowed' : ''" [class.active]="(navbar_scroll_style == true) || (hamburgerOpen)">
+<header class="header-shadowed" [class.active]="(navbar_scroll_style == true) || (hamburgerOpen)">
     <nav class="navbar container d-flex align-item-center justify-content-md-between relative">
         <div class="branding d-flex gap-10 align-item-center">
 
@@ -25,26 +25,22 @@
                 <ul class="sub-categories">
                     <li>
                         <a [routerLink]="['/explore']" [queryParams]="{ gender: 'male' , category: 'kurta'}">
-                            <img src="http://drive.google.com/uc?export=view&id=1y9Y0C7C5blrO-iHTPksIlizLGAhzfy06">
-                            <span>Kurta</span>
+                            Kurta
                         </a>
                     </li>
                     <li>
                         <a [routerLink]="['/explore']" [queryParams]="{ gender: 'male' , category: 'shirt'}">
-                            <img src="http://drive.google.com/uc?export=view&id=1hUIIpJV-fz4R0B59tjl9_LLVPoax6wLr">
-                            <span>Shirt</span>
+                            Shirt
                         </a>
                     </li>
                     <li>
                         <a [routerLink]="['/explore']" [queryParams]="{ gender: 'male' , category: 'tshirt'}" >
-                            <img src="http://drive.google.com/uc?export=view&id=1yBMcAJKcREDpDlNxNPS1Kdy61LgyGKIj">
-                            <span>Tshirt</span>
+                            Tshirt
                         </a>
                     </li>
                     <li>
                         <a [routerLink]="['/explore']" [queryParams]="{ gender: 'male'}" >
-                            <img src="http://drive.google.com/uc?export=view&id=1N0WCb1MgxZ9YOOq-thJ_dEqy8PvtiXPH">
-                            <span>Explore All</span>
+                            Explore All
                         </a>
                     </li>
                 </ul>
@@ -53,29 +49,25 @@
                 <a class="d-flex flex-column gap-5 pointer" [routerLink]="['/explore']" [queryParams]="{ gender: 'female'}">
                     Women
                 </a>
-                <ul class="sub-categories">
+                <ul class="sub-categories d-flex flex-column">
                     <li>
                         <a [routerLink]="['/explore']" [queryParams]="{ gender: 'female' , category: 'kurti'}">
-                            <img src="http://drive.google.com/uc?export=view&id=1GFq-TZahsWC2wEwyiikAZBh29TkpXo1p">
-                            <span>Kurti</span>
+                            Kurti
                         </a>
                     </li>
                     <li>
                         <a [routerLink]="['/explore']" [queryParams]="{ gender: 'female' , category: 'shirt'}">
-                            <img src="http://drive.google.com/uc?export=view&id=1GHYUCJT1Ee97ucIGDtZ6-2HWKHgsE9XT">
-                            <span>Shirt</span>
+                            Shirt
                         </a>
                     </li>
                     <li>
                         <a [routerLink]="['/explore']" [queryParams]="{ gender: 'female' , category: 'tshirt'}">
-                            <img src="http://drive.google.com/uc?export=view&id=1xTshBiSZh-plrIFcYNV-Xg0ENO7qi4Lh">
-                            <span>T-Shirt</span>
+                            T-Shirt
                         </a>
                     </li>
                     <li>
                         <a [routerLink]="['/explore']" [queryParams]="{ gender: 'female'}">
-                            <img src="http://drive.google.com/uc?export=view&id=189fp7hK8OAdzTqiXI2cIJgnrgEiH8VL2">
-                            <span>Explore All</span>
+                        Explore All
                         </a>
                     </li>
                    
@@ -108,29 +100,6 @@
                     </span>
                 </a>
             </li>
-            <!-- <li>
-                <a class="icons" href="javscript:void(0);">
-                    <span class="material-symbols-outlined">
-                        notifications
-                        <span class="count" id="notification">0</span>
-                    </span>
-                </a>
-                <ul class="sub-items d-flex flex-column gap-15">
-                    <li class="d-flex align-item-center justify-content-md-between">
-                        <h4>Notifications</h4>
-                        <h6>0 Unread</h6>
-                    </li>
-                    <li>
-                        <span>
-
-                        </span>
-                    </li>
-                    <li>
-                        <button class="btn-primary d-flex align-item-center mw100"><a href=""
-                                style="color: rgb(var(--whiteClr));">View All</a></button>
-                    </li>
-                </ul>
-            </li> -->
             <li>
                 <a class="icons" [routerLink]="['/cart']">
                     <span class="material-symbols-outlined">
@@ -138,21 +107,6 @@
                         <span *ngIf="cart_count > 0" class="count" id="inventory">{{ cart_count }}</span>
                     </span>
                 </a>
-                <!-- <ul class="sub-items d-flex flex-column gap-15">
-                    <li class="d-flex align-item-center justify-content-md-between">
-                        <h4>Cart</h4>
-                        <h6>{{ cart_count }} items</h6>
-                    </li>
-                    <li>
-                        <span>
-
-                        </span>
-                    </li>
-                    <li>
-                        <button class="btn-primary d-flex align-item-center mw100"><a [routerLink]="['/cart']"
-                                style="color: rgb(var(--whiteClr));">Open Cart</a></button>
-                    </li>
-                </ul> -->
             </li>
             <li>
                 <a class="icons" href="javscript:void(0);">
@@ -185,11 +139,7 @@
                         <div class="header">
                             <div class="d-flex justify-content-md-between align-item-center border"
                                 style="margin-bottom: 10px">
-                                <h4 *ngIf="purchaser!=''">Welcome {{purchaser}}
-
-
-                                    <!-- Jahnavi -->
-                                </h4>
+                                <h4 *ngIf="purchaser!=''">Welcome {{purchaser}}</h4>
                             </div>
                             <ul class="border">
                                 <!-- <li [routerLink]="['about']" style="margin-bottom: 10px;">About Us</li> -->
