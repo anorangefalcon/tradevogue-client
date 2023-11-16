@@ -205,6 +205,12 @@ export class AddproductComponent {
               data.basicinfo = {};
               this.editPage = true;
 
+              if(data.oldPrice){
+                data.price = data.oldPrice;
+                delete data['oldPrice'];
+              }
+
+
               Object.keys(data).forEach((key: string) => {
                 if (key !== 'assets') {
                   data.basicinfo[key] = data[key];
@@ -219,9 +225,8 @@ export class AddproductComponent {
                   this.addStockQuantityForm(i);
                 }
               }
-
-              this.productsForm.patchValue(data);
               this.reponseData = data;
+              this.productsForm.patchValue(this.reponseData);
               this.isUpdateRequest = true;
             }
           })

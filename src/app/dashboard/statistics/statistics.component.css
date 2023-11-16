@@ -204,6 +204,11 @@
 .refresh_icons{
     font-size: 22px;
     color: rgb(var(--text-gray));
+    transition: all 0.4s ease-in-out;
+
+    &:hover{
+        transform: rotate(180deg);
+    }
 }
 
 @media screen and (max-width: 768px) {

@@ -19,6 +19,7 @@ export class OrdersComponent {
   selectedColor: any = 0;
   totalCount: any;
   updateIndex: any = false; //Purpose of invoice Avalibility
+  updateIndexStatus: any; //For puspose of Input status
   filename: string = 'Orders.xlsx';
 
   orderStats: any = {
@@ -49,11 +50,13 @@ export class OrdersComponent {
     this.fetchOrders();
 
     this.dialogService.responseEmitter.subscribe((res: any)=>{
-      if(res == true){
-        console.log(this.orderData)
+
+      if(!res){
+        this.orderData[this.updateIndex].invoice_status = false
+      }
+
+      if(res && this.updateIndexStatus){
         this.orderData[this.updateIndex].invoice_status = true;
-      }else{
-        this.orderData[this.updateIndex].invoice_status = false;
       } 
     })
   }
@@ -73,7 +76,6 @@ export class OrdersComponent {
   fetchStats(){
     this.fetchData.HTTPGET(this.backendUrl.URLs.getOrderOverallData).subscribe({
       next: (stats: any)=>{
-        console.log(stats);
         this.orderStats = stats;
 
         stats.forEach((data: any)=>{
@@ -89,6 +91,10 @@ export class OrdersComponent {
     this.fetchData.HTTPPOST(this.backendUrl.URLs.getSellerOrders, this.template).subscribe({
       next: (data: any)=>{
         console.log(data);
+        if(!data.length){
+          this.orderData = [0]
+          return;
+        }
         this.orderData = [];
         data.forEach((order: any)=>{
           let orderInfo = {
@@ -107,9 +113,22 @@ export class OrdersComponent {
     });
   }
 
-  updateInvoice(index: number, _id: string){
+  dialogTemplate: any = {
+    title: 'Want to make Invoice Available?',
+    type: 'confirmation',
+    confirmationText: 'Yes, Avial it',
+    cancelText: 'No, Cancel it',
+  }
+
+  updateInvoice(e: Event, index: number, _id: string){
+    this.updateIndexStatus = (<HTMLInputElement>e.target).checked;
+    if(this.updateIndexStatus){
+      this.dialogTemplate.title = 'Want to make Invoice Available?';
+    }else{
+      this.dialogTemplate.title = 'Want to make Invoice Unavailable?';
+    }
     console.log("hello");
-    this.dialogService.confirmationDialogBox(_id);
+    this.dialogService.confirmationDialogBox(this.dialogTemplate);
     this.updateIndex = index;
   }
 

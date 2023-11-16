@@ -3,6 +3,7 @@ import { Component, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FetchDataService } from 'src/app/shared/services/fetch-data.service';
 import { UtilsModule } from 'src/app/utils/utils.module';
+import { InvoiceTemplateComponent } from 'src/app/shared/components/invoice-template/invoice-template.component';
 
 @Component({
   selector: 'app-order-page',
@@ -17,7 +18,8 @@ export class OrderPageComponent {
   constructor(
     private fetchDataService: FetchDataService,
     private backendUrl: UtilsModule,
-    private activeRoute: ActivatedRoute
+    private activeRoute: ActivatedRoute,
+    private InvoiceService: InvoiceTemplateComponent
   ) {
     activeRoute.params.subscribe({
       next: async (data) => {
@@ -49,8 +51,9 @@ export class OrderPageComponent {
       }
     })
   }
-  printInvoice(){
-      window.print();
+
+  viewInvoice(){
+    this.InvoiceService.open();
   }
 }
 

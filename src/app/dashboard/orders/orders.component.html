@@ -62,15 +62,17 @@
                         <th class="items heading">Quantity</th>
                         <th class="items heading">Amount</th>
                         <th class="items heading">Payment Status</th>
-                        <th class="items heading">Invoice Available</th>
+                        <!-- <th class="items heading">Invoice Available</th> -->
                         <!-- <th class="items heading">Track</th> -->
                         <th class="items heading">Invoice</th>
                     </tr>
                 </thead>
 
                 <tbody *ngIf="!orderData.length; else orderInfo">
-                    <tr *ngFor="let i of tableGenerator(pageSize)" >
-                        <td *ngFor="let i of tableGenerator(8)" class="items"><div class="skeleton" style="border-radius: 5px; color: transparent"> d</div></td>
+                    <tr *ngFor="let i of tableGenerator(pageSize)">
+                        <td *ngFor="let i of tableGenerator(8)" class="items">
+                            <div class="skeleton" style="border-radius: 5px; color: transparent"> d</div>
+                        </td>
                     </tr>
                 </tbody>
 
@@ -93,21 +95,24 @@
                                     <span *ngIf="item.payment_status == 'Failed' ||item.payment_status == 'failed'"
                                         style="color: rgb(var(--danger));">Failed</span>
                                 </td>
-                                <td class="items">
+                                <!-- <td class="items">
                                     <div class="slide-button d-flex align-item-center">
                                         <input type="checkbox" [(ngModel)]="item.invoice_status"
-                                            (change)="updateInvoice(i, item._id)" [name]="i + 'Available'"
+                                            (input)="updateInvoice($event, i, item._id)" [name]="i + 'Available'"
                                             [id]="i + 'Available'" />
-                                        <label [for]="i + 'Available'"></label>
+                                        <label [for]="i + 'Available'"></label>{{item.invoice_status}}
                                     </div>
-                                </td>
+                                </td> -->
                                 <!-- <td class="items">
                                     <span [routerLink]="['/dashboard/orderDetails', item.orderId]"
                                         class="material-symbols-outlined">open_in_new</span>
                                 </td> -->
-                                <td class="items">
-                                    <span [routerLink]="['/dashboard/orderDetails', item._id]"
-                                        class="pointer material-symbols-outlined">search</span>
+                                <td class="items action-btns">
+                                    <a href="javascript:void(0);" class="tooltip"
+                                        [routerLink]="['/dashboard/orderDetails', item._id]">
+                                        <i class="fs-20 action__btn-icon material-symbols-outlined">search</i>
+                                        <span class="tooltiptext">View</span>
+                                    </a>
                                 </td>
                             </ng-container>
                         </tr>

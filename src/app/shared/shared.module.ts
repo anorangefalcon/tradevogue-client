@@ -74,7 +74,7 @@ import { NotificationComponent } from './components/notification/notification.co
     DrawerComponent,
     InvoiceTemplateComponent,
     NotificationComponent
-  ],
+  ]
 
 })
 export class SharedModule { }

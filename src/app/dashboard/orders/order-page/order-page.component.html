@@ -1,7 +1,7 @@
-<section id="OrderDetails" class="d-flex flex-column gap-20" >
+<section *ngIf="orderInfo" id="OrderDetails" class="d-flex flex-column gap-20" >
     <div class="action-btns d-flex justify-content-end gap-10">
-        <button class="btn-secondary">Print Invoice</button>
-        <button class="btn-primary">View Invoice</button>
+        <button class="btn-secondary" [routerLink]="['/dashboard/orders']">Back</button>
+        <button class="btn-primary" (click)="viewInvoice()">View Invoice</button>
     </div>
     <div class="card card__pd-25 d-flex flex-column gap-20">
         <div class="order-header d-flex justify-content-md-between">

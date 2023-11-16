@@ -12,7 +12,7 @@ export class DashboardComponent {
   isCollapse: boolean = false;
   isSalesBtnActive: boolean = false;
   isProductBtnActive: boolean = false;
-  title: string = 'Dashboard';
+  
 
   navitems = [
     { name: 'Dashboard', icons: 'grid_view', route: '/dashboard' },

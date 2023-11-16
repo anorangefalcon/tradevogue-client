@@ -10,8 +10,11 @@ import { UtilsModule } from 'src/app/utils/utils.module';
 })
 export class StatisticsComponent implements OnInit {
   customerCount: number = 0;
+  customerCountChange: number = 0;
   orderCount: number = 0;
+  orderCountChange: number = 0;
   revenue: number = 0;
+  revenueChange: number = 0;
   inventoryAlert: number = 0;
 
 
@@ -114,17 +117,25 @@ export class StatisticsComponent implements OnInit {
 
   fetchData() {
     this.fetchdata.HTTPGET(this.backendUrl.URLs.fetchOverallData).subscribe((data: any) => {
-      this.inventoryAlert = data.alertCount;
-      this.customerCount = data.customerCount;
-      this.orderCount = data.orderCount;
+      console.log("Data", data);
 
-      this.revenue = 0;
-      data.salesStats.forEach((sale: any) => {
-        this.revenue += sale.totalSales;
-      })
+      this.inventoryAlert = data.alertCount;
+
+      this.revenue = data.revenue.total;
+      this.revenueChange = data.revenue.change;
+
+      this.customerCount = data.customer.count;
+      this.customerCountChange = data.customer.change;
+
+      this.orderCount = data.orders.count;
+      this.orderCountChange = data.orders.change;
+
+      // this.revenue = 0;
+      // data.salesStats.forEach((sale: any) => {
+      //   this.revenue += sale.totalSales;
+      // })
 
       this.reviewDataLabel = [];
-      // this.reviewData = [];
       Object.keys(data.customerReview).forEach((key: any) => {
         this.reviewDataLabel.push(key);
         this.reviewData.push(data.customerReview[key])
