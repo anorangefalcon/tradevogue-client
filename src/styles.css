@@ -755,6 +755,9 @@ ul {
 
 .btn:disabled {
     cursor: no-drop;
+    background-color: rgb(var(--primaryClr), 0.8);
+    border: 1px solid transparent;
+
 }
 
 .btn-primary {
@@ -1200,18 +1203,5 @@ ul {
 
     to {
         transform: translateX(110%);
-    }
-}
-
-
-/*  DISABLED CLASS */
-
-.disabled {
-    background-color: rgb(var(--primaryClr), 0.7);
-    color: rgb(var(--whiteClr));
-    cursor: no-drop;
-
-    &:hover {
-        background-color: rgb(var(--primaryClr), 0.7);
     }
 }

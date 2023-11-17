@@ -26,13 +26,13 @@
                             </div>
                         </ng-template>
                     </owl-carousel-o>
-                    <button *ngIf="!productSku" class=" wishlist-btn d-flex align-item-center absolute">
-                        <button class=" wishlist-btn d-flex align-item-center absolute" (click)="chooseWishlist()"
-                            [disabled]="data.wishlisted">
-                            <span class="material-symbols-outlined" [ngClass]="data.wishlisted ? 'wishlisted': ''">
-                                favorite
-                            </span>
-                        </button>
+                    <button *ngIf="!productSku" class="btn wishlist-btn d-flex align-item-center absolute"
+                        (click)="chooseWishlist()">
+
+                        <span class="material-symbols-outlined" [ngClass]="data.wishlisted ? 'wishlisted': ''">
+                            favorite
+                        </span>
+
                     </button>
                 </div>
                 <div class="product-desc">
@@ -108,7 +108,7 @@
                             </div>
                             <div *ngIf="!productSku" class="cart-div d-flex gap-10 align-item-center">
                                 <button [ngClass]="!this.selectedQ ? 'disabled': ''" [disabled]="!this.selectedQ"
-                                    class="btn-primary d-flex gap-10 align-item-center cart cart-btn"
+                                    class="btn btn-sm btn-rounded fw-500 btn-primary d-flex gap-10 align-item-center"
                                     (click)="addToCart()">
                                     ADD TO CART
                                 </button>
@@ -142,23 +142,23 @@
                                                                 In Stock
                                                                 &#40;{{stock.quantity}}&#41;
                                                             </span>
-    
+
                                                             <ng-template #low_inventry>
-    
+
                                                                 <span
                                                                     *ngIf="( (stock.quantity) < (data.info.orderQuantity | lessThanOrEqual: stock.quantity)[(data.info.orderQuantity | lessThanOrEqual: stock.quantity).length -1]) && (stock.quantity) >= (data.info.orderQuantity | lessThanOrEqual: stock.quantity)[0]; else empty_inventry"
                                                                     class="inventory okay">
                                                                     Low Inventory &#40;{{
                                                                     stock.quantity }}&#41;
                                                                 </span>
-    
+
                                                                 <ng-template #empty_inventry>
                                                                     <span class="inventory bad">
                                                                         Out of Stock &#40;{{
                                                                         stock.quantity }}&#41;
                                                                     </span>
                                                                 </ng-template>
-    
+
                                                             </ng-template>
                                                         </td>
                                                     </tr>
@@ -168,7 +168,7 @@
                                     </tbody>
                                 </table>
                             </div>
-                        </div>    
+                        </div>
 
                         <div class="d-flex flex-column">
 
@@ -293,9 +293,9 @@
 
                 <ng-container *ngIf="!productSku">
                     <div class="add-review-btn" *ngIf="!userReview">
-                        <button class="btn-primary review-btn pointer d-flex align-item-center gap-10"
+                        <button class="btn btn-sm fw-500 btn-rounded btn-primary d-flex align-item-center gap-5"
                             *ngIf="!showReview" (click)="showReview = true; scroll(addReview)">
-                            <span class="material-symbols-outlined">
+                            <span class="fs-18 material-symbols-outlined">
                                 add
                             </span>
                             Add a Review
@@ -319,12 +319,12 @@
                         </div>
                         <textarea formControlName="review" rows="5" placeholder="Write your review here..."></textarea>
                         <div class="d-flex gap-10">
-                            <button class="btn-primary" [ngClass]="ratingForm.invalid ? 'disabled': ''"
+                            <button class="btn-primary btn btn-sm btn-rounded" [ngClass]="ratingForm.invalid ? 'disabled': ''"
                                 [disabled]="ratingForm.invalid" (click)="addOrUpdateReview(); scroll(reviews)">
                                 {{ userReview ? 'Update' : 'Submit' }}
                             </button>
 
-                            <button class="btn-secondary review-btn pointer d-flex align-item-center gap-10"
+                            <button class="btn-secondary review-btn pointer d-flex align-item-center gap-10 btn btn-sm btn-rounded"
                                 *ngIf="this.showReview==true"
                                 (click)="this.showReview = !this.showReview; scroll(reviews)">
                                 Cancel
@@ -335,9 +335,10 @@
             </ng-container>
         </div>
 
-       
+
         <div *ngIf="!productSku" style="padding-block-end: 50px;">
-            <app-product-card-carousel [titles] = carouselTitles [whatToFetch]="fetchSimilarProducts"></app-product-card-carousel>
+            <app-product-card-carousel [titles]=carouselTitles
+                [whatToFetch]="fetchSimilarProducts"></app-product-card-carousel>
         </div>
     </div>
 </section>

@@ -89,6 +89,8 @@ export class SettingsComponent {
     })
 
     this.route.paramMap.subscribe((params: any) => {
+      console.log(params, "my params");
+      
       this.changeComponent(params.get('page'));
 
     });

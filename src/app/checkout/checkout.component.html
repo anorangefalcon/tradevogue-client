@@ -54,11 +54,11 @@
                 <p>₹{{cart.amounts.total | number : '1.0-2'}}</p>
             </div>
             <button *ngIf="(!CouponApplied && !(BillingPageVisited))"
-                class="btn-primary apply__coupon d-flex align-item-center justify-content-center"
+                class="btn-secondary d-flex flex-center gap-5 btn btn-md "
                 (click)="CouponOpener()">
 
                 Apply Coupons
-                <span class="material-symbols-outlined">
+                <span class="material-symbols-outlined fs-18">
                     chevron_right
                 </span>
 
@@ -71,8 +71,8 @@
                 <span (click)="RemoveAppliedCoupon()">Remove</span>
             </button>
             <!-- (click)="CreateOrder()" -->
-            <button class="btn-primary" (click)="verifyOrderSummary()" *ngIf="!BillingPageVisited" ><a>Proceed to Checkout</a></button>
-            <button class="btn-primary" *ngIf="BillingPageVisited" (click)="ProceedToPayment()">Proceed to Payment</button>
+            <button class="btn-primary btn btn-md " (click)="verifyOrderSummary()" *ngIf="!BillingPageVisited" ><a>Proceed to Checkout</a></button>
+            <button class="btn-primary btn btn-md " *ngIf="BillingPageVisited" (click)="ProceedToPayment()">Proceed to Payment</button>
               
         </div>
     </div>
@@ -182,7 +182,7 @@
 
 
 
-                <button (click)="ApplyCoupon(coupon)" class="coupon__btns">Apply Coupon</button>
+                <button (click)="ApplyCoupon(coupon)" class="coupon__btns btn ">Apply Coupon</button>
             </div>
 
         </div>

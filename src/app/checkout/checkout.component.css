@@ -426,15 +426,7 @@
 
 
 /* =--------- */
-.apply__coupon {
-    background: transparent;
-    color: rgba(var(--textblack), 0.5);
-    display: flex;
-    align-items: center;
-    padding-inline: 0;
-    padding-block: 8px;
-    justify-content: center;
-}
+
 
 .wrapper {
     opacity: 0;

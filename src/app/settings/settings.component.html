@@ -131,10 +131,10 @@
 
 
                 <div class="d-flex gap-15">
-                    <button class="width-160 cancelbtn" (click)="editClick()" *ngIf="!isReadOnly">Cancel</button>
-                    <button class="btn-primary width-160" #EditBtn (click)="editClick()" *ngIf="isReadOnly">Edit
+                    <button class="btn btn-md btn-rounded btn-secondary" (click)="editClick()" *ngIf="!isReadOnly">Cancel</button>
+                    <button class="btn btn-md btn-rounded btn-primary" #EditBtn (click)="editClick()" *ngIf="isReadOnly">Edit
                         Profile</button>
-                    <button class="btn-primary width-160" #EditBtn (click)="saveDetails()"
+                    <button class="btn btn-md btn-rounded btn-primary" #EditBtn (click)="saveDetails()"
                         *ngIf="!isReadOnly">Save</button>
                 </div>
 
@@ -172,9 +172,9 @@
                                 <button class="btn default__btn" (click)="MakeDefault(address,i)" *ngIf="i!=0">Make this
                                     Defult</button>
 
-                                <button class="edit__btn d-flex align-item-center"
+                                <button class="edit__btn d-flex align-item-center btn"
                                     (click)="EditAddress(address,i)">Edit</button>
-                                <button class="remove" (click)="RemoveAddress(address,i)">Remove</button>
+                                <button class="remove btn " (click)="RemoveAddress(address,i)">Remove</button>
                             </div>
                         </div>
                         <div>
@@ -291,7 +291,7 @@
                 </form>
 
 
-                <button class="btn-primary width-160" (click)="onPasswordChange()">Save</button>
+                <button class="btn btn-md btn-rounded btn-primary btn-inline" (click)="onPasswordChange()">Save</button>
             </div>
 
             <div class="Orders  d-flex flex-column gap-20" *ngIf="showData=='orders'">
