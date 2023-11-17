@@ -15,7 +15,7 @@ export class CardTemplateComponent {
   showPopup: boolean = false;
   selectedItem: boolean = false;
 
-  constructor(private cartService: CartService, private popupService: PopupService, private wishlistService : WishlistService) {    
+  constructor(private cartService: CartService, private popupService: PopupService, private wishlistService : WishlistService,) {    
    }
 
   avgRating: number = 0;
@@ -93,5 +93,4 @@ export class CardTemplateComponent {
       this.popupService.openPopup();
       this.showPopup = true;
     }
-
 }

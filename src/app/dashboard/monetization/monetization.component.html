@@ -1,29 +1,33 @@
 <section class="d-flex flex-column gap-20 ">
-  <div class="card card__pd-25 d-flex flex-column gap-15">
-    <h2 class="form-heading">Stripe Payment Keys</h2>
-    <form [formGroup]="stripeKeysForm" (ngSubmit)="onSubmit()" class="d-flex gap-25 flex-wrap justify-content-md-between">
-      <div class="form-group d-flex flex-column gap-5">
-        <label for="publicKey" class="form__label">Public Key</label>
-        <input type="text" id="publicKey" formControlName="publicKey" class="form__input">
-        <div *ngIf="stripeKeysForm.get('publicKey')?.invalid && stripeKeysForm.get('publicKey')?.touched"
-          class="error-message">
-          Public Key is required.
+    <form [formGroup]="stripeKeysForm" (ngSubmit)="onSubmit()" class="card card__pd-25 d-flex flex-column gap-15">
+
+      <div class="d-flex justify-content-md-between align-item-center">
+        <h2 class="form-heading">Stripe Payment Keys</h2>
+          <button type="submit" [disabled]="!stripeKeysForm.valid" class="btn btn-xs fw-500 btn-rounded btn-primary">Submit</button>
+      </div>
+
+      <div class="d-flex gap-25 flex-wrap justify-content-md-between">
+        <div class="form-group d-flex flex-column gap-5">
+          <label for="publicKey" class="form__label">Public Key</label>
+          <input type="text" id="publicKey" formControlName="publicKey" class="form__input">
+          <div *ngIf="stripeKeysForm.get('publicKey')?.invalid && stripeKeysForm.get('publicKey')?.touched"
+            class="error-message">
+            Public Key is required.
+          </div>
+        </div>
+    
+        <div class="form-group d-flex flex-column gap-5">
+          <label for="privateKey" class="form__label">Private Key</label>
+          <input type="text" id="privateKey" formControlName="privateKey" class="form__input">
+          <div *ngIf="stripeKeysForm.get('privateKey')?.invalid && stripeKeysForm.get('privateKey')?.touched"
+            class="error-message">
+            Private Key is required.
+          </div>
         </div>
       </div>
-  
-      <div class="form-group d-flex flex-column gap-5">
-        <label for="privateKey" class="form__label">Private Key</label>
-        <input type="text" id="privateKey" formControlName="privateKey" class="form__input">
-        <div *ngIf="stripeKeysForm.get('privateKey')?.invalid && stripeKeysForm.get('privateKey')?.touched"
-          class="error-message">
-          Private Key is required.
-        </div>
-      </div>
-  
-      <button type="submit" [disabled]="!stripeKeysForm.valid" class="submit-button btn-primary">Submit</button>
+
     </form>
-  </div>
-  
+
   <div class="card card__pd-25 d-flex flex-column gap-15 ">
     <h2 class="form-heading">User Keys Table</h2>
     <div class="table-wrapper table-list">
@@ -138,7 +142,12 @@
   </div>
   
   <div class="card card__pd-25 d-flex flex-column gap-15">
-    <h2 class="form-heading">Razorpay Payment Keys</h2>
+    
+    <div class="d-flex justify-content-md-between align-item-center">
+      <h2 class="form-heading">Razorpay Payment Keys</h2>
+      <button type="submit" [disabled]="!razorpayKeysForm.valid" class="btn btn-xs fw-500 btn-rounded btn-primary">Submit</button>
+    </div>
+
     <form [formGroup]="razorpayKeysForm" (ngSubmit)="onSubmit()" class="form d-flex gap-25">
       <div class="form-group d-flex flex-column gap-5">
         <label for="rzpPublicKey" class="form__label">Razorpay Public Key</label>
@@ -157,9 +166,7 @@
           Razorpay Private Key is required.
         </div>
       </div>
-  
-      <button type="submit" [disabled]="!razorpayKeysForm.valid" class="submit-button btn-primary">Submit</button>
-    </form>
+      </form>
   </div>
   
   

@@ -5,6 +5,7 @@ import { ImageUploadService } from 'src/app/shared/services/image-upload.service
 import { FetchDataService } from 'src/app/shared/services/fetch-data.service';
 import { UtilsModule } from 'src/app/utils/utils.module';
 import { HttpClient } from '@angular/common/http';
+import { ToastService } from 'src/app/shared/services/toast.service';
 
 @Component({
   selector: 'app-notifications',
@@ -22,7 +23,8 @@ export class NotificationsComponent {
   editingIndex: any;
   fcmTokens: any;
 
-  constructor(private fb: FormBuilder, private notificationService: NotificationService, private uploadService: ImageUploadService, private fetch: FetchDataService, private util : UtilsModule, private http: HttpClient) {
+  constructor(private fb: FormBuilder, private notificationService: NotificationService, private uploadService: ImageUploadService, private fetch: FetchDataService, private util : UtilsModule, private http: HttpClient,
+    private toast: ToastService) {
 
     this.notificationService.getRegistrationIDs().subscribe((res)=> {
       this.registrationIds = res;
@@ -149,6 +151,16 @@ export class NotificationsComponent {
 
 
       const apiUrl = 'http://localhost:3000/send-notification';
+
+
+      // this.fetch.HTTPPOST(apiUrl, data).subscribe((response)=> {
+        
+      //   if(response) {
+      //     this.toast.successToast({'title': 'Notification sent'});
+      //   }
+
+      //   this.notificationForm.reset();
+      // })
 
       this.http.post(apiUrl, data).subscribe(
         (response:  any) => {

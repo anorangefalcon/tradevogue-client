@@ -26,6 +26,10 @@ export class MonetizationComponent {
   ngOnInit(): void {
     this.createForm();
     this.createRazorpayForm();
+    this.fetchData();
+  }
+
+  fetchData() {
     this.http.get<any[]>('http://localhost:1000/paymentKeys/getAll').subscribe((data) => {
       this.paymentKeys = data;
       this.razorpayPaymentKeys = data;
@@ -102,6 +106,8 @@ export class MonetizationComponent {
          
         });
     }
+
+    this.fetchData()
 
   }
 

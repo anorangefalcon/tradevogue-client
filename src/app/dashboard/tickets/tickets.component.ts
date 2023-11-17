@@ -6,6 +6,7 @@ import { FetchDataService } from 'src/app/shared/services/fetch-data.service';
 import { catchError, forkJoin } from 'rxjs';
 import { FormBuilder, Validators } from '@angular/forms';
 import { CookieService } from 'ngx-cookie-service';
+import { ToastService } from 'src/app/shared/services/toast.service';
 
 @Component({
   selector: 'app-tickets',
@@ -29,7 +30,7 @@ export class TicketsComponent {
   messageInput: string = '';
   token: any;
 
-  constructor(private utils: UtilsModule, private http: HttpClient, private popupService: PopupService, private fetchDataService: FetchDataService, private formBuilder: FormBuilder, private cookie: CookieService) {
+  constructor(private utils: UtilsModule, private http: HttpClient, private popupService: PopupService, private fetchDataService: FetchDataService, private formBuilder: FormBuilder, private cookie: CookieService, private toast: ToastService) {
     this.loadData();
 
 
@@ -188,7 +189,7 @@ export class TicketsComponent {
 
     this.fetchDataService.HTTPPOST(this.utils.URLs.addTicketTitle, body)
       .subscribe((response: any) => {
-        if (response.success) {
+        if (response) {
           this.ticketData
             .push(this.updatedItem);
         }
@@ -219,7 +220,7 @@ export class TicketsComponent {
 
     this.fetchDataService.HTTPPOST(this.utils.URLs.addTicketTitle, body)
       .subscribe((response: any) => {
-        if (response.success) {
+        if (response) {
           this.ticketData
             .push(this.updatedItem);
         }
@@ -230,6 +231,7 @@ export class TicketsComponent {
   }
 
   deleteTicketTitle(item: any) {
+    console.log("clicked")
     this.loadData()
     const body = {
       _id: this.ticketTypeId
@@ -237,7 +239,8 @@ export class TicketsComponent {
 
     this.fetchDataService.HTTPPOST(this.utils.URLs.deleteTicket, body)
       .subscribe((response: any) => {
-        if (response.success) {
+        if (response) {
+          this.toast.successToast({'title': 'Deleted Successfully'})
           const deletedIndex = this.ticketData
             .findIndex(title => title === item);
           if (deletedIndex !== -1) {

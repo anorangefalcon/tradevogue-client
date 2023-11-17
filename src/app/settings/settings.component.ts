@@ -53,6 +53,7 @@ export class SettingsComponent {
   // addnewAddress:boolean=false;
   userAddresses!: any;
   TranslateData: boolean = false;
+  currentPage: number = 1;
 
   // private toastService: ToastService
   constructor(private backendURLs: UtilsModule,
@@ -277,6 +278,15 @@ export class SettingsComponent {
   }
 
   // orders work
+  handlePageChange(pageNumber: number) {
+    this.currentPage = pageNumber;
+    this.getOrders()
+  }
+
+  //  ADDRESS COMPLETE
+  
+
+  //  ORDERS TS
    getOrders(){
     this.showData='orders';
     setTimeout(()=>{
