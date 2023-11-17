@@ -49,7 +49,7 @@
     </a>
 
         <!-- (click)="chooseWishlist()" -->
-        <a class="options-icon wishlist-logo" (click)="RemoveOrAddToWishlist(product.wishlisted)">
+        <a class="options-icon wishlist-logo" (click)="RemoveOrAddToWishlist(product?.wishlisted)">
             <span class="material-symbols-outlined" [ngClass]="product.wishlisted ? 'wishlisted': ''">
                 favorite
             </span>

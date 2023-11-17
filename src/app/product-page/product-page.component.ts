@@ -85,7 +85,7 @@ export class ProductPageComponent implements OnInit {
     this.loading = true;
     let params = new HttpParams();
     params = params.set("sku", this.sku);
-    
+
     if (this.productSku) {
       this.fetchService.HTTPGET(this.backendUrl.URLs.fetchProductDetails, params).subscribe((data: any) => {
         this.updateDataFields(data);
@@ -121,7 +121,7 @@ export class ProductPageComponent implements OnInit {
         review: data.userReview.comment
       })
     }
-    this.fetchSimilarProducts = { 
+    this.fetchSimilarProducts = {
       'tags': this.data.info.tags
     };
     this.loading = false;
@@ -170,6 +170,21 @@ export class ProductPageComponent implements OnInit {
   }
 
 
+
+  RemoveOrAddToWishlist(event: any = null) {
+    if (!event) {
+      this.wishlistService.ShowWishlist(this.data._id);
+    }
+    else {
+      this.wishlistService.removeFromWishlist(this.data._id).subscribe((data) => {
+        this.wishlistService.getWishlistCount();
+        this.data.wishlisted = false;
+      });
+    }
+  }
+
+
+
   getOrderQuantity() {
     let limit = this.data.assets[this.assetIndex].stockQuantity[this.sizeIndex].quantity;
     let arr = this.data.info.orderQuantity;
@@ -197,7 +212,7 @@ export class ProductPageComponent implements OnInit {
       comment: this.ratingForm.controls['review'].value
     }
 
-    this.reviewService.addReview(review).subscribe(() => {      
+    this.reviewService.addReview(review).subscribe(() => {
       this.fetchProductData();
       this.showReview = false;
       this.toastService.successToast({

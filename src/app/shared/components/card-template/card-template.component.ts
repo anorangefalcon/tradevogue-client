@@ -15,7 +15,8 @@ export class CardTemplateComponent {
   showPopup: boolean = false;
   selectedItem: boolean = false;
 
-  constructor(private cartService: CartService, private popupService: PopupService, private wishlistService : WishlistService,) {    
+  constructor(private cartService: CartService, private popupService: PopupService, private wishlistService : WishlistService,) { 
+     
    }
 
   avgRating: number = 0;
@@ -36,22 +37,21 @@ export class CardTemplateComponent {
     return Array(newTotal).fill(0);
   }
 
-   chooseWishlist() {  
-    this.wishlistService.ShowWishlist(this.product._id);
-  }
 
   RemoveOrAddToWishlist(event:any=null){
     if(!event){
       this.wishlistService.ShowWishlist(this.product._id);
     }
     else{
-      this.wishlistService.removeFromWishlist(this.product._id).subscribe((data)=>{        
+      this.wishlistService.removeFromWishlist(this.product._id).subscribe((data)=>{    
+            this.wishlistService.getWishlistCount();
       });
     }
   }
 
   
   addToCart(){
+    console.log('size come up is ',this.product.info.orderQuantity[0]);
     
     const cartItem = {
       sku: this.product.sku,

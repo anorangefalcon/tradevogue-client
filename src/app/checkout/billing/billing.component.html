@@ -1,27 +1,29 @@
-<!-- ADDRESS -->
+<!-- ADDRESS STARTS -->
 <!-- show address -->
-<div class="address">
+
+<div class="container billingPage">
+<div class="address d-flex flex-column gap-20">
     <div class="d-flex flex-column gap-10">
 
-        <div class="d-flex justify-content-md-between align-item-center pointer"
-            [ngClass]="{'h2_div':!DeliveredAddress}">
-            <div class="d-flex align-item-center pointer">
+        <div class="d-flex justify-content-md-between align-item-center pointer overall__div">
+
                 <h2>SELECT DELIVERY ADDRESS
                 </h2>
-            </div>
+
 
             <div class="d-flex align-item-center addAddress__div" *ngIf="!DeliveredAddress" (click)="AddAddress()">
-                <span class="material-symbols-outlined">
-                    add_circle
-                </span>
-                <p>ADD NEW ADDRESS</p>
+                    <span class="material-symbols-outlined">
+                        add_circle
+                    </span>
+                    <p>ADD NEW ADDRESS</p>
+
             </div>
 
-            <button *ngIf="DeliveredAddress" class="changeaddress__btn" (click)="ChangeAddress()">
+            <!-- <button *ngIf="DeliveredAddress" class="changeaddress__btn" (click)="ChangeAddress()">
 
                 Change Address
 
-            </button>
+            </button> -->
 
         </div>
 
@@ -38,42 +40,43 @@
 
     </div>
 
-    <div class="d-flex flex-column gap-10" *ngIf="!DeliveredAddress">
+    <div class="d-flex flex-column gap-20 main-address" *ngIf="!DeliveredAddress">
         <ng-container *ngFor="let address of userAddresses; let i=index" class="d-flex address__firstdiv ">
-            <div class="ok" style="display: none;">
-                <input type="radio" id="radio{{i}}" name="address" value="address" class="d-flex" [checked]="address.selected">
-            </div>
-
-            <label for="radio{{i}}" id="{{i}}" class="d-flex align-item-center pointer" (click)="AddressClicked(address)">
-
-                <div class="d-flex gap-10 justify-content-md-between   mw100">
-                    <div class="address-part">
-                        <div class="d-flex justify-content-md-between">
-                            <div class="d-flex gap-10">
-                                <p class="name pointer-none">{{address.firstname}} {{address.lastname}}</p>
-                                <button class="default__btn btn" (click)="MakeDefault(address,i)" *ngIf="i!=0">Set Default</button>
-                                <button class="deliver__btn btn" *ngIf="address?.selected">Deliver Here</button>
-                            </div>  
-                        </div>
-
-                        <p>{{address.apartment}} {{address.area}} {{address.landmark}}, {{address.town_city}}</p>
-                        <p>{{address.state}}- {{address.pincode}}</p>
-                        <!-- <button *ngIf=" class="btn-primary">Delivery Here</button> -->
-                    </div>
-                    <div class="d-flex flex-column gap-5 buttons-part">
-                        <!-- <button class="edit__btn btn" (click)="EditAddress(address,i)">Edit</button> -->
-                        <span class="material-symbols-outlined edit__btn" (click)="EditAddress(address,i)">
-                            edit
-                        </span>
-                        <span class="material-symbols-outlined remove__btn" (click)="RemoveAddress(address,i)">
-                            delete
-                        </span>
-                    </div>
-
+            <div class="single-address">
+                <div class="ok" style="display: none;">
+                    <input type="radio" id="radio{{i}}" name="address" value="address" class="d-flex" [checked]="address.selected">
                 </div>
-
-            
-            </label>
+    
+                <label for="radio{{i}}" id="{{i}}" class="d-flex align-item-center pointer" (click)="AddressClicked(address)">
+    
+                    <div class="d-flex gap-10 justify-content-md-between   mw100">
+                        <div class="address-part">
+                            <div class="d-flex justify-content-md-between">
+                                <div class="d-flex gap-10">
+                                    <p class="name pointer-none">{{address.firstname}} {{address.lastname}}</p>
+                                    <button class="default__btn btn" *ngIf="address?.selected">Deliver Here</button>
+                                </div>  
+                            </div>
+    
+                            <p>{{address.apartment}} {{address.area}} {{address.landmark}}, {{address.town_city}}</p>
+                            <p>{{address.state}}- {{address.pincode}}</p>
+                            <!-- <button *ngIf=" class="btn-primary">Delivery Here</button> -->
+                        </div>
+                        <div class="d-flex flex-column gap-5 buttons-part">
+                            <!-- <button class="edit__btn btn" (click)="EditAddress(address,i)">Edit</button> -->
+                            <span class="material-symbols-outlined edit__btn" (click)="EditAddress(address,i)">
+                                edit
+                            </span>
+                            <span class="material-symbols-outlined remove__btn" (click)="RemoveAddress(address,i)">
+                                delete
+                            </span>
+                        </div>
+    
+                    </div>
+    
+                
+                </label>
+            </div>
         </ng-container>
     </div>
 
@@ -90,7 +93,7 @@
 </div>
 
 
-<!-- ADDRESS -->
+<!-- ADDRESS FINISH -->
 
 <div class="payment-method-buttons">
     <button (click)="onStripeButtonClick()" [class.selected]="selectedPaymentMethod === 'stripe'">Pay with
@@ -123,7 +126,7 @@
         Stripe.js injects the Address Element
     </div> -->
         <button id="submit" class="btn-primary">
-            <div class="spinner hidden" id="spinner"></div>
+            <!-- <div class="spinner hidden" id="spinner"></div> -->
             <span id="button-text">Pay now</span>
         </button>
         <div id="payment-message" class="hidden"></div>
@@ -140,4 +143,6 @@
             </form>
         </div>
     </div>
+</div>
+
 </div>

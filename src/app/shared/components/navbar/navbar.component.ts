@@ -51,7 +51,7 @@ export class NavbarComponent implements OnInit {
 
     this.wishlistService.getWishlistCount();
     this.wishlistService.WishlistCount$.subscribe((data) => {
-      if (data) {
+      if (data || data==0) {
         this.wishlistCount = data;
       }
     })

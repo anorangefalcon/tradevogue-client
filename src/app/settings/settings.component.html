@@ -11,7 +11,7 @@
                     </span>
                 </li>
                 <li class="nav-links" [ngClass]="{'nav-link-active': this.showData === 'orders'}" (click)="getOrders()">
-                    <a>
+                    <a class="d-flex">
                         <span class="nav-txt">My Order</span>
                     </a>
                     <span class="material-symbols-outlined right__icon">
@@ -19,7 +19,7 @@
                     </span>
                 </li>
                 <li class="nav-links" [ngClass]="{'nav-link-active': this.showData === 'wishlist'}"
-                    (click)="changeComponent('wishlist')"><a>
+                    (click)="changeComponent('wishlist')"><a class="d-flex">
                         <span class="nav-txt">My Wishlist</span>
                     </a>
                     <span class="material-symbols-outlined right__icon">
@@ -29,7 +29,7 @@
 
 
                 <li class="nav-links" [ngClass]="{'nav-link-active': this.showData === 'addresses'}"
-                    (click)="getAddresses()"><a>
+                    (click)="getAddresses()"><a class="d-flex">
                         <span class="nav-txt">Addresses</span>
                     </a>
                     <span class="material-symbols-outlined right__icon">
@@ -38,7 +38,7 @@
                 </li>
 
                 <li class="nav-links" [ngClass]="{'nav-link-active': this.showData === 'changePassword'}"
-                    (click)="changeComponent('changePassword')"><a>
+                    (click)="changeComponent('changePassword')"><a class="d-flex">
 
                         <span class="nav-txt">Change Password</span>
                     </a>
@@ -50,12 +50,12 @@
         </nav>
 
         <div class="content" [ngClass]="{'expand':TranslateData}">
-            <div class="profile selected d-flex flex-column gap-20" *ngIf="showData=='profile'">
+            <div class="profile d-flex flex-column gap-20" *ngIf="showData=='profile'">
 
                 <div class="d-flex align-item-center pointer h2_div" (click)="TranslateBack()">
-                    <span class="material-symbols-outlined left__icon">
+                    <!-- <span class="material-symbols-outlined left__icon">
                         chevron_left
-                    </span>
+                    </span> -->
                     <h2>
                         Profile Details
                     </h2>
@@ -64,8 +64,7 @@
                 </div>
 
 
-                <form [formGroup]="ProfileForm" class="d-flex gap-15 disableInput flex-wrap"
-                    [ngClass]="isReadOnly === true ? 'disableInput' : 'enableInput'">
+                <form [formGroup]="ProfileForm" class="d-flex gap-15 disableInput flex-wrap">
                     <div class="form__group relative d-flex flex-column">
                         <label class="form__label">First Name<span>*</span></label>
                         <span class="material-symbols-outlined form__icon absolute">person</span>
@@ -131,10 +130,10 @@
 
 
                 <div class="d-flex gap-15">
-                    <button class="width-160 cancelbtn" (click)="editClick()" *ngIf="!isReadOnly">Cancel</button>
-                    <button class="btn-primary width-160" #EditBtn (click)="editClick()" *ngIf="isReadOnly">Edit
+                    <button class="btn-secondary  btn btn-sm btn-rounded" (click)="editClick()" *ngIf="!isReadOnly">Cancel</button>
+                    <button class="btn-primary btn btn-sm btn-rounded" #EditBtn (click)="editClick()" *ngIf="isReadOnly">Edit
                         Profile</button>
-                    <button class="btn-primary width-160" #EditBtn (click)="saveDetails()"
+                    <button class="btn-primary btn btn-sm btn-rounded" #EditBtn (click)="saveDetails()"
                         *ngIf="!isReadOnly">Save</button>
                 </div>
 
@@ -143,13 +142,13 @@
             </div>
 
             <div *ngIf="showData=='addresses'" class="address">
-                <div class="d-flex  align-item-center justify-content-md-between pointer address__heading h2_div"
+                <div class="d-flex  align-item-center justify-content-md-between pointer address__heading"
                     (click)="TranslateBack()">
 
-                    <div class="d-flex align-item-center pointer h2_div" (click)="TranslateBack()">
-                        <span class="material-symbols-outlined left__icon">
+                    <div class="d-flex align-item-center pointer" (click)="TranslateBack()">
+                        <!-- <span class="material-symbols-outlined left__icon">
                             chevron_left
-                        </span>
+                        </span> -->
                         <h2>
                             My Addresses
                         </h2>
@@ -166,16 +165,16 @@
                 <div class="d-flex flex-column gap-10">
                     <div class="addressDiv d-flex flex-column gap-20">
                         <ng-container  *ngFor="let address of userAddresses;let i=index" >
-                            <div class="d-flex mw100 justify-content-md-between main-address">
+                            <div class="d-flex mw100 particularAddress justify-content-md-between">
                                 <div class="d-flex flex-column  gap-10 address__firstdiv">
                                     <div class="d-flex gap-10">
-                                        <p class="name text-capitalize">{{address.firstname}} {{address.lastname}}</p>
-                                        <button class="btn default__btn" (click)="MakeDefault(address,i)" *ngIf="i!=0">set default</button>
+                                        <p class="name">{{address.firstname}} {{address.lastname}}</p>
+                                        <button class="default__btn" (click)="MakeDefault(address,i)" *ngIf="i!=0">set default</button>
                                     </div>
                                     <div> 
-                                        <p class="other__details">{{address.apartment}} {{address.area}} {{address.landmark}},
+                                        <p >{{address.apartment}} {{address.area}} {{address.landmark}},
                                             {{address.town_city}}</p>
-                                        <p class="other__details">{{address.state}}- {{address.pincode}}</p>
+                                        <p>{{address.state}}- {{address.pincode}}</p>
                                     </div>
                                 </div>
                                 <div class="d-flex">
@@ -200,10 +199,10 @@
             </div>
 
             <div class="changePassword" *ngIf="showData=='changePassword'">
-                <div class="d-flex align-item-center pointer h2_div" (click)="TranslateBack()">
-                    <span class="material-symbols-outlined left__icon">
+                <div class="d-flex align-item-center pointer" (click)="TranslateBack()">
+                    <!-- <span class="material-symbols-outlined left__icon">
                         chevron_left
-                    </span>
+                    </span> -->
                     <h2>
                         Change Password
                     </h2>
@@ -240,7 +239,7 @@
                         <div class="password-helper d-flex justify-content-md-between">
 
 
-                            <div class="helper-inside d-flex flex-column ">
+                            <div class="d-flex flex-column ">
                                 <p [ngClass]="{'red-text': changePasswordForm.get('newPassword')?.hasError('minlength') && !changePasswordForm.get('newPassword')?.hasError('required'),
                      'green-text': !changePasswordForm.get('newPassword')?.hasError('minlength') && !changePasswordForm.get('newPassword')?.hasError('required')}"
                                     *ngIf="!changePasswordForm.get('newPassword')?.hasError('required')">
@@ -266,7 +265,7 @@
                                 </p>
                             </div>
 
-                            <div class="helper-inside d-flex flex-column ">
+                            <div class="d-flex flex-column">
                                 <p [ngClass]="{'red-text': changePasswordForm.get('newPassword')?.hasError('digit') && !changePasswordForm.get('newPassword')?.hasError('required'),
                'green-text': !changePasswordForm.get('newPassword')?.hasError('digit') && !changePasswordForm.get('newPassword')?.hasError('required')}"
                                     *ngIf="!changePasswordForm?.get('newPassword')?.hasError('required')">
@@ -303,7 +302,7 @@
                 </form>
 
 
-                <button class="btn-primary width-160" (click)="onPasswordChange()">Save</button>
+                <button class="btn-primary btn-rounded btn-sm btn-inline" (click)="onPasswordChange()">Save</button>
             </div>
 
             <div class="Orders  d-flex flex-column gap-20" *ngIf="showData=='orders'">
@@ -408,10 +407,10 @@
 
             <div *ngIf="showData=='wishlist'" class="wishlist">
 
-                <div class="d-flex align-item-center pointer h2_div" (click)="TranslateBack()">
-                    <span class="material-symbols-outlined left__icon">
+                <div class="d-flex align-item-center pointer" (click)="TranslateBack()">
+                    <!-- <span class="material-symbols-outlined left__icon">
                         chevron_left
-                    </span>
+                    </span> -->
                     <h2 style="margin-block-end: 15px;">
                         Wishlists
                     </h2>

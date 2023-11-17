@@ -52,11 +52,18 @@ export class ExploreComponent {
 
       this.fetchData.getProducts(actualParams, this.limit, 1).subscribe((data: any) => {
         data.items.forEach((el:any)=>{
-          this.wishlistService.WishListedProducts.subscribe((response:any)=>{
+          this.wishlistService.WishListedProducts.subscribe((response:any)=>{  
             if(response.includes(el._id)){
               el.wishlisted=true;
             } 
+            else{
+              el.wishlisted=false;
+            }
           })
+
+        
+          // this.wishlistService.
+
         })     
         this.products = data.items;      
         this.totalProducts = data.total;
@@ -199,7 +206,7 @@ export class ExploreComponent {
 
   onRemove(event: any, field: any) {
     console.log('event coming up is ',event.target.value," field is ",field);
-    
+
     if (Array.isArray(this.filterApplied[field])) {
 
       let index = this.filterApplied[field].indexOf(event.target.value);

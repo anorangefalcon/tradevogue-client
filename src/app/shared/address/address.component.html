@@ -70,7 +70,7 @@
     
     <div class="d-flex gap-15">
         <!-- <button class="width-160 cancelbtn">Cancel</button> -->
-        <button class="btn-primary width-160" #EditBtn (click)="SaveAddress()"  [disabled]="DetailsForm.invalid" >
+        <button class="btn-primary btn-sm btn-rounded" #EditBtn (click)="SaveAddress()"  [disabled]="DetailsForm.invalid" >
             <span *ngIf="receiveData">Update</span>
             <span *ngIf="!receiveData">Save</span>
         </button>

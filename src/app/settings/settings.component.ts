@@ -100,6 +100,7 @@ export class SettingsComponent {
       }
     });
 
+    this.ProfileForm.disable()
     
   };
 
@@ -130,10 +131,21 @@ export class SettingsComponent {
   // SETTING PAGE
   editClick() {
     this.isReadOnly = !this.isReadOnly;
+    console.log('iread only is ',this.isReadOnly);
+    
+    if(!this.isReadOnly){
+      this.ProfileForm.enable();
+    }
+    else{
+      this.ProfileForm.disable();
+    }
+
   }
 
   // wishlist work 
   showWishlists() {
+    this.toggleAccordian(0);
+    this.showWishlistedProducts('My Wishlist')
     this.fetchDataService.HTTPGET(this.backendURLs.URLs.showWishlist).subscribe((data: any) => {
       this.productsArray = data.wishlists;
     })
@@ -259,7 +271,7 @@ export class SettingsComponent {
       "info.dob": new Date(this.ProfileForm.get('dob')?.value)
     }
     this.fetchDataService.HTTPPOST(this.backendURLs.URLs.updateDetails, body).subscribe((data) => {
-      this.isReadOnly = !this.isReadOnly;
+      this.editClick();
     })
 
   }
@@ -276,7 +288,7 @@ export class SettingsComponent {
     }
   }
 
-  // orders work
+  // orders code 
    getOrders(){
     this.showData='orders';
     setTimeout(()=>{

@@ -18,6 +18,7 @@ export class WishlistService {
   wishlistPopupData = this.showWishlistPopup.asObservable();
 
   WishListedProducts: any = new BehaviorSubject('');
+
   WishlistCount = new BehaviorSubject<any>('');
   WishlistCount$ = this.WishlistCount.asObservable();
 
@@ -56,10 +57,13 @@ export class WishlistService {
   }
 
   getWishlistCount() {
+    console.log('get Wishlist count is ---------->');
+    
     // const IsLogin = this.cookie.get('userToken')
     this.userService.getUser().subscribe((IsLogin)=>{
       if (IsLogin) {
         this.fetchDataService.HTTPGET(this.backendUrls.URLs.showWishlist).subscribe((data: any) => {
+    
           let newData = data.wishlists.map((el: any) => {
             return el.products;
           }).flat();
@@ -83,7 +87,8 @@ export class WishlistService {
         title : response.message
       }
       this.toastService.notificationToast(toast);
-      this.WishlistCount.next(this.WishlistCount.value + 1);
+      // this.WishlistCount.next(this.WishlistCount.value + 1);
+      this.getWishlistCount();
     })
   }
 
