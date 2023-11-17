@@ -50,7 +50,6 @@
                 <div class="d-flex flex-column gap-10">
                     <p>{{filter.key | titlecase}}</p>
                     <div *ngFor="let value of filter.value | slice:0:3; let i = index" class="d-flex gap-10 ">
-
                         <input type="checkbox" [name]="filter.key" [value]="value"
                             (change)="onChecked($event, filter.key)" id={{value}} class="checkboxes"
                             [checked]="isValueSelected(value,filterApplied[filter.key])">
@@ -61,7 +60,7 @@
                         <div *ngFor="let value of filter.value | slice:3; let i = index"
                             class="d-flex gap-10 align-item-center">
                             <input type="checkbox" [name]="filter.key" [value]="value" id={{value}} class="checkboxes"
-                                (change)="onChecked($event, filter.key)">
+                                (change)="onChecked($event, filter.key)"  [checked]="isValueSelected(value,filterApplied[filter.key])">
                             <label [for]="value" class="capital">{{ value}}</label>
                         </div>
                     </div>
@@ -139,8 +138,9 @@
             </div>
             <div class="d-flex cards">
 
-                <div class="tags-inside d-flex flex-row gap-10">
+             <div class="tags-inside d-flex flex-row gap-10">
                     <ng-container *ngFor="let filter of filterApplied | keyvalue">
+                   
                         <span class="d-flex gap-10" >
 
                             <div   class="d-flex gap-10" *ngIf="filter.key !== 'sort' && filter.key !== 'size' && filter.key !== 'minPrice' && filter.key!='color' && filter.key !== 'maxPrice' && filter.key !== 'search'" >
@@ -150,31 +150,32 @@
                                         <a class="d-flex justify-content-center align-item-center">
                                             <span class="material-symbols-outlined pointer"
                                                 (click)="onChecked(false, filter.key,filter.value)">
-                                                <!-- "onChecked($event, 'color')" -->
                                                 close
                                             </span>
                                         </a>
                                     </div>
                                 </div>
-    
-                                <div class="d-flex gap-10 tags align-item-center justify-content-center "
+                                
+                                <ng-container *ngIf="!isString(filter.value)">
+                                    <div  class="d-flex gap-10 tags align-item-center justify-content-center "
                                     *ngFor="let val of filter?.value  ">
-                                    <!-- {{val}} -->
                                     <p>{{val}}</p>
                                     <a class="d-flex justify-content-center align-item-center">
-                                        <!-- {{filter | json}} -->
                                         <span class="material-symbols-outlined pointer"
                                             (click)="onChecked(false, filter.key,val)">
                                             close
                                         </span>
                                     </a>
                                 </div>
+
+                                </ng-container>
+                          
     
                             </div>
                         </span>
                     </ng-container>
                   
-                </div>
+                </div> 
 
             </div>
 

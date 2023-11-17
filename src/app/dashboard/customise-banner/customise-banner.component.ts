@@ -17,8 +17,9 @@ export class CustomiseBannerComponent {
   bannerData: any;
   preview: any;
   checked: boolean = false;
+  checked2: boolean = false;
   editValue: any = '';
-  showForm : boolean = false;
+  showForm: boolean = false;
 
   constructor(private fb: FormBuilder,
     private bannerService: BannerService,
@@ -47,8 +48,10 @@ export class CustomiseBannerComponent {
     )
   }
 
-  isChecked() {  
-    if (this.checked == true) {
+  isChecked(event: any) {
+    let val = (<HTMLInputElement>event.target).checked
+   
+    if (val == true) {
       this.bannerForm.get('title')?.disable()
       this.bannerForm.get('subTitle')?.disable()
       this.bannerForm.get('buttonText')?.disable()
@@ -68,34 +71,11 @@ export class CustomiseBannerComponent {
     }
 
   }
-  addBanner() {
-    (this.bannerForm.get('banner') as FormArray).push(this.fb.group({
-      backgroundImage: ['ok', Validators.required],
-      title: ['', Validators.required],
-      subTitle: ['', Validators.required],
-      buttonText: ['', Validators.required],
-      buttonLink: ['', Validators.required],
-      contentAlign: ['', Validators.required],
-      colors: this.fb.group({
-        titleColor: '',
-        subTitleColor: '',
-        buttonColor: ''
-      })
-    }))
-  }
 
-  getBanner() {
-    return (this.bannerForm.get('banner') as FormArray).controls;
-  }
-
-  removeBanner(index: any) {
-    (this.bannerForm.get('banner') as FormArray).removeAt(index);
-  }
-
-  onSave() {    
+  onSave() {
     if (!this.editValue) {
       this.bannerService.setBanners(this.bannerForm.value).subscribe((data: any) => {
-  
+
         const toast = {
           title: data.message
         }
@@ -107,13 +87,13 @@ export class CustomiseBannerComponent {
     }
     else {
       const body = {
-        id : this.editValue._id,
-        data : this.bannerForm.value
+        id: this.editValue._id,
+        data: this.bannerForm.value
       }
-      
-      this.bannerService.updateBanner(body).subscribe((res : any)=>{
+
+      this.bannerService.updateBanner(body).subscribe((res: any) => {
         const toast = {
-          title : res.message
+          title: res.message
         }
         this.toastService.successToast(toast)
         this.bannerForm.reset()
@@ -123,14 +103,7 @@ export class CustomiseBannerComponent {
     }
   }
 
-
-
-  getImages() {
-    return this.bannerForm.get('backgroundImage')?.value;
-  }
-
   bannerImageUpload(event: any) {
-   
 
     let file: any = (<HTMLInputElement>event.target)?.files![0];
 
@@ -146,11 +119,8 @@ export class CustomiseBannerComponent {
     return value;
   }
 
-  removeImage(index: any) {
-    const bannerArray = this.bannerForm.get('banner') as FormArray;
-    const bannerControl = bannerArray.at(index) as FormGroup;
-    bannerControl.get('backgroundImage')?.reset('');
-    // <FormArray>((this?.bannerForm?.get('banner'))?.get(String(index)))?.get('backgroundImage')?.reset()
+  onRemove() {
+    this.bannerForm.get('backgroundImage')?.reset('');
   }
 
   delete(id: any) {
@@ -164,20 +134,19 @@ export class CustomiseBannerComponent {
     })
   }
 
-  toggleBanner(id : any, event: any){
-    let val =  (<HTMLInputElement>event.target).checked
+  toggleBanner(id: any, event: any) {
+    let val = (<HTMLInputElement>event.target).checked
     const data = {
-      id, active : val
+      id, active: val
     }
-    
-    this.bannerService.toggleBanner(data).subscribe((res: any)=>{
+    this.bannerService.toggleBanner(data).subscribe((res: any) => {
       this.ngOnInit()
     })
   }
 
   edit(index: any) {
     const value = this.bannerData[index]
-  
+
     if (value.title) {
       this.bannerForm.patchValue({
         backgroundImage: value.backgroundImage,
@@ -201,6 +170,7 @@ export class CustomiseBannerComponent {
     }
     this.editValue = value;
   }
+
   showLoading(i: number): boolean {
     return !this.getImagePreview();
   }

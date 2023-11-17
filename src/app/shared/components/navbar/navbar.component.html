@@ -17,68 +17,33 @@
             </a>
         </div>
         <ul class="d-flex gap-30 nav-items" [class.active]="hamburgerOpen">
-        
-            <li class="nav-links relative " (click)="hamburgerOpen = false" >
-                <a class="d-flex flex-column gap-5 pointer" [routerLink]="['/explore']" [queryParams]="{ gender: 'male'}">
+
+            <li class="nav-links relative " (click)="hamburgerOpen = false">
+                <a class="d-flex flex-column gap-5 pointer" [routerLink]="['/explore']"
+                    [queryParams]="{ gender: 'male'}">
                     Men
                 </a>
-                <ul class="sub-categories">
-                    <li>
-                        <a [routerLink]="['/explore']" [queryParams]="{ gender: 'male' , category: 'kurta'}">
-                            Kurta
-                        </a>
-                    </li>
-                    <li>
-                        <a [routerLink]="['/explore']" [queryParams]="{ gender: 'male' , category: 'shirt'}">
-                            Shirt
-                        </a>
-                    </li>
-                    <li>
-                        <a [routerLink]="['/explore']" [queryParams]="{ gender: 'male' , category: 'tshirt'}" >
-                            Tshirt
-                        </a>
-                    </li>
-                    <li>
-                        <a [routerLink]="['/explore']" [queryParams]="{ gender: 'male'}" >
-                            Explore All
+                <ul class="sub-categories d-flex flex-column gap-10">
+                    <li *ngFor="let category of categories.men">
+                        <a [routerLink]="['/explore']" [queryParams]="{ gender: 'male' , category: category}">
+                            {{category}}
                         </a>
                     </li>
                 </ul>
             </li>
-            <li class="nav-links relative" (click)="hamburgerOpen = false" >
-                <a class="d-flex flex-column gap-5 pointer" [routerLink]="['/explore']" [queryParams]="{ gender: 'female'}">
+            <li class="nav-links relative" (click)="hamburgerOpen = false">
+                <a class="d-flex flex-column gap-5 pointer" [routerLink]="['/explore']"
+                    [queryParams]="{ gender: 'female'}">
                     Women
                 </a>
-                <ul class="sub-categories d-flex flex-column">
-                    <li>
-                        <a [routerLink]="['/explore']" [queryParams]="{ gender: 'female' , category: 'kurti'}">
-                            Kurti
+                <ul class="sub-categories d-flex flex-column gap-10">
+                    <li *ngFor="let category of categories.women">
+                        <a [routerLink]="['/explore']" [queryParams]="{ gender: 'female' , category: category}">
+                            {{category}}
                         </a>
                     </li>
-                    <li>
-                        <a [routerLink]="['/explore']" [queryParams]="{ gender: 'female' , category: 'shirt'}">
-                            Shirt
-                        </a>
-                    </li>
-                    <li>
-                        <a [routerLink]="['/explore']" [queryParams]="{ gender: 'female' , category: 'tshirt'}">
-                            T-Shirt
-                        </a>
-                    </li>
-                    <li>
-                        <a [routerLink]="['/explore']" [queryParams]="{ gender: 'female'}">
-                        Explore All
-                        </a>
-                    </li>
-                   
                 </ul>
             </li>
-            <!-- <li class="nav-links" (click)="hamburgerOpen = false">
-                <a href="" class=" d-flex flex-column gap-5" [routerLink]="['/explore']">
-                    Offers
-                </a>
-             
-            </li> -->
         </ul>
         <ul class="navbar-features d-flex align-item-center gap-20 m-gap-15 s-gap-10">
 
@@ -86,7 +51,8 @@
                 <span (click)="isSearching = false" class="back material-symbols-outlined pointer">
                     keyboard_backspace
                 </span>
-                <app-search-bar (click)="hamburgerOpen = false" class="search-bar" [searchPlaceholder]="'Search Products...'" (searchQuery$)="searchExplore($event)"></app-search-bar>
+                <app-search-bar (click)="hamburgerOpen = false" class="search-bar"
+                    [searchPlaceholder]="'Search Products...'" (searchQuery$)="searchExplore($event)"></app-search-bar>
             </div>
             <span (click)="isSearching = !isSearching; hamburgerOpen = false"
                 class="search-icon-mobile material-symbols-outlined">
@@ -114,12 +80,12 @@
                 </a>
                 <ul class="sub-items d-flex flex-column gap-15">
 
-                    <li *ngIf="!isUserLogin" class="sub-links">
-                        <div class="header">
-                            <span>Welcome</span>
-                            <p>Access your account and manage your order</p>
+                    <li *ngIf="!isUserLogin" class="sub-links d-flex flex-column gap-10">
+                        <div class="header d-flex flex-column gap-5">
+                            <span style="font-size: 16px;">Welcome</span>
+                            <p style="font-weight: 400;">Access your account and manage your orders, cart, wishlist and what not.</p>
                         </div>
-                        <div class="d-flex justify-content-md-between gap-13">
+                        <div class="d-flex justify-content-md-between mw100 gap-15">
                             <a [routerLink]="['/auth/login']" id="login">
                                 <span class="material-symbols-outlined">login</span>
                                 <span>Login</span>
@@ -129,50 +95,22 @@
                                 <span>Register</span>
                             </a>
                         </div>
-                        <div>
-
-                        </div>
                     </li>
 
 
-                    <li *ngIf="isUserLogin" class="sub-links">
-                        <div class="header">
-                            <div class="d-flex justify-content-md-between align-item-center border"
-                                style="margin-bottom: 10px">
-                                <h4 *ngIf="purchaser!=''">Welcome {{purchaser}}</h4>
-                            </div>
-                            <ul class="border">
-                                <!-- <li [routerLink]="['about']" style="margin-bottom: 10px;">About Us</li> -->
-                                <li [routerLink]="['help']" style="margin-bottom: 10px;" class="pointer">Contact Us</li>
-                                <!-- <li [routerLink]="['faq']" style="margin-bottom: 10px;">Faq</li>
-                                <li [routerLink]="['t&c']" style="margin-bottom: 10px;">Terms And Condition</li> -->
-                                <!-- <li [routerLink]="['cart']" style="margin-bottom: 10px;">My Cart</li> -->
-                            </ul>
-                            <ul class="pointer ">
-                                <li class="padding-top" [routerLink]="['usersetting']" style="margin-bottom: 10px;">
-                                    Profile</li>
-                                <li style="margin-bottom: 10px;" (click)="onLogout()">Logout</li>
-                            </ul>
-                        </div>
-                        <!-- <div class="d-flex justify-content-md-between gap-13">
-                            <a [routerLink]="['/auth/login']" id="login">
-                                <span class="material-symbols-outlined">login</span>
-                                <span>Login</span>
-                            </a>
-                            <a [routerLink]="['/auth/signup']" id="register">
-                                <span class="material-symbols-outlined">person_add</span>
-                                <span>Register</span>
-                            </a>
-                        </div> -->
-                        <div>
+                    <ul *ngIf="isUserLogin" class="sub-links on-login d-flex flex-column gap-5">
 
-                        </div>
-                    </li>
-
-                    <!-- <li class="sub-links d-flex flex-column justify-content-start">
-                        <a [routerLink]="['/help']">Contact Us</a>
-                        <a [routerLink]="['/faq']">FAQ</a>
-                    </li> -->
+                        <li *ngIf="purchaser!=''" class="name border">
+                            Welcome <span style="color: teal;"> {{purchaser}}</span>
+                        </li>
+                        <li [routerLink]="['usersetting/orders']">Orders</li>
+                        <li [routerLink]="['usersetting/wishlist']">Wishlist</li>
+                        <li routerLink="/usersetting/addresses">Saved Addresses</li>
+                        <li [routerLink]="['help']" class="pointer border">Contact Us</li>
+                        <li [routerLink]="['usersetting/profile']" class="edit">
+                            Edit Profile</li>
+                        <li (click)="onLogout()" class="logout">Logout</li>
+                    </ul>
                 </ul>
             </li>
         </ul>

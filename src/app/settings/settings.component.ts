@@ -71,11 +71,6 @@ export class SettingsComponent {
       }
     });
 
-    // if(this.route.url()=='/cart/billing'){
-    //   this.getOrders();
-    // }
-
-
     this.ProfileForm = fb.group(
       {
         firstname: fb.control(''),
@@ -108,8 +103,7 @@ export class SettingsComponent {
     
   };
 
-
-  async ngOnInit() {
+  ngOnInit() {
     this.fetchDataService.HTTPGET(this.backendURLs.URLs.getDetails).subscribe((data: any) => {
       data.firstname = data.name.firstname;
       data.lastname = data.name.lastname;
@@ -125,7 +119,7 @@ export class SettingsComponent {
     this.TranslateData = false;
   }
 
-  async changeComponent(el: string) {
+  changeComponent(el: string) {
     this.showData = el;
     this.TranslateData = true;
     if (el == 'wishlist') {
@@ -243,7 +237,7 @@ export class SettingsComponent {
   }
 
   
-
+  // change password work
   onPasswordChange() {
     const body = {
       oldPassword: this.changePasswordForm.get('currentPassword')?.value,
@@ -282,10 +276,7 @@ export class SettingsComponent {
     }
   }
 
-  //  ADDRESS COMPLETE
-  
-
-  //  ORDERS TS
+  // orders work
    getOrders(){
     this.showData='orders';
     setTimeout(()=>{

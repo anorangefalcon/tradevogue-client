@@ -27,7 +27,8 @@
                         <img [src]="getImagePreview()" [style.display]="getImagePreview() ? 'flex' : 'none'"
                             class="banner-image">
                         <span class="material-symbols-outlined remove-btn pointer"
-                            [style.display]="getImagePreview() ? 'flex' : 'none'">
+                            [style.display]="getImagePreview() ? 'flex' : 'none'"
+                            (click)="onRemove()">
                             close
                         </span>
                         <!-- <div class="loader" ></div> -->
@@ -78,8 +79,8 @@
                     </div>
                 </div>
             </div>
-            <div class="d-flex gap-5 checkbox align-item-center">
-                <input type="checkbox" name="layput" id="layout" [(ngModel)]="checked" (change)="isChecked()"
+            <div class="d-flex gap-10 checkbox align-item-center">
+                <input type="checkbox" name="layput" id="layout" (change)="isChecked($event)"
                     class="custom-check">
                 <label for="layout">Add only banner and link</label>
             </div>

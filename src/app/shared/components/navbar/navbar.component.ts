@@ -38,9 +38,6 @@ export class NavbarComponent implements OnInit {
         this.purchaser = name;
       }
     });
-
-
-
   }
 
   ngOnInit() {
@@ -75,6 +72,8 @@ export class NavbarComponent implements OnInit {
     }
 
     this.fetchDataService.HTTPPOST(this.BackendEndUrl.URLs.uniqueProductFields, body).subscribe((data: any) => {
+      this.categories.men = data.data.male.category;
+      this.categories.women = data.data.female.category;        
     })
 
   }

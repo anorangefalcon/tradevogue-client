@@ -127,6 +127,8 @@ export class ExploreComponent {
     //   event.target.checked=false;
     // }
     let value;
+
+
     if(event){
        value = field === 'price' ? Number(event?.target?.value) : event.target.value;
     }
@@ -143,12 +145,9 @@ export class ExploreComponent {
 
       else {
 
-        console.log('abcd is ----->');
-        
-        // this.filterApplied[field]=value;
+
         if (Object.keys(this.filterApplied).length > 0) {
           this.filterApplied[field] = {};
-
           this.filterApplied[field] = value;
         }
 
@@ -156,6 +155,8 @@ export class ExploreComponent {
           let newObject = { [field]: value };
           this.filterApplied = newObject;
         }
+      
+        
       }
 
     }
@@ -175,9 +176,6 @@ export class ExploreComponent {
         delete this.filterApplied[field];
       }
     }
-
-    console.log('filter Applied is ',this.filterApplied);
-    
 
     this.setParams()
   }
