@@ -1,0 +1,76 @@
+<section id="dashboard" class="relative">
+
+    <header class="header fixed inset-inline-0 inset-block-start-0 transition" [class.active]="isCollapse">
+        <div class="mh100 header_container d-flex align-item-center justify-content-md-between">
+            <div class="toogle-section d-flex gap-10 align-item-center">
+                <a (click)="isCollapse = !isCollapse" class="pointer d-flex align-item-center mh100"><span
+                        class="material-symbols-outlined">menu</span></a>
+                <img class="brand-logo" src="../../assets/logo-mobile.svg" [class.active]="isCollapse" alt="Logo">
+            </div>
+            <ul class="mh100 header_items d-flex align-item-center justify-content-end gap-20">
+
+                <!-- <li class="header_links">
+                    <span class="mh100 message d-flex align-item-center relative">
+                        <span class="pointer transition  icons material-symbols-outlined">Message</span>
+                        <span class="count d-flex flex-center text-center absolute">{{0}}</span>
+                    </span>
+                </li>
+                <li class="header_links">
+                    <span class="mh100 notification d-flex align-item-center relative">
+                        <span class="pointer transition icons material-symbols-outlined">notifications</span>
+                        <span class="count d-flex flex-center text-center absolute">{{0}}</span>
+                    </span>
+                </li> -->
+
+                <li class="header_links profile d-flex align-item-center gap-10 pointer"
+                    [routerLink]="'/dashboard/account'">
+                    <span class="photo-section relative d-flex justify-content-center align-item-center">
+                        <img id="profile__photo" src="../../../assets/avatars/try.svg" alt="">
+                        <span class="account__icon absolute material-symbols-outlined">settings</span>               
+                    </span>
+
+                    <span class="profile-content d-flex flex-column justify-content-center">
+                        <h5 class="profile-title">{{this.adminName}}</h5>
+                        <p class="profile-sub-title">Admin</p>
+                    </span>
+                </li>
+            </ul>
+        </div>
+    </header>
+
+    <div class="sidebar fixed inset-block-start-0 inset-inline-start-0 transition" [class.active]="isCollapse">
+        <span class="branding d-flex align-item-center">
+            <a [routerLink]="'/'">
+                <img class="brand-logo" src="../../assets/logo.svg" [class.active]="isCollapse" alt="Logo">
+                <img class="mobile-logo" src="../../assets/logo-mobile.svg" alt="Logo" alt="">
+            </a>
+        </span>
+
+        <nav class="navbar mh100">
+            <ul class="navlist d-flex flex-column mh100 relative">
+                <li class="transition" *ngFor="let item of navitems">
+
+                    <a [routerLink]="item.route ? item.route: null" (click)="item.name.toLowerCase() == 'logout' ? logout() : null" [class.dropdown]="item.sublist" [class.active]="isProductBtnActive == true"
+                        class="nav-links relative align-item-center d-flex gap-15 pointer">
+                        <i class="icons material-symbols-outlined">{{item.icons}}</i>
+                        <span class="nav-text">{{item.name}}</span>
+                    </a>
+
+                    <ul class="sub-navlist" *ngIf="item.sublist">
+
+                        <li class="sub-links"  *ngFor="let subitem of item.sublist">
+                            <a [routerLink]="subitem.route">{{subitem.name}}</a>
+                        </li>
+
+                    </ul>
+                </li>
+
+            </ul>
+        </nav>
+    </div>
+    <main class="main transition">
+        <div class="content">
+            <router-outlet></router-outlet>
+        </div>
+    </main>
+</section>

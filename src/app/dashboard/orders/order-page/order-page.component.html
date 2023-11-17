@@ -1,0 +1,81 @@
+<section *ngIf="orderInfo" id="OrderDetails" class="d-flex flex-column gap-20" >
+    <div class="action-btns d-flex justify-content-end gap-10">
+        <button class="btn-secondary" [routerLink]="['/dashboard/orders']">Back</button>
+        <button class="btn-primary" (click)="viewInvoice()">View Invoice</button>
+    </div>
+    <div class="card card__pd-25 d-flex flex-column gap-20">
+        <div class="order-header d-flex justify-content-md-between">
+            <div class="d-flex flex-column gap-5">
+                <div class="invoice__title d-flex flex-column gap-5">
+                    <h2>Order Details</h2>
+                    <div class="d-flex flex-column">
+                        <span class="d-flex align-items-center gap-5">
+                            <p class="invoice__sub-title">Payment:</p> {{orderInfo.payment_status}}
+                        </span>
+                        <span class="d-flex align-items-center gap-5">
+                            <p class="invoice__sub-title">Order ID:</p> {{orderInfo.orderID}}
+                        </span>
+                        <span class="d-flex align-items-center gap-5">
+                            <p class="invoice__sub-title">Order Time:</p> {{orderInfo.orderDate}}
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="customerInfo buyer__details text-right">
+                <h4>Shipping Address</h4>
+                <p class="text-capitalize">{{orderInfo.address.firstname + ' ' + orderInfo.address.lastname}}</p>
+                <p>{{orderInfo.buyerId.email}}</p>
+                <p>{{orderInfo.address.mobile}}</p>
+                <address class="text-capitalize">
+                    <p>{{orderInfo.address.apartment + ', ' + orderInfo.address.area + ', ' + orderInfo.address.landmark}}
+                    </p>
+                    <p>{{ orderInfo.address.town_city}}</p>
+                    <p>{{ orderInfo.address.state + ', ' + orderInfo.address.country }} </p>
+                    <p> {{ orderInfo.address.pincode }}</p>
+                </address>
+            </div>
+        </div>
+        <div class="product__info table-list card">
+            <table>
+                <thead>
+                    <tr>
+                        <th class="items">Sr.</th>
+                        <th class="items">Product Title</th>
+                        <th class="items">Color</th>
+                        <th class="items">Size</th>
+                        <th class="items">Item Price</th>
+                        <th class="items">Shipment</th>
+                        <th class="items">Quantity</th>
+                        <th class="items">Total Price</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of orderInfo.products; let i = index">
+                        <td class="items">{{i+1}}</td>
+                        <!-- <td class="items product__title">{{item.name}}</td> -->
+                        <td class="items">
+                            <div class="table__item-image d-flex gap-10 align-item-center mh100">
+                                <img src="{{item.image}}" loading="lazy" alt="product.png" width="100%"
+                                    height="100%">
+                                <span>{{item.name}}</span>
+                            </div>
+                        </td>
+                        <td class="items"><span class="item__color d-flex" style="width: 20px;height: 20px;border-radius: 50%;" [style.background-color]="item.color"> </span></td>
+                        <td class="items">{{item.size}}</td>
+                        <td class="items">&#8377; {{item.price}}</td>
+                        <td class="items text-capitalize">{{item.shipmentStatus}}</td>
+                        <td class="items">{{item.quantity}}</td>
+                        <td class="items">&#8377; {{item.price * item.quantity}}</td>
+                    </tr>
+                    <tr class="total">
+                        <td class="items text-center" colspan="6">Total</td>
+                        <td class="items">{{orderInfo.totalQty}}</td>
+                        <td class="items">&#8377; {{orderInfo.totalAmount}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+
+<app-invoice-template [orderInfo]="orderInfo"></app-invoice-template>

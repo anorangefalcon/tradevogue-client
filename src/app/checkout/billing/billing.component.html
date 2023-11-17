@@ -1,200 +1,135 @@
-<!-- <head><script defer src="https://js.stripe.com/v3/"></script></head> -->
-<section>
+<div class="payment-method-buttons">
+    <button (click)="onStripeButtonClick()" [class.selected]="selectedPaymentMethod === 'stripe'">Pay with
+        Stripe</button>
+    <button (click)="selectedPaymentMethod = 'razorpay'" [class.selected]="selectedPaymentMethod === 'razorpay'">Pay
+        with Razorpay</button>
+</div>
+
+<div *ngIf="selectedPaymentMethod === 'stripe'" class="payment-form">
     <form id="payment-form">
         <h3 style="align-items: center; text-align: center;">Place Your Order</h3>
-       <!-- gpay
-        <div id="payment-request-button">
-  A Stripe Element will be inserted here.
-       </div> -->
+        <!-- gpay
+    <div id="payment-request-button">
+A Stripe Element will be inserted here.
+   </div> -->
 
         <div id="link-authentication-element">
             <!-- Stripe.js injects the Link Authentication Element -->
         </div>
 
-        <div id="shipping-address-element">
-            <!-- Stripe.js injects the Shipping Address Element -->
-        </div>
+        <!-- <div id="shipping-address-element">
+       
+    </div> -->
 
         <div id="payment-element">
             <!-- Stripe.js injects the Payment Element -->
         </div>
 
         <!-- <div id="address-element">
-            Stripe.js injects the Address Element
-        </div> -->
-        <button id="submit">
+        Stripe.js injects the Address Element
+    </div> -->
+        <button id="submit" class="btn-primary">
             <div class="spinner hidden" id="spinner"></div>
             <span id="button-text">Pay now</span>
         </button>
         <div id="payment-message" class="hidden"></div>
     </form>
-    <!-- <div class="container  d-flex flex-column">
-        <h2 class="text-center">Shipping Details</h2>
-        <form>
-            <div class="form__group d-flex flex-column width-50">
-                <label class="form__label">First Name<span>*</span></label>
-                <input type="text" placeholder="Enter Your First Name" class="form__input/">
-            </div>
+</div>
 
-            <div class="form__group d-flex flex-column width-50">
-                <label class="form__label">Last Name<span>*</span></label>
-             
-                <input type="text" placeholder="Enter Your Last Name" class="form__input/">
-             
-            </div>
-            
-            <div class="form__group d-flex flex-column width-100">
-                <label class="form__label">Street Name<span>*</span></label>
-             
-                <input type="text" placeholder="Enter Your Street Address" class="form__input/">
-             
-            </div>
-
-            <div class="form__group d-flex flex-column width-60">
-                <label class="form__label">Town / City<span>*</span></label>
-             
-                <input type="text" placeholder="" class="form__input/">
-             
-            </div>
-
-            <div class="form__group d-flex flex-column width-20">
-                <label class="form__label">State <span>*</span></label>
-             
-                <input type="text" placeholder="" class="form__input/">
-             
-            </div>
-
-
-            <div class="form__group d-flex flex-column width-20">
-                <label class="form__label">PostCode <span>*</span></label>
-             
-                <input type="text" placeholder="" class="form__input/">
-            </div>
-
-            <div class="form__group d-flex flex-column width-100">
-                <label class="form__label">Country <span>*</span></label>
-             
-                <div class="customSelect">
-                    <select id="country" name="country" class="form__input/">
-                        <option value="us">United States</option>
-                        <option value="ca">Canada</option>
-                        <option value="uk">United Kingdom</option>
-                        <option value="au">Australia</option>
-                    </select>
-                </div>
-             
-            </div>
-
-            <div class="form__group d-flex flex-column width-100">
-                <label class="form__label">Email <span>*</span></label>
-             
-                <input type="email" placeholder="" class="form__input/">
-             
-            </div>
-
-            <h3 style=" padding-inline: 10px;">Payments</h3>
-
-            <div class="payment__div">
-                <div>
-                    <span class="material-symbols-outlined payment__icon">
-                        credit_card
-                        </span>
-
-                        <p class="payment__p">Card</p>
-                </div>
-                <div>
-                    <span class="material-symbols-outlined payment__icon">
-                        payments
-                        </span>
-                        <p class="payment__p">Cash</p>
-                </div>
-                <div>
-                    <span class="material-symbols-outlined payment__icon">
-                        account_balance
-                        </span>
-                        <p class="payment__p">Bank</p>
-                </div>
-            </div>
-
-            <div class="form__group d-flex flex-column width-100">
-                <label class="form__label">Card number <span>*</span></label>
-             
-                <input type="number" placeholder="" class="form__input/">
-             
-            </div>
-
-            <div class="form__group d-flex flex-column width-50">
-                <label class="form__label"> Expiry <span>*</span></label>
-             
-                <input type="number" placeholder="" class="form__input/">
-             
-            </div>
-
-
-            <div class="form__group d-flex flex-column width-50">
-                <label class="form__label"> CVC <span>*</span></label>
-             
-                <input type="number" placeholder="" class="form__input/" style="appearance: none;">
-             
-            </div>
-
-            <div class="check__div d-flex width-100">
-               
-                <input type="checkbox" id="terms">
-                <label for="terms">
-                    <span class="material-symbols-outlined accept__icon">done</span>
-                </label>
-                <p>Billing is same as shipping address</p>
-            </div>
-
-            <p class="text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime aspernatur unde odit aliquam repellat molestias aut libero, sed nobis iste?</p>
-
-            <button class="btn-primary paymentbtn">Continue to Payment</button>
-
-
-        </form>
-    </div> -->
-</section>
-<!-- <div>
-    <h2>Products tags</h2>
-  
-    <div style="display:flex; border:2px solid black; position: relative; height:40px;">
-        <div *ngFor="let data of visible_data">
-            <button>{{data}}
-                <span (click)="remove_data(data)">X</span>
-            </button>
+<div *ngIf="selectedPaymentMethod === 'razorpay'">
+    <div *ngFor="let item of items">
+        <div class="btn-primary">
+            Payment Method Selected Proceed To Payment
+            <form class="hidden btn-primary" (click)="submitForm(item)">
+                <input type="hidden" name="amount" [value]="item.price">
+                <button class="hidden" id='razorSubmit' type="submit">pay</button>
+            </form>
         </div>
-        <div>
-      <button (click)="clicked()" style="position: absolute; inset-inline-end:0px;">Click</button>
-    </div>
-
-
-    <div #mydiv>
-        <input type="text" style="width: 100%;" [(ngModel)]="search_text">
-    <div *ngFor="let data of not_visible_data | pipes: search_text">
-        <button (click)="add_data(data)">{{data}}</button>
     </div>
 </div>
 
-   
-</div> -->
 
 
+<!-- show address -->
+<div class="address">
+    <div class="d-flex flex-column gap-10">
+
+        <div class="d-flex justify-content-md-between align-item-center pointer"
+            [ngClass]="{'h2_div':!DeliveredAddress}">
+            <div class="d-flex align-item-center pointer">
+                <h2>SELECT DELIVERY ADDRESS
+                </h2>
+            </div>
+
+            <div class="d-flex align-item-center addAddress__div" *ngIf="!DeliveredAddress" (click)="AddAddress()">
+                <span class="material-symbols-outlined">
+                    add_circle
+                </span>
+                <p>ADD NEW ADDRESS</p>
+            </div>
+
+            <button *ngIf="DeliveredAddress" class="changeaddress__btn" (click)="ChangeAddress()">
+
+                Change Address
+
+            </button>
+
+        </div>
+
+        <div *ngIf="DeliveredAddress">
+            <p>
+                {{DeliveredAddress.apartment}}
+                {{DeliveredAddress.area}},
+                {{DeliveredAddress.landmark}}
+                {{DeliveredAddress.town_city}}
+                {{DeliveredAddress.country}}
+            </p>
+        </div>
 
 
+    </div>
+
+    <div class="d-flex flex-column gap-10" *ngIf="!DeliveredAddress">
+        <ng-container *ngFor="let address of userAddresses; let i=index" class="d-flex address__firstdiv ">
+            <div class="ok" style="display: none;">
+                <input type="radio" id="radio{{i}}" name="address" value="address" class="d-flex">
+            </div>
+
+            <label for="radio{{i}}" id="{{i}}" class="d-flex align-item-center pointer">
+
+                <div class="d-flex gap-10 input mw100 flex-column">
+
+                    <div class="d-flex justify-content-md-between">
+                        <p class="name pointer-none">{{address.firstname}} {{address.lastname}}</p>
+                        <div class="d-flex functionality-btns">
+                            <span *ngIf="address.defaultAddress">Default Address</span>
+                            <button class="btn default__btn" (click)="MakeDefault(address,i)" *ngIf="i!=0">Make this
+                                Default</button>
+                            <button class="edit__btn btn" (click)="EditAddress(address,i)">Edit</button>
+                            <button class="remove__btn btn" (click)="RemoveAddress(address,i)">Remove</button>
+                        </div>
+                    </div>
+
+                    <div class="pointer-none">
+                        <p>{{address.apartment}} {{address.area}} {{address.landmark}}, {{address.town_city}}</p>
+                        <p>{{address.state}}- {{address.pincode}}</p>
+                    </div>
+
+                    <button class="btn-primary btn-deliver " (click)="SelectAddress(address)">DELIVER HERE</button>
+                </div>
+
+            </label>
+        </ng-container>
+    </div>
 
 
+</div>
 
 
+<!-- new address  -->
+<div [ngClass]="{'show':ShowComponent==true}">
+    <app-address [ShowComponent]="ShowComponent" [receiveData]="receiveData"
+        (AddressHandler)="AddressHandler($event)"></app-address>
 
 
-
-
-
-
-
-
-
-<app-address></app-address>
-
-
+</div>

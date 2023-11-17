@@ -33,9 +33,6 @@ footer {
         }
 
     }
-    & .letter-spacing {
-        letter-spacing: 0.8px;
-    }
     
     & p {
         font-size: 14px !important;
@@ -45,7 +42,6 @@ footer {
         font-size: 14px;
         transition: 0.3s ease-in-out;
         color: rgb(var(--new-text-black));
-        letter-spacing: 0.8px;
         
     }
     & ul li a:hover{
@@ -107,6 +103,7 @@ footer {
     }
     .copyright-footer {
         padding-block: 20px;
+        border-block-start: 0.05px solid rgba(0, 0, 0, 0.5);
         & p{
             color: rgb(var(--text-gray));
             

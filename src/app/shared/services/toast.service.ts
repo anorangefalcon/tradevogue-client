@@ -10,6 +10,7 @@ export class ToastService {
   display$ = this.displaySubject.asObservable();
 
   constructor() { }
+  
   sample: any = {
     display: '',
     content: {

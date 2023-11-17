@@ -1,0 +1,130 @@
+<div class="d-flex flex-column gap-20">
+
+
+  <div class="card card__pd-20 form__card__head d-flex justify-content-md-between align-item-center">
+    <h3>Social Info</h3>
+    <div class="operation_button d-flex gap-10">
+      <button class="btn btn-rounded btn-xs btn-primary" [ngStyle]="{'display': !socialsForm.disabled? 'none': 'block'}"
+        (click)="socialsForm.enable()">Edit</button>
+      <button class="btn btn-rounded btn-xs btn-secondary" [ngStyle]="{'display': socialsForm.disabled? 'none': 'block'}"
+        (click)="socialsForm.disable()">Cancel</button>
+      <button class="btn btn-rounded btn-xs btn-primary" [ngStyle]="{'display': socialsForm.disabled? 'none': 'block'}"
+        (click)="onSubmit()">Update</button>
+    </div>
+  </div>
+
+  <form [formGroup]="socialsForm"
+    class="card card__pd-25 form__card second_card d-flex flex-wrap gap-20 justify-content-center">
+
+    <div class="image-upload-div internal-div d-flex justify-content-center align-item-center relative">
+      <div class="upload-image d-flex flex-column gap-10 align-item-center">
+        <input type="file" [id]="'desktopLogo'" accept="image/jpg, image/jpeg, image/png, image/svg+xml"
+          (input)="bannerImageUpload($event, 'desktopLogo')" formControlName="desktopLogo"/>
+        <label [for]="'desktopLogo'" class="upload__block d-flex flex-column flex-center pointer">
+          <span class="upload_icon material-symbols-outlined">
+            desktop_windows
+          </span>
+        </label>
+        <small class="banner-label">Upload Brand Logo</small>
+        <!-- <img [src]="getImagePreview('desktopLogo')" [style.display]="getImagePreview('desktopLogo') ? 'flex' : 'none'" class="banner-image"> -->
+        <img [src]="getImagePreview('desktopLogo')" [style.display]="getImagePreview('desktopLogo') ? 'flex' : 'none'" class="banner-image">
+        <span class="material-symbols-outlined remove-btn pointer" [style.display]="getImagePreview('desktopLogo') ? 'flex' : 'none'">
+          close
+        </span>
+      </div>
+    </div>
+
+    <div class="image-upload-div internal-div d-flex justify-content-center align-item-center relative">
+      <div class="upload-image d-flex flex-column gap-10 align-item-center">
+        <input type="file" [id]="'mobileLogo'" accept="image/jpg, image/jpeg, image/png, image/svg"
+          (input)="bannerImageUpload($event, 'mobileLogo')" formControlName="mobileLogo"/>
+        <label [for]="'mobileLogo'" class="upload__block d-flex flex-column flex-center pointer">
+          <span class="upload_icon material-symbols-outlined">
+            smartphone
+          </span>
+        </label>
+        <small class="banner-label">Upload
+          Mobile Friendly Logo</small>
+        <!-- <img [src]="getImagePreview('mobileLogo')" [style.display]="getImagePreview('mobileLogo') ? 'flex' : 'none'" class="banner-image"> -->
+        <img [src]="getImagePreview('mobileLogo')" [style.display]="getImagePreview('mobileLogo') ? 'flex' : 'none'" class="banner-image">
+        <span class="material-symbols-outlined remove-btn pointer" [style.display]="getImagePreview('mobileLogo') ? 'flex' : 'none'">
+          close
+        </span>
+      </div>
+    </div>
+
+    <div class="internal-div">
+      <label class="form__title" for="email">E-Mail</label>
+      <input class="form__input" type="text" id="email" formControlName="email" />
+    </div>
+
+    <div class="internal-div">
+      <label class="form__title" for="address">Address</label>
+      <input class="form__input" type="text" id="address" formControlName="address" />
+    </div>
+
+    <div class="internal-div">
+      <label class="form__title" for="mobile">Mobile Number</label>
+      <input class="form__input" type="text" id="mobile" formControlName="mobile" />
+    </div>
+
+    <div class="internal-div">
+      <label class="form__title" for="facebook">Facebook Profile Link</label>
+      <input class="form__input" type="text" id="facebook" formControlName="facebook" />
+    </div>
+
+    <div class="internal-div">
+      <label class="form__title" for="whatsapp">WhatsApp Number</label>
+      <input class="form__input" type="text" id="whatsapp" formControlName="whatsapp" />
+    </div>
+
+    <div class="internal-div">
+      <label class="form__title" for="instagramLink">Instagram Profile Link</label>
+      <input class="form__input" type="text" id="instagramLink" formControlName="instagramLink" />
+    </div>
+
+
+    <div class="dynamic_gallery d-flex flex-wrap gap-20 justify-content-center">
+
+      <div class="gallery-title d-flex align-item-center">
+        <h4>
+          Instagram Gallery
+        </h4>
+        <div class="tooltip d-flex align-item-center">
+          <span class="info-icon pointer material-symbols-outlined" (click)="show = true">
+            info
+          </span>
+          <span class="tooltiptext">
+            Preview
+          </span>
+        </div>
+
+        <app-drawer [direction]="'bottom'" [show]="show" (showChange)="ChangeHandler($event)"
+          [title]="'Gallery available at Home Page'">
+          <app-gallery></app-gallery>
+        </app-drawer>
+
+      </div>
+
+      <div class="internal-div">
+        <label class="form__title" for="accountID">Account ID</label>
+        <input class="form__input" type="text" id="accountID" formControlName="accountID" />
+      </div>
+
+      <div class="internal-div">
+        <label class="form__title" for="accessToken">Access Token</label>
+        <input class="form__input" type="text" id="accessToken" formControlName="accessToken" />
+        <a class="documentation d-flex align-item-center"
+          href="https://developers.facebook.com/docs/instagram-basic-display-api/getting-started" target="_blank"><span
+            class="link-icon material-symbols-outlined">
+            link
+          </span>
+          How to obtain ID & Token?</a>
+
+      </div>
+
+    </div>
+
+  </form>
+
+</div>

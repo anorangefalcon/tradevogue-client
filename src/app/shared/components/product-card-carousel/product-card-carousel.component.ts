@@ -11,16 +11,19 @@ import { productData } from '../../productData';
 export class ProductCardCarouselComponent {
 
   @Input() whatToFetch: string = '';
-  productArr: productData[] = [];
-  i: number = -1;
+  @Input() titles: any = {
+    title: 'Popular Products',
+    subTitle: 'Explore our most demanded products.'
+  };
   
-  //will fetch ?queryParam according to whatToFetch (but a dummy which gets 10 data from a .json)
-  constructor(private fetchDataService: FetchDataService) {
-    this.fetchDataService.getData().subscribe(data => {
-      while(this.productArr.length < data.length){
-         this.productArr.push(data[this.i+=1]);
-      }
-    });
+  productArr: productData[] = [];
+  
+  constructor(private fetchDataService: FetchDataService) {}
+
+  ngOnInit(){
+    this.fetchDataService.getProducts(this.whatToFetch, 10).subscribe((data:any)=>{
+      this.productArr = data.items;
+    })
   }
 
   customOptions: OwlOptions = {

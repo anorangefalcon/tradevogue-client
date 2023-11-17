@@ -28,6 +28,9 @@ const routers: Routes = [
     UtilsModule,
     SharedModule,
     RouterModule.forChild(routers),
+  ],
+  exports:[
+    CartComponent,
   ]
 })
 export class CheckoutModule{

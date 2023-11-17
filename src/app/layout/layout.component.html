@@ -1,5 +1,10 @@
-<app-navbar></app-navbar>
-<app-breadcrumb></app-breadcrumb>
+<ng-container *ngIf="ShowNavBar">
+    <app-navbar></app-navbar>
+    <div class="bread">
+        <app-breadcrumb></app-breadcrumb>
+    </div>
+</ng-container>
 <router-outlet></router-outlet>
+<app-notification></app-notification>
 <app-support></app-support>
 <app-footer></app-footer>

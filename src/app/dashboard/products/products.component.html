@@ -1,183 +1,249 @@
 <section id="product-section">
-    <div class="product-table">
-        <div class="row-1 d-flex justify-content-md-between">
+    <div class="product-table d-flex flex-column gap-25">
+        <div class="d-flex justify-content-md-between">
             <h3>Products Inventory</h3>
         </div>
 
-        <div class="row d-flex gap-20 align-item-center justify-content-md-between">
-            <span class="file-section d-flex align-item-center gap-20">
-                <input type="file" id="sizes" maxlength="1" minlength="1" (change)="uploadFile($event)"
+        <div class="card card__pd-20 d-flex gap-20 align-item-center justify-content-md-between">
+            <div class="file-section d-flex align-item-center gap-20">
+                <input style="display: none;" type="file" id="sizes" maxlength="1" minlength="1" (input)="uploadFile($event)"
                     accept="image/CSV, application/vnd.ms-excel ,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" />
                 <label class="uploadbtn d-flex flex-center pointer gap-5" for="sizes">
                     <span class="material-symbols-outlined operation-icon">upload_file</span>
                     Import
                 </label>
+                
                 <a class="downloadBtn d-flex flex-center pointer gap-5"
                     href="../../../assets/ExcelSampleFile/sampleFullData.xlsx" download>
                     <span class="material-symbols-outlined operation-icon">download</span>
-                    Export Sample
+                    Download Sample
                 </a>
-            </span>
+            </div>
 
-            <span class="operational-buttons d-flex  flex-wrap">
-                <button routerLink="/dashboard/addproduct" class=" d-flex align-item-center gap-5">
+            <div class="operational-buttons d-flex  flex-wrap gap-20">
+                <button routerLink="/dashboard/addproduct" class="btn btn-md btn-rounded d-flex align-item-center gap-5">
                     <i class="material-symbols-outlined operational-buttons-icons">add</i>
                     Add Product
-                    <!-- <span class="tooltiptext">Add Product</span> -->
                 </button>
-                <button class="d-flex align-item-center gap-5">
-                    <i class="material-symbols-outlined operational-buttons-icons" (click)="deleteItems()">delete</i>
+                <button class="btn btn-md btn-rounded d-flex align-item-center gap-5" [disabled]="!deleteList.length"
+                    [ngStyle]="{'cursor': deleteList.length? 'pointer': 'no-drop'}"
+                    (click)="deleteItem(deleteList, 'bulk')">
+                    <i class="material-symbols-outlined operational-buttons-icons">delete</i>
                     Delete
-                    <!-- <span class="tooltiptext">Delete Selected Products</span> -->
                 </button>
-            </span>
+            </div>
 
         </div>
 
-        <div class="row d-flex flex-column">
+        <div class="card card__pd-20 d-flex flex-column">
             <div class="product-header filters d-flex gap-15 align-item-center mh100 mw100">
                 <span class="search-bar mh100">
-                    <app-search-bar [searchPlaceholder]="'Search by Name...'"></app-search-bar>
+                    <app-search-bar [searchPlaceholder]="'Search by Name, Category.....'"
+                        (searchQuery$)="updateFields($event, 'search')"></app-search-bar>
                 </span>
-                <!-- Product Inventory -->
+                <!-- Product Inventory
                 <app-custom-select class="options" [options]="stockStatus" [selectedOption]="'Filter by Stock Status'"
-                    (final_option)="updateFields($event, 'stockStatus')"></app-custom-select>
+                    (final_option)="updateFields($event, 'stockStatus')"></app-custom-select> -->
 
                 <!-- Product Category -->
-                <app-custom-select class="options" [options]="categoryOption" [selectedOption]="'Filter by Catgory'"
-                    (final_option)="updateFields($event, 'productCatgory')"></app-custom-select>
+                <app-custom-select class="options" [options]="categoryOption" [selectedOption]="'Filter by Category'"
+                    (final_option)="updateFields($event, 'categories')"></app-custom-select>
 
                 <!-- Rating -->
-                <app-custom-select class="options" [options]="ratingOption" [selectedOption]="'Filter by Rating'"
-                    (final_option)="updateFields($event, 'productRating')"></app-custom-select>
-
+                <app-custom-select class="options" [options]="sortOption" [selectedOption]="'Sort by'"
+                    (final_option)="updateFields($event)"></app-custom-select>
+                <!-- <button class="clear_btn btn-primary" (click)="filters = {}">Clear</button> -->
             </div>
         </div>
-
-        <div class="row-2 d-flex flex-column gap-20">
-            <div class="product-list">
-                <table id="datatable1" class="text-wrap mh100 mw100" (change)="changeDetection($event)">
-                    <thead>
-                        <tr>
-                            <th class="product-items item-check ">
-                                <input [attr.checked]="checkboxParent" [(ngModel)]="checkboxParent" type="checkbox"
-                                    id="all_product">
-                                <label for='all_product' class="d-flex flex-center">
-                                    <span class="d-flex flex-center material-symbols-outlined">done</span>
-                                </label>
-                            </th>
-                            <th class="product-items">Product Name</th>
-                            <th class="product-items">Category</th>
-                            <th class="product-items">Price</th>
-                            <th class="product-items">Unit Sold</th>
-                            <th class="product-items">In Stock</th>
-                            <th class="product-items">Rating</th>
-                            <th class="product-items">Last Modified</th>
-                            <th class="product-items">Action</th>
-                        </tr>
-                    </thead>
+        <div class="table-list card">
+            <table class="text-wrap">
+                <thead>
+                    <tr>
+                        <th class="items item-check ">
+                            <input [(ngModel)]="selectAll" (change)="toggleSelectAll();  updateCheckList();"
+                                type="checkbox" id="all_product">
+                            <label for='all_product' class="d-flex flex-center">
+                                <span class="d-flex flex-center material-symbols-outlined">done</span>
+                            </label>
+                        </th>
+                        <th class="items">Product Name</th>
+                        <th class="items">Category</th>
+                        <th class="items">Brand</th>
+                        <th class="items">Price</th>
+                        <th class="items">Unit Sold</th>
+                        <th class="items">In Stock</th>
+                        <th class="items">Rating</th>
+                        <th class="items">Last Modified</th>
+                        <th class="items">Action</th>
+                    </tr>
+                </thead>
+                <tbody class="items" *ngIf="!productList.length; else productData">
+                    <tr *ngFor="let i of tableGenerator(template.limit)">
+                        <td *ngFor="let i of tableGenerator(10)" class="items">
+                            <div class="skeleton" style="border-radius: 5px; color: transparent"> d</div>
+                        </td>
+                    </tr>
+                </tbody>
+                <ng-template #productData>
                     <tbody>
-                        <tr *ngFor="let item of productList | paginate: {
-                            itemsPerPage: pageSize,
-                            currentPage: currentPage
-                        }; let i = index">
-                            <td class="product-items item-check">
-                                <input [attr.checked]="checkboxChild" type="checkbox" id="itemId_{{item.itemId}}">
-                                <label class="d-flex flex-center" for='itemId_{{item.itemId}}'>
-                                    <span class="d-flex flex-center material-symbols-outlined">done</span>
-                                </label>
-                            </td>
+                        <ng-container *ngFor="let item of productList; let i = index">
+                            <tr *ngIf="(i < template.limit)" class="default-animation">
+                                <td class="items item-check">
+                                    <input [(ngModel)]="item.checked" type="checkbox"
+                                        (change)="checkboxChanged(); updateCheckList();" id="itemId_{{item.itemId}}">
+                                    <label class="d-flex flex-center" for='itemId_{{item.itemId}}'>
+                                        <span class="d-flex flex-center material-symbols-outlined">done</span>
+                                    </label>
+                                </td>
 
-                            <td class="product-items">
-                                <div class=" d-flex gap-10 align-item-center mh100">
-                                    <div class="product-image d-flex flex-center">
-                                        <img src="{{item.image}}" alt="product.png" width="100%" height="100%">
+                                <td class="items">
+                                    <div class="table__item-image d-flex gap-10 align-item-center mh100">
+                                        <img src="{{item.image}}" loading="lazy" alt="product.png" width="100%"
+                                            height="100%">
+                                        <span>{{item.name}}</span>
                                     </div>
-                                    <span>{{item.name}}</span>
-                                </div>
-                            </td>
+                                </td>
 
-                            <td class="product-items">{{item.category}}</td>
+                                <td class="items text-capitalize">{{item.category}}</td>
+                                <td class="items text-capitalize">{{item.brand}}</td>
+                                <td class="items">&#8377; {{item.price}}</td>
 
-                            <td class="product-items">&#8377; {{item.price}}</td>
+                                <td class="items"> {{item.unit_sold}} </td>
 
-                            <td class="product-items">{{item.unit_sold}}</td>
+                                <td class="items displayInfo relative" (mouseleave)="selectedColor=0">
+                                    <div class="pointer relative d-flex align-item-center">
 
-                            <td class="product-items">
-                                <span *ngIf="item.product_inventory >= 20; else low_inventry" class="inventory good">
-                                    In Stock &#40;{{ item.product_inventory }}&#41;
-                                </span>
+                                        <p (click)="displayInfo($event)">
+                                            {{item.product_inventory}}<sup
+                                                class="info__icon material-symbols-outlined">info</sup>
+                                        </p>
 
-                                <ng-template #low_inventry>
+                                        <div class="popup d-flex flex-column flex-center">
 
-                                    <span *ngIf="item.product_inventory != 0; else empty_inventry"
-                                        class="inventory okay">
-                                        Low Inventory &#40;{{ item.product_inventory }}&#41;
-                                    </span>
+                                            <div class="popup_content relative d-flex flex-column flex-center gap-15">
+                                                <h4 class="pop__title">Stock Inventory Status</h4>
+                                                <span
+                                                    class="pointer close__icon d-flex flex-center absolute material-symbols-outlined"
+                                                    (click)="closeInfo($event)">close
+                                                </span>
 
-                                    <ng-template #empty_inventry>
-                                        <span class="inventory bad">
-                                            Out of Stock &#40;{{ item.product_inventory }}&#41;
-                                        </span>
-                                    </ng-template>
+                                                <span class="d-flex justify-content-center align-item-center gap-10">
+                                                    <ng-container *ngFor="let c of item.assets; let c_index = index">
+                                                        <input type="radio" [name]="'color1' + item.name"
+                                                            [id]="'color1_'+ item.name + c.color" [value]="c.color"
+                                                            (click)="isradioChecked($event, c_index)"
+                                                            [checked]="c_index == 0" />
+                                                        <label class="pointer relative d-flex flex-center"
+                                                            [for]="'color1_'+ item.name + c.color"
+                                                            [style]="'background-color:'+ c.color"></label>
+                                                    </ng-container>
+                                                </span>
 
-                                </ng-template>
+                                                <div class="table-list">
+                                                    <table>
+                                                        <thead>
+                                                            <tr>
+                                                                <th class="items">Size</th>
+                                                                <th class="items">Sold</th>
+                                                                <th class="items">Remaining Qty</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <ng-container [ngSwitch]="selectedColor">
+                                                                <ng-container
+                                                                    *ngFor="let asset of item.assets; let asset_index=index">
 
-                            </td>
+                                                                    <ng-container *ngSwitchCase="asset_index">
+                                                                        <tr
+                                                                            *ngFor="let stock of asset.stockQuantity; let x=index">
+                                                                            <td class="items">{{stock.size}}</td>
+                                                                            <td class="items">{{ stock.unitSold}}
+                                                                            </td>
+                                                                            <td class="items">
+                                                                                <span class="inventory good"
+                                                                                    *ngIf="(stock.quantity) >= filterData(item.orderQuantity,stock.quantity)[filterData(item.orderQuantity,stock.quantity).length -1]; else low_inventry">
+                                                                                    In Stock
+                                                                                    &#40;{{stock.quantity}}&#41;
+                                                                                </span>
 
-                            <td class="product-items">
-                                <div class="d-flex gap-5 align-item-center">
-                                    <ng-container *ngFor="let star of rating">
+                                                                                <ng-template #low_inventry>
 
-                                        <i *ngIf="item.rating % 1 === 0 && star <= item.rating; else halfStar"
-                                            class="fa-solid fa-star" style="color: rgb(var(--primaryClr));"></i>
+                                                                                    <span
+                                                                                        *ngIf="( (stock.quantity) < filterData(item.orderQuantity,stock.quantity)[filterData(item.orderQuantity,stock.quantity).length -1]) && (stock.quantity) >= filterData(item.orderQuantity,stock.quantity)[0]; else empty_inventry"
+                                                                                        class="inventory okay">
+                                                                                        Low Inventory &#40;{{
+                                                                                        stock.quantity }}&#41;
+                                                                                    </span>
 
-                                        <ng-template #halfStar>
-                                            <i *ngIf="star < item.rating " class="fa-solid fa-star"
-                                                style="color: rgb(var(--primaryClr));"></i>
-                                            <i *ngIf="star < item.rating && (star + 1) > item.rating; "
-                                                class="fa-solid fa-star-half-stroke"
-                                                style="color: rgb(var(--primaryClr));"></i>
-                                        </ng-template>
+                                                                                    <ng-template #empty_inventry>
+                                                                                        <span class="inventory bad">
+                                                                                            Out of Stock &#40;{{
+                                                                                            stock.quantity }}&#41;
+                                                                                        </span>
+                                                                                    </ng-template>
 
-                                        <ng-container *ngIf="star > item.rating">
-                                            <i class="fa-regular fa-star" style="color: rgb(var(--primaryClr));"></i>
+                                                                                </ng-template>
+                                                                            </td>
+                                                                        </tr>
+                                                                    </ng-container>
+                                                                </ng-container>
+                                                            </ng-container>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </td>
+
+                                <td class="items">
+                                    <div class="d-flex gap-5 align-item-center">
+                                        <ng-container *ngFor="let star of starRating(item.rating)">
+                                            <i [class]="star" style="color: rgb(var(--primaryClr));"></i>
                                         </ng-container>
-                                    </ng-container>
-                                    &#40;{{item.rating}}&#41;
-                                </div>
-                            </td>
-                            <td class="product-items">{{item.last_updated}}</td>
-                            <td class="product-items">
-                                <span class=" d-flex align-item-center gap-10 transition">
-                                    <a href="javascript:void(0);" class="tooltip">
-                                        <i class="fs-20 fa-icon material-symbols-outlined">zoom_in</i>
-                                        <span class="tooltiptext">View</span>
-                                    </a>
-                                    <a href="javascript:void(0);" class="tooltip">
-                                        <i class="fa-icon fa-regular fa-pen-to-square"></i>
-                                        <span class="tooltiptext">Edit</span>
-                                    </a>
-                                    <a href="javascript:void(0);" class="tooltip" (click)="deleteItem(item)">
-                                        <i class="fa-icon fa-regular fa-trash-can"></i>
-                                        <span class="tooltiptext">Delete</span>
-                                    </a>
-                                </span>
-                                <!-- <span (click)="toggleClass($event)" class="pointer material-symbols-outlined">more_vert</span>
-                                <ul class="action_option d-flex flex-column absolute">
-                                    <li class="option pointer">View</li>
-                                    <li class="option pointer">Edit</li>
-                                    <li class="option pointer" (click)="deleteItem(item)">Delete</li>
-                                </ul> -->
-                            </td>
-                        </tr>
+                                        &#40;{{item.rating}}&#41;
+                                    </div>
+                                </td>
+
+                                <td class="items">{{item.last_updated}}</td>
+
+                                <td class="items action-btns">
+                                    <span class="d-flex align-item-center gap-5 transition">
+
+                                        <span class="tooltip">
+                                            <input class="highlight" type="checkbox" style="display: none;"
+                                                [id]="'highlight'+i" (click)="highlightProduct($event, item._id, i)"
+                                                [(ngModel)]="item.highlight">
+                                            <label class="pointer checkbox__label" [for]="'highlight'+i"></label>
+                                            <span class="tooltiptext">Highlight Product</span>
+                                        </span>
+
+                                        <a class="tooltip" [routerLink]="['/dashboard/product-overview', item.itemId]">
+                                            <i class="fs-18 action__btn-icon material-symbols-outlined">zoom_in</i>
+                                            <span class="tooltiptext">View</span>
+                                        </a>
+                                        <a class="tooltip" [routerLink]="['/dashboard/editproduct', item.itemId]">
+                                            <i class="action__btn-icon fa-regular fa-pen-to-square"></i>
+                                            <span class="tooltiptext">Edit</span>
+                                        </a>
+                                        <a class="tooltip" (click)="deleteItem(item._id, item.name)">
+                                            <i class="action__btn-icon fa-regular fa-trash-can"></i>
+                                            <span class="tooltiptext">Delete</span>
+                                        </a>
+                                    </span>
+                                </td>
+                            </tr>
+                        </ng-container>
                     </tbody>
-                </table>
-            </div>
-            <div class="table-controls d-flex justify-content-md-between">
-                <pagination-controls (pageChange)="pageChanged($event)" previousLabel="Previous"
-                    nextLabel="Next"></pagination-controls>
-            </div>
+                </ng-template>
+            </table>
         </div>
     </div>
+
+    <app-pagination [collectionSize]="totalCount" [pageSize]="pageSize" [currentPage]="currentPage"
+        (activePage)="pageChange($event)"></app-pagination>
+    <!-- PopUp Div -->
+    <!-- <app-dialog [type]="'confirmation'" (reply)="response($event)"></app-dialog> -->
 </section>

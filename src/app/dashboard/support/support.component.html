@@ -1,0 +1,71 @@
+<section class="d-flex flex-column gap-20">
+  <div class="card card__pd-20 d-flex justify-content-md-between align-item-center">
+    <h3>Set Ticket Type</h3>
+    <button (click)="openDrawer()" class="btn btn-xs btn-rounded fw-500 btn-primary d-flex align-item-center gap-5">
+      <i class="material-symbols-outlined operational-buttons-icons transition fs-20">add</i>
+      <span>Add New Title</span>
+    </button>
+  </div>
+
+
+  <div class="table-list card">
+    <table class="selected-category">
+      <thead>
+        <tr>
+          <th class="items">Serial Number</th>
+          <th class=" items ellipsis">Title</th>
+          <th class="items">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of titleData; let i = index;">
+          <td class="items ellipsis">{{ i + 1 }}</td>
+          <td class="items ellipsis">{{ item }}</td>
+          <td class="items action-btns">
+
+
+            <span class="tooltip">
+              <i class="fs-18 action__btn-icon pointer material-symbols-outlined"
+                (click)="showItemDetails(item)">edit</i>
+              <span class="tooltiptext">Edit</span>
+            </span>
+            <span class="tooltip">
+              <i class="fs-18 action__btn-icon pointer material-symbols-outlined"
+                (click)="deleteTicketTitle(item)">delete</i>
+              <span class="tooltiptext">Delete</span>
+            </span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="drawer" [ngClass]="{ 'open': isDrawerOpen }">
+    <div (click)="closeDrawer()" class="absolute right-5 top-5 close-button">
+      <svg class="close-icon" width="24" height="24" viewBox="0 0 24 24" fill="none">
+        <path
+          d="M18.2929 5.70711C18.6834 6.09763 18.6834 6.73079 18.2929 7.12132L13.4142 12L18.2929 16.8787C18.6834 17.2692 18.6834 17.9024 18.2929 18.2929C17.9024 18.6834 17.2692 18.6834 16.8787 18.2929L12 13.4142L7.12132 18.2929C6.73079 18.6834 6.09763 18.6834 5.70711 18.2929C5.31658 17.9024 5.31658 17.2692 5.70711 16.8787L10.5858 12L5.70711 7.12132C5.31658 6.73079 5.31658 6.09763 5.70711 5.70711C6.09763 5.31658 6.73079 5.31658 7.12132 5.70711L12 10.5858L16.8787 5.70711C17.2692 5.31658 17.9024 5.31658 18.2929 5.70711Z"
+          fill="currentColor" />
+      </svg>
+    </div>
+
+    <div class="ticket">
+      <h2>Ticket Title</h2>
+      <div>
+      </div>
+      <input type="text" [(ngModel)]="updatedItem" style="padding: 8px; border: 1px solid #ccc; border-radius: 4px;">
+      <button (click)="pushItem()" class="btn-primary">Add</button>
+    </div>
+  </div>
+
+  <app-pop-up *ngIf="selectedItem">
+    <div class="details-container">
+      <h2>Edit Ticket</h2>
+      <div>
+      </div>
+      <input type="text" [(ngModel)]="updatedItem" style="padding: 8px; border: 1px solid #ccc; border-radius: 4px;">
+      <button (click)="updateItem()" class="btn-primary">Update</button>
+    </div>
+  </app-pop-up>
+
+</section>

@@ -4,7 +4,11 @@ import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 import { ApiService } from '../services/api.service';
 import { Subject } from 'rxjs';
 import { ImageUploadService } from 'src/app/shared/services/image-upload.service';
-
+import { UtilsModule } from 'src/app/utils/utils.module';
+import { SellerFetchDataService } from 'src/app/shared/services/seller-fetch-data.service';
+import { CookieService } from 'ngx-cookie-service';
+import { PopupService } from 'src/app/shared/services/popup.service';
+import { DatePipe } from '@angular/common';
 @Component({
   selector: 'app-account',
   templateUrl: './account.component.html',
@@ -15,25 +19,37 @@ export class AccountComponent implements OnInit {
   changee: boolean = true;
   profileForm!: FormGroup;
   AccountForm!: FormGroup; 
+  passwordForm!: FormGroup; 
   postalCode: string = '';
   country: string = '';
   state: string = '';
   county: string = '';
+  city: string = '';
   passwordVisible: boolean = false;
   pincodeFilled: boolean = false;
   userPhoto: string = '';  
   private postalCodeInput = new Subject<string>();
-
+  showPopup = true;
 
 
   constructor(
     private postalCodeService: ApiService,
     private formBuilder: FormBuilder,
-    private imageUpload: ImageUploadService 
-  ) { }
+    private imageUpload: ImageUploadService,
+    private backendURLs: UtilsModule,
+    private sellerFetchDataService: SellerFetchDataService,
+    private cookieService: CookieService,
+    private popupService: PopupService,
+    private datePipe: DatePipe
+  ) {
+
+   }
 
 
+   
   ngOnInit() {
+      // Use the patchValue method to update the profileForm with adminData
+
     this.profileForm = this.formBuilder.group({
       firstName: [
         '',
@@ -62,6 +78,8 @@ export class AccountComponent implements OnInit {
           ),
         ],
       ],
+      dob: ['', [Validators.required]],
+      gender: ['', [Validators.required]],
       mobile: [
         '',
         [Validators.required, Validators.pattern('[0-9]{10}')],
@@ -74,10 +92,29 @@ export class AccountComponent implements OnInit {
           Validators.pattern(/^(?=.*[A-Z])(?=.*[!@#$%^&*()_+{}\[\]:;<>,.?~\\-])/),
         ],
       ],
-      organization: [''],
       address: ['', [Validators.required]],
-      postalCode: ['', [Validators.required, Validators.pattern('[0-9]{6}')],
-      ],
+      postalCode: ['', [Validators.required, Validators.pattern('[0-9]{6}')]],
+      country: ['', [Validators.required]],
+      state: ['', [Validators.required]],
+      town_city: ['', [Validators.required]],
+    });
+
+
+    var adminData = this.sellerFetchDataService.getSellerInfo().subscribe((data: any) => {
+      const formattedDob = this.datePipe.transform(data[0].info.dob, 'yyyy-MM-dd');
+      this.profileForm.patchValue({
+        firstName: data[0].name.firstname,
+        lastName: data[0].name.lastname,
+        email: data[0].email,
+        dob: formattedDob,
+        address: data[0].info.address[0].apartment,
+        postalCode: data[0].info.address[0].pincode,
+        country: data[0].info.address[0].country,
+        state: data[0].info.address[0].state,
+        city: data[0].info.address[0].city,
+        gender: data[0].info.gender,
+        mobile: data[0].mobile,
+      });
     });
 
     this.AccountForm = this.formBuilder.group({
@@ -88,6 +125,11 @@ export class AccountComponent implements OnInit {
       IFSC: ['', [Validators.required, Validators.maxLength(11)]],
       GST: ['', [Validators.required, Validators.maxLength(15)]],
     });
+
+    this.passwordForm = this.formBuilder.group({
+      currentPassword: ['', Validators.required],
+      newPassword: ['', Validators.required],
+    })
 
 
 
@@ -104,6 +146,7 @@ export class AccountComponent implements OnInit {
             this.country = '';
             this.state = '';
             this.county = '';
+            this.city = '';
             return [];
           }
         })
@@ -113,12 +156,18 @@ export class AccountComponent implements OnInit {
           this.country = data[0].COUNTRY;
           this.state = data[0].STATE;
           this.county = data[0].COUNTY;
+          this.city = data[0].CITY;
         } else {
           this.country = '';
           this.state = '';
           this.county = '';
+          this.city = '';
         }
       });
+
+
+      this.AccountForm.disable();
+      this.profileForm.disable();
   }
 
   onPostalCodeInputChange() {
@@ -141,9 +190,67 @@ export class AccountComponent implements OnInit {
     }
   }
 
-  updateInformation() {
+  async updateDetails(form: {[key: string]: string}) {
+    const body = {
+      "email": form['email'],
+      "name": {
+        "firstname": form['firstName'],
+        "lastname": form['lastName']
+      },
+      "mobile" : form['mobile'],
+      "info":{
+        "gender": form['gender'],
+        "dob": form['dob'],
+        "address": [
+          {
+              "firstname": form['firstName'],
+              "lastname": form['lastName'],
+              "apartment": form['address'],
+              "city": form['city'],
+              "area": form['county'],
+              "state": form['state'],
+              "pincode": form['postalCode'],
+              "country": form['country'],
+          },
+      ],
+      "token": this.cookieService.get('userToken')
+      }
+    }
+    
+    // let data: any = await this.fetchDataService.httpPost(this.backendUrls.URLs.loginUrl, body);
+    await this.sellerFetchDataService.sendSellerInfo(body);
 
+    const pinData= {
+      "POSTAL_CODE": form['postalCode'],
+      "COUNTRY": form['country'],
+      "STATE": form['state'],
+      "COUNTY": form['city'],
+      "CITY": form['county']
+    }
+
+    await this.sellerFetchDataService.sendPinInfo(pinData).subscribe((data: any) => {
+    });
   }
+
+  
+  
+  
+
+  // async saveDetails() {
+
+  //   this.DetailsSubmitted = true;
+  //   if (this.ProfileForm.invalid) return;
+
+  //   let body = {
+  //     name: { firstname: this.ProfileForm.get('firstname')?.value, lastname: this.ProfileForm.get('lastname')?.value },
+  //     email: this.ProfileForm.get('email')?.value,
+  //     mobile: this.ProfileForm.get('mobile')?.value,
+  //     "info.gender": this.ProfileForm.get('gender')?.value,
+  //     "info.dob": new Date(this.ProfileForm.get('dob')?.value)
+  //   }
+  //   let response = await this.fetchDataService.httpPost(this.backendURLs.URLs.updateDetails, body);
+  //   this.isReadOnly = !this.isReadOnly;
+  // }
 
   uploadImage(e: Event){
     const file = (e.target as HTMLInputElement).files![0];

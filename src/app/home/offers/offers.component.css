@@ -10,16 +10,6 @@ img {
   margin-bottom: 30px;
 }
 
-.col {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-evenly;
-  padding: 20px;
-  width: 50%;
-  border-radius: 10px;
-}
-
 .col:first-child {
   background-color: rgb(236, 242, 247);
 }
@@ -65,9 +55,9 @@ img {
 }
 
 .btn-style3:hover {
-  color: #df4117;
+  color: rgb(var(--primaryClr));
   background-color: #0000;
-  border: 2px solid #df4117;
+  border: 2px solid rgb(var(--primaryClr));
   box-shadow: 0 0 10px #0000000d;
 }
 
@@ -94,7 +84,7 @@ a:hover {
   }  
 
   .btn-style3 {
-    font-size: 13px;
+    font-size: 12px;
     padding: 10px 12px;
     font-weight: 500;
     width: 123px;
@@ -128,4 +118,30 @@ a:hover {
     font-size: 12px;
     width: 105px;
   }
+}
+
+.col {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-evenly;
+  padding: 59px;
+  width: 50%;
+  border-radius: 10px;
+}
+
+.left-content {
+  width: 60%; 
+  padding-right: 20px; 
+}
+
+.right-content {
+  width: 40%; 
+}
+
+.large-image {
+  max-width: 253px;
+  max-height: 222px;
+  display: block;
+  margin: 0 auto; 
 }

@@ -1,177 +1,209 @@
 import { Injectable } from '@angular/core';
-import { FetchDataService } from './fetch-data.service';
 import { BehaviorSubject, Observable, map } from 'rxjs';
 import { ToastService } from './toast.service';
+import { HttpClient } from '@angular/common/http';
+import { UtilsModule } from './../../utils/utils.module';
+import { LoginCheckService } from './login-check.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CartService {
 
-  constructor(private fetchData: FetchDataService, private toastService: ToastService) {
+  constructor(private toastService: ToastService, private http: HttpClient, private backendUrls: UtilsModule, private loginCheckService: LoginCheckService) { 
+    
+    this.loginCheckService.getUser().subscribe((loggedIn: any) => { 
+      this.user = loggedIn;
+    });
     this.fetchDetails();
+    
+
   }
 
+  user: boolean = false;
   // used to add items to cart in localStorage
   cartStorage: any[] = [];
+  sideCart = new BehaviorSubject<any>('');
   // used as a subject for cart to be as observable
-  cartSubject = new BehaviorSubject<any>({});
+  private cartSubject = new BehaviorSubject<any>([]);
   // actual data lies here
-  cart$ = this.cartSubject.asObservable();
+  private cart$ = this.cartSubject.asObservable();
+
 
   addToCart(data: any) {
-    const localStorageData = localStorage.getItem("myCart");
+    const cartObj = { "sku": data.sku, "size": data.size, "color": data.color, "quantity": data.quantity };
 
-    if (localStorageData) {
-      this.cartStorage = JSON.parse(localStorageData);
-
-      const skuFound = this.cartStorage.find((item: any) => {
-        return item.sku === data.sku;
-      });
-      if (skuFound) {
-        this.toastService.errorToast({
-          title: 'Item already exists in cart'
-        })
-        return;
-      }
+    if (this.user) {
+      this.addToCartWithToken(cartObj);
     }
+    else {
+      this.addToCartWithoutToken(cartObj);
+    }
+  }
 
-    this.cartStorage.push({ "sku": data.sku, "size": data.size, "color": data.color, "Quantity": data.quantity });
-    const myCart = JSON.stringify(this.cartStorage);
-    localStorage.setItem("myCart", myCart);
+  private addToCartWithToken(cartObj: any) {
+    this.http.post(this.backendUrls.URLs.addItemsToCart, [cartObj]).subscribe(
+      (details: any) => {
+        if (!details.added) {
+          this.toastService.warningToast({ title: 'Item already exists in cart' });
+        }
+        else {
+          this.handleSuccessfulAddToCart();
+        }
+      }
+    );
+  }
+
+  private addToCartWithoutToken(cartObj: any) {
+    const localStorageData = localStorage.getItem("myCart");
+    this.cartStorage = localStorageData ? JSON.parse(localStorageData) : [];
+
+    if (this.checkIfSameConfigAlreadyExists(this.cartStorage, cartObj)) {
+      this.cartStorage.push(cartObj);
+      localStorage.setItem("myCart", JSON.stringify(this.cartStorage));
+      this.handleSuccessfulAddToCart();
+    }
+    else {
+      this.toastService.warningToast({ title: 'Item already exists in cart' });
+    }
+  }
+
+  private handleSuccessfulAddToCart() {
     this.toastService.successToast();
-
+    this.sideCart.next(true);
     this.fetchDetails();
   }
 
+  // Helper function
+  private checkIfSameConfigAlreadyExists(existingCart: any, newItem: any): boolean {
+    const shouldAdd = !existingCart.some((existingItem: any) =>
+      newItem.sku === existingItem.sku &&
+      newItem.color === existingItem.color &&
+      newItem.size === existingItem.size
+    );
 
-  // could be more optimised but cant due to cap Q in quantity
+    return shouldAdd;
+  }
+
+
   updateCart(data: any) {
-    const localStorageData = localStorage.getItem("myCart");
 
-    if (localStorageData) {
-      this.cartStorage = JSON.parse(localStorageData);
-
-      const skuFound = this.cartStorage.find((item: any) => {
-        return item.sku === data.sku;
+    if (this.user) {
+      this.http.post(this.backendUrls.URLs.updateItemFromCart, data).subscribe((data: any) => {
+        if (data.updated) {
+          this.fetchDetails();
+        }
       });
-      if (skuFound) {
-        skuFound.size = data.size;
-        skuFound.color = data.color;
-        skuFound.Quantity = data.quantity;
+    }
+    else {
+      const localStorageData = localStorage.getItem("myCart");
+
+      if (localStorageData) {
+        this.cartStorage = JSON.parse(localStorageData);
+
+        const itemFound = this.cartStorage[data.index];
+        delete data.index;
+
+        if (itemFound) {
+          Object.keys(data).forEach((key: any) => {
+            itemFound[key] = data[key];
+          });
+        }
       }
+
+      const myCart = JSON.stringify(this.cartStorage);
+      localStorage.setItem("myCart", myCart);
+
+
+      this.fetchDetails();
     }
 
-    const myCart = JSON.stringify(this.cartStorage);
-    localStorage.setItem("myCart", myCart);
-
-    this.fetchDetails();
   }
-
 
   fetchDetails() {
-    const cartDetails: any = {
-      details: [],
-      amounts: {
-        subTotal: 0,
-        shipping: 0,
-        savings: 0,
-        total: 0
-      }
+    const localCart = localStorage.getItem('myCart');
+    let cartDetails = localCart ? JSON.parse(localCart) : null;
+
+    if (localCart && this.user) {
+      this.http.post(this.backendUrls.URLs.addItemsToCart, cartDetails).subscribe((message: any) => {
+        this.clearCart('localOnly');
+
+        this.http.post(this.backendUrls.URLs.fetchCart, cartDetails).subscribe((data: any) => {
+          this.cartSubject?.next(data);
+        });
+      });
     }
-    const fields = ["name", "price", "oldPrice", "image", "orderQuantity"];
-    const localCart = localStorage.getItem("myCart");
-    cartDetails.details = localCart ? JSON.parse(localCart) : null;
-
-    if (cartDetails.details !== null) {
-      this.fetchData.getData().subscribe((data) => {
-
-        for (let i = 0; i < cartDetails.details.length; i++) {
-          const matchSku = (data.find((item: any) => {
-            return item.sku == cartDetails.details[i].sku;
-          }));
-          Object.assign(cartDetails.details[i],
-            Object.fromEntries(
-              fields.map(field => [
-                field, matchSku[field]
-              ])
-            )
-          );
-
-
-          // { temp until we connect db
-          if (!(cartDetails.details[i].color)) {
-            cartDetails.details[i].color = (matchSku['colors'])[0]
-          }
-          if (!(cartDetails.details[i].price)) {
-            cartDetails.details[i].price = (matchSku['price'])[0]
-          }
-          if (!(cartDetails.details[i].Quantity)) {
-            cartDetails.details[i].Quantity = (matchSku['orderQuantity'])[0]
-          }
-          if (!(cartDetails.details[i].size)) {
-            cartDetails.details[i].size = (matchSku['sizes'])[0]
-          }
-          // }
-
-          //amounting payment:
-          cartDetails.amounts.subTotal += (cartDetails.details[i].price * cartDetails.details[i].Quantity);
-
-          cartDetails.amounts.shipping += 50;
-
-          cartDetails.amounts.savings += cartDetails.details[i].oldPrice * cartDetails.details[i].Quantity;  
-        }
-        
-        cartDetails.amounts.savings -= cartDetails.amounts.subTotal;
-        cartDetails.amounts.savings = (Math.round((cartDetails.amounts.savings) * 100))/100;
-
-        cartDetails.amounts.subTotal = (Math.round((cartDetails.amounts.subTotal) * 100)/100);
-        
-        cartDetails.amounts.total = cartDetails.amounts.subTotal + cartDetails.amounts.shipping;
-
-      })
-
-      this.cartSubject.next(cartDetails);
+    else {
+      if (!cartDetails) {
+        cartDetails = [];
+      }
+      this.http.post(this.backendUrls.URLs.fetchCart, cartDetails).subscribe((data: any) => {
+        this.cartSubject?.next(data);
+      });
     }
   }
 
-  removeItem(sku: any) {
-    const localStorageData = localStorage.getItem("myCart");
+  removeItem(identifier: any) {
 
-    if (localStorageData) {
-      this.cartStorage = JSON.parse(localStorageData);
-
-      this.cartStorage = this.cartStorage.filter((item) => {
-        return item.sku !== sku;
+    if (this.user) {
+      this.http.post(this.backendUrls.URLs.removeItemFromCart, { itemId: identifier }).subscribe((message: any) => {
+        // this.ItemDeleted=true;
+        this.fetchDetails();
       });
     }
+    else {
+      const localStorageData = localStorage.getItem("myCart");
 
+      if (localStorageData) {
+        this.cartStorage = JSON.parse(localStorageData);
+
+        this.cartStorage.splice(identifier, 1);
+      }
+
+      const myCart = JSON.stringify(this.cartStorage);
+      localStorage.setItem("myCart", myCart);
+      this.fetchDetails();
+    }
     this.toastService.notificationToast({
       title: 'Item removed!'
     })
-    const myCart = JSON.stringify(this.cartStorage);
-    localStorage.setItem("myCart", myCart);
-    this.fetchDetails();
+
   }
 
+  refreshCart() {
+
+  }
+
+  // use this function to access cart data
   fetchCart(what: string = ''): Observable<any> {
 
     if (what === 'count') {
       return this.cart$.pipe(
-        map(data => data.details.length)
+        map(data => data.details?.length)
       );
     }
     else if (what === 'details') {
       return this.cart$.pipe(
-        map(data => data.details)
+        map(data => data?.details)
       );
     }
     else if (what === ('amount' || 'amounts')) {
       return this.cart$.pipe(
-        map(data => data.amounts)
+        map(data => data?.amounts)
       );
     }
     return this.cart$;
+  }
+
+  clearCart(which: string = '') {
+
+    if (!which) {
+      if (this.user) {
+        this.http.get(this.backendUrls.URLs.clearCart).subscribe((message: any) => {
+        });
+      }
+    }
+    localStorage.removeItem("myCart");
   }
 
 }

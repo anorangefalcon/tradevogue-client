@@ -1,6 +1,9 @@
 import { Component, Input } from '@angular/core';
 import { CartService } from '../../services/cart.service';
 import { OwlOptions } from 'ngx-owl-carousel-o';
+import { PopupService } from '../../services/popup.service';
+import { WishlistService } from '../../services/wishlist.service';
+
 @Component({
   selector: 'app-card-template',
   templateUrl: './card-template.component.html',
@@ -10,41 +13,19 @@ export class CardTemplateComponent {
   
   @Input() product: any = {};
   showPopup: boolean = false;
+  selectedItem: boolean = false;
 
-
-  constructor(private cartService: CartService) { }
+  constructor(private cartService: CartService, private popupService: PopupService, private wishlistService : WishlistService,) {    
+   }
 
   avgRating: number = 0;
+  productData: any = [];
   offerPercentage: number = 0;
-   selectedColor: string = "";
+  selectedColor: string = "";
 
   ngOnInit(): void {
-
-    // console.log("product is", this.product);
-    
-    for (let review of this.product.reviews) {
-      this.avgRating += review.rating;
-    // console.log('reviews are ',this.product.reviews[0].rating);
-    }
-    this.avgRating = this.avgRating / this.product.reviews.length;
-    if (this.product.oldPrice !== (undefined || 0)) {
-      this.offerPercentage = Math.floor((this.product.oldPrice- this.product.price) / this.product.oldPrice * 100);
-    }
-
-    const allSkeleton = document.querySelectorAll('.skeleton');
-
-    window.addEventListener('load', () => {
-      allSkeleton.forEach((item: Element) => {
-        item.classList.remove('skeleton');
-      });
-    });
-
-    window.addEventListener('scroll', () => {
-      allSkeleton.forEach((item: Element) => {
-        item.classList.remove('skeleton')
-      })
-    })
-
+    const sku = this.product.sku;
+    this.avgRating = this.product.avgRating;
   }
 
   createArrayToIterate(num: number){
@@ -54,15 +35,33 @@ export class CardTemplateComponent {
     }
     return Array(newTotal).fill(0);
   }
-    
+
+   chooseWishlist() {  
+    this.wishlistService.ShowWishlist(this.product._id);
+  }
+
+  RemoveOrAddToWishlist(event:any=null){
+    if(!event){
+      this.wishlistService.ShowWishlist(this.product._id);
+    }
+    else{
+      this.wishlistService.removeFromWishlist(this.product._id).subscribe((data)=>{        
+      });
+    }
+  }
+
+  
   addToCart(){
+    
     const cartItem = {
       sku: this.product.sku,
+      color: this.product.assets[0].color,
+      size: this.product.assets[0].stockQuantity[0].size,
+      quantity: this.product.info.orderQuantity[0]
     }
     
     this.cartService.addToCart(cartItem);
   }
-
 
     customOptions: OwlOptions = {
     loop: true,
@@ -90,4 +89,8 @@ export class CardTemplateComponent {
     },
   }
 
+  openPopup() {
+      this.popupService.openPopup();
+      this.showPopup = true;
+    }
 }

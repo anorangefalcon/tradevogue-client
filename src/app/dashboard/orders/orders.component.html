@@ -1,124 +1,139 @@
 <section id="order-section" class="d-flex flex-column gap-20">
-    <!-- <div class="d-flex justify-content-md-between align-center">
-        <div class="update d-flex align-center">
-            <h1>Orders</h1>
-            <span class="material-symbols-outlined rotate pointer">refresh</span>
-        </div>
-        <div class="search-option">
-            <app-search-bar [searchPlaceholder]="'Search Orders...'"></app-search-bar>
-        </div>
-    </div> -->
+    <h3>Order List</h3>
 
-    <div class="order-info-cards d-grid gap-20">
-        <div class="column col-2">
-            <div class="card">
-                <span class="material-symbols-outlined">thumb_up</span>
-                <div>
-                    <p class="title">Confirmed</p>
-                    <span class="order-count">323</span>
-                </div>
+    <div class="order-info-cards grid gap-20">
+        <div class="card card__pd-20 column col-2">
+            <div>
+                <p class="title">Confirmed</p>
+                <span class="order-count">{{orderStats.confirmed ? orderStats.confirmed : 0}}</span>
             </div>
+            <i class="material-symbols-outlined">thumb_up</i>
         </div>
-        <div class="column col-4">
-            <div class="card">
-                <span class="material-symbols-outlined">local_shipping</span>
-                <div>
-                    <p class="title">Shipping</p>
-                    <span class="order-count">100</span>
-                </div>
+        <div class="card card__pd-20 column col-4">
+            <div>
+                <p class="title">Shipped</p>
+                <span class="order-count">{{orderStats.shipped ? orderStats.shipped : 0}}</span>
             </div>
+            <i class="material-symbols-outlined">local_shipping</i>
         </div>
-        <div class="column col-3">
-            <div class="card">
-                <span class="material-symbols-outlined">close</span>
-                <div>
-                    <p class="title">Canceled</p>
-                    <span class="order-count">10</span>
-                </div>
+        <div class="card card__pd-20 column col-3">
+            <div>
+                <p class="title">Cancelled</p>
+                <span class="order-count">{{orderStats.cancelled ? orderStats.cancelled: 0}}</span>
             </div>
+            <i class="material-symbols-outlined">close</i>
         </div>
-        <div class="column col-1">
-            <div class="card">
-                <span class="material-symbols-outlined">done</span>
-                <div>
-                    <p class="title">Completed</p>
-                    <span class="order-count">2000</span>
-                </div>
+        <div class="card card__pd-20 column col-1">
+            <div>
+                <p class="title">Delivered</p>
+                <span class="order-count">{{orderStats.delivered ? orderStats.delivered: 0}}</span>
             </div>
+            <i class="material-symbols-outlined">done</i>
         </div>
     </div>
 
-    <div class="order-list d-flex flex-column gap-25">
-        <div class="filters d-flex justify-content-md-between align-item-center">
-            <h3>Order List</h3>
-            <!-- <div class="d-flex align-item-centergap-20">
-                <span class="d-flex align-item-centergap-10">
-                    <label for="todate">To: </label>
-                    <input type="date" #todate>
-                </span>
-                <span class="d-flex align-item-centergap-10">
-                    <label for="fromdate">From: </label>
-                    <input type="date" #fromdate>
-                </span>
-            </div> -->
-            <div class="d-flex align-item-centergap-20">
-                <app-custom-select [options]="categoryOption" [selectedOption]="'Filter by Category'" (final_option)="updateFields($event, 'category')"></app-custom-select>
-                <app-custom-select [options]="orderStatus" [selectedOption]="'Filter by Order'" (final_option)="updateFields($event, 'order')"></app-custom-select>
-            </div>
-        </div>
-        <div class="order-table">
-            <table datatable class="row-border hover">
+
+    <div class="filters card card__pd-20 grid gap-20 justify-content-end">
+        <app-search-bar [searchPlaceholder]="'Search Orders...'"
+            (searchQuery$)="updateFields($event, 'search')"></app-search-bar>
+        <app-custom-select [options]="paymentStatus" [selectedOption]="'Filter by Payment Status'"
+            (final_option)="updateFields($event, 'payment_status')"></app-custom-select>
+        <span class="d-flex relative justify-content-md-between flex-column gap-5">
+            <label class="form__title" for="todate">To: </label>
+            <input class="form__input todate" (input)="updateDateFields($event, 'dateto')" type="date" id="todate">
+        </span>
+        <span class="d-flex relative justify-content-md-between flex-column gap-5">
+            <label class="form__title" for="fromdate">From: </label>
+            <input class="form__input fromdate" (input)="updateDateFields($event, 'datefrom')" type="date"
+                id="fromdate">
+        </span>
+        <button class="btn btn-rounded btn-primary btn-md" (click)="downloadExcel()">Download All Orders</button>
+    </div>
+
+    <div class="order-list d-flex flex-column gap-20">
+
+        <div class="order-table card table-list">
+            <table class="row-border hover" id="order-excel-table">
                 <thead>
                     <tr>
-                        <th class="order-items heading">Order ID</th>
-                        <th class="order-items heading">Product</th>
-                        <th class="order-items heading">Category</th>
-                        <th class="order-items heading">Sizes</th>
-                        <th class="order-items heading">Quantity</th>
-                        <th class="order-items heading">Amount</th>
-                        <th class="order-items heading">Order Status</th>
-                        <th class="order-items heading">Payment</th>
-                        <th class="order-items heading">Track </th>
+                        <th class="items heading">Invoice ID</th>
+                        <th class="items heading">Customer Name</th>
+                        <th class="items heading">Order Time</th>
+                        <th class="items heading">Quantity</th>
+                        <th class="items heading">Amount</th>
+                        <th class="items heading">Payment Status</th>
+                        <!-- <th class="items heading">Invoice Available</th> -->
+                        <!-- <th class="items heading">Track</th> -->
+                        <th class="items heading">Invoice</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr *ngFor="let item of orders | paginate: {
-                        itemsPerPage: pageSize,
-                        currentPage: currentPage
-                    }">
-                        <td class="order-items">#{{item.orderId}}</td>
-                        <td class="order-items">{{item.product}}</td>
-                        <td class="order-items">{{item.category}}</td>
-                        <td class="order-items">{{item.size}}</td>
-                        <td class="order-items">{{item.quantity}}</td>
-                        <td class="order-items">&#8377; {{item.amount}}</td>
-                        <td class="order-items">
-                            <span *ngIf="item.order_status == 'Confirmed'" style="color: rgb(var(--success));">Confirmed</span>
-                            <span *ngIf="item.order_status == 'Shipping'" style="color: rgba(255, 85, 0, 0.992);">Shipping</span>
-                            <span *ngIf="item.order_status == 'Canceled'" style="color: rgb(var(--danger));">Canceled</span>
-                            <span *ngIf="item.order_status !== 'Confirmed' && item.order_status !== 'Shipping' && item.order_status !== 'Canceled'" style="color: rgb(var(--dash-blue-clr));">{{item.order_status}}</span>                            
-                        </td>
 
-                        <td class="order-items">
-                            <span *ngIf="item.payment_status == 'Confirmed'" style="color: rgb(var(--success));">Completed</span>
-                            <span *ngIf="item.payment_status == 'Failed'" style="color: rgb(var(--danger));">Failed</span>
-                            <span *ngIf="item.payment_status == 'Refunded'" style="color: rgb(var(--dash-blue-clr));">Refunded</span>
-                            <span *ngIf="item.payment_status !== 'Confirmed' && item.payment_status !== 'Failed' && item.payment_status !== 'Refunded'" style="color: rgb(var(--dash-blue-clr));">{{item.payment_status}}</span>                          
-                        </td>
-                        <td class="order-items">
-                            <a [routerLink]="['/dashboard/orderDetails', item.orderId]">
-                                <span class="material-symbols-outlined">open_in_new</span>
-                            </a>
+                <tbody *ngIf="!orderData.length; else orderInfo">
+                    <tr *ngFor="let i of tableGenerator(pageSize)">
+                        <td *ngFor="let i of tableGenerator(8)" class="items">
+                            <div class="skeleton" style="border-radius: 5px; color: transparent"> d</div>
                         </td>
                     </tr>
                 </tbody>
+
+                <ng-template #orderInfo>
+                    <tbody class="default-animation">
+                        <tr *ngFor="let item of orderData; let i = index">
+                            <ng-container *ngIf="i< pageSize">
+                                <td class="items">#{{item.orderID}}</td>
+                                <td class="items text-capitalize">{{item.customer}}</td>
+                                <td class="items">{{item.orderTime}}</td>
+                                <td class="items">{{item.quantity}}</td>
+                                <td class="items">&#8377; {{item.amount}}</td>
+                                <td class="items" style="font-weight: 500;">
+                                    <span *ngIf="item.payment_status == 'success' || item.payment_status == 'Success'"
+                                        style="color: rgb(var(--success));">Success</span>
+                                    <span *ngIf="item.payment_status == 'Pending' || item.payment_status == 'pending'"
+                                        style="color: rgba(255, 85, 0, 0.992);">Pending</span>
+                                    <span *ngIf="item.payment_status == 'Canceled' || item.payment_status == 'canceled'"
+                                        style="color: rgb(var(--danger));">Canceled</span>
+                                    <span *ngIf="item.payment_status == 'Failed' ||item.payment_status == 'failed'"
+                                        style="color: rgb(var(--danger));">Failed</span>
+                                </td>
+                                <!-- <td class="items">
+                                    <div class="slide-button d-flex align-item-center">
+                                        <input type="checkbox" [(ngModel)]="item.invoice_status"
+                                            (input)="updateInvoice($event, i, item._id)" [name]="i + 'Available'"
+                                            [id]="i + 'Available'" />
+                                        <label [for]="i + 'Available'"></label>{{item.invoice_status}}
+                                    </div>
+                                </td> -->
+                                <!-- <td class="items">
+                                    <span [routerLink]="['/dashboard/orderDetails', item.orderId]"
+                                        class="material-symbols-outlined">open_in_new</span>
+                                </td> -->
+                                <td class="items action-btns">
+                                    <a href="javascript:void(0);" class="tooltip"
+                                        [routerLink]="['/dashboard/orderDetails', item._id]">
+                                        <i class="fs-20 action__btn-icon material-symbols-outlined">search</i>
+                                        <span class="tooltiptext">View</span>
+                                    </a>
+                                </td>
+                            </ng-container>
+                        </tr>
+                    </tbody>
+                </ng-template>
             </table>
         </div>
-        <div class="table-controls d-flex justify-content-md-between">
-            <pagination-controls (pageChange)="pageChanged($event)" previousLabel="Previous"
-                nextLabel="Next"></pagination-controls>
-        </div>
+        <app-pagination [collectionSize]="12" [pageSize]="8" [currentPage]="currentPage"
+            (activePage)="pageChanged($event)"></app-pagination>
     </div>
-    
-
 </section>
+
+
+<!-- <td class="items">
+    <span *ngIf="item.payment_status == 'Confirmed'"
+        style="color: rgb(var(--success));">Confirmed</span>
+    <span *ngIf="item.payment_status == 'Shipping'"
+        style="color: rgba(255, 85, 0, 0.992);">Shipping</span>
+    <span *ngIf="item.payment_status == 'Canceled'"
+        style="color: rgb(var(--danger));">Canceled</span>
+    <span
+        *ngIf="item.payment_status !== 'Confirmed' && item.payment_status !== 'Shipping' && item.payment_status !== 'Canceled'"
+        style="color: rgb(var(--dash-blue-clr));">{{item.payment_status}}</span>
+</td> -->

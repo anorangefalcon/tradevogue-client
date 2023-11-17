@@ -1,0 +1,28 @@
+<div class="drawer">
+    <app-drawer [direction]="direction" [show]="show" (showChange)="handler($event)" [title]="'WISHLISTS'" [ParenClosed]="ParentClosed" (ParentClosedEmitter)="ParenClosedHandler($event)">
+        <div class="d-flex flex-column gap-20">
+            <!-- <p class="text">Wishlist {{productName}} to...</p> -->
+            <div class="d-flex flex-column radios">
+                <div *ngFor="let item of list; let i = index">
+                    <label class="d-flex gap-20 pointer" for="{{i}}">
+                        <input type="radio" name="wishlist" id="{{i}}" value="{{item}}" (click)="addToWishlist(item.wishlistName)" >
+                        <p class="wishlist-name relative">{{item.wishlistName}}</p>
+                    </label>
+                </div>
+            </div>
+            <div class="d-flex justify-content-center align-item-center click-div" *ngIf="!showTextField">
+                <button class="d-flex align-item-center gap-5 justify-content-center add-btn" (click)="showTextField=true">
+                    <span class="material-symbols-outlined">
+                        add
+                    </span>
+                    Add New Wishlist
+                </button>
+            </div>
+            <div class="d-flex justify-content-md-between add-div" *ngIf="showTextField==true">
+                <input type="text" [(ngModel)]="newWishlist" placeholder="Create new wishlist">
+                <!-- (click)="addNewWishlist()" -->
+                <button class="btn-primary create-btn d-flex justify-content-center align-item-center" (click)="addToWishlist(newWishlist)" [disabled]="newWishlist==''">Add</button>
+            </div> 
+        </div>
+    </app-drawer>
+</div>

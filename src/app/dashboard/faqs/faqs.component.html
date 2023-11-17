@@ -1,0 +1,172 @@
+<section class="d-flex flex-column gap-20">
+  <div class="card card__pd-20 d-flex align-item-center justify-content-md-between">
+    <h3>FAQs</h3>
+    <app-custom-select [selectedOption]="'select Category'" (final_option)="retrieveContent($event)"
+      [options]="faq"></app-custom-select>
+    <button (click)="openDrawer()" class="btn-primary btn btn-sm fw-500 btn-rounded d-flex align-item-center gap-5">
+      <i class="material-symbols-outlined operational-buttons-icons">add</i>
+      <span style="font-weight: bold;">Add New Category</span>
+    </button>
+  </div>
+
+  <div class="drawer" [ngClass]="{ 'open': isDrawerOpen }">
+    <div (click)="closeDrawer()" class="close-button">
+      <svg class="close-icon" width="24" height="24" viewBox="0 0 24 24" fill="none">
+        <path
+          d="M18.2929 5.70711C18.6834 6.09763 18.6834 6.73079 18.2929 7.12132L13.4142 12L18.2929 16.8787C18.6834 17.2692 18.6834 17.9024 18.2929 18.2929C17.9024 18.6834 17.2692 18.6834 16.8787 18.2929L12 13.4142L7.12132 18.2929C6.73079 18.6834 6.09763 18.6834 5.70711 18.2929C5.31658 17.9024 5.31658 17.2692 5.70711 16.8787L10.5858 12L5.70711 7.12132C5.31658 6.73079 5.31658 6.09763 5.70711 5.70711C6.09763 5.31658 6.73079 5.31658 7.12132 5.70711L12 10.5858L16.8787 5.70711C17.2692 5.31658 17.9024 5.31658 18.2929 5.70711Z"
+          fill="currentColor" />
+      </svg>
+    </div>
+
+    <form [formGroup]="faqForm">
+      <div>
+        <select formControlName="selectedOption">
+          <option value="" disabled>Select a Category</option>
+          <option *ngFor="let item of faqData" [value]="item.title">{{item.title}}</option>
+        </select>
+        <!-- <app-custom-select [selectedOption]="'select Category'" (final_option)="retrieveContent($event)"
+          [options]="faqData"></app-custom-select> -->
+      </div>
+
+      <div class="form-group">
+        <label class="form__label" for="query">Query</label>
+        <input class="form__input" type="text" id="query" formControlName="query" required />
+        <div *ngIf="faqForm.get('query')?.invalid && faqForm.get('query')?.touched" class="error-message">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form__label" for="content">Answer</label>
+        <input class="form__input" type="text" id="content" formControlName="content" required />
+        <div *ngIf="faqForm.get('content')?.invalid && faqForm.get('content')?.touched" class="error-message">
+        </div>
+      </div>
+
+      <button (click)="addCategory()" [disabled]="faqForm.invalid">Add Category</button>
+    </form>
+  </div>
+
+  <div *ngIf="selectedCategory" class="table-list card">
+    <table class="selected-category-table">
+      <thead>
+        <tr>
+          <th class="items">Serial Number</th>
+          <th class="items">Query</th>
+          <th class="items">Answer</th>
+          <th class="items">Actions</th>
+        </tr>
+      </thead>
+      <tbody class="items" *ngIf="!selectedCategory.childrens.length; else faqData">
+        <tr *ngFor="let i of tableGenerator(4)">
+          <td *ngFor="let i of tableGenerator(4)" class="items">
+            <div class="skeleton" style="border-radius: 5px; color: transparent"> d</div>
+          </td>
+        </tr>
+      </tbody>
+      <ng-template #faqData>
+
+      </ng-template>
+      <tbody>
+        <tr
+          *ngFor="let child of selectedCategory.childrens | slice: (pagination.currentPage - 1) * pagination.pageSize: pagination.currentPage * pagination.pageSize; let i = index;"
+          class="default-animation">
+          <td class="ellipsis items serial-number">{{ (pagination.currentPage - 1) * pagination.pageSize + i + 1 }}</td>
+          <td class="ellipsis items query">{{ child.title }}</td>
+          <td class="ellipsis items answer">{{ child.content }}</td>
+          <td class="items action-btns">
+            <div class="d-flex align-item-center gap-5 transition">
+
+              <span class="tooltip">
+                <i (click)="showItemDetails(child)" class="fs-18 action__btn-icon material-symbols-outlined">visibility</i>
+                <span class="tooltiptext">View</span>
+              </span>
+
+              <span class="tooltip">
+                <i (click)="showEdit(child)" class="fs-18 action__btn-icon material-symbols-outlined">edit</i>
+                <span class="tooltiptext">Edit</span>
+              </span>
+              
+              <span class="tooltip">
+                <i (click)="deleteFaq(child)" class="fs-18 action__btn-icon material-symbols-outlined">delete</i>
+                <span class="tooltiptext">Delete</span>
+              </span>              
+
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <app-pagination #pagination [collectionSize]="selectedCategory.childrens.length" [pageSize]="3"
+    [currentPage]="currentPage" (activePage)="handlePageChange($event)" [firstLastButtons]="true"
+    [nextPreviousButtons]="true" [small]="true"></app-pagination>
+
+
+
+  <app-pop-up>
+    <div *ngIf="selectedItem" class="details-container">
+      <p class="detail-item"><strong>Serial Number:</strong> {{ (currentPage - 1) * pageSize +
+        selectedCategory.childrens.indexOf(selectedItem) + 1 }}</p>
+      <p class="detail-item"><strong>Query:</strong> {{ selectedItem.title }}</p>
+      <p class="detail-item"><strong>Answer:</strong> {{ selectedItem.content }}</p>
+    </div>
+  </app-pop-up>
+
+  <div *ngIf="editItem" class="slider">
+    <div *ngIf="selectedItem" class="details-container">
+      <div class="form__card basic__info form__card d-flex flex-column gap-20">
+
+        <div class="d-flex justify-content-md-between align-item-center ">
+          <h3>Info</h3>
+
+          <div class="operation_button d-flex gap-10">
+            <button class="btn-primary" [ngStyle]="{'display': !faqForm.disabled? 'none': 'block'}"
+              (click)="faqForm.enable()">Edit</button>
+            <button class="btn-secondary" [ngStyle]="{'display': faqForm.disabled? 'none': 'block'}"
+              (click)="faqForm.disable()">Cancel</button>
+            <button class="btn-primary" [ngStyle]="{'display': faqForm.disabled? 'none': 'block'}"
+              (click)="updateDetails()">Update</button>
+          </div>
+        </div>
+
+        <form [formGroup]="faqForm" class="d-flex flex-wrap gap-20">
+          <div class="form__group">
+            <label class="form__title" for="query">Query</label>
+            <input type="text" class="form__input" id="query" formControlName="query" required minlength="2"
+              maxlength="50" />
+            <div *ngIf="faqForm.get('query')?.invalid && (faqForm.get('query')?.dirty || faqForm.get('query')?.touched)"
+              class="error-message">
+              <div *ngIf="faqForm.get('query')?.hasError('required')">query is required.
+              </div>
+              <div *ngIf="faqForm.get('query')?.hasError('minlength')">query should have at
+                least 2 characters.</div>
+              <div *ngIf="faqForm.get('query')?.hasError('maxlength')">query should have at
+                most 50 characters.</div>
+            </div>
+          </div>
+
+          <div class="form__group">
+            <label class="form__title" for="content">Content</label>
+            <input type="text" class="form__input" id="content" formControlName="content" required minlength="2"
+              maxlength="50" />
+            <div
+              *ngIf="faqForm.get('content')?.invalid && (faqForm.get('content')?.dirty || faqForm.get('content')?.touched)"
+              class="error-message">
+              <div *ngIf="faqForm.get('content')?.hasError('required')">content is required.
+              </div>
+              <div *ngIf="faqForm.get('content')?.hasError('minlength')">content should have at
+                least 2 characters.</div>
+              <div *ngIf="faqForm.get('content')?.hasError('maxlength')">content should have at
+                most 50 characters.</div>
+            </div>
+          </div>
+
+        </form>
+
+      </div>
+
+    </div>
+  </div>
+
+</section>

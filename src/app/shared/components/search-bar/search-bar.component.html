@@ -1,6 +1,6 @@
-<form action="" class="search d-flex justify-content-end align-item-center gap-0">
-    <input type="text" class="search-bar d-flex align-item-center" [placeholder]="searchPlaceholder">
-    <button><span class="default-animation material-symbols-outlined">
+<form action="" class="search relative">
+    <input type="text" class="form__input search-bar d-flex align-item-center" [placeholder]="searchPlaceholder" (keyup)="typed($event)">
+    <button class="btn mh100 d-flex flex-center absolute inset-block-0 inset-inline-end-0"><span class="default-animation material-symbols-outlined">
             search
         </span>
     </button>

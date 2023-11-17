@@ -1,0 +1,148 @@
+<div class="d-flex flex-column gap-20">
+    <div class="card card__pd-25 d-flex justify-content-md-between align-item-center">
+        <h3>Customise Sales</h3>
+        <div class="operation_button d-flex gap-10">
+            <button class="btn btn-rounded btn-xs fw-500 fs-14 btn-secondary d-flex align-item-center gap-5"
+                [ngStyle]="{'display': salesForm.disabled? 'none': 'flex'}" (click)="addSale()">
+                <span class="material-symbols-outlined fs-20 ">add</span>
+                Add Sales
+            </button>
+            <button class="btn btn-rounded btn-xs btn-primary" [ngStyle]="{'display': salesForm.disabled? 'none': 'inline-block'}"
+                (click)="onUpdate()">Update</button>
+        </div>
+    </div>
+    <form class="form__card d-flex gap-15 flex-column" [formGroup]="salesForm">
+        <ng-container formArrayName='sale'>
+            <ng-container *ngFor="let sale of getSale(); let i = index">
+                <div formGroupName="{{i}}" class=" d-flex gap-15 card card__pd-25 mw100 relative">
+                    <button (click)="removeSale(i)"
+                        class="absolute btn-primary remove-banner-btn d-flex justify-content-center align-items-center"
+                        *ngIf="i!=0">
+                        <span class="material-symbols-outlined">
+                            close
+                        </span>
+                    </button>
+                    <div class="image-upload-div d-flex justify-content-center align-item-center relative">
+                        <div class="upload-image d-flex flex-column gap-10 align-item-center">
+                            <input type="file" [id]="'backgroundImage'+i" accept="image/jpg, image/jpeg, image/png"
+                                (input)="saleImageUpload($event, i)" />
+                            <label [for]="'backgroundImage'+i"
+                                class="upload__block d-flex flex-column flex-center pointer">
+                                <span class="upload_icon material-symbols-outlined">
+                                    cloud_upload
+                                </span>
+                            </label>
+                            <small class="banner-label">Upload
+                                Sale Product Image</small>
+                            <img [src]="getImagePreview(i)" [style.display]="getImagePreview(i) ? 'flex' : 'none'"
+                                class="banner-iage">
+                            <span class="material-symbols-outlined remove-btn pointer"
+                                [style.display]="getImagePreview(i) ? 'flex' : 'none'" (click)="removeImage(i)">
+                                close
+                            </span>
+                            <div class="loader" *ngIf="showLoading(i)"></div>
+
+                        </div>
+                    </div>
+                    <div class="data-upload-div d-flex gap-15">
+                        <div class="d-flex flex-column mw100 gap-10">
+                            <div class="internal-div">
+                                <label class="form__title" for="title">Sale Type</label>
+                                <input class="form__input" type="text" id="title" formControlName="title" />
+                            </div>
+                            <div class="internal-div">
+                                <label class="form__title" for="subTitle">SubTitle</label>
+                                <input class="form__input" type="text" id="subTitle" formControlName="subTitle" />
+                            </div>
+                            <div class="internal-div">
+                                <label class="form__title" for="buttonText">Button</label>
+                                <input class="form__input" type="text" id="buttonText" formControlName="buttonText" />
+                            </div>
+                            <div class="internal-div">
+                                <label class="form__title" for="buttonLink">Button Link</label>
+                                <input class="form__input" type="text" id="buttonLink" formControlName="buttonLink" />
+                            </div>
+                        </div>
+                        <div class="d-flex flex-column mw100 gap-10">
+                            <ng-container formGroupName="colors">
+                                <div class="internal-div">
+                                    <label class="form__title" [for]="'titleText'+i">Sale Type Color</label>
+                                    <input class="form__input" type="color" name="" [id]="'titleText'+i"
+                                        formControlName="titleColor">
+                                </div>
+                                <div class="internal-div">
+                                    <label class="form__title" [for]="'subTitleText'+i">Subtitle Color</label>
+                                    <input class="form__input" type="color" [id]="'subTitleText'+i"
+                                        formControlName="subTitleColor" />
+                                </div>
+                                <div class="internal-div">
+                                    <label class="form__title" [for]="'buttonText'+i">Button Color</label>
+                                    <input class="form__input" type="color" [id]="'buttonText'+i"
+                                        formControlName="buttonColor" />
+                                </div>
+                            </ng-container>
+                        </div>
+                    </div>
+                </div>
+            </ng-container>
+        </ng-container>
+    </form>
+
+    <div class="table-list card">
+        <table class="mw100">
+            <thead>
+                <tr>
+                    <th class="items">Sr.</th>
+                    <th class="items">Image</th>
+                    <th class="items">Sale Type</th>
+                    <th class="items">Sale Type Color</th>
+                    <th class="items">Sub Title</th>
+                    <th class="items">Sub Title Color</th>
+                    <th class="items">Button</th>
+                    <th class="items">Button Color</th>
+                    <th class="items">Button Link</th>
+                    <th class="items">Enable</th>
+                    <th class="items">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of tableData; let i = index">
+                    <td class="ellipsis items serial-number">{{i+1}}</td>
+                    <td class="ellipsis items">
+                        <a [href]="item.backgroundImage">Link</a>
+                    </td>
+                    <td class="ellipsis items">{{item.title}}</td>
+                    <td class="ellipsis items">{{item.colors.titleColor}}</td>
+                    <td class="ellipsis items">{{item.subTitle}}</td>
+                    <td class="ellipsis items">{{item.colors.subTitleColor}}</td>
+                    <td class="ellipsis items">{{item.buttonText}}</td>
+                    <td class="ellipsis items">{{item.colors.buttonColor}}</td>
+                    <td class="items">{{item.buttonLink}}</td>
+                    <td class="items">
+                        <div class="slide-button d-flex align-item-center">
+                            <input type="checkbox" [checked]="item.enable" (change)="toggle(item)"
+                                [name]="i + 'Available'" [id]="i + 'Available'" />
+                            <label [for]="i + 'Available'"></label>
+                        </div>
+                    </td>
+
+                    <td class="items actions">
+                        <div class="action-buttons">
+
+                            <span class="tooltip">
+                                <i (click)="showItemDetails(item , i)"
+                                    class="fs-18 action__btn-icon material-symbols-outlined">edit</i>
+                                <span class="tooltiptext">Edit</span>
+                            </span>
+                            <span class="tooltip">
+                                <i (click)="deleteItem(item)"
+                                    class="fs-18 action__btn-icon material-symbols-outlined">delete</i>
+                                <span class="tooltiptext">Delete</span>
+                            </span>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

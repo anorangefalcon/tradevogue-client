@@ -5,7 +5,7 @@
         <div class="overlay">
           <h3>Women Collection</h3>
           <div class="d-flex gap-5 align-item-center">
-            <a [routerLink]="['/explore']" class="btn">Shop Now</a>
+            <a [routerLink]="['/explore']" [queryParams]="{ gender: 'female' }" class="btn">Shop Now</a>
             <span class="icons material-symbols-outlined">arrow_right_alt</span>
           </div>
         </div>
@@ -14,7 +14,7 @@
         <div class="overlay">
           <h3>Men Collection</h3>
           <div class="d-flex gap-5 align-item-center">
-            <a [routerLink]="['/explore']" class="btn">Shop Now</a>
+            <a [routerLink]="['/explore']" [queryParams]="{ gender: 'male' }" class="btn">Shop Now</a>
             <span class="icons material-symbols-outlined">arrow_right_alt</span>
           </div>
         </div>

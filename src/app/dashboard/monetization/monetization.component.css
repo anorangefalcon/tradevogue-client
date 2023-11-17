@@ -1,0 +1,32 @@
+/* Form styling */
+  .form-heading {
+    color: #333;
+    font-size: 20px; /* Reduced font size for the heading */
+    margin-bottom: 10px; /* Adjusted margin for the heading */
+  }
+  
+  
+  .form-group {
+    width: 48%;
+    margin-bottom: 15px;
+  }
+  
+  .error-message {
+    color: rgb(var(--danger));
+    font-size: 12px; /* Adjusted font size for error messages */
+    margin-top: 5px;
+  }
+
+  
+  /* Table styling */
+  
+  .keys-wrap{
+    max-width: 180px; /* Adjust the max-width to your preference */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .slider {
+    margin-top: 20px;
+  }

@@ -1,52 +1,19 @@
-<section class="container">
-
+<section class="container offer-container">
     <div class="row d-flex justify-content-center align-item-center gap-20">
-
-        <div class="col">
-                <div class="banner-text">
-                    <span class="subtitle" >Product sale</span>
-                    <h2 class="offer-title">Glamorous Garments</h2>
-                    <a href="/collections/hand-made" class="btn-style3">Shop now</a>
-                </div>
-            <img src="../../../assets/deal-of-week-component/shirt.png" alt="offers">
+      <ng-container *ngFor="let item of saleData">
+        <div *ngIf="item.enable" class="col">
+          <div class="left-content">
+            <div class="banner-text">
+              <span class="subtitle" [style.color]="item.colors.subTitleColor">{{ item.subTitle }}</span>
+              <h2 class="offer-title" [style.color]="item.colors.titleColor">{{ item.title }}</h2>
+              <a [href]="item.buttonLink" class="btn-style3" [style.backgroundColor]="item.colors.buttonColor">{{ item.buttonText }}</a>
+            </div>
+          </div>
+          <div class="right-content">
+            <img *ngIf="item.enable" [src]="item.backgroundImage" alt="offers" class="large-image">
+          </div>
         </div>
- 
-        <div class="col">
-                <div class="banner-text">
-                    <span class="subtitle" >Product sale</span>
-                    <h2 class="offer-title">Fashionable Fabrics</h2>
-                    <a href="/collections/hand-made" class="btn-style3">Shop now</a>
-                </div>
-            <img src="../../../assets/deal-of-week-component/shirt.png" alt="offers">
-        </div>
+      </ng-container>
     </div>
-</section>
-
-<!-- <section class="container">
-
-    <div class="row d-flex justify-content-center align-item-center gap-20">
-
-        <div class="col col-1">
-                <div class="banner-text">
-                    <span class="subtitle" >Starting at ₹250</span>
-                    <h2 class="offer-title">Women Jeans</h2>
-                    <div class="d-flex gap-5 align-item-center">
-                        <a href="#" class="btn">Shop Now</a>
-                        <span class="icons material-symbols-outlined">arrow_right_alt</span>
-                      </div>
-                </div>
-            </div>
-     
-            <div class="col col-2">
-                    <div class="banner-text">
-                        <span class="subtitle" >Starting at ₹150</span>
-                        <h2 class="offer-title">Male T-shirts</h2>
-                        <div class="d-flex gap-5 align-item-center">
-                            <a href="#" class="btn">Shop Now</a>
-                            <span class="icons material-symbols-outlined">arrow_right_alt</span>
-                        </div>
-                    </div>
-            </div>
-        </div>
-    </section>
- -->
+  </section>
+  

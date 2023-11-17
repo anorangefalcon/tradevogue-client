@@ -1,8 +1,10 @@
 import { Component } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { FetchDataService } from 'src/app/shared/services/fetch-data.service';
-import { invalidformat } from 'src/app/shared/validators/imageValidators.validator';
 import { UploadExcelService } from '../services/upload-excel.service';
+import { UtilsModule } from 'src/app/utils/utils.module';
+import { ToastService } from 'src/app/shared/services/toast.service';
+import { DialogBoxService } from 'src/app/shared/services/dialog-box.service';
+import { first, take } from 'rxjs';
 
 @Component({
   selector: 'app-addproductfeatures',
@@ -11,31 +13,23 @@ import { UploadExcelService } from '../services/upload-excel.service';
 })
 export class AddproductfeaturesComponent {
 
-  // FilterVariable
-  categoriesFilter: any = '';
-  brandsFilter: any = '';
-  sizesFilter: any = '';
-  tagsFilter: any = '';
-  orderQuantitysFilter: any = '';
-
-  // Form
-  categories!: FormGroup;
-  brands!: FormGroup;
-  sizes!: FormGroup;
-  tags!: FormGroup;
-  orderQuantity!: FormGroup;
-
   // Data array
   dataList: any = {
-    categoryList: [],
+    categoriesList: [],
     brandsList: [],
     sizesList: [],
     tagsList: [],
-    quantitiesList: [],
+    orderQuantityList: [],
+  }
+
+  // Template for Toast
+  data_template: any = {
+    title: '',
+    body: []
   }
 
   //Data
-  data: any = {
+  filter: any = {
     category: '',
     brand: '',
     sizes: '',
@@ -43,55 +37,102 @@ export class AddproductfeaturesComponent {
     quantity: ''
   }
 
-  constructor(private featuredata: FetchDataService, private uploadExcel: UploadExcelService){}
+  field_data: any;
+  popup: boolean = false;
 
-  ngOnInit() {
-
-    // FetchData Service
-    this.featuredata.getSellerData().subscribe((data: any)=>{
-      this.dataList.categoryList = data[0]['categories'];
-      console.log(this.dataList.categoryList);
-      this.dataList.brandsList = data[0]['brands'];
-      this.dataList.sizesList = data[0]['sizes'];
-      this.dataList.quantitiesList = data[0]['orderQuantity'];
-      this.dataList.tagsList = data[0]['tags'];
-      this.dataList.colorsList = data[0]['colors'];
-    });
-
+  deleteObject: any = {
+    field: '',
+    index: '',
   }
 
-  uploadFile(event: Event, field: string){
+
+  // Type Name should be same as that of backend (avoiding conflicts)
+  card_template: any = [
+    { name: 'Category', type: 'categories', filter: 'category', file_name: 'Categories_Sample' },
+    { name: 'Brand', type: 'brands', filter: 'brand' },
+    { name: 'Order Quantity', type: 'orderQuantity', filter: 'quantity' },
+    { name: 'Product Tags', type: 'tags', filter: 'tags' }
+  ];
+
+  dataField: string[] = ['categories', 'brands', 'orderQuantity', 'tags'];
+
+  constructor(
+    private dataService: FetchDataService,
+    private uploadExcel: UploadExcelService,
+    private toastService: ToastService,
+    private DialogBoxService: DialogBoxService,
+    private backendurls: UtilsModule) { }
+
+  async ngOnInit() {
+
+    this.DialogBoxService.responseEmitter.subscribe(async (res) => {
+
+      if (res == true) {
+        this.field_data[this.deleteObject.field].splice(this.deleteObject.index, 1);
+
+        const data = {
+          'field': this.deleteObject.field,
+          'data': this.field_data[this.deleteObject.field]
+        };
+
+        this.dataService.HTTPPOST(this.backendurls.URLs.updateFeatures, data).subscribe({
+          next: ()=>{
+            this.toastService.successToast({ title: 'Item Deleted Successfully' });
+          }
+        }); 
+      }
+
+    })
+
+
+    this.dataService.HTTPPOST(this.backendurls.URLs.fetchFeatures, this.dataField).subscribe({
+      next: (res: any) => {
+        this.field_data = res;
+      }
+    });
+  }
+
+  uploadFile(event: Event, field: string) {
     const fieldList = field.toLowerCase() + 'List';
     const dataObserver = this.uploadExcel.handleFileInput(event, field);
-    console.log(field);
-    console.log("File");
-    
-    dataObserver.then((resolve)=>{
-      console.log('data + errors',resolve);
-      
+   
+    dataObserver.then((resolve) => {
+     
       let items = resolve['data'];
-      console.log(items, 'data', fieldList);
-      
-      items.forEach((item: any)=>{
-        if(!this.dataList[fieldList].includes(item))
+
+      items.forEach((item: any) => {
+        if (!this.dataList[fieldList].includes(item))
           this.dataList[fieldList].push(item);
       })
     })
   }
 
-  addItem(item: any, list: string){    
-    if(!this.dataList[list].includes(this.data[item])){
-      // this.dataList[list].splice(0, 0, this.data[item]);
-      this.dataList[list].push(this.data[item]);
-      this.data[item] = '';
-    }
+  deleteItem(field: string, index: number) {
+    this.deleteObject.field = field;
+    this.deleteObject.index = index;
+    this.DialogBoxService.confirmationDialogBox();
   }
-  
-  deleteItem(type: string, index: number) {
-    this.dataList[type].splice(index, 1);
-  }
-  
-  submit() {
 
+  async addItem(item: any, field: string) {
+    try {
+
+      if (!this.field_data[field].includes(this.filter[item])) {
+
+        this.field_data[field].push(this.filter[item]);
+        this.filter[item] = '';
+
+        const data = {
+          'field': field,
+          'data': this.field_data[field]
+        };
+        this.dataService.HTTPPOST(this.backendurls.URLs.updateFeatures, data).subscribe({
+          next: (res: any) => {
+            this.toastService.successToast({ title: 'Item Added Successfully' });
+          }
+        });
+      }
+    } catch (err) {
+  
+    }
   }
 }

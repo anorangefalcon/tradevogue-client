@@ -5,6 +5,7 @@
   align-items: center;
   background-repeat: no-repeat;
   background-size: cover;
+  gap: 25px;
 
   & .container {
     display: flex;

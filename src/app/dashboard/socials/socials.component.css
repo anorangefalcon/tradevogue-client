@@ -1,0 +1,106 @@
+.form__card {
+
+    & .internal-div {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        width: calc(50% - 20px);
+    }
+}
+
+.second_card{
+    padding-block-end: 40px;
+}
+
+.operation_button button {
+    border: 1px solid;
+    padding: 12px;
+    padding-block: 8px;
+    padding-inline: 18px;
+}
+
+.dynamic_gallery {
+    width: 100%;
+    margin-block-start: 20px;
+
+    & .gallery-title {
+        width: 100%;
+        margin-inline-start: 10px;
+        gap: 2px;
+    }
+
+    & .info-icon{
+        font-weight: 300;
+        font-size: 16px;
+        opacity: 0.8;
+    }
+
+    & .internal-div {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        width: calc(50% - 20px);
+
+        position: relative;
+
+        & .documentation{
+            color: rgb(var(--primaryClr));
+            right: 0;
+            position: absolute;
+            bottom: -24px;
+            font-style: italic;
+            padding-inline-end: 5px;
+            gap: 2px;
+            font-size: 12px;
+            transition: 0.3s ease-in-out;
+
+            & .link-icon{
+                font-size: 12px;
+                transform: rotate(-45deg);
+            }
+
+            &:hover{
+                opacity: 0.8;
+            }
+        }
+    }
+}
+
+
+.image-upload-div {
+    background: rgb(var(--secondary));
+    border-radius: 10px;
+    height: 300px;
+
+    & input[type="file"] {
+        display: none;
+
+        &::-webkit-file-upload-button {
+            display: none;
+        }
+    }
+
+    & .upload__block {
+        border-radius: 50%;
+      
+        padding: 50px;
+        font-size: 10px;
+        font-weight: 500;
+        color: rgb(var(--blackClr), 0.6);
+
+    }
+
+    & label {
+        background: #ffffff;
+        padding: 46px;
+        height: 40px;
+        width: 40px;
+        border-radius: 50%;
+    }
+
+    & .upload_icon {
+        font-size: 48px;
+        opacity: 0.7;
+    }
+
+}

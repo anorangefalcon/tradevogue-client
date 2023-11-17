@@ -12,6 +12,5 @@ export class RouterLinksService {
 
   updateShowData(data: string) {
     this.showDataValue.next(data);
-    console.log("this.showdata val", this.showDataValue);
   }
 }

@@ -1,4 +1,6 @@
-import { Component, Renderer2 } from '@angular/core';
+import { Component } from '@angular/core';
+// import { SupportNotificationService } from './shared/services/support-notification.service';
+
 
 @Component({
   selector: 'app-root',
@@ -6,8 +8,12 @@ import { Component, Renderer2 } from '@angular/core';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
-    title = 'eCommerce-frontend';
-    script:any;
-  
+  'title': 'tradevogue';
 
+  constructor() { }
+
+  ngOnInit(): void {
+    // this.notificationService.initialize();
   }
+
+}

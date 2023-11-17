@@ -1,33 +1,44 @@
+import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
+import { SocialsService } from 'src/app/shared/services/custom-UI/socials.service';
 
 @Component({
+  standalone: true,
+  imports: [CommonModule],
   selector: 'app-gallery',
   templateUrl: './gallery.component.html',
   styleUrls: ['./gallery.component.css']
 })
 export class GalleryComponent {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private socialService: SocialsService) { }
 
   username: String = '';
   posts: any = [];
   image_loaded: boolean = false;
 
-  // we will expire this later and generate new to save securely.
-  accID: String = '17841462170148259'+"skjfbsdfjs" ;
-  access_token: String = 'IGQWROcXZAYQlRfOW95eWp0emVkY1pmYS1vWXA2bV9qZAGx5YW53N1UxQk1YTGJBMzByYl9Db2xydElWNXdaMlp4ZAUt3ekFQal81dzJ2aEJJbDBfbUhUcC1YdU9JaFJsQTVOd1BpY0hrWTBJRGltOU1tSF92U0IwRzQZD'+"sdhfskd" ;
-
+  accID!: String;
+  access_token!: String;
 
   ngOnInit() {
-    this.http.get('https://graph.instagram.com/' + this.accID + '?fields=username,media&access_token=' + this.access_token).subscribe((data: any) => {
+    this.socialService.getSocials().subscribe((socialData: any) => {
+      this.accID = socialData.instagram.accountID;
+      this.access_token = socialData.instagram.accessToken;
 
+      this.fetchFromMeta();
+    })
+  }
+
+  fetchFromMeta() {
+    this.http.get('https://graph.instagram.com/' + this.accID + '?fields=username,media&access_token=' + this.access_token).subscribe((data: any) => {
       this.username = data.username;
       let i = 0;
       for (let postID of data.media.data) {
         this.http.get('https://graph.instagram.com/' + postID.id + '?fields=media_type,media_url,permalink&access_token=' + this.access_token)
           .subscribe((data: any) => {
-            if(i > 8){
+
+            if (i > 8) {
               return;
             }
 
@@ -42,7 +53,6 @@ export class GalleryComponent {
           });
       }
     });
-
   }
 
 }

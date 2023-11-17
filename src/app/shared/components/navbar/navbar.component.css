@@ -1,16 +1,10 @@
-.gap-13 {
-    gap: 13px;
-}
-
 header {
     position: fixed;
-    box-shadow: 0 2px 5px rgb(var(--textClr), 0.1);
-    letter-spacing: 1.2px;
+    /* padding-block-end: 95px; */
     font-weight: 500;
     width: 100%;
     transition: all 0.3s ease-in-out;
     z-index: 97;
-    /* padding-block: 20px; */
 
     & .navbar {
         height: 80px;
@@ -29,6 +23,7 @@ header {
             display: none;
         }
     }
+
 
     & .nav-links a,
     .navbar-features .icons {
@@ -57,19 +52,13 @@ header {
     }
 }
 
-.border {
-    border-block-end: 1px solid rgb(var(--text-black), 0.2);
-    padding-block: 5px !important;
+.header-shadowed {
+    box-shadow: 0 2px 5px rgb(var(--textClr), 0.1);
+    background-color: rgb(var(--whiteClr));
 }
-
-
-.padding-top {
-    padding-block-start: 5px !important;
-}
-
 header.active {
     box-shadow: 0 5px 10px rgb(var(--textClr), 0.1);
-    background-color: rgb(var(--whiteClr), 0.8);
+    background-color: rgb(var(--whiteClr));
     backdrop-filter: blur(10px);
     padding-block: 0;
 
@@ -98,7 +87,8 @@ header.active {
     }
 } */
 
-.navbar-features {
+.navbar-features,
+.nav-items {
     height: 100%;
 
     & .search-icon-mobile {
@@ -167,21 +157,26 @@ header.active {
         transition: all 0.3s ease-in-out;
 
         &::before {
-            z-index: 5;
+
             content: "";
+            z-index: 5;
             position: absolute;
             display: block;
             height: 0;
             width: 0;
-            border-block-end: 10px solid rgba(243, 243, 243, 0.9);
-            border-inline-start: 10px solid transparent;
-            border-inline-end: 10px solid transparent;
-            inset-block-start: -9px;
+            border-block-end: 10px solid rgba(255, 255, 255, 0.6);
+
+            border-inline-start: 10px solid rgba(128, 128, 128, 0.02);
+
+            border-inline-end: 10px solid rgb(128, 128, 128, 0.02);
+
+            inset-block-start: -10px;
             inset-inline-end: 4px;
+
         }
 
         & .header p {
-            font-size: 13px !important;
+            font-size: 12px !important;
         }
 
         & li:last-child {
@@ -200,8 +195,51 @@ header.active {
         }
     }
 
+    .sub-categories {
+        position: absolute;
+        z-index: 99;
+        width: 160px;
+        padding: 20px;
+        opacity: 0;
+        visibility: hidden;
+        background-color: rgba(255, 255, 255, 0.9);
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        border-radius: 5px;
+        backdrop-filter: blur(10px);
+        transition: all 0.3s ease-in-out;
+        transform: translateX(-30%);
+
+        & li a {
+            color: rgb(var(--blackClr));
+        }
+
+    }
+
+    & .sub-categories::before {
+        inset-inline-start: 50%;
+        transform: translateX(-50%);
+    }
+
+    .sub-categories a {
+
+        gap: 10px;
+ 
+        font-size: 16px;
+        text-transform: capitalize;
+    }
+
+    .sub-categories a:is(:hover, :focus, .active) span {
+        height: 100%;
+    }
+
     /* Content Display */
-    & li:hover .sub-items {
+
+    
+
+    &
+     li:hover 
+    .sub-items,  li:hover 
+    .sub-categories {
         opacity: 1;
         visibility: visible;
     }
@@ -233,21 +271,22 @@ header.active {
         font-size: 18px;
     }
 }
-
-
-.cart-items {
-    & img {
-        max-width: 40px;
-    }
-
-    & h4 {
-        font-size: 12px !important;
-    }
-
-    & p {
-
-        font-size: 8px !important;
-    }
+.on-login li {
+    width: 100%;
+    font-weight: 500;
+    cursor: pointer;
+}
+.name {
+    font-size: 16px;
+    font-weight: 600;
+}
+.border {
+    padding-block-end: 5px;
+    margin-block-end: 5px;
+    border-block-end: 0.5px solid rgb(var(--textClr), 0.4);
+}
+.edit, .logout {
+    opacity: 0.7;
 }
 
 @media screen and (max-width: 768px) {
@@ -300,6 +339,7 @@ header.active {
                 z-index: 99;
 
                 transition: all 0.5s ease-in-out;
+
                 & span {
                     height: 2px;
                     width: 18px;
@@ -333,7 +373,9 @@ header.active {
             & .dropdown-active {
                 transform: scale(1.5) translate(19px, 7px);
                 opacity: 0.6;
+
                 & span {
+
                     /* center line*/
                     &:nth-child(1) {
                         transform: translateX(-50%);
