@@ -30,6 +30,7 @@ export class AccountComponent implements OnInit {
   userPhoto: string = '';  
   private postalCodeInput = new Subject<string>();
   showPopup = true;
+  area: string= '';
 
 
   constructor(
@@ -96,11 +97,13 @@ export class AccountComponent implements OnInit {
       postalCode: ['', [Validators.required, Validators.pattern('[0-9]{6}')]],
       country: ['', [Validators.required]],
       state: ['', [Validators.required]],
-      town_city: ['', [Validators.required]],
+      city: ['', [Validators.required]],
+      area: ['', [Validators.required]],
     });
 
 
     var adminData = this.sellerFetchDataService.getSellerInfo().subscribe((data: any) => {
+      console.log("data", data)
       const formattedDob = this.datePipe.transform(data[0].info.dob, 'yyyy-MM-dd');
       this.profileForm.patchValue({
         firstName: data[0].name.firstname,
@@ -114,6 +117,7 @@ export class AccountComponent implements OnInit {
         city: data[0].info.address[0].city,
         gender: data[0].info.gender,
         mobile: data[0].mobile,
+        area: data[0].info.address[0].area
       });
     });
 
@@ -147,6 +151,7 @@ export class AccountComponent implements OnInit {
             this.state = '';
             this.county = '';
             this.city = '';
+            this.area = '';
             return [];
           }
         })
@@ -157,6 +162,7 @@ export class AccountComponent implements OnInit {
           this.state = data[0].STATE;
           this.county = data[0].COUNTY;
           this.city = data[0].CITY;
+          
         } else {
           this.country = '';
           this.state = '';
@@ -191,6 +197,8 @@ export class AccountComponent implements OnInit {
   }
 
   async updateDetails(form: {[key: string]: string}) {
+
+
     const body = {
       "email": form['email'],
       "name": {
@@ -207,7 +215,7 @@ export class AccountComponent implements OnInit {
               "lastname": form['lastName'],
               "apartment": form['address'],
               "city": form['city'],
-              "area": form['county'],
+              "area": form['area'],
               "state": form['state'],
               "pincode": form['postalCode'],
               "country": form['country'],
@@ -216,6 +224,8 @@ export class AccountComponent implements OnInit {
       "token": this.cookieService.get('userToken')
       }
     }
+
+  
     
     // let data: any = await this.fetchDataService.httpPost(this.backendUrls.URLs.loginUrl, body);
     await this.sellerFetchDataService.sendSellerInfo(body);
