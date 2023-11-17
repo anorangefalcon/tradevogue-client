@@ -21,18 +21,13 @@
         background-color: rgb(var(--whiteClr));
     }
 
-    .loginbtn,
     .google-btn-wrapper {
         height: 50px;
-        border-radius: 5px;
     }
 
     & .google-btn {
         opacity: 0;
         position: absolute;
-        /* z-index: 99; */
-        /* width: 100%;
-        height: 100%; */
     }
 
     & .or-div {

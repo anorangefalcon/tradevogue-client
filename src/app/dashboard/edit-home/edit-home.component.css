@@ -14,10 +14,12 @@
     width: 100%;
 
     & div {
-        height: fit-content;
+        /* height: fit-content; */
+        height: 100%;
 
         & .hero-section {
             height: 500px !important;
+            object-position: top;
         }
     }
 
@@ -176,12 +178,12 @@
     padding-inline: 18px;
 }
 
-.form__card__head{
+/* .form__card__head{
     position: sticky;
     top: 75px;
     z-index: 5;
     box-shadow: 5px 5px 5px 0px #afafaf36;
-}
+} */
 
 .edit-name{
     right: 28px;

@@ -24,8 +24,9 @@
                     <input [type]="passwordFieldType" placeholder="Enter Your Password" formControlName="password">
                     <a class="eye-btn flex justify-content-center align-item-center"
                         (click)="togglePasswordVisibility()">
-                        <span class="material-symbols-outlined eye">{{ showPassword ? 'visibility' : 'visibility_off'}}</span>
-                </a>
+                        <span class="material-symbols-outlined eye">{{ showPassword ? 'visibility' :
+                            'visibility_off'}}</span>
+                    </a>
                     <div class="forgot-pass">
                         <a class="pointer sign-up-text" (click)="showPasswordForm=true">Forgot password?</a>
                     </div>
@@ -33,14 +34,14 @@
                 </div>
 
 
-                <button class="btn-primary  relative" [disabled]="loginForm.invalid"
+                <button class="btn btn-md fw-500 btn-rounded btn-primary  relative" [disabled]="loginForm.invalid"
                     [ngClass]="{'disabled':loginForm.invalid, 'spinner' : loading}" (click)="onLogin()">Login</button>
                 <div class="or-div relative">
                     <p class="absolute">or</p>
                 </div>
 
                 <button
-                    class="btn-secondary relative d-flex justify-content-center align-item-center google-btn-wrapper ">
+                    class="btn btn-md fw-500 btn-rounded btn-secondary relative d-flex justify-content-center align-item-center google-btn-wrapper ">
                     <img src="../../../assets/logos/google-logo.svg" width="50px" height="50px" alt="google" />
                     Sign in with Google
                     <div class="google-btn ">

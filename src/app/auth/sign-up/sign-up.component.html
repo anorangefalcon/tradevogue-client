@@ -11,24 +11,24 @@
       <form [formGroup]="signupForm" class="d-flex flex-column gap-15">
 
 
-          <div class="form__group relative d-flex flex-column">
-            <label class="form__label">First Name<span>*</span></label>
-            <span class="material-symbols-outlined form__icon absolute">person</span>
-            <input type="text" id="firstname" formControlName="firstname" placeholder="First Name">
+        <div class="form__group relative d-flex flex-column">
+          <label class="form__label">First Name<span>*</span></label>
+          <span class="material-symbols-outlined form__icon absolute">person</span>
+          <input type="text" id="firstname" formControlName="firstname" placeholder="First Name">
 
-            <small *ngIf="signupForm.get('firstname')?.hasError('required') && signupForm.get('firstname')?.touched"
-              class="invalid">*FirstName is required.</small>
+          <small *ngIf="signupForm.get('firstname')?.hasError('required') && signupForm.get('firstname')?.touched"
+            class="invalid">*FirstName is required.</small>
 
-          </div>
-          <div class="form__group relative d-flex flex-column">
-            <label class="form__label">Last Name<span>*</span></label>
-            <span class="material-symbols-outlined form__icon absolute">person</span>
-            <input type="text" id="lastname" formControlName="lastname" placeholder="Last Name">
+        </div>
+        <div class="form__group relative d-flex flex-column">
+          <label class="form__label">Last Name<span>*</span></label>
+          <span class="material-symbols-outlined form__icon absolute">person</span>
+          <input type="text" id="lastname" formControlName="lastname" placeholder="Last Name">
 
-            <small *ngIf="signupForm.get('lastname')?.hasError('required') && signupForm.get('lastname')?.touched"
-              class="invalid">*LastName is required.</small>
+          <small *ngIf="signupForm.get('lastname')?.hasError('required') && signupForm.get('lastname')?.touched"
+            class="invalid">*LastName is required.</small>
 
-          </div>
+        </div>
 
 
         <div class="form__group relative d-flex flex-column">
@@ -107,12 +107,14 @@
 
         </div>
 
-        <button class="btn-primary registerbtn relative" [disabled]="signupForm.invalid" [ngClass]="{'disabled':signupForm.invalid, 'spinner': loading}" (click)="onSubmit()">Register</button>
+        <button class="btn btn-lg btn-rounded fw-500 btn-primary relative" [disabled]="signupForm.invalid"
+          [ngClass]="{'disabled':signupForm.invalid, 'spinner': loading}" (click)="onSubmit()">Register</button>
         <div class="or-div relative">
           <p class="absolute">or</p>
-      </div>
-        <button class="btn-secondary relative d-flex justify-content-center align-item-center google-btn-wrapper">
-          <img src="../../../assets/logos/google-logo.svg" width="50px" height="50px" alt="google"/>
+        </div>
+        <button
+          class="btn btn-lg btn-rounded fw-500 btn-secondary relative d-flex flex-center google-btn-wrapper">
+          <img src="../../../assets/logos/google-logo.svg" width="50px" height="50px" alt="google" />
           Sign up with Google
           <div class="google-btn">
             <div id="g_id_onload"

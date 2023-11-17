@@ -10,7 +10,8 @@
                 <span class="icons material-symbols-outlined">bar_chart_4_bars</span>
             </div>
             <div class="row-2 d-flex align-item-center  gap-5">
-                <p *ngIf="customerCountChange >= 0; else customer_decrease" class="spike d-flex align-item-center gap-10">
+                <p *ngIf="customerCountChange >= 0; else customer_decrease"
+                    class="spike d-flex align-item-center gap-10">
                     <span class="value">{{customerCountChange}}% Higher growth</span>
                     <i class="fa-solid fa-arrow-trend-up"></i>
                 </p>
@@ -69,13 +70,13 @@
             <div class="row-1">
                 <div class="d-flex flex-column ">
                     <p class="title">Inventory Alert</p>
-                    <span class="card-value"  id="inventory">{{inventoryAlert}}</span>
+                    <span class="card-value" id="inventory">{{inventoryAlert}}</span>
                 </div>
                 <span class="icons material-symbols-outlined">production_quantity_limits</span>
             </div>
             <div class="row-2 d-flex align-item-center gap-5">
                 <span class="value">Recently Updated</span>
-                <span class="material-symbols-outlined" >refresh</span>
+                <span class="material-symbols-outlined">refresh</span>
             </div>
         </div>
     </div>
@@ -83,7 +84,17 @@
         <div class="column col-1 graph d-flex flex-column gap-15 card card__pd-20">
             <div class="row-1">
                 <h3>Sales & Profits</h3>
-                <span (click)="fetchSalesProfitStats()" class="material-symbols-outlined pointer refresh_icons">refresh</span>
+
+                <div class="radio_button pointer">
+                    <input type="radio" name="popular_product_sort" [(ngModel)]="selectedType" (change)="importData()" value="monthly" class="form__input" id="Monthly" checked />
+                    <label for="Monthly" class="form__label">Monthly</label>
+
+                    <input type="radio" name="popular_product_sort" [(ngModel)]="selectedType" (change)="importData()" value="yearly" class="form__input" id="yearly"/>
+                    <label for="yearly" class="form__label">Yearly</label>
+                </div>
+
+                <span (click)="fetchSalesProfitStats()"
+                    class="material-symbols-outlined pointer refresh_icons">refresh</span>
             </div>
             <div class="row-2 ">
                 <canvas id="barChart">{{barChart}}</canvas>
@@ -92,7 +103,8 @@
         <div class="column col-2 graph d-flex flex-column gap-15 card card__pd-20">
             <div class="row-1 ">
                 <h3>Customer Reviews</h3>
-                <span (click)="fetchReviewStats()" class="material-symbols-outlined pointer refresh_icons">refresh</span>
+                <span (click)="fetchReviewStats()"
+                    class="material-symbols-outlined pointer refresh_icons">refresh</span>
             </div>
             <div class="row-2">
                 <canvas id="donutChart">{{donutChart}}</canvas>
@@ -117,7 +129,8 @@
                         <label for="Monthly" class="form__label">Monthly</label>
                     </div> -->
                 </div>
-                <span (click)="fetchPopularStats()" class="material-symbols-outlined pointer refresh_icons">refresh</span>
+                <span (click)="fetchPopularStats()"
+                    class="material-symbols-outlined pointer refresh_icons">refresh</span>
             </div>
 
             <div class="row-2 product__table">
@@ -131,7 +144,7 @@
                                     <img src='{{product.photo}}' alt="product_image.png">
                                     <!-- <span class="material-symbols-outlined icons">laundry</span> -->
                                 </div>
-                                
+
                                 <div class="product-name d-flex flex-column text-left text-captialize">
                                     <h4>{{product.name}}</h4>
                                     <p class="text-capitalize">{{product.category}}</p>
@@ -157,7 +170,8 @@
         <div class="column col-4 product-info-cards d-flex flex-column gap-15 card card__pd-20">
             <div class="row-1">
                 <h3>Category Sales</h3>
-                <span (click)="fetchCategoryStats()" class="material-symbols-outlined pointer refresh_icons">refresh</span>
+                <span (click)="fetchCategoryStats()"
+                    class="material-symbols-outlined pointer refresh_icons">refresh</span>
             </div>
             <div class="row-2 category-table">
                 <table class="category-row d-flex flex-column gap-20">
@@ -166,10 +180,10 @@
                             <h4>{{category.field}}</h4>
                             <span class="Category-price">&#8377; {{category.sales}}</span>
                         </span>
-                        <progress [value]="category.sales" max="1000000"></progress>    
+                        <progress [value]="category.sales" max="1000000"></progress>
                     </tr>
                 </table>
             </div>
-        </div> 
+        </div>
     </div>
 </section>

@@ -17,31 +17,21 @@ export class StatisticsComponent implements OnInit {
   revenueChange: number = 0;
   inventoryAlert: number = 0;
 
-
-  barChart: any;
-  donutChart: any;
-  table: any;
-  reviewDataLabel: any[] = ['Satisfied', 'Neutral', 'Unsatisfied'];
-  reviewData: any[] = [0, 0, 0];
-
-  SPLabel: any[] = [];
-  salesData: any[] = [];
-  profitData: any[] = [];
-
   isCustomerChange: boolean = true;
   isOrderChange: boolean = false;
   isRevenueChange: boolean = true;
 
   category_sales: any = [];
   productList: any[] = [];
+  selectedType: string = 'monthly';
 
   constructor(private fetchdata: FetchDataService, private backendUrl: UtilsModule) { }
 
   ngOnInit(): void {
     this.fetchData();
-
-    this.createBarChart();
+    this.resetMonthly();
     this.createDonut();
+    this.createBarChart();
 
     // this.popularProducts();
     // this.createTable();
@@ -53,6 +43,10 @@ export class StatisticsComponent implements OnInit {
   }
 
   fetchSalesProfitStats() {
+
+    this.barChart.destroy();
+    this.createBarChart();
+
     this.fetchdata.HTTPGET(this.backendUrl.URLs.fetchSalesStats).subscribe((res: any) => {
       this.salesDataUpdate(res);
       // this.revenue = 0;
@@ -64,6 +58,7 @@ export class StatisticsComponent implements OnInit {
 
     });
   }
+
   fetchReviewStats() {
     this.fetchdata.HTTPGET(this.backendUrl.URLs.fetchReviewStats).subscribe((res: any) => {
       this.reviewDataLabel = [];
@@ -137,6 +132,7 @@ export class StatisticsComponent implements OnInit {
         this.reviewDataLabel.push(key);
         this.reviewData.push(data.customerReview[key])
       });
+
       this.donutChart.update();
 
       this.productList = data.popularStats;
@@ -154,6 +150,64 @@ export class StatisticsComponent implements OnInit {
     });
   }
 
+  resetMonthly() {
+
+    let currMonth = new Date().getMonth();
+    let currYear = new Date().getFullYear();
+    let monthCount = 30;
+
+    let dataLabel = [];
+    this.salesData = [];
+    this.profitData = [];
+
+    if (currMonth == 2) {
+      if (currYear % 400 == 0 || (currYear % 100 != 0 && currYear % 4 == 0)) monthCount = 29;
+      else monthCount = 28;
+    } else if (currMonth % 2 == 0) monthCount = 30;
+    else monthCount = 31;
+
+    for (let i = 1; i <= monthCount; i++) {
+      dataLabel.push(i);
+      this.salesData.push(0);
+      this.profitData.push(0);
+    }
+
+    this.SPLabel = dataLabel;
+  }
+
+  resetYearly() {
+    const months = ['January', 'February', 'March', 'April', 'May', 'June',
+      'July', 'August', 'September', 'October', 'November', 'December'];
+
+    this.salesData = [];
+    this.profitData = [];
+
+    for (let i = 1; i <= 12; i++) {
+      this.salesData.push(0);
+      this.profitData.push(0);
+    }
+    this.SPLabel = months;
+  }
+
+  importData() {
+    if (this.selectedType == 'monthly') {
+      this.resetMonthly();
+    }else{
+      this.resetYearly();
+    }
+    this.fetchSalesProfitStats();
+  }
+
+  barChart: any;
+  donutChart: any;
+  table: any;
+  reviewDataLabel: any[] = ['Satisfied', 'Neutral', 'Unsatisfied'];
+  reviewData: any[] = [50, 50, 50];
+
+  SPLabel: any[] = [];
+  salesData: any[] = [];
+  profitData: any[] = [];
+
   createBarChart() {
 
     this.barChart = new Chart("barChart", {
@@ -166,12 +220,11 @@ export class StatisticsComponent implements OnInit {
             label: "Profit",
             data: this.profitData,
             backgroundColor: 'rgb(0, 173, 181)',
-            // maxBarThickness: 5,
             borderColor: 'rgba(0, 173, 181)',
             pointStyle: 'circle',
-            borderWidth: 3,
-            pointBackgroundColor: 'white'
-            // borderRadius: 5,
+            borderWidth: 2,
+            pointBackgroundColor: 'white',
+            tension: 0.1
           },
           {
             label: "Sales",
