@@ -142,6 +142,7 @@ export class UtilsModule {
     getHomeLayout: 'http://localhost:1000/homeLayout/get',
     getAllHomeLayouts: 'http://localhost:1000/homeLayout/getAll',
     createOrUpdateHomeLayout: 'http://localhost:1000/homeLayout/updateOrCreate',
+    deleteHomeLayout: 'http://localhost:1000/homeLayout/delete',
     
     // Socials
     setSocials: 'http://localhost:1000/socials/set',

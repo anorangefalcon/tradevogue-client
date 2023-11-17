@@ -1,5 +1,6 @@
-import { Component, TemplateRef, ViewChild, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectorRef, Component, TemplateRef, ViewChild, ViewEncapsulation } from '@angular/core';
 import { FetchDataService } from 'src/app/shared/services/fetch-data.service';
+import { ToastService } from 'src/app/shared/services/toast.service';
 import { UtilsModule } from 'src/app/utils/utils.module';
 
 @Component({
@@ -23,13 +24,14 @@ export class EditHomeComponent {
   States: any = {};
   edited: Boolean = false;
   Direction: any[] = [];
-
+  popUpDirection:any='popup';
+  showingPopUp: boolean = false;
+  
   loadingData: Boolean = false;
-
   layouts: any = [];
   currentLayout: any = {};
 
-  constructor(private fetchDataService: FetchDataService, private backendUrls: UtilsModule){}
+  constructor(private fetchDataService: FetchDataService, private cdr: ChangeDetectorRef, private backendUrls: UtilsModule, private toastService: ToastService){}
 
   ngOnInit(){
    this.fetchLayouts();
@@ -40,7 +42,7 @@ export class EditHomeComponent {
     this.fetchDataService.HTTPGET(this.backendUrls.URLs.getAllHomeLayouts)
     .subscribe((data: any)=>{
       this.layouts = data;
-
+      
       let findQuery = ()=>{
         if(created){
           return ( (item: any)=> item.name === this.currentLayout.name ) ;
@@ -110,12 +112,30 @@ export class EditHomeComponent {
     .subscribe(()=>{
       this.edited = false;
       this.fetchLayouts(true);
+      this.toastService.successToast({
+        title: 'Successfully updated ' + this.currentLayout.name
+      });
+    });
+  }
+
+  deleteLayout(){
+    this.fetchDataService.HTTPPOST(this.backendUrls.URLs.deleteHomeLayout, {id: this.currentLayout._id})
+    .subscribe(()=>{
+      this.edited = false;
+      this.showingPopUp = false;
+      this.toastService.successToast({
+        title: 'Successfully deleted ' + this.currentLayout.name
+      });
+      this.fetchLayouts();
     });
   }
 
   activateLayout(){
     this.currentLayout.active = true;
     this.updateLayout();
+    this.toastService.successToast({
+      title: this.currentLayout.name + ' is Now Active'
+    });
   }
 
   // helpers:
@@ -153,5 +173,9 @@ export class EditHomeComponent {
       default:
         return null!;
     }
+  }
+
+  PopUpChangeHanlder(event: any){
+    this.showingPopUp = event;
   }
 }

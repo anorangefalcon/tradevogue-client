@@ -12,26 +12,39 @@
 
       <div class="d-flex justify-content-md-between align-item-center gap-10">
 
-          <span class="add-layout pointer btn-secondary material-symbols-outlined"
-          (click)="createNewLayout()">
-            add
-          </span>
+        <span class="add-layout pointer btn-secondary material-symbols-outlined" (click)="createNewLayout()">
+          add
+        </span>
 
         <div class="customSelect relative">
           <app-custom-select [selectedOption]="currentLayout.name" (final_option)="selectLayout($event)"
             [options]="getLayoutsNames()">
           </app-custom-select>
 
-          <span class="edit-name pointer material-symbols-outlined absolute">
-            edit
+          <span class="edit-name pointer material-symbols-outlined absolute" (click)="showingPopUp = true">
+            discover_tune
           </span>
         </div>
-
       </div>
+
+      <app-drawer [direction]="popUpDirection" [show]="showingPopUp" (showChange)="PopUpChangeHanlder($event)"
+        [title]="'Layout Settings'">
+        <div class="d-flex flex-column align-item-center justify-content-center gap-20">
+          <input id="editName" class="form__input" type="text" [placeholder]="'Edit Layout Name'"
+            [value]="currentLayout.name">
+
+          <div class="d-flex align-item-center justify-content-center gap-10">
+            <button class="btn btn-xs btn-rounded fw-500 btn-primary" (click)="updateLayout()">Save</button>
+            <button class="btn btn-xs btn-rounded fw-500 btn-secondary" (click)="deleteLayout()">Delete</button>
+          </div>
+
+        </div>
+      </app-drawer>
+
 
       <div class="operation_button d-flex gap-10">
         <button class="btn-secondary" [ngStyle]="{'display': currentLayout.active ? 'none': 'block'}"
-        (click)="activateLayout()">Activate</button>
+          (click)="activateLayout()">Activate</button>
         <button class="btn-primary" [ngStyle]="{'display': !edited ? 'none': 'block'}"
           (click)="updateLayout()">Save</button>
 
@@ -40,8 +53,8 @@
 
   </div>
 
-  <ng-container *ngFor="let item of currentLayout.layout">
-    <ng-container *ngTemplateOutlet="getTemplate(item.name); context: { item: item }">
+  <ng-container *ngFor="let item of currentLayout?.layout">
+    <ng-container *ngTemplateOutlet="getTemplate(item?.name); context: { item: item }">
     </ng-container>
   </ng-container>
 

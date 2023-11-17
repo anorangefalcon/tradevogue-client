@@ -1,4 +1,5 @@
 import { Component, ViewEncapsulation } from '@angular/core';
+import { LoginCheckService } from '../shared/services/login-check.service';
 
 
 @Component({
@@ -12,50 +13,56 @@ export class DashboardComponent {
   isCollapse: boolean = false;
   isSalesBtnActive: boolean = false;
   isProductBtnActive: boolean = false;
-  
+  adminName: String = '';
+
+  constructor(private userService: LoginCheckService){}
 
   navitems = [
     { name: 'Dashboard', icons: 'grid_view', route: '/dashboard' },
     {
-      name: 'Products', route:'', icons: 'inventory', sublist: [
+      name: 'Products', route: '', icons: 'inventory', sublist: [
         { name: 'Product Overview', route: '/dashboard/products' },
         { name: 'Add Features', route: '/dashboard/features' },
         { name: 'Add Product', route: '/dashboard/addproduct' },
       ]
     },
     { name: 'Orders', icons: 'shopping_cart', route: '/dashboard/orders' },
-    { name: 'Promo Code', icons: 'redeem' ,route: '/dashboard/coupons'},
+    { name: 'Promo Code', icons: 'redeem', route: '/dashboard/coupons' },
     {
-      name: 'Customise', route:'',icons: 'build', sublist: [
-        { name: 'HomePage', route: '/dashboard/customise-home'},
-        { name: 'Banner', route: '/dashboard/customise-banner'},
-        { name: 'Deal', route: '/dashboard/customise-deal'},
-        { name: 'Socials', route: '/dashboard/socials' },
+      name: 'Customise', route: '', icons: 'build', sublist: [
+        { name: 'HomePage', route: '/dashboard/customise-home' },
+        { name: 'Banner', route: '/dashboard/customise-banner' },
+        { name: 'Deal', route: '/dashboard/customise-deal' },
+        { name: 'Branding', route: '/dashboard/socials' },
         { name: 'FAQs', route: '/dashboard/faq' },
-        { name: 'Payment Keys' , route: '/dashboard/monetization'},
-        { name: 'Sales' , route: '/dashboard/sales'}
+        { name: 'Payment Keys', route: '/dashboard/monetization' },
+        { name: 'Sales', route: '/dashboard/sales' }
       ]
     },
     {
-      name: 'Support Tickets', route:'', icons: 'chat_bubble', sublist: [
+      name: 'Support Tickets', route: '', icons: 'chat_bubble', sublist: [
         { name: 'Ticket Types', route: '/dashboard/support' },
-        { name: 'Tickets' , route: '/dashboard/tickets'},
+        { name: 'Tickets', route: '/dashboard/tickets' },
         // {name: 'Monetization', route: '/dashboard/monetization'}
       ]
     },
     {
-      name: 'Notifications' , route: '/dashboard/notification' , icons: 'notifications'
+      name: 'Notifications', route: '/dashboard/notification', icons: 'notifications'
     },
-    { name: 'Logout', icons: 'logout', route: '' }
+    { name: 'Logout', icons: 'logout', route: '' , function:'logout()'}
   ]
 
   ngOnInit() {
+
+    this.userService.getUser('name').subscribe((data: any) => {
+      this.adminName = data;
+    });
+
     window.addEventListener("resize", () => {
       let check = window.matchMedia("(max-width: 992px)");
   
       if (check.matches) {
         this.isCollapse = true;
-    
         return;
       }
       this.isCollapse = false;
@@ -68,5 +75,9 @@ export class DashboardComponent {
 
   product_dropdown() {
     this.isProductBtnActive = !this.isProductBtnActive;
+  }
+
+  logout(){    
+    this.userService.logoutUser();
   }
 }

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { SocialsService } from 'src/app/shared/services/custom-UI/socials.service';
+import { ImageUploadService } from 'src/app/shared/services/image-upload.service';
 import { ToastService } from 'src/app/shared/services/toast.service';
 
 @Component({
@@ -11,7 +12,8 @@ import { ToastService } from 'src/app/shared/services/toast.service';
 export class SocialsComponent {
   socialsForm!: FormGroup;
   show: boolean = false;
-  constructor(private fb: FormBuilder, private toastService: ToastService, private socialsService: SocialsService) { }
+  constructor(private fb: FormBuilder, private toastService: ToastService, 
+    private socialsService: SocialsService, private uploadService: ImageUploadService) { }
 
   ngOnInit() {
     this.socialsForm = this.fb.group({
@@ -22,7 +24,10 @@ export class SocialsComponent {
       whatsapp: ['', Validators.pattern(/^\+[1-9]\d{1,14}$/)],
       instagramLink: '',
       accountID: '',
-      accessToken: ''
+      accessToken: '',
+
+      desktopLogo: ['', Validators.required],
+      mobileLogo: ['', Validators.required]
     });
 
     this.socialsService.getSocials().subscribe((data: any) => {
@@ -35,10 +40,14 @@ export class SocialsComponent {
         whatsapp: data.whatsapp,
         instagramLink: data.instagram.link,
         accountID: data.instagram.accountID,
-        accessToken: data.instagram.accessToken
-      })
+        accessToken: data.instagram.accessToken,
+        desktopLogo: data.logos.desktop,
+        mobileLogo: data.logos.mobile
+      });
+      console.log(this.socialsForm.value);
+      
     });
-
+    
     this.socialsForm.disable();
   }
 
@@ -46,7 +55,7 @@ export class SocialsComponent {
     this.socialsService.setSocials(this.socialsForm?.value).subscribe((data: any) => {
       this.toastService.successToast({
         title: data.message
-      })
+      });
 
       this.socialsForm.disable();
     });
@@ -56,4 +65,18 @@ export class SocialsComponent {
     this.show = event;
   }
 
+  bannerImageUpload(event: any, logoType: any) {
+    let file: any = (<HTMLInputElement>event.target)?.files![0];
+
+    this.uploadService.fileupload([{ file: file }]).then((url: any) => {
+      this.socialsForm.get(logoType)?.setValue(url[0]);
+      this.getImagePreview(logoType);
+    });
+  }
+
+
+  getImagePreview(logoType: any) {
+    return this.socialsForm.get(logoType)?.value;
+  }
+  
 }

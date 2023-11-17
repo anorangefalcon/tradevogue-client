@@ -30,8 +30,8 @@
                     </span>
 
                     <span class="profile-content d-flex flex-column justify-content-center">
-                        <h5 class="profile-title">Abhishek Rana</h5>
-                        <p class="profile-sub-title">Seller</p>
+                        <h5 class="profile-title">{{this.adminName}}</h5>
+                        <p class="profile-sub-title">Admin</p>
                     </span>
                 </li>
             </ul>
@@ -50,7 +50,7 @@
             <ul class="navlist d-flex flex-column mh100 relative">
                 <li class="transition" *ngFor="let item of navitems">
 
-                    <a [routerLink]="item.route ? item.route: null" [class.dropdown]="item.sublist" [class.active]="isProductBtnActive == true"
+                    <a [routerLink]="item.route ? item.route: null" (click)="item.name.toLowerCase() == 'logout' ? logout() : null" [class.dropdown]="item.sublist" [class.active]="isProductBtnActive == true"
                         class="nav-links relative align-item-center d-flex gap-15 pointer">
                         <i class="icons material-symbols-outlined">{{item.icons}}</i>
                         <span class="nav-text">{{item.name}}</span>
@@ -58,7 +58,7 @@
 
                     <ul class="sub-navlist" *ngIf="item.sublist">
 
-                        <li class="sub-links" *ngFor="let subitem of item.sublist">
+                        <li class="sub-links"  *ngFor="let subitem of item.sublist">
                             <a [routerLink]="subitem.route">{{subitem.name}}</a>
                         </li>
 

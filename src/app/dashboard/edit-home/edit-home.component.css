@@ -184,10 +184,16 @@
 }
 
 .edit-name{
-    right: 24px;
+    right: 28px;
+    opacity: 0.8;
     top: 50%;
-    font-size: 18px;
     transform: translateY(-50%);
+    font-size: 15px;
+    
+    &:hover{
+        color: rgb(var(--primaryClr));
+        opacity: 1;
+    }
 }
 
 .add-layout{
