@@ -37,6 +37,32 @@ export class CheckoutService {
 
   }
 
+  private stripeScript!: HTMLScriptElement | undefined;
+
+  loadStripeScript(): Promise<void> {
+    return new Promise<void>((resolve, reject) => {
+      if (this.stripeScript) {
+        resolve(); // If script already loaded, resolve immediately
+      } else {
+        this.stripeScript = document.createElement('script');
+        this.stripeScript.src = 'https://js.stripe.com/v3/';
+        this.stripeScript.onload = (event: Event) => resolve(); // Define the event handler explicitly
+        this.stripeScript.onerror = reject;
+        document.body.appendChild(this.stripeScript);
+      }
+    });
+  }
+
+  getStripeInstance(publicKey: string): any {
+    return Stripe(publicKey); // Return the Stripe instance with the provided public key
+  }
+
+  unloadStripeScript(): void {
+    if (this.stripeScript && this.stripeScript.parentNode) {
+      this.stripeScript.parentNode.removeChild(this.stripeScript);
+    }
+  }
+
   async showMessage(messageText: any) {
     const messageContainer = document.querySelector("#payment-message");
     if (messageContainer) {

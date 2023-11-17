@@ -61,9 +61,30 @@ export class BillingComponent implements OnInit {
       });
 
       this.getAddresses();
+      this.load();
 
     } catch (error) {
       console.error('Error loading Stripe scripts:', error);
+    }
+  }
+
+
+  private stripeLoaded = false;
+
+  load(): Promise<void> {
+    if (!this.stripeLoaded) {
+      return new Promise<void>((resolve, reject) => {
+        const script = document.createElement('script');
+        script.src = 'https://js.stripe.com/v3/';
+        script.onload = () => {
+          this.stripeLoaded = true;
+          resolve();
+        };
+        script.onerror = (error) => reject(error);
+        document.body.appendChild(script);
+      });
+    } else {
+      return Promise.resolve();
     }
   }
 
@@ -197,17 +218,63 @@ export class BillingComponent implements OnInit {
     const { clientSecret } = await response.json();
   
     const appearance = {
-      theme: 'stripe',
+      theme: 'flat',
       variables: {
-        colorPrimary: '#0570de',
-        colorBackground: '#ffffff',
-        colorText: '#30313d',
-        colorDanger: '#df1b41',
-        fontFamily: 'Ideal Sans, system-ui, sans-serif',
-        spacingUnit: '3px',
-        borderRadius: '4px',
+        fontFamily: 'Verdana',
+        fontLineHeight: '1.5',
+        borderRadius: '0',
+        colorBackground: '#fff',
+        focusBoxShadow: 'none',
+        focusOutline: '-webkit-focus-ring-color auto 1px',
+        tabIconSelectedColor: 'var(--colorText)'
       },
-      //  labels: 'floating',
+      rules: {
+        '.Input, .CheckboxInput, .CodeInput': {
+          transition: 'none',
+          boxShadow: 'inset -1px -1px #ffffff, inset 1px 1px #0a0a0a, inset -2px -2px #dfdfdf, inset 2px 2px #808080'
+        },
+        '.Input': {
+          padding: '12px'
+        },
+        '.Input--invalid': {
+          color: '#DF1B41'
+        },
+        '.Tab, .Block, .PickerItem--selected': {
+          backgroundColor: '#047676',
+          boxShadow: 'inset -1px -1px #0a0a0a, inset 1px 1px #ffffff, inset -2px -2px #808080, inset 2px 2px #dfdfdf'
+        },
+        '.Tab': {
+          transition: 'none'
+        },
+        '.Tab:hover': {
+          backgroundColor: '#047676'
+        },
+        '.Tab--selected, .Tab--selected:focus, .Tab--selected:hover': {
+          color: 'var(--colorText)',
+          backgroundColor: '#ccc'
+        },
+        '.Tab:focus, .Tab--selected:focus': {
+          boxShadow: 'inset -1px -1px #0a0a0a, inset 1px 1px #ffffff, inset -2px -2px #808080, inset 2px 2px #dfdfdf',
+          outline: 'none'
+        },
+        '.Tab:focus-visible': {
+          outline: 'var(--focusOutline)'
+        },
+        '.PickerItem': {
+          backgroundColor: '#dfdfdf',
+          boxShadow: 'inset -1px -1px #0a0a0a, inset 1px 1px #ffffff, inset -2px -2px #808080, inset 2px 2px #dfdfdf',
+          transition: 'none'
+        },
+        '.PickerItem:hover': {
+          backgroundColor: '#eee'
+        },
+        '.PickerItem--highlight': {
+          outline: '1px solid blue'
+        },
+        '.PickerItem--selected:hover': {
+          backgroundColor: '#dfdfdf'
+        }
+      }
     };
   
     this.elements = stripe.elements({ clientSecret, appearance });
@@ -263,7 +330,7 @@ export class BillingComponent implements OnInit {
     private http: HttpClient
   ) {
     this.items = JSON.parse(localStorage.getItem('paymentIntent') || '[]');
-
+    this.load() 
     this.billingService.BillingPageVisited.next(true);
     this.proceedToPayment();
 

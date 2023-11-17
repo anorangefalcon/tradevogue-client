@@ -70,3 +70,7 @@
   padding-block-end: 20px;
   border-block-end: 0.5px solid rgb(var(--textClr), 0.09);
 }
+
+.hidden {
+  display: none;
+}
