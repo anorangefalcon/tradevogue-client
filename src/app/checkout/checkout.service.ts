@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { UtilsModule } from '../utils/utils.module';
 import { CookieService } from 'ngx-cookie-service';
 import { FetchDataService } from '../shared/services/fetch-data.service';
+import { NavigationEnd, Router } from '@angular/router';
+import { BehaviorSubject } from 'rxjs';
 declare var Stripe: any;
 
 @Injectable({
@@ -10,12 +12,30 @@ declare var Stripe: any;
 export class CheckoutService {
   publicKey: any;
   stripe: any;
-
+  private secureNavbar = new BehaviorSubject(false);
+  secureNavbar$ = this.secureNavbar.asObservable();
   constructor(
     private backendUri: UtilsModule,
     private fetchData: FetchDataService,
-    private cookie: CookieService
-  ) {}
+    private cookie: CookieService,
+    private router:Router
+  ) {
+
+   
+    this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        if (this.router.url === '/cart/billing' ) {
+      
+          // this.secureNavbar.next(true);
+        }
+        else{
+          this.secureNavbar.next(false);
+        }
+      }
+    })
+
+
+  }
 
   async showMessage(messageText: any) {
     const messageContainer = document.querySelector("#payment-message");
@@ -111,4 +131,8 @@ export class CheckoutService {
       throw new Error('Network response was not ok.');
     })
   }
+
+  //  ADDRESS
+  addressSelected=new BehaviorSubject(false);
+  addressSelected$=this.addressSelected.asObservable();
 }

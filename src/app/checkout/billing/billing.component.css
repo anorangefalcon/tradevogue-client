@@ -468,6 +468,8 @@ button:disabled {
 .ok:has(> input[type="radio"]:checked)+label::before {
   background-color: rgba(var(--primaryClr));
   border: none;
+
+
 }
 
 label {
@@ -520,17 +522,15 @@ label {
 
   & .btn {
     background: transparent;
-    padding: 0px 15px !important;
+    /* padding: 0px 15px !important; */
     border-radius: 0;
     font-size: 12px;
   }
 
   & .edit__btn {
-    border-right: 1px solid red;
     color: #96999b;
     box-shadow: none;
   }
-
 
 }
 
@@ -565,8 +565,13 @@ label {
 
 
 
-.default__btn {
-  /* text-transform: uppercase; */
+.default__btn,.deliver__btn {
+  background-color: rgb(var(--textClr), 0.09) !important;
+  color: rgb(var(--blackClr));
+  border-radius: 10px !important;
+  font-weight: 400;
+  font-size: 9px !important;
+  padding: 0px 6px !important;
  
 }
 
@@ -1013,4 +1018,15 @@ button:disabled {
   border: 1px solid rgb(var(--primaryClr));
   background-color: rgb(var(--primaryClr));
   color: rgb(var(--whiteClr));
+}
+/* .address-part{
+  width: 95%;
+}
+.buttons-part {
+  width: 5%;
+} */
+.edit__btn, .remove__btn {
+  cursor: pointer;
+    font-weight: 300;
+    font-size: 21px;
 }

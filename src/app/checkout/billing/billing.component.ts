@@ -252,6 +252,7 @@ export class BillingComponent implements OnInit {
   constructor(
     private cartService: CartService,
     private billingService: BillingResponseService,
+    private checkOutService:CheckoutService,
     private fetchDataService: FetchDataService,
     private backendURLs: UtilsModule,
     private renderer: Renderer2,
@@ -295,7 +296,11 @@ export class BillingComponent implements OnInit {
     };
 
     checkSubTotal();
-    // this.userService.PaymentUrlVisited.next(true);
+
+    // address checked
+    this.checkOutService.addressSelected$.subscribe((data)=>{
+      
+    })
   }
 
 
@@ -408,4 +413,16 @@ export class BillingComponent implements OnInit {
     }
   }
 
+  addressDelivered!:any[];
+
+  addressChecked:Boolean=false;
+  AddressClicked(address:any){
+
+    this.userAddresses.forEach((el)=>{
+      el.selected=false;
+    })
+    address.selected=true;
+    this.checkOutService.addressSelected.next(address);
+    this.addressDelivered=address;
+  }
 }

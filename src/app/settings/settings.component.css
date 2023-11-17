@@ -19,6 +19,19 @@
 
 }
 
+.address__heading{
+    padding-inline: 12px 10px;
+}
+
+.default__btn {
+    background-color: rgb(var(--textClr), 0.09) !important;
+    color: rgb(var(--blackClr));
+    border-radius: 10px !important;
+    font-weight: 400;
+    font-size: 9px !important;
+    padding: 0px 6px !important;
+}
+
 
 .enableInput {
 
@@ -256,25 +269,45 @@ label span {
 
 
 .address__firstdiv {
-    & p {
+    & .name {
         font-weight: 500;
     }
 
-    & button {
+    /* & .other__details{
+        font-weight: 100;
+    } */
+
+    /* & button {
         background: transparent;
         padding: 0px 15px !important;
         border-radius: 0;
 
 
-    }
+    } */
 
-    & .edit__btn {
-        border-right: 2px solid red;
-        color: #96999b;
-    }
+  
 }
 
+.edit__btn {
+    color: rgba(var(--blackClr), 0.7);
+}
+.remove__btn {
+    color: rgba(var(--danger), 0.8); 
+}
 
+.edit__btn,.remove__btn{
+    cursor: pointer;
+    font-weight: 300;
+    font-size: 21px;
+}
+
+/* .edit__btn:hover{
+    color: rgba(var(--primaryClr), 1);
+}
+
+.remove__btn:hover{
+    color: rgba(var(--danger), 0.8);
+} */
 /* .show{
 
     & .addressForm{
@@ -291,11 +324,6 @@ label span {
 
 
 
-.default__btn {
-    border-radius: 16px;
-    color: rgb(var(--textClr), 0.5);
-    font-weight: 400;
-}
 
 
 
@@ -389,12 +417,13 @@ label span {
 .addressDiv {
     /* border: 1px solid rgb(var(--textClr), 0.5); */
     padding: 24px;
-    box-shadow: 0 3px 14px 0 rgba(0, 0, 0, 0.04);
+    background-color: rgb(var(--whiteClr));
+    border-radius: 6px;
 
     /* & .name{
          text-transform: capitalize; 
     } */
-    & .remove {
+    & .remove::hover {
         color: rgb(var(--danger))
     }
 }
@@ -461,7 +490,7 @@ label span {
 }
 
 .order:not(:last-child) {
-    border-block-end: 0.8px solid rgb(var(--textClr), 0.9);
+    border-block-end: 0.8px solid rgb(var(--textClr), 0.2);
 }
 
 
@@ -508,8 +537,10 @@ label span {
     width: 15px;
     border-radius: 50%;
 }
-
-
+.main-address:not(:last-child) {
+    padding-block-end: 15px;
+    border-bottom: 0.5px solid rgb(var(--blackClr), 0.6);
+}
 
 /*  WISHLISTS CSS */
 .accordian {
@@ -626,7 +657,9 @@ label span {
         font-size: 18px;
     }
 }
+
 .wishlist-name {
     font-size: 15px !important;
     font-weight: 500;
 }
+

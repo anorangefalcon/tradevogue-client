@@ -131,10 +131,10 @@
 
 
                 <div class="d-flex gap-15">
-                    <button class="btn btn-md btn-rounded btn-secondary" (click)="editClick()" *ngIf="!isReadOnly">Cancel</button>
-                    <button class="btn btn-md btn-rounded btn-primary" #EditBtn (click)="editClick()" *ngIf="isReadOnly">Edit
+                    <button class="width-160 cancelbtn" (click)="editClick()" *ngIf="!isReadOnly">Cancel</button>
+                    <button class="btn-primary width-160" #EditBtn (click)="editClick()" *ngIf="isReadOnly">Edit
                         Profile</button>
-                    <button class="btn btn-md btn-rounded btn-primary" #EditBtn (click)="saveDetails()"
+                    <button class="btn-primary width-160" #EditBtn (click)="saveDetails()"
                         *ngIf="!isReadOnly">Save</button>
                 </div>
 
@@ -143,7 +143,7 @@
             </div>
 
             <div *ngIf="showData=='addresses'" class="address">
-                <div class="d-flex  align-item-center justify-content-md-between pointer h2_div"
+                <div class="d-flex  align-item-center justify-content-md-between pointer address__heading h2_div"
                     (click)="TranslateBack()">
 
                     <div class="d-flex align-item-center pointer h2_div" (click)="TranslateBack()">
@@ -164,23 +164,35 @@
 
                 </div>
                 <div class="d-flex flex-column gap-10">
-                    <div *ngFor="let address of userAddresses;let i=index" class="addressDiv d-flex flex-column gap-15">
-                        <div class="d-flex justify-content-md-between align-item-center address__firstdiv">
-                            <p class="name text-capitalize">{{address.firstname}} {{address.lastname}}</p>
-                            <div class="d-flex">
-                                <span *ngIf="address.defaultAddress">Default Address</span>
-                                <button class="btn default__btn" (click)="MakeDefault(address,i)" *ngIf="i!=0">Make this
-                                    Defult</button>
-
-                                <button class="edit__btn d-flex align-item-center btn"
-                                    (click)="EditAddress(address,i)">Edit</button>
-                                <button class="remove btn " (click)="RemoveAddress(address,i)">Remove</button>
+                    <div class="addressDiv d-flex flex-column gap-20">
+                        <ng-container  *ngFor="let address of userAddresses;let i=index" >
+                            <div class="d-flex mw100 justify-content-md-between main-address">
+                                <div class="d-flex flex-column  gap-10 address__firstdiv">
+                                    <div class="d-flex gap-10">
+                                        <p class="name text-capitalize">{{address.firstname}} {{address.lastname}}</p>
+                                        <button class="btn default__btn" (click)="MakeDefault(address,i)" *ngIf="i!=0">set default</button>
+                                    </div>
+                                    <div> 
+                                        <p class="other__details">{{address.apartment}} {{address.area}} {{address.landmark}},
+                                            {{address.town_city}}</p>
+                                        <p class="other__details">{{address.state}}- {{address.pincode}}</p>
+                                    </div>
+                                </div>
+                                <div class="d-flex">
+                                    <div class="d-flex flex-column gap-5">
+                                        <span class="material-symbols-outlined edit__btn" (click)="EditAddress(address,i)">
+                                            edit
+                                        </span>
+        
+                                        <span class="material-symbols-outlined remove__btn" (click)="RemoveAddress(address,i)">
+                                            delete
+                                        </span>
+                                    </div>
+        
+                                </div>
                             </div>
-                        </div>
-                        <div>
-                            <p>{{address.apartment}} {{address.area}} {{address.landmark}}, {{address.town_city}}</p>
-                            <p>{{address.state}}- {{address.pincode}}</p>
-                        </div>
+                        </ng-container>
+
                     </div>
                 </div>
 
@@ -291,7 +303,7 @@
                 </form>
 
 
-                <button class="btn btn-md btn-rounded btn-primary btn-inline" (click)="onPasswordChange()">Save</button>
+                <button class="btn-primary width-160" (click)="onPasswordChange()">Save</button>
             </div>
 
             <div class="Orders  d-flex flex-column gap-20" *ngIf="showData=='orders'">
@@ -391,9 +403,7 @@
                             </div>
                         </ng-container>
                     </div>
-
                 </div>
-
             </div>
 
             <div *ngIf="showData=='wishlist'" class="wishlist">
