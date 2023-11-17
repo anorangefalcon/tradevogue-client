@@ -181,7 +181,7 @@ export class BillingComponent implements OnInit {
     this.route.queryParams.subscribe(params => {
       const redirectStatus = params['redirect_status'];
       if (redirectStatus === 'succeeded') {
-      
+        
       }
     });
   }

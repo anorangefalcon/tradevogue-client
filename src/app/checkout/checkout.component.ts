@@ -257,10 +257,10 @@ async ApplyCoupon(coupon: any = '', event: any = '') {
   async ProceedToPayment() {
 
 
-    if (!this.billingService.Address) {
-      this.toastService.errorToast({ title: 'Please select Address' });
-      return;
-    }
+    // if (!this.billingService.Address) {
+    //   this.toastService.errorToast({ title: 'Please select Address' });
+    //   return;
+    // }
 
     // response of payment here 
 
