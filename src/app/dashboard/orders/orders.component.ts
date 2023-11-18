@@ -17,7 +17,7 @@ export class OrdersComponent {
   pageSize: number = 8;
   currentPage: number = 1;
   selectedColor: any = 0;
-  totalCount: any;
+  totalCount: any = 0
   updateIndex: any = false; //Purpose of invoice Avalibility
   updateIndexStatus: any; //For puspose of Input status
   filename: string = 'Orders.xlsx';
@@ -90,7 +90,7 @@ export class OrdersComponent {
   fetchOrders(){
     this.fetchData.HTTPPOST(this.backendUrl.URLs.getSellerOrders, this.template).subscribe({
       next: (data: any)=>{
-        console.log(data);
+        
         if(!data.orders.length){
           this.orderData = [0];
           return;
@@ -110,6 +110,8 @@ export class OrdersComponent {
           };
           this.orderData.push(orderInfo);
         });
+
+        this.totalCount = data.total[0].count;
       }
     });
   }

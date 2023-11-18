@@ -17,7 +17,7 @@ import { HttpParams } from '@angular/common/http';
   styleUrls: ['./product-page.component.css']
 })
 export class ProductPageComponent implements OnInit {
-  @Input() productSku: any;
+  @Input() productSku: any = '';
 
   data: any = null;
   cartStorage: any[] = [];
@@ -68,8 +68,8 @@ export class ProductPageComponent implements OnInit {
   ngOnInit(): void {
 
     if (this.productSku) {
+      console.log("HELLO");
       this.sku = this.productSku;
-
       this.fetchProductData();
     }
     else {

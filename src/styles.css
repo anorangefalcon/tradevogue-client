@@ -541,10 +541,9 @@ ul {
 }
 
 .tooltiptext {
-    visibility: hidden;
-    opacity: 0;
-    transition: all 0.3s ease-in-out;
     position: absolute;
+    opacity: 0;
+    pointer-events: none;
     background-color: rgb(var(--blackClr)) !important;
     color: rgb(var(--whiteClr)) !important;
     font-size: 11px !important;
@@ -552,28 +551,90 @@ ul {
     padding: 5px 10px;
     border-radius: 3px;
     z-index: 99;
+    text-align: center;
+    box-shadow: 0px 0px 5px rgba(151, 114, 114, 0.37);
+    transition: all 0.3s ease-in-out;
+}
+
+.tooltip:not(:first-child, :last-child) .tooltiptext {
     inset-block-start: 120%;
     inset-inline-start: 50%;
     transform: translateX(-50%);
-    box-shadow: 0px 0px 5px rgba(151, 114, 114, 0.37);
-    text-align: center;
+}
+
+.tooltip:first-child .tooltiptext {
+    inset-block-start: 120%;
+    inset-inline-start: 10%;
+}
+
+.tooltip:last-child .tooltiptext {
+    inset-block-start: 120%;
+    inset-inline-end: 0%;
 }
 
 .tooltiptext::before {
     content: "";
     position: absolute;
-    inset-block-end: 100%;
-    inset-inline-start: 50%;
     margin-left: -5px;
     border-width: 5px;
     border-style: solid;
     border-color: transparent transparent rgb(var(--blackClr)) transparent;
 }
 
-.tooltip:is(:hover, :active) .tooltiptext {
-    visibility: visible;
-    opacity: 1;
+.tooltip:not(:first-child, :last-child) .tooltiptext::before {
+    inset-block-end: 100%;
+    inset-inline-start: 50%;
+}
 
+.tooltip:first-child .tooltiptext::before {
+    inset-block-end: 100%;
+    inset-inline-start: 9px;
+}
+
+.tooltip:last-child .tooltiptext::before {
+    inset-block-end: 100%;
+    inset-inline-end: 9px;
+}
+
+.tooltip:is(:hover, :active) .tooltiptext {
+    opacity: 1;
+    pointer-events: all;
+}
+
+tr:last-child td{
+
+    & .tooltip .tooltiptext{
+        inset-block-end: 120%;
+        inset-block-start: initial;
+    }
+
+    & .tooltip .tooltiptext::before{
+        display: none;
+    }
+
+    & .tooltip .tooltiptext::after{
+        content: "";
+        position: absolute;
+        margin-left: -5px;
+        border-width: 5px;
+        border-style: solid;
+        border-color: rgb(var(--blackClr)) transparent transparent transparent;
+    }
+
+    .tooltip:not(:first-child, :last-child) .tooltiptext::after {
+        inset-block-start: 100%;
+        inset-inline-start: 50%;
+    }
+    
+    .tooltip:first-child .tooltiptext::after {
+        inset-block-start: 100%;
+        inset-inline-start: 9px;
+    }
+    
+    .tooltip:last-child .tooltiptext::after {
+        inset-block-start: 100%;
+        inset-inline-end: 9px;
+    }
 }
 
 /* Buttons Style */
@@ -790,7 +851,7 @@ ul {
 }
 
 
-.text-ellipsis{
+.text-ellipsis {
     width: 16ch;
     overflow: auto;
     text-overflow: ellipsis;

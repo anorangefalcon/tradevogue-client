@@ -1,5 +1,5 @@
 <div class="card-container mh100 ">
-    
+
     <div class="fixed" style="z-index: 2;" [ngStyle]="{display: popup? 'block': 'none'}">
     </div>
 
@@ -8,24 +8,36 @@
             <h4>{{item.name}}</h4>
 
             <div class="file-section d-flex flex-center gap-5">
-                <input type="file" [id]="'item'+i" minlength="1" (input)="uploadFile($event, item.type)" class="mh100 mw100"
-                    accept="image/CSV, application/vnd.ms-excel ,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-                    multiple />
-                <label [for]="'item'+i" class="d-flex flex-center pointer transition"><span class="material-symbols-outlined">upload_file</span></label>
-                <a class="d-flex flex-center" [href]="'../../../assets/ExcelSampleFile/'+ item.file_name + '.xlsx'" download>
-                    <span class=" transition material-symbols-outlined">download</span></a>
+                <span class="tooltip">
+                    <input type="file" [id]="'item'+i" minlength="1" (input)="uploadFile($event, item.type)"
+                        class="mh100 mw100"
+                        accept="image/CSV, application/vnd.ms-excel ,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+                        multiple />
+                    <label [for]="'item'+i" class="d-flex flex-center pointer transition"><span
+                            class="material-symbols-outlined">upload_file</span></label>
+                    <span class="tooltiptext">Upload Excel</span>
+                </span>
+                <span class="tooltip">
+                    <a class="d-flex flex-center" [href]="'../../../assets/ExcelSampleFile/'+ item.file_name + '.xlsx'"
+                        download>
+                        <span class=" transition material-symbols-outlined">download</span></a>
+                    <span class="tooltiptext">Download Sample</span>
+                </span>
             </div>
         </div>
         <div class="row row-2 card-data d-flex gap-10 flex-wrap">
             <ng-container *ngIf="field_data">
-                <div class="data__field d-flex justify-content-md-between align-item-center fs-14 gap-10 transition " *ngFor="let option of field_data[item.type] | productFilter: filter[item.filter]; let j = index">
+                <div class="data__field d-flex justify-content-md-between align-item-center fs-14 gap-10 transition "
+                    *ngFor="let option of field_data[item.type] | productFilter: filter[item.filter]; let j = index">
                     <span class="data-field__text">{{option}}</span>
-                    <span class="pointer d-flex flex-center transition material-symbols-outlined" (click)="deleteItem(item.type, j)">close</span>
+                    <span class="pointer d-flex flex-center transition material-symbols-outlined"
+                        (click)="deleteItem(item.type, j)">close</span>
                 </div>
             </ng-container>
         </div>
         <div class="row row-3 relative mw100">
-            <input type="text" class="form__input" [placeholder]="'Add '+ item.name" [id]="item.type" [(ngModel)]='filter[item.filter]' />
+            <input type="text" class="form__input" [placeholder]="'Add '+ item.name" [id]="item.type"
+                [(ngModel)]='filter[item.filter]' />
 
             <div class="button absolute inset-inline-end-0 inset-block-start-0">
                 <button class="btn-primary d-flex flex-center" type="submit" (click)="addItem(item.filter, item.type)">

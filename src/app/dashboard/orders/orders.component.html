@@ -120,7 +120,7 @@
                 </ng-template>
             </table>
         </div>
-        <app-pagination [collectionSize]="12" [pageSize]="8" [currentPage]="currentPage"
+        <app-pagination [collectionSize]="totalCount" [pageSize]="pageSize" [currentPage]="currentPage"
             (activePage)="pageChanged($event)"></app-pagination>
     </div>
 </section>

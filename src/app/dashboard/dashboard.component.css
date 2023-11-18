@@ -552,11 +552,13 @@ main {
                     transition: all 0.1s ease-in-out;
                     padding: 2px;
                     color: rgb(var(--blackClr), 0.7);
+                    cursor: pointer;
+
+                    &:hover{
+                        color: rgb(var(--primaryClr));
+                    }
                 }
 
-                & a:hover i {
-                    color: rgb(var(--blue-clr));
-                }
             }
         }
     }

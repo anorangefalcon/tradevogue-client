@@ -21,7 +21,7 @@
                     </div>
                 </div>
             </div>
-            <div class="customerInfo buyer__details text-right">
+            <div class="customerInfo buyer__details text-right" *ngIf="orderInfo.address">
                 <h4>Shipping Address</h4>
                 <p class="text-capitalize">{{orderInfo.address.firstname + ' ' + orderInfo.address.lastname}}</p>
                 <p>{{orderInfo.buyerId.email}}</p>
