@@ -10,6 +10,7 @@ import { UtilsModule } from '../utils/utils.module';
 import { FetchDataService } from '../shared/services/fetch-data.service';
 import { HttpParams } from '@angular/common/http';
 
+
 @Component({
   selector: 'app-product-page',
   templateUrl: './product-page.component.html',
@@ -49,7 +50,6 @@ export class ProductPageComponent implements OnInit {
     private route: ActivatedRoute,
     private fetchService: FetchDataService,
     private backendUrl: UtilsModule,
-
     private cartService: CartService,
     private wishlistService: WishlistService,
     private reviewService: ReviewService,
@@ -112,6 +112,7 @@ export class ProductPageComponent implements OnInit {
 
     this.outOfStock = (this.data.assets[this.assetIndex].stockQuantity[this.sizeIndex].quantity <= 0) ? true : false;
 
+
     // if this user has already reviewed:
     if (data.userReview) {
       this.userReview = data.userReview;
@@ -162,6 +163,8 @@ export class ProductPageComponent implements OnInit {
     this.selectedSize = this.data.assets[this.assetIndex].stockQuantity[this.sizeIndex].size;
     this.outOfStock = (this.data.assets[this.assetIndex].stockQuantity[this.sizeIndex].quantity <= 0) ? true : false;
 
+   
+    
     if (!(this.getOrderQuantity().includes(this.selectedQ))) this.selectedQ = 0;
   }
 

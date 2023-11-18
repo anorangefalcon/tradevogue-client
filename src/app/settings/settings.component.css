@@ -348,6 +348,7 @@ label span {
     background-color: rgb(var(--textClr), 0.09) !important;
     color: rgb(var(--blackClr));
     border-radius: 10px !important;
+    cursor: pointer;
     font-weight: 400;
     border: none;
     font-size: 9px !important;

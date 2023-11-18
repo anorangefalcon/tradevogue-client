@@ -1,5 +1,6 @@
-<ng-container *ngIf="ShowNavBar">
-    <app-navbar></app-navbar>
+<app-navbar></app-navbar>
+
+<ng-container *ngIf="!secureNavBar">
     <div class="bread">
         <app-breadcrumb></app-breadcrumb>
     </div>

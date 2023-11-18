@@ -4,11 +4,9 @@ import { Router } from '@angular/router';
 import { UtilsModule } from '../utils/utils.module';
 import { FetchDataService } from '../shared/services/fetch-data.service';
 import { ToastService } from '../shared/services/toast.service';
-import { BillingResponseService } from './billing-response.service';
 // import { StripPaymentService } from '../shared/services/stripe-Integration/strip-payment.service';
 import { CheckoutService } from './checkout.service';
 import { LoginCheckService } from '../shared/services/login-check.service';
-import { retry } from 'rxjs';
 
 
 @Component({
@@ -21,34 +19,16 @@ export class CheckoutComponent implements OnInit {
   // CouponAppliedBtnClicked:any='hidden';
   navbar_scroll_style: boolean = false;
   cartCount: number = 0;
-  // OpenCoupon: boolean = false;
-  AllCoupons: any;
   updateBoolean: boolean = false;
   cart: any = {};
-  ParenClosed: boolean = false;
 
-  direction: string = 'right';
-  show: boolean = false;
   loading: boolean = false;
-
   @ViewChild('CouponCode') CouponCode: any;
-  @ViewChild('Proceed__btn') Proceed__btn!: ElementRef;
 
-  BillingPageVisited: boolean = false;
-  constructor(private cartService: CartService, private loginCheckService: LoginCheckService, private billingService: BillingResponseService, private router: Router, private renderer: Renderer2, private toastService: ToastService, private BackendUrl: UtilsModule, private fetchService: FetchDataService, private route: Router, private el: ElementRef, private stripePay: CheckoutService) {
-    // route changes
-    this.router.events.subscribe((event) => {
-      if (this.router.url === '/cart/billing') {
-        this.BillingPageVisited = true;
-      } else {
-        this.BillingPageVisited = false;
-      }
-    });
-
-    this.billingService.BillingpageVisited$.subscribe((data: any) => {
-      this.BillingPageVisited = data;
+  constructor(private cartService: CartService, private loginCheckService: LoginCheckService, private checkOutService:CheckoutService, private router: Router, private renderer: Renderer2, private toastService: ToastService, private BackendUrl: UtilsModule, private fetchService: FetchDataService, private route: Router, private el: ElementRef, private stripePay: CheckoutService) {
+    this.checkOutService.secureNavbar$.subscribe((data)=>{
+      this.SecureNavBar=data;
     })
-
   }
 
 
@@ -137,9 +117,14 @@ export class CheckoutComponent implements OnInit {
 
 
 
-// COUPONS CODE STARTS
+// COUPONS CODE STARTS-------------------
 CouponValid: string = 'hidden';
+AllCoupons: any;
+SecureNavBar:Boolean=false;
 CouponApplied: any = '';
+ParenClosed: boolean = false;
+direction: string = 'right';
+show: boolean = false;
 CouponOpener() {
   this.show = true;
 }
@@ -217,10 +202,11 @@ async ApplyCoupon(coupon: any = '', event: any = '') {
     return;
   }
 
-  this.CouponCode.nativeElement.value = ''; // change input field to ''
+  this.CouponCode.nativeElement.value = '';
   this.cart.amounts.savings = this.CalculateDiscount(this.CouponApplied);
   this.cart.amounts.total -= this.cart.amounts.savings;
   this.ParenClosed = true;
+
 }
 
 
@@ -252,15 +238,20 @@ async ApplyCoupon(coupon: any = '', event: any = '') {
     this.CouponCode.nativeElement.value='';
   }
   
-  // COUPONS CODE FINSIH
+  // COUPONS CODE FINSIH-------------------
 
   async ProceedToPayment() {
+    let body:any={};
+    this.checkOutService.addressSelected$.subscribe((data)=>{
+      body.address=data;
 
+    })
 
-    // if (!this.billingService.Address) {
-    //   this.toastService.errorToast({ title: 'Please select Address' });
-    //   return;
-    // }
+    if(!body.address){
+      this.toastService.errorToast({title:'Please select some address'});
+      return;
+    }
+
 
     // response of payment here 
 
@@ -275,19 +266,12 @@ async ApplyCoupon(coupon: any = '', event: any = '') {
     }
 
 
-    this.billingService.PaymentResponse$.subscribe((data) => {
-
-    })
     this.cartService.fetchCart().subscribe((data) => {
-      let body: any = {};
       if (this.CouponApplied) {
         body.coupon = this.CouponApplied;
         body.discount = data.amounts.savings;
       }
       body.products = data.details;
-      body.address = this.billingService.Address;
-      // body.payment_status = "succeeded"
-
 
       this.fetchService.HTTPPOST(this.BackendUrl.URLs.createOrder, body).subscribe((data: any) => {
       });

@@ -128,19 +128,31 @@ export class SettingsComponent {
     }
   }
 
-  // SETTING PAGE
+  // PROFILE PAGE
   editClick() {
     this.isReadOnly = !this.isReadOnly;
-    console.log('iread only is ',this.isReadOnly);
-    
     if(!this.isReadOnly){
       this.ProfileForm.enable();
     }
     else{
       this.ProfileForm.disable();
     }
+  }
+
+  async saveDetails() {
+    let body = {
+      name: { firstname: this.ProfileForm.get('firstname')?.value, lastname: this.ProfileForm.get('lastname')?.value },
+      email: this.ProfileForm.get('email')?.value,
+      mobile: this.ProfileForm.get('mobile')?.value,
+      "info.gender": this.ProfileForm.get('gender')?.value,
+      "info.dob": new Date(this.ProfileForm.get('dob')?.value)
+    }
+    this.fetchDataService.HTTPPOST(this.backendURLs.URLs.updateDetails, body).subscribe((data) => {
+      this.editClick();
+    })
 
   }
+
 
   // wishlist work 
   showWishlists() {
@@ -261,21 +273,6 @@ export class SettingsComponent {
   }
 
 
-
-  async saveDetails() {
-    let body = {
-      name: { firstname: this.ProfileForm.get('firstname')?.value, lastname: this.ProfileForm.get('lastname')?.value },
-      email: this.ProfileForm.get('email')?.value,
-      mobile: this.ProfileForm.get('mobile')?.value,
-      "info.gender": this.ProfileForm.get('gender')?.value,
-      "info.dob": new Date(this.ProfileForm.get('dob')?.value)
-    }
-    this.fetchDataService.HTTPPOST(this.backendURLs.URLs.updateDetails, body).subscribe((data) => {
-      this.editClick();
-    })
-
-  }
-
   async MakeDefault(address: any,index:any) {
     try {
       const body = { address: address ,index};
@@ -295,7 +292,6 @@ export class SettingsComponent {
       this.TranslateData=true;
     },300)
      this.fetchDataService.HTTPGET(this.backendURLs.URLs.getParticularUserOrders).subscribe((data:any)=>{
-      
         this.AllOrders=data;   
     });      
   }

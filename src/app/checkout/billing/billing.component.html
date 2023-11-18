@@ -1,7 +1,8 @@
-<!-- ADDRESS STARTS -->
-<!-- show address -->
+
 
 <div class="container billingPage">
+    <!-- ADDRESS STARTS -->
+
     <div class="address d-flex flex-column gap-20">
         <div class="d-flex flex-column gap-10">
 
@@ -11,7 +12,7 @@
                 </h2>
 
 
-                <div class="d-flex align-item-center addAddress__div" *ngIf="!DeliveredAddress" (click)="AddAddress()">
+            <div class="d-flex align-item-center addAddress__div"  (click)="AddAddress()">
                     <span class="material-symbols-outlined">
                         add_circle
                     </span>
@@ -19,28 +20,15 @@
 
                 </div>
 
-                <!-- <button *ngIf="DeliveredAddress" class="changeaddress__btn" (click)="ChangeAddress()">
-
-                Change Address
-
-            </button> -->
-
-            </div>
-
-            <div *ngIf="DeliveredAddress">
-                <p>
-                    {{DeliveredAddress.apartment}}
-                    {{DeliveredAddress.area}},
-                    {{DeliveredAddress.landmark}}
-                    {{DeliveredAddress.town_city}}
-                    {{DeliveredAddress.country}}
-                </p>
-            </div>
-
-
         </div>
 
-        <div class="d-flex flex-column gap-20 main-address" *ngIf="!DeliveredAddress">
+   
+
+
+    </div>
+
+    <!-- show address -->
+        <div class="d-flex flex-column gap-20 main-address">
             <ng-container *ngFor="let address of userAddresses; let i=index" class="d-flex address__firstdiv ">
                 <div class="single-address">
                     <div class="ok" style="display: none;">
@@ -84,9 +72,6 @@
         </div>
 
 
-    </div>
-
-
     <!-- new address  -->
     <div [ngClass]="{'show':ShowComponent==true}">
         <app-address [ShowComponent]="ShowComponent" [receiveData]="receiveData"
@@ -95,6 +80,7 @@
 
     </div>
 
+    </div>
 
     <!-- ADDRESS FINISH -->
 
@@ -136,4 +122,3 @@
         </div>
     </div>
 
-</div>

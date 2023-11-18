@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
+import { CheckoutService } from '../checkout/checkout.service';
 
 @Component({
   selector: 'app-layout',
@@ -7,19 +8,11 @@ import { NavigationEnd, Router } from '@angular/router';
   styleUrls: ['./layout.component.css']
 })
 export class LayoutComponent {
-  ShowNavBar:boolean=true;
-  constructor(private router: Router) {
-
-    this.router.events.subscribe((event) => {
-      if (event instanceof NavigationEnd) {
-        if (this.router.url === '/cart/billing' ) {
-          this.ShowNavBar = false;
-        }
-        else{
-          this.ShowNavBar = true;
-        }
-      }
-    })
-  }
+  secureNavBar:Boolean=false;
+    constructor(private checkoutService:CheckoutService) {
+  this.checkoutService.secureNavbar$.subscribe((data)=>{
+    this.secureNavBar=data;
+  })
+    }
 
 }

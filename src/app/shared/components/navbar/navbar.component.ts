@@ -5,6 +5,7 @@ import { NavigationEnd, Router } from '@angular/router';
 import { WishlistService } from '../../services/wishlist.service';
 import { UtilsModule } from 'src/app/utils/utils.module';
 import { LoginCheckService } from '../../services/login-check.service';
+import { CheckoutService } from 'src/app/checkout/checkout.service';
 
 // declare var doSignout:any;
 @Component({
@@ -29,8 +30,14 @@ export class NavbarComponent implements OnInit {
     men: [],
     women: []
   }
+  secureNavbar: boolean=false;
+  
+  constructor(private cartService: CartService, private userService: LoginCheckService, private checkOutService:CheckoutService, private BackendEndUrl: UtilsModule, private fetchDataService: FetchDataService, private router: Router, private wishlistService: WishlistService, private utils: UtilsModule) {
 
-  constructor(private cartService: CartService, private userService: LoginCheckService, private BackendEndUrl: UtilsModule, private fetchDataService: FetchDataService, private router: Router, private wishlistService: WishlistService, private utils: UtilsModule) {
+    this.checkOutService.secureNavbar$.subscribe((data)=>{
+      this.secureNavbar = data;
+    });
+
 
     this.userService.getUser('name').subscribe((name: any) => {
       if (name) {

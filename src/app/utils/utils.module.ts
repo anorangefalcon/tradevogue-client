@@ -110,7 +110,7 @@ export class UtilsModule {
     removeWishlist : 'http://localhost:1000/wishlist/deleteWishlist',
 
     // ORDERS
-    verifyOrderSummary: 'http://localhost:1000/orders/verifyOrderSummary',
+    verifyOrderSummary: 'http://localhost:1000/orders/verifyOrder',
     createOrder: 'http://localhost:1000/orders/create',
     getParticularUserOrders: 'http://localhost:1000/orders/getparticularUserOrders',
     cancelOrder: 'http://localhost:1000/orders/cancelOrder',

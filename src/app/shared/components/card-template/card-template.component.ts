@@ -27,6 +27,19 @@ export class CardTemplateComponent {
   ngOnInit(): void {
     const sku = this.product.sku;
     this.avgRating = this.product.avgRating;
+    // this.product.quantity=limit;
+  
+    let limit = this.product.assets[0].stockQuantity[0].quantity;
+    let arr = this.product.info.orderQuantity;
+    let filteredArray = arr.filter((item: any) => item <= limit);
+
+    if (!(filteredArray.includes(limit)) && (arr[arr.length - 1] > limit)) {
+      filteredArray.push(limit);
+    }
+
+    // this.productPageService.orderQuantity.next(filteredArray);
+    this.product.info.orderQuantity=filteredArray;
+
   }
 
   createArrayToIterate(num: number){
@@ -51,8 +64,6 @@ export class CardTemplateComponent {
 
   
   addToCart(){
-    console.log('size come up is ',this.product.info.orderQuantity[0]);
-    
     const cartItem = {
       sku: this.product.sku,
       color: this.product.assets[0].color,

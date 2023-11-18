@@ -528,3 +528,9 @@ header.active {
         top: 50%;
     }
 }
+
+
+/* padding for payment page */
+.padding__lock{
+    padding-inline-end: 45px;
+}

@@ -26,7 +26,7 @@ export class CheckoutService {
       if (event instanceof NavigationEnd) {
         if (this.router.url === '/cart/billing' ) {
       
-          // this.secureNavbar.next(true);
+          this.secureNavbar.next(true);
         }
         else{
           this.secureNavbar.next(false);

@@ -1,5 +1,5 @@
 <header class="header-shadowed" [class.active]="(navbar_scroll_style == true) || (hamburgerOpen)">
-    <nav class="navbar container d-flex align-item-center justify-content-md-between relative">
+    <nav class="navbar container d-flex align-item-center justify-content-md-between relative" [ngClass]="{'padding__lock':secureNavbar}">
         <div class="branding d-flex gap-10 align-item-center">
 
             <div [ngClass]="hamburgerOpen ? 'dropdown-active' : ''" class="dropdown pointer"
@@ -16,6 +16,9 @@
                 </picture>
             </a>
         </div>
+
+        <ng-container *ngIf="!secureNavbar">
+
         <ul class="d-flex gap-30 nav-items" [class.active]="hamburgerOpen">
 
             <li class="nav-links relative " (click)="hamburgerOpen = false">
@@ -114,7 +117,15 @@
                 </ul>
             </li>
         </ul>
+    </ng-container>
+
+    <ng-container *ngIf="secureNavbar">
+        <span class="material-symbols-outlined">
+            lock
+            </span>
+    </ng-container>
     </nav>
+
 
     <!-- <nav class="container d-flex align-item-center justify-content-md-between">
         <a [routerLink]="['/']">
@@ -180,3 +191,5 @@
         </ul>
     </nav> -->
 </header>
+
+<div [ngClass]="secureNavbar ? 'secure-navbar' : ''"></div>

@@ -3,7 +3,6 @@ import { FetchDataService } from 'src/app/shared/services/fetch-data.service';
 import { UtilsModule } from 'src/app/utils/utils.module';
 import { CartService } from 'src/app/shared/services/cart.service';
 import { ActivatedRoute } from '@angular/router';
-import { BillingResponseService } from '../billing-response.service';
 import { HttpClient } from '@angular/common/http';
 import { CheckoutService } from '../checkout.service';
 import { LoginCheckService } from 'src/app/shared/services/login-check.service';
@@ -51,6 +50,8 @@ export class BillingComponent implements OnInit {
   selectedPaymentMethod = 'stripe';
 
   ngOnInit(): void {
+    console.log('ngOnit called------> of billing');
+    
     try {
       this.route.queryParams.subscribe(async params => {
         const redirectStatus = params['redirect_status'];
@@ -69,7 +70,7 @@ export class BillingComponent implements OnInit {
   }
 
 
-  private stripeLoaded = false;
+  // private stripeLoaded = false;
 
   // load(): Promise<void> {
   //   if (!this.stripeLoaded) {
@@ -323,10 +324,10 @@ export class BillingComponent implements OnInit {
     }
   }
 
+
   constructor(
     private cartService: CartService,
-    private billingService: BillingResponseService,
-    private checkOutService: CheckoutService,
+    private checkOutService:CheckoutService,
     private fetchDataService: FetchDataService,
     private backendURLs: UtilsModule,
     private userService: LoginCheckService,
@@ -334,9 +335,8 @@ export class BillingComponent implements OnInit {
     private stripePay: CheckoutService,
     private http: HttpClient
   ) {
+
     this.items = JSON.parse(localStorage.getItem('paymentIntent') || '[]');
-    // this.load()
-    this.billingService.BillingPageVisited.next(true);
     this.proceedToPayment();
 
     this.stripePay.setLoading = this.stripePay.setLoading.bind(this);
@@ -593,12 +593,8 @@ export class BillingComponent implements OnInit {
 
   userAddresses: any[] = [];
   receiveData: any;
-  navbar_scroll_style: boolean = false;
-  cart: any = '';
-  CouponApplied: any = '';
-  DeliveredAddress: any = '';
   ShowComponent: boolean = false;
-
+  SecureNavBar:Boolean=false;
 
 
   getAddresses() {
@@ -653,35 +649,14 @@ export class BillingComponent implements OnInit {
   AddAddress() {
     this.ShowComponent = true;
   }
-
-  SelectAddress(address: any) {
-    this.DeliveredAddress = address;
-    this.billingService.Address = this.DeliveredAddress;
-  }
-
-  ChangeAddress() {
-    this.DeliveredAddress = false;
-  }
-
-  async MakeDefault(address: any, index: any) {
-    try {
-      const body = { address: address, index };
-      this.fetchDataService.HTTPPOST(this.backendURLs.URLs.setDefaultAddress, body).subscribe((data: any) => {
-        this.userAddresses = data;
-      });
-
-    } catch (error) {
-
-    }
-  }
+  
 
   addressDelivered!: any[];
 
-  addressChecked: Boolean = false;
-  AddressClicked(address: any) {
-
-    this.userAddresses.forEach((el) => {
-      el.selected = false;
+  addressChecked:Boolean=false;
+  AddressClicked(address:any){
+    this.userAddresses.forEach((el)=>{
+      el.selected=false;
     })
     address.selected = true;
     this.checkOutService.addressSelected.next(address);

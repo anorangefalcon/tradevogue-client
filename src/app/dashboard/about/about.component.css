@@ -2,7 +2,9 @@
     background-color: white;
     padding: 20px;
 }
-
+textarea {
+    resize: none;
+}
 .width-50 {
     width: 50%;
 }
@@ -42,61 +44,6 @@ form {
     flex-wrap: wrap;
 }
 
-/* .about-image-div{
-    & .common{
-        width: calc(50% - 5px);
-        height: 25%;
-    }
-} */
-
-
-/* .about-image-div {
-    display: grid;
-    width: 50%;
-    grid-template-columns: repeat(10, 0.2fr);
-    grid-template-rows: repeat(10, 0.2fr);
-    gap: 15px;
-
-
-
-    & .common img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        border-radius: 10px;
-    }
-
-
-    & .common1 {
-        grid-column: 1/ 5;
-        grid-row: 1/ 6;
-    }
-
-    & .common2 {
-        grid-column: 5/11;
-        grid-row: 2/6;
-    }
-
-    & .common3 {
-        grid-row: 6/9;
-        grid-column: 1/4;
-        & .upload__div{
-            padding: 30px;
-        }
-    }
-
-    & .common4 {
-        grid-column: 4/11;
-        grid-row: 6/11;
-
-    }
-
-
-
-
-}  */
-
-
 .ImageDiv{
     width: 50%;
 
@@ -105,32 +52,27 @@ form {
         height: 170px;
         border-radius: 10px;
         & img{
+            z-index: 5;
             height: 170px;
             border-radius: 4px;
+            
        }
     }
    
 }
-.form__label {
-    font-size: 14px;
-    color: rgb(var(--textClr), 0.9);
-    padding-bottom: 5px;
-
-    & span {
-        color: rgb(var(--danger));
-    }
+.remove-btn {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    background-color: rgb(var(--whiteClr), 0.6);
+    border-radius: 50%;
+    padding: 2px;
+    font-size: 18px;
 }
 
-.form__input {
-    width: 100%;
-    height: 42px;
-    padding-inline: 15px;
-    border-radius: 8px;
-    font-size: 14px;
-    outline: 1px solid rgba(var(--blackClr), 0.2);
-    background-color: transparent;
+.red {
+    color: rgb(var(--danger))
 }
-
 .formControl{
     width:calc(50% - 10px);
     /* display: flex;
@@ -139,7 +81,7 @@ form {
 }
 
 
-.commitment,.features , .common__formGroup{
+.commitment , .common__formGroup{
     padding: 15px;
     border: 1px solid rgba(0,0,0,0.2);
     border-radius: 6px;
@@ -148,6 +90,7 @@ form {
 
 
 .formControl__textArea{
+    resize: none;
     width: 100%;
     & textarea{
         border: 1px solid rgba(0,0,0,0.2);
@@ -185,10 +128,10 @@ textarea::placeholder{
 
 
 .upload__div{
-    width: 20px !important;
-    height: 20px !important;
+    width: 50px ;
+    height: 50px ;
     border-radius: 50%;
-    padding: 50px;
+    /* padding: 50px; */
     font-size: 10px;
     font-weight: 500;
     color: rgb(var(--blackClr), 0.6);
@@ -209,8 +152,7 @@ textarea::placeholder{
     background-color: rgba(128, 128, 128, 0.079);
     border-radius: 10px;
     padding-block: 10px;
-
- 
+    height: 260px;
 }
 
 
@@ -266,10 +208,6 @@ overflow: hidden;
 }
 
 .image__uploaded{
-    right: 10px;
-    position: absolute;
-    height: 70px !important;
-    width: 70px !important;
-    bottom: 10px;
+    top: 0;
     border-radius: 10px;
 }
