@@ -11,10 +11,12 @@ import { productData } from '../../productData';
 export class ProductCardCarouselComponent {
 
   @Input() whatToFetch: string = '';
+  @Input() product: any = {};
   @Input() titles: any = {
     title: 'Popular Products',
     subTitle: 'Explore our most demanded products.'
   };
+  productData: any = [];
   
   productArr: productData[] = [];
   

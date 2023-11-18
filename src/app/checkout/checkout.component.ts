@@ -51,6 +51,7 @@ export class CheckoutComponent implements OnInit {
 
   }
 
+
   async ngOnInit() {
     this.loading = true;
     this.cartService.fetchCart('count').subscribe((data) => {
