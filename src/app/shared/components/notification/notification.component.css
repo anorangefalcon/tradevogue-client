@@ -478,6 +478,7 @@ p {
   border: 1px dotted #999;
   margin-bottom: 5px;
   padding: 5px;
+  width: 100%;
 }
 
 .product-image {

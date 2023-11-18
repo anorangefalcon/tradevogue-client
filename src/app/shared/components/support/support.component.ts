@@ -37,9 +37,14 @@ export class SupportComponent {
       this.loginCheckService.getUser().subscribe((login)=>{
         if(!login) return;
         this.fetchData.HTTPPOST(this.util.URLs.getLatestProductForBuyer, {buyerId: this.cookie.get('userToken')}).subscribe((data: any) => {
-          this.products = data.latestProduct.products;
-          this.orderDetails = data.latestProduct;
-          this.loadingProducts = false;
+
+          if(data) {
+            this.products = data.latestProduct.products;
+            this.orderDetails = data.latestProduct;
+            this.loadingProducts = false;
+          }else {
+            console.log("No data found because you have not ordered anything yet");
+          }
           }); 
         this.showOrder = true;
       });

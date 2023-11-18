@@ -8,7 +8,7 @@
   <div *ngFor="let section of faqData" class="container accordion_wrapper">
 
     <!--- Parent --->
-    <button class="d-flex align-item-center justify-content-md-between pointer relative accordion main_acc content"
+    <button class="btn d-flex align-item-center justify-content-md-between pointer relative accordion main_acc content"
       (click)="toggleParent(section)" [ngClass]="{ expanded: section.expanded }">
       {{ section.title }}
     </button>
@@ -18,7 +18,7 @@
       <div *ngFor="let child of section.childrens">
 
         <!--- Child Questions --->
-        <button class=" main_acc custom-title" (click)="toggleChild(child)">
+        <button class="btn  main_acc custom-title" (click)="toggleChild(child)">
           <div>{{ child.title }}</div>
           <div class="custom">{{ child.expanded ? '-' : '+' }}</div>
 
