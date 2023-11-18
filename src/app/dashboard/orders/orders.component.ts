@@ -90,20 +90,22 @@ export class OrdersComponent {
   fetchOrders(){
     this.fetchData.HTTPPOST(this.backendUrl.URLs.getSellerOrders, this.template).subscribe({
       next: (data: any)=>{
-        if(!data.length){
-          this.orderData = [0]
+        console.log(data);
+        if(!data.orders.length){
+          this.orderData = [0];
           return;
         }
         this.orderData = [];
-        data.forEach((order: any)=>{
+
+        data.orders.forEach((order: any)=>{
           let orderInfo = {
-            orderID: order.data.orderID,
-            customer: order.customer,
+            orderID: order.data.orderID || null,
+            customer: order.customer || '',
             orderTime: (new Date(order.data.orderDate)).toDateString(),
-            amount: order.data.orderAmount,
-            quantity: order.orderQuantity,
-            payment_status:  order.data.payment_status,
-            invoice_status: order.data.invoice_status,
+            amount: order.data.orderAmount || 0,
+            quantity: order.orderQuantity || 0,
+            payment_status:  order.data.payment_status || '',
+            invoice_status: order.data.invoice_status || '',
             _id: order._id
           };
           this.orderData.push(orderInfo);
@@ -115,7 +117,7 @@ export class OrdersComponent {
   dialogTemplate: any = {
     title: 'Want to make Invoice Available?',
     type: 'confirmation',
-    confirmationText: 'Yes, Avial it',
+    confirmationText: 'Yes, Avail it',
     cancelText: 'No, Cancel it',
   }
 

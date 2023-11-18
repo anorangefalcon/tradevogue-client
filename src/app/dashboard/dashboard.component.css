@@ -317,7 +317,7 @@
         }
     }
 
-    @media screen and (max-width: 767px) {
+    @media screen and (max-width: 992px) {
 
         & .header {
             padding-inline-start: 0px;
@@ -342,7 +342,7 @@
 
         & .sidebar.active {
             width: 240px !important;
-            inset-block-start: 50px;
+            inset-block-start: 65px;
             background-color: rgb(var(--whiteClr));
             opacity: 1;
             overflow: visible;
@@ -352,6 +352,18 @@
             }
         }
 
+    }
+
+    @media screen and (max-width: 767px) {
+        
+        .main{
+
+            .content {
+ 
+                padding: 16px;
+
+            }
+        }
     }
 
 
@@ -439,11 +451,6 @@ main {
             border-radius: 5px;
             background-color: rgb(var(--secondary), 0.4);
         }
-/* 
-        &::-webkit-scrollbar-thumb {
-            border-radius:5px;
-            background-color: rgb(var(--primaryClr), 0.8);
-        } */
         
         & .table__item-image {
 

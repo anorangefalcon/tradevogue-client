@@ -25,49 +25,45 @@ export class StatisticsComponent implements OnInit {
   productList: any[] = [];
   selectedType: string = 'monthly';
 
+  barChart: any;
+  donutChart: any;
+  table: any;
+  reviewDataLabel: any[] = ['Satisfied', 'Neutral', 'Unsatisfied'];
+  reviewData: any[] = [50, 50, 50];
+
+  SPLabel: any[] = [];
+  salesData: any[] = [];
+  profitData: any[] = [];
+
   constructor(private fetchdata: FetchDataService, private backendUrl: UtilsModule) { }
 
   ngOnInit(): void {
-    this.fetchData();
-    this.resetMonthly();
+    this.createLineChart();
     this.createDonut();
-    this.createBarChart();
+    this.resetMonthly();
 
-    // this.popularProducts();
-    // this.createTable();
-
-    // $('#datatable').DataTable({
-    //   pagingType: 'numbers',
-    //   pageLength: 5,
-    // }); 
+    // Fetch Data
+    this.fetchOverAllData();
+    this.fetchSalesProfitStats();
+    this.fetchCategoryStats();
+    this.fetchPopularStats();
+    this.fetchReviewStats();
   }
 
   fetchSalesProfitStats() {
-
-    this.barChart.destroy();
-    this.createBarChart();
-
-    this.fetchdata.HTTPGET(this.backendUrl.URLs.fetchSalesStats).subscribe((res: any) => {
+    this.fetchdata.HTTPGET(this.backendUrl.URLs.fetchSalesStats, {'type': this.selectedType}).subscribe((res: any) => {
       this.salesDataUpdate(res);
-      // this.revenue = 0;
-      // res.salesStats.forEach((sale: any)=>{
-      //     this.revenue += sale.totalSales;
-      // });
-
-      // this.salesDataUpdate(res.salesStats);
-
     });
   }
 
   fetchReviewStats() {
     this.fetchdata.HTTPGET(this.backendUrl.URLs.fetchReviewStats).subscribe((res: any) => {
-      this.reviewDataLabel = [];
+
       this.reviewData = [];
       Object.keys(res).forEach((key: any) => {
-        this.reviewDataLabel.push(key);
         this.reviewData.push(res[key])
       });
-      this.donutChart.update();
+      this.resetDonut();
     });
   }
 
@@ -96,19 +92,21 @@ export class StatisticsComponent implements OnInit {
 
     data.forEach((saleData: any) => {
       if (saleData._id.year = year) {
-        date.setMonth(saleData._id.month - 1);
-        this.SPLabel.push(date.toDateString().split(' ')[1]);
-        this.salesData.push(saleData.totalSales);
-        this.profitData.push(saleData.totalProfit);
-        // this.sales Data[saleData._id.month - 1] = saleData.totalSales;
-        // this.profitData[saleData._id.month - 1] = saleData.totalProfit;
+
+        if (this.selectedType == "monthly") {
+          this.salesData[saleData._id.date - 1] = saleData.totalSales;
+          this.profitData[saleData._id.date - 1] = saleData.totalProfit;
+        } else {
+          this.salesData[saleData._id.month - 1] = saleData.totalSales;
+          this.profitData[saleData._id.month - 1] = saleData.totalProfit;
+        }
+
       }
     });
-
-    this.barChart.update();
+    this.resetLineChart();
   }
 
-  fetchData() {
+  fetchOverAllData() {
     this.fetchdata.HTTPGET(this.backendUrl.URLs.fetchOverallData).subscribe((data: any) => {
 
       this.inventoryAlert = data.alertCount;
@@ -121,32 +119,6 @@ export class StatisticsComponent implements OnInit {
 
       this.orderCount = data.orders.count;
       this.orderCountChange = data.orders.change;
-
-      // this.revenue = 0;
-      // data.salesStats.forEach((sale: any) => {
-      //   this.revenue += sale.totalSales;
-      // })
-
-      this.reviewDataLabel = [];
-      Object.keys(data.customerReview).forEach((key: any) => {
-        this.reviewDataLabel.push(key);
-        this.reviewData.push(data.customerReview[key])
-      });
-
-      this.donutChart.update();
-
-      this.productList = data.popularStats;
-      this.category_sales = [];
-
-      data.categorySales.forEach((category: any) => {
-        let temp = {
-          field: category._id,
-          sales: category.sales
-        }
-        this.category_sales.push(temp);
-      });
-
-      this.salesDataUpdate(data.salesStats);
     });
   }
 
@@ -192,23 +164,13 @@ export class StatisticsComponent implements OnInit {
   importData() {
     if (this.selectedType == 'monthly') {
       this.resetMonthly();
-    }else{
+    } else {
       this.resetYearly();
     }
     this.fetchSalesProfitStats();
   }
 
-  barChart: any;
-  donutChart: any;
-  table: any;
-  reviewDataLabel: any[] = ['Satisfied', 'Neutral', 'Unsatisfied'];
-  reviewData: any[] = [50, 50, 50];
-
-  SPLabel: any[] = [];
-  salesData: any[] = [];
-  profitData: any[] = [];
-
-  createBarChart() {
+  createLineChart() {
 
     this.barChart = new Chart("barChart", {
 
@@ -222,9 +184,8 @@ export class StatisticsComponent implements OnInit {
             backgroundColor: 'rgb(0, 173, 181)',
             borderColor: 'rgba(0, 173, 181)',
             pointStyle: 'circle',
-            borderWidth: 2,
+            borderWidth: 1.5,
             pointBackgroundColor: 'white',
-            tension: 0.1
           },
           {
             label: "Sales",
@@ -232,7 +193,7 @@ export class StatisticsComponent implements OnInit {
             backgroundColor: 'rgba(57, 62, 70)',
             borderColor: 'rgba(57, 62, 70)',
             borderWidth: 2,
-            pointBorderColor: 'white'
+            pointBorderColor: 'white',
           },
         ]
       },
@@ -240,7 +201,7 @@ export class StatisticsComponent implements OnInit {
         responsive: true,
         elements: {
           point: {
-            radius: 5,
+            radius: 4,
           }
         },
         plugins: {
@@ -262,7 +223,7 @@ export class StatisticsComponent implements OnInit {
           },
           y: {
             grid: {
-              color: 'rgba(0, 0, 0, 0.0)',
+              color: 'rgba(0, 0, 0, 0.1)',
             },
           }
         }
@@ -270,6 +231,11 @@ export class StatisticsComponent implements OnInit {
       }
 
     });
+  }
+
+  resetLineChart() {
+    this.barChart.destroy();
+    this.createLineChart();
   }
 
   createDonut() {
@@ -288,7 +254,7 @@ export class StatisticsComponent implements OnInit {
           ],
           hoverOffset: 10,
           borderWidth: 2,
-          borderRadius: 5,
+          borderRadius: 1,
         }]
 
       },
@@ -309,5 +275,10 @@ export class StatisticsComponent implements OnInit {
         }
       }
     });
+  }
+
+  resetDonut() {
+    this.donutChart.destroy();
+    this.createDonut();
   }
 }

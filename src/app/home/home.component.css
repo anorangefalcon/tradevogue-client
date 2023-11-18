@@ -1,14 +1,9 @@
-.home-carousel {
-  padding-block: 100px;
+.home__block:nth-child(2n){
+  padding-block: 90px;
 }
 
-.py-100 {
-  /* Padding Block 100*/
-  padding-block: 100px;
-}
-
-.pb-100 {
-  padding-block-end: 100px;
+.py-start-100 {
+  padding-block-start: 100px;
 }
 
 .facilities {

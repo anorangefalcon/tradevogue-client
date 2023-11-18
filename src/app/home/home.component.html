@@ -10,7 +10,7 @@
         </ng-container>
     </ng-container>
 
-    <section id="newsletter" class="newsletter">
+    <section id="newsletter" class="home__block newsletter">
         <div class="container d-flex flex-column align-item-center gap-20 mgap-15 sm-gap-10">
             <h2>Subscribe and get discount 25% Off</h2>
             <form class="d-flex gap-10" [formGroup]="subscribeForm">
@@ -21,7 +21,7 @@
                 </button>
             </form>
             <div class="medias d-flex gap-30">
-                <a  href="{{socialsData?.facebook}}" target="_blank">
+                <a href="{{socialsData?.facebook}}" target="_blank">
                     <i class="fa-brands fa-facebook-f"></i>
                 </a>
                 <a href="{{socialsData?.instagram.link}}" target="_blank">
@@ -33,80 +33,80 @@
             </div>
         </div>
     </section>
-    <section id="gallery" class="py-100">
+    <section id="gallery" class="home__block">
         <app-gallery></app-gallery>
     </section>
 </div>
 
 
 <ng-template #hero let-item="item">
-    <div class="home">
-    <app-hero></app-hero>
-    <section id="facilites" class="facilities py-100">
-        <div class="container d-flex justify-content-center flex-wrap">
-            <div class="facility d-flex  justify-content-center align-item-center gap-30 ">
-                <div class="icon d-flex justify-content-center align-item-center">
-                    <span class="material-symbols-outlined">
-                        headset_mic
-                    </span>
+    <div class="home home__block">
+        <app-hero></app-hero>
+        <section id="facilites" class="facilities py-start-100">
+            <div class="container d-flex justify-content-center flex-wrap">
+                <div class="facility d-flex  justify-content-center align-item-center gap-30 ">
+                    <div class="icon d-flex justify-content-center align-item-center">
+                        <span class="material-symbols-outlined">
+                            headset_mic
+                        </span>
+                    </div>
+                    <div class="text d-flex flex-column justify-content-center ">
+                        <h4>24/7 CUSTOMER SERVICE</h4>
+                        <p>Call from support</p>
+                    </div>
                 </div>
-                <div class="text d-flex flex-column justify-content-center ">
-                    <h4>24/7 CUSTOMER SERVICE</h4>
-                    <p>Call from support</p>
+                <div class="facility d-flex justify-content-center align-item-center gap-30">
+                    <div class="icon d-flex justify-content-center align-item-center">
+                        <span class="rupee">₹</span>
+                    </div>
+                    <div class="text d-flex flex-column justify-content-center ">
+                        <h4>MONEY BACK GUARANTEE!</h4>
+                        <p>Secure payment</p>
+                    </div>
+                </div>
+                <div class="facility d-flex justify-content-center align-item-center gap-30">
+                    <div class="icon d-flex justify-content-center align-item-center">
+                        <span class="material-symbols-outlined">
+                            local_shipping
+                        </span>
+                    </div>
+                    <div class="text d-flex flex-column justify-content-center ">
+                        <h4>FREE SHIPPING WORLDWIDE</h4>
+                        <p>Order above ₹999</p>
+                    </div>
                 </div>
             </div>
-            <div class="facility d-flex justify-content-center align-item-center gap-30">
-                <div class="icon d-flex justify-content-center align-item-center">
-                    <span class="rupee">₹</span>
-                </div>
-                <div class="text d-flex flex-column justify-content-center ">
-                    <h4>MONEY BACK GUARANTEE!</h4>
-                    <p>Secure payment</p>
-                </div>
-            </div>
-            <div class="facility d-flex justify-content-center align-item-center gap-30">
-                <div class="icon d-flex justify-content-center align-item-center">
-                    <span class="material-symbols-outlined">
-                        local_shipping
-                    </span>
-                </div>
-                <div class="text d-flex flex-column justify-content-center ">
-                    <h4>FREE SHIPPING WORLDWIDE</h4>
-                    <p>Order above ₹999</p>
-                </div>
-            </div>
-        </div>
-    </section>
+        </section>
     </div>
 </ng-template>
 
 
 <ng-template #collection let-item="item">
-    <section id="collection" class="pb-100">
+    <section id="collection" class="home__block">
         <app-collections></app-collections>
     </section>
 </ng-template>
 
 <ng-template #deal let-item="item">
-    <section id="deals">
+    <section id="deals" class="home__block">
         <app-deal-of-week></app-deal-of-week>
     </section>
 </ng-template>
 
 <ng-template #latestProducts let-item="item">
-    <section id="products" class="py-100">
+    <section id="products" class="home__block">
         <app-product-cards></app-product-cards>
     </section>
 </ng-template>
 
 <ng-template #offers let-item="item">
-    <section id="offers">
+    <section id="offers" class="home__block">
         <app-offers></app-offers>
     </section>
 </ng-template>
 
 <ng-template #productCarousel let-item="item">
-    <div class="container home-carousel d-flex flex-column gap-30">
+    <div class="home__block container home-carousel d-flex flex-column gap-30">
         <app-product-card-carousel></app-product-card-carousel>
     </div>
 </ng-template>

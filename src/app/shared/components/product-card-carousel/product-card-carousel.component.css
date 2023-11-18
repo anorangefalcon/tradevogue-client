@@ -23,7 +23,7 @@
 }
 
 .section-header{
-    padding-block: 30px;
+    padding-block-end: 30px;
 }
 
 @media screen and (max-width: 440px) {

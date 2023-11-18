@@ -10,13 +10,13 @@ import { productData } from '../../productData';
 })
 export class ProductCardCarouselComponent {
 
-  @Input() whatToFetch: string = '';
-  @Input() product: any = {};
+  @Input() whatToFetch: any = {
+    sort: 'highlight:-1'
+  };
   @Input() titles: any = {
     title: 'Popular Products',
     subTitle: 'Explore our most demanded products.'
-  };
-  productData: any = [];
+  };    
   
   productArr: productData[] = [];
   
@@ -24,6 +24,7 @@ export class ProductCardCarouselComponent {
 
   ngOnInit(){
     this.fetchDataService.getProducts(this.whatToFetch, 10).subscribe((data:any)=>{
+      console.log("hightl", data);
       this.productArr = data.items;
     })
   }

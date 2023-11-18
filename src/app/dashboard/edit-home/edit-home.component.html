@@ -5,7 +5,7 @@
 
 <div *ngIf="!loadingData" class="d-flex flex-column gap-20 relative default-animation">
 
-  <div class="card card__pd-25 d-flex justify-content-md-between align-item-center">
+  <div class="card card__pd-25  d-flex justify-content-md-between align-item-center">
     <h3>Customise Home-Page</h3>
 
     <div class="d-flex gap-10">
@@ -62,14 +62,14 @@
   <!-- templates -->
 
   <ng-template #hero let-item="item">
-    <div class="card-hero-app restrict-height">
+    <div class="card-hero-app relative restrict-height">
       <div>
         <app-hero></app-hero>
       </div>
 
       <div class="controls">
 
-        <div class="d-flex flex-column align-item-center justify-content-md-between gap-15">
+        <div class="d-flex flex-column align-item-center justify-content-center gap-15">
 
           <span class="material-symbols-outlined pointer">
             edit

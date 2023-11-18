@@ -58,15 +58,16 @@ export class DashboardComponent {
       this.adminName = data;
     });
 
-    window.addEventListener("resize", () => {
-      let check = window.matchMedia("(max-width: 992px)");
+    // window.addEventListener("resize", () => {
+    //   let check = window.matchMedia("(min-width: 768px)");
   
-      if (check.matches) {
-        this.isCollapse = true;
-        return;
-      }
-      this.isCollapse = false;
-    });
+    //   if (check.matches) {
+    //     this.isCollapse = true;
+    //     console.log("this.co", this.isCollapse);
+    //     return;
+    //   }
+    //   this.isCollapse = false;
+    // });
   }
 
   sales_dropdown() {
