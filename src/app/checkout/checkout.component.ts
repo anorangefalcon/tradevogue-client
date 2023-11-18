@@ -4,7 +4,6 @@ import { Router } from '@angular/router';
 import { UtilsModule } from '../utils/utils.module';
 import { FetchDataService } from '../shared/services/fetch-data.service';
 import { ToastService } from '../shared/services/toast.service';
-import { CookieService } from 'ngx-cookie-service';
 import { BillingResponseService } from './billing-response.service';
 // import { StripPaymentService } from '../shared/services/stripe-Integration/strip-payment.service';
 import { CheckoutService } from './checkout.service';
@@ -36,7 +35,7 @@ export class CheckoutComponent implements OnInit {
   @ViewChild('Proceed__btn') Proceed__btn!: ElementRef;
 
   BillingPageVisited: boolean = false;
-  constructor(private cartService: CartService, private loginCheckService: LoginCheckService, private cookie: CookieService, private billingService: BillingResponseService, private router: Router, private renderer: Renderer2, private toastService: ToastService, private BackendUrl: UtilsModule, private fetchService: FetchDataService, private route: Router, private el: ElementRef, private stripePay: CheckoutService) {
+  constructor(private cartService: CartService, private loginCheckService: LoginCheckService, private billingService: BillingResponseService, private router: Router, private renderer: Renderer2, private toastService: ToastService, private BackendUrl: UtilsModule, private fetchService: FetchDataService, private route: Router, private el: ElementRef, private stripePay: CheckoutService) {
     // route changes
     this.router.events.subscribe((event) => {
       if (this.router.url === '/cart/billing') {

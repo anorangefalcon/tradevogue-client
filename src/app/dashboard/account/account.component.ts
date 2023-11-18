@@ -3,12 +3,9 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 import { ApiService } from '../services/api.service';
 import { Subject } from 'rxjs';
-import { ImageUploadService } from 'src/app/shared/services/image-upload.service';
-import { UtilsModule } from 'src/app/utils/utils.module';
 import { SellerFetchDataService } from 'src/app/shared/services/seller-fetch-data.service';
-import { CookieService } from 'ngx-cookie-service';
-import { PopupService } from 'src/app/shared/services/popup.service';
 import { DatePipe } from '@angular/common';
+import { LoginCheckService } from 'src/app/shared/services/login-check.service';
 @Component({
   selector: 'app-account',
   templateUrl: './account.component.html',
@@ -18,8 +15,8 @@ export class AccountComponent implements OnInit {
   Check: boolean = false;
   changee: boolean = true;
   profileForm!: FormGroup;
-  AccountForm!: FormGroup; 
-  passwordForm!: FormGroup; 
+  AccountForm!: FormGroup;
+  passwordForm!: FormGroup;
   postalCode: string = '';
   country: string = '';
   state: string = '';
@@ -27,30 +24,29 @@ export class AccountComponent implements OnInit {
   city: string = '';
   passwordVisible: boolean = false;
   pincodeFilled: boolean = false;
-  userPhoto: string = '';  
+  userPhoto: string = '';
   private postalCodeInput = new Subject<string>();
   showPopup = true;
-  area: string= '';
-
+  area: string = '';
+  userToken: any = '';
 
   constructor(
     private postalCodeService: ApiService,
     private formBuilder: FormBuilder,
-    private imageUpload: ImageUploadService,
-    private backendURLs: UtilsModule,
     private sellerFetchDataService: SellerFetchDataService,
-    private cookieService: CookieService,
-    private popupService: PopupService,
-    private datePipe: DatePipe
-  ) {
-
-   }
+    private datePipe: DatePipe,
+    private userService: LoginCheckService
+  ) { }
 
 
-   
+
   ngOnInit() {
-      // Use the patchValue method to update the profileForm with adminData
 
+    this.userService.getUser('token').subscribe((token: any) => {
+      this.userToken = token;
+    });
+
+    // Use the patchValue method to update the profileForm with adminData
     this.profileForm = this.formBuilder.group({
       firstName: [
         '',
@@ -162,7 +158,7 @@ export class AccountComponent implements OnInit {
           this.state = data[0].STATE;
           this.county = data[0].COUNTY;
           this.city = data[0].CITY;
-          
+
         } else {
           this.country = '';
           this.state = '';
@@ -172,8 +168,8 @@ export class AccountComponent implements OnInit {
       });
 
 
-      this.AccountForm.disable();
-      this.profileForm.disable();
+    this.AccountForm.disable();
+    this.profileForm.disable();
   }
 
   onPostalCodeInputChange() {
@@ -196,7 +192,7 @@ export class AccountComponent implements OnInit {
     }
   }
 
-  async updateDetails(form: {[key: string]: string}) {
+  async updateDetails(form: { [key: string]: string }) {
 
 
     const body = {
@@ -205,32 +201,30 @@ export class AccountComponent implements OnInit {
         "firstname": form['firstName'],
         "lastname": form['lastName']
       },
-      "mobile" : form['mobile'],
-      "info":{
+      "mobile": form['mobile'],
+      "info": {
         "gender": form['gender'],
         "dob": form['dob'],
         "address": [
           {
-              "firstname": form['firstName'],
-              "lastname": form['lastName'],
-              "apartment": form['address'],
-              "city": form['city'],
-              "area": form['area'],
-              "state": form['state'],
-              "pincode": form['postalCode'],
-              "country": form['country'],
+            "firstname": form['firstName'],
+            "lastname": form['lastName'],
+            "apartment": form['address'],
+            "city": form['city'],
+            "area": form['area'],
+            "state": form['state'],
+            "pincode": form['postalCode'],
+            "country": form['country'],
           },
-      ],
-      "token": this.cookieService.get('userToken')
+        ],
+        "token": this.userToken
       }
     }
 
-  
-    
     // let data: any = await this.fetchDataService.httpPost(this.backendUrls.URLs.loginUrl, body);
     await this.sellerFetchDataService.sendSellerInfo(body);
 
-    const pinData= {
+    const pinData = {
       "POSTAL_CODE": form['postalCode'],
       "COUNTRY": form['country'],
       "STATE": form['state'],
@@ -242,9 +236,9 @@ export class AccountComponent implements OnInit {
     });
   }
 
-  
-  
-  
+
+
+
 
   // async saveDetails() {
 
@@ -262,7 +256,7 @@ export class AccountComponent implements OnInit {
   //   this.isReadOnly = !this.isReadOnly;
   // }
 
-  uploadImage(e: Event){
+  uploadImage(e: Event) {
     const file = (e.target as HTMLInputElement).files![0];
   }
 }

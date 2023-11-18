@@ -1,9 +1,8 @@
 import { Component } from '@angular/core';
 import { FetchDataService } from '../shared/services/fetch-data.service';
 import { UtilsModule } from '../utils/utils.module';
-import { HttpClient } from '@angular/common/http';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { CookieService } from 'ngx-cookie-service';
+import { LoginCheckService } from '../shared/services/login-check.service';
 
 @Component({
   selector: 'app-help-page',
@@ -13,13 +12,13 @@ import { CookieService } from 'ngx-cookie-service';
 export class HelpPageComponent {
   ticketData: string[] = [];
   contactForm: FormGroup;
+  fcmToken: any;
 
   constructor(
     private fetchDataService: FetchDataService,
     private utils: UtilsModule,
-    private http: HttpClient,
     private formBuilder: FormBuilder,
-    private cookie: CookieService
+    private userService: LoginCheckService
   ) {
       this.fetchDataService.HTTPGET(this.utils.URLs.getTicketStatus).subscribe((data: any)=> {
         this.ticketData = data[0].title;
@@ -30,6 +29,12 @@ export class HelpPageComponent {
       selectedTicket: ['', Validators.required],
       message: ['', Validators.required]
     });
+  }
+
+  ngOnInit(){
+    this.userService.getUser('fcm').subscribe((token: any)=>{
+      this.fcmToken = token;
+    })
   }
 
   async onSubmit() {
@@ -52,7 +57,7 @@ export class HelpPageComponent {
         })
        
 
-        this.fetchDataService.HTTPPOST(this.utils.URLs.webPushTokenDetail, {token: this.cookie.get('fcmToken'), email: this.contactForm.get('email')?.value}).subscribe((response: any) => {
+        this.fetchDataService.HTTPPOST(this.utils.URLs.webPushTokenDetail, {token: this.fcmToken, email: this.contactForm.get('email')?.value}).subscribe((response: any) => {
           if (response) {
 
           }

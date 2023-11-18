@@ -62,7 +62,7 @@
                 <a class="icons" href="javscript:void(0);" routerLink="/usersetting/wishlist">
                     <span class="wishlist_count material-symbols-outlined" *ngIf="purchaser != ''">
                         favorite
-                        <span class="count" id="wishList">{{wishlistCount}}</span>
+                        <span *ngIf="wishlistCount > 0" class="count" id="wishList">{{wishlistCount}}</span>
                     </span>
                 </a>
             </li>

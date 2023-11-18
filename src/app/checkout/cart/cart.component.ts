@@ -1,11 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { CookieService } from 'ngx-cookie-service';
 import { CartService } from 'src/app/shared/services/cart.service';
 import { BillingResponseService } from '../billing-response.service';
 import { LoginCheckService } from 'src/app/shared/services/login-check.service';
-
-
 
 @Component({
   selector: 'app-cart',
@@ -15,24 +12,28 @@ import { LoginCheckService } from 'src/app/shared/services/login-check.service';
 
 export class CartComponent implements OnInit {
 
-  constructor(private cartService: CartService, private loginCheckService:LoginCheckService,private LoginCheckService:LoginCheckService, private cookie: CookieService, private billingService:BillingResponseService, private router:Router) {
-    // this.userService.PaymentUrlVisited.next(false);
-    // this.billingService.BillingPageVisited.next(false);
-   }
+  constructor(private cartService: CartService, private router: Router,
+    private userService: LoginCheckService) {}
+    
   cartArr: any[] = [];
-  userToken: any = this.cookie.get("userToken");
-  direction:any='right';
-  ngOnInit() {
-    this.cartService.fetchCart("details").subscribe((data) => {
-      this.cartArr = data;
-      this.cartArr = this.cartArr?.map((item: any) => {
-        item.image = (item.assets).find((asset: any) => {
-          return (asset.color) === item.color;
-        }).photo[0];
+  userToken: any = '';
+  direction: any = 'right';
 
-        return item;
+  ngOnInit() {
+    this.userService.getUser('token').subscribe((token: any) => {
+      this.userToken = token;
+
+      this.cartService.fetchCart("details").subscribe((data) => {
+        this.cartArr = data;
+        this.cartArr = this.cartArr?.map((item: any) => {
+          item.image = (item.assets).find((asset: any) => {
+            return (asset.color) === item.color;
+          }).photo[0];
+
+          return item;
+        });
       });
-    });
+    })
   }
 
   remove_item(identifier: any) {
@@ -49,7 +50,7 @@ export class CartComponent implements OnInit {
       return asset.color === this.cartArr[productIndex].color;
     }).stockQuantity.find((stock: any) => {
       return stock.size === this.cartArr[productIndex].size;
-    }).quantity;    
+    }).quantity;
 
     if (what === 'next' && quantityIndex < (this.cartArr[productIndex].info.orderQuantity.length - 1) && (this.cartArr[productIndex].info.orderQuantity[quantityIndex + 1] <= stockLimit)) {
       this.cartArr[productIndex].info.quantity = this.cartArr[productIndex].info.orderQuantity[quantityIndex + 1];
@@ -73,17 +74,10 @@ export class CartComponent implements OnInit {
     this.cartService.updateCart(cartItem);
   }
 
-  async ProceedCheckOut(){
-    // const checkToken=this.cookie.get('userToken');
-    const checkToken=this.LoginCheckService.getUser().subscribe((checkToken:any)=>{
-      if(!checkToken){
-        this.router.navigate(['/auth/login']);
-      }
-      this.cartService.fetchCart().subscribe((data)=>{
-   
-      })
-    })
-
-  
+  async ProceedCheckOut() {
+    if (!this.userToken) {
+      this.router.navigate(['/auth/login']);
+    }
+    this.cartService.fetchCart().subscribe(() => {});
   }
 }

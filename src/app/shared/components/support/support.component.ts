@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { UtilsModule } from 'src/app/utils/utils.module';
 import { FetchDataService } from 'src/app/shared/services/fetch-data.service';
-import { CookieService } from 'ngx-cookie-service';
 import { LoginCheckService } from '../../services/login-check.service';
 
 @Component({
@@ -11,7 +10,7 @@ import { LoginCheckService } from '../../services/login-check.service';
 })
 
 export class SupportComponent {
-  latestOrder: any; 
+  latestOrder: any;
   showOrder: boolean = false;
   selectedTabIndex = 0;
   products: any[] = [];
@@ -28,28 +27,25 @@ export class SupportComponent {
   previousOrders: any[] = [];
 
 
-  constructor(private util: UtilsModule, private fetchData: FetchDataService,private loginCheckService:LoginCheckService, private cookie: CookieService) {
+  constructor(private util: UtilsModule, private fetchData: FetchDataService,
+    private userService: LoginCheckService) {
 
   }
 
   ngOnInit() {
-
-      this.loginCheckService.getUser().subscribe((login)=>{
-        if(!login) return;
-        this.fetchData.HTTPPOST(this.util.URLs.getLatestProductForBuyer, {buyerId: this.cookie.get('userToken')}).subscribe((data: any) => {
-
-          if(data) {
-            this.products = data.latestProduct.products;
-            this.orderDetails = data.latestProduct;
-            this.loadingProducts = false;
-          }else {
-            console.log("No data found because you have not ordered anything yet");
-          }
-          }); 
-        this.showOrder = true;
+    this.userService.getUser('token').subscribe((token: any) => {
+      if (!token) return;
+      this.fetchData.HTTPPOST(this.util.URLs.getLatestProductForBuyer, { buyerId: token }).subscribe((data: any) => {
+        if(data) {
+          this.products = data.latestProduct.products;
+          this.orderDetails = data.latestProduct;
+          this.loadingProducts = false;
+        }else {
+          console.log("No data found because you have not ordered anything yet");
+        }
       });
-      
-
+      this.showOrder = true;
+    });
   }
 
   responses: any = {
@@ -63,40 +59,38 @@ export class SupportComponent {
     "bye": "Bye!",
     "goodbye": "Bye!",
     "reach": "reach"
-};
+  };
 
 
+  sendMessage() {
+    this.messages.push({ content: this.newMessage, sender: 'user' });
 
+    const response = this.checkKeywords(this.newMessage.toLowerCase());
+    this.messages.push({ content: response, sender: 'bot' });
 
-sendMessage() {
-  this.messages.push({ content: this.newMessage, sender: 'user' });
+    this.newMessage = '';
+  }
 
-  const response = this.checkKeywords(this.newMessage.toLowerCase());
-  this.messages.push({ content: response, sender: 'bot' });
+  noMatch: boolean = false;
 
-  this.newMessage = '';
-}
-
-noMatch: boolean = false;
-
-checkKeywords(message: string): string {
-  message = message.toLowerCase();
-  for (const keyword in this.responses) {
+  checkKeywords(message: string): string {
+    message = message.toLowerCase();
+    for (const keyword in this.responses) {
       const currentKeyword = keyword.toLowerCase();
       if (message.includes(currentKeyword)) {
-          if (currentKeyword === "when my order reaches me?") {
-              if (this.orderDetails && this.orderDetails.transactionId) {
-                  return `Your order with payment Id : ${this.orderDetails.transactionId}`;
-              } else {
-                  return "Sorry, I couldn't retrieve the transaction ID for your order.";
-              }
+        if (currentKeyword === "when my order reaches me?") {
+          if (this.orderDetails && this.orderDetails.transactionId) {
+            return `Your order with payment Id : ${this.orderDetails.transactionId}`;
+          } else {
+            return "Sorry, I couldn't retrieve the transaction ID for your order.";
           }
-          return this.responses[keyword];
+        }
+        return this.responses[keyword];
       }
+    }
+    this.noMatch = true;
+    return "I'm sorry, I don't understand. Can you please rephrase?";
   }
-  this.noMatch = true;
-  return "I'm sorry, I don't understand. Can you please rephrase?";
-}
 
 
   showProductDetails(product: any) {
@@ -115,7 +109,7 @@ checkKeywords(message: string): string {
   onNoThanks() {
 
   }
-  
+
 
   onConfirmation(confirmed: boolean) {
     if (confirmed) {
@@ -126,9 +120,9 @@ checkKeywords(message: string): string {
     }
   }
 
-  
 
-   toggleChat() {
+
+  toggleChat() {
     const chatBtn = document.querySelector('.icon-support');
     const chatBox = document.querySelector('.messenger');
 
@@ -139,9 +133,9 @@ checkKeywords(message: string): string {
         chatBox.classList.toggle('expanded');
       }, 100);
     }
-   }
+  }
 
-   navigateTo(tab: string) {
+  navigateTo(tab: string) {
     if (tab === 'home') {
       this.selectedTabIndex = 0;
     } else if (tab === 'chat') {
@@ -155,7 +149,7 @@ checkKeywords(message: string): string {
     this.showNewSection = true;
     this.Clicked = true;
     // Other logic when the user clicks Yes
-    
+
   }
 
   onNoClick() {
@@ -177,12 +171,12 @@ checkKeywords(message: string): string {
 
   // Function to fetch previous orders
   loadPreviousOrders() {
-    this.fetchData.HTTPGET(this.util.URLs.getParticularUserOrders).subscribe((data:any)=>{
-      this.previousOrders=data; 
-  });  
+    this.fetchData.HTTPGET(this.util.URLs.getParticularUserOrders).subscribe((data: any) => {
+      this.previousOrders = data;
+    });
     return this.previousOrders;
   }
 
-  
-  
+
+
 }

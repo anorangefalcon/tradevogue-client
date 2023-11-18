@@ -1,8 +1,6 @@
 import { Component, Renderer2 } from '@angular/core';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
-import { passwordStrengthValidator, matchPasswordValidator, usernameValidator } from '../validators'; // Adjust the path to the correct location
-import { CookieService } from 'ngx-cookie-service';
-import { UserDataService } from '../user-data.service';
+import { passwordStrengthValidator } from '../validators'; // Adjust the path to the correct location
 import { UtilsModule } from 'src/app/utils/utils.module';
 import { FetchDataService } from 'src/app/shared/services/fetch-data.service';
 import { Router } from '@angular/router';
@@ -20,7 +18,7 @@ export class SignUpComponent {
   showPassword: boolean = false;
   loading : boolean = false;
 
-constructor(private fb: FormBuilder, private router: Router,private loginService:LoginCheckService, private cookies: CookieService, private renderer: Renderer2, private backendURLs: UtilsModule, private fetchDataService: FetchDataService) {
+constructor(private fb: FormBuilder, private router: Router,private loginService:LoginCheckService, private renderer: Renderer2, private backendURLs: UtilsModule, private fetchDataService: FetchDataService) {
     // Google login
     // window.addEventListener('signupEvent', async (event: any) => {
     //     const token = { credential: event.detail.credential }

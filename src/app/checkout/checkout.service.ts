@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { UtilsModule } from '../utils/utils.module';
-import { CookieService } from 'ngx-cookie-service';
 import { FetchDataService } from '../shared/services/fetch-data.service';
 import { NavigationEnd, Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
+import { LoginCheckService } from '../shared/services/login-check.service';
 declare var Stripe: any;
 
 @Injectable({
@@ -17,7 +17,7 @@ export class CheckoutService {
   constructor(
     private backendUri: UtilsModule,
     private fetchData: FetchDataService,
-    private cookie: CookieService,
+    private userService: LoginCheckService,
     private router:Router
   ) {
 
@@ -135,12 +135,15 @@ export class CheckoutService {
   }
 
   private async updateOrderStatus(paymentIntent: any) {
-    const body: any = {
-      buyerId: this.cookie.get('userToken'),
-      newPaymentStatus: 'success',
-      transactionId: paymentIntent.id,
-      MOP: paymentIntent.payment_method_types[0],
-    };
+    let body:any = {};
+    this.userService.getUser('token').subscribe((token: any)=>{
+      body = {
+        buyerId: token,
+        newPaymentStatus: 'success',
+        transactionId: paymentIntent.id,
+        MOP: paymentIntent.payment_method_types[0],
+      };
+    });
 
     await this.fetchData.HTTPPOST(this.backendUri.URLs.updateOrderStatus, body)
       .subscribe();

@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { CookieService } from 'ngx-cookie-service';
 import { FetchDataService } from './fetch-data.service';
 import { UtilsModule } from 'src/app/utils/utils.module';
 import { BehaviorSubject } from 'rxjs';
@@ -27,41 +26,39 @@ export class WishlistService {
   delete$ = this.deleteProduct.asObservable();
 
   productId: any;
+  private userIsLoggedIn: Boolean = false;
 
-  constructor(private cookie: CookieService,
-    private fetchService: FetchDataService,
+  constructor(
     private backendUrls: UtilsModule,
     private router: Router,
     private fetchDataService: FetchDataService,
     private utils: UtilsModule,
     private http: HttpClient,
-    private userService:LoginCheckService,
+    private userService: LoginCheckService,
     private toastService: ToastService,
-    
-
-  ) { }
-
+  ) {
+    this.userService.getUser().subscribe((isLoggedIn: any) => {
+      this.userIsLoggedIn = isLoggedIn;
+      this.getWishlistCount();
+    })
+  }
 
   ShowWishlist(productId: string) {
-    this.userService.getUser().subscribe((IsLogin)=>{
-      if (IsLogin) {
-        this.productId = productId;
-        this.fetchDataService.HTTPGET(this.backendUrls.URLs.showWishlist).subscribe((data: any) => {
-          this.showWishlistPopup.next(data);     
-        });
-      }
-      else {
-        this.router.navigate(['/auth/login']);
-      }
-    });
+
+    if (this.userIsLoggedIn) {
+      this.productId = productId;
+      this.fetchDataService.HTTPGET(this.backendUrls.URLs.showWishlist).subscribe((data: any) => {
+        this.showWishlistPopup.next(data);
+      });
+    }
+    else {
+      this.router.navigate(['/auth/login']);
+    }
+
   }
 
   getWishlistCount() {
-    console.log('get Wishlist count is ---------->');
-    
-    // const IsLogin = this.cookie.get('userToken')
-    this.userService.getUser().subscribe((IsLogin)=>{
-      if (IsLogin) {
+      if (this.userIsLoggedIn) {
         this.fetchDataService.HTTPGET(this.backendUrls.URLs.showWishlist).subscribe((data: any) => {
     
           let newData = data.wishlists.map((el: any) => {
@@ -71,8 +68,6 @@ export class WishlistService {
           this.WishlistCount.next(data.count);
         });
       }
-    })
-   
   }
 
   AddtoWishlist(wishlistName: string) {
@@ -84,7 +79,7 @@ export class WishlistService {
     this.fetchDataService.HTTPPOST(this.utils.URLs.addToWishlist, body).subscribe((response: any) => {
       if (!response) return;
       const toast = {
-        title : response.message
+        title: response.message
       }
       this.toastService.notificationToast(toast);
       // this.WishlistCount.next(this.WishlistCount.value + 1);
@@ -92,32 +87,24 @@ export class WishlistService {
     })
   }
 
-removeFromWishlist(productId: any, wishlistName: string='') {
-    const delProduct:any = {
+  removeFromWishlist(productId: any, wishlistName: string = '') {
+    const delProduct: any = {
       productId: productId
     }
-    if(wishlistName) delProduct.wishlistName=wishlistName;
+    if (wishlistName) delProduct.wishlistName = wishlistName;
     return this.fetchDataService.HTTPPOST(this.backendUrls.URLs.deleteFromWishlist, delProduct);
-    let delData = this.fetchDataService.HTTPPOST(this.backendUrls.URLs.deleteFromWishlist, delProduct).subscribe((data: any) => {
-
-      if (data.modifiedCount) {
-        this.deleteProduct.next(true);
-      }
-
-    })
   }
 
-  removeWishlist (index: any) {
+  removeWishlist(index: any) {
     return this.http.post(this.backendUrls.URLs.removeWishlist, index);
-    
+
   }
 
-  showWishlistedProducts(wishlist: string){
+  showWishlistedProducts(wishlist: string) {
     const body = {
-      wishlistName : wishlist
+      wishlistName: wishlist
     }
     return this.http.post(this.backendUrls.URLs.showProducts, body);
   }
-
 
 }

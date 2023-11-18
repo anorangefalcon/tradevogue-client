@@ -1,52 +1,65 @@
 import { Injectable } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
-import { BehaviorSubject, Observable, filter, map } from 'rxjs';
+import { BehaviorSubject, Observable, filter, map, pairwise } from 'rxjs';
+import { ToastService } from './toast.service';
 
 @Injectable({
   providedIn: 'root'
 })
+
 export class LoginCheckService {
 
   private userSubject = new BehaviorSubject({});
   private user$ = this.userSubject.asObservable();
 
-  constructor(private cookieService: CookieService, private router: Router) {
-    if (cookieService.get('userToken')) {
+  private previousUrl: any = '/';
+  constructor(private cookieService: CookieService, private router: Router, private toastService: ToastService) {
 
+    this.router.events
+      .pipe(
+        filter((event): event is NavigationEnd => event instanceof NavigationEnd),
+        pairwise()
+      )
+      .subscribe(([prevEvent, currentEvent]: [NavigationEnd, NavigationEnd]) => {
+        this.previousUrl = prevEvent.url;
+      });
+
+    if (cookieService.get('userToken')) {
       let userObj = {
         userToken: cookieService.get('userToken'),
         name: cookieService.get('name'),
         fcmToken: ''
       }
+      this.userSubject.next({ 'user': userObj, 'loggedIn': true });
 
-      if(Object.keys(this.userSubject.getValue()).length>0){
+      if (Object.keys(this.userSubject.getValue()).length > 0) {
         return;
       }
-      this.loginUser(userObj);
-    }
-    else {
-      // this.logoutUser();
+      this.loginUser(userObj, false);
     }
   }
 
-  loginUser(userObj: any) {  
+  loginUser(userObj: any, redirect: Boolean = true) {
     this.cookieService.set('userToken', userObj.userToken);
     this.cookieService.set('name', userObj.name);
-
     this.userSubject.next({ 'user': userObj, 'loggedIn': true });
 
-    if(this.cookieService.get('fcmToken')){
+    if (this.cookieService.get('fcmToken')) {
       this.setFcmToken(this.cookieService.get('fcmToken'));
     }
-    this.redirectToPreviousRoute();
+
+    if (redirect) {
+      this.router.navigate([this.previousUrl]);
+    }
   }
 
   logoutUser() {
-    this.cookieService.delete('userToken');
-    this.cookieService.delete('name');
-
+    this.cookieService.deleteAll();
     this.userSubject.next({ 'loggedIn': false })
+    this.toastService.notificationToast({
+      title: 'Logged Out Successfully'
+    });
 
     this.router.navigate(['/']);
   }
@@ -86,17 +99,8 @@ export class LoginCheckService {
     return this.user$.pipe(
       map((data: any) => {
         return data.loggedIn
-      }));
+      })
+    );
   }
 
-  redirectToPreviousRoute() {
-    // let previousUrl = '/';
-    // this.router.events
-    //   .pipe(filter((event): event is NavigationEnd => event instanceof NavigationEnd))
-    //   .subscribe((event: NavigationEnd) => {
-    //     previousUrl = event.url;
-    //   });
-
-    // this.router.navigate([previousUrl]);
-  }
 }

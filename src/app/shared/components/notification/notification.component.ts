@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { SupportNotificationService } from '../../services/support-notification.service';
 import { FetchDataService } from '../../services/fetch-data.service';
-import { CookieService } from 'ngx-cookie-service';
 import { Router } from '@angular/router';
 import { UtilsModule } from 'src/app/utils/utils.module';
+import { LoginCheckService } from '../../services/login-check.service';
 
 @Component({
   selector: 'app-notification',
@@ -12,18 +12,22 @@ import { UtilsModule } from 'src/app/utils/utils.module';
 })
 export class NotificationComponent implements OnInit {
   showBellIcon: boolean = true;
-  fcmToken = this.cookie.get('fcmToken');
+  fcmToken: any;
   notifications: any[] = [];
 
   constructor(
     public notification: SupportNotificationService,
     private fetchService: FetchDataService,
-    private cookie: CookieService,
     private router: Router,
-    private util: UtilsModule
+    private util: UtilsModule,
+    private userService: LoginCheckService
   ) {}
 
   ngOnInit(): void {
+    this.userService.getUser('fcm').subscribe((token: any)=>{
+      this.fcmToken = token;
+    });
+    
     this.notification.notificationOptions$.subscribe((options) => {
     });
 

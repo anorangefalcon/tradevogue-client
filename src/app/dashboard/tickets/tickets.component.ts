@@ -1,12 +1,12 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { UtilsModule } from 'src/app/utils/utils.module';
 import { PopupService } from 'src/app/shared/services/popup.service';
 import { FetchDataService } from 'src/app/shared/services/fetch-data.service';
-import { catchError, forkJoin } from 'rxjs';
+import { forkJoin } from 'rxjs';
 import { FormBuilder, Validators } from '@angular/forms';
-import { CookieService } from 'ngx-cookie-service';
 import { ToastService } from 'src/app/shared/services/toast.service';
+import { LoginCheckService } from 'src/app/shared/services/login-check.service';
 
 @Component({
   selector: 'app-tickets',
@@ -30,7 +30,9 @@ export class TicketsComponent {
   messageInput: string = '';
   token: any;
 
-  constructor(private utils: UtilsModule, private http: HttpClient, private popupService: PopupService, private fetchDataService: FetchDataService, private formBuilder: FormBuilder, private cookie: CookieService, private toast: ToastService) {
+  constructor(private utils: UtilsModule, private http: HttpClient,
+    private popupService: PopupService, private fetchDataService: FetchDataService, 
+    private formBuilder: FormBuilder, private toast: ToastService, private userService: LoginCheckService) {
     this.loadData();
 
 
@@ -39,6 +41,12 @@ export class TicketsComponent {
       body: ['', Validators.required],
       icon: ['', Validators.required]
     });
+  }
+
+  ngOnInit(){
+    this.userService.getUser('fcm').subscribe((token: any)=>{
+      this.token = token;
+    })
   }
 
   updateFormFields(field: string) {
@@ -160,9 +168,9 @@ export class TicketsComponent {
         title: this.notificationForm.value.title,
         body: this.notificationForm.value.body,
         icon: this.notificationForm.value.icon,
-        token: this.cookie.get('fcmToken'),
+        token: this.token,
       };
-      this.cookie.set('fcmToken', this.token)
+      this.userService.setFcmToken(this.token);
       const fcmToken = this.token;
 
       const apiUrl = 'http://localhost:3000/send-notification';

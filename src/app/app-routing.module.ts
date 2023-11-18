@@ -15,6 +15,7 @@ import { NoPageComponent } from './no-page/no-page.component';
 import { authGuard } from './auth.guard';
 import { OffersCarouselComponent } from './offers-carousel/offers-carousel.component';
 import { AboutComponent } from './about/about.component';
+import { redirectGuard } from './checkout/redirect.guard';
 
 const routes: Routes = [
 
@@ -41,7 +42,7 @@ const routes: Routes = [
         data: { breadcrumb: 'Cart' },
         children: [
           { path: '', component: CartComponent, data: { breadcrumb: 'Cart' } },
-          { path: 'billing', component: BillingComponent, data: { breadcrumb: 'Billing' } }
+          { path: 'billing', component: BillingComponent, data: { breadcrumb: 'Billing' }, canDeactivate: [redirectGuard] }
         ]
       },
     ]

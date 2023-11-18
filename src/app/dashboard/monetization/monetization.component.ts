@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UtilsModule } from 'src/app/utils/utils.module';
 import { FetchDataService } from 'src/app/shared/services/fetch-data.service';
-import { CookieService } from 'ngx-cookie-service';
 import { HttpClient } from '@angular/common/http';
 import { PopupService } from 'src/app/shared/services/popup.service';
 import { LoginCheckService } from 'src/app/shared/services/login-check.service';
@@ -21,7 +20,7 @@ export class MonetizationComponent {
   editItem: boolean = false;
 
 
-  constructor(private formBuilder: FormBuilder, private loginCheckService: LoginCheckService, private util: UtilsModule, private fetch: FetchDataService, private cookie: CookieService, private http: HttpClient, private popup: PopupService) { }
+  constructor(private formBuilder: FormBuilder, private loginCheckService: LoginCheckService, private util: UtilsModule, private fetch: FetchDataService, private http: HttpClient, private popup: PopupService) { }
 
   ngOnInit(): void {
     this.createForm();
@@ -155,8 +154,6 @@ export class MonetizationComponent {
 
     }
   }
-
-
 
   onSubmit() {
     if (this.stripeKeysForm.valid) {

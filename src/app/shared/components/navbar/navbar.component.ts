@@ -1,6 +1,5 @@
 import { Component, HostListener, OnInit } from '@angular/core';
 import { CartService } from '../../services/cart.service';
-import { CookieService } from 'ngx-cookie-service';
 import { FetchDataService } from '../../services/fetch-data.service';
 import { NavigationEnd, Router } from '@angular/router';
 import { WishlistService } from '../../services/wishlist.service';
@@ -31,11 +30,14 @@ export class NavbarComponent implements OnInit {
     women: []
   }
 
-  constructor(private cartService: CartService, private userService: LoginCheckService, private BackendEndUrl: UtilsModule, private cookie: CookieService, private fetchDataService: FetchDataService, private router: Router, private wishlistService: WishlistService, private utils: UtilsModule) {
+  constructor(private cartService: CartService, private userService: LoginCheckService, private BackendEndUrl: UtilsModule, private fetchDataService: FetchDataService, private router: Router, private wishlistService: WishlistService, private utils: UtilsModule) {
 
     this.userService.getUser('name').subscribe((name: any) => {
       if (name) {
         this.purchaser = name;
+      }
+      else{
+        this.purchaser = '';
       }
     });
   }
@@ -49,7 +51,7 @@ export class NavbarComponent implements OnInit {
         this.cart_count = item_count;
       })
 
-    this.wishlistService.getWishlistCount();
+    // this.wishlistService.getWishlistCount();
     this.wishlistService.WishlistCount$.subscribe((data) => {
       if (data || data==0) {
         this.wishlistCount = data;

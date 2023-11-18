@@ -1,13 +1,13 @@
 import { Component, ElementRef, Renderer2, ViewChild, OnInit } from '@angular/core';
-import { CookieService } from 'ngx-cookie-service';
 import { FetchDataService } from 'src/app/shared/services/fetch-data.service';
 import { UtilsModule } from 'src/app/utils/utils.module';
 import { CartService } from 'src/app/shared/services/cart.service';
 import { ActivatedRoute } from '@angular/router';
 import { BillingResponseService } from '../billing-response.service';
 import { HttpClient } from '@angular/common/http';
-declare var Stripe: any;
 import { CheckoutService } from '../checkout.service';
+import { LoginCheckService } from 'src/app/shared/services/login-check.service';
+declare var Stripe: any;
 
 interface PaymentOptions {
   key: string;
@@ -61,7 +61,7 @@ export class BillingComponent implements OnInit {
       });
 
       this.getAddresses();
-      this.load();
+      // this.load();
 
     } catch (error) {
       console.error('Error loading Stripe scripts:', error);
@@ -71,22 +71,22 @@ export class BillingComponent implements OnInit {
 
   private stripeLoaded = false;
 
-  load(): Promise<void> {
-    if (!this.stripeLoaded) {
-      return new Promise<void>((resolve, reject) => {
-        const script = document.createElement('script');
-        script.src = 'https://js.stripe.com/v3/';
-        script.onload = () => {
-          this.stripeLoaded = true;
-          resolve();
-        };
-        script.onerror = (error) => reject(error);
-        document.body.appendChild(script);
-      });
-    } else {
-      return Promise.resolve();
-    }
-  }
+  // load(): Promise<void> {
+  //   if (!this.stripeLoaded) {
+  //     return new Promise<void>((resolve, reject) => {
+  //       const script = document.createElement('script');
+  //       script.src = 'https://js.stripe.com/v3/';
+  //       script.onload = () => {
+  //         this.stripeLoaded = true;
+  //         resolve();
+  //       };
+  //       script.onerror = (error) => reject(error);
+  //       document.body.appendChild(script);
+  //     });
+  //   } else {
+  //     return Promise.resolve();
+  //   }
+  // }
 
   async initializeStripe(): Promise<void> {
     try {
@@ -109,17 +109,21 @@ export class BillingComponent implements OnInit {
     }
   }
 
-  async onStripeButtonClick(): Promise<void> {   
+  async onStripeButtonClick(): Promise<void> {
     this.selectedPaymentMethod = 'stripe';
     await this.initializeStripe();
   }
 
   async submitForm(item: any): Promise<void> {
-    const body = {
-      'amount': item.price.toString(),
-      'items': item,
-      'token': this.cookie.get('userToken')
-    };
+
+    let body = {};
+    this.userService.getUser('token').subscribe((token: any) => {
+      body = {
+        amount: item.price.toString(),
+        items: item,
+        token: token
+      };
+    })
 
     try {
       const res = await this.http.post<any>('http://localhost:1000/razorpay/createUpiPayment', body).toPromise();
@@ -134,15 +138,18 @@ export class BillingComponent implements OnInit {
           image: 'https://dummyimage.com/600x400/000/fff',
           order_id: res.order_id,
           handler: (response: any) => {
-        
-            const paymentBody: any = {
-              buyerId: this.cookie.get('userToken'),
-              newPaymentStatus: 'success',
-              transactionId: response.razorpay_payment_id,
-              MOP: 'razorpay',
-            };
-      
-            this.fetchDataService.HTTPPOST(this.backendURLs.URLs.updateOrderStatus, paymentBody).subscribe((data: any) => {});
+
+            let paymentBody = {};
+            this.userService.getUser('token').subscribe((token: any) => {
+              paymentBody = {
+                buyerId: token,
+                newPaymentStatus: 'success',
+                transactionId: response.razorpay_payment_id,
+                MOP: 'razorpay',
+              };
+            });
+
+            this.fetchDataService.HTTPPOST(this.backendURLs.URLs.updateOrderStatus, paymentBody).subscribe((data: any) => { });
 
             alert('Payment Succeeded');
           },
@@ -179,14 +186,14 @@ export class BillingComponent implements OnInit {
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
-  
+
       const data = await response.json();
       const publicKey = data[0]?.keys?.[0]?.publicKey;
-  
+
       if (publicKey) {
         this.stripe = Stripe(publicKey);
         this.initialize(this.stripe);
-  
+
         const paymentForm = document.querySelector("#payment-form");
         if (paymentForm) {
           paymentForm.addEventListener("submit", this.handleSubmit);
@@ -198,15 +205,15 @@ export class BillingComponent implements OnInit {
     } catch (error) {
       console.error('Error loading Stripe scripts:', error);
     }
-  
+
     this.route.queryParams.subscribe(params => {
       const redirectStatus = params['redirect_status'];
       if (redirectStatus === 'succeeded') {
-        
+
       }
     });
   }
-  
+
   async initialize(stripe: any): Promise<void> {
     const items = JSON.parse(localStorage.getItem('paymentIntent') || '[]');
     const response = await fetch("http://localhost:1000/create-payment-intent", {
@@ -214,9 +221,9 @@ export class BillingComponent implements OnInit {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ items }),
     });
-  
+
     const { clientSecret } = await response.json();
-  
+
     const appearance = {
       theme: 'flat',
       variables: {
@@ -276,26 +283,26 @@ export class BillingComponent implements OnInit {
         }
       }
     };
-  
+
     this.elements = stripe.elements({ clientSecret, appearance });
-  
+
     const linkAuthenticationElement = this.elements.create("linkAuthentication");
     linkAuthenticationElement.mount("#link-authentication-element");
-  
+
     linkAuthenticationElement.on('change', (event: any) => {
       this.emailAddress = event.value.email;
     });
-  
+
     const paymentElementOptions = { layout: "tabs" };
     const paymentElement = this.elements.create("payment", paymentElementOptions);
     paymentElement.mount("#payment-element");
   }
-  
+
   async handleSubmit(e: Event): Promise<void> {
     try {
       e.preventDefault();
       await this.stripePay.setLoading(true);
-  
+
       const { error } = await this.stripe.confirmPayment({
         elements: this.elements,
         confirmParams: {
@@ -303,34 +310,32 @@ export class BillingComponent implements OnInit {
           receipt_email: this.emailAddress,
         },
       });
-  
+
       if (error && (error.type === "card_error" || error.type === "validation_error")) {
         this.stripePay.showMessage(error.message);
       } else {
         this.stripePay.showMessage("An unexpected error occurred.");
       }
-  
+
       this.stripePay.setLoading(false);
     } catch (error) {
 
     }
-  }  
+  }
 
   constructor(
     private cartService: CartService,
     private billingService: BillingResponseService,
-    private checkOutService:CheckoutService,
+    private checkOutService: CheckoutService,
     private fetchDataService: FetchDataService,
     private backendURLs: UtilsModule,
-    private renderer: Renderer2,
-    private elementRef: ElementRef,
-    private cookie: CookieService,
+    private userService: LoginCheckService,
     private route: ActivatedRoute,
     private stripePay: CheckoutService,
     private http: HttpClient
   ) {
     this.items = JSON.parse(localStorage.getItem('paymentIntent') || '[]');
-    this.load() 
+    // this.load()
     this.billingService.BillingPageVisited.next(true);
     this.proceedToPayment();
 
@@ -365,10 +370,200 @@ export class BillingComponent implements OnInit {
     checkSubTotal();
 
     // address checked
-    this.checkOutService.addressSelected$.subscribe((data)=>{
-      
+    this.checkOutService.addressSelected$.subscribe((data) => {
+
     })
   }
+
+
+  // async initializeStripe(): Promise<void> {
+  //   try {
+  //     if (this.stripePay.publicKey) {
+  //       this.stripe = Stripe(this.stripePay.publicKey);
+  //       await this.initialize(this.stripe);
+
+  //       const paymentForm = document.querySelector("#payment-form");
+
+  //       if (paymentForm) {
+  //         paymentForm.removeEventListener("submit", this.handleSubmit);
+  //         paymentForm.addEventListener("submit", this.handleSubmit);
+  //       } else {
+  //         console.error("Payment form not found");
+  //       }
+  //     } else {
+  //     }
+  //   } catch (error) {
+  //     console.error('Error occurred:', error);
+  //   }
+  // }
+
+  // async onStripeButtonClick(): Promise<void> {
+  //   this.selectedPaymentMethod = 'stripe';
+  //   await this.initializeStripe();
+  // }
+
+  // async submitForm(item: any): Promise<void> {
+
+  //   let body = {};
+  //   this.userService.getUser('token').subscribe((token: any) => {
+  //     body = {
+  //       amount: item.price.toString(),
+  //       items: item,
+  //       token: token
+  //     };
+  //   });
+
+  //   try {
+  //     const res = await this.http.post<any>('http://localhost:1000/razorpay/createUpiPayment', body).toPromise();
+
+  //     if (res.success) {
+  //       const options: PaymentOptions = {
+  //         key: res.key_id,
+  //         amount: res.amount,
+  //         currency: 'INR',
+  //         name: res.product_name,
+  //         description: res.description,
+  //         image: 'https://dummyimage.com/600x400/000/fff',
+  //         order_id: res.order_id,
+  //         handler: (response: any) => {
+
+  //           let paymentBody = {};
+  //           this.userService.getUser('token').subscribe((token: any) => {
+  //             paymentBody = {
+  //               buyerId: token,
+  //               newPaymentStatus: 'success',
+  //               transactionId: response.razorpay_payment_id,
+  //               MOP: 'razorpay',
+  //             };
+  //           });
+  //           this.fetchDataService.HTTPPOST(this.backendURLs.URLs.updateOrderStatus, paymentBody).subscribe((data: any) => { });
+
+  //           alert('Payment Succeeded');
+  //         },
+  //         prefill: {
+  //           contact: res.contact,
+  //           name: res.name,
+  //           email: res.email,
+  //         },
+  //         notes: {
+  //           description: res.description,
+  //         },
+  //         theme: {
+  //           color: '#2300a3',
+  //         },
+  //       };
+
+  //       const razorpayObject = new (window as any).Razorpay(options);
+  //       razorpayObject.on('payment.failed', (response: any) => {
+  //         alert('Payment Failed');
+  //       });
+  //       razorpayObject.open();
+  //     } else {
+  //       alert(res.msg);
+  //     }
+  //   } catch (error) {
+  //     console.error('Error creating order:', error);
+  //   }
+  // }
+
+
+  // async proceedToPayment(): Promise<void> {
+  //   try {
+  //     const response = await fetch(this.backendURLs.URLs.getPaymentKeys);
+  //     if (!response.ok) {
+  //       throw new Error('Network response was not ok');
+  //     }
+
+  //     const data = await response.json();
+  //     const publicKey = data[0]?.keys?.[0]?.publicKey;
+
+  //     if (publicKey) {
+  //       this.stripe = Stripe(publicKey);
+  //       this.initialize(this.stripe);
+
+  //       const paymentForm = document.querySelector("#payment-form");
+  //       if (paymentForm) {
+  //         paymentForm.addEventListener("submit", this.handleSubmit);
+  //       } else {
+  //         console.error("Payment form not found");
+  //       }
+  //     } else {
+  //     }
+  //   } catch (error) {
+  //     console.error('Error loading Stripe scripts:', error);
+  //   }
+
+  //   this.route.queryParams.subscribe(params => {
+  //     const redirectStatus = params['redirect_status'];
+  //     if (redirectStatus === 'succeeded') {
+
+  //     }
+  //   });
+  // }
+
+  // async initialize(stripe: any): Promise<void> {
+  //   const items = JSON.parse(localStorage.getItem('paymentIntent') || '[]');
+  //   const response = await fetch("http://localhost:1000/create-payment-intent", {
+  //     method: "POST",
+  //     headers: { "Content-Type": "application/json" },
+  //     body: JSON.stringify({ items }),
+  //   });
+
+  //   const { clientSecret } = await response.json();
+
+  //   const appearance = {
+  //     theme: 'stripe',
+  //     variables: {
+  //       colorPrimary: '#0570de',
+  //       colorBackground: '#ffffff',
+  //       colorText: '#30313d',
+  //       colorDanger: '#df1b41',
+  //       fontFamily: 'Ideal Sans, system-ui, sans-serif',
+  //       spacingUnit: '3px',
+  //       borderRadius: '4px',
+  //     },
+  //     //  labels: 'floating',
+  //   };
+
+  //   this.elements = stripe.elements({ clientSecret, appearance });
+
+  //   const linkAuthenticationElement = this.elements.create("linkAuthentication");
+  //   linkAuthenticationElement.mount("#link-authentication-element");
+
+  //   linkAuthenticationElement.on('change', (event: any) => {
+  //     this.emailAddress = event.value.email;
+  //   });
+
+  //   const paymentElementOptions = { layout: "tabs" };
+  //   const paymentElement = this.elements.create("payment", paymentElementOptions);
+  //   paymentElement.mount("#payment-element");
+  // }
+
+  // async handleSubmit(e: Event): Promise<void> {
+  //   try {
+  //     e.preventDefault();
+  //     await this.stripePay.setLoading(true);
+
+  //     const { error } = await this.stripe.confirmPayment({
+  //       elements: this.elements,
+  //       confirmParams: {
+  //         return_url: "http://localhost:4200/usersetting/orders",
+  //         receipt_email: this.emailAddress,
+  //       },
+  //     });
+
+  //     if (error && (error.type === "card_error" || error.type === "validation_error")) {
+  //       this.stripePay.showMessage(error.message);
+  //     } else {
+  //       this.stripePay.showMessage("An unexpected error occurred.");
+  //     }
+
+  //     this.stripePay.setLoading(false);
+  //   } catch (error) {
+
+  //   }
+  // }
+
 
 
   @ViewChild('mydiv') my_div: ElementRef | undefined;
@@ -468,28 +663,28 @@ export class BillingComponent implements OnInit {
     this.DeliveredAddress = false;
   }
 
-  async MakeDefault(address: any,index:any) {
+  async MakeDefault(address: any, index: any) {
     try {
-      const body = { address: address ,index};
-      this.fetchDataService.HTTPPOST(this.backendURLs.URLs.setDefaultAddress, body).subscribe((data:any)=>{
+      const body = { address: address, index };
+      this.fetchDataService.HTTPPOST(this.backendURLs.URLs.setDefaultAddress, body).subscribe((data: any) => {
         this.userAddresses = data;
       });
-      
+
     } catch (error) {
 
     }
   }
 
-  addressDelivered!:any[];
+  addressDelivered!: any[];
 
-  addressChecked:Boolean=false;
-  AddressClicked(address:any){
+  addressChecked: Boolean = false;
+  AddressClicked(address: any) {
 
-    this.userAddresses.forEach((el)=>{
-      el.selected=false;
+    this.userAddresses.forEach((el) => {
+      el.selected = false;
     })
-    address.selected=true;
+    address.selected = true;
     this.checkOutService.addressSelected.next(address);
-    this.addressDelivered=address;
+    this.addressDelivered = address;
   }
 }

@@ -1,15 +1,11 @@
 import { Component, Renderer2 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { passwordStrengthValidator } from '../validators';
-import { CookieService } from 'ngx-cookie-service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { UserDataService } from '../user-data.service';
 import { UtilsModule } from 'src/app/utils/utils.module';
 import { FetchDataService } from 'src/app/shared/services/fetch-data.service';
 import { WishlistService } from 'src/app/shared/services/wishlist.service';
 import { LoginCheckService } from 'src/app/shared/services/login-check.service';
-
-
 
 @Component({
   selector: 'app-login',
@@ -28,7 +24,7 @@ export class LoginComponent {
   script: any;
   loading : boolean = false;
 
-  constructor(private fb: FormBuilder,private loginService:LoginCheckService, private wishlistService:WishlistService, private cookies: CookieService, private router: Router, private userData: UserDataService, private route: ActivatedRoute, private backendUrls: UtilsModule, private fetchDataService: FetchDataService, private renderer: Renderer2) {
+  constructor(private fb: FormBuilder,private loginService:LoginCheckService, private wishlistService:WishlistService, private router: Router, private userData: UserDataService, private route: ActivatedRoute, private backendUrls: UtilsModule, private fetchDataService: FetchDataService, private renderer: Renderer2) {
    
     this.loginForm = fb.group(
       {
@@ -62,7 +58,7 @@ export class LoginComponent {
     this.fetchDataService.HTTPPOST(this.backendUrls.URLs.loginUrl, body).subscribe(
       (data: any) => {
         this.loginService.loginUser({'userToken': data.token, 'name': data.firstName});
-      },    
+      }
     )
     this.loading=false;
   }

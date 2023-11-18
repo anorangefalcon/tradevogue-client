@@ -11,14 +11,11 @@ import { Router } from '@angular/router';
 })
 export class CartService {
 
-  constructor(private toastService: ToastService, private router:Router, private http: HttpClient, private backendUrls: UtilsModule, private loginCheckService: LoginCheckService) { 
-    
-    this.loginCheckService.getUser().subscribe((loggedIn: any) => { 
+  constructor(private toastService: ToastService, private router: Router, private http: HttpClient, private backendUrls: UtilsModule, private loginCheckService: LoginCheckService) {
+    this.loginCheckService.getUser().subscribe((loggedIn: any) => {
       this.user = loggedIn;
+      this.fetchDetails();
     });
-    this.fetchDetails();
-    
-
   }
 
   user: boolean = false;
@@ -32,7 +29,7 @@ export class CartService {
 
 
   addToCart(data: any) {
-    const cartObj = { "sku": data.sku, "size": data.size, "color": data.color, "quantity": data.quantity };    
+    const cartObj = { "sku": data.sku, "size": data.size, "color": data.color, "quantity": data.quantity };
     if (this.user) {
       this.addToCartWithToken(cartObj);
     }
@@ -46,7 +43,7 @@ export class CartService {
       (details: any) => {
         if (!details.added) {
           this.toastService.warningToast({ title: 'this Item already exists in cart please select another configuration of this product' });
-          this.router.navigate(['/product/'+cartObj.sku])
+          this.router.navigate(['/product/' + cartObj.sku])
         }
         else {
           this.handleSuccessfulAddToCart();

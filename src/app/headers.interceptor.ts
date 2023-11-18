@@ -14,17 +14,15 @@ export class HeadersInterceptor implements HttpInterceptor {
   intercept(request: HttpRequest<unknown>, next: HttpHandler): any {
 
     this.userService.getUser('token').subscribe((token: any) => {
-      if(token){
-        
+      if(token){  
         request = request.clone({
           setHeaders: {
             Authorization: `Bearer ${token}`
           }
         });
       }
-      
     })
-
+    
     return next.handle(request);
   }
 }
