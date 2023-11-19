@@ -19,7 +19,12 @@
   </ng-container>
 </div>
 
-<ng-template #defaultBreadcrumbs>
+<ng-template  #defaultBreadcrumbs>
+
+  <div *ngIf="isHomePage()">
+    
+    
+  </div>
   <!-- <div class="marquee-container" (mouseenter)="pauseMarquee()" (mouseleave)="resumeMarquee()">
     <marquee *ngIf="marqueeData.length > 0" [direction]="marqueeDirection">
       <span *ngFor="let item of saleData">

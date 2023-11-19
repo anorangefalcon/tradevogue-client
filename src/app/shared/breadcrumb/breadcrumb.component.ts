@@ -57,7 +57,7 @@ export class BreadcrumbComponent implements OnInit {
   }
 
   isHomePage(): boolean {
-    return this.router.url === '/';
+    return window.location.pathname === '/';
   }
 
   ngOnInit(): void {
@@ -90,11 +90,20 @@ export class BreadcrumbComponent implements OnInit {
       breadcrumbs.push({ label: breadcrumbLabel, url });
     }
 
+    // if (breadcrumbLabel === 'Product' && this.activeSku) {
+    //   const existingSkuIndex = breadcrumbs.findIndex((item) => item.label === this.activeSku);
+    //   if (existingSkuIndex === -1) {
+    //     breadcrumbs.push({ label: this.activeSku, url });
+    //   } else {
+    //     breadcrumbs[existingSkuIndex].url = url;
+    //   }
+    // }
+
     // Recursion
     if (route.children.length > 0) {
       return this.createBreadcrumbs(route.children[0], url, breadcrumbs);
     }
-    return breadcrumbs;``
+    return breadcrumbs;
   }
 
 }

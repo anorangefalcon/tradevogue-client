@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef } from '@angular/core';
 import { UtilsModule } from 'src/app/utils/utils.module';
 import { FetchDataService } from 'src/app/shared/services/fetch-data.service';
 import { LoginCheckService } from '../../services/login-check.service';
@@ -28,24 +28,29 @@ export class SupportComponent {
 
 
   constructor(private util: UtilsModule, private fetchData: FetchDataService,
-    private userService: LoginCheckService) {
+    private userService: LoginCheckService, private elementRef: ElementRef) {
 
   }
 
   ngOnInit() {
+    this.loadLatestOrder();
+  }
+
+  loadLatestOrder() {
     this.userService.getUser('token').subscribe((token: any) => {
       if (!token) return;
+      this.showOrder = true;
       this.fetchData.HTTPPOST(this.util.URLs.getLatestProductForBuyer, { buyerId: token }).subscribe((data: any) => {
-        if(data) {
+        if (data) {
           this.products = data.latestProduct.products;
           this.orderDetails = data.latestProduct;
           this.loadingProducts = false;
-        }else {
+        } else {
           // console.log("No data found because you have not ordered anything yet");
         }
       });
-      this.showOrder = true;
     });
+  
   }
 
   responses: any = {
@@ -92,6 +97,17 @@ export class SupportComponent {
     return "I'm sorry, I don't understand. Can you please rephrase?";
   }
 
+  scrollToChatBot() {
+    this.Clicked = true;
+  console.log("scroll")
+    setTimeout(() => {
+      const chatBotElement = this.elementRef.nativeElement.querySelector('.orderDetail');
+      if (chatBotElement) {
+        chatBotElement.scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'nearest' });
+      }
+    }, 100);
+  }
+
 
   showProductDetails(product: any) {
     this.selectedProduct = product;
@@ -107,7 +123,7 @@ export class SupportComponent {
     this.buttonsHidden = true;
   }
   onNoThanks() {
-
+    this.toggleChat();
   }
 
 
@@ -138,7 +154,7 @@ export class SupportComponent {
   navigateTo(tab: string) {
     if (tab === 'home') {
       this.selectedTabIndex = 0;
-    } else if (tab === 'chat') {
+    } else if (tab === 'support') {
       this.selectedTabIndex = 1;
     } else if (tab === 'help') {
       this.selectedTabIndex = 2;
@@ -146,14 +162,14 @@ export class SupportComponent {
   }
 
   onYesClick() {
+    this.scrollToChatBot();
+    this.loadLatestOrder();
     this.showNewSection = true;
     this.Clicked = true;
-    // Other logic when the user clicks Yes
-
   }
 
   onNoClick() {
-    // Other logic when the user clicks No
+    this.toggleChat();
   }
 
   chatWithHuman() {
