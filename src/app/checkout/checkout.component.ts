@@ -266,7 +266,7 @@ async ApplyCoupon(coupon: any = '', event: any = '') {
     }
 
 
-    this.cartService.fetchCart().subscribe((data) => {
+    await this.cartService.fetchCart().subscribe((data) => {
       if (this.CouponApplied) {
         body.coupon = this.CouponApplied;
         body.discount = data.amounts.savings;
@@ -274,6 +274,7 @@ async ApplyCoupon(coupon: any = '', event: any = '') {
       body.products = data.details;
 
       this.fetchService.HTTPPOST(this.BackendUrl.URLs.createOrder, body).subscribe((data: any) => {
+        console.log(data);
       });
     })
 

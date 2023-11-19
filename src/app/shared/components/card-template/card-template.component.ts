@@ -15,8 +15,7 @@ export class CardTemplateComponent {
   showPopup: boolean = false;
   selectedItem: boolean = false;
 
-  constructor(private cartService: CartService, private popupService: PopupService, private wishlistService : WishlistService,) { 
-     
+  constructor(private cartService: CartService, private popupService: PopupService, private wishlistService : WishlistService) {    
    }
 
   avgRating: number = 0;
@@ -40,6 +39,24 @@ export class CardTemplateComponent {
     // this.productPageService.orderQuantity.next(filteredArray);
     this.product.info.orderQuantity=filteredArray;
 
+    console.log(this.product , "product is ");
+    this.startRotatingTags();
+  }
+
+  currentIndex = 0;
+  tagsToShow = 3;
+  slicedTags: string[] = [];
+
+  startRotatingTags(): void {
+    if (this.product && this.product.info && this.product.info.tags) {
+      const productTags = this.product.info.tags;
+
+      setInterval(() => {
+        const endIndex = this.currentIndex + this.tagsToShow;
+        this.slicedTags = productTags.slice(this.currentIndex, endIndex);
+        this.currentIndex = (this.currentIndex + this.tagsToShow) % productTags.length;
+      }, 5000); // Change the time interval as needed (in milliseconds)
+    }
   }
 
   createArrayToIterate(num: number){
@@ -50,20 +67,24 @@ export class CardTemplateComponent {
     return Array(newTotal).fill(0);
   }
 
+   chooseWishlist() {  
+    this.wishlistService.ShowWishlist(this.product._id);
+  }
 
   RemoveOrAddToWishlist(event:any=null){
     if(!event){
       this.wishlistService.ShowWishlist(this.product._id);
     }
     else{
-      this.wishlistService.removeFromWishlist(this.product._id).subscribe((data)=>{    
-            this.wishlistService.getWishlistCount();
+      this.wishlistService.removeFromWishlist(this.product._id).subscribe((data)=>{        
       });
     }
   }
 
   
   addToCart(){
+    console.log(this.product);
+    
     const cartItem = {
       sku: this.product.sku,
       color: this.product.assets[0].color,
@@ -104,4 +125,5 @@ export class CardTemplateComponent {
       this.popupService.openPopup();
       this.showPopup = true;
     }
+
 }

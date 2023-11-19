@@ -173,7 +173,7 @@ export class TicketsComponent {
       this.userService.setFcmToken(this.token);
       const fcmToken = this.token;
 
-      const apiUrl = 'http://localhost:3000/send-notification';
+      const apiUrl = 'http://localhost:1000/send-notification';
 
       this.http.post(apiUrl, data).subscribe(
         (response) => {

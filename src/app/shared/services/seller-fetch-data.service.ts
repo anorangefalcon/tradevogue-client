@@ -37,7 +37,6 @@ export class SellerFetchDataService {
     return this.http.get(this.backendUrl.URLs.getAccount, { params });
   }
   
-
   sendSellerInfo(data: any){
     this.http.post(this.backendUrl.URLs.updateAccount, {'data': data}).subscribe();
   }

@@ -86,6 +86,8 @@ export class ProductPageComponent implements OnInit {
     let params = new HttpParams();
     params = params.set("sku", this.sku);
 
+    console.log(params, 'dddd');
+    
     if (this.productSku) {
       this.fetchService.HTTPGET(this.backendUrl.URLs.fetchProductDetails, params).subscribe((data: any) => {
         this.updateDataFields(data);
