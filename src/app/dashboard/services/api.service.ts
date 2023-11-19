@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class ApiService {
- private apiUrl = 'http://localhost:4000/api/purchaser/getDetailsByPostalCode';
+ private apiUrl = 'http://54.157.29.156:4000/api/purchaser/getDetailsByPostalCode';
 // private apiUrl = 'http://localhost:4000/api/purchaser/getDetailsByPostalCode'
 
   constructor(private http: HttpClient) { }
