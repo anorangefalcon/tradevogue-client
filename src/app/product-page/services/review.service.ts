@@ -9,7 +9,7 @@ export class ReviewService {
   constructor(private http: HttpClient, private backendUrls: UtilsModule, private fetchDataService:FetchDataService) { }
 
   addReview(data: any){    
-    console.log(data, 'kokokoko');
+    // console.log(data, 'kokokoko');
     
     return this.fetchDataService.HTTPPOST(this.backendUrls.URLs.addOrUpdateReview, data);
   }

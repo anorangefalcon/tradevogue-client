@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { filter } from 'rxjs';
 import { BreadcrumbService } from 'src/app/shared/services/breadcrumb.service';
+import { SalesService } from '../services/custom-UI/sales.service';
 
 @Component({
   selector: 'app-breadcrumb',
@@ -11,10 +13,30 @@ export class BreadcrumbComponent implements OnInit {
   breadcrumbs: Array<{ label: string; url: string }> = [];
   currentRoute: string = '';
   activeSku:any;
+  saleData: any[] = [];
+  marqueeData: string[] = [];
+  marqueeDirection: string = 'left';
+  private marqueeElement: HTMLMarqueeElement | undefined;
+
+  // Function to pause the marquee
+  pauseMarquee() {
+    this.marqueeElement = document.querySelector('.marquee-container marquee') as HTMLMarqueeElement;
+    if (this.marqueeElement) {
+      this.marqueeElement.stop();
+    }
+  }
+
+  // Function to resume the marquee
+  resumeMarquee() {
+    if (this.marqueeElement) {
+      this.marqueeElement.start();
+    }
+  }
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    private breadcrumbService: BreadcrumbService
+    private breadcrumbService: BreadcrumbService,
+    private salesService: SalesService
   ) {
     this.router.events.subscribe((event) => {
       this.router.events.subscribe(event => {
@@ -35,11 +57,16 @@ export class BreadcrumbComponent implements OnInit {
   }
 
   isHomePage(): boolean {
-    return window.location.pathname === '/';
+    return this.router.url === '/';
   }
 
   ngOnInit(): void {
     this.breadcrumbs = this.breadcrumbService.getBreadcrumbs();
+    this.salesService.getSales().subscribe((data: any) => {
+      this.saleData = data.filter((item: any) => item.enable);
+      // console.log(this.saleData, "sale data ")
+      this.marqueeData = this.saleData.map((item: any) => item.title);
+    });
   }
 
   private createBreadcrumbs(

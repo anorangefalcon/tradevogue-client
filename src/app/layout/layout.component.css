@@ -1,4 +1,8 @@
 .bread{
-    padding-block-start: 80px;
+    padding-block-start: 90px;
     color: transparent !important;
+}
+
+.no-padding {
+    padding: 0px !important;
 }

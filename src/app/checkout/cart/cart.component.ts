@@ -44,7 +44,7 @@ export class CartComponent implements OnInit {
 
 
   changeQuantity(what: string, productIndex: any, selectedQuantity: Number) {
-    console.log('quantity runs ');
+    // console.log('quantity runs ');
 
     const quantityIndex = this.cartArr[productIndex].info.orderQuantity.findIndex((q: any) => {
       return q == selectedQuantity;

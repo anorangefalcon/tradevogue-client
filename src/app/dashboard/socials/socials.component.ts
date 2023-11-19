@@ -44,7 +44,7 @@ export class SocialsComponent {
         // desktopLogo: data.logos.desktop,
         // mobileLogo: data.logos.mobile
       });
-      console.log(this.socialsForm.value);
+      // console.log(this.socialsForm.value);
       
     });
     

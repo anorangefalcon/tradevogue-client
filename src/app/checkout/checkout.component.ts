@@ -273,7 +273,7 @@ async ApplyCoupon(coupon: any = '', event: any = '') {
       body.products = data.details;
 
       this.fetchService.HTTPPOST(this.BackendUrl.URLs.createOrder, body).subscribe((data: any) => {
-        console.log(data);
+        // console.log(data);
       });
     })
 

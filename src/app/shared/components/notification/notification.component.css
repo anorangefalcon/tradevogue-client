@@ -81,16 +81,12 @@ visibility: hidden;
   visibility: hidden;
 }
 
-/* #chat-bots .icon.expanded .icons {
-  display: none;
-} */
-
 #chat-bots .messengers.expanded {
     visibility: visible;
     height: 428px;
-    width: 270px;
-    overflow: hidden; /* Add overflow hidden to contain child elements */
-    position: relative !important; /* Add relative position */
+    width: 278px;
+    overflow: hidden; 
+    position: relative !important; 
 }
 
 /* #chat-bots .icon-supports.expanded .user {
@@ -665,11 +661,12 @@ p {
     background: rgb(var(--primaryClr));
     color: #fff;
     padding: 10px;
-    border-bottom: 1px solid #ccc; /* Add a border between header and notifications */
+    border-bottom: 1px solid #ccc; 
 }
 
 .notification-title {
-    font-size: 16px; /* Adjust the font size */
+  font-size: 12px;
+  font-weight: 500;
 }
 
 .close-button {
@@ -677,7 +674,7 @@ p {
     border: none;
     color: #fff;
     cursor: pointer;
-    font-size: 18px; /* Adjust the font size */
+    font-size: 18px; 
 }
 
 .close-button:hover {
@@ -727,7 +724,7 @@ p {
     /* Positioning */
     position: absolute;
     bottom: 10px;
-    right: 31px; 
+    right: 37px; 
 }
 
 

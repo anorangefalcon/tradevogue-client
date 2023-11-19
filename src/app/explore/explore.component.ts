@@ -205,7 +205,7 @@ export class ExploreComponent {
   }
 
   onRemove(event: any, field: any) {
-    console.log('event coming up is ',event.target.value," field is ",field);
+    // console.log('event coming up is ',event.target.value," field is ",field);
 
     if (Array.isArray(this.filterApplied[field])) {
 

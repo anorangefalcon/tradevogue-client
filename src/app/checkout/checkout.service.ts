@@ -137,7 +137,7 @@ export class CheckoutService {
 
   private async removeCartItems(paymentIntent: any) {
     this.fetchData.HTTPPOST(this.backendUri.URLs.removeItems, paymentIntent).subscribe((Data)=> {
-      console.log(Data)
+      // console.log(Data)
     })
   }
 

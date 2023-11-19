@@ -1,5 +1,6 @@
 header {
     position: fixed;
+    background: transparent !important;
     /* padding-block-end: 95px; */
     font-weight: 500;
     width: 100%;

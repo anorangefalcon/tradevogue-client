@@ -50,7 +50,7 @@ export class BillingComponent implements OnInit {
   selectedPaymentMethod = 'stripe';
 
   ngOnInit(): void {
-    console.log('ngOnit called------> of billing');
+    // console.log('ngOnit called------> of billing');
     
     try {
       this.route.queryParams.subscribe(async params => {

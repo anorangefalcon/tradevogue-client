@@ -33,7 +33,8 @@ export class DashboardComponent {
         { name: 'Home Page', route: '/dashboard/customise-home' },
         { name: 'Social', route: '/dashboard/socials' },
         { name: 'FAQs', route: '/dashboard/faq' },
-        { name: 'Payment Keys', route: '/dashboard/monetization' }
+        { name: 'Payment Keys', route: '/dashboard/monetization' },
+        { name: 'Sales' , route: '/dashboard/sales' }
       ]
     },
     {

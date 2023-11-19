@@ -180,7 +180,7 @@ export class SelectLayoutComponent {
   }
 
   navigate(name: any){
-    console.log('name', name);
+    // console.log('name', name);
     
     this.router.navigate(['/dashboard/customise-home/'+ name]);
   }

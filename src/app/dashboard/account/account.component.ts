@@ -99,7 +99,7 @@ export class AccountComponent implements OnInit {
 
 
     var adminData = this.sellerFetchDataService.getSellerInfo().subscribe((data: any) => {
-      console.log("data", data)
+      // console.log("data", data)
       const formattedDob = this.datePipe.transform(data[0].info.dob, 'yyyy-MM-dd');
       this.profileForm.patchValue({
         firstName: data[0].name.firstname,

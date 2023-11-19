@@ -68,7 +68,7 @@ export class ProductPageComponent implements OnInit {
   ngOnInit(): void {
 
     if (this.productSku) {
-      console.log("HELLO");
+      // console.log("HELLO");
       this.sku = this.productSku;
       this.fetchProductData();
     }

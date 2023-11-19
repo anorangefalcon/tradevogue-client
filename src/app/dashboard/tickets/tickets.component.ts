@@ -239,7 +239,7 @@ export class TicketsComponent {
   }
 
   deleteTicketTitle(item: any) {
-    console.log("clicked")
+    // console.log("clicked")
     this.loadData()
     const body = {
       _id: this.ticketTypeId

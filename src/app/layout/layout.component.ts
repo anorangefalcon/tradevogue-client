@@ -9,10 +9,15 @@ import { CheckoutService } from '../checkout/checkout.service';
 })
 export class LayoutComponent {
   secureNavBar:Boolean=false;
-    constructor(private checkoutService:CheckoutService) {
+    constructor(private checkoutService:CheckoutService, private router: Router) {
   this.checkoutService.secureNavbar$.subscribe((data)=>{
     this.secureNavBar=data;
   })
     }
+
+    isHomePage(): boolean {
+      return this.router.url === '/';
+    }
+    
 
 }

@@ -99,7 +99,6 @@ export class SalesComponent {
 
   addSale() {
     const saleGroup = this.fb.group({
-      // Define your form controls here
       backgroundImage: ['', Validators.required],
       title: ['', Validators.required],
       subTitle: ['', Validators.required],
@@ -114,8 +113,6 @@ export class SalesComponent {
 
     (this.salesForm.get('sale') as FormArray).push(saleGroup); 
   }
-
-
 
   getSale() {
     return (this.salesForm.get('sale') as FormArray).controls;
