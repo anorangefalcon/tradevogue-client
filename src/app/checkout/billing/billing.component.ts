@@ -358,7 +358,7 @@ export class BillingComponent implements OnInit {
             "id": this.cartitems.details.map((item: { sku: any; }) => item.sku),
             "name": this.cartitems.details.map((item: { name: any; }) => item.name),
             "price": this.cartitems.amounts.total,
-            "quantity": this.cartitems.details.map((item: { Quantity: any; }) => item.Quantity),
+            // "quantity": this.cartitems.details.map((item: { quantity: any; }) => item.quantity),
           }
         ];
         localStorage.setItem('paymentIntent', JSON.stringify(this.item));

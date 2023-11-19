@@ -75,6 +75,7 @@ export class UtilsModule {
     removeItemFromCart: 'http://localhost:1000/cart/remove',
     updateItemFromCart: 'http://localhost:1000/cart/update',
     clearCart: 'http://localhost:1000/cart/clear',
+    removeItems: 'http://localhost:1000/cart/removeItems',
 
     // OFFER
     createOffer: 'http://localhost:1000/offer/create',

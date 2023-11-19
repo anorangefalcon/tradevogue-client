@@ -124,6 +124,7 @@ export class CheckoutService {
       case "succeeded":
         await this.updateOrderStatus(paymentIntent);
         await this.sendInvoiceData(paymentIntent);
+        await this.removeCartItems(paymentIntent);
         break;
       case "processing":
         break;
@@ -132,6 +133,12 @@ export class CheckoutService {
       default:
         break;
     }
+  }
+
+  private async removeCartItems(paymentIntent: any) {
+    this.fetchData.HTTPPOST(this.backendUri.URLs.removeItems, paymentIntent).subscribe((Data)=> {
+      console.log(Data)
+    })
   }
 
   private async updateOrderStatus(paymentIntent: any) {

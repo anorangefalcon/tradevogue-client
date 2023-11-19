@@ -265,7 +265,6 @@ async ApplyCoupon(coupon: any = '', event: any = '') {
       razorpayButton.click();
     }
 
-
     await this.cartService.fetchCart().subscribe((data) => {
       if (this.CouponApplied) {
         body.coupon = this.CouponApplied;
