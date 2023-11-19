@@ -16,9 +16,6 @@ import { TicketsComponent } from './tickets/tickets.component';
 import { SocialsComponent } from './socials/socials.component';
 import { MonetizationComponent } from './monetization/monetization.component';
 import { NoPageComponent } from '../no-page/no-page.component';
-import { DealComponent } from './deal/deal.component';
-import { SalesComponent } from './sales/sales.component';
-import { CustomiseBannerComponent } from './customise-banner/customise-banner.component';
 import { NotificationsComponent } from './notifications/notifications.component';
 import { AboutComponent } from './about/about.component';
 
@@ -47,16 +44,12 @@ const routes: Routes = [
       { path: 'tickets', component: TicketsComponent },
       { path: 'monetization', component: MonetizationComponent },
       { path: 'socials', component: SocialsComponent },
-      { path: 'customise-banner', component: CustomiseBannerComponent},
-      { path: 'sales', component: SalesComponent},
       {
         path: 'customise-home', loadChildren: () => import('./edit-home/edit-home.module').then(m => m.EditHomeModule)
       },
-      { path: 'customise-deal', component: DealComponent },
       { path: 'notification' , component: NotificationsComponent },
       { path: 'customiseabout', component: AboutComponent },
       
-
       { path: '**', component: NoPageComponent },
     ]
   },

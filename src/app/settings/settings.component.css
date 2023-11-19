@@ -255,8 +255,8 @@ label span {
 }
 
 .prod-img img {
-    max-width: 60px;
-    max-height: 110px;
+    width: 60px;
+    height: 80px;
     object-fit: cover;
 }
 
@@ -283,7 +283,7 @@ label span {
     max-height: 22px;
     position: absolute;
     inset-block-start: -5.5px;
-    inset-inline-start: -2px;
+    inset-inline-start: -5.5px;
     background-color: rgb(var(--textClr));
     border-radius: 50%;
     transition: background-color 0.3s ease-in-out;

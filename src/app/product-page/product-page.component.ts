@@ -81,10 +81,12 @@ export class ProductPageComponent implements OnInit {
 
   }
 
-  fetchProductData() {
-    this.loading = true;
+  fetchProductData(loading: boolean = true) {
+    this.loading = loading;
     let params = new HttpParams();
     params = params.set("sku", this.sku);
+    this.assetIndex = 0;
+    this.sizeIndex = 0;
 
     console.log(params, 'dddd');
     
@@ -124,6 +126,7 @@ export class ProductPageComponent implements OnInit {
         review: data.userReview.comment
       })
     }
+    this.selectedQ = this.getOrderQuantity()[0];
     this.fetchSimilarProducts = {
       'tags': this.data.info.tags
     };
@@ -174,8 +177,6 @@ export class ProductPageComponent implements OnInit {
     this.wishlistService.ShowWishlist(this.data._id);
   }
 
-
-
   RemoveOrAddToWishlist(event: any = null) {
     if (!event) {
       this.wishlistService.ShowWishlist(this.data._id);
@@ -188,10 +189,9 @@ export class ProductPageComponent implements OnInit {
     }
   }
 
-
-
-  getOrderQuantity() {
+  getOrderQuantity() {    
     let limit = this.data.assets[this.assetIndex].stockQuantity[this.sizeIndex].quantity;
+    
     let arr = this.data.info.orderQuantity;
     let filteredArray = arr.filter((item: any) => item <= limit);
 
@@ -218,7 +218,7 @@ export class ProductPageComponent implements OnInit {
     }
 
     this.reviewService.addReview(review).subscribe(() => {
-      this.fetchProductData();
+      this.fetchProductData(false);
       this.showReview = false;
       this.toastService.successToast({
         title: 'Review successfully ' + (this.userReview ? 'updated' : 'posted')

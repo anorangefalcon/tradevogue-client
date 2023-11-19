@@ -26,10 +26,8 @@ import { DateDisplayPipe } from '../shared/Pipe/date-display.pipe';
 import { ProductPageModule } from '../product-page/product-page.module';
 import { SocialsComponent } from './socials/socials.component';
 import { MonetizationComponent } from './monetization/monetization.component';
-import { DealComponent } from './deal/deal.component';
-import { SalesComponent } from './sales/sales.component';
+import { SalesComponent } from './edit-home/sales/sales.component';
 import { GalleryComponent } from '../home/gallery/gallery.component';
-import { CustomiseBannerComponent } from './customise-banner/customise-banner.component';
 import { NotificationsComponent } from './notifications/notifications.component';
 import { AboutComponent } from './about/about.component';
 
@@ -38,7 +36,6 @@ import { AboutComponent } from './about/about.component';
     DashboardComponent,
     StatisticsComponent,
     ProductsComponent,
-    // FilterPipe,
     OrdersComponent,
     AddproductComponent,
     AccountComponent,
@@ -52,9 +49,7 @@ import { AboutComponent } from './about/about.component';
     DateDisplayPipe,
     SocialsComponent,
     MonetizationComponent,
-    DealComponent,
     SalesComponent,
-    CustomiseBannerComponent,
     NotificationsComponent,
     AboutComponent
   ],

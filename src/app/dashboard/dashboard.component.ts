@@ -30,13 +30,10 @@ export class DashboardComponent {
     { name: 'Promo Code', icons: 'redeem', route: '/dashboard/coupons' },
     {
       name: 'Customise', route: '', icons: 'build', sublist: [
-        { name: 'HomePage', route: '/dashboard/customise-home' },
-        { name: 'Banner', route: '/dashboard/customise-banner' },
-        { name: 'Deal', route: '/dashboard/customise-deal' },
+        { name: 'Home Page', route: '/dashboard/customise-home' },
         { name: 'Social', route: '/dashboard/socials' },
         { name: 'FAQs', route: '/dashboard/faq' },
-        { name: 'Payment Keys', route: '/dashboard/monetization' },
-        { name: 'Sales', route: '/dashboard/sales' }
+        { name: 'Payment Keys', route: '/dashboard/monetization' }
       ]
     },
     {

@@ -24,7 +24,6 @@ export class ProductCardCarouselComponent {
 
   ngOnInit(){
     this.fetchDataService.getProducts(this.whatToFetch, 10).subscribe((data:any)=>{
-      console.log("hightl", data);
       this.productArr = data.items;
     })
   }

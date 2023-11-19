@@ -435,11 +435,11 @@
                         <div class="accordian__body d-flex flex-column gap-10"
                             [class.active]="openedAccordionIndex === i">
                             <ng-container *ngFor="let product of wishlistedProducts">
-                                <div class="product d-flex justify-content-md-between mw100">
+                                <div class="product d-flex justify-content-md-between mw100 default-animation">
                                     <div class="d-flex gap-20">
                                         <div class="prod-img relative">
                                             <a href="/product/{{product.productDetails.sku}}">
-                                                <img [src]="product.productDetails.assets[0].photo[0]"
+                                                <img class="skeleton" [src]="product.productDetails.assets[0].photo[0]"
                                                     alt="Product Image">
                                             </a>
                                             <button

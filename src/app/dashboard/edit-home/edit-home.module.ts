@@ -8,20 +8,30 @@ import { CollectionsComponent } from 'src/app/home/collections/collections.compo
 import { SharedModule } from 'src/app/shared/shared.module';
 import { DealOfWeekComponent } from 'src/app/home/deal-of-week/deal-of-week.component';
 import { OffersComponent } from 'src/app/home/offers/offers.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CustomiseBannerComponent } from './customise-banner/customise-banner.component';
+import { SelectLayoutComponent } from './select-layout/select-layout.component';
+import { DealComponent } from './deal/deal.component';
+import { SalesComponent } from './sales/sales.component';
 
 const routes: Routes = [
   {
     path: '', component: EditHomeComponent,
-    // children: [
-
-    // ]
+    children: [
+      { path: '', component: SelectLayoutComponent},
+      { path: 'hero', component: CustomiseBannerComponent},
+      { path: 'deal', component: DealComponent},
+      { path: 'offers', component: SalesComponent},
+    ]
   }
 ];
 
 @NgModule({
   declarations: [
-    EditHomeComponent
+    EditHomeComponent,
+    SelectLayoutComponent,
+    CustomiseBannerComponent,
+    DealComponent
   ],
   imports: [
     CommonModule,
@@ -32,6 +42,7 @@ const routes: Routes = [
     SharedModule,
     OffersComponent,
     FormsModule,
+    ReactiveFormsModule,
     [RouterModule.forChild(routes)],
   ],
   exports: [RouterModule]

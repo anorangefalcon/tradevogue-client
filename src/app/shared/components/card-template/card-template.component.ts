@@ -38,8 +38,6 @@ export class CardTemplateComponent {
 
     // this.productPageService.orderQuantity.next(filteredArray);
     this.product.info.orderQuantity=filteredArray;
-
-    console.log(this.product , "product is ");
     this.startRotatingTags();
   }
 
