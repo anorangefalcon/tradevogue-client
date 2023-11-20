@@ -36,7 +36,8 @@ export class SalesComponent {
           colors: this.fb.group({
             titleColor: '',
             subTitleColor: '',
-            buttonColor: ''
+            buttonColor: '',
+            cardColor: ''
           })
         })
       ])
@@ -90,7 +91,8 @@ export class SalesComponent {
           colors: {
             titleColor: item.colors.titleColor,
             subTitleColor: item.colors.subTitleColor,
-            buttonColor: item.colors.buttonColor
+            buttonColor: item.colors.buttonColor,
+            cardColor: item.colors.cardColor
           }
         }
       ]
@@ -107,7 +109,8 @@ export class SalesComponent {
       colors: this.fb.group({
         titleColor: '',
         subTitleColor: '',
-        buttonColor: ''
+        buttonColor: '',
+        cardColor: ''
       })
     });
 
@@ -154,6 +157,8 @@ export class SalesComponent {
 
   saleImageUpload(event: any, formIndex: any) {
 
+    console.log(event, 'file', formIndex, "index");
+
     let file: any = (<HTMLInputElement>event.target)?.files![0];
 
     this.uploadService.fileupload([{ file: file }]).then((url: any) => {
@@ -164,6 +169,8 @@ export class SalesComponent {
 
   getImagePreview(index: any) {
     let value = <FormArray>((this?.salesForm?.get('sale'))?.get(String(index)))?.get('backgroundImage')?.value;
+    // console.log(value, 'linkkk');
+    
     return value;
   }
 
@@ -172,6 +179,7 @@ export class SalesComponent {
     const saleControl = saleArray.at(index) as FormGroup;
     saleControl.get('backgroundImage')?.reset('');
   }
+
   showLoading(i: number): boolean {
     return !this.getImagePreview(i);
   }

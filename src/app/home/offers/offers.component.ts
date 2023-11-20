@@ -12,8 +12,15 @@ import { RouterModule } from '@angular/router';
 })
 export class OffersComponent {
   saleData: any;
-  constructor(private salesService: SalesService){
+  color: any = 'white';
+  isHovered: boolean = false;
+  constructor(public salesService: SalesService){
     this.salesService.getSales().subscribe((data: any) => {
+
+      data.forEach((element: any) => {
+        element['hover'] = false;
+      });
+      
       this.saleData = data;
     })
   }

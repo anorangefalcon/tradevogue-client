@@ -80,6 +80,11 @@
                                     <input class="form__input" type="color" [id]="'buttonText'+i"
                                         formControlName="buttonColor" />
                                 </div>
+                                <div class="internal-div">
+                                    <label class="form__title" [for]="'buttonText'+i">Card Color</label>
+                                    <input class="form__input" type="color" [id]="'buttonText'+i"
+                                        formControlName="cardColor" />
+                                </div>
                             </ng-container>
                         </div>
                     </div>
@@ -101,6 +106,7 @@
                     <th class="items">Button</th>
                     <th class="items">Button Color</th>
                     <th class="items">Button Link</th>
+                    <th class="items">Card Color</th>
                     <th class="items">Enable</th>
                     <th class="items">Action</th>
                 </tr>
@@ -118,6 +124,7 @@
                     <td class="ellipsis items">{{item.buttonText}}</td>
                     <td class="ellipsis items">{{item.colors.buttonColor}}</td>
                     <td class="items">{{item.buttonLink}}</td>
+                    <td class="items">{{item.colors.cardColor}}</td>
                     <td class="items">
                         <div class="slide-button d-flex align-item-center">
                             <input type="checkbox" [checked]="item.enable" (change)="toggle(item)"

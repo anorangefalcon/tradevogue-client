@@ -138,6 +138,7 @@ export class MonetizationComponent {
     if (this.selectedItem) {
       const id = this.selectedItem._id;
       const itemIndex = this.paymentKeys.findIndex((key: any) => key._id === id);
+      console.log(itemIndex, "item index are")
       if (itemIndex !== -1) {
         this.paymentKeys.splice(itemIndex, 1);
       }
