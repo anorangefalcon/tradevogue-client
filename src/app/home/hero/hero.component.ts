@@ -21,7 +21,7 @@ export class HeroComponent {
 
   ngOnInit(){    
     this.bannerService.getBanners().subscribe((data: any) => {      
-      this.bannerData = data.filter((banner: any)=> banner['active'] == true)
+      this.bannerData = data.filter((banner: any)=> banner['active'] == true)      
     })
 
   }
@@ -37,7 +37,7 @@ export class HeroComponent {
     pullDrag: true,
     dots: false,
     autoplay: true,
-    navSpeed: 700,
+    navSpeed: 500,
     navText: ['', ''],
     responsive: {
       0: {

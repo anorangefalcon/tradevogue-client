@@ -20,6 +20,8 @@ export class HeadersInterceptor implements HttpInterceptor {
             Authorization: `Bearer ${token}`
           }
         });
+        console.log(token, 'jjo');
+        
       }
     })
     

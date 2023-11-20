@@ -60,10 +60,6 @@ export class ExploreComponent {
               el.wishlisted=false;
             }
           })
-
-        
-          // this.wishlistService.
-
         })     
         this.products = data.items;      
         this.totalProducts = data.total;
@@ -98,7 +94,6 @@ export class ExploreComponent {
       let index = this.sorting.titles.findIndex((title: string)=> title == event);
       this.sorting.value[index]    
       this.filterApplied[field] = this.sorting.value[index]
-      
     }
     else if(Array.isArray(event)){
       this.filterApplied[field] = event;
@@ -126,13 +121,7 @@ export class ExploreComponent {
   }
 
   onChecked(event: any, field: string,extraParameter:any='') { 
-    // if(extraParameter && !event){
-    //   event={
-    //     target:{}
-    //   };
-    //   event.target.value=extraParameter;
-    //   event.target.checked=false;
-    // }
+
     let value;
 
 

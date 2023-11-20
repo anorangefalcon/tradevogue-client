@@ -21,17 +21,25 @@ export class CustomiseBannerComponent {
   editValue: any = '';
   showForm: boolean = false;
 
+  popUpDirection:any='right';
+  showingPopUp: boolean = false;
+  ParentClosed:boolean=false;
+
   constructor(private fb: FormBuilder,
     private bannerService: BannerService,
     private uploadService: ImageUploadService,
     private toastService: ToastService) {
 
     this.bannerForm = this.fb.group({
-      backgroundImage: ['', Validators.required],
+      backgroundImage: ['', 
+      // Validators.required
+    ],
       title: '',
       subTitle: '',
       buttonText: '',
-      buttonLink: ['', Validators.required],
+      buttonLink: ['', 
+      Validators.required
+    ],
       contentAlign: '',
       colors: this.fb.group({
         titleColor: '',
@@ -73,9 +81,12 @@ export class CustomiseBannerComponent {
   }
 
   onSave() {
+    console.log(this.bannerForm.get('contentAlign')?.value, "content");
+    
+    console.log(this.bannerForm.value, "dataaaa");
+    
     if (!this.editValue) {
       this.bannerService.setBanners(this.bannerForm.value).subscribe((data: any) => {
-
         const toast = {
           title: data.message
         }
@@ -124,12 +135,14 @@ export class CustomiseBannerComponent {
   }
 
   delete(id: any) {
+    console.log("lolol");
+    
     const data = { id }
     this.bannerService.deleteBanner(data).subscribe((res: any) => {
       const toast = {
         title: res.message
       }
-      this.toastService.warningToast(toast);
+      this.toastService.successToast(toast);
       this.ngOnInit()
     })
   }
@@ -174,4 +187,11 @@ export class CustomiseBannerComponent {
   showLoading(i: number): boolean {
     return !this.getImagePreview();
   }
+
+  PopUpChangeHanlder(event: any){
+    this.showingPopUp = event;
+  }
+  ParentClosedHandler(event:any){
+    this.ParentClosed=event;
+    }
 }

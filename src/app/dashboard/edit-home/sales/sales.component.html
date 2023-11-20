@@ -1,6 +1,13 @@
 <div class="d-flex flex-column gap-20">
     <div class="card card__pd-25 d-flex justify-content-md-between align-item-center">
-        <h3>Customise Sales</h3>
+        <div class="d-flex gap-5 justify-content-center align-item-center">
+            <button class="btn btn-xs customise-back-btn d-flex flex-center" routerLink="/dashboard/customise-home">
+                <span class="material-symbols-outlined">
+                    arrow_back_ios
+                </span>
+            </button>
+            <h3>Customise Sales</h3>
+        </div>
         <div class="operation_button d-flex gap-10">
             <button class="btn btn-rounded btn-xs fw-500 fs-14 btn-secondary d-flex align-item-center gap-5"
                 [ngStyle]="{'display': salesForm.disabled? 'none': 'flex'}" (click)="addSale()">

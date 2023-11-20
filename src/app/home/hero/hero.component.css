@@ -50,12 +50,12 @@
 
     & .hero-text-container{
         z-index: 5;
-        & h3 {
-            margin-bottom: 0;
-            font-size: 85px !important;
+        & h1 {
+            font-size: 100px !important;
+            margin-block-start: -5px;
         }
         & .title {
-            font-size: 44px !important;
+            font-size: 38px !important;
         }  
     }
     & .banner-background {
@@ -64,7 +64,7 @@
 
 }
 .overlay {
-    background-color: rgba(0, 0, 0, 0.13);
+    background-color: rgba(0, 0, 0, 0.23);
 }
 
 /* @media screen and (max-width: 768px) {

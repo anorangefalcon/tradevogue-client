@@ -455,11 +455,11 @@
                                                 {{product.productDetails.name}}
                                             </p>
                                             <p>{{product.productDetails.info.brand}}</p>
-                                            <p>Price: {{ product.productDetails.price }}</p>
+                                            <p>Price:  ₹{{ product.productDetails.price }}</p>
                                         </div>
                                     </div>
                                     <div class="d-flex justify-content-center align-item-center">
-                                        <button class="btn-secondary cart-btn d-flex align-items-center gap-5"
+                                        <button class="btn-secondary cart-btn d-flex align-items-center gap-5 btn-rounded"
                                             (click)="moveToCart(product.productDetails.sku) ; removeFromWishlist(product.productDetails._id, item.wishlistName) ">
                                             Move to
                                             <span class="material-symbols-outlined">

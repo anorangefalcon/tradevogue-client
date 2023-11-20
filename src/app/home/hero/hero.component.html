@@ -28,9 +28,9 @@
                                         <p class="title" [ngStyle]="{'color': banner.colors.subTitleColor}">
                                             {{ banner.subTitle }}
                                         </p>
-                                        <h3 [ngStyle]="{'color': banner.colors.titleColor}">
+                                        <h1 [ngStyle]="{'color': banner.colors.titleColor}">
                                             {{ banner.title }}
-                                        </h3>
+                                        </h1>
                                         <a [routerLink]="[getLink(banner.buttonLink)]">
                                             <button class="heading-button"
                                                 [ngStyle]="{'color': banner.colors.buttonColor, 'border-color': banner.colors.buttonColor}">
@@ -44,31 +44,32 @@
                             <ng-container *ngIf="banner.contentAlign == 'Left'">
                                 <div class="container d-flex align-item-center default-animation mh100"
                                     style="justify-content: flex-start;">
-                                    <div class="hero-text-container d-flex flex-column gap-10">
-                                        <p class="title" [ngStyle]="{'color' : banner.colors.subTitleColor}">
+                                    <div class="hero-text-container d-flex flex-column gap-5">
+                                        <p class="title" [ngStyle]="{'color' : banner.colors.subTitleColor}"
+                                            style="width: 530px;">
                                             {{banner.subTitle}}</p>
-                                        <h3 [ngStyle]="{'color' : banner.colors.titleColor}">{{banner.title}}</h3>
-                                        <a [routerLink]="[getLink(banner.buttonLink)]">
-                                            <button class="heading-button" [ngStyle]="{'color' : banner.colors.buttonColor, 
-                                'border-color' : banner.colors.buttonColor}">Explore
+                                        <h1 [ngStyle]="{'color' : banner.colors.titleColor}">{{banner.title}}</h1>
+                                        <a [routerLink]="[banner.buttonLink]">
+                                            <button class="heading-button btn btn-md btn-rounded" [ngStyle]="{'color' : banner.colors.buttonColor, 
+                                'border': '1.5px solid ' + banner.colors.buttonColor}">Explore
                                                 More</button>
                                         </a>
                                     </div>
                                 </div>
                             </ng-container>
-                            
+
                             <ng-container *ngIf="banner.contentAlign == 'Center'">
                                 <div class="container d-flex align-item-center default-animation mh100"
                                     style="justify-content: center;">
                                     <div class="hero-text-container d-flex flex-column gap-10 align-item-center">
-                                    
-                                            <p class="title" [ngStyle]="{'color' : banner.colors.subTitleColor}">
-                                                {{banner.subTitle}}</p>
-                                            <h3 [ngStyle]="{'color' : banner.colors.titleColor}">{{banner.title}}</h3>
-                            
+
+                                        <p class="title" [ngStyle]="{'color' : banner.colors.subTitleColor}">
+                                            {{banner.subTitle}}</p>
+                                        <h1 [ngStyle]="{'color' : banner.colors.titleColor}">{{banner.title}}</h1>
+
                                         <a [routerLink]="[getLink(banner.buttonLink)]">
-                                            <button class="heading-button" [ngStyle]="{'color' : banner.colors.buttonColor, 
-                                'border-color' : banner.colors.buttonColor}">Explore
+                                            <button class="heading-button btn btn-md btn-rounded" [ngStyle]="{'color' : banner.colors.buttonColor, 
+                                'border': '1.5px solid ' + banner.colors.buttonColor}">Explore
                                                 More</button>
                                         </a>
                                     </div>
@@ -77,15 +78,16 @@
                             <ng-container *ngIf="banner.contentAlign == 'Right'">
                                 <div class="container d-flex align-item-center default-animation mh100"
                                     style="justify-content: flex-end;">
-                                    <div class="hero-text-container d-flex flex-column gap-10" style="align-items: flex-end;">
-                                     
-                                            <p class="title" [ngStyle]="{'color' : banner.colors.subTitleColor}">
-                                                {{banner.subTitle}}</p>
-                                            <h3 [ngStyle]="{'color' : banner.colors.titleColor}">{{banner.title}}</h3>
-                             
+                                    <div class="hero-text-container d-flex flex-column gap-5"
+                                        style="align-items: flex-end;">
+
+                                        <p class="title" [ngStyle]="{'color' : banner.colors.subTitleColor}">
+                                            {{banner.subTitle}}</p>
+                                        <h1 [ngStyle]="{'color' : banner.colors.titleColor}">{{banner.title}}</h1>
+
                                         <a [routerLink]="[getLink(banner.buttonLink)]">
-                                            <button class="heading-button" [ngStyle]="{'color' : banner.colors.buttonColor, 
-                                'border-color' : banner.colors.buttonColor}">Explore
+                                            <button class="heading-button btn btn-md btn-rounded" [ngStyle]="{'color' : banner.colors.buttonColor, 
+                                'border': '1.5px solid ' + banner.colors.buttonColor}">Explore
                                                 More</button>
                                         </a>
                                     </div>
@@ -112,9 +114,10 @@
                                 <h1 class="heading">
                                     <p class="title">NEW TRENDS</p>
                                     WINTER SALE
-                                    <h3>GIRLS</h3>
+                                    <h1>GIRLS</h1>
                                 </h1>
-                                <a [routerLink]="['explore']"> <button class="heading-button">Explore More</button></a>
+                                <a [routerLink]="['explore']"> <button class="btn-rounded heading-button btn">Explore
+                                        More</button></a>
                             </div>
                         </div>
                     </div>
@@ -129,10 +132,11 @@
                                 <h1 class="heading">
                                     <p class="title">HOT DEALS</p>
                                     TRENDING STYLES
-                                    <h3>BOYS</h3>
+                                    <h1>BOYS</h1>
                                 </h1>
 
-                                <a [routerLink]="['explore']"> <button class="heading-button">Explore More</button></a>
+                                <a [routerLink]="['explore']"> <button
+                                        class="heading-button btn btn-sm btn-rounded">Explore More</button></a>
                             </div>
 
                         </div>

@@ -4,7 +4,6 @@
 </div>
 
 <div *ngIf="!loading" class="home default-animation">
-
     <ng-container *ngFor="let item of layout">
         <ng-container *ngTemplateOutlet="getTemplate(item.name); context: { item: item }">
         </ng-container>
@@ -41,7 +40,9 @@
 
 <ng-template #hero let-item="item">
     <div class="home home__block">
-        <app-hero></app-hero>
+        <div style="padding-block-start: 80px;">
+            <app-hero></app-hero>
+        </div>
         <section id="facilites" class="facilities py-start-100">
             <div class="container d-flex justify-content-center flex-wrap">
                 <div class="facility d-flex  justify-content-center align-item-center gap-30 ">
