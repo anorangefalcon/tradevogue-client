@@ -16,6 +16,7 @@ export class OrdersComponent {
   orderData: any[] = [];
   pageSize: number = 8;
   currentPage: number = 1;
+  orderStatus: number = 2;
   selectedColor: any = 0;
   totalCount: any = 0
   updateIndex: any = false; //Purpose of invoice Avalibility

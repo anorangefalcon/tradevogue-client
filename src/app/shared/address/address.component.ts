@@ -2,9 +2,11 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FetchDataService } from '../services/fetch-data.service';
 import { UtilsModule } from 'src/app/utils/utils.module';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { ApiService } from 'src/app/dashboard/services/api.service';
 
 // import {}
 import { PhoneNumberValidator } from '../../auth/validators';
+import { Subject, debounceTime, distinctUntilChanged, switchMap } from 'rxjs';
 
 
 @Component({
@@ -21,10 +23,20 @@ export class AddressComponent {
   @Input() receiveData: any;
   @Input() ShowComponent: any;
   @Output() AddressHandler: EventEmitter<any> = new EventEmitter();
-  states: any[] = ['Punjab', 'Delhi', 'UP'];
   DetailsForm: FormGroup;
+  
+  // pincode
+  // states: any[] = ['Punjab', 'Delhi', 'UP'];
+  states: any;
+  town_city: any;
+  country: any;
+  area: any;
 
-  constructor(private fetchService: FetchDataService, private backendURLs: UtilsModule, private fb: FormBuilder) {
+  // pincode
+  pincodeFilled: boolean = false;
+  private postalCodeInput = new Subject<string>();
+
+  constructor(private fetchService: FetchDataService, private backendURLs: UtilsModule, private fb: FormBuilder, private postalCodeService: ApiService) {
     this.DetailsForm = fb.group(
       {
         firstname: fb.control('', [Validators.required]),
@@ -37,8 +49,49 @@ export class AddressComponent {
         state: fb.control('', [Validators.required,]),
         mobile: ['', [Validators.required, PhoneNumberValidator]],
       });
+  }
 
+  // pincode
+  ngOnInit(): void {
+    this.postalCodeInput
+      .pipe(
+        debounceTime(500),
+        distinctUntilChanged(),
+        switchMap((value: string) => {
+          if (value) {
+            this.pincodeFilled = true;
+            return this.postalCodeService.getDetailsByPostalCode(value);
+          } else {
+            this.pincodeFilled = false;
+            // this.country = '';
+            this.states = '';
+            this.town_city = '';
+            // this.city = '';
+            this.area = '';
+            return [];
+          }
+        })
+      )
+      .subscribe((data: any[]) => {
+        if (data.length > 0) {
+          this.country = data[0].COUNTRY;
+          this.states = data[0].STATE;
+          this.town_city = data[0].COUNTY;
+          this.area = data[0].CITY;
 
+        } else {
+          this.country = '';
+          this.states = '';
+          this.town_city = '';
+          this.area = '';
+        }
+      });
+  }
+
+  // pincode
+  onPostalCodeInputChange() {
+      const postalCodeValue = this.DetailsForm?.get('pincode')?.value;
+    this.postalCodeInput.next(postalCodeValue);
   }
 
   ChangeHanlder(event: any) {
@@ -65,7 +118,6 @@ export class AddressComponent {
     } 
       
   }
-
 
   async SaveAddress() {
     try {

@@ -24,7 +24,7 @@
     <div class="form__group relative d-flex flex-column">
         <label class="form__label">Area<span>*</span></label>
         <!-- <span class="material-symbols-outlined form__icon absolute">call</span> -->
-        <input type="text" id="area" formControlName="area" placeholder="Enter Your area" class="form__input">
+        <input type="text" id="area" formControlName="area" placeholder="Enter Your area" [value]="area" class="form__input">
     </div>
     
     
@@ -39,21 +39,24 @@
     <div class="form__group relative d-flex flex-column">
         <label class="form__label">Pincode<span>*</span></label>
         <!-- <span class="material-symbols-outlined form__icon absolute">person</span> -->
-        <input type="text" id="pincode" formControlName="pincode" placeholder="Enter Your Username" class="form__input">
+        <input type="text" id="pincode" formControlName="pincode" placeholder="Enter Your Username" class="form__input" (input)="onPostalCodeInputChange()">
     </div>
     
     
     <div class="form__group relative d-flex flex-column">
         <label class="form__label">Town/City<span>*</span></label>
         <!-- <span class="material-symbols-outlined form__icon absolute">person</span> -->
-        <input type="text" id="town_city" formControlName="town_city" placeholder="Enter Your Town/City" class="form__input">
+        <input type="text" id="town_city" formControlName="town_city" [value]="town_city" placeholder="Enter Your Town/City" class="form__input">
     </div>
     
     <div class="form__group relative d-flex flex-column">
         <label class="form__label">State<span>*</span></label>
+
+        <input class="form__input" formControlName="states" type="text" id="states" [value]="states" required
+                                placeholder="State" [disabled]="!pincodeFilled" />
     
-        <app-custom-select [type]="''"  [options]="states" [selectedOption]="((DetailsForm.get('state')?.value) ? (DetailsForm.get('state')?.value) : 'Select State')"
-        (final_option)="StateHandler($event)"></app-custom-select>
+        <!-- <app-custom-select [type]="''"  [options]="states" [selectedOption]="((DetailsForm.get('state')?.value) ? (DetailsForm.get('state')?.value) : 'Select State')"
+        (final_option)="StateHandler($event)"></app-custom-select> -->
     
     </div>
     
