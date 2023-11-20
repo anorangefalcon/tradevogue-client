@@ -548,6 +548,7 @@ main {
 
             & td.action-btns {
                 & .action__btn-icon {
+                    display: flex;
                     font-size: 14px;
                     transition: all 0.1s ease-in-out;
                     padding: 2px;

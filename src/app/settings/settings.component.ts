@@ -13,6 +13,8 @@ import { CheckoutService } from '../checkout/checkout.service';
 import { WishlistService } from '../shared/services/wishlist.service';
 import { DialogBoxService } from '../shared/services/dialog-box.service';
 import { ToastService } from '../shared/services/toast.service';
+
+
 @Component({
   selector: 'app-settings',
   templateUrl: './settings.component.html',
@@ -22,7 +24,6 @@ export class SettingsComponent {
   // showData: string = "profile";
   showData: string ="addresses"
   AllOrders!: any
-  isReadOnly: boolean = true;
   changePasswordForm: FormGroup;
   ShowComponent: boolean = false;
   ProfileForm: FormGroup;
@@ -102,8 +103,7 @@ export class SettingsComponent {
       }
     });
 
-    this.ProfileForm.disable()
-    
+    this.ProfileForm.disable();
   };
 
   ngOnInit() {
@@ -136,16 +136,6 @@ export class SettingsComponent {
     }
   }
 
-  // PROFILE PAGE
-  editClick() {
-    this.isReadOnly = !this.isReadOnly;
-    if(!this.isReadOnly){
-      this.ProfileForm.enable();
-    }
-    else{
-      this.ProfileForm.disable();
-    }
-  }
 
   async saveDetails() {
     let body = {
@@ -156,7 +146,7 @@ export class SettingsComponent {
       "info.dob": new Date(this.ProfileForm.get('dob')?.value)
     }
     this.fetchDataService.HTTPPOST(this.backendURLs.URLs.updateDetails, body).subscribe((data) => {
-      this.editClick();
+      this.ProfileForm.disable();
     })
 
   }

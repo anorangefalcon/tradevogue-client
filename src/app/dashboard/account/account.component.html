@@ -15,9 +15,9 @@
                     <h3>Profile Info</h3>
 
                     <div class="operation_button d-flex gap-10">
-                        <button class="btn-primary" [ngStyle]="{'display': !profileForm.disabled? 'none': 'block'}" (click)="profileForm.enable()" >Edit</button>
-                        <button class="btn-secondary" [ngStyle]="{'display': profileForm.disabled? 'none': 'block'}" (click)="profileForm.disable()" >Cancel</button>
-                        <button class="btn-primary" [ngStyle]="{'display': profileForm.disabled? 'none': 'block'}" (click)="updateDetails(profileForm.value)" >Update</button>
+                        <button class="btn btn-xs fw-500 btn-rounded btn-primary" [ngStyle]="{'display': !profileForm.disabled? 'none': 'block'}" (click)="profileForm.enable()" >Edit</button>
+                        <button class="btn btn-xs fw-500 btn-rounded btn-secondary" [ngStyle]="{'display': profileForm.disabled? 'none': 'block'}" (click)="profileForm.disable()" >Cancel</button>
+                        <button class="btn btn-xs fw-500 btn-rounded btn-primary" [ngStyle]="{'display': profileForm.disabled? 'none': 'block'}" (click)="updateDetails(profileForm.value)" >Update</button>
                     </div>
                 </div>
 

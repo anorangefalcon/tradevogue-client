@@ -46,9 +46,10 @@
         }
 
         & .data__field{
-            height: 30px;
-            border: 1px solid #0000004f;
-            padding-inline: 12px;
+            height: 25px;
+            border: 1px solid #00000027;
+            background-color: rgb(var(--whiteClr));
+            padding-inline: 8px;
             font-weight: 500;
             border-radius: 25px;
 
@@ -72,19 +73,13 @@
 
 input[type="file"] {
     display: none;
-
     &::-webkit-file-upload-button {
         display: none;
     }
 }
 
 input[type="file"] + label {
-    border: none;
-    padding: 5px 10px;
-    border-radius: 8px;
     color: rgb(var(--blackClr));
-    font-weight: 500;
-    font-size: 13px;
 }
 
 input[type="file"]+label:hover, .file-section span:hover {

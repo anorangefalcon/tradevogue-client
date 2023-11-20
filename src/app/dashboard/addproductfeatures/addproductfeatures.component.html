@@ -13,25 +13,29 @@
                         class="mh100 mw100"
                         accept="image/CSV, application/vnd.ms-excel ,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
                         multiple />
-                    <label [for]="'item'+i" class="d-flex flex-center pointer transition"><span
-                            class="material-symbols-outlined">upload_file</span></label>
+                    <label [for]="'item'+i" class="d-flex flex-center pointer transition">
+                        <i class="material-symbols-outlined fs-22 fw-300">upload_file</i>
+                    </label>
                     <span class="tooltiptext">Upload Excel</span>
                 </span>
                 <span class="tooltip">
-                    <a class="d-flex flex-center" [href]="'../../../assets/ExcelSampleFile/'+ item.file_name + '.xlsx'"
-                        download>
-                        <span class=" transition material-symbols-outlined">download</span></a>
+                    <a class="d-flex flex-center" 
+                       [href]="'../../../assets/ExcelSampleFile/'+ item.file_name + '.xlsx'" download>
+                        <i class=" transition material-symbols-outlined fs-22 fw-300">download</i>
+                    </a>
                     <span class="tooltiptext">Download Sample</span>
                 </span>
             </div>
         </div>
-        <div class="row row-2 card-data d-flex gap-10 flex-wrap">
+        <div class="row row-2 card-data">
             <ng-container *ngIf="field_data">
-                <div class="data__field d-flex justify-content-md-between align-item-center fs-14 gap-10 transition "
+                <div style="height: fit-content;" class="d-flex gap-10 flex-wrap">
+                    <div class="data__field d-flex justify-content-md-between align-item-center gap-10 transition "
                     *ngFor="let option of field_data[item.type] | productFilter: filter[item.filter]; let j = index">
-                    <span class="data-field__text">{{option}}</span>
-                    <span class="pointer d-flex flex-center transition material-symbols-outlined"
+                    <span class="data-field__text fs-12">{{option}}</span>
+                    <span class="pointer d-flex fs-16 flex-center transition material-symbols-outlined"
                         (click)="deleteItem(item.type, j)">close</span>
+                </div>
                 </div>
             </ng-container>
         </div>

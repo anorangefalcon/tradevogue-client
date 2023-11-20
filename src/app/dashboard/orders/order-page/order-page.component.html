@@ -9,11 +9,18 @@
                 <div class="invoice__title d-flex flex-column gap-5">
                     <h2>Order Details</h2>
                     <div class="d-flex flex-column">
-                        <span class="d-flex align-items-center gap-5">
-                            <p class="invoice__sub-title">Payment:</p> {{orderInfo.payment_status}}
+                        <span class="d-flex align-items-center gap-5 fw-500">
+                            <p class="invoice__sub-title">Payment:</p> 
+                            <span *ngIf="orderInfo.payment_status.toLowerCase() == 'success'; else failed" style="color: rgb(var(--green-clr));">{{orderInfo.payment_status.toUpperCase()}}</span>
+                            <ng-template #failed>
+                                <span *ngIf="orderInfo.payment_status.toLowerCase() == 'failed'; else processing" style="color: rgb(var(--red-clr));">{{orderInfo.payment_status.toUpperCase()}}</span>
+                                <ng-template #processing>
+                                    <span style="color: rgb(var(--blue-clr));">{{orderInfo.payment_status.toUpperCase()}}</span>
+                                </ng-template>
+                            </ng-template>
                         </span>
                         <span class="d-flex align-items-center gap-5">
-                            <p class="invoice__sub-title">Order ID:</p> {{orderInfo.orderID}}
+                            <p class="invoice__sub-title">Order ID:</p> {{orderInfo.orderID.toUpperCase()}}
                         </span>
                         <span class="d-flex align-items-center gap-5">
                             <p class="invoice__sub-title">Order Time:</p> {{orderInfo.orderDate}}

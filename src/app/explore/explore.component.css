@@ -305,6 +305,10 @@ input::-webkit-inner-spin-button {
     .phone-icons-active {
         z-index: 98;
     }
+
+    .non-filters{
+        width: 100%;
+    }
     
 }
 

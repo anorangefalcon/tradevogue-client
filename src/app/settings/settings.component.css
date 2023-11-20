@@ -44,7 +44,7 @@ form {
             color: rgb(var(--textClr), 0.5);
         }
 
-        & ::placeholder {
+        &::placeholder {
             color: rgb(var(--textClr), 0.3);
         }
 
@@ -54,7 +54,7 @@ form {
 
 label span {
     color: rgb(var(--danger));
-} 
+}
 
 /* COMMON CSS */
 .container {
@@ -72,38 +72,27 @@ label span {
     border-right: 1px solid rgba(var(--blackClr), 0.2);
 
     & .nav-items {
-        width: 100%;
         gap: 18px;
-        height: 100%;
-
-        & .nav-links {
-            width: 100%;
-            transition: all 0.3s ease-in;
-        }
-
 
         & .nav-links a {
-            cursor: pointer;
-            align-items: center;
             padding-inline: 22px;
             padding-block: 12px;
-
-
-
-            & .nav-txt {
-                font-size: 14px;
-                font-weight: 300;
-            }
-
         }
-
     }
-
 }
 
+.nav-links::before {
+    content: '';
+    display: flex;
+    position: absolute;
+    height: 0%;
+    width: 2px;
+    background-color: rgb(var(--primaryClr));
+    transition: all 0.3s ease-in-out;
+}
 
-.nav-link-active {
-    border-left: 3.5px solid rgb(var(--primaryClr));
+.nav-links.nav-link-active::before {
+    height: 80%;
 }
 
 .nav-links a span:hover {
@@ -119,6 +108,7 @@ label span {
 .content {
     width: calc(100% - 260px);
 }
+
 /*  CONTENT ENDS  */
 
 
@@ -132,6 +122,7 @@ label span {
     flex-direction: column;
     gap: 20px;
     padding-inline: 50px;
+
     & h2 {
         font-size: 24px;
         font-weight: 600;
@@ -142,57 +133,41 @@ label span {
 .radio {
     padding-block: 40px;
 
-    & label {
-        width: 200px;
-        cursor: pointer;
+    & input[type='radio'] {
+        display: none;
+    }
 
-        & span {
-            color: rgba(var(--blackClr), 0.9);
-        }
+    & input[type='radio']:checked + label::before {
+        background-color: rgba(var(--primaryClr));
+        border: none;
+    }
 
-        & input {
-            display: none;
+    & input[type='radio']:checked+label {
+        color: rgba(var(--blackClr), 0.9);
+    }
 
-        }
+    & input[type='radio'] + label::before{
+        content: "";
+        height: 20px;
+        transition: all 0.5s;
+        width: 20px;
+        background-color: #fff;
+        border: 1px solid black;
+        border-radius: 50%;
+    }
 
-        & input[type='radio']:checked+span::before {
-            background-color: rgba(var(--primaryClr));
-            border: none;
-        }
-
-        & span {
-            display: flex;
-            gap: 4px;
-            align-items: center;
-            position: relative;
-        }
-
-        & span::before {
-            content: "";
-            height: 25px;
-            transition: all 0.5s;
-            width: 25px;
-            /* border: none; */
-            background-color: #fff;
-            border: 1px solid black;
-            border-radius: 50%;
-        }
-
-        & span::after {
-            content: "";
-            height: 10px;
-            width: 10px;
-            position: absolute;
-            border: none;
-            background-color: #fff;
-            border-radius: 50%;
-            align-items: center;
-            left: 7px;
-            justify-content: center;
-        }
-
+    & input[type='radio'] + label::after{
+        content: "";
+        height: 9px;
+        width: 9px;
+        position: absolute;
+        border: none;
+        background-color: rgb(var(--whiteClr));
+        border-radius: 50%;
+        left: 5.3px;
     }
 }
+
 /*  RADIO BUTTON CSS */
 
 /*  PROFILE ENDS  */
@@ -235,11 +210,12 @@ label span {
     justify-content: space-between;
 }
 
-.accordian__head:has(+ .accordian__body.active) > span {
+.accordian__head:has(+ .accordian__body.active)>span {
 
     transform: rotate(-180deg);
 
 }
+
 .no-item-label {
     font-size: 12px !important;
     opacity: 0.6;
@@ -329,11 +305,13 @@ label span {
     padding: 24px;
     background-color: rgb(var(--whiteClr));
     border-radius: 6px;
+
     & .remove::hover {
         color: rgb(var(--danger))
     }
 }
-.particularAddress:not(:last-child){
+
+.particularAddress:not(:last-child) {
     border-block-end: 0.5px solid rgb(var(--textClr), 0.09);
     padding-block-end: 8px;
 }
@@ -341,7 +319,7 @@ label span {
 .address__firstdiv {
     & .name {
         font-weight: 500;
-    } 
+    }
 }
 
 .default__btn {
@@ -358,15 +336,18 @@ label span {
 .edit__btn {
     color: rgba(var(--blackClr), 0.7);
 }
+
 .remove__btn {
-    color: rgba(var(--danger), 0.8); 
+    color: rgba(var(--danger), 0.8);
 }
 
-.edit__btn,.remove__btn{
+.edit__btn,
+.remove__btn {
     cursor: pointer;
     font-weight: 300;
     font-size: 21px;
 }
+
 /* ADDRESS CSS ENDS */
 
 .right__icon,
@@ -514,6 +495,8 @@ label span {
     width: 80px;
     overflow: hidden;
     border-radius: 8px;
+    object-fit: cover;
+    object-position: top;
     height: 100px;
 }
 
@@ -561,8 +544,8 @@ label span {
     width: 15px;
     border-radius: 50%;
 }
+
 .main-address:not(:last-child) {
     padding-block-end: 15px;
     border-bottom: 0.5px solid rgb(var(--blackClr), 0.6);
 }
-

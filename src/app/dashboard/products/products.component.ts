@@ -62,11 +62,14 @@ export class ProductsComponent implements OnInit {
       }
     });
   }
-
+  
   async fetchData() {
     try {
       this.fetchdata.HTTPPOST(this.backendUrl.URLs.fetchProductInventory, this.template).subscribe({
-        next: (res) => {
+        next: (res: any) => {
+          if(!res.pageInfo[0].count){
+
+          }
           this.productArray = res;
           this.productList = [];
           this.totalCount = this.productArray.pageInfo[0].count;
@@ -96,6 +99,7 @@ export class ProductsComponent implements OnInit {
         }
       });
     } catch (err) {
+
     }
   }
 
@@ -151,12 +155,15 @@ export class ProductsComponent implements OnInit {
   }
 
   // Filter Handling function
+  tempSortData: string = '';
+
   updateFields(e: any, field: string = '') {
 
     if (field) {
       this.template.filter[field] = e;
 
     } else {
+      this.tempSortData = e;
       let data = e.split(':');
       delete this.template.filter['rating'];
       delete this.template.filter['stockQuantity'];
@@ -172,6 +179,14 @@ export class ProductsComponent implements OnInit {
     this.currentPage = 1
     this.template.page = 1;
 
+    this.fetchData();
+  }
+
+  clearFields(){
+    this.tempSortData = '';
+    this.template.filter.categories = '';
+    delete this.template.filter['rating'];
+    delete this.template.filter['stockQuantity'];
     this.fetchData();
   }
 
@@ -245,7 +260,7 @@ export class ProductsComponent implements OnInit {
         type: 'bulk',
         data: excel.data
       };
-
+      console.log("Excel", excel.data);
       this.fetchdata.HTTPPOST(this.backendUrl.URLs.addproduct, formData).subscribe({
         next: (res: any) => {
           this.toastService.successToast("Data Uploaded Successfuly");
