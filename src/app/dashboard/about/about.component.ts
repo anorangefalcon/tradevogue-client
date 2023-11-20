@@ -13,7 +13,6 @@ import { UtilsModule } from 'src/app/utils/utils.module';
 export class AboutComponent {
   Edit:Boolean=false;
   AboutPageForm!:FormGroup
-
   constructor(private fb:FormBuilder,private imageuploadService:ImageUploadService,private backendURLs:UtilsModule, private fetchDataService:FetchDataService, private toastService:ToastService){
     
     this.AboutPageForm=this.fb.group({
@@ -35,58 +34,24 @@ export class AboutComponent {
             }),
           
         }),
-        StoreImages:this.fb.group({
-          img:this.fb.array([],Validators.minLength(4)),
-        }),
-        active:[true,Validators.required],
+        StoreImages: this.fb.control([], Validators.required),
       }),
-      Statistics:this.fb.group({
-        Sales:this.fb.group({
-          Number:[''],
-          color:['#000000',Validators.required],
-          active:[true,Validators.required]
-        }),
-        HappyCustomers:this.fb.group({
-          Number:[''],
-          color:['#000000',Validators.required],
-          active:[true,Validators.required]
-        }),
-        ShippedProducts:this.fb.group({
-          Number:[''],
-          color:['#000000',Validators.required],
-          active:[true,Validators.required]
-        }),
-
-    }),
-    TeamMembers:this.fb.group({
-      memberInfo:this.fb.array([
-        // this.fb.group({
-        //   name:this.fb.control('abcd',Validators.required),
-        //   imgLink:this.fb.control('',Validators.required)
-        // }),
-
-      ]),
-      active:this.fb.control(true,Validators.required)
-    })
-      
+    TeamMembers:this.fb.array([
+      this.fb.group({
+        img:['',Validators.required],
+        name:['',Validators.required]
+      })
+    ]),    
     })
 
     this.fetchDataService.HTTPGET((this.backendURLs.URLs.getAboutDetails)).subscribe((data:any)=>{
-;
-      data.BasicInfo.StoreImages.img.forEach((el:any)=>{
-        (this.AboutPageForm?.get('BasicInfo')?.get('StoreImages')?.get('img') as FormArray)?.push(this.fb.control(el));
-      })
-        
-      data.TeamMembers.memberInfo.forEach(()=>{
-        this.AddTeamMember();
-      })
     this.AboutPageForm.patchValue(data);
-    })
+    })    
 
-    
-    
-    this.FormDisableEnable();
+
     // this.DummyImages();
+    this.FormDisableEnable();
+    // this.getStoreImages();
     // this.DummyTeamMembers();
   }
 
@@ -103,19 +68,19 @@ export class AboutComponent {
 
 
 
-  getTeamMemberImage(index:any){
-   return (this.AboutPageForm.get('TeamMembers')?.get('memberInfo') as FormArray)?.at(index)?.get('imgLink')?.value;
-  }
-  getStoreImages(index:any){
-    let  imgArray:any= this.AboutPageForm?.get('BasicInfo')?.get('StoreImages')?.get('img') as FormArray;
-    return imgArray.at(index)?.value;
-    }
+ 
 
 
   getTeamMembers() {
-    return (<FormArray>this.AboutPageForm.get('TeamMembers')?.get('memberInfo'))?.controls
-
+    return (<FormArray>this.AboutPageForm.get('TeamMembers'))?.controls;
   }
+
+
+  getStoreImages(){
+return this.AboutPageForm?.get('BasicInfo')?.get('StoreImages')?.value;
+  }
+
+
   
 
  EditClicked(){
@@ -143,87 +108,98 @@ export class AboutComponent {
   }
 
   ImageUploadHandler(event:any,FormGroupName:any,index:any){
-    let imgArray:any;
-    
-    if(FormGroupName=='BasicInfo'){
-       imgArray = this.AboutPageForm.get('BasicInfo.StoreImages.img') as FormArray;
-      if(index!=0 && !imgArray.at(index-1)?.value){
-        this.toastService.errorToast('Please upload another images first');
-        return;
-      }
-    }
-    else if(FormGroupName=='TeamMembers'){
-      imgArray = this.AboutPageForm.get('TeamMembers')?.get('memberInfo') as FormArray;
-     
-      if(index!=0 && !imgArray.at(index-1)?.value.imgLink){
-        this.toastService.errorToast('Please upload another images first');
-        return;
-      }
-    }
-
-   
 
     let file: any = (<HTMLInputElement>event.target)?.files![0];
     this.imageuploadService.fileupload([{ file: file }]).then((url: any) => {
-      if(FormGroupName=='BasicInfo'){    
-        if(!url[0]){
-          this.toastService.errorToast('error while uploading image please try again');
+      if(!url[0]){
+        this.toastService.errorToast('error while uploading image please try again');
         return;
-        }   
-        imgArray.insert(index,this.fb.control([url[0]]));
+      }  
 
-      }
+      
+
+      let imgArray:any;
+      if(FormGroupName=='BasicInfo'){  
+       imgArray=(this.AboutPageForm.get('BasicInfo.StoreImages')?.value); 
+        if(index!=0 && !imgArray[index-1]){
+          this.toastService.errorToast({title:'Please upload another images first'});
+          return;
+        }
+        imgArray[index]=url[0];
+      } 
+      
       else if(FormGroupName=='TeamMembers'){
-        // const imgArray = this.AboutPageForm.get('TeamMembers')?.get('memberInfo') as FormArray;
-        imgArray.insert(index,this.fb.control([url[0]]));
-      }
-
+        // console.log('previous value is ',this.AboutPageForm.get('TeamMembers') as FormArray).at(index-1)?.get('img')?.value);
+        console.log('previous value is ',(this.AboutPageForm.get('TeamMembers') as FormArray).at(index-1)?.get('img')?.value)
+        if(index!=0 && !(this.AboutPageForm.get('TeamMembers') as FormArray).at(index-1)?.get('img')?.value){
+          this.toastService.errorToast({title:'Please upload another images first'});
+          return;
+        }
+      (this.AboutPageForm.get('TeamMembers') as FormArray).at(index)?.get('img')?.setValue(url[0]);
+      }  
     })
     
   }
-
-  check:Boolean=true;
-  ActiveStatus(event:any,data:any){
-    this.AboutPageForm?.get(data)?.get('active')?.setValue(false);
-    
-  }
-
 
 
 
   AddTeamMember(){
   let newTeamMember=  this.fb.group({
       name:['',Validators.required],
-      imgLink:['',Validators.required],
+      img:['',Validators.required],
     });
 
-    if((this.AboutPageForm.get('TeamMembers')?.get('memberInfo') as FormArray).length>=5){
-      this.toastService.errorToast('You cannot add more than 5 TeamMembers');
+    if((this.AboutPageForm.get('TeamMembers') as FormArray).length>=5){
+      this.toastService.errorToast({title:'You cannot add more than 5 TeamMembers'});
       return;
     }
-    (this.AboutPageForm.get('TeamMembers')?.get('memberInfo') as FormArray)?.push(newTeamMember);
+    (this.AboutPageForm.get('TeamMembers') as FormArray)?.push(newTeamMember);
     // this.DummyTeamMembers();
   }
 
   RemoveMember(index:any){
-    if((this.AboutPageForm.get('TeamMembers')?.get('memberInfo') as FormArray).length<=1){
+    if((this.AboutPageForm.get('TeamMembers') as FormArray).length<=1){
       this.toastService.errorToast('You cannot delete member any more');
       return;
     }
-    (this.AboutPageForm.get('TeamMembers')?.get('memberInfo') as FormArray).removeAt(index);
+    (this.AboutPageForm.get('TeamMembers') as FormArray).removeAt(index);
   }
 
-  DummyImages(){
-    const imgArray = this.AboutPageForm.get('BasicInfo.StoreImages.img') as FormArray;
-    let link='https://images.pexels.com/photos/3965551/pexels-photo-3965551.jpeg?auto=compress&cs=tinysrgb&w=600';
-    imgArray.insert(0,this.fb.control(link));
-    link='https://images.pexels.com/photos/5864264/pexels-photo-5864264.jpeg?auto=compress&cs=tinysrgb&w=600';
-    imgArray.insert(1,this.fb.control(link));
-    link='https://images.pexels.com/photos/1311590/pexels-photo-1311590.jpeg?auto=compress&cs=tinysrgb&w=600';
-    imgArray.insert(2,this.fb.control(link));
-    link='https://images.pexels.com/photos/1884583/pexels-photo-1884583.jpeg?auto=compress&cs=tinysrgb&w=600';
-    imgArray.insert(3,this.fb.control(link));
 
+  ShowUpload(index:any,form:any){
+    if(form=='BasicInfo'){
+     let array= this.AboutPageForm.get('BasicInfo.StoreImages')?.value;
+     delete array[index];
+     this.AboutPageForm.get('BasicInfo.StoreImages')?.setValue(array);  
+    }
+    else{ 
+      (this.AboutPageForm.get('TeamMembers') as FormArray).at(index).get('img')?.setValue(''); 
+    }
+  }
+
+
+  ImageShower(index:any,form:any){
+    if(form=='BasicInfo'){
+      return this.AboutPageForm.get('BasicInfo.StoreImages')?.value[index];
+    }
+    else{
+      return (this.AboutPageForm?.get('TeamMembers') as FormArray)?.at(index)?.get('img')?.value;
+    }
+  }
+
+
+
+  DummyImages(){
+    const imgArray:any = this.AboutPageForm.get('BasicInfo.StoreImages')?.value;
+    let arr=[
+      'https://images.pexels.com/photos/3965551/pexels-photo-3965551.jpeg?auto=compress&cs=tinysrgb&w=600',
+      'https://images.pexels.com/photos/5864264/pexels-photo-5864264.jpeg?auto=compress&cs=tinysrgb&w=600',
+      'https://images.pexels.com/photos/1311590/pexels-photo-1311590.jpeg?auto=compress&cs=tinysrgb&w=600',
+      'https://images.pexels.com/photos/1884583/pexels-photo-1884583.jpeg?auto=compress&cs=tinysrgb&w=600'
+    ];
+    if(imgArray.length==0){
+      this.AboutPageForm.get('BasicInfo.StoreImages')?.setValue(arr);
+    }     
   }
 
   DummyTeamMembers(){

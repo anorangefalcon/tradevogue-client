@@ -28,6 +28,7 @@ export class CouponsComponent {
   OfferType = ['coupon', 'discount'];
   discountType = ['percentage', 'flat'];
   couponType = ['global', 'custom', 'new'];
+  newEntry:Boolean=false;
   Brands: any;
   EditIndex: any;
   EditRequest: any;
@@ -60,6 +61,7 @@ export class CouponsComponent {
       this.Brands = data.brands;
       this.Categories = data.categories;
     })
+
 
   }
 
@@ -214,6 +216,11 @@ export class CouponsComponent {
     });
   }
 
+
+  getOfferImage(){
+     return this.OfferForm.get('Image')?.value;
+  }
+
   async ngOnInit() {
     this.getAllOffers();
   }
@@ -223,7 +230,9 @@ export class CouponsComponent {
     // this.fetchData();
   }
 
+
   AddCoupon() {
+    this.newEntry=true;
     this.OfferForm.reset();
     this.show = true;
     this.EditRequest = false;
@@ -384,8 +393,16 @@ endDate.setMinutes(endDate.getMinutes() - 1);
   bannerImageUpload(event:any){
     let file: any = (<HTMLInputElement>event.target)?.files![0];
     this.imageuploadService.fileupload([{ file: file }]).then((url: any) => {
+      console.log('url come up is ',url[0]);
+      
       this.OfferForm.get('Image')?.setValue(url[0]);
+
     })
+  }
+
+
+  ShowUpload(){
+    this.OfferForm.get('Image')?.setValue('');
   }
 
 }

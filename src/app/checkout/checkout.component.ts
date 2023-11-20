@@ -237,24 +237,37 @@ async ApplyCoupon(coupon: any = '', event: any = '') {
     this.show = event;
     this.CouponCode.nativeElement.value='';
   }
+
+  StripePaymentOpener:Boolean=false;
+  AddressSelected:any=null;
+  nextClicked(){
+    this.checkOutService.addressSelected$.subscribe((data)=>{
+      if(!data){
+        this.toastService.errorToast({title:'Please select some address'});
+        return;
+      }
+      this.AddressSelected=data;
+    })
+
+    if(this.AddressSelected){
+      this.checkOutService.StripePaymentOpen.next(true);
+      this.StripePaymentOpener=true;
+    }
+  }
   
   // COUPONS CODE FINSIH-------------------
 
   async ProceedToPayment() {
     let body:any={};
-    this.checkOutService.addressSelected$.subscribe((data)=>{
-      body.address=data;
+    body.address=this.AddressSelected;
 
-    })
-
-    if(!body.address){
-      this.toastService.errorToast({title:'Please select some address'});
-      return;
-    }
+    // if(!body.address){
+    //   this.toastService.errorToast({title:'Please select some address'});
+    //   return;
+    // }
 
 
     // response of payment here 
-
     const paymentButton = document.getElementById('submit') as HTMLButtonElement;
     const razorpayButton = document.getElementById('razorSubmit') as HTMLButtonElement;
     if (paymentButton) {

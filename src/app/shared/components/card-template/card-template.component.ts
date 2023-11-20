@@ -3,6 +3,8 @@ import { CartService } from '../../services/cart.service';
 import { OwlOptions } from 'ngx-owl-carousel-o';
 import { PopupService } from '../../services/popup.service';
 import { WishlistService } from '../../services/wishlist.service';
+import { ToastService } from '../../services/toast.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-card-template',
@@ -15,7 +17,7 @@ export class CardTemplateComponent {
   showPopup: boolean = false;
   selectedItem: boolean = false;
 
-  constructor(private cartService: CartService, private popupService: PopupService, private wishlistService : WishlistService) {    
+  constructor(private cartService: CartService, private popupService: PopupService, private router:Router, private toastService:ToastService, private wishlistService : WishlistService) {    
    }
 
   avgRating: number = 0;
@@ -26,7 +28,6 @@ export class CardTemplateComponent {
   ngOnInit(): void {
     const sku = this.product.sku;
     this.avgRating = this.product.avgRating;
-    // this.product.quantity=limit;
   
     let limit = this.product.assets[0].stockQuantity[0].quantity;
     let arr = this.product.info.orderQuantity;
@@ -82,8 +83,13 @@ export class CardTemplateComponent {
 
   
   addToCart(){
-    console.log(this.product);
-    
+    // console.log('product is ',this.product);
+    // return;
+    if(this.product.assets[0].stockQuantity[0].quantity<=0){
+this.toastService.errorToast({title:'Please select other variant of this product as it is outofStock'});
+this.router.navigate(['product/'+this.product.sku]);
+return;
+    }
     const cartItem = {
       sku: this.product.sku,
       color: this.product.assets[0].color,

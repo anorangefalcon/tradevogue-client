@@ -10,7 +10,7 @@
                         chevron_right
                     </span>
                 </li>
-                <li class="nav-links" [ngClass]="{'nav-link-active': this.showData === 'orders'}" (click)="getOrders()">
+                <li class="nav-links" [ngClass]="{'nav-link-active': this.showData === 'orders'}" (click)="changeComponent('orders')">
                     <a class="d-flex">
                         <span class="nav-txt">My Order</span>
                     </a>
@@ -29,7 +29,7 @@
 
 
                 <li class="nav-links" [ngClass]="{'nav-link-active': this.showData === 'addresses'}"
-                    (click)="getAddresses()"><a class="d-flex">
+                    (click)="changeComponent('addresses')"><a class="d-flex">
                         <span class="nav-txt">Addresses</span>
                     </a>
                     <span class="material-symbols-outlined right__icon">

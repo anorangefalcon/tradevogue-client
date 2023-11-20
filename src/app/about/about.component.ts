@@ -12,7 +12,6 @@ export class AboutComponent {
   constructor(private fetchDataService:FetchDataService,private backendUrls:UtilsModule){
     this.fetchDataService.HTTPGET((this.backendUrls.URLs.getAboutDetails)).subscribe((data)=>{
       this.Data=data;
-
     })
   }
 

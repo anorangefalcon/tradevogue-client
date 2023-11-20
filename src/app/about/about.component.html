@@ -6,24 +6,19 @@
     <div class="container d-flex justify-content-center" > 
       <div class="about-image-div">
         <div class="common common1">
-          <!-- <img src="https://images.pexels.com/photos/3965551/pexels-photo-3965551.jpeg?auto=compress&cs=tinysrgb&w=600" /> -->
-          <img [src]="Data?.BasicInfo?.StoreImages?.img[0]">
+          <img [src]="Data?.BasicInfo?.StoreImages[0]">
         </div>
         <div class="common common2">
-          <!-- <img src="https://images.pexels.com/photos/5864264/pexels-photo-5864264.jpeg?auto=compress&cs=tinysrgb&w=600" /> -->
-          <img [src]="Data?.BasicInfo?.StoreImages?.img[1]">
+          <img [src]="Data?.BasicInfo?.StoreImages[1]">
         </div>
         <div class="common common3">
-          <!-- <img src="https://images.pexels.com/photos/1311590/pexels-photo-1311590.jpeg?auto=compress&cs=tinysrgb&w=600" /> -->
-          <img [src]="Data?.BasicInfo?.StoreImages?.img[2]">
+          <img [src]="Data?.BasicInfo?.StoreImages[2]">
         </div>
         <div class="common common4">
-          <!-- <img src="https://images.pexels.com/photos/1884583/pexels-photo-1884583.jpeg?auto=compress&cs=tinysrgb&w=600" /> -->
-          <img [src]="Data?.BasicInfo?.StoreImages?.img[3]">
+          <img [src]="Data?.BasicInfo?.StoreImages[3]">
         </div>
       </div>
       <div class="about-content-div">
-        <!-- <h3>About Us</h3> -->
         <h2>Welcome to {{Data?.BasicInfo?.content?.name}}, {{Data?.BasicInfo?.content?.tagline}}</h2>
   
         <p>
@@ -85,43 +80,7 @@
     </div>
   </section>
   
-  <!-- another section -->
-  
-  <!-- <section class="another">
-    <div class="container">
-      <div class="first">
-        <h2> We're dedicated to enhancing your shopping experience </h2>
-        <p>
-          Our team of fashion experts constantly tracks the latest trends and selects the best pieces to add to our collection. You can trust us to keep you ahead of the fashion curve.
-          We prioritize quality in everything we offer. Each garment is carefully chosen for its durability, comfort, and style.
-        </p>
-        
-      </div>
-      <div class="second">
-        <div class="second_1">
-          <div class="second_content">
-            <p>Recuring Customers</p>
-            <p>70%</p>
-          </div>
-          <div class="skill_1"></div>
-        </div>
-        <div class="second_1">
-          <div class="second_content">
-            <p>Recuring Customers</p>
-            <p>90%</p>
-          </div>
-          <div class="skill_2"></div>
-        </div>
-        <div class="second_1">
-          <div class="second_content">
-            <p>Recuring Customers</p>
-            <p>60%</p>
-          </div>
-          <div class="skill_3"></div>
-        </div>
-      </div>
-    </div>
-  </section> -->
+
   
   <!-- TEAM MEMBER SECTION -->
   
@@ -132,45 +91,15 @@
       </div>
       
       <div class="team-members-img" >
-        <ng-container *ngFor="let member of Data?.TeamMembers?.memberInfo">
+        <ng-container *ngFor="let member of Data?.TeamMembers">
         <div class="common relative">
-          <img [src]="member.imgLink">
+          <img [src]="member.img">
           <div class="content relative">
             <h3>{{member.name}}</h3>
           </div>
         </div>
     </ng-container>
-        <!-- <div class="common relative">
-          <img src="https://images.pexels.com/photos/7063781/pexels-photo-7063781.jpeg?auto=compress&cs=tinysrgb&w=600" />
-          <div class="content relative">
-            <h3>Priyanshu Dhall</h3>
-          </div>
-        </div>
-        <div class="common relative">
-          <img src="https://images.pexels.com/photos/7063780/pexels-photo-7063780.jpeg?auto=compress&cs=tinysrgb&w=600" />
-          <div class="content relative">
-            <h3>Abhishek Rana</h3>
-          </div>
-        </div>
-        <div class="common relative">
-          <img src="https://images.pexels.com/photos/5435154/pexels-photo-5435154.jpeg?auto=compress&cs=tinysrgb&w=600" />
-          <div class="content relative">
-            <h3>Jahnavi Singh</h3>
-          </div>
-        </div>
-        <div class="common relative">
-          <img src="https://images.pexels.com/photos/4195342/pexels-photo-4195342.jpeg?auto=compress&cs=tinysrgb&w=600" />
-          <div class="content">
-            <h3>Vivek Dhiman</h3>
-          </div>
-        </div>
-        <div class="common relative">
-          <img src="https://images.pexels.com/photos/4195342/pexels-photo-4195342.jpeg?auto=compress&cs=tinysrgb&w=600" />
-          <div class="content">
-            <h3>Davinder Kumar</h3>
-          </div>
-        </div> -->
-  
+ 
       </div>
     </div>
   </section>

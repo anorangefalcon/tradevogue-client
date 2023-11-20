@@ -5,6 +5,7 @@ import { UtilsModule } from 'src/app/utils/utils.module';
 import { passwordStrengthValidator, matchPasswordValidator } from '../auth/validators';
 // import { ToastService } from '../shared/services/toast.service';
 import { MobileNoValidator } from './validators';
+import { Location } from '@angular/common';
 import { CartService } from '../shared/services/cart.service';
 import { ActivatedRoute, Router } from '@angular/router';
 // import { StripPaymentService } from '../shared/services/stripe-Integration/strip-payment.service';
@@ -62,6 +63,7 @@ export class SettingsComponent {
      private fb: FormBuilder,
      private cartService: CartService, 
      private route: ActivatedRoute, 
+     private location: Location,
      private stripePay: CheckoutService,
      private toastService : ToastService,
      private dialogBox : DialogBoxService) {
@@ -122,9 +124,15 @@ export class SettingsComponent {
 
   changeComponent(el: string) {
     this.showData = el;
-    this.TranslateData = true;
+    this.location.replaceState('usersetting/'+el);
+    if(el=='addresses'){
+      this.getAddresses();
+    }
     if (el == 'wishlist') {
       this.showWishlists();
+    }
+    if(el=='orders'){
+      this.getOrders();
     }
   }
 
@@ -213,7 +221,6 @@ export class SettingsComponent {
 //  ADDRESS
   getAddresses() {
     this.showData = 'addresses';
-    this.TranslateData = true;
     this.fetchDataService.HTTPGET(this.backendURLs.URLs.getAddress)
       .subscribe((data: any) => {
         if (data) {
@@ -287,7 +294,6 @@ export class SettingsComponent {
 
   // orders code 
    getOrders(){
-    this.showData='orders';
     setTimeout(()=>{
       this.TranslateData=true;
     },300)

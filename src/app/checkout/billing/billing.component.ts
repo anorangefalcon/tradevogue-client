@@ -48,10 +48,11 @@ export class BillingComponent implements OnInit {
   stripe: any;
   items: any;
   selectedPaymentMethod = 'stripe';
-
-  ngOnInit(): void {
-    // console.log('ngOnit called------> of billing');
-    
+StripeOpener:Boolean=false;
+  ngOnInit(): void {    
+  this.checkOutService.StripePaymentOpen$.subscribe((data)=>{
+    this.StripeOpener=data;
+  })
     try {
       this.route.queryParams.subscribe(async params => {
         const redirectStatus = params['redirect_status'];
@@ -662,4 +663,7 @@ export class BillingComponent implements OnInit {
     this.checkOutService.addressSelected.next(address);
     this.addressDelivered = address;
   }
+
+
+
 }

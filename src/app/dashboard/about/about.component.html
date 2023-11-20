@@ -1,117 +1,64 @@
 <div class="container  d-flex flex-column gap-20">
-  <div class="d-flex justify-content-md-between heading__section">
+  <div class="d-flex justify-content-md-between card__pd-20 card ">
     <h2 class="d-flex align-item-center">Customize About Page</h2>
     <div class="d-flex gap-10">
-      <!--  [disabled]="DealForm.invalid" -->
-      <button class="Edit__btn btn btn-xs btn-rounded" (click)="EditClicked()" *ngIf="!Edit">Edit</button>
-      <button class="cancel__btn btn btn-xs btn-rounded" (click)="EditClicked()" *ngIf="Edit">Cancel</button>
-      <button class="save__btn btn btn-xs btn-rounded" (click)="Save()" *ngIf="Edit">Save</button>
+
+      <button class="btn  btn-primary btn-xs btn-rounded" (click)="EditClicked()" *ngIf="!Edit">Edit</button>
+      <button class="cancel__btn btn btn-secondary btn-xs btn-rounded" (click)="EditClicked()"
+        *ngIf="Edit">Cancel</button>
+      <button class="btn btn-primary btn-xs btn-rounded" (click)="Save()" [disabled]="AboutPageForm.invalid" *ngIf="Edit">Save</button>
     </div>
   </div>
 
 
-  <form [formGroup]="AboutPageForm" class="d-flex flex-column gap-20">
+  <form [formGroup]="AboutPageForm"  class="d-flex flex-column gap-20">
 
     <!--  BASIC INFO  START -->
-    <div class="d-flex flex-column gap-20 basicInfo" formGroupName="BasicInfo">
-      <div class="d-flex justify-content-md-between">
-        <h2 class="common__h2">Basic Info</h2>
+    <div class="d-flex flex-column card__pd-20 card gap-20">
+  <div class="d-flex flex-column gap-20" formGroupName="BasicInfo">
 
-        <!-- <div class="slide-button tooggle__btn">
-      <input type="checkbox"   formControlName="active"   id="basicInfo" (change)="ActiveStatus($event,'BasicInfo')">
-      <label for="basicInfo"></label>
-    </div> -->
+        <h3 class="common__h2">Basic Info</h3>
 
-      </div>
+      <div formGroupName="content" class="d-flex flex-column gap-20">
 
+        <!-- store images and content -->
       <div class="d-flex gap-20">
 
-        <div class="ImageDiv d-flex flex-wrap gap-10 relative" style="height: fit-content;">
+      <div class="d-flex gap-20 ImageDiv flex-wrap">
+        <ng-container *ngFor="let link of getStoreImages(); let i=index">
+          <div class="input-form d-flex align-item-center justify-content-center">
 
-          <div class="common common1 relative ">
-            <img [src]="getStoreImages(0)" *ngIf="getStoreImages(0) && !Edit">
-            <img [src]="getStoreImages(0)" class="image__uploaded absolute mw100 mh100"
-              *ngIf="getStoreImages(0) && Edit">
-            <span class="material-symbols-outlined remove-btn pointer">
-              close
-            </span>
-            <div *ngIf="Edit" class="d-flex flex-column align-item-center img__div justify-content-center gap-10">
-              <label for="backgroundImage0" class="upload__div d-flex flex-center">
+            <!--  LABEL AND SPAN -->
+            <div class="d-flex flex-column align-item-center gap-5"  *ngIf="!ImageShower(i,'BasicInfo')">
+            <label [for]="'storeImage'+i"  class="d-flex align-item-center upload__label flex-column justify-content-center" >
                 <span class="upload_icon material-symbols-outlined">
                   cloud_upload
                 </span>
-              </label>
-              <input type="file" class="image__upload__input" [id]="'backgroundImage0'"
-                accept="image/jpg, image/jpeg, image/png" (input)="ImageUploadHandler($event,'BasicInfo',0)">
-              <small class="banner-label">Upload Image</small>
-            </div>
-
-          </div>
-          <div class="common common2 relative">
-            <img [src]="getStoreImages(1)" *ngIf="getStoreImages(1) && !Edit">
-            <img [src]="getStoreImages(1)" class="image__uploaded absolute mw100 mh100"
-              *ngIf="getStoreImages(1) && Edit">
-            <span class="material-symbols-outlined remove-btn pointer">
-              close
-            </span>
-
-            <div *ngIf="Edit"
-              class="d-flex flex-column align-item-center img__div height-100 justify-content-center gap-10">
-              <label for="backgroundImage1" class="upload__div d-flex flex-center">
-                <span class="upload_icon material-symbols-outlined">
-                  cloud_upload
-                </span>
-              </label>
-              <input type="file" class="image__upload__input" [id]="'backgroundImage1'"
-                accept="image/jpg, image/jpeg, image/png" (input)="ImageUploadHandler($event,'BasicInfo',1)">
-              <small class="banner-label">Upload Image</small>
-            </div>
-          </div>
-          <div class="common common3 relative">
-            <img [src]="getStoreImages(2)" *ngIf="getStoreImages(2) && !Edit">
-            <img [src]="getStoreImages(2)" class="image__uploaded absolute mw100 mh100"
-              *ngIf="getStoreImages(2) && Edit">
-            <span class="material-symbols-outlined remove-btn pointer">
-              close
-            </span>
-            <div *ngIf="Edit"
-              class="d-flex flex-column align-item-center img__div height-100 justify-content-center gap-10">
-              <label for="backgroundImage2" class="upload__div d-flex flex-center">
-                <span class="upload_icon material-symbols-outlined">
-                  cloud_upload
-                </span>
-              </label>
-              <input type="file" class="image__upload__input" [id]="'backgroundImage2'"
-                accept="image/jpg, image/jpeg, image/png" (input)="ImageUploadHandler($event,'BasicInfo',2)">
-              <small class="banner-label">Upload Image</small>
-            </div>
-          </div>
-          <div class="common common4 relative">
-            <img [src]="getStoreImages(3)" *ngIf="getStoreImages(3) && !Edit">
-            <img [src]="getStoreImages(3)" class="image__uploaded absolute mw100 mh100"
-              *ngIf="getStoreImages(3) && Edit">
-            <span class="material-symbols-outlined remove-btn pointer">
-              close
-            </span>
-            <div *ngIf="Edit"
-              class="d-flex flex-column align-item-center img__div height-100 justify-content-center gap-10">
-              <label for="backgroundImage3" class="upload__div d-flex flex-center">
-                <span class="upload_icon material-symbols-outlined">
-                  cloud_upload
-                </span>
-              </label>
-              <input type="file" class="image__upload__input" [id]="'backgroundImage3'"
-                accept="image/jpg, image/jpeg, image/png" (input)="ImageUploadHandler($event,'BasicInfo',3)">
-              <small class="banner-label">Upload Image</small>
-            </div>
-
-
-
+            </label>
+            <small class="banner-label">Upload Image</small>
           </div>
 
+          
+            <!-- IMAGE VISIBLE DIV -->
+            <!-- {{AboutPageForm.get('StoreImages')[i]}} image is  -->
+            <div class="image-container" *ngIf="ImageShower(i,'BasicInfo')">
+              <span class="remove-img material-symbols-outlined" *ngIf="Edit" (click)="ShowUpload(i,'BasicInfo')">
+                close
+              </span>
+              <img  [src]="link" class="mh100 mw100"  alt="Profile Image" />
+            </div>
 
-        </div>
-        <div class="width-50 d-flex flex-wrap gap-20" formGroupName="content">
+            <!-- INPUT WHICH DISPLAY NONE -->
+            <input type="file" class="image__upload__input" [id]="'storeImage'+i" 
+              accept="image/jpg, image/jpeg, image/png"  (input)="ImageUploadHandler($event,'BasicInfo',i)">
+          
+
+          </div>
+        </ng-container>
+      </div>
+
+      <div class="basicInfo__content">
+        <div class="d-flex flex-wrap gap-20">
           <div class="formControl d-flex flex-column gap-5">
             <label class="form__label">Name<span class="red">*</span></label>
             <input type="text" id="title" formControlName="name" placeholder="Enter Name" class="form__input">
@@ -128,7 +75,7 @@
           </div>
 
 
-          <div class="width-100 d-flex flex-column gap-5">
+          <div class="mw100 d-flex flex-column gap-5">
             <label class="form__label">Tagline<span class="red">*</span></label>
             <input type="text" id="title" formControlName="tagline" placeholder="Enter Tagline" class="form__input">
           </div>
@@ -154,98 +101,97 @@
 
 
         </div>
-
       </div>
-      <div class="features d-flex gap-20">
-        <div class="d-flex features width-100 flex-column gap-10">
-          <h4>Feature 1</h4>
-          <div class="d-flex gap-20 flex-wrap" formGroupName="Feature1">
-            <div class="width-100 d-flex flex-column gap-5">
-              <label class="form__label">Heading<span>*</span></label>
-              <input type="text" id="title" formControlName="heading" placeholder="Enter heading" class="form__input">
-            </div>
-            <div class="width-100 formControl__textArea d-flex flex-column gap-5">
-              <label class="form__label">Description<span class="red">*</span></label>
-              <textarea rows="2" id="title" formControlName="description" placeholder="Enter Description">
-        </textarea>
-            </div>
 
-          </div>
+    </div>
 
-        </div>
-
-
-        <div formGroupName="Feature2" class="d-flex features width-100 flex-column gap-10">
-          <h4>Feature 2</h4>
-          <div class="d-flex gap-20 flex-wrap">
-            <div class="width-100 d-flex flex-column gap-5">
-              <label class="form__label">Heading<span class="red">*</span></label>
-              <input type="text" id="title" formControlName="heading" placeholder="Enter heading" class="form__input">
-            </div>
-            <div class="width-100 d-flex flex-column gap-5  formControl__textArea">
-              <label class="form__label">Description<span class="red">*</span></label>
-              <textarea rows="2" id="title" formControlName="description" placeholder="Enter Description">
+    <!-- FEATURES -->
+    <div class="d-flex features gap-20">
+    <div formGroupName="Feature1" class="feature1 d-flex flex-column gap-10">
+      <div class="width-100 d-flex flex-column gap-5">
+        <label class="form__label">Heading<span class="red">*</span></label>
+        <input type="text" id="title" formControlName="heading" placeholder="Enter Name" class="form__input">
+      </div>
+      <div class="formControl__textArea d-flex flex-column gap-5">
+        <label class="form__label">Description<span class="red">*</span></label>
+        <textarea rows="3" formControlName="description" placeholder="Enter Description">
     </textarea>
-            </div>
-
-          </div>
-
-        </div>
       </div>
+    </div>
 
+    <div formGroupName="Feature2" class="feature2 d-flex flex-column gap-10">
+      <div class="width-100 d-flex flex-column gap-5">
+        <label class="form__label">Heading<span class="red">*</span></label>
+        <input type="text" id="title" formControlName="heading" placeholder="Enter Name" class="form__input">
+      </div>
+      <div class="formControl__textArea d-flex flex-column gap-5">
+        <label class="form__label">Description<span class="red">*</span></label>
+        <textarea rows="3" formControlName="description" placeholder="Enter Description">
+    </textarea>
+      </div>
+    </div>
+  </div>
 
+  </div>
+
+    </div>
     </div>
     <!--  BASIC INFO END -->
 
-   
-   <!-- TEAMMEMBERS START -->
-    <div class="TeamMembers d-flex flex-column gap-10" formGroupName="TeamMembers">
+
+    <!--   TEAM MEMBER STARTS -->
+    <div class="d-flex flex-column card__pd-20 card gap-20" formArrayName="TeamMembers"> 
       <div class="d-flex justify-content-md-between">
-        <h2 class="common__h2">Team Members</h2>
-
-        <button class="add__icon btn" (click)="AddTeamMember()">
-          <span class="material-symbols-outlined ">
+        <h3 class="common__h2">Team Members</h3>
+        <button class="d-flex align-item-center btn btn-secondary" (click)="AddTeamMember()" [disabled]="!Edit">
+          <span class="material-symbols-outlined">
             add
-          </span>
+            </span>
         </button>
-
       </div>
 
-
-      <div class="d-flex  all__members flex-wrap" formArrayName="memberInfo">
+        <div class="d-flex flex-wrap gap-10">
         <ng-container *ngFor="let form of getTeamMembers();let i=index">
-          <div class="d-flex flex-column gap-10 flex-wrap member__div ">
-            <img [src]="getTeamMemberImage(i)" *ngIf="getTeamMemberImage(i) && !Edit">
 
-            <div *ngIf="Edit"
-              class="d-flex flex-column align-item-center img__div justify-content-center gap-10 relative ">
-              <label [for]="'teammember'+i" class="upload__div ">
-                <span class="upload_icon material-symbols-outlined">
-                  cloud_upload
-                </span>
+
+          <div [formGroupName]="i" class="particular_team_member d-flex flex-column gap-5">
+            <!-- team member image -->
+            <div class="d-flex  team_member_img align-item-center justify-content-center">
+
+              <!--  LABEL AND SPAN -->
+              <div class="d-flex flex-column align-item-center gap-5"  *ngIf="!ImageShower(i,'TeamMembers')">
+              <label [for]="'teammember'+i"  class="d-flex align-item-center upload__label flex-column justify-content-center" >
+                  <span class="upload_icon material-symbols-outlined">
+                    cloud_upload
+                  </span>
               </label>
-              <input type="file" class="image__upload__input" [id]="'teammember'+i"
-                accept="image/jpg, image/jpeg, image/png" (input)="ImageUploadHandler($event,'TeamMembers',i)">
               <small class="banner-label">Upload Image</small>
-              <img [src]="getTeamMemberImage(i)" class="image__uploaded absolute mh100 mw100" *ngIf="getTeamMemberImage(i) && Edit">
+            </div>
+  
+            
+              <!-- IMAGE ViSIBLE DIV -->
+              <div *ngIf="ImageShower(i,'TeamMembers')" class="img_and_close_icon">
+                <span class="remove-img material-symbols-outlined" *ngIf="Edit" (click)="ShowUpload(i,'TeamMembers')">
+                  close
+                </span>
+                <img  [src]="ImageShower(i,'TeamMembers')" alt="Profile Image" class="mh100 mw100" />
+              </div>
+  
+              <!-- INPUT WHICH DISPLAY NONE -->
+              <input type="file" class="image__upload__input" [id]="'teammember'+i"
+                accept="image/jpg, image/jpeg, image/png" multiple (input)="ImageUploadHandler($event,'TeamMembers',i)">
+            
+  
             </div>
 
-
-            <button class="close__icon btn" (click)="RemoveMember(i)">
-              <span class="material-symbols-outlined">
-                close
-              </span>
-            </button>
-
-
-            <div class="width-100" [formGroupName]="i">
-              <label class="form__label">Name<span>*</span></label>
-              <input type="text" id="title" [formControlName]="'name'" placeholder="Enter Name" class="form__input">
-            </div>
-
+            <!-- name -->
+            <input type="text" id="title" formControlName="name" placeholder="Enter Name" class="form__input">
           </div>
-        </ng-container>
-      </div>
+          </ng-container>
+        </div>
     </div>
+ <!--   TEAM MEMBER ENDS -->
+   
+
   </form>
 </div>

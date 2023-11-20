@@ -14,6 +14,8 @@ export class CheckoutService {
   stripe: any;
   private secureNavbar = new BehaviorSubject(false);
   secureNavbar$ = this.secureNavbar.asObservable();
+  StripePaymentOpen=new BehaviorSubject(false);
+  StripePaymentOpen$=this.StripePaymentOpen.asObservable();
   constructor(
     private backendUri: UtilsModule,
     private fetchData: FetchDataService,

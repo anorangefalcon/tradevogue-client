@@ -2,7 +2,22 @@
   padding-block:40px;
 }
 
+.checkOutSteps{
+    justify-content: space-around;
 
+}
+.common{
+  padding-block-end: 3px;
+}
+.dotted_line{
+  display: inline-block;
+  border-top: 1px dashed #696B79;
+  width: 40px;
+}
+.selected_step{
+  color: rgba(var(--primaryClr), 0.8);
+  border-bottom: 1px solid rgba(var(--primaryClr), 0.3);
+}
 
 .addAddress__div {
   gap: 2px;
@@ -74,3 +89,5 @@
 .hidden {
   display: none;
 }
+
+

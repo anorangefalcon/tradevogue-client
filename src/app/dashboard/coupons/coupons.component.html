@@ -9,7 +9,7 @@
         </div>
 
         <div class="d-flex gap-10 align-item-center">
-            <button (click)="AddCoupon()" class="btn btn-xs btn-rounded add__coupon">Add Coupon</button>
+            <button (click)="AddCoupon()" class="btn btn-xs btn-rounded btn-primary">Add Coupon</button>
 
             <button (click)="Delete_Offer()" class="btn btn-xs btn-rounded btn-secondary"
                 [disabled]="!deleteList.length">Delete</button>
@@ -89,18 +89,16 @@
 <app-drawer [direction]="direction" [show]="show" (showChange)="ChangeHanlder($event)"
     (ParentClosedEmitter)="ParenClosedHandler($event)" [ParenClosed]="ParenClosed" [title]="title">
 
-    <div class="CouponDiv d-flex flex-column justify-content-md-between gap-25">
-        <div class="d-flex align-item-center justify-content-md-between header__addOffer">
+    <div class="d-flex flex-column justify-content-md-between gap-25">
             <p>Add your coupon and necessary information from here
             </p>
-        </div>
 
 
-        <form [formGroup]="OfferForm" class="d-flex flex-column gap-15 OfferForm mw100">
+        <form [formGroup]="OfferForm" class="d-flex flex-column gap-15 mw100">
 
             <div class="d-flex  form__group align-item-center justify-content-center gap-10">
                 <label class="form__label"> Image <span>*</span></label>
-                <div class="d-flex flex-column align-item-center product__img__div">
+                <!-- <div class="d-flex flex-column align-item-center product__img__div">
                     <label for="backgroundImage" class="upload__div" *ngIf="!OfferForm.get('Image')?.value">
                         <span class="upload_icon material-symbols-outlined">
                             cloud_upload
@@ -112,7 +110,37 @@
                     </label>
                     <img [src]="OfferForm.get('Image')?.value" alt="" class="product-image">
 
-                </div>
+                </div> -->
+
+                <!--  new code  -->
+                <div class="d-flex flex-column align-item-center product__img__div">
+
+                    <!--  LABEL AND SPAN -->
+                    <div class="d-flex flex-column label__product__div align-item-center gap-5"  *ngIf="!OfferForm.get('Image')?.value">
+                    <label for="offerImage"  class="d-flex align-item-center upload__label flex-column justify-content-center" >
+                        <span class="upload_icon material-symbols-outlined">
+                          cloud_upload
+                        </span>
+                    </label>
+                    <small class="banner-label">Upload Image</small>
+                  </div>
+        
+                  
+                    <!-- IMAGE VISIBLE DIV -->
+                    <div *ngIf="OfferForm.get('Image')?.value" class="relative mh100">
+                      <span class="remove-img material-symbols-outlined" (click)="ShowUpload()">
+                        close
+                      </span>
+                      <img  [src]="getOfferImage()" class="mh100" alt="Profile Image" />
+                    </div>
+        
+                    <!-- INPUT WHICH DISPLAY NONE -->
+                    <input type="file" [id]="'offerImage'"
+                      accept="image/jpg, image/jpeg, image/png" class="upload__input"  multiple (input)="bannerImageUpload($event)">
+                  
+        
+                  </div>
+
             </div>
 
             <div class="form__group d-flex">
@@ -305,7 +333,7 @@
 
         <div class="d-flex align-item-center justify-content-end btns footer__addOffer">
             <!-- [disabled]="OfferForm.invalid" -->
-            <button class="btn-primary" (click)="CouponSubmit()" [ngClass]="{disabled:OfferForm.invalid}">
+            <button class="btn-primary btn btn-sm btn-rounded" (click)="CouponSubmit()" [ngClass]="{disabled:OfferForm.invalid}">
                 <span *ngIf="!EditRequest else add">Save</span>
                 <ng-template #add>
                     Update
