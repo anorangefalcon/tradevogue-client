@@ -25,10 +25,14 @@
     }
 
     & .hero-model-img {
-
         & img {
             object-position: center !important;
         }
+    }
+
+    & .hero-text-container{
+        transform: translateY(35%);
+        scale: 0.8;
     }
 }
 
@@ -170,6 +174,22 @@
 
     }
     
+}
+
+.operation_button{
+    position: fixed;
+    bottom: 0;
+    right: 35px;
+    z-index: 5;
+    background: white;
+    padding-block-end: 14px;
+    padding-block-start: 20px;
+    padding-inline: 16px;
+    border-top-left-radius: 16px;
+    border-top-right-radius: 16px;
+    border: 1px solid rgba(var(--blackClr), 0.1);
+    box-shadow: 0 0 5px rgba(var(--blackClr), 0.1);
+
 }
 
 .operation_button button {

@@ -14,8 +14,8 @@ export class CartComponent implements OnInit {
   constructor(private cartService: CartService, private router: Router,
     private userService: LoginCheckService) { }
 
-  nextDisabledBtn: Boolean = false;
-  PreviousDisabledBtn: Boolean = false;
+  // nextDisabledBtn: Boolean = false;
+  // PreviousDisabledBtn: Boolean = false;
   cartArr: any[] = [];
   userToken: any = '';
   direction: any = 'right';
@@ -41,10 +41,7 @@ export class CartComponent implements OnInit {
     this.cartService.removeItem(identifier);
   }
 
-
-
-  changeQuantity(what: string, productIndex: any, selectedQuantity: Number) {
-    // console.log('quantity runs ');
+  isDisabled(what: string, productIndex: any, selectedQuantity: Number){
 
     const quantityIndex = this.cartArr[productIndex].info.orderQuantity.findIndex((q: any) => {
       return q == selectedQuantity;
@@ -52,20 +49,24 @@ export class CartComponent implements OnInit {
 
     if (what == 'next') {
       if ((quantityIndex >= ((this.cartArr[productIndex].info.orderQuantity.length) - 1)) || quantityIndex == -1) {
-        this.nextDisabledBtn = true;
-        this.PreviousDisabledBtn = false;
-        return;
+        return true;
       }
     }
 
     if (what == 'previous') {
       if (quantityIndex == 0 || quantityIndex == -1) {
-        this.PreviousDisabledBtn = true;
+        return true;
       }
-      this.nextDisabledBtn = false;
     }
+    return false;
+    
+  }
 
+  changeQuantity(what: string, productIndex: any, selectedQuantity: Number) {
 
+    const quantityIndex = this.cartArr[productIndex].info.orderQuantity.findIndex((q: any) => {
+      return q == selectedQuantity;
+    });
 
     const stockLimit = this.cartArr[productIndex].assets.find((asset: any) => {
       return asset.color === this.cartArr[productIndex].color;
@@ -74,8 +75,6 @@ export class CartComponent implements OnInit {
     }).quantity;
 
     if (what === 'next' && quantityIndex < (this.cartArr[productIndex].info.orderQuantity.length - 1) && (this.cartArr[productIndex].info.orderQuantity[quantityIndex + 1] <= stockLimit)) {
-
-
       this.cartArr[productIndex].info.quantity = this.cartArr[productIndex].info.orderQuantity[quantityIndex + 1];
     }
     else if (what === 'previous' && quantityIndex > 0) {

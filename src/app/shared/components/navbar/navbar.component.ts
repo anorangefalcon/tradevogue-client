@@ -32,7 +32,7 @@ export class NavbarComponent implements OnInit {
   }
   secureNavbar: boolean=false;
   
-  constructor(private cartService: CartService, private userService: LoginCheckService, private checkOutService:CheckoutService, private BackendEndUrl: UtilsModule, private fetchDataService: FetchDataService, private router: Router, private wishlistService: WishlistService, private utils: UtilsModule) {
+  constructor(private cartService: CartService, private userService: LoginCheckService, private checkOutService:CheckoutService, private BackendEndUrl: UtilsModule, private fetchDataService: FetchDataService, private router: Router, private wishlistService: WishlistService) {
 
     this.checkOutService.secureNavbar$.subscribe((data)=>{
       this.secureNavbar = data;
@@ -88,7 +88,12 @@ export class NavbarComponent implements OnInit {
   }
 
   searchExplore(query: string) {
-    this.router.navigateByUrl(`/explore?search=${query}`);
+    if(query == ''){
+      this.router.navigateByUrl(`/explore`);
+    }
+    else{
+      this.router.navigateByUrl(`/explore?search=${query}`);
+    }
   }
 
   onLogout() {

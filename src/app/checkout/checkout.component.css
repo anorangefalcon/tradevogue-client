@@ -130,7 +130,7 @@
     background: rgb(var(--whiteClr));
     padding: 30px;
     border: 1px solid rgb(var(--blackClr), 0.07);
-    border-radius: 27px;
+    border-radius: 14px;
 
     & h2 {
         font-size: 24px;

@@ -1155,7 +1155,9 @@ tr:last-child td{
 .default-animation {
     animation: show-animation 0.5s ease-in-out;
 }
-
+.default-animation-slow {
+    animation: show-animation 1s ease-in-out;
+}
 
 @keyframes show-animation {
     0% {

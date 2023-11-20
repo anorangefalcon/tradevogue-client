@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, FormArray, FormControl, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { BannerService } from 'src/app/shared/services/custom-UI/banner.service';
 import { ImageUploadService } from 'src/app/shared/services/image-upload.service';
 import { ToastService } from 'src/app/shared/services/toast.service';
