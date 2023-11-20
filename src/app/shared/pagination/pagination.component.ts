@@ -68,7 +68,7 @@ export class PaginationComponent implements OnInit {
   }
 
   showFirstEllipsis(): boolean {
-    return this.currentPage > 3;
+    return this.currentPage < this.totalPages.length;
   }
   
   showLastEllipsis(): boolean {

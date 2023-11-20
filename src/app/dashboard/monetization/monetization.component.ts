@@ -99,14 +99,12 @@ export class MonetizationComponent {
       }
 
       this.fetch.HTTPPOST(this.util.URLs.updatePaymentKeys, body).subscribe((response: any) => {
-      
+        this.fetchData();
       }
         , (error: any) => {
          
         });
     }
-
-    this.fetchData()
 
   }
 

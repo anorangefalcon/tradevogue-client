@@ -146,6 +146,4 @@ export class AddressComponent {
   StateHandler(event: any) {
     this.DetailsForm.get('state')?.setValue(event);
   }
-
-
 }

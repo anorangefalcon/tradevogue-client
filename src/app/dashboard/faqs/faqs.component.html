@@ -1,5 +1,5 @@
 <section class="d-flex flex-column gap-20">
-  <div class="card card__pd-20 d-flex align-item-center justify-content-md-between">
+  <div class="card card__pd-20 d-flex align-item-center justify-content-md-between default-animation">
     <h3>FAQs</h3>
     <app-custom-select [selectedOption]="'select Category'" (final_option)="retrieveContent($event)"
       [options]="faq"></app-custom-select>
@@ -46,7 +46,7 @@
     </form>
   </div>
 
-  <div *ngIf="selectedCategory" class="table-list card">
+  <div *ngIf="selectedCategory" class="table-list card default-animation-slow">
     <table class="selected-category-table">
       <thead>
         <tr>

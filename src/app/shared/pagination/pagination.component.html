@@ -13,35 +13,44 @@
 
     <!-- page numbers with ellipsis -->
     <ng-container *ngFor="let p of totalPages; index as i">
-      <ng-container *ngIf="showEllipsisBefore(i)">
+
+      <!--First Number when the user is the last number-->
+      <li class="page-item" *ngIf="i === 0 && currentPage === totalPages.length">
+        <button class="page-link" (click)="selectPageNumber(1)">
+          1
+        </button>
+      </li>
+
+      <ng-container *ngIf="showEllipsisBefore(i) && i === 1 && currentPage === totalPages.length">
         <li class="page-item">
           <button class="page-link ellipsis">&#8226;&#8226;&#8226;</button>
         </li>
       </ng-container>
-      
+
+
       <li class="page-item" *ngIf="shouldShowPage(i)" [ngClass]="currentPage === i + 1 ? 'active' : ''">
         <button class="page-link" (click)="selectPageNumber(i + 1)">
           {{ i + 1 }}
         </button>
       </li>
+
+      <ng-container *ngIf="showEllipsisAfter(i)">
+        <li class="page-item">
+          <button class="page-link ellipsis">&#8226;&#8226;&#8226;</button>
+        </li>
+      </ng-container>
     
       <!-- Add last page number before ellipsis -->
-      <ng-container *ngIf="showEllipsisAfter(i) && i === totalPages.length - 3">
+      <ng-container *ngIf="showEllipsisAfter(i) && i === totalPages.length - 1">
         <li class="page-item">
           <button class="page-link" (click)="selectPageNumber(totalPages.length)">
             {{ totalPages.length }}
           </button>
         </li>
       </ng-container>
-    
-      <ng-container *ngIf="showEllipsisAfter(i)">
-        <li class="page-item">
-          <button class="page-link ellipsis">&#8226;&#8226;&#8226;</button>
-        </li>
-      </ng-container>
+  
     </ng-container>
     
-
     <!-- next button -->
     <li class="page-item" [ngClass]="currentPage === totalPages.length ? 'disabled' : ''" *ngIf="nextPreviousButtons">
       <button class="page-link" (click)="next()">»</button>
