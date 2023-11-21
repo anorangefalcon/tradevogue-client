@@ -18,6 +18,9 @@ import { MonetizationComponent } from './monetization/monetization.component';
 import { NoPageComponent } from '../no-page/no-page.component';
 import { NotificationsComponent } from './notifications/notifications.component';
 import { AboutComponent } from './about/about.component';
+import { CustomiseTcComponent } from './customise-tc/customise-tc.component';
+import { SalesComponent } from './edit-home/sales/sales.component';
+
 
 const routes: Routes = [ 
   {
@@ -48,6 +51,7 @@ const routes: Routes = [
       },
       { path: 'notification' , component: NotificationsComponent },
       { path: 'customiseabout', component: AboutComponent },
+      {path:'tandc',component: CustomiseTcComponent},
       
       { path: '**', component: NoPageComponent },
     ]

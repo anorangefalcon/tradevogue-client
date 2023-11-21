@@ -1,0 +1,25 @@
+<div class="container">
+    <div class="card card__pd-20 d-flex justify-content-md-between align-item-center">
+        <div class="d-flex gap-5 justify-content-center align-item-center">
+            <button class="btn btn-xs customise-back-btn d-flex flex-center" routerLink="/dashboard/customise-home">
+                <span class="material-symbols-outlined">
+                    arrow_back_ios
+                </span>
+            </button>
+            <h3>Customise T and C</h3>
+        </div>
+        <div class="operation_button d-flex gap-10">
+            <button class="btn btn-xs fw-500 btn-rounded btn-primary">Add Section</button>
+        </div>
+    </div>
+
+    <div formArrayName="TandC">
+        <div *ngFor="let section of getTandC();let i=index">
+            <div [formGroupName]="i">
+                
+            </div>
+        </div>
+    </div>
+   
+
+</div>

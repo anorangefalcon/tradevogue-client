@@ -30,6 +30,8 @@ import { SalesComponent } from './edit-home/sales/sales.component';
 import { GalleryComponent } from '../home/gallery/gallery.component';
 import { NotificationsComponent } from './notifications/notifications.component';
 import { AboutComponent } from './about/about.component';
+import { CustomiseTcComponent } from './customise-tc/customise-tc.component';
+
 
 @NgModule({
   declarations: [
@@ -51,7 +53,9 @@ import { AboutComponent } from './about/about.component';
     MonetizationComponent,
     SalesComponent,
     NotificationsComponent,
-    AboutComponent
+    AboutComponent,
+    CustomiseTcComponent,
+
   ],
 
   imports: [

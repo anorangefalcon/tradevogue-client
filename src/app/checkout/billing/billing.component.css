@@ -48,11 +48,11 @@
   }
 }
 
-.address__firstdiv {
-  & .name {
-      font-weight: 500;
+
+   .name {
+      font-weight: 600;
   } 
-}
+
 
 .default__btn {
   background-color: rgb(var(--textClr), 0.09) !important;
@@ -83,7 +83,7 @@
 }
 .single-address:not(:last-child){
   padding-block-end: 20px;
-  border-block-end: 0.5px solid rgb(var(--textClr), 0.09);
+  border-block-end: 0.5px solid rgb(var(--textClr), 0.2);
 }
 
 .hidden {
