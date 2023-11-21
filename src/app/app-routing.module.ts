@@ -58,8 +58,6 @@ const routes: Routes = [
   {
     path: '**', component: NoPageComponent, data: { breadcrumb: '404' } 
   },
-  
-
 ];
 
 @NgModule({

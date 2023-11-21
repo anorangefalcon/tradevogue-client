@@ -84,10 +84,10 @@ StripeOpener:Boolean=false;
         const script = document.createElement('script');
         script.src = 'https://js.stripe.com/v3/';
         script.onload = async () => {
-          this.stripeLoaded = true; // Flag that Stripe is loaded
-          this.stripe = Stripe(publicKey); // Initialize Stripe object
-          await this.initializeStripe(); // Initialize Stripe elements
-          await this.proceedToPayment(); // Proceed to payment handling
+          this.stripeLoaded = true; 
+          this.stripe = Stripe(publicKey);
+          await this.initializeStripe(); 
+          await this.proceedToPayment(); 
         };
         document.body.appendChild(script);
       } else {
@@ -238,59 +238,42 @@ StripeOpener:Boolean=false;
     const appearance = {
       theme: 'flat',
       variables: {
-        fontFamily: 'Verdana',
+        fontFamily: ' "Gill Sans", sans-serif',
         fontLineHeight: '1.5',
-        borderRadius: '0',
-        colorBackground: '#fff',
-        focusBoxShadow: 'none',
-        focusOutline: '-webkit-focus-ring-color auto 1px',
-        tabIconSelectedColor: 'var(--colorText)'
+        borderRadius: '10px',
+        colorBackground: '#F6F8FA',
+        accessibleColorOnColorPrimary: '#262626'
       },
       rules: {
-        '.Input, .CheckboxInput, .CodeInput': {
-          transition: 'none',
-          boxShadow: 'inset -1px -1px #ffffff, inset 1px 1px #0a0a0a, inset -2px -2px #dfdfdf, inset 2px 2px #808080'
+        '.Block': {
+          backgroundColor: 'var(--colorBackground)',
+          boxShadow: 'none',
+          padding: '12px',
+          // marginBlockEnd: '10px !important',
         },
         '.Input': {
-          padding: '12px'
+          padding: '12px',
+          backgroundColor: '#fff',
+          border: '1px solid rgb(228 , 228, 228)',
         },
-        '.Input--invalid': {
-          color: '#DF1B41'
-        },
-        '.Tab, .Block, .PickerItem--selected': {
-          backgroundColor: '#047676',
-          boxShadow: 'inset -1px -1px #0a0a0a, inset 1px 1px #ffffff, inset -2px -2px #808080, inset 2px 2px #dfdfdf'
+        '.Input:disabled, .Input--invalid:disabled': {
+          color: 'lightgray'
         },
         '.Tab': {
-          transition: 'none'
+          padding: '10px 12px 8px 12px',
+          border: 'none'
         },
         '.Tab:hover': {
-          backgroundColor: '#047676'
+          border: 'none',
+          boxShadow: '0px 1px 1px rgba(0, 0, 0, 0.03), 0px 3px 7px rgba(18, 42, 66, 0.04)'
         },
         '.Tab--selected, .Tab--selected:focus, .Tab--selected:hover': {
-          color: 'var(--colorText)',
-          backgroundColor: '#ccc'
+          border: 'none',
+          backgroundColor: '#fff',
+          boxShadow: '0 0 0 1.5px var(--colorPrimaryText), 0px 1px 1px rgba(0, 0, 0, 0.03), 0px 3px 7px rgba(18, 42, 66, 0.04)'
         },
-        '.Tab:focus, .Tab--selected:focus': {
-          boxShadow: 'inset -1px -1px #0a0a0a, inset 1px 1px #ffffff, inset -2px -2px #808080, inset 2px 2px #dfdfdf',
-          outline: 'none'
-        },
-        '.Tab:focus-visible': {
-          outline: 'var(--focusOutline)'
-        },
-        '.PickerItem': {
-          backgroundColor: '#dfdfdf',
-          boxShadow: 'inset -1px -1px #0a0a0a, inset 1px 1px #ffffff, inset -2px -2px #808080, inset 2px 2px #dfdfdf',
-          transition: 'none'
-        },
-        '.PickerItem:hover': {
-          backgroundColor: '#eee'
-        },
-        '.PickerItem--highlight': {
-          outline: '1px solid blue'
-        },
-        '.PickerItem--selected:hover': {
-          backgroundColor: '#dfdfdf'
+        '.Label': {
+          fontWeight: '500',
         }
       }
     };
@@ -308,22 +291,30 @@ StripeOpener:Boolean=false;
     const paymentElement = this.elements.create("payment", paymentElementOptions);
     paymentElement.mount("#payment-element");
   }
-
+  // this.stripePay.checkOrderStatus()
   async handleSubmit(e: Event): Promise<void> {
     try {
       e.preventDefault();
       await this.stripePay.setLoading(true);
 
-      const { error } = await this.stripe.confirmPayment({
+      // this.checkOutService.checkOrderStatus();
+
+      const { paymentIntent,error } = await this.stripe.confirmPayment({
         elements: this.elements,
         confirmParams: {
-          return_url: "http://localhost:4200/usersetting/orders",
+          return_url: "http://localhost:4200/usersetting/order",
           receipt_email: this.emailAddress,
-        },
+        }
       });
 
-      if (error && (error.type === "card_error" || error.type === "validation_error")) {
+      if (error) {
         this.stripePay.showMessage(error.message);
+      } else if (paymentIntent && paymentIntent.id) {
+        const paymentIntentId = paymentIntent.id;
+        const body = { paymentIntentId };
+        // this.checkOutService.checkOrderStatus();
+  
+        this.stripePay.showMessage("Payment successful!");
       } else {
         this.stripePay.showMessage("An unexpected error occurred.");
       }
@@ -384,197 +375,6 @@ StripeOpener:Boolean=false;
 
     })
   }
-
-
-  // async initializeStripe(): Promise<void> {
-  //   try {
-  //     if (this.stripePay.publicKey) {
-  //       this.stripe = Stripe(this.stripePay.publicKey);
-  //       await this.initialize(this.stripe);
-
-  //       const paymentForm = document.querySelector("#payment-form");
-
-  //       if (paymentForm) {
-  //         paymentForm.removeEventListener("submit", this.handleSubmit);
-  //         paymentForm.addEventListener("submit", this.handleSubmit);
-  //       } else {
-  //         console.error("Payment form not found");
-  //       }
-  //     } else {
-  //     }
-  //   } catch (error) {
-  //     console.error('Error occurred:', error);
-  //   }
-  // }
-
-  // async onStripeButtonClick(): Promise<void> {
-  //   this.selectedPaymentMethod = 'stripe';
-  //   await this.initializeStripe();
-  // }
-
-  // async submitForm(item: any): Promise<void> {
-
-  //   let body = {};
-  //   this.userService.getUser('token').subscribe((token: any) => {
-  //     body = {
-  //       amount: item.price.toString(),
-  //       items: item,
-  //       token: token
-  //     };
-  //   });
-
-  //   try {
-  //     const res = await this.http.post<any>('http://localhost:1000/razorpay/createUpiPayment', body).toPromise();
-
-  //     if (res.success) {
-  //       const options: PaymentOptions = {
-  //         key: res.key_id,
-  //         amount: res.amount,
-  //         currency: 'INR',
-  //         name: res.product_name,
-  //         description: res.description,
-  //         image: 'https://dummyimage.com/600x400/000/fff',
-  //         order_id: res.order_id,
-  //         handler: (response: any) => {
-
-  //           let paymentBody = {};
-  //           this.userService.getUser('token').subscribe((token: any) => {
-  //             paymentBody = {
-  //               buyerId: token,
-  //               newPaymentStatus: 'success',
-  //               transactionId: response.razorpay_payment_id,
-  //               MOP: 'razorpay',
-  //             };
-  //           });
-  //           this.fetchDataService.HTTPPOST(this.backendURLs.URLs.updateOrderStatus, paymentBody).subscribe((data: any) => { });
-
-  //           alert('Payment Succeeded');
-  //         },
-  //         prefill: {
-  //           contact: res.contact,
-  //           name: res.name,
-  //           email: res.email,
-  //         },
-  //         notes: {
-  //           description: res.description,
-  //         },
-  //         theme: {
-  //           color: '#2300a3',
-  //         },
-  //       };
-
-  //       const razorpayObject = new (window as any).Razorpay(options);
-  //       razorpayObject.on('payment.failed', (response: any) => {
-  //         alert('Payment Failed');
-  //       });
-  //       razorpayObject.open();
-  //     } else {
-  //       alert(res.msg);
-  //     }
-  //   } catch (error) {
-  //     console.error('Error creating order:', error);
-  //   }
-  // }
-
-
-  // async proceedToPayment(): Promise<void> {
-  //   try {
-  //     const response = await fetch(this.backendURLs.URLs.getPaymentKeys);
-  //     if (!response.ok) {
-  //       throw new Error('Network response was not ok');
-  //     }
-
-  //     const data = await response.json();
-  //     const publicKey = data[0]?.keys?.[0]?.publicKey;
-
-  //     if (publicKey) {
-  //       this.stripe = Stripe(publicKey);
-  //       this.initialize(this.stripe);
-
-  //       const paymentForm = document.querySelector("#payment-form");
-  //       if (paymentForm) {
-  //         paymentForm.addEventListener("submit", this.handleSubmit);
-  //       } else {
-  //         console.error("Payment form not found");
-  //       }
-  //     } else {
-  //     }
-  //   } catch (error) {
-  //     console.error('Error loading Stripe scripts:', error);
-  //   }
-
-  //   this.route.queryParams.subscribe(params => {
-  //     const redirectStatus = params['redirect_status'];
-  //     if (redirectStatus === 'succeeded') {
-
-  //     }
-  //   });
-  // }
-
-  // async initialize(stripe: any): Promise<void> {
-  //   const items = JSON.parse(localStorage.getItem('paymentIntent') || '[]');
-  //   const response = await fetch("http://localhost:1000/create-payment-intent", {
-  //     method: "POST",
-  //     headers: { "Content-Type": "application/json" },
-  //     body: JSON.stringify({ items }),
-  //   });
-
-  //   const { clientSecret } = await response.json();
-
-  //   const appearance = {
-  //     theme: 'stripe',
-  //     variables: {
-  //       colorPrimary: '#0570de',
-  //       colorBackground: '#ffffff',
-  //       colorText: '#30313d',
-  //       colorDanger: '#df1b41',
-  //       fontFamily: 'Ideal Sans, system-ui, sans-serif',
-  //       spacingUnit: '3px',
-  //       borderRadius: '4px',
-  //     },
-  //     //  labels: 'floating',
-  //   };
-
-  //   this.elements = stripe.elements({ clientSecret, appearance });
-
-  //   const linkAuthenticationElement = this.elements.create("linkAuthentication");
-  //   linkAuthenticationElement.mount("#link-authentication-element");
-
-  //   linkAuthenticationElement.on('change', (event: any) => {
-  //     this.emailAddress = event.value.email;
-  //   });
-
-  //   const paymentElementOptions = { layout: "tabs" };
-  //   const paymentElement = this.elements.create("payment", paymentElementOptions);
-  //   paymentElement.mount("#payment-element");
-  // }
-
-  // async handleSubmit(e: Event): Promise<void> {
-  //   try {
-  //     e.preventDefault();
-  //     await this.stripePay.setLoading(true);
-
-  //     const { error } = await this.stripe.confirmPayment({
-  //       elements: this.elements,
-  //       confirmParams: {
-  //         return_url: "http://localhost:4200/usersetting/orders",
-  //         receipt_email: this.emailAddress,
-  //       },
-  //     });
-
-  //     if (error && (error.type === "card_error" || error.type === "validation_error")) {
-  //       this.stripePay.showMessage(error.message);
-  //     } else {
-  //       this.stripePay.showMessage("An unexpected error occurred.");
-  //     }
-
-  //     this.stripePay.setLoading(false);
-  //   } catch (error) {
-
-  //   }
-  // }
-
-
 
   @ViewChild('mydiv') my_div: ElementRef | undefined;
   search_text: any = '';

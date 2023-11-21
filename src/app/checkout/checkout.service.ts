@@ -12,6 +12,7 @@ declare var Stripe: any;
 export class CheckoutService {
   publicKey: any;
   stripe: any;
+  SecretClient: any;
   private secureNavbar = new BehaviorSubject(false);
   secureNavbar$ = this.secureNavbar.asObservable();
   StripePaymentOpen=new BehaviorSubject(false);
@@ -100,6 +101,7 @@ export class CheckoutService {
   };
 
   async checkOrderStatus(): Promise<void> {
+    console.log("called")
     try {
       const response = await fetch(this.backendUri.URLs.getPaymentKeys);
       if (!response.ok) throw new Error('Network response was not ok');
@@ -109,12 +111,23 @@ export class CheckoutService {
 
       this.stripe = Stripe(publicKey);
 
-      const clientSecret = new URLSearchParams(window.location.search).get("payment_intent_client_secret");
-      if (!clientSecret) return;
+      // const clientSecret = new URLSearchParams(window.location.search).get("payment_intent_client_secret");
+      const clientSecret = this.fetchData.HTTPGET(this.backendUri.URLs.getClientSecret).subscribe(async (res)=> {
+        console.log(res, 'res is' );
+        this.SecretClient=res;
 
-      const { paymentIntent } = await this.stripe.retrievePaymentIntent(clientSecret);
+
+      console.log( res, 'client secret')
+
+      if (!this.SecretClient) return;
+
+      const { paymentIntent } = await this.stripe.retrievePaymentIntent(this.SecretClient);
+
+      console.log(paymentIntent, 'payment intent');
 
       this.handlePaymentIntentStatus(paymentIntent);
+
+    })
 
     } catch (error) {
       console.error('Error checking order status:', error);

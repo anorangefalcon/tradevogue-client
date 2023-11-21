@@ -179,6 +179,9 @@ export class UtilsModule {
     // razorpay
     razorpayPayment: 'http://localhost:1000/razorpay/createUpiPayment',
 
+    // redis 
+    getClientSecret: 'http://localhost:1000/paymentKeys/get-redis-data',
+
     // update the order status 
     updateOrderStatus: 'http://localhost:1000/orders/updateOrderStatus',
     getLatestProductForBuyer: 'http://localhost:1000/orders/latestOrder'

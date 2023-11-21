@@ -19,11 +19,15 @@ export class SalesComponent {
   itemId: any;
   editingIndex: any;
 
+getSales() {
+  this.salesService.getSales().subscribe((res)=> {
+    this.tableData = res;
+  })
+}
+
   constructor(private fb: FormBuilder, private salesService: SalesService, private uploadService: ImageUploadService, private fetch: FetchDataService, private util : UtilsModule) {
 
-    this.salesService.getSales().subscribe((res)=> {
-      this.tableData = res;
-    })
+    this.getSales();
 
     this.salesForm = this.fb.group({
       sale: this.fb.array([
@@ -135,10 +139,12 @@ export class SalesComponent {
         }
 
         this.fetch.HTTPPOST(this.util.URLs.updateSales , body).subscribe((res)=> {
+          this.getSales();
         })
         
       } else {
         this.salesService.setSales(this.salesForm.value).subscribe((data) => {
+          this.getSales();
         });
       }
     } else {

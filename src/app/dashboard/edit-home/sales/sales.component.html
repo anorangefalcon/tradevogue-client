@@ -54,7 +54,7 @@
                     <div class="data-upload-div d-flex gap-15">
                         <div class="d-flex flex-column mw100 gap-10">
                             <div class="internal-div">
-                                <label class="form__title" for="title">Sale Type</label>
+                                <label class="form__title" for="title">Title</label>
                                 <input class="form__input" type="text" id="title" formControlName="title" />
                             </div>
                             <div class="internal-div">
@@ -73,7 +73,7 @@
                         <div class="d-flex flex-column mw100 gap-10">
                             <ng-container formGroupName="colors">
                                 <div class="internal-div">
-                                    <label class="form__title" [for]="'titleText'+i">Sale Type Color</label>
+                                    <label class="form__title" [for]="'titleText'+i">Title Color</label>
                                     <input class="form__input" type="color" name="" [id]="'titleText'+i"
                                         formControlName="titleColor">
                                 </div>
@@ -106,12 +106,8 @@
                 <tr>
                     <th class="items">Sr.</th>
                     <th class="items">Image</th>
-                    <th class="items">Sale Type</th>
-                    <th class="items">Sale Type Color</th>
+                    <th class="items">Title</th>
                     <th class="items">Sub Title</th>
-                    <th class="items">Sub Title Color</th>
-                    <th class="items">Button</th>
-                    <th class="items">Button Color</th>
                     <th class="items">Button Link</th>
                     <th class="items">Card Color</th>
                     <th class="items">Enable</th>
@@ -122,16 +118,48 @@
                 <tr *ngFor="let item of tableData; let i = index">
                     <td class="ellipsis items serial-number">{{i+1}}</td>
                     <td class="ellipsis items">
-                        <a [href]="item.backgroundImage">Link</a>
+                        <img class="sale-image-circle pointer" [src]="item.backgroundImage">
                     </td>
                     <td class="ellipsis items">{{item.title}}</td>
-                    <td class="ellipsis items">{{item.colors.titleColor}}</td>
                     <td class="ellipsis items">{{item.subTitle}}</td>
-                    <td class="ellipsis items">{{item.colors.subTitleColor}}</td>
-                    <td class="ellipsis items">{{item.buttonText}}</td>
-                    <td class="ellipsis items">{{item.colors.buttonColor}}</td>
-                    <td class="items">{{item.buttonLink}}</td>
-                    <td class="items">{{item.colors.cardColor}}</td>
+
+                    <td class="items ">
+                        <div class="d-flex align-item-center gap-5" >
+                            {{item.buttonText}}
+                          <a *ngIf="item.buttonLink" href="{{item.buttonLink}}" target="_blank">
+                            <span class="material-symbols-outlined link-icon pointer" >
+                                open_in_new
+                            </span>
+                        </a>
+                        </div>
+                    </td>
+
+                    <td class="items">
+                        <div class="d-flex gap-5 align-item-center">
+                            <ng-container *ngIf="!item?.colors">
+                                None
+                            </ng-container>
+                            <div class="tooltip" [class.color-circle]="item.colors.cardColor"
+                                [style.background-color]="item.colors.cardColor">
+                                <span class="tooltiptext">
+                                    Card Color
+                                </span>
+                            </div>
+                            <div class="tooltip" [class.color-circle]="item.colors.buttonColor"
+                                [style.background-color]="item.colors.buttonColor">
+                                <span class="tooltiptext">
+                                    Button Color
+                                </span>
+                            </div>
+                            <div class="tooltip" [class.color-circle]="item.colors.titleColor"
+                                [style.background-color]="item.colors.titleColor">
+                                <span class="tooltiptext">
+                                    Title Color
+                                </span>
+                            </div>
+                        </div>
+                    </td>
+
                     <td class="items">
                         <div class="slide-button d-flex align-item-center">
                             <input type="checkbox" [checked]="item.enable" (change)="toggle(item)"
@@ -143,12 +171,12 @@
                     <td class="items actions">
                         <div class="action-buttons">
 
-                            <span class="tooltip">
+                            <span class="tooltip pointer">
                                 <i (click)="showItemDetails(item , i)"
                                     class="fs-18 action__btn-icon material-symbols-outlined">edit</i>
                                 <span class="tooltiptext">Edit</span>
                             </span>
-                            <span class="tooltip">
+                            <span class="tooltip pointer">
                                 <i (click)="deleteItem(item)"
                                     class="fs-18 action__btn-icon material-symbols-outlined">delete</i>
                                 <span class="tooltiptext">Delete</span>

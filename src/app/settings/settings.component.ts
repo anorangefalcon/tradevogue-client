@@ -68,12 +68,12 @@ export class SettingsComponent {
      private stripePay: CheckoutService,
      private toastService : ToastService,
      private dialogBox : DialogBoxService) {
-    this.route.queryParams.subscribe(params => {
-      const redirectStatus = params['redirect_status'];
-      if (redirectStatus === 'succeeded') {
+    // this.route.queryParams.subscribe(params => {
+    //   const redirectStatus = params['redirect_status'];
+      // if (redirectStatus === 'succeeded') {
         this.stripePay.checkOrderStatus()
-      }
-    });
+    //   }
+    // });
 
     this.ProfileForm = fb.group(
       {

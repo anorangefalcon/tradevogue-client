@@ -1,16 +1,16 @@
-<div class="container billingPage d-flex flex-column gap-20" >
+<div class="container billingPage d-flex flex-column gap-20">
 
     <div class="d-flex checkOutSteps">
         <div class="d-flex gap-20 align-item-center">
-        <p class="common" [ngClass]="{'selected_step':!StripeOpener}">Address</p>
- <p class="dotted_line"></p>
-       
-        <p  class="common" [ngClass]="{'selected_step':StripeOpener}">Payment</p>
-    </div>
+            <p class="common" [ngClass]="{'selected_step':!StripeOpener}">Address</p>
+            <p class="dotted_line"></p>
+
+            <p class="common" [ngClass]="{'selected_step':StripeOpener}">Payment</p>
+        </div>
     </div>
     <!-- ADDRESS STARTS -->
 
-    <div class="address d-flex flex-column gap-20"  *ngIf="!StripeOpener">
+    <div class="address d-flex flex-column gap-20" *ngIf="!StripeOpener">
         <div class="d-flex flex-column gap-10">
 
             <div class="d-flex justify-content-md-between align-item-center overall__div">
@@ -19,17 +19,17 @@
                 </h2>
 
 
-            <div class="d-flex align-item-center pointer addAddress__div"  (click)="AddAddress()">
+                <div class="d-flex align-item-center pointer addAddress__div" (click)="AddAddress()">
                     <span class="material-symbols-outlined">
                         add_circle
                     </span>
                     <p>ADD NEW ADDRESS</p>
 
                 </div>
+            </div>
         </div>
-    </div>
 
-    <!-- show address -->
+        <!-- show address -->
         <div class="d-flex flex-column gap-20 main-address">
             <ng-container *ngFor="let address of userAddresses; let i=index" class="d-flex address__firstdiv ">
                 <div class="single-address">
@@ -74,13 +74,13 @@
         </div>
 
 
-    <!-- new address  -->
-    <div [ngClass]="{'show':ShowComponent==true}">
-        <app-address [ShowComponent]="ShowComponent" [receiveData]="receiveData"
-            (AddressHandler)="AddressHandler($event)"></app-address>
+        <!-- new address  -->
+        <div [ngClass]="{'show':ShowComponent==true}">
+            <app-address [ShowComponent]="ShowComponent" [receiveData]="receiveData"
+                (AddressHandler)="AddressHandler($event)"></app-address>
 
 
-    </div>
+        </div>
 
     </div>
 
@@ -89,44 +89,46 @@
 
 
     <div *ngIf="StripeOpener">
-    <div class="payment-method-buttons">
-        <button class="btn-primary" (click)="loadStripeOnButtonClick()" [class.selected]="selectedPaymentMethod === 'stripe'">Pay with
-            Stripe</button> &nbsp;
-        <button class="btn-primary" (click)="selectedPaymentMethod = 'razorpay'" [class.selected]="selectedPaymentMethod === 'razorpay'">Pay
-            with Razorpay</button>
-    </div>
+        <div class="payment-method-buttons">
+            <button class="btn-primary" (click)="loadStripeOnButtonClick()"
+                [class.selected]="selectedPaymentMethod === 'stripe'">Pay with
+                Stripe</button> &nbsp;
+            <button class="btn-primary" (click)="selectedPaymentMethod = 'razorpay'"
+                [class.selected]="selectedPaymentMethod === 'razorpay'">Pay
+                with Razorpay</button>
+        </div>
 
-    <div *ngIf="selectedPaymentMethod === 'stripe'" class="payment-form">
-        <form id="payment-form">
-            <!-- <button id="load-stripe" class="btn-primary" (click)="loadStripeOnButtonClick()">
+        <div *ngIf="selectedPaymentMethod === 'stripe'" class="payment-form">
+            <form id="payment-form">
+                <!-- <button id="load-stripe" class="btn-primary" (click)="loadStripeOnButtonClick()">
                 Load Stripe
             </button> -->
-            <div class="payment-elements">
-                <!-- Stripe.js elements -->
-                <div id="payment-request-button"></div>
-                <div id="link-authentication-element"></div>
-                <div id="payment-element"></div>
-            </div>
+                <div class="payment-elements">
+                    <!-- Stripe.js elements -->
+                    <div id="payment-request-button"></div>
+                    <div id="link-authentication-element"></div>
+                    <div id="payment-element"></div>
+                </div>
 
-            <button id="submit" class="btn-primary hidden">
-                <span id="button-text">Pay now</span>
-            </button>
-            <div id="payment-message" class="hidden"></div>
-        </form>
-    </div>
+                <button id="submit" class="btn-primary hidden">
+                    <span id="button-text">Pay now</span>
+                </button>
+                <div id="payment-message" class="hidden"></div>
+            </form>
+        </div>
 
 
-    <div *ngIf="selectedPaymentMethod === 'razorpay'">
-        <div *ngFor="let item of items">
-            <div class="btn-primary">
-                Payment Method Selected Proceed To Payment
-                <form class="hidden btn-primary" (click)="submitForm(item)">
-                    <input type="hidden" name="amount" [value]="item.price">
-                    <button class="hidden" id='razorSubmit' type="submit">pay</button>
-                </form>
+        <div *ngIf="selectedPaymentMethod === 'razorpay'">
+            <div *ngFor="let item of items">
+                <div class="btn-primary">
+                    Payment Method Selected Proceed To Payment
+                    <form class="hidden btn-primary" (click)="submitForm(item)">
+                        <input type="hidden" name="amount" [value]="item.price">
+                        <button class="hidden" id='razorSubmit' type="submit">pay</button>
+                    </form>
+                </div>
             </div>
         </div>
-    </div>
 
     </div>
 </div>
