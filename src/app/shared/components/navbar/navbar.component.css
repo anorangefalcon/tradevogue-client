@@ -1,6 +1,5 @@
 header {
     position: fixed;
-    background: transparent !important;
     /* padding-block-end: 95px; */
     font-weight: 500;
     width: 100%;
@@ -60,7 +59,7 @@ header {
 header.active {
     box-shadow: 0 5px 10px rgb(var(--textClr), 0.1);
     background-color: rgb(var(--whiteClr));
-    backdrop-filter: blur(10px);
+    /* backdrop-filter: blur(10px); */
     padding-block: 0;
 
     & .navbar {

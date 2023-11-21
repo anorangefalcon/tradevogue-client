@@ -81,10 +81,7 @@ export class CustomiseBannerComponent {
   }
 
   onSave() {
-    console.log(this.bannerForm.get('contentAlign')?.value, "content");
-    
-    console.log(this.bannerForm.value, "dataaaa");
-    
+
     if (!this.editValue) {
       this.bannerService.setBanners(this.bannerForm.value).subscribe((data: any) => {
         const toast = {
@@ -134,9 +131,7 @@ export class CustomiseBannerComponent {
     this.bannerForm.get('backgroundImage')?.reset('');
   }
 
-  delete(id: any) {
-    console.log("lolol");
-    
+  delete(id: any) { 
     const data = { id }
     this.bannerService.deleteBanner(data).subscribe((res: any) => {
       const toast = {

@@ -210,17 +210,15 @@ label span {
     justify-content: space-between;
 }
 
-.accordian__head:has(+ .accordian__body.active)>span {
-
+.accordian__head:has(+ .accordian__body.active) > span {
+    background-color: pink;
     transform: rotate(-180deg);
-
 }
 
 .no-item-label {
     font-size: 12px !important;
     opacity: 0.6;
 }
-
 
 .wishlist {
     padding-inline: 50px;
