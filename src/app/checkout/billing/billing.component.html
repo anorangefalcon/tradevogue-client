@@ -26,12 +26,7 @@
                     <p>ADD NEW ADDRESS</p>
 
                 </div>
-
         </div>
-
-   
-
-
     </div>
 
     <!-- show address -->
@@ -95,7 +90,7 @@
 
     <div *ngIf="StripeOpener">
     <div class="payment-method-buttons">
-        <button class="btn-primary" (click)="initializeStripe()" (click)="onStripeButtonClick()" [class.selected]="selectedPaymentMethod === 'stripe'">Pay with
+        <button class="btn-primary" (click)="loadStripeOnButtonClick()" [class.selected]="selectedPaymentMethod === 'stripe'">Pay with
             Stripe</button> &nbsp;
         <button class="btn-primary" (click)="selectedPaymentMethod = 'razorpay'" [class.selected]="selectedPaymentMethod === 'razorpay'">Pay
             with Razorpay</button>
@@ -103,8 +98,9 @@
 
     <div *ngIf="selectedPaymentMethod === 'stripe'" class="payment-form">
         <form id="payment-form">
-            <h3 class="form-title">Place Your Order</h3>
-
+            <!-- <button id="load-stripe" class="btn-primary" (click)="loadStripeOnButtonClick()">
+                Load Stripe
+            </button> -->
             <div class="payment-elements">
                 <!-- Stripe.js elements -->
                 <div id="payment-request-button"></div>

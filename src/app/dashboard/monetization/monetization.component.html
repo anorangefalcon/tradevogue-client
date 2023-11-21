@@ -145,7 +145,7 @@
     
     <div class="d-flex justify-content-md-between align-item-center">
       <h2 class="form-heading">Razorpay Payment Keys</h2>
-      <button type="submit" [disabled]="!razorpayKeysForm.valid" class="btn btn-xs fw-500 btn-rounded btn-primary">Submit</button>
+      <button type="button" [disabled]="!razorpayKeysForm.valid" class="btn btn-xs fw-500 btn-rounded btn-primary" (click)="onSubmit()">Submit</button>
     </div>
 
     <form [formGroup]="razorpayKeysForm" (ngSubmit)="onSubmit()" class="form d-flex gap-25">

@@ -69,26 +69,35 @@ StripeOpener:Boolean=false;
       console.error('Error loading Stripe scripts:', error);
     }
   }
+  stripeLoaded: boolean = false;
+  async loadStripeOnButtonClick(): Promise<void> {
+    try {
+      const response = await fetch(this.backendURLs.URLs.getPaymentKeys);
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+  
+      const data = await response.json();
+      const publicKey = data[0]?.keys?.[0]?.publicKey;
+  
+      if (publicKey) {
+        const script = document.createElement('script');
+        script.src = 'https://js.stripe.com/v3/';
+        script.onload = async () => {
+          this.stripeLoaded = true; // Flag that Stripe is loaded
+          this.stripe = Stripe(publicKey); // Initialize Stripe object
+          await this.initializeStripe(); // Initialize Stripe elements
+          await this.proceedToPayment(); // Proceed to payment handling
+        };
+        document.body.appendChild(script);
+      } else {
+        console.error('Public key not found');
+      }
+    } catch (error) {
+      console.error('Error loading Stripe scripts:', error);
+    }
+  }
 
-
-  // private stripeLoaded = false;
-
-  // load(): Promise<void> {
-  //   if (!this.stripeLoaded) {
-  //     return new Promise<void>((resolve, reject) => {
-  //       const script = document.createElement('script');
-  //       script.src = 'https://js.stripe.com/v3/';
-  //       script.onload = () => {
-  //         this.stripeLoaded = true;
-  //         resolve();
-  //       };
-  //       script.onerror = (error) => reject(error);
-  //       document.body.appendChild(script);
-  //     });
-  //   } else {
-  //     return Promise.resolve();
-  //   }
-  // }
 
   async initializeStripe(): Promise<void> {
     try {

@@ -13,12 +13,12 @@ export class PopupService {
   openPopup() {
     if (!this.isPopupOpen) { 
       this.showPopupSubject.next(true);
-      // this.isPopupOpen = true;
+      this.isPopupOpen = true;
     }
   }
 
   closePopup() {
     this.showPopupSubject.next(false);
-    // this.isPopupOpen = false;
+    this.isPopupOpen = false;
   }
 }

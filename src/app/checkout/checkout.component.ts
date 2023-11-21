@@ -241,6 +241,7 @@ async ApplyCoupon(coupon: any = '', event: any = '') {
   StripePaymentOpener:Boolean=false;
   AddressSelected:any=null;
   nextClicked(){
+
     this.checkOutService.addressSelected$.subscribe((data)=>{
       if(!data){
         this.toastService.errorToast({title:'Please select some address'});
@@ -254,7 +255,6 @@ async ApplyCoupon(coupon: any = '', event: any = '') {
       this.StripePaymentOpener=true;
     }
   }
-  
   // COUPONS CODE FINSIH-------------------
 
   async ProceedToPayment() {
@@ -289,13 +289,5 @@ async ApplyCoupon(coupon: any = '', event: any = '') {
         // console.log(data);
       });
     })
-
-    // const paymentButton = document.getElementById('submit') as HTMLButtonElement;
-    //   if (paymentButton) {
-    //     paymentButton.click(); 
-    //   }
   }
-
-
-
 }

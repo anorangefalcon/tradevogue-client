@@ -169,8 +169,9 @@ export class MonetizationComponent {
         this.fetch.HTTPPOST(this.util.URLs.addPaymentKeys, body).subscribe((response: any) => {
         });
       });
-    } else if (this.razorpayKeysForm.valid) {
+    } else {
       const razorKeys = this.razorpayKeysForm.value;
+      console.log(razorKeys, "razor keys are")
       this.loginCheckService.getUser('token').subscribe((data: any) => {
         const tokenSegments = data.split('.');
         const adminId = tokenSegments[1];
@@ -181,6 +182,7 @@ export class MonetizationComponent {
           "adminId": adminId,
         };
         this.fetch.HTTPPOST(this.util.URLs.addPaymentKeys, razorpayBody).subscribe((response: any) => {
+          // console.log(response, "response are")
         });
       })
     }

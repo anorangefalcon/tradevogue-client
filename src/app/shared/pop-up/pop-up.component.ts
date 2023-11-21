@@ -26,6 +26,6 @@ export class PopUpComponent implements OnDestroy {
 
   closePopup() {
     this.showPopup = false;
-    // this.popupService.closePopup();
+    this.popupService.closePopup();
   }
 }

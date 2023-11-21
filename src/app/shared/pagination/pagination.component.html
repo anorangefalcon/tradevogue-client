@@ -15,7 +15,7 @@
     <ng-container *ngFor="let p of totalPages; index as i">
 
       <!--First Number when the user is the last number-->
-      <li class="page-item" *ngIf="i === 0 && currentPage === totalPages.length">
+      <li class="page-item" *ngIf="i === 0 && currentPage === totalPages.length && currentPage > 2">
         <button class="page-link" (click)="selectPageNumber(1)">
           1
         </button>

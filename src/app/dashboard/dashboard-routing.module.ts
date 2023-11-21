@@ -18,8 +18,6 @@ import { MonetizationComponent } from './monetization/monetization.component';
 import { NoPageComponent } from '../no-page/no-page.component';
 import { NotificationsComponent } from './notifications/notifications.component';
 import { AboutComponent } from './about/about.component';
-import { SalesComponent } from './edit-home/sales/sales.component';
-
 
 const routes: Routes = [ 
   {
@@ -45,7 +43,6 @@ const routes: Routes = [
       { path: 'tickets', component: TicketsComponent },
       { path: 'monetization', component: MonetizationComponent },
       { path: 'socials', component: SocialsComponent },
-      { path: 'sales' , component: SalesComponent},
       {
         path: 'customise-home', loadChildren: () => import('./edit-home/edit-home.module').then(m => m.EditHomeModule)
       },
