@@ -278,6 +278,7 @@ export class CouponsComponent {
 
 
   async CouponSubmit() {
+    console.log('this offer form is ',this.OfferForm);
     if(!this.OfferForm.get('Image')?.value){
       this.toastService.errorToast('Image is still uploading please try again');
       return;
@@ -307,8 +308,8 @@ endDate.setMinutes(endDate.getMinutes() - 1);
       else {
         this.allOffers.unshift(data);
       }
-      // this.ParenClosed=true;  
-      // this.OfferForm.reset();
+      this.ParenClosed=true;  
+      this.OfferForm.reset();
     });
     return;
 
@@ -374,6 +375,7 @@ endDate.setMinutes(endDate.getMinutes() - 1);
   ActiveStatus(event:any,data:any){
     const body={data,status:event.target.checked};
       this.fetchDateService.HTTPPOST(this.BackendUrls.URLs.updateOfferStatus,body).subscribe((data)=>{
+        
       })
 
   }

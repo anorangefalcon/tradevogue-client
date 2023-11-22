@@ -32,7 +32,9 @@ export class FetchDataService {
 
   HTTPGET(url: any, params:any='') {
     return this.http.get(url, { params }).pipe(catchError((error:any):any=>{
-      this.toastService.errorToast(error);
+      if(!error){
+        this.toastService.errorToast(error);
+      }
     }));
   }
 

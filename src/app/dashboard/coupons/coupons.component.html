@@ -19,7 +19,7 @@
         <table>
             <tr>
                 <th class="items item-check ">
-                    <input [(ngModel)]="selectAll" (change)="toggleSelectAll();  updateCheckList();" type="checkbox"
+                    <input [(ngModel)]="selectAll" (change)="toggleSelectAll(); updateCheckList();" type="checkbox"
                         id="all_product">
                     <label for='all_product' class="d-flex flex-center">
                         <span class="d-flex flex-center material-symbols-outlined">done</span>
@@ -90,56 +90,44 @@
     (ParentClosedEmitter)="ParenClosedHandler($event)" [ParenClosed]="ParenClosed" [title]="title">
 
     <div class="d-flex flex-column justify-content-md-between gap-25">
-            <p>Add your coupon and necessary information from here
-            </p>
+        <p>Add your coupon and necessary information from here
+        </p>
 
 
         <form [formGroup]="OfferForm" class="d-flex flex-column gap-15 mw100">
 
             <div class="d-flex  form__group align-item-center justify-content-center gap-10">
                 <label class="form__label"> Image <span>*</span></label>
-                <!-- <div class="d-flex flex-column align-item-center product__img__div">
-                    <label for="backgroundImage" class="upload__div" *ngIf="!OfferForm.get('Image')?.value">
-                        <span class="upload_icon material-symbols-outlined">
-                            cloud_upload
-                        </span>
-                        <input type="file" id="backgroundImage" accept="image/jpg, image/jpeg, image/png"
-                            (input)="bannerImageUpload($event)">
-                        <small class="banner-label">Upload
-                            Banner Image</small>
-                    </label>
-                    <img [src]="OfferForm.get('Image')?.value" alt="" class="product-image">
 
-                </div> -->
-
-                <!--  new code  -->
                 <div class="d-flex flex-column align-item-center product__img__div">
 
                     <!--  LABEL AND SPAN -->
-                    <div class="d-flex flex-column label__product__div align-item-center gap-5"  *ngIf="!OfferForm.get('Image')?.value">
-                    <label for="offerImage"  class="d-flex align-item-center upload__label flex-column justify-content-center" >
-                        <span class="upload_icon material-symbols-outlined">
-                          cloud_upload
-                        </span>
-                    </label>
-                    <small class="banner-label">Upload Image</small>
-                  </div>
-        
-                  
+                    <div class="d-flex flex-column label__product__div align-item-center gap-5"
+                        *ngIf="!OfferForm.get('Image')?.value">
+                        <label for="offerImage"
+                            class="d-flex align-item-center upload__label flex-column justify-content-center">
+                            <span class="upload_icon material-symbols-outlined">
+                                cloud_upload
+                            </span>
+                        </label>
+                        <small class="banner-label">Upload Image</small>
+                    </div>
+
+
                     <!-- IMAGE VISIBLE DIV -->
                     <div *ngIf="OfferForm.get('Image')?.value" class="relative mh100">
-                      <span class="remove-img material-symbols-outlined" (click)="ShowUpload()">
-                        close
-                      </span>
-                      <img  [src]="getOfferImage()" class="mh100" alt="Profile Image" />
+                        <span class="remove-img material-symbols-outlined" (click)="ShowUpload()">
+                            close
+                        </span>
+                        <img [src]="getOfferImage()" class="mh100" alt="Profile Image" />
                     </div>
-        
+
                     <!-- INPUT WHICH DISPLAY NONE -->
-                    <input type="file" [id]="'offerImage'"
-                      accept="image/jpg, image/jpeg, image/png" class="upload__input"  multiple (input)="bannerImageUpload($event)">
-                  
-        
-                  </div>
+                    <input type="file" [id]="'offerImage'" accept="image/jpg, image/jpeg, image/png"
+                        class="upload__input" multiple (input)="bannerImageUpload($event)">
+
+
+                </div>
 
             </div>
 
@@ -190,7 +178,7 @@
             </div>
 
             <div class="form__group d-flex">
-                <label class="form__label"> startDate</label>
+                <label class="form__label"> startDate <span>*</span></label>
                 <div class="validation__div">
                     <input type="date" id="startDate" class="form__input" formControlName="startDate"
                         placeholder="Enter Start Date" [min]="CurrentDate()">
@@ -204,10 +192,10 @@
 
 
             <div class="form__group d-flex">
-                <label class="form__label"> endDate</label>
+                <label class="form__label"> endDate <span>*</span></label>
                 <div class="validation__div">
 
-                    <input type="date" id="endDate" class="form__input" formControlName="endDate"
+                    <input type="date" id="endDate" class="form__input" [min]="CurrentDate()" formControlName="endDate"
                         placeholder="Enter End Date">
                     <small
                         *ngIf="OfferForm.get('endDate')?.hasError('format') &&  OfferForm.get('endDate')?.touched">end
@@ -266,7 +254,7 @@
                 <div class="form__group d-flex">
 
                     <label class="form__label"> Brands
-                        <span>*</span>
+                        <!-- <span>*</span> -->
                     </label>
                     <div class="custom__select">
                         <app-custom-select [type]="'multiSelect'" [options]="Brands"
@@ -281,7 +269,7 @@
 
                     <label class="form__label"> Categories
 
-                        <span>*</span>
+                        <!-- <span>*</span> -->
                     </label>
                     <div class="custom__select">
                         <app-custom-select [type]="'multiSelect'" [options]="Categories"
@@ -298,27 +286,30 @@
 
             </div>
 
-            <div formArrayName="UserEmails" *ngIf="OfferForm.get('couponType')?.value=='custom'">
+            <div formArrayName="UserEmails" *ngIf="OfferForm.get('couponType')?.value=='custom'" class="d-flex flex-column gap-10">
                 <ng-container *ngFor="let form of getEmailArray();let i=index" class="form__group d-flex">
                     <div class="form__group d-flex" *ngIf="OfferForm.get('couponType')?.value=='custom'">
                         <label class="form__label"> User Email <span>*</span></label>
 
                         <div class="validation__div" [formGroupName]="i">
-                            <div class="d-flex">
-                                <input type="email" id="email" class="form__input" [formControlName]="'email'"
-                                    placeholder="Enter Your Email">
-                                <button (click)="AddEmailFormControl()" *ngIf="i==0" class="add_del_btn add__btn">
-                                    <span class="material-symbols-outlined ">
-                                        add
-                                    </span>
-                                </button>
-
+                          
+                                <div class="relative">
+                                    <input type="email" id="email" class="form__input" [formControlName]="'email'"
+                                        placeholder="Enter Your Email">
+                                    <button (click)="AddEmailFormControl()" *ngIf="i==0"
+                                        class="btn d-flex add__btn btn-rounded absolute">
+                                        <span class="material-symbols-outlined">
+                                            add
+                                        </span>
+                                    </button>
+                                    <button (click)="RemoveEmailFormControl(i)" *ngIf="i!=0" class="btn add__btn btn-rounded absolute d-flex flex-center">
+                                        <span class="material-symbols-outlined">
+                                            delete
+                                        </span>
+                                    </button>
+                                
                                 <!-- [disabled]="deleteList.length>0" -->
-                                <button (click)="RemoveEmailFormControl(i)" *ngIf="i!=0" class="add_del_btn">
-                                    <span class="material-symbols-outlined">
-                                        delete
-                                    </span>
-                                </button>
+                               
 
 
                             </div>
@@ -333,10 +324,12 @@
 
         <div class="d-flex align-item-center justify-content-end btns footer__addOffer">
             <!-- [disabled]="OfferForm.invalid" -->
-            <button class="btn-primary btn btn-sm btn-rounded" (click)="CouponSubmit()" [ngClass]="{disabled:OfferForm.invalid}">
+            <button class="btn-primary btn btn-sm btn-rounded" (click)="CouponSubmit()"
+                [ngClass]="{disabled:OfferForm.invalid}" [disabled]="OfferForm.invalid"
+                [ngClass]="{'disabled':OfferForm.invalid}">
                 <span *ngIf="!EditRequest else add">Save</span>
                 <ng-template #add>
-                    Update
+                    <span> Update</span>
                 </ng-template>
             </button>
         </div>

@@ -52,7 +52,7 @@
     <div class="form__group relative d-flex flex-column">
         <label class="form__label">State<span>*</span></label>
 
-        <input class="form__input" formControlName="states" type="text" id="states" [value]="states" required
+        <input class="form__input" formControlName="state" type="text" id="state" [value]="states" required
                                 placeholder="State" [disabled]="!pincodeFilled" />
     
         <!-- <app-custom-select [type]="''"  [options]="states" [selectedOption]="((DetailsForm.get('state')?.value) ? (DetailsForm.get('state')?.value) : 'Select State')"
@@ -73,7 +73,8 @@
     
     <div class="d-flex gap-15">
         <!-- <button class="width-160 cancelbtn">Cancel</button> -->
-        <button class="btn-primary btn-sm btn-rounded" #EditBtn (click)="SaveAddress()"  [disabled]="DetailsForm.invalid" >
+
+        <button class="btn-primary btn btn-sm btn-rounded" #EditBtn (click)="SaveAddress()" [disabled]="DetailsForm.invalid"  [ngClass]="{'disabled':DetailsForm.invalid}">
             <span *ngIf="receiveData">Update</span>
             <span *ngIf="!receiveData">Save</span>
         </button>

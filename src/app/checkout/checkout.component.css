@@ -36,6 +36,20 @@
     transition: all 0.5s ease-in-out;
 }
 
+.padding_top{
+    padding-block-start: 80px;
+}
+
+.coupon_applied__div{
+    padding-inline: 10px;
+    padding-block: 4px;
+    border: 1px dashed rgb(var(--textClr), 0.7);
+    font-size: 16px;
+    font-weight: 500;
+    opacity: 0.8;
+}
+
+
 .orderSummary.active {
     padding-block: 100px;
 }

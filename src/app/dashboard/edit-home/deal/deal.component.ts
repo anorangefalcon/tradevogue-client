@@ -55,6 +55,15 @@ export class DealComponent {
     this.EditClicked();
   }
 
+  
+  getProductImage(){
+    return this.DealForm.get('productImage')?.value;
+  }
+
+  CloseIconClicked(){
+    this.DealForm.get('productImage')?.setValue('');
+  }
+
   bannerImageUpload(event: any) {
     let file: any = (<HTMLInputElement>event.target)?.files![0];
     this.imageuploadService.fileupload([{ file: file }]).then((url: any) => {

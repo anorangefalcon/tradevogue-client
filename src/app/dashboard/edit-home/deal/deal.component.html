@@ -21,20 +21,33 @@
         <form [formGroup]="DealForm" class="d-flex gap-15 card card__pd-20 default-animation-slow">
 
             <div class="form__group width-40 relative d-flex flex-column img-upload justify-content-center align-item-center">
+                <div class="d-flex align-item-center justify-content-center">
 
-                <img [src]="DealForm.get('productImage')?.value" alt="" class="product-image" *ngIf="!Edit">
-                <img [src]="DealForm.get('productImage')?.value" alt="" class="product-uploaded-image" *ngIf="Edit">
-                <div *ngIf="Edit" class="d-flex flex-column align-item-center justify-content-center gap-10">
-                    <label for="backgroundImage" class="upload__div">
-                        <span class="upload_icon material-symbols-outlined">
-                            cloud_upload
+                    <!--  LABEL AND SPAN -->
+                    <div class="d-flex flex-column align-item-center gap-5" *ngIf="!getProductImage()">
+                    <label [for]="'deal_image'"  class="d-flex align-item-center upload__label flex-column justify-content-center" >
+                        <span class="upload_icon material-symbols-outlined" >
+                          cloud_upload
                         </span>
                     </label>
-                    <input type="file" id="backgroundImage" accept="image/jpg, image/jpeg, image/png"
-                        (input)="bannerImageUpload($event)">
-                    <small class="banner-label">Upload
-                        Banner Image</small>
-                </div>
+                    <small class="banner-label">Upload Image</small>
+                  </div>
+        
+                  
+                    <!-- IMAGE ViSIBLE DIV -->
+                    <div  class="img_and_close_icon" *ngIf="getProductImage()">
+                      <span class="remove-img material-symbols-outlined" *ngIf="Edit" (click)="CloseIconClicked()">
+                        close
+                      </span>
+                      <img  [src]="getProductImage()" alt="Product Image" class="mh100 mw100" />
+                    </div>
+        
+                    <!-- INPUT WHICH DISPLAY NONE -->
+                    <input type="file" class="image__upload__input" [id]="'deal_image'"
+                      accept="image/jpg, image/jpeg, image/png" multiple (input)="bannerImageUpload($event)">
+                  
+
+                  </div>
             </div>
 
             <div class="width-60 d-flex flex-wrap gap-20">
@@ -98,18 +111,3 @@
 </div>
 
 
-
-<!-- <div *ngFor="let i of Direction">
-    <div *ngIf="i=='home'">
-        <p>this is home</p>
-    </div>
-
-    <div *ngIf="i=='deal'">
-        <p>this is deal</p>
-    </div>
-
-    <div *ngIf="i=='popular'">
-        <p>this is popular</p>
-    </div>
-
-</div> -->

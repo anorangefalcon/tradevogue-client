@@ -5,12 +5,14 @@ form {
         display: flex;
         flex-direction: column;
         gap: 5px;
-
-        & .key {
-            transform: rotate(90deg);
-        }
     }
 
+}
+
+.form__label{
+    & span{
+        color: rgba(var(--danger));
+    }
 }
 
 .width-40{
@@ -30,7 +32,7 @@ form {
     }
 }
 
-.upload__div{
+/* .upload__div{
     border-radius: 50%;
     padding: 50px;
     font-size: 10px;
@@ -43,17 +45,17 @@ form {
          opacity: 0.7;
 
     }
-}
+} */
 
-.banner-label{
+/* .banner-label{
     color: rgb(var(--blackClr), 0.7);
-}
+} */
 
-#backgroundImage{
+/* #backgroundImage{
     display: none;
-}
+} */
 
-
+/* 
 .product-uploaded-image{
     right: 20px;
     position: absolute;
@@ -61,4 +63,47 @@ form {
     width: 100px !important;
     bottom: 20px;
     object-fit: contain;
+} */
+
+
+/*  NEW CSS */
+.img_and_close_icon{
+    height: 100%;
+    width: 100%;
+    position: relative;
+}
+
+.image__upload__input{
+    display: none;
+}
+
+.remove-img{
+    position: absolute;
+    right: 0;
+    background: #ffffffc2;
+    border-radius: 50%;
+    top: 5px;
+    right: 5px;
+    cursor: pointer;
+    font-size: 18px;
+}
+
+.upload__label{
+    border-radius: 50%;
+    padding: 50px;
+    font-size: 10px;
+    font-weight: 500;
+    color: rgb(var(--blackClr), 0.6);
+    background-color: rgb(var(--whiteClr));
+}
+
+
+.upload_icon{
+    font-size: 48px;
+    opacity: 0.7; 
+}
+
+
+.banner-label{
+    color: rgb(var(--blackClr), 0.7);
 }

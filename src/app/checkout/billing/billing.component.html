@@ -29,16 +29,15 @@
             </div>
         </div>
 
-        <!-- show address -->
-        <div class="d-flex flex-column gap-20 main-address">
+    <!-- show address -->
+        <div class="d-flex flex-column gap-20 " [ngClass]="{'main-address':AddressLength} ">
             <ng-container *ngFor="let address of userAddresses; let i=index" class="d-flex address__firstdiv ">
                 <div class="single-address">
-                    <div class="ok" style="display: none;">
                         <input type="radio" id="radio{{i}}" name="address" value="address" class="d-flex"
                             [checked]="address.selected">
-                    </div>
+                
 
-                    <label for="radio{{i}}" id="{{i}}" class="d-flex align-item-center pointer"
+                    <label for="radio{{i}}" id="{{i}}" class="d-flex align-item-center pointer relative"
                         (click)="AddressClicked(address)">
 
                         <div class="d-flex gap-10 justify-content-md-between   mw100">

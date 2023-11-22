@@ -1,7 +1,6 @@
-
 /* new css */
 
-.product__img__div{
+.product__img__div {
     width: 220px;
     height: 100px;
     /* padding: 10px; */
@@ -10,11 +9,11 @@
     background: rgb(var(--secondary));
 }
 
-.label__product__div{
+.label__product__div {
     padding: 10px;
 }
 
-.upload__label{
+.upload__label {
     border-radius: 50%;
     padding: 17px;
     font-size: 10px;
@@ -24,11 +23,12 @@
 }
 
 
-.form__label{
+.form__label {
     font-size: 14px;
     width: 220px;
     color: rgb(var(--textClr), 0.9);
-    & span{
+
+    & span {
         color: rgb(var(--danger));
     }
 }
@@ -39,22 +39,24 @@ form {
 
     & .form__group {
         align-items: center;
-        gap:20px;
+        gap: 20px;
 
-        & input, & .custom__select, & textarea {
+        & input,
+        & .custom__select,
+        & textarea {
             width: calc(100% - 220px);
         }
 
 
-        & .selectBox__div{
+        & .selectBox__div {
             width: calc(100% - 220px);
             cursor: pointer;
-        
+
         }
 
 
-        & .custom__select{
-            & input{
+        & .custom__select {
+            & input {
                 width: 100% !important;
             }
         }
@@ -75,53 +77,67 @@ form {
 
 }
 
-.validation__div{
+.validation__div {
     width: calc(100% - 220px);
-    & input{
+
+    & input {
         width: 100% !important;
     }
 
 }
 
 
-.add_del_btn{
+.add_del_btn {
     width: 50px;
     height: 50px;
-        padding: 0;
-        height: 50px;
-        background: transparent;
-    }
+    padding: 0;
+    height: 50px;
+    background: transparent;
+}
 
-    .edit__btn,.delete__btn{
-        padding: 0;
-        background: transparent;
-    }
-    
+.edit__btn,
+.delete__btn {
+    padding: 0;
+    background: transparent;
+}
 
-    .tooggle__btn{
-        display: flex;
-        align-items: center;
-        border: none;
-    }
-    
 
-    .banner-label{
-        color: rgb(var(--blackClr), 0.7);
-    }
-    
+.tooggle__btn {
+    display: flex;
+    align-items: center;
+    border: none;
+}
 
-    .remove-img{
-        position: absolute;
-        right: 0;
-        background: #ffffffc2;
-        border-radius: 50%;
-        top: 5px;
-        right: 5px;
-        cursor: pointer;
-        font-size: 18px;
-    }
-    
 
-.upload__input{
+.banner-label {
+    color: rgb(var(--blackClr), 0.7);
+}
+
+
+.remove-img {
+    position: absolute;
+    right: 0;
+    background: #ffffffc2;
+    border-radius: 50%;
+    top: 5px;
+    right: 5px;
+    cursor: pointer;
+    font-size: 18px;
+}
+
+
+.upload__input {
     display: none;
+}
+
+.add__btn {
+    right: 5px;
+    top: 10px;
+    font-size: 15px;
+    background-color: rgb(var(--blackClr), 0.09);
+    border-radius: 50%;
+
+    & span {
+        font-size: 15px;
+    }
 }

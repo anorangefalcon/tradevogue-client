@@ -184,6 +184,7 @@ export class CheckoutService {
   }
 
   //  ADDRESS
-  addressSelected=new BehaviorSubject(false);
-  addressSelected$=this.addressSelected.asObservable();
+  // addressSelected=new BehaviorSubject(false);
+  // addressSelected$=this.addressSelected.asObservable();
+  addressSelected:any=null;
 }

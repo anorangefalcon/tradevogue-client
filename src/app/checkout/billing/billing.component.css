@@ -1,5 +1,5 @@
 .billingPage{
-  padding-block:40px;
+  padding-block:80px;
 }
 
 .checkOutSteps{
@@ -80,6 +80,7 @@
   background-color: rgb(var(--whiteClr));
   border-radius: 4px;
   padding: 20px;
+  padding-inline-start: 30px;
 }
 .single-address:not(:last-child){
   padding-block-end: 20px;
@@ -88,6 +89,41 @@
 
 .hidden {
   display: none;
+}
+input[type="radio"] {
+  display: none;
+} 
+ input[type='radio']:checked + label::before {
+  background-color: rgba(var(--primaryClr));
+  border: none;
+}
+
+input[type='radio']:checked+label {
+  color: rgba(var(--blackClr), 0.9);
+}
+
+input[type='radio'] + label::before{
+  content: "";
+  position: absolute;
+  height: 15px;
+  transition: all 0.5s;
+  width: 15px;
+  background-color: #fff;
+  border: 1px solid black;
+  border-radius: 50%;
+  left: -23px;
+  top: 6px;
+}
+
+ input[type='radio'] + label::after{
+  content: "";
+  height: 9px;
+  width: 9px;
+  position: absolute;
+  border: none;
+  background-color: rgb(var(--whiteClr));
+  border-radius: 50%;
+  left: 5.3px;
 }
 
 

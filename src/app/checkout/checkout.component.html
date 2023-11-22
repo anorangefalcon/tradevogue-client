@@ -12,7 +12,7 @@
         </div>
         <router-outlet class="cartAndBilling"></router-outlet>
     </div>
-    <div class="orderSummary" [class.active]="navbar_scroll_style == true">
+    <div class="orderSummary" [class.active]="navbar_scroll_style == true" [ngClass]="{'padding_top':SecureNavBar}">
         <div class="summary-container d-flex flex-column gap-10" id="orders">
 
             <h2 class="border-end text-center">Order Summary</h2>
@@ -64,15 +64,16 @@
 
             </button>
 
-            <button *ngIf="CouponApplied && (!SecureNavBar)" class="d-flex justify-content-md-between">
+            <div *ngIf="CouponApplied && (!SecureNavBar)" class="d-flex justify-content-md-between coupon_applied__div">
                 <span>
                     {{CouponApplied.couponcode}}
                 </span>
-                <span (click)="RemoveAppliedCoupon()">Remove</span>
-            </button>
+                <span (click)="RemoveAppliedCoupon()" class="pointer">Remove</span>
+            </div>
             <!-- (click)="CreateOrder()" -->
             <button class="btn-primary btn btn-md" (click)="verifyOrderSummary()" *ngIf="!SecureNavBar" ><a>Proceed to Checkout</a></button>
-            <button class="btn-primary btn btn-md" (click)="nextClicked()" *ngIf="!StripePaymentOpener && SecureNavBar">Next</button>
+
+            <button class="btn-primary btn btn-md" (click)="nextClicked()" *ngIf="!StripePaymentOpener && SecureNavBar" [disabled]="NextDisabled">Next</button>
             <button class="btn-primary btn btn-md" *ngIf="SecureNavBar && StripePaymentOpener" (click)="ProceedToPayment()">Proceed to Payment</button>
               
         </div>

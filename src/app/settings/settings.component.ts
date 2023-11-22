@@ -24,6 +24,7 @@ export class SettingsComponent {
   // showData: string = "profile";
   showData: string ="addresses"
   AllOrders!: any
+  AddressLength:number=0;
   changePasswordForm: FormGroup;
   ShowComponent: boolean = false;
   ProfileForm: FormGroup;
@@ -97,9 +98,10 @@ export class SettingsComponent {
 
     this.dialogBox.responseEmitter.subscribe(async (res: boolean) => {
       if (res == true) {
-        await this.fetchDataService.HTTPPOST(this.backendURLs.URLs.cancelOrder, this.body);
-        // this.fetchData();
-        this.dialogBox.responseEmitter.next(false);
+        this.fetchDataService.HTTPPOST(this.backendURLs.URLs.cancelOrder, this.body).subscribe((data)=>{
+          console.log('data is ',data);
+          
+        })
       }
     });
 
@@ -123,6 +125,8 @@ export class SettingsComponent {
   }
 
   changeComponent(el: string) {
+    console.log('el comng is ',el);
+    
     this.showData = el;
     this.location.replaceState('usersetting/'+el);
     if(el=='addresses'){
@@ -214,6 +218,7 @@ export class SettingsComponent {
       .subscribe((data: any) => {
         if (data) {
           data = data.addresses;
+          this.AddressLength=data.length;
           if (data.length != 0) {
             this.userAddresses = data;
           }
@@ -221,6 +226,8 @@ export class SettingsComponent {
       })
   }
 
+
+ 
   AddAddress() {
     this.receiveData = '';
     this.ShowComponent = true;
@@ -235,10 +242,12 @@ export class SettingsComponent {
     //edit request updated
     else if (event.index === 0 || event.index) {
       this.userAddresses[event.index] = event.data;
+      this.AddressLength=this.userAddresses.length;
     }
     // // new address added
     else {
       this.userAddresses = event;
+      this.AddressLength=this.userAddresses.length;
     }
 
   }
@@ -247,6 +256,7 @@ export class SettingsComponent {
     const body = { address_id: address._id }
     this.fetchDataService.HTTPPOST(this.backendURLs.URLs.deleteAddress, body).subscribe((data) => {
       this.userAddresses.splice(index, 1);
+      this.AddressLength=this.userAddresses.length;
     })
   }
 
@@ -301,9 +311,17 @@ export class SettingsComponent {
   }
 
 
-  CancelProduct(orderId:any,productId:any){
-    this.body = { orderId , productId}
+  CancelProduct(orderId:any,sku:any){
+    this.body = { orderId , sku}
+    let   template: any = {
+      title: 'Cancel Order',
+      subtitle: 'Are you sure you want to remove product from the order?',
+      type: 'confirmation',
+      confirmationText: 'Yes, Remove it',
+      cancelText: 'No, Keep it',
+    };
     this.dialogBox.confirmationDialogBox(this.template);
+
   }
 
 }

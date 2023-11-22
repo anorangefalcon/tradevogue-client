@@ -113,6 +113,7 @@ export class UtilsModule {
     // ORDERS
     verifyOrderSummary: 'http://localhost:1000/orders/verifyOrder',
     createOrder: 'http://localhost:1000/orders/create',
+    updateOrder:'http://localhost:1000/orders/update',
     getParticularUserOrders: 'http://localhost:1000/orders/getparticularUserOrders',
     cancelOrder: 'http://localhost:1000/orders/cancelOrder',
 
@@ -184,7 +185,10 @@ export class UtilsModule {
 
     // update the order status 
     updateOrderStatus: 'http://localhost:1000/orders/updateOrderStatus',
-    getLatestProductForBuyer: 'http://localhost:1000/orders/latestOrder'
+    getLatestProductForBuyer: 'http://localhost:1000/orders/latestOrder',
+
+    // T&C
+    getTandC:'http://localhost:1000/tc/get',
   }
 }
 

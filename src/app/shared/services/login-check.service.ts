@@ -40,7 +40,7 @@ export class LoginCheckService {
     }
   }
 
-  loginUser(userObj: any, redirect: Boolean = true) {
+  loginUser(userObj: any, redirect: Boolean = true) {    
     this.cookieService.set('userToken', userObj.userToken);
     this.cookieService.set('name', userObj.name);
     this.userSubject.next({ 'user': userObj, 'loggedIn': true });

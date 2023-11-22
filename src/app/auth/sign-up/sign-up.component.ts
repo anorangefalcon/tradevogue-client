@@ -48,7 +48,7 @@ constructor(private fb: FormBuilder, private router: Router,private loginService
 
    CreateUser(body:any){    
     this.fetchDataService.HTTPPOST(this.backendURLs.URLs.signupUrl, body).subscribe((data:any)=>{
-      this.loginService.loginUser(data);
+      this.loginService.loginUser({ 'userToken': data.token, 'name': data.firstName });
       this.loading = false;
     })
   }

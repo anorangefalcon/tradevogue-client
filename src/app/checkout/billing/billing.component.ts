@@ -370,10 +370,6 @@ StripeOpener:Boolean=false;
 
     checkSubTotal();
 
-    // address checked
-    this.checkOutService.addressSelected$.subscribe((data) => {
-
-    })
   }
 
   @ViewChild('mydiv') my_div: ElementRef | undefined;
@@ -405,13 +401,13 @@ StripeOpener:Boolean=false;
   receiveData: any;
   ShowComponent: boolean = false;
   SecureNavBar:Boolean=false;
-
-
+  AddressLength:number=0;
   getAddresses() {
     this.fetchDataService.HTTPGET(this.backendURLs.URLs.getAddress)
       .subscribe((data: any) => {
         if (data) {
           data = data.addresses;
+          this.AddressLength=data.length;
           if (data.length != 0) {
             this.userAddresses = data;
           }
@@ -440,10 +436,12 @@ StripeOpener:Boolean=false;
     //edit request updated
     else if (event.index === 0 || event.index) {
       this.userAddresses[event.index] = event.data;
+      this.AddressLength=this.userAddresses.length;
     }
     // // new address added
     else {
       this.userAddresses = event;
+      this.AddressLength=this.userAddresses.length;
     }
 
   }
@@ -452,6 +450,7 @@ StripeOpener:Boolean=false;
     const body = { address_id: address._id }
     this.fetchDataService.HTTPPOST(this.backendURLs.URLs.deleteAddress, body).subscribe((data) => {
       this.userAddresses.splice(index, 1);
+      this.AddressLength=this.userAddresses.length;
     })
   }
 
@@ -469,7 +468,7 @@ StripeOpener:Boolean=false;
       el.selected=false;
     })
     address.selected = true;
-    this.checkOutService.addressSelected.next(address);
+    this.checkOutService.addressSelected=(address);
     this.addressDelivered = address;
   }
 

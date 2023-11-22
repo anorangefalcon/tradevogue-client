@@ -7,6 +7,7 @@ import { ToastService } from '../shared/services/toast.service';
 // import { StripPaymentService } from '../shared/services/stripe-Integration/strip-payment.service';
 import { CheckoutService } from './checkout.service';
 import { LoginCheckService } from '../shared/services/login-check.service';
+import { debounceTime, distinctUntilChanged } from 'rxjs';
 
 
 @Component({
@@ -28,6 +29,9 @@ export class CheckoutComponent implements OnInit {
   constructor(private cartService: CartService, private loginCheckService: LoginCheckService, private checkOutService:CheckoutService, private router: Router, private renderer: Renderer2, private toastService: ToastService, private BackendUrl: UtilsModule, private fetchService: FetchDataService, private route: Router, private el: ElementRef, private stripePay: CheckoutService) {
     this.checkOutService.secureNavbar$.subscribe((data)=>{
       this.SecureNavBar=data;
+    })
+    this.checkOutService.StripePaymentOpen$.subscribe((data)=>{
+      this.StripePaymentOpener=data;
     })
   }
 
@@ -240,21 +244,43 @@ async ApplyCoupon(coupon: any = '', event: any = '') {
 
   StripePaymentOpener:Boolean=false;
   AddressSelected:any=null;
+  NextDisabled:Boolean=false;
   nextClicked(){
-
-    this.checkOutService.addressSelected$.subscribe((data)=>{
-      if(!data){
+    
+      if(!this.checkOutService.addressSelected){
         this.toastService.errorToast({title:'Please select some address'});
         return;
       }
-      this.AddressSelected=data;
-    })
+      this.AddressSelected=this.checkOutService.addressSelected;
+      if(this.AddressSelected){
+        this.NextDisabled=true;
+      }
 
-    if(this.AddressSelected){
-      this.checkOutService.StripePaymentOpen.next(true);
-      this.StripePaymentOpener=true;
+    if(this.checkOutService.addressSelected){
+
+      this.createOrder();
     }
   }
+
+  
+  async createOrder(){
+    let body:any={};
+    body.address=this.AddressSelected;
+    await this.cartService.fetchCart().subscribe((data) => {
+      if (this.CouponApplied) {
+        body.coupon = this.CouponApplied;
+        body.discount = data.amounts.savings;
+      }
+      body.products = data.details;
+
+      this.fetchService.HTTPPOST(this.BackendUrl.URLs.createOrder, body).subscribe((data: any) => {
+          this.checkOutService.StripePaymentOpen.next(true);
+      
+        });
+      
+    })
+  }
+
   // COUPONS CODE FINSIH-------------------
 
   async ProceedToPayment() {
@@ -285,7 +311,7 @@ async ApplyCoupon(coupon: any = '', event: any = '') {
       }
       body.products = data.details;
 
-      this.fetchService.HTTPPOST(this.BackendUrl.URLs.createOrder, body).subscribe((data: any) => {
+      this.fetchService.HTTPPOST(this.BackendUrl.URLs.updateOrder, body).subscribe((data: any) => {
         // console.log(data);
       });
     })

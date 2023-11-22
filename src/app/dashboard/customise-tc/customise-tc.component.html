@@ -13,13 +13,53 @@
         </div>
     </div>
 
-    <div formArrayName="TandC">
-        <div *ngFor="let section of getTandC();let i=index">
-            <div [formGroupName]="i">
-                
-            </div>
+
+
+    <form [formGroup]="yourFormGroup">
+        <div formArrayName="TandC" class="d-flex flex-column gap-20">
+            <ng-container *ngFor="let data of getTandC();let i=index">
+                <div [formGroupName]="i">
+
+                    <div>
+                        <label>Heading</label>
+                        <input formControlName="heading" />
+                    </div>
+
+                    <div formArrayName="contentInfo">
+
+                        <ng-container *ngFor="let content of getContentInfoArray(i);let j=index">
+
+                            <div [formGroupName]="i">
+
+                            <app-custom-select [type]="''" [options]="contentType"
+                                [selectedOption]="((getTandCContent(i,j) ? (getTandCContent(i,j)) : 'Select Type'))"
+                                (final_option)="ContentTypeHandler($event)"></app-custom-select>
+                                
+                                <textarea *ngIf="getTandCContent(i,j)=='paragraph'" formControlName="content_description">
+                                </textarea>
+
+                                <div *ngIf="getTandCContent(i,j)=='list'">
+                                    <ng-container *ngFor="let control of getTandCContent(i,j,'content_description');let z=index">
+                                        {{control.value}} achbdhcdfhfcd
+                                        <!-- <input [form]="control.value"> -->
+                                        <input formControlName="{{i}}">
+                                        <!-- <div [formGroupName]="z">
+                                            <input formControlName="insideContent">
+                                        </div> -->
+                                        <!-- <input [value]="contol.value"> -->
+                                    </ng-container>
+                                </div>
+
+
+                            </div>
+                        </ng-container>
+                        <div></div>
+                    </div>
+                </div>
+            </ng-container>
         </div>
-    </div>
-   
+    </form>
+
+
 
 </div>

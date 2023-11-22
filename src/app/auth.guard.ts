@@ -5,26 +5,39 @@ import { UtilsModule } from './utils/utils.module';
 import { lastValueFrom } from 'rxjs';
 
 export const authGuard: CanActivateFn = async (route, state) => {
-  return true;
   const currentRoutes = state.url.split('/')[1];
-  // const service = inject(userService);
   const router = inject(Router);
+  const FetchService = inject(FetchDataService);
+  const BackendUrl = inject(UtilsModule);
+  if(currentRoutes=='usersetting'){
+    try {
+      let data=await lastValueFrom(FetchService.HTTPGET(BackendUrl.URLs.authorizeUrl));
+   if(data=='admin'){
+    router.navigate(['/']);
+    return false;
+   }
+   return true;
+    } catch (error) {
+      router.navigate(['/']);
+      return false;
+    }
+   
+  }
 
-  // let userLogin=await lastValueFrom(service.SubscrbingUserSubject());
-  // if (currentRoutes == 'auth' && userLogin) {
-  //   router.navigate(['/']);
-  //   return false;
-  // }
 
   if (currentRoutes == 'dashboard') {
-      const FetchService = inject(FetchDataService);
-      const BackendUrl = inject(UtilsModule);
-      let a =await lastValueFrom(FetchService.HTTPGET(BackendUrl.URLs.authorizeUrl));
-      if(a) return true;
+    try {
+      let data =await lastValueFrom(FetchService.HTTPGET(BackendUrl.URLs.authorizeUrl));
+      if(data=='admin') return true;
       else {
         router.navigate(['/']);
         return false;
       }
+    } catch (error) {
+      router.navigate(['/'])
+        return false;
+    }
+
   }
 
   return true;
