@@ -1,17 +1,16 @@
-<section class="hero-section">
+<div *ngIf="!bannerData" class="skeleton"></div>
+<section class="hero-section default-animation">
     <div *ngIf="bannerData">
         <owl-carousel-o [options]="customOptions">
             <ng-container *ngFor="let banner of bannerData">
                 <ng-template carouselSlide>
                     <ng-container *ngIf="!banner.title; else bannerData1">
-                        <a [routerLink]="[getLink(banner.buttonLink)]">
-                            <div class="banner-background" [ngStyle]="{
+                            <div class="banner-background" (click)="getLink(banner.buttonLink)" [ngStyle]="{
                             'background-image': 'url(' + banner.backgroundImage + ')',
                             'background-size': 'cover',
                             'background-position': 'center'
                           }">
                             </div>
-                        </a>
                     </ng-container>
                     <ng-template #bannerData1>
                         <div class="banner-background relative" [ngStyle]="{
@@ -49,11 +48,11 @@
                                             style="width: 530px;">
                                             {{banner.subTitle}}</p>
                                         <h1 [ngStyle]="{'color' : banner.colors.titleColor}">{{banner.title}}</h1>
-                                        <a [routerLink]="[banner.buttonLink]">
-                                            <button class="heading-button btn btn-md btn-rounded" [ngStyle]="{'color' : banner.colors.buttonColor, 
+
+                                            <button class="heading-button btn btn-md btn-rounded btn-inline" (click)="getLink(banner.buttonLink)" [ngStyle]="{'color' : banner.colors.buttonColor, 
                                 'border': '1.5px solid ' + banner.colors.buttonColor}">Explore
                                                 More</button>
-                                        </a>
+
                                     </div>
                                 </div>
                             </ng-container>
@@ -67,11 +66,11 @@
                                             {{banner.subTitle}}</p>
                                         <h1 [ngStyle]="{'color' : banner.colors.titleColor}">{{banner.title}}</h1>
 
-                                        <a [routerLink]="[getLink(banner.buttonLink)]">
-                                            <button class="heading-button btn btn-md btn-rounded" [ngStyle]="{'color' : banner.colors.buttonColor, 
+
+                                            <button class="heading-button btn btn-md btn-rounded btn-inline" (click)="getLink(banner.buttonLink)" [ngStyle]="{'color' : banner.colors.buttonColor, 
                                 'border': '1.5px solid ' + banner.colors.buttonColor}">Explore
                                                 More</button>
-                                        </a>
+
                                     </div>
                                 </div>
                             </ng-container>
@@ -85,11 +84,10 @@
                                             {{banner.subTitle}}</p>
                                         <h1 [ngStyle]="{'color' : banner.colors.titleColor}">{{banner.title}}</h1>
 
-                                        <a [routerLink]="[getLink(banner.buttonLink)]">
-                                            <button class="heading-button btn btn-md btn-rounded" [ngStyle]="{'color' : banner.colors.buttonColor, 
+
+                                                <button class="heading-button btn btn-md btn-rounded btn-inline" (click)="getLink(banner.buttonLink)" [ngStyle]="{'color' : banner.colors.buttonColor, 
                                 'border': '1.5px solid ' + banner.colors.buttonColor}">Explore
                                                 More</button>
-                                        </a>
                                     </div>
                                 </div>
                             </ng-container>

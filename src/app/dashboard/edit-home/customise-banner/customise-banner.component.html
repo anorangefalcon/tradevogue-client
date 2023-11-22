@@ -1,5 +1,5 @@
 <div class="d-flex flex-column gap-20">
-    <div class="card card__pd-20 d-flex justify-content-md-between align-item-center">
+    <div class="card card__pd-20 d-flex justify-content-md-between align-item-center default-animation">
         <div class="d-flex gap-5 justify-content-center align-item-center">
             <button class="btn btn-xs customise-back-btn d-flex flex-center" routerLink="/dashboard/customise-home">
                 <span class="material-symbols-outlined">
@@ -9,19 +9,22 @@
             <h3>Customise Banner</h3>
         </div>
         <div class="operation_button d-flex gap-10">
-            <button class="btn btn-xs fw-500 btn-rounded btn-primary" (click)="showForm = true; showingPopUp=true">Add banner</button>
+            <button class="btn btn-xs fw-500 btn-rounded btn-primary" (click)="showForm = true; showingPopUp=true">Add
+                banner</button>
         </div>
     </div>
 
 
-    <app-drawer [direction]="popUpDirection" [show]="showingPopUp" (showChange)="PopUpChangeHanlder($event)" (ParentClosedEmitter)="ParentClosedHandler($event)"
-        [title]="'Customise Banner'">
-        <form class="form__card d-flex gap-15 flex-column" [formGroup]="bannerForm" *ngIf="showForm === true">
+    <app-drawer [direction]="popUpDirection" [show]="showingPopUp" (showChange)="PopUpChangeHanlder($event)"
+        (ParentClosedEmitter)="ParentClosedHandler($event)" [title]="'Customise Banner'">
+        <form class="form__card d-flex gap-15 default-animation flex-column" [formGroup]="bannerForm"
+            *ngIf="showForm === true">
             <div class="mw100 relative d-flex flex-column gap-20">
                 <div class="d-flex flex-column mw100 gap-15">
                     <div class="image-upload-div d-flex justify-content-center align-item-center relative">
                         <div class="upload-image d-flex flex-column gap-10 align-item-center">
-                            <input type="file" [id]="'backgroundImage'" accept="image/jpg, image/jpeg, image/png, image/avif"
+                            <input type="file" [id]="'backgroundImage'"
+                                accept="image/jpg, image/jpeg, image/png, image/avif"
                                 (input)="bannerImageUpload($event)" />
                             <label [for]="'backgroundImage'"
                                 class="upload__block d-flex flex-column flex-center pointer">
@@ -40,7 +43,8 @@
                         </div>
                     </div>
                     <div class="d-flex gap-10 checkbox align-item-center">
-                        <input type="checkbox" name="layput" id="layout" (change)="isChecked($event)" class="custom-check">
+                        <input type="checkbox" name="layput" id="layout" (change)="isChecked($event)"
+                            class="custom-check">
                         <label for="layout">Add only banner and link</label>
                     </div>
                     <div class="data-upload-div d-flex flex-column mw100 gap-10">
@@ -89,14 +93,14 @@
                         </div>
                     </div>
                 </div>
-              
+
             </div>
         </form>
         <button class="btn btn-md fw-500 btn-rounded btn-primary save-btn" (click)="onSave()" *ngIf="showForm == true"
             [ngClass]="{'disabled':bannerForm.invalid}" [disabled]="this.bannerForm.invalid">Save</button>
     </app-drawer>
 
-    <div class="table-list card">
+    <div class="table-list card default-animation-slow">
         <table class="mw100" *ngIf="bannerData.length > 0">
             <thead>
                 <tr>
@@ -114,7 +118,7 @@
             <tbody>
                 <tr *ngFor="let banner of bannerData; let i = index">
                     <td class="items">
-                            {{i+1}}
+                        {{i+1}}
                     </td>
                     <td class="ellipsis items">
                         <img class="banner-image-circle pointer" [src]="banner.backgroundImage">
@@ -128,11 +132,14 @@
                         <div class="text-ellipsis">{{banner.subTitle ? banner.subTitle : '-'}}</div>
                     </td>
                     <td class="items ">
-                        <div class="d-flex align-item-center gap-5" >
+                        <div class="d-flex align-item-center gap-5">
                             {{banner.buttonText}}
-                            <span class="material-symbols-outlined link-icon pointer" *ngIf="banner.buttonLink " [routerLink]="[banner.buttonLink]">
-                                open_in_new
-                            </span>
+                            {{banner.buttonLink}}
+                            <a *ngIf="banner.buttonLink" href="{{banner.buttonLink}}" target="_blank">
+                                <span class="material-symbols-outlined link-icon pointer">
+                                    open_in_new
+                                </span>
+                            </a>
                         </div>
                     </td>
                     <td class="items">{{banner.contentAlign ? banner.contentAlign : 'None'}}</td>

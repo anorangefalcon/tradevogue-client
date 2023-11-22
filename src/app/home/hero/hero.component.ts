@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, ViewEncapsulation } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { OwlOptions } from 'ngx-owl-carousel-o';
 import { BannerService } from 'src/app/shared/services/custom-UI/banner.service';
 import { CarouselModule } from 'ngx-owl-carousel-o';
@@ -17,7 +17,7 @@ export class HeroComponent {
 
   bannerData : any;
 
-  constructor (private bannerService: BannerService) {}
+  constructor (private bannerService: BannerService, private router: Router) {}
 
   ngOnInit(){    
     this.bannerService.getBanners().subscribe((data: any) => {      
@@ -25,10 +25,11 @@ export class HeroComponent {
     })
 
   }
+  
   getLink(link: string){
-    return link.split('/')[1]
+    const toLink = '/' + link.split('/')[3];    
+    this.router.navigateByUrl(toLink);
   }
-
 
   customOptions: OwlOptions = {
     loop: true,

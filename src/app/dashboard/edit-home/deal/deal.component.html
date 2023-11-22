@@ -1,12 +1,12 @@
 <div class="deal__container d-flex flex-column gap-20">
-        <div class="d-flex justify-content-md-between card card__pd-20">
+        <div class="d-flex justify-content-md-between card card__pd-20 default-animation">
           <div  class="d-flex gap-5 justify-content-center align-item-center">
             <button class="btn btn-xs customise-back-btn d-flex flex-center" routerLink="/dashboard/customise-home">
                 <span class="material-symbols-outlined">
                     arrow_back_ios
                 </span>
             </button>
-            <h2 class="d-flex align-item-center">Customize Deal Section</h2>
+            <h2 class="d-flex align-item-center">Customise Deal</h2>
           </div>
             <div class="d-flex gap-10">
                 <!--  [disabled]="DealForm.invalid" -->
@@ -18,7 +18,7 @@
             </div>
         </div>
 
-        <form [formGroup]="DealForm" class="d-flex gap-15 card card__pd-20">
+        <form [formGroup]="DealForm" class="d-flex gap-15 card card__pd-20 default-animation-slow">
 
             <div class="form__group width-40 relative d-flex flex-column img-upload justify-content-center align-item-center">
 
