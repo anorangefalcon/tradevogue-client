@@ -97,7 +97,6 @@ export class WishlistService {
 
   removeWishlist(index: any) {
     return this.http.post(this.backendUrls.URLs.removeWishlist, index);
-
   }
 
   showWishlistedProducts(wishlist: string) {

@@ -65,11 +65,10 @@ label span {
 /*  NAV BAR  */
 
 .navbar {
-    min-width: 260px;
+    min-width: 220px;
     padding-block: 40px;
     height: 426px;
     position: sticky;
-    border-right: 1px solid rgba(var(--blackClr), 0.2);
 
     & .nav-items {
         gap: 18px;
@@ -94,19 +93,38 @@ label span {
 .nav-links.nav-link-active::before {
     height: 80%;
 }
+.nav-link-active {
+   & a {
+        color: rgb(var(--primaryClr));
+    }
+    & .nav-icons {
+        color: rgb(var(--primaryClr));
+        font-variation-settings:
+            'FILL' 1,
+            'wght' 400,
+            'GRAD' 0,
+            'opsz' 24
+    }
+}
 
-.nav-links a span:hover {
+.nav-links a:hover {
     color: rgb(var(--primaryClr))
 }
 
 /* NAV BAR */
-
+.nav-icons {
+    font-size: 20px;
+}
 
 
 
 /*  CONTENT STARTS  */
 .content {
-    width: calc(100% - 260px);
+    border-left: 1px solid rgba(var(--blackClr), 0.2);
+    width: 100%;
+    min-height: 450px;
+    max-height: fit-content;
+    padding-inline-start: 50px;
 }
 
 /*  CONTENT ENDS  */
@@ -121,7 +139,6 @@ label span {
     display: flex;
     flex-direction: column;
     gap: 20px;
-    padding-inline: 50px;
 
     & h2 {
         font-size: 24px;
@@ -131,13 +148,13 @@ label span {
 
 /*  RADIO BUTTON CSS */
 .radio {
-    padding-block: 40px;
+    padding-block: 15px;
 
     & input[type='radio'] {
         display: none;
     }
 
-    & input[type='radio']:checked + label::before {
+    & input[type='radio']:checked+label::before {
         background-color: rgba(var(--primaryClr));
         border: none;
     }
@@ -146,7 +163,7 @@ label span {
         color: rgba(var(--blackClr), 0.9);
     }
 
-    & input[type='radio'] + label::before{
+    & input[type='radio']+label::before {
         content: "";
         height: 20px;
         transition: all 0.5s;
@@ -156,7 +173,7 @@ label span {
         border-radius: 50%;
     }
 
-    & input[type='radio'] + label::after{
+    & input[type='radio']+label::after {
         content: "";
         height: 9px;
         width: 9px;
@@ -210,8 +227,7 @@ label span {
     justify-content: space-between;
 }
 
-.accordian__head:has(+ .accordian__body.active) > span {
-    background-color: pink;
+.accordian__head:has(+ .accordian__body.active)>span {
     transform: rotate(-180deg);
 }
 
@@ -220,18 +236,15 @@ label span {
     opacity: 0.6;
 }
 
-.wishlist {
-    padding-inline: 50px;
-
-    & h2 {
-        font-weight: 600;
-    }
+.wishlist h2 {
+    font-weight: 600;
 }
 
 .prod-img img {
     width: 60px;
     height: 80px;
     object-fit: cover;
+    border-radius: 4px;
 }
 
 .product {
@@ -443,7 +456,7 @@ label span {
 /* ORDERS  CSS */
 .Orders {
     width: 100%;
-    padding-inline: 50px;
+    /* padding-inline: 50px; */
 
 }
 
@@ -452,11 +465,7 @@ label span {
 }
 
 .particularOrder {
-    /* border-top: 1px solid rgba(var(--blackClr), 0.6); */
-    /* border-right-radius: 5px; */
-    /* border-left-radius: 5px; */
-    border-top-right-radius: 9px;
-    border-top-left-radius: 9px;
+    border-radius: 10px;
     border: 1px solid rgba(var(--blackClr), 0.2);
     padding-inline: 30px;
     padding-block: 20px;
@@ -471,11 +480,11 @@ label span {
 
     & p {
         font-weight: 500;
-    }
+    } 
 }
 
 .order {
-    padding-block: 20px;
+    padding-block-start: 20px;
 }
 
 .order__firstDiv__btn {
@@ -483,9 +492,8 @@ label span {
         padding-inline: 15px;
         padding-block: 10px;
         background: transparent;
-        border: 1px dashed rgba(var(--primaryClr));
+        border: 1px solid rgba(var(--primaryClr), 0.3);
         color: rgba(var(--blackClr), 0.6);
-
     }
 }
 
@@ -499,6 +507,7 @@ label span {
 }
 
 .order:not(:last-child) {
+    padding-block-end: 15px;
     border-block-end: 0.8px solid rgb(var(--textClr), 0.2);
 }
 
@@ -520,15 +529,23 @@ label span {
     font-weight: 500;
 }
 
-.delivery {
+.deliverDiv {
     & span {
         color: rgb(var(--whiteClr));
-        background-color: rgb(var(--success));
-        width: 15px;
-        height: 15px;
+        width: 25px;
+        height: 25px;
         font-size: 15px;
         border-radius: 50%;
+        padding: 5px;
     }
+}
+
+.pending-icon {
+    background-color: rgb(var(--warning));
+}
+
+.deliver-icon {
+    background-color: rgb(var(--success));
 }
 
 .btns button {
@@ -541,9 +558,18 @@ label span {
     height: 15px;
     width: 15px;
     border-radius: 50%;
+    border: 0.5px solid rgb(var(--blackClr, 0.5));
 }
 
 .main-address:not(:last-child) {
     padding-block-end: 15px;
     border-bottom: 0.5px solid rgb(var(--blackClr), 0.6);
+}
+
+.order {
+    display: none;
+}
+
+.order.active {
+    display: flex;
 }

@@ -2,27 +2,37 @@
     <div class="container d-flex">
         <nav class="navbar d-flex flex-column align-item-center gap-25">
             <ul class="nav-items d-flex flex-column align-item-center mh100 mw100">
-                <li class="nav-links d-flex align-item-center mw100 relative transition" [ngClass]="{'nav-link-active': this.showData === 'profile'}"
-                    (click)="changeComponent('profile')">
-                    <a class="d-flex align-item-center pointer">
+                <li class="nav-links d-flex align-item-center mw100 relative transition"
+                    [ngClass]="{'nav-link-active': this.showData === 'profile'}" (click)="changeComponent('profile')">
+                    <a class="d-flex align-item-center pointer gap-10">
+                        <span class="material-symbols-outlined nav-icons">
+                            person
+                        </span>
                         <span class="nav-txt fs-14 fw-300">Profile</span>
                     </a>
                     <span class="material-symbols-outlined right__icon">
                         chevron_right
                     </span>
                 </li>
-                <li class="nav-links d-flex align-item-center mw100 relative transition" [ngClass]="{'nav-link-active': this.showData === 'orders'}" (click)="getOrders()">
-                    <a class="d-flex align-item-center pointer">
-                        <span class="nav-txt fs-14 fw-300">My Order</span>
+                <li class="nav-links d-flex align-item-center mw100 relative transition"
+                    [ngClass]="{'nav-link-active': this.showData === 'orders'}" (click)="getOrders()">
+                    <a class="d-flex align-item-center pointer gap-10">
+                        <span class="material-symbols-outlined nav-icons">
+                            package_2
+                        </span>
+                        <span class="nav-txt fs-14 fw-300">Orders</span>
                     </a>
                     <span class="material-symbols-outlined right__icon">
                         chevron_right
                     </span>
                 </li>
-                <li class="nav-links d-flex align-item-center mw100 relative transition" [ngClass]="{'nav-link-active': this.showData === 'wishlist'}"
-                    (click)="changeComponent('wishlist')">
-                    <a class="d-flex align-item-center pointer">
-                        <span class="nav-txt fs-14 fw-300">My Wishlist</span>
+                <li class="nav-links d-flex align-item-center mw100 relative transition"
+                    [ngClass]="{'nav-link-active': this.showData === 'wishlist'}" (click)="changeComponent('wishlist')">
+                    <a class="d-flex align-item-center pointer gap-10">
+                        <span class="material-symbols-outlined nav-icons">
+                            favorite
+                        </span>
+                        <span class="nav-txt fs-14 fw-300">Wishlists</span>
                     </a>
                     <span class="material-symbols-outlined right__icon">
                         chevron_right
@@ -30,9 +40,12 @@
                 </li>
 
 
-                <li class="nav-links d-flex align-item-center mw100 relative transition" [ngClass]="{'nav-link-active': this.showData === 'addresses'}"
-                    (click)="getAddresses()">
-                    <a class="d-flex align-item-center pointer">
+                <li class="nav-links d-flex align-item-center mw100 relative transition"
+                    [ngClass]="{'nav-link-active': this.showData === 'addresses'}" (click)="getAddresses()">
+                    <a class="d-flex align-item-center pointer gap-10">
+                        <span class="material-symbols-outlined nav-icons">
+                            home
+                        </span>
                         <span class="nav-txt fs-14 fw-300">Addresses</span>
                     </a>
                     <span class="material-symbols-outlined right__icon">
@@ -40,11 +53,14 @@
                     </span>
                 </li>
 
-                <li class="nav-links d-flex align-item-center mw100 relative transition" [ngClass]="{'nav-link-active': this.showData === 'changePassword'}"
+                <li class="nav-links d-flex align-item-center mw100 relative transition"
+                    [ngClass]="{'nav-link-active': this.showData === 'changePassword'}"
                     (click)="changeComponent('changePassword')">
-                    <a class="d-flex align-item-center pointer">
-
-                        <span class="nav-txt fs-14 fw-300">Change Password</span>
+                    <a class="d-flex align-item-center pointer gap-10">
+                        <span class="material-symbols-outlined nav-icons" style="rotate: 90deg;">
+                            key
+                        </span>
+                        <span class="nav-txt fs-14 fw-300">Security</span>
                     </a>
                     <span class="material-symbols-outlined right__icon">
                         chevron_right
@@ -56,7 +72,8 @@
         <div class="content" [ngClass]="{'expand':TranslateData}">
             <div class="profile d-flex flex-column gap-20" *ngIf="showData=='profile'">
 
-                <div class="d-flex align-item-center justify-content-md-between pointer h2_div" (click)="TranslateBack()">
+                <div class="d-flex align-item-center justify-content-md-between pointer h2_div"
+                    (click)="TranslateBack()">
                     <!-- <span class="material-symbols-outlined left__icon">
                         chevron_left
                     </span> -->
@@ -65,11 +82,17 @@
                     </h2>
 
                     <div class="d-flex gap-15">
-                        <button class="btn-secondary  btn btn-sm btn-rounded" [ngStyle]="{'display': ProfileForm.disabled? 'none': 'block'}" (click)="ProfileForm.disable()">Cancel</button>
-                        <button class="btn-primary btn btn-sm btn-rounded" [ngStyle]="{'display': !ProfileForm.disabled? 'none': 'block'}" (click)="ProfileForm.enable()">Edit</button>
-                        <button class="btn-primary btn btn-sm btn-rounded" [ngStyle]="{'display': ProfileForm.disabled? 'none': 'block'}" (click)="saveDetails(); ProfileForm.enable()">Save</button>
+                        <button class="btn-secondary  btn btn-sm btn-rounded"
+                            [ngStyle]="{'display': ProfileForm.disabled? 'none': 'block'}"
+                            (click)="ProfileForm.disable()">Cancel</button>
+                        <button class="btn-primary btn btn-sm btn-rounded"
+                            [ngStyle]="{'display': !ProfileForm.disabled? 'none': 'block'}"
+                            (click)="ProfileForm.enable()">Edit</button>
+                        <button class="btn-primary btn btn-sm btn-rounded"
+                            [ngStyle]="{'display': ProfileForm.disabled? 'none': 'block'}"
+                            (click)="saveDetails(); ProfileForm.enable()">Save</button>
                     </div>
-    
+
                 </div>
 
 
@@ -116,14 +139,17 @@
                         <input type="date" id="dob" formControlName="dob" placeholder="Enter Your Username">
                     </div>
 
-                    <div class="form__group relative radio d-flex gap-20 align-item-center">
-                        <input type="radio" id="male" name="gender" value="male" formControlName="gender"
-                            [attr.checked]="this?.ProfileForm?.get('gender')?.value=='male' ? true: null">
-                        <label for="male" class="d-flex flex-center relative gap-5 pointer">Male</label>
+                    <div class="form__group relative d-flex flex-column">
+                        <label class="form__label">Gender<span>*</span></label>
+                        <div class="form__group relative radio d-flex gap-20 align-item-center">
+                            <input type="radio" id="male" name="gender" value="male" formControlName="gender"
+                                [attr.checked]="this?.ProfileForm?.get('gender')?.value=='male' ? true: null">
+                            <label for="male" class="d-flex flex-center relative gap-5 pointer">Male</label>
 
-                        <input type="radio" id="female" name="gender" formControlName="gender" value="female"
-                            [attr.checked]="this?.ProfileForm?.get('gender')?.value=='female'  ? true : null">
-                        <label for="female" class="d-flex flex-center relative gap-5 pointer"> Female </label>
+                            <input type="radio" id="female" name="gender" formControlName="gender" value="female"
+                                [attr.checked]="this?.ProfileForm?.get('gender')?.value=='female'  ? true : null">
+                            <label for="female" class="d-flex flex-center relative gap-5 pointer"> Female </label>
+                        </div>
                     </div>
 
                 </form>
@@ -154,30 +180,33 @@
                 </div>
                 <div class="d-flex flex-column gap-10">
                     <div class="addressDiv d-flex flex-column gap-20">
-                        <ng-container  *ngFor="let address of userAddresses;let i=index" >
+                        <ng-container *ngFor="let address of userAddresses;let i=index">
                             <div class="d-flex mw100 particularAddress justify-content-md-between">
                                 <div class="d-flex flex-column  gap-10 address__firstdiv">
                                     <div class="d-flex gap-10">
                                         <p class="name">{{address.firstname}} {{address.lastname}}</p>
-                                        <button class="default__btn" (click)="MakeDefault(address,i)" *ngIf="i!=0">set default</button>
+                                        <button class="default__btn" (click)="MakeDefault(address,i)" *ngIf="i!=0">set
+                                            default</button>
                                     </div>
-                                    <div> 
-                                        <p >{{address.apartment}} {{address.area}} {{address.landmark}},
+                                    <div>
+                                        <p>{{address.apartment}} {{address.area}} {{address.landmark}},
                                             {{address.town_city}}</p>
                                         <p>{{address.state}}- {{address.pincode}}</p>
                                     </div>
                                 </div>
                                 <div class="d-flex">
                                     <div class="d-flex flex-column gap-5">
-                                        <span class="material-symbols-outlined edit__btn" (click)="EditAddress(address,i)">
+                                        <span class="material-symbols-outlined edit__btn"
+                                            (click)="EditAddress(address,i)">
                                             edit
                                         </span>
-        
-                                        <span class="material-symbols-outlined remove__btn" (click)="RemoveAddress(address,i)">
+
+                                        <span class="material-symbols-outlined remove__btn"
+                                            (click)="RemoveAddress(address,i)">
                                             delete
                                         </span>
                                     </div>
-        
+
                                 </div>
                             </div>
                         </ng-container>
@@ -229,7 +258,7 @@
                         <div class="password-helper d-flex justify-content-md-between">
 
 
-                            <div class="d-flex flex-column ">
+                            <div class="d-flex flex-column helper-inside">
                                 <p [ngClass]="{'red-text': changePasswordForm.get('newPassword')?.hasError('minlength') && !changePasswordForm.get('newPassword')?.hasError('required'),
                      'green-text': !changePasswordForm.get('newPassword')?.hasError('minlength') && !changePasswordForm.get('newPassword')?.hasError('required')}"
                                     *ngIf="!changePasswordForm.get('newPassword')?.hasError('required')">
@@ -255,7 +284,7 @@
                                 </p>
                             </div>
 
-                            <div class="d-flex flex-column">
+                            <div class="d-flex flex-column helper-inside">
                                 <p [ngClass]="{'red-text': changePasswordForm.get('newPassword')?.hasError('digit') && !changePasswordForm.get('newPassword')?.hasError('required'),
                'green-text': !changePasswordForm.get('newPassword')?.hasError('digit') && !changePasswordForm.get('newPassword')?.hasError('required')}"
                                     *ngIf="!changePasswordForm?.get('newPassword')?.hasError('required')">
@@ -307,7 +336,7 @@
 
 
                 </div>
-                <p class="orders__p">Check the status of recent orders, manage returns, and discover similar products
+                <p class="orders__p">Check the status of recent orders, view invoice and manage returns.
                 </p>
 
                 <div class="AllOrders d-flex flex-column gap-25">
@@ -329,25 +358,26 @@
                             </div>
 
                             <div class="d-flex gap-20 order__firstDiv__btn">
-                                <button>View Order</button>
-                                <button>View Invoice</button>
+                                <button class="btn-rounded btn" (click)="toggleAccordian(i)">View Order</button>
+                                <button class="btn-rounded btn">View Invoice</button>
                             </div>
 
                         </div>
                         <ng-container *ngFor="let product of order.products">
-                            <div class="order d-flex flex-column gap-20" *ngIf="product.shipmentStatus!='cancelled'">
+                            <div class="order d-flex flex-column gap-20 default-animation"
+                                *ngIf="product.shipmentStatus!='cancelled'" [class.active]="openedAccordionIndex === i">
                                 <div class=" d-flex justify-content-md-between">
                                     <div class="d-flex gap-15">
                                         <!-- <div > -->
-                                        <img src={{product.image}} class="imgDiv">
+                                        <img src={{product.image}} class="imgDiv skeleton">
                                         <!-- </div> -->
-                                        <div class="d-flex flex-column productDetails">
+                                        <div class="d-flex flex-column productDetails gap-5">
                                             <p class="prodName">{{product.name}}</p>
                                             <div class="d-flex align-item-center gap-5">
-                                                <p>Product</p>
+                                                <p>Color :</p>
                                                 <div [style.background-color]="product.color" class="color__div"></div>
                                             </div>
-                                            <p>Qty - {{product.quantity}}</p>
+                                            <p>Qty : {{product.quantity}}</p>
                                             <!-- <p>Order Id - {{order._id}}</p> -->
                                         </div>
                                     </div>
@@ -357,18 +387,16 @@
                                 </div>
                                 <div class="deliverDiv d-flex justify-content-md-between">
 
-
                                     <div class="d-flex gap-10 delivery align-item-center">
-                                        <span class="material-symbols-outlined"
+                                        <span class="material-symbols-outlined pending-icon d-flex flex-center"
                                             *ngIf="product.shipmentStatus=='pending'">
-                                            pending
+                                            hourglass_empty
                                         </span>
-
-                                        <span class="material-symbols-outlined"
+                                        <span class="material-symbols-outlined deliver-icon"
                                             *ngIf="product.shipmentStatus=='delivered'">
-                                            done
+                                            check
                                         </span>
-                                        <p class="delivery-status">{{product.shipmentStatus}}</p>
+                                        <p class="delivery-status">{{product.shipmentStatus | titlecase}}</p>
                                     </div>
                                     <div class="d-flex gap-10 btns">
                                         <button class="btn" routerLink="/product/{{product.sku}}">
@@ -378,7 +406,6 @@
                                         <!-- <button (click)="BuyAgain(product)">
                                             Buy Again
                                         </button> -->
-
                                         <button class="btn" *ngIf="product.shipmentStatus=='pending'"
                                             (click)="CancelProduct(order._id,product._id)">
                                             Cancel Product
@@ -441,15 +468,18 @@
                                             </button>
                                         </div>
                                         <div class="d-flex flex-column gap-5">
+                                           <a href="/product/{{product.productDetails.sku}}">
                                             <p class="prod-name">
                                                 {{product.productDetails.name}}
                                             </p>
+                                           </a>
                                             <p>{{product.productDetails.info.brand}}</p>
-                                            <p>Price:  ₹{{ product.productDetails.price }}</p>
+                                            <p>Price: ₹{{ product.productDetails.price }}</p>
                                         </div>
                                     </div>
                                     <div class="d-flex justify-content-center align-item-center">
-                                        <button class="btn-secondary cart-btn d-flex align-items-center gap-5 btn-rounded"
+                                        <button
+                                            class="btn-secondary cart-btn d-flex align-items-center gap-5 btn-rounded"
                                             (click)="moveToCart(product.productDetails.sku) ; removeFromWishlist(product.productDetails._id, item.wishlistName) ">
                                             Move to
                                             <span class="material-symbols-outlined">

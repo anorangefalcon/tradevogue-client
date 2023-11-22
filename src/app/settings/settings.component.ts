@@ -151,7 +151,6 @@ export class SettingsComponent {
 
   }
 
-
   // wishlist work 
   showWishlists() {
     this.toggleAccordian(0);
@@ -284,6 +283,7 @@ export class SettingsComponent {
 
   // orders code 
    getOrders(){
+    this.toggleAccordian(0);
     setTimeout(()=>{
       this.TranslateData=true;
     },300)

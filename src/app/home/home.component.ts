@@ -48,7 +48,13 @@ export class HomeComponent {
       const body = {
         email: this.subscribeForm.get('email')?.value
       }
-       this.fetchDataService.HTTPPOST(this.backendUrls.URLs.subscribeMail, body)
+      console.log(body);
+      
+       this.fetchDataService.HTTPPOST(this.backendUrls.URLs.subscribeMail, body).subscribe(()=>{
+         console.log("ok");
+
+       });
+       
     }
     catch (error) {
     }

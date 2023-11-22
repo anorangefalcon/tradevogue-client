@@ -12,6 +12,7 @@ export class UtilsModule {
   URLs: any = {
     signupUrl: 'http://localhost:1000/user/signup',
     loginUrl: 'http://localhost:1000/user/login',
+    subscribeMail: 'http://localhost:1000/user/subscribe',
     forgetPasswordUrl: 'http://localhost:1000/user/forget',
     updatePasswordUrl: 'http://localhost:1000/user/update',
     getDetails: 'http://localhost:1000/user/getDetails',
@@ -21,7 +22,6 @@ export class UtilsModule {
     // signupUrl:'http://localhost:5000/user/signup',
     getAddress: 'http://localhost:1000/user/getAddress',
     addAddress: 'http://localhost:1000/user/addAddress',
-    subscribeMail: 'http://localhost:1000/sendMail',
     updateAddress: 'http://localhost:1000/user/updateAdress',
     deleteAddress: 'http://localhost:1000/user/deleteAddress',
     setDefaultAddress: 'http://localhost:1000/user/setDefault',

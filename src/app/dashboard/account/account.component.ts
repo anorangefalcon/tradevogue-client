@@ -6,6 +6,8 @@ import { Subject } from 'rxjs';
 import { SellerFetchDataService } from 'src/app/shared/services/seller-fetch-data.service';
 import { DatePipe } from '@angular/common';
 import { LoginCheckService } from 'src/app/shared/services/login-check.service';
+import { FetchDataService } from 'src/app/shared/services/fetch-data.service';
+import { UtilsModule } from 'src/app/utils/utils.module';
 @Component({
   selector: 'app-account',
   templateUrl: './account.component.html',
@@ -35,7 +37,9 @@ export class AccountComponent implements OnInit {
     private formBuilder: FormBuilder,
     private sellerFetchDataService: SellerFetchDataService,
     private datePipe: DatePipe,
-    private userService: LoginCheckService
+    private userService: LoginCheckService,
+    private fetchDataService : FetchDataService,
+    private backendURLs : UtilsModule
   ) { }
 
 
@@ -258,5 +262,15 @@ export class AccountComponent implements OnInit {
 
   uploadImage(e: Event) {
     const file = (e.target as HTMLInputElement).files![0];
+  }
+
+  onResetPassword(){
+    const body = {
+      oldPassword: this.passwordForm.get('currentPassword')?.value,
+      newPassword: this.passwordForm.get('newPassword')?.value
+    }
+    this.fetchDataService.HTTPPOST(this.backendURLs.URLs.changePassword, body).subscribe((data) => {
+      // this.toastService.successToast({ title: data.message })
+    });
   }
 }
