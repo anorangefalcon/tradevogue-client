@@ -53,6 +53,7 @@ StripeOpener:Boolean=false;
   this.checkOutService.StripePaymentOpen$.subscribe((data)=>{
     this.StripeOpener=data;
   })
+
     try {
       this.route.queryParams.subscribe(async params => {
         const redirectStatus = params['redirect_status'];
@@ -471,6 +472,8 @@ StripeOpener:Boolean=false;
     this.checkOutService.addressSelected=(address);
     this.addressDelivered = address;
   }
+
+
 
 
 

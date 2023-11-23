@@ -33,6 +33,9 @@ export class CheckoutComponent implements OnInit {
     this.checkOutService.StripePaymentOpen$.subscribe((data)=>{
       this.StripePaymentOpener=data;
     })
+
+    this.verifyOrderSummary(false);
+
   }
 
 
@@ -48,14 +51,13 @@ export class CheckoutComponent implements OnInit {
 
     });
 
-    this.fetchService.HTTPGET(this.BackendUrl.URLs.getCoupons).subscribe((data: any) => {
-      this.AllCoupons = data;
-      this.loading = false;
-    });
+  
 
 
 
   }
+
+
 
 
 
@@ -130,7 +132,11 @@ ParenClosed: boolean = false;
 direction: string = 'right';
 show: boolean = false;
 CouponOpener() {
-  this.show = true;
+  this.fetchService.HTTPGET(this.BackendUrl.URLs.getCoupons).subscribe((data: any) => {
+    this.AllCoupons = data;
+    this.loading = false;
+    this.show = true;
+  });
 }
 
 InputChange() {
@@ -139,8 +145,9 @@ InputChange() {
 
 
 RemoveAppliedCoupon() {
-  this.CouponApplied = false;
-  this.cart.amounts.savings = 0;
+
+  this.cart.amounts.savings -= this.CalculateDiscount(this.CouponApplied);
+  this.CouponApplied = false;  
   this.cart.amounts.total = this.cart.amounts.subTotal;
 }
 
@@ -157,7 +164,7 @@ CalculateDiscount(coupon: any) {
   else {
     if (coupon.discountType == 'percentage') {
       let calculatedDiscount = (totalAmount / 100) * coupon.discountAmount;
-      calculatedDiscount <= coupon.maximumDiscount ? calculatedDiscount : coupon.maximumDiscount;
+    calculatedDiscount=  calculatedDiscount <= coupon.maximumDiscount ? calculatedDiscount : coupon.maximumDiscount;
       return calculatedDiscount<totalAmount?calculatedDiscount:0;
     }
   }
@@ -207,20 +214,30 @@ async ApplyCoupon(coupon: any = '', event: any = '') {
   }
 
   this.CouponCode.nativeElement.value = '';
-  this.cart.amounts.savings = this.CalculateDiscount(this.CouponApplied);
+  this.cart.amounts.savings += this.CalculateDiscount(this.CouponApplied);
   this.cart.amounts.total -= this.cart.amounts.savings;
   this.ParenClosed = true;
 
 }
 
 
-  async verifyOrderSummary() {
+  async verifyOrderSummary(navigate:Boolean=true) {
     this.cartService.fetchCart().subscribe(async (res) => {
       let result = JSON.parse(JSON.stringify(res));
+      if(result.length==0) return;
       if (this.CouponApplied) {
         result.CouponApplied = this.CouponApplied;
       }
 
+      if(!navigate){        
+        this.fetchService.HTTPPOST(this.BackendUrl.URLs.verifyOrderWithoutCoupon, result).subscribe((response) => {
+          this.cart.amounts = response;
+        });
+      }
+
+      else{
+        console.log('also calling for true');
+        
       this.loginCheckService.getUser().subscribe((checkToken) => {
         if (!checkToken) {
           this.router.navigate(['/auth/login']);
@@ -228,11 +245,13 @@ async ApplyCoupon(coupon: any = '', event: any = '') {
         else {
           this.fetchService.HTTPPOST(this.BackendUrl.URLs.verifyOrderSummary, result).subscribe((response) => {
             this.cart.amounts = response;
+
             this.router.navigate(['/cart/billing']);
           });
         }
 
       })
+    }
 
     });
   }
@@ -262,7 +281,8 @@ async ApplyCoupon(coupon: any = '', event: any = '') {
     }
   }
 
-  
+
+  OrderId:String='';
   async createOrder(){
     let body:any={};
     body.address=this.AddressSelected;
@@ -275,9 +295,11 @@ async ApplyCoupon(coupon: any = '', event: any = '') {
 
       this.fetchService.HTTPPOST(this.BackendUrl.URLs.createOrder, body).subscribe((data: any) => {
           this.checkOutService.StripePaymentOpen.next(true);
-      
+          this.OrderId=data.orderId;
         });
-      
+
+
+        this.NextDisabled=false;
     })
   }
 
@@ -310,9 +332,10 @@ async ApplyCoupon(coupon: any = '', event: any = '') {
         body.discount = data.amounts.savings;
       }
       body.products = data.details;
-
+      body.orderID=this.OrderId;
       this.fetchService.HTTPPOST(this.BackendUrl.URLs.updateOrder, body).subscribe((data: any) => {
         // console.log(data);
+        
       });
     })
   }

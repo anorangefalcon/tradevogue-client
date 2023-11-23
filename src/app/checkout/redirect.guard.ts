@@ -1,11 +1,12 @@
 import { inject } from '@angular/core';
-import { CanActivateFn } from '@angular/router';
+import { CanActivateFn, Router } from '@angular/router';
 import { DialogBoxService } from '../shared/services/dialog-box.service';
 import { CheckoutService } from './checkout.service';
 
 export const redirectGuard: CanActivateFn = async(route, state) => {
   const dialogBox = inject(DialogBoxService);
   const checkOutService=inject(CheckoutService);
+  const router=inject(Router);
   let emittedBoolean: any = false;
   let DialogBoxTemplate = {
     title: 'Do you want to cancel the payment?',
@@ -25,11 +26,10 @@ export const redirectGuard: CanActivateFn = async(route, state) => {
     });
   }
   emittedBoolean = await waitForDialogResponse();
-  console.log('emiited bolan si ',emittedBoolean);
-  
   if(emittedBoolean){
     checkOutService.StripePaymentOpen.next(false);
     checkOutService.addressSelected=(null);
+  // router.navigate(['/']);
   }
   dialogBox.responseEmitter.next(false);
   

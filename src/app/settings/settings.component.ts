@@ -99,7 +99,7 @@ export class SettingsComponent {
     this.dialogBox.responseEmitter.subscribe(async (res: boolean) => {
       if (res == true) {
         this.fetchDataService.HTTPPOST(this.backendURLs.URLs.cancelOrder, this.body).subscribe((data)=>{
-          console.log('data is ',data);
+          this.getOrders();
           
         })
       }
@@ -311,8 +311,8 @@ export class SettingsComponent {
   }
 
 
-  CancelProduct(orderId:any,sku:any){
-    this.body = { orderId , sku}
+  CancelProduct(id:any,sku:any){
+    this.body = { id , sku}
     let   template: any = {
       title: 'Cancel Order',
       subtitle: 'Are you sure you want to remove product from the order?',

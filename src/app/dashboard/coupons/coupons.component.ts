@@ -59,6 +59,8 @@ export class CouponsComponent {
     const body = ['categories', 'brands']
     this.fetchDateService.HTTPPOST(this.BackendUrls.URLs.fetchFeatures, body).subscribe((data: any) => {
       this.Brands = data.brands;
+      console.log('brand is ',this.Brands);
+      
       this.Categories = data.categories;
     })
 

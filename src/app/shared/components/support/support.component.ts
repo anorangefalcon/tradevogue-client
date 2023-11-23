@@ -40,7 +40,7 @@ export class SupportComponent {
     this.userService.getUser('token').subscribe((token: any) => {
       if (!token) return;
       this.showOrder = true;
-      this.fetchData.HTTPPOST(this.util.URLs.getLatestProductForBuyer, { buyerId: token }).subscribe((data: any) => {
+      this.fetchData.HTTPGET(this.util.URLs.getParticularUserOrders).subscribe((data: any) => {
         if (data) {
           this.products = data.latestProduct.products;
           this.orderDetails = data.latestProduct;
