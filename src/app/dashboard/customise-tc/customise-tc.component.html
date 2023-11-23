@@ -8,48 +8,88 @@
             </button>
             <h3>Customise T and C</h3>
         </div>
-        <div class="operation_button d-flex gap-10">
-            <button class="btn btn-xs fw-500 btn-rounded btn-primary">Add Section</button>
-        </div>
+        <button class="btn btn-xs fw-500 btn-rounded btn-primary" (click)="onsubmit()">Update</button>
+
+
+        <button class="btn btn-xs btn-secondary btn-rounded fw-500 d-flex flex-center" (click)="addFormControl()">
+            <span class="material-symbols-outlined fs-20">add</span>
+        </button>
     </div>
 
 
 
-    <form [formGroup]="yourFormGroup">
-        <div formArrayName="TandC" class="d-flex flex-column gap-20">
-            <ng-container *ngFor="let data of getTandC();let i=index">
-                <div [formGroupName]="i">
 
-                    <div>
-                        <label>Heading</label>
-                        <input formControlName="heading" />
+    <form [formGroup]="yourFormGroup">
+
+        <div formArrayName="TandC" class="mh100 mw100 d-flex flex-column gap-20">
+            <ng-container *ngFor="let data of getFormArrayControls();let i=index">
+                <div [formGroupName]="i" class=" card card__pd-20 mh100 mw100 d-flex flex-column gap-20">
+                    <h2>Card {{i}}</h2>
+
+                    <div class="mh100 mw100 d-flex flex-column gap-5">
+                        <label class="form__label">Heading</label>
+                        <input class="form__input" formControlName="heading" />
                     </div>
+
+
+                    <button class="btn btn-xs btn-secondary btn-rounded fw-500 d-flex flex-center"
+                        (click)="addContentFormControl(i)">
+                        <span class="material-symbols-outlined fs-20">add</span>
+                    </button>
+
 
                     <div formArrayName="contentInfo">
 
-                        <ng-container *ngFor="let content of getContentInfoArray(i);let j=index">
+                        <ng-container *ngFor="let content of getContentFormArrayControls(i);let j=index">
 
-                            <div [formGroupName]="i">
+                            <h4>Paragraph {{j}}</h4>
 
-                            <app-custom-select [type]="''" [options]="contentType"
-                                [selectedOption]="((getTandCContent(i,j) ? (getTandCContent(i,j)) : 'Select Type'))"
-                                (final_option)="ContentTypeHandler($event)"></app-custom-select>
-                                
-                                <textarea *ngIf="getTandCContent(i,j)=='paragraph'" formControlName="content_description">
-                                </textarea>
+                            <div [formGroupName]="j">
 
-                                <div *ngIf="getTandCContent(i,j)=='list'">
-                                    <ng-container *ngFor="let control of getTandCContent(i,j,'content_description');let z=index">
-                                        {{control.value}} achbdhcdfhfcd
-                                        <!-- <input [form]="control.value"> -->
-                                        <input formControlName="{{i}}">
-                                        <!-- <div [formGroupName]="z">
-                                            <input formControlName="insideContent">
-                                        </div> -->
-                                        <!-- <input [value]="contol.value"> -->
+                                <app-custom-select [type]="''" [_id]="''+i+j" [options]="contentType"
+                                    [selectedOption]="((getTandCContent(i,j) ? (getTandCContent(i,j)) : 'Select Type'))"
+                                    (final_option)="ContentTypeHandler($event, i ,j)"></app-custom-select>
+
+                                <!-- <div class="form__radio d-flex gap-20">
+
+                                    <input type="radio" value="paragraph" [id]="'paragraph'+i" [name]="'type'+i" formControlName="content_type">
+                                    <label [for]="'paragraph'+i">Paragraph</label>
+
+                                    <input type="radio" value="list" [id]="'list'+i" [name]="'type'+i" formControlName="content_type">
+                                    <label for="list">List</label>
+
+                                </div> -->
+
+                                <div formArrayName="content_description">
+
+                                    <div>
+                                        <h5>Content Area</h5>
+                                        <button class="btn btn-xs btn-secondary btn-rounded fw-500 d-flex flex-center"
+                                            *ngIf="getTandCContent(i,j) == 'list'"
+                                            (click)="addContentDescFormControl(i, j)">
+                                            <span class="material-symbols-outlined fs-20">add</span>
+                                        </button>
+
+                                    </div>
+                                    <ng-container
+                                        *ngFor="let content of getContentDescFormArrayControls(i,j);let k=index">
+
+                                        <div [formGroupName]="k">
+                                            <textarea class="form__textarea mw100" formControlName="content">
+                                            </textarea>
+
+                                        </div>
+
                                     </ng-container>
                                 </div>
 
+                                <!-- <div *ngIf="getTandCContent(i,j)=='list'">
+                                    <ng-container
+                                        *ngFor="let control of getTandCContent(i,j,'content_description');let z=index">
+
+                                        <input formControlName="{{i}}">
+                                    </ng-container>
+                                </div> -->
 
                             </div>
                         </ng-container>

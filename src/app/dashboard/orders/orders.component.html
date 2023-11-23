@@ -80,7 +80,7 @@
                     <tbody class="default-animation">
                         <tr *ngFor="let item of orderData; let i = index">
                             <ng-container *ngIf="i< pageSize">
-                                <td class="items">#{{item.orderID}}</td>
+                                <td class="items" style="text-transform: uppercase;">{{item.orderID}}</td>
                                 <td class="items text-capitalize">{{item.customer}}</td>
                                 <td class="items">{{item.orderTime}}</td>
                                 <td class="items">{{item.quantity}}</td>
@@ -89,7 +89,7 @@
                                     <span *ngIf="item.payment_status == 'success' || item.payment_status == 'Success'"
                                         style="color: rgb(var(--success));">Success</span>
                                     <span *ngIf="item.payment_status == 'Pending' || item.payment_status == 'pending'"
-                                        style="color: rgba(255, 85, 0, 0.992);">Pending</span>
+                                        style="color: rgb(var(--warning));">Pending</span>
                                     <span *ngIf="item.payment_status == 'Canceled' || item.payment_status == 'canceled'"
                                         style="color: rgb(var(--danger));">Canceled</span>
                                     <span *ngIf="item.payment_status == 'Failed' ||item.payment_status == 'failed'"

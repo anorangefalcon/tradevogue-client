@@ -36,7 +36,7 @@
                             <img [src]="getImagePreview()" [style.display]="getImagePreview() ? 'flex' : 'none'"
                                 class="banner-image">
                             <span class="material-symbols-outlined remove-btn pointer"
-                                [style.display]="getImagePreview() ? 'flex' : 'none'" (click)="onRemove()">
+                                [style.display]="getImagePreview() ? 'flex' : 'none'" (click)="onImageRemove()">
                                 close
                             </span>
                             <!-- <div class="loader" ></div> -->
@@ -101,7 +101,7 @@
     </app-drawer>
 
     <div class="table-list card default-animation-slow">
-        <table class="mw100" *ngIf="bannerData.length > 0">
+        <table class="mw100" *ngIf="bannerData">
             <thead>
                 <tr>
                     <th class="items">S.No.</th>

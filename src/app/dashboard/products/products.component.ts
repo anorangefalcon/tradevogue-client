@@ -37,6 +37,7 @@ export class ProductsComponent implements OnInit {
   productArray: any = [];
   deleteList: any = [];
   productList: any[] = [];
+  dataFetchStatus: boolean = true;
 
   constructor(private element: ElementRef,
     private fetchdata: FetchDataService,
@@ -46,8 +47,10 @@ export class ProductsComponent implements OnInit {
     private toastService: ToastService) { }
 
   async ngOnInit() {
+
     this.fetchdata.HTTPPOST(this.backendUrl.URLs.fetchFeatures, this.dataField).subscribe({
       next: (res: any) => {
+
         this.categoryOption = res.categories;
         this.fetchData();
       }
@@ -67,9 +70,9 @@ export class ProductsComponent implements OnInit {
     try {
       this.fetchdata.HTTPPOST(this.backendUrl.URLs.fetchProductInventory, this.template).subscribe({
         next: (res: any) => {
-          if(!res.pageInfo[0].count){
+          if(!res.data.length) this.dataFetchStatus = false;
 
-          }
+
           this.productArray = res;
           this.productList = [];
           this.totalCount = this.productArray.pageInfo[0].count;

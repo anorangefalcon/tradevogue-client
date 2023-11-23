@@ -4,6 +4,7 @@ import { SalesService } from 'src/app/shared/services/custom-UI/sales.service';
 import { ImageUploadService } from 'src/app/shared/services/image-upload.service';
 import { FetchDataService } from 'src/app/shared/services/fetch-data.service';
 import { UtilsModule } from 'src/app/utils/utils.module';
+import { DialogBoxService } from 'src/app/shared/services/dialog-box.service';
 
 @Component({
   selector: 'app-sales',
@@ -19,13 +20,19 @@ export class SalesComponent {
   itemId: any;
   editingIndex: any;
 
-getSales() {
-  this.salesService.getSales().subscribe((res)=> {
-    this.tableData = res;
-  })
-}
+  getSales() {
+    this.salesService.getSales().subscribe((res) => {
+      this.tableData = res;
+    })
+  }
 
-  constructor(private fb: FormBuilder, private salesService: SalesService, private uploadService: ImageUploadService, private fetch: FetchDataService, private util : UtilsModule) {
+  constructor(
+    private fb: FormBuilder, 
+    private salesService: SalesService, 
+    private uploadService: ImageUploadService, 
+    private fetch: FetchDataService, 
+    private dialogService: DialogBoxService,
+    private util: UtilsModule) {
 
     this.getSales();
 
@@ -45,21 +52,26 @@ getSales() {
           })
         })
       ])
-    })
+    });
 
-  }
-  deleteItem(key: any){
-    this.selectedItem = key;
-    if(this.selectedItem) {
-      const id = this.selectedItem._id;
-
-      const body = {
-        _id: id
+    this.dialogService.responseEmitter.subscribe({
+      next: (res: any)=>{
+        if(res){
+          this.fetch.HTTPPOST(this.util.URLs.deleteSales, {_id: this.deleteId}).subscribe((data => {
+          }));
+          this.getSales();
+        }
       }
+    })
+  }
+  
+  deleteId: any;
 
-      this.fetch.HTTPPOST(this.util.URLs.deleteSales, body).subscribe((data=> {
-      }))
-      
+  deleteItem(key: any) {
+    this.selectedItem = key;
+    if (this.selectedItem) {
+      this.deleteId =  this.selectedItem._id;
+      this.dialogService.confirmationDialogBox()
     }
   }
 
@@ -69,21 +81,21 @@ getSales() {
       const id = this.selectedItem._id;
       const enable = !this.selectedItem.enable;
       const body = {
-        id , enable
+        id, enable
       }
 
-      this.fetch.HTTPPOST(this.util.URLs.toggleSales , body).subscribe((res)=> {
+      this.fetch.HTTPPOST(this.util.URLs.toggleSales, body).subscribe((res) => {
       })
 
     }
   }
 
-  showItemDetails(item: any , index: any) {
+  showItemDetails(item: any, index: any) {
     this.selectedItem = item;
     this.itemId = item._id;
     this.editingIndex = index;
-    
-  
+
+
     this.salesForm.patchValue({
       sale: [
         {
@@ -118,7 +130,7 @@ getSales() {
       })
     });
 
-    (this.salesForm.get('sale') as FormArray).push(saleGroup); 
+    (this.salesForm.get('sale') as FormArray).push(saleGroup);
   }
 
   getSale() {
@@ -130,7 +142,7 @@ getSales() {
   }
 
   onUpdate() {
-    if (this.salesForm.dirty) { 
+    if (this.salesForm.dirty) {
       if (this.editingIndex !== undefined) {
         const body = {
           index: this.editingIndex,
@@ -138,10 +150,10 @@ getSales() {
           data: this.salesForm.value
         }
 
-        this.fetch.HTTPPOST(this.util.URLs.updateSales , body).subscribe((res)=> {
+        this.fetch.HTTPPOST(this.util.URLs.updateSales, body).subscribe((res) => {
           this.getSales();
         })
-        
+
       } else {
         this.salesService.setSales(this.salesForm.value).subscribe((data) => {
           this.getSales();
@@ -176,7 +188,7 @@ getSales() {
   getImagePreview(index: any) {
     let value = <FormArray>((this?.salesForm?.get('sale'))?.get(String(index)))?.get('backgroundImage')?.value;
     // console.log(value, 'linkkk');
-    
+
     return value;
   }
 

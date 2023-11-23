@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { DialogBoxService } from 'src/app/shared/services/dialog-box.service';
 import { FetchDataService } from 'src/app/shared/services/fetch-data.service';
 import { ImageUploadService } from 'src/app/shared/services/image-upload.service';
 import { ToastService } from 'src/app/shared/services/toast.service';
@@ -28,7 +29,7 @@ export class CouponsComponent {
   OfferType = ['coupon', 'discount'];
   discountType = ['percentage', 'flat'];
   couponType = ['global', 'custom', 'new'];
-  newEntry:Boolean=false;
+  newEntry: Boolean = false;
   Brands: any;
   EditIndex: any;
   EditRequest: any;
@@ -41,10 +42,17 @@ export class CouponsComponent {
 
 
 
-  constructor(private fb: FormBuilder, private toastService:ToastService, private imageuploadService:ImageUploadService, private fetchDateService: FetchDataService, private BackendUrls: UtilsModule) {
+  constructor(
+    private fb: FormBuilder,
+    private toastService: ToastService,
+    private imageuploadService: ImageUploadService,
+    private fetchDateService: FetchDataService,
+    private dialogService: DialogBoxService,
+    private BackendUrls: UtilsModule) {
+
     this.OfferForm = fb.group(
       {
-        Image:fb.control('',[Validators.required]),
+        Image: fb.control('', [Validators.required]),
         OfferType: fb.control('', [Validators.required]),
         Title: fb.control('', [Validators.required]),
         Description: fb.control('', [Validators.required]),
@@ -62,9 +70,20 @@ export class CouponsComponent {
       console.log('brand is ',this.Brands);
       
       this.Categories = data.categories;
+    });
+
+    this.dialogService.responseEmitter.subscribe({
+      next: (res: any) => {
+        console.log
+
+        if (res) {
+          this.fetchDateService.HTTPPOST(this.BackendUrls.URLs.deleteOffer, { id: this.deleteId }).subscribe((data) => {
+            this.allOffers = data;
+          });
+        }
+
+      }
     })
-
-
   }
 
 
@@ -139,7 +158,7 @@ export class CouponsComponent {
     if (event == 'coupon') {
       if (this.OfferForm.get('ExtraInfo')) {
         this.OfferForm.removeControl('ExtraInfo');
-        this.OfferForm.removeControl('DiscountPercentageHandler');        
+        this.OfferForm.removeControl('DiscountPercentageHandler');
       }
       controls.forEach((el: any) => {
         if (el.validator) {
@@ -212,15 +231,15 @@ export class CouponsComponent {
 
 
 
-  getAllOffers(){
+  getAllOffers() {
     this.fetchDateService.HTTPGET(this.BackendUrls.URLs.getOffers).subscribe((data) => {
       this.allOffers = data;
     });
   }
 
 
-  getOfferImage(){
-     return this.OfferForm.get('Image')?.value;
+  getOfferImage() {
+    return this.OfferForm.get('Image')?.value;
   }
 
   async ngOnInit() {
@@ -234,7 +253,7 @@ export class CouponsComponent {
 
 
   AddCoupon() {
-    this.newEntry=true;
+    this.newEntry = true;
     this.OfferForm.reset();
     this.show = true;
     this.EditRequest = false;
@@ -268,7 +287,7 @@ export class CouponsComponent {
     this.OfferForm.get('discountType')?.patchValue(event);
     if (this?.OfferForm?.get('discountType')?.value == 'percentage') {
       this.OfferForm.get('discountAmount')?.setValidators([this.PercentageValidator])
-      this.OfferForm.addControl('maximumDiscount',this.fb.control('',[Validators.required]));
+      this.OfferForm.addControl('maximumDiscount', this.fb.control('', [Validators.required]));
     }
 
     else {
@@ -280,8 +299,8 @@ export class CouponsComponent {
 
 
   async CouponSubmit() {
-    console.log('this offer form is ',this.OfferForm);
-    if(!this.OfferForm.get('Image')?.value){
+    console.log('this offer form is ', this.OfferForm);
+    if (!this.OfferForm.get('Image')?.value) {
       this.toastService.errorToast('Image is still uploading please try again');
       return;
     }
@@ -289,7 +308,7 @@ export class CouponsComponent {
 
     let endDate: any = new Date((this.OfferForm.get('endDate')?.value));
     endDate.setDate(endDate.getDate() + 1);
-endDate.setMinutes(endDate.getMinutes() - 1);
+    endDate.setMinutes(endDate.getMinutes() - 1);
     this.OfferForm.get('endDate')?.setValue(endDate);
 
 
@@ -310,7 +329,7 @@ endDate.setMinutes(endDate.getMinutes() - 1);
       else {
         this.allOffers.unshift(data);
       }
-      this.ParenClosed=true;  
+      this.ParenClosed = true;
       this.OfferForm.reset();
     });
     return;
@@ -318,24 +337,30 @@ endDate.setMinutes(endDate.getMinutes() - 1);
   }
 
 
-  async DeleteOffer(element: any, index: any) {
+  deleteId: any;
+  async DeleteOffer(element: any) {
+    this.deleteId = element._id;
 
-    const body = { id: element._id };
-    this.fetchDateService.HTTPPOST(this.BackendUrls.URLs.deleteOffer, body).subscribe((data) => {
-      this.allOffers=data;
-    });
+    let template = {
+      title: 'Proceed with Deletion?',
+      subtitle: 'The Offer will be permanently deleted, and recovery will not be possible. Are you sure you want to proceed?',
+      type: 'confirmation',
+      confirmationText: 'Yes, Remove it',
+      cancelText: 'No, Keep it',
+    };
 
+    this.dialogService.confirmationDialogBox(template);
   }
 
 
-  CustomTypeHandler(value:any){
+  CustomTypeHandler(value: any) {
     this.OfferForm.addControl('UserEmails', this.fb.array([]));
-  value.forEach((el:any)=>{
-    (<FormArray>this.OfferForm.get('UserEmails')).push(this.fb.group({
-      email: ['', Validators.required]
-    }));
-  })
-   
+    value.forEach((el: any) => {
+      (<FormArray>this.OfferForm.get('UserEmails')).push(this.fb.group({
+        email: ['', Validators.required]
+      }));
+    })
+
   }
 
   async EditOffer(data: any, index: any) {
@@ -346,9 +371,9 @@ endDate.setMinutes(endDate.getMinutes() - 1);
     data.endDate = data.endDate.split('T')[0];
     this.OfferTypeHandler(data.OfferType);
     this.DiscountTypeHandler(data.discountType);
-  if(data.UserEmails) { 
-   this.CustomTypeHandler( data.UserEmails);
-  }
+    if (data.UserEmails) {
+      this.CustomTypeHandler(data.UserEmails);
+    }
 
     this.OfferForm.patchValue(data);
     this.show = true;
@@ -360,7 +385,7 @@ endDate.setMinutes(endDate.getMinutes() - 1);
     const body = this.deleteList;
     this.fetchDateService.HTTPPOST(this.BackendUrls.URLs.deleteOffer, body).subscribe((response) => {
       this.selectAll = false;
-      this.allOffers=response;
+      this.allOffers = response;
       this.deleteList = [];
     });
 
@@ -374,38 +399,38 @@ endDate.setMinutes(endDate.getMinutes() - 1);
   }
 
 
-  ActiveStatus(event:any,data:any){
-    const body={data,status:event.target.checked};
-      this.fetchDateService.HTTPPOST(this.BackendUrls.URLs.updateOfferStatus,body).subscribe((data)=>{
-        
-      })
+  ActiveStatus(event: any, data: any) {
+    const body = { data, status: event.target.checked };
+    this.fetchDateService.HTTPPOST(this.BackendUrls.URLs.updateOfferStatus, body).subscribe((data) => {
+
+    })
 
   }
 
-  updateFields(event:any){
-      if(!event){
-        this.getAllOffers();
-        return;
-      }
-      const body={searchWord:event};
-      this.fetchDateService.HTTPPOST(this.BackendUrls.URLs.searchOffer,body).subscribe((data)=>{
-        this.allOffers=data;
-      })
+  updateFields(event: any) {
+    if (!event) {
+      this.getAllOffers();
+      return;
+    }
+    const body = { searchWord: event };
+    this.fetchDateService.HTTPPOST(this.BackendUrls.URLs.searchOffer, body).subscribe((data) => {
+      this.allOffers = data;
+    })
   }
 
 
-  bannerImageUpload(event:any){
+  bannerImageUpload(event: any) {
     let file: any = (<HTMLInputElement>event.target)?.files![0];
     this.imageuploadService.fileupload([{ file: file }]).then((url: any) => {
-      console.log('url come up is ',url[0]);
-      
+      console.log('url come up is ', url[0]);
+
       this.OfferForm.get('Image')?.setValue(url[0]);
 
     })
   }
 
 
-  ShowUpload(){
+  ShowUpload() {
     this.OfferForm.get('Image')?.setValue('');
   }
 

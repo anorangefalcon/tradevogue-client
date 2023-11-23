@@ -443,6 +443,14 @@
 
 /* Table CSS */
 main {
+    .noDataFound{
+
+        & img{
+            height: 170px;
+            opacity: 0.3;
+        }
+    }
+
     .table-list {
         overflow-x: auto;
 

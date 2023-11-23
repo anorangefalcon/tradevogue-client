@@ -28,7 +28,7 @@
             </div>
         </div>
         <div class="row row-2 card-data">
-            <ng-container *ngIf="field_data">
+            <ng-container *ngIf="field_data; else noData">
                 <div style="height: fit-content;" class="d-flex gap-10 flex-wrap">
                     <div class="data__field d-flex justify-content-md-between align-item-center gap-10 transition "
                     *ngFor="let option of field_data[item.type] | productFilter: filter[item.filter]; let j = index">
@@ -38,6 +38,11 @@
                 </div>
                 </div>
             </ng-container>
+            <ng-template #noData> 
+                <div class="noDataFound d-flex flex-column flex-center ">
+                    <img src="../../../assets/noDataFound.svg" alt="No Data Found" style="height: 150px !important;">
+                </div>
+            </ng-template>
         </div>
         <div class="row row-3 relative mw100">
             <input type="text" class="form__input" [placeholder]="'Add '+ item.name" [id]="item.type"

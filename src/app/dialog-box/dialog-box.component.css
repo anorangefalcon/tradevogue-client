@@ -35,11 +35,6 @@ p{
     margin-bottom: 10px;
 }
 
-button{
-    padding: 10px 24px;
-    font-weight: 400;
-}
-
 .warning_icon{
     inset-block-start: -30px;
     width: 60px;

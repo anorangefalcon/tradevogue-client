@@ -1,12 +1,12 @@
 <div #content class="dialogBox fixed d-flex flex-center mw100 mh100 inset-block-start-0 inset-inline-start-0">
 
-    <div class="dialog__container relative d-flex flex-column flex-center gap-10" *ngIf="dialogboxData.type == 'confirmation'">
+    <div class="dialog__container relative d-flex flex-column justify-content-md-between align-item-center gap-10" *ngIf="dialogboxData.type == 'confirmation'">
         <span class="warning_icon absolute d-flex flex-center material-symbols-outlined" >warning</span>
         <h3>{{dialogboxData.title}}</h3>
         <p>{{dialogboxData.subtitle}}</p>
         <span class="d-flex flex-center gap-30">
-            <button class="btn-secondary" (click)="cancel()">{{dialogboxData.cancelText}}</button>
-            <button class="btn-primary" (click)="confirm()">{{dialogboxData.confirmationText}}</button>
+            <button class="btn btn-xs btn-rounded fw-500 btn-secondary" (click)="cancel()">{{dialogboxData.cancelText}}</button>
+            <button class="btn btn-xs btn-rounded fw-500 btn-primary" (click)="confirm()">{{dialogboxData.confirmationText}}</button>
         </span>
     </div>
 
@@ -14,7 +14,7 @@
         <img src="../../../assets/logos/mail-animation.gif" alt="mail" class="mail-animate">
         <h3>{{dialogboxData.title}}</h3>
         <p>{{dialogboxData.subtitle}}</p>
-        <button #popupclose class="btn-primary btn-rounded" (click)="closeDialog()">Close</button>
+        <button #popupclose class="btn btn-xs btn-primary btn-rounded" (click)="closeDialog()">Close</button>
     </div>
 
 </div>

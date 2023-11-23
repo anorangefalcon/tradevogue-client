@@ -248,8 +248,12 @@ input::-webkit-inner-spin-button {
 .price button {
     background-color: rgb(var(--gray));
     padding: 5px;
-    border: 0.5px solid black;
+    border: 0.5px solid rgb(var(--blackClr));
     height: 30px;
+
+    &:hover{
+        border: 0.5px solid rgb(var(--blackClr), 0.5);
+    }
 
     & span {
         font-size: 20px;

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { BannerService } from 'src/app/shared/services/custom-UI/banner.service';
+import { DialogBoxService } from 'src/app/shared/services/dialog-box.service';
 import { ImageUploadService } from 'src/app/shared/services/image-upload.service';
 import { ToastService } from 'src/app/shared/services/toast.service';
 
@@ -20,33 +21,51 @@ export class CustomiseBannerComponent {
   checked2: boolean = false;
   editValue: any = '';
   showForm: boolean = false;
+  deleteId: any;
 
-  popUpDirection:any='right';
+  popUpDirection: any = 'right';
   showingPopUp: boolean = false;
-  ParentClosed:boolean=false;
+  ParentClosed: boolean = false;
 
   constructor(private fb: FormBuilder,
     private bannerService: BannerService,
     private uploadService: ImageUploadService,
+    private dialogService: DialogBoxService,
     private toastService: ToastService) {
 
     this.bannerForm = this.fb.group({
-      backgroundImage: ['', 
-      // Validators.required
-    ],
+      backgroundImage: ['',
+        // Validators.required
+      ],
       title: '',
       subTitle: '',
       buttonText: '',
-      buttonLink: ['', 
-      Validators.required
-    ],
+      buttonLink: ['',
+        Validators.required
+      ],
       contentAlign: '',
       colors: this.fb.group({
         titleColor: '',
         subTitleColor: '',
         buttonColor: ''
       })
-    })
+    });
+
+    dialogService.responseEmitter.subscribe({
+      next: (res: any) => {
+        if (res) {
+          console.log("asjdhasjdhakj", res);
+          this.bannerService.deleteBanner({id: this.deleteId}).subscribe((res: any) => {
+            const toast = {
+              title: res.message
+            }
+            this.toastService.successToast(toast);
+            this.ngOnInit()
+          });
+        }
+      }
+    });
+
   }
 
   ngOnInit() {
@@ -58,7 +77,7 @@ export class CustomiseBannerComponent {
 
   isChecked(event: any) {
     let val = (<HTMLInputElement>event.target).checked
-   
+
     if (val == true) {
       this.bannerForm.get('title')?.disable()
       this.bannerForm.get('subTitle')?.disable()
@@ -127,19 +146,20 @@ export class CustomiseBannerComponent {
     return value;
   }
 
-  onRemove() {
+  onImageRemove() {
     this.bannerForm.get('backgroundImage')?.reset('');
   }
 
-  delete(id: any) { 
-    const data = { id }
-    this.bannerService.deleteBanner(data).subscribe((res: any) => {
-      const toast = {
-        title: res.message
-      }
-      this.toastService.successToast(toast);
-      this.ngOnInit()
-    })
+  delete(id: any) {
+    this.deleteId = id;
+    let template: any = {
+      title: 'Proceed with Deletion?',
+      subtitle: 'The banner will be permanently deleted, and recovery will not be possible. Are you sure you want to proceed?',
+      type: 'confirmation',
+      confirmationText: 'Yes, Delete it',
+      cancelText: 'No, Keep it',
+    };
+    this.dialogService.confirmationDialogBox(template);
   }
 
   toggleBanner(id: any, event: any) {
@@ -183,10 +203,10 @@ export class CustomiseBannerComponent {
     return !this.getImagePreview();
   }
 
-  PopUpChangeHanlder(event: any){
+  PopUpChangeHanlder(event: any) {
     this.showingPopUp = event;
   }
-  ParentClosedHandler(event:any){
-    this.ParentClosed=event;
-    }
+  ParentClosedHandler(event: any) {
+    this.ParentClosed = event;
+  }
 }
