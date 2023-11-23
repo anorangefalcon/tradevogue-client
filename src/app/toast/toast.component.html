@@ -1,27 +1,36 @@
-<div *ngIf="display" (mouseenter)="hoverIn()" (mouseleave)="hoverOut()" class="container">
-    <div class="toast">
+<div class="d-flex flex-column gap-20 toastContainer">
 
-        <div class="toast-header d-flex align-item-center">
+    <div class="relative">
+        <div *ngIf="ErrorArray.length" class="toast-container d-flex flex-column gap-5">
 
-            <div class="loader {{display}}-bg"></div>
+            <div class="toast" *ngFor="let el of ErrorArray;let i=index" (mouseenter)="hoverIn(i)"
+                (mouseleave)="hoverOut(i)">
+                <div class="toast-header d-flex align-item-center">
 
-            <div class="logo d-flex flex-center">
-                <i *ngIf="display === 'success'" class="success material-symbols-outlined">done</i>
-                <i *ngIf="display === 'error'" class="error material-symbols-outlined">error</i>
-                <i *ngIf="display === 'warning'" class="warning material-symbols-outlined">warning</i>
-                <i *ngIf="display === 'notification'" class="notification material-symbols-outlined">notifications</i>
+                    <div class="loader {{el.display}}-bg"></div>
+
+                    <div class="logo d-flex flex-center">
+                        <i *ngIf="el.display === 'success'" class="success material-symbols-outlined">done</i>
+                        <i *ngIf="el.display === 'error'" class="error material-symbols-outlined">error</i>
+                        <i *ngIf="el.display === 'warning'" class="warning material-symbols-outlined">warning</i>
+                        <i *ngIf="el.display === 'notification'"
+                            class="notification material-symbols-outlined">notifications</i>
+                    </div>
+
+                    <div class="text {{el.display}}">
+                        {{el.content?.title}}
+                    </div>
+                </div>
+
+                <div *ngIf="(el.content?.body)?.length > 0" class="toast-body">
+                    <ul *ngFor="let text of el.content?.body">
+                        <li>{{text}}</li>
+                    </ul>
+                </div>
+
             </div>
-
-            <div class="text {{display}}">
-                {{content?.title}}
-            </div>
-        </div>
-
-        <div *ngIf="(content?.body)?.length > 0" class="toast-body">
-            <ul *ngFor="let text of content?.body">
-                <li>{{text}}</li>
-            </ul>
         </div>
 
     </div>
+
 </div>

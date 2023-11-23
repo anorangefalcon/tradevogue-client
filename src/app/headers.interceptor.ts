@@ -12,6 +12,7 @@ export class HeadersInterceptor implements HttpInterceptor {
   constructor(private userService: LoginCheckService) { }
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): any {
+console.log(request, 'hrer');
 
     this.userService.getUser('token').subscribe((token: any) => {
       if(token){  

@@ -42,7 +42,7 @@ const routes: Routes = [
         data: { breadcrumb: 'Cart' },
         children: [
           { path: '', component: CartComponent, data: { breadcrumb: 'Cart' } },
-          { path: 'billing', component: BillingComponent, data: { breadcrumb: 'Billing' }, canDeactivate: [redirectGuard] }
+          { path: 'billing', component: BillingComponent, data: { breadcrumb: 'Billing' }, canDeactivate: [redirectGuard],canActivate:[authGuard] }
         ]
       },
     ]

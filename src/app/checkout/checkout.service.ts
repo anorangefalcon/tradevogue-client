@@ -4,6 +4,7 @@ import { FetchDataService } from '../shared/services/fetch-data.service';
 import { NavigationEnd, Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 import { LoginCheckService } from '../shared/services/login-check.service';
+import { CartService } from '../shared/services/cart.service';
 declare var Stripe: any;
 
 @Injectable({
@@ -12,6 +13,7 @@ declare var Stripe: any;
 export class CheckoutService {
   publicKey: any;
   stripe: any;
+  orderID:any=''
   SecretClient: any;
   private secureNavbar = new BehaviorSubject(false);
   secureNavbar$ = this.secureNavbar.asObservable();
@@ -21,6 +23,7 @@ export class CheckoutService {
     private backendUri: UtilsModule,
     private fetchData: FetchDataService,
     private userService: LoginCheckService,
+    private cartService:CartService,
     private router:Router
   ) {
 
@@ -156,19 +159,19 @@ export class CheckoutService {
     })
   }
 
-  private async updateOrderStatus(paymentIntent: any) {
+  private  updateOrderStatus(paymentIntent: any) {
     let body:any = {};
-    this.userService.getUser('token').subscribe((token: any)=>{
-      body = {
-        buyerId: token,
-        newPaymentStatus: 'success',
-        transactionId: paymentIntent.id,
-        MOP: paymentIntent.payment_method_types[0],
-      };
-    });
+    body.newPaymentStatus='success';
+    body.transactionId=paymentIntent.id;
+    body.MOP= paymentIntent.payment_method_types[0]
+    this.cartService.fetchCart().subscribe(async (res) => {
+      let result = JSON.parse(JSON.stringify(res));
+      body.products=result.details;
+  
 
-    await this.fetchData.HTTPPOST(this.backendUri.URLs.updateOrderStatus, body)
+     this.fetchData.HTTPPOST(this.backendUri.URLs.updateOrderStatus, body)
       .subscribe();
+    });
   }
 
   private async sendInvoiceData(paymentIntent: any) {

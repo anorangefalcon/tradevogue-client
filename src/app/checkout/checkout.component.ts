@@ -294,7 +294,7 @@ async ApplyCoupon(coupon: any = '', event: any = '') {
 
       this.fetchService.HTTPPOST(this.BackendUrl.URLs.createOrder, body).subscribe((data: any) => {
           this.checkOutService.StripePaymentOpen.next(true);
-          this.OrderId=data.orderId;
+          this.checkOutService.orderID=data.orderId;
         });
 
 

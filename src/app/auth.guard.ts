@@ -13,7 +13,6 @@ export const authGuard: CanActivateFn = async (route, state) => {
   const BackendUrl = inject(UtilsModule);
 
   let navigateCheck = true;
-
   try{
     const data=await lastValueFrom((FetchService.HTTPGET(BackendUrl.URLs.authorizeUrl)));
 
@@ -28,8 +27,9 @@ export const authGuard: CanActivateFn = async (route, state) => {
     }
     else {
       loginCheckService.getUser().subscribe((check: any) => {
-        if (currentRoutes == 'usersetting') navigateCheck = false;
+        if (currentRoutes == 'usersetting' && state.url!='/usersetting/wishlist') navigateCheck = false;
         if (currentRoutes == 'auth' && check) navigateCheck = false;
+
         if (currentRoutes == 'billing') navigateCheck = false;
       });
     }
@@ -43,6 +43,8 @@ export const authGuard: CanActivateFn = async (route, state) => {
   if (!navigateCheck) {
     router.navigate(['/']);
   }
+  
+  console.log('navigate is ',navigateCheck);
   
   return navigateCheck;
 };

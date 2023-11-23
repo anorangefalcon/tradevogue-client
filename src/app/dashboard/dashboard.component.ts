@@ -11,7 +11,7 @@ import { LoginCheckService } from '../shared/services/login-check.service';
 export class DashboardComponent {
 
   isCollapse: boolean = false;
-  isSalesBtnActive: boolean = false;
+isSalesBtnActive: boolean = false;
   isProductBtnActive: boolean = false;
   adminName: String = '';
 

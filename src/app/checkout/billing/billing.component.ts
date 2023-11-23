@@ -303,7 +303,7 @@ StripeOpener:Boolean=false;
       const { paymentIntent,error } = await this.stripe.confirmPayment({
         elements: this.elements,
         confirmParams: {
-          return_url: "http://localhost:4200/usersetting/order",
+          return_url: "http://localhost:4200/usersetting/orders",
           receipt_email: this.emailAddress,
         }
       });

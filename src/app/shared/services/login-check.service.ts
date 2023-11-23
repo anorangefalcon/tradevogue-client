@@ -16,6 +16,7 @@ export class LoginCheckService {
   private previousUrl: any = '/';
   constructor(private cookieService: CookieService, private router: Router, private toastService: ToastService) {
 
+  
     this.router.events
       .pipe(
         filter((event): event is NavigationEnd => event instanceof NavigationEnd),
@@ -25,9 +26,14 @@ export class LoginCheckService {
         this.previousUrl = prevEvent.url;
       });
 
+      console.log('hehe 2 ', typeof(cookieService.get('userToken')));
     if (cookieService.get('userToken')) {
+      console.log('hehe');
+      
+      console.log(this.userSubject, 'heree');
+      
       let userObj = {
-        userToken: cookieService.get('userToken'),
+        userToken : this.cookieService.get('userToken'),
         name: cookieService.get('name'),
         fcmToken: ''
       }
@@ -41,8 +47,8 @@ export class LoginCheckService {
   }
 
   loginUser(userObj: any, redirect: Boolean = true) {    
-    this.cookieService.set('userToken', userObj.userToken);
-    this.cookieService.set('name', userObj.name);
+    this.cookieService.set('userToken', userObj.userToken, { path: '/' });
+    this.cookieService.set('name', userObj.name, { path: '/' });
     this.userSubject.next({ 'user': userObj, 'loggedIn': true });
 
     if (this.cookieService.get('fcmToken')) {
@@ -55,7 +61,9 @@ export class LoginCheckService {
   }
 
   logoutUser() {
-    this.cookieService.deleteAll();
+    // this.cookieService.deleteAll();
+    this.cookieService.delete('userToken', '/');
+    this.cookieService.delete('name', '/');
     this.userSubject.next({ 'loggedIn': false })
     this.toastService.notificationToast({
       title: 'Logged Out Successfully'
