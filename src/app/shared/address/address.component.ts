@@ -16,7 +16,6 @@ import { Subject, debounceTime, distinctUntilChanged, switchMap } from 'rxjs';
 })
 export class AddressComponent {
 
-  ParenClosed: boolean = false;
   direction: string = 'right';
   show: boolean = false;
   title!:string;
@@ -100,9 +99,7 @@ export class AddressComponent {
     this.DetailsForm.reset();
   }
 
-  ParentClosedHandler(event: any) {
-    this.ParenClosed = event;
-  }
+
 
   ngOnChanges() {
     if (this.ShowComponent == true) {
@@ -140,7 +137,7 @@ export class AddressComponent {
     catch (error) {
     }
     this.DetailsForm.reset();
-      this.ParenClosed = true;
+      this.show = false;
   }
 
   StateHandler(event: any) {

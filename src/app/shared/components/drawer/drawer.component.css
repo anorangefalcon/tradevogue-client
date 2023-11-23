@@ -9,6 +9,7 @@
     transition: background-color 0.1s ease-in-out;
     top: 0;
     left: 0;
+    transition: 0.3s ease-in-out;
 }
 
 .content-drawer {
@@ -29,6 +30,7 @@
 .show {
     opacity: 1;
     visibility: initial;
+    transition: 0.3s ease-in-out;
 }
 
 .top {
@@ -43,15 +45,13 @@
 
 .right {
     right: 0;
-    /* width: fit-content !important; */
     width: 500px;
-    transform: translate(100%, 0);
-
+    transform: translate(510px, 0);
+    transition: 0.4s ease-in-out;
 }
 
 .right_show {
-    transform: translate(calc(100% - 500px), 0);
-    /* transform: translate(0%,0); */
+    transform: translate(0, 0);
 }
 
 .bottom {

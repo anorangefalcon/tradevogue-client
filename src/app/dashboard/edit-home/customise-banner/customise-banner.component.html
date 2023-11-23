@@ -15,8 +15,7 @@
     </div>
 
 
-    <app-drawer [direction]="popUpDirection" [show]="showingPopUp" (showChange)="PopUpChangeHanlder($event)"
-        (ParentClosedEmitter)="ParentClosedHandler($event)" [title]="'Customise Banner'">
+    <app-drawer [direction]="popUpDirection" [show]="showingPopUp" (showChange)="PopUpChangeHanlder($event)" (ParentClosedEmitter)="ParentClosedHandler($event)" [title]="'Customise Banner'">
         <form class="form__card d-flex gap-15 default-animation flex-column" [formGroup]="bannerForm"
             *ngIf="showForm === true">
             <div class="mw100 relative d-flex flex-column gap-20">
@@ -49,21 +48,60 @@
                     </div>
                     <div class="data-upload-div d-flex flex-column mw100 gap-10">
                         <div class="d-flex flex-column mw100 gap-10">
+
                             <div class="internal-div">
                                 <label class="form__title" for="title">Title</label>
-                                <input class="form__input" type="text" id="title" formControlName="title" />
+                                <span class="relative ">
+                                    <input class="form__input color-input" type="text" id="title"
+                                        formControlName="title" />
+                                    <ng-container formGroupName="colors">
+                                        <span class="tooltip">
+                                            <input type="color" name="" [id]="'titleText'" formControlName="titleColor"
+                                                class="absolute color-picker-position">
+                                            <span class="tooltiptext">
+                                                Title Color
+                                            </span>
+                                        </span>
+                                    </ng-container>
+                                </span>
+
                             </div>
                             <div class="internal-div">
                                 <label class="form__title" for="subTitle">Description</label>
-                                <input class="form__input" type="text" id="subTitle" formControlName="subTitle" />
+                                <span class="relative">
+                                    <input class="form__input color-input" type="text" id="subTitle"
+                                        formControlName="subTitle" />
+                                    <ng-container formGroupName="colors">
+                                        <span class="tooltip mh100">
+                                            <input type="color" [id]="'subTitleText'" formControlName="subTitleColor"
+                                                class="absolute color-picker-position" />
+                                            <span class="tooltiptext">
+                                                SubTitle Color
+                                            </span>
+                                        </span>
+                                    </ng-container>
+                                </span>
                             </div>
                             <div class="internal-div">
                                 <label class="form__title" for="buttonText">Button Text</label>
-                                <input class="form__input" type="text" id="buttonText" formControlName="buttonText" />
+                                <span class="relative">
+                                    <input class="form__input color-input" type="text" id="buttonText"
+                                        formControlName="buttonText" />
+                                    <ng-container formGroupName="colors">
+                                        <span class="tooltip">
+                                            <input type="color" [id]="'buttonText'" formControlName="buttonColor"
+                                                class="absolute color-picker-position" />
+                                            <span class="tooltiptext">
+                                                Button Color
+                                            </span>
+                                        </span>
+                                    </ng-container>
+                                </span>
                             </div>
                             <div class="internal-div">
                                 <label class="form__title" for="buttonLink">Button Link</label>
-                                <input class="form__input" type="text" id="buttonLink" formControlName="buttonLink" />
+                                <input class="form__input" type="text" id="buttonLink" formControlName="buttonLink"
+                                    placeholder="Eg. http://localhost:4200/explore?gender=male" />
                             </div>
                         </div>
                         <div class="d-flex flex-column mw100 gap-10">
@@ -73,23 +111,20 @@
                                     [selectedOption]="(bannerForm.get('contentAlign')?.value ? bannerForm.get('contentAlign')?.value : 'Select..')"
                                     (final_option)="this.bannerForm.get('contentAlign')?.setValue($event);"></app-custom-select>
                             </div>
-                            <ng-container formGroupName="colors">
+                            <!-- <ng-container formGroupName="colors">
                                 <div class="internal-div">
                                     <label class="form__title" [for]="'titleText'">Title Color</label>
-                                    <input class="form__input" type="color" name="" [id]="'titleText'"
-                                        formControlName="titleColor">
+                                    <input type="color" name="" [id]="'titleText'" formControlName="titleColor">
                                 </div>
                                 <div class="internal-div">
                                     <label class="form__title" [for]="'subTitleText'">Subtitle Color</label>
-                                    <input class="form__input" type="color" [id]="'subTitleText'"
-                                        formControlName="subTitleColor" />
+                                    <input type="color" [id]="'subTitleText'" formControlName="subTitleColor" />
                                 </div>
                                 <div class="internal-div">
                                     <label class="form__title" [for]="'buttonText'">Button Color</label>
-                                    <input class="form__input" type="color" [id]="'buttonText'"
-                                        formControlName="buttonColor" />
+                                    <input type="color" [id]="'buttonText'" formControlName="buttonColor" />
                                 </div>
-                            </ng-container>
+                            </ng-container> -->
                         </div>
                     </div>
                 </div>

@@ -132,6 +132,23 @@
 .save-btn {
     margin-block-start: 10px;
 }
+input[type="color"]{
+    visibility: visible;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+}
+input[type="color" i]::-webkit-color-swatch-wrapper {
+    padding: 0px  !important;
+}
+input[type="color" i]::-webkit-color-swatch {
+    border-radius: 50%;
+    border: none;
+}
+::placeholder{
+    color: rgb(var(--textClr), 0.3);
+}
+/* -webkit-color-swatch-wrapper */
 
 @keyframes spinner {
     to {transform: rotate(360deg);}

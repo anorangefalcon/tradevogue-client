@@ -36,7 +36,8 @@ export class WishlistService {
     private http: HttpClient,
     private userService: LoginCheckService,
     private toastService: ToastService,
-  ) {
+  ) 
+  {
     this.userService.getUser().subscribe((isLoggedIn: any) => {
       this.userIsLoggedIn = isLoggedIn;
       this.getWishlistCount();
@@ -54,7 +55,6 @@ export class WishlistService {
     else {
       this.router.navigate(['/auth/login']);
     }
-
   }
 
   getWishlistCount() {

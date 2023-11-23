@@ -1,113 +1,144 @@
 <div class="deal__container d-flex flex-column gap-20">
-        <div class="d-flex justify-content-md-between card card__pd-20 default-animation">
-          <div  class="d-flex gap-5 justify-content-center align-item-center">
+    <div class="d-flex justify-content-md-between card card__pd-20 default-animation">
+        <div class="d-flex gap-5 justify-content-center align-item-center">
             <button class="btn btn-xs customise-back-btn d-flex flex-center" routerLink="/dashboard/customise-home">
                 <span class="material-symbols-outlined">
                     arrow_back_ios
                 </span>
             </button>
             <h2 class="d-flex align-item-center">Customise Deal</h2>
-          </div>
-            <div class="d-flex gap-10">
-                <!--  [disabled]="DealForm.invalid" -->
-                <button class="btn btn-xs fw-500 btn-rounded btn-primary" (click)="EditClicked()"
-                    *ngIf="!Edit">Edit</button>
-                <button class="btn btn-xs fw-500 btn-rounded btn-secondary" (click)="EditClicked()"
-                    *ngIf="Edit">Cancel</button>
-                <button class="btn btn-xs fw-500 btn-rounded btn-primary" (click)="Save()" *ngIf="Edit">Save</button>
-            </div>
         </div>
+        <div class="d-flex gap-10">
+            <!--  [disabled]="DealForm.invalid" -->
+            <button class="btn btn-xs fw-500 btn-rounded btn-primary" (click)="EditClicked()"
+                *ngIf="!Edit">Edit</button>
+            <button class="btn btn-xs fw-500 btn-rounded btn-secondary" (click)="EditClicked()"
+                *ngIf="Edit">Cancel</button>
+            <button class="btn btn-xs fw-500 btn-rounded btn-primary" (click)="Save()" *ngIf="Edit">Save</button>
+        </div>
+    </div>
 
-        <form [formGroup]="DealForm" class="d-flex gap-15 card card__pd-20 default-animation-slow">
+    <form [formGroup]="DealForm" class="d-flex gap-15 card card__pd-20 default-animation-slow">
 
-            <div class="form__group width-40 relative d-flex flex-column img-upload justify-content-center align-item-center">
-                <div class="d-flex align-item-center justify-content-center">
+        <div
+            class="form__group width-40 relative d-flex flex-column img-upload justify-content-center align-item-center">
+            <div class="d-flex align-item-center justify-content-center">
 
-                    <!--  LABEL AND SPAN -->
-                    <div class="d-flex flex-column align-item-center gap-5" *ngIf="!getProductImage()">
-                    <label [for]="'deal_image'"  class="d-flex align-item-center upload__label flex-column justify-content-center" >
-                        <span class="upload_icon material-symbols-outlined" >
-                          cloud_upload
+                <!--  LABEL AND SPAN -->
+                <div class="d-flex flex-column align-item-center gap-5" *ngIf="!getProductImage()">
+                    <label [for]="'deal_image'"
+                        class="d-flex align-item-center upload__label flex-column justify-content-center">
+                        <span class="upload_icon material-symbols-outlined">
+                            cloud_upload
                         </span>
                     </label>
                     <small class="banner-label">Upload Image</small>
-                  </div>
-        
-                  
-                    <!-- IMAGE ViSIBLE DIV -->
-                    <div  class="img_and_close_icon" *ngIf="getProductImage()">
-                      <span class="remove-img material-symbols-outlined" *ngIf="Edit" (click)="CloseIconClicked()">
+                </div>
+
+
+                <!-- IMAGE ViSIBLE DIV -->
+                <div class="img_and_close_icon" *ngIf="getProductImage()">
+                    <span class="remove-img material-symbols-outlined" *ngIf="Edit" (click)="CloseIconClicked()">
                         close
-                      </span>
-                      <img  [src]="getProductImage()" alt="Product Image" class="mh100 mw100" />
-                    </div>
-        
-                    <!-- INPUT WHICH DISPLAY NONE -->
-                    <input type="file" class="image__upload__input" [id]="'deal_image'"
-                      accept="image/jpg, image/jpeg, image/png" multiple (input)="bannerImageUpload($event)">
-                  
+                    </span>
+                    <img [src]="getProductImage()" alt="Product Image" class="mh100 mw100" />
+                </div>
 
-                  </div>
+                <!-- INPUT WHICH DISPLAY NONE -->
+                <input type="file" class="image__upload__input" [id]="'deal_image'"
+                    accept="image/jpg, image/jpeg, image/png" multiple (input)="bannerImageUpload($event)">
+
+
             </div>
+        </div>
 
-            <div class="width-60 d-flex flex-wrap gap-20">
+        <div class="width-60 d-flex flex-wrap gap-20">
 
-                <div class="form__group relative d-flex flex-column">
-                    <label class="form__label">Title<span>*</span></label>
+            <div class="form__group relative d-flex flex-column">
+                <label class="form__label">Title<span>*</span></label>
+                <span class="relative">
                     <input type="text" id="title" formControlName="Title" placeholder="Enter Deal Title"
                         class="form__input">
-                </div>
-
-                <div class="form__group relative d-flex flex-column">
-                    <label class="form__label">Sub Title<span>*</span></label>
-                    <input type="text" id="subTitle" formControlName="subTitle" placeholder="Enter SubTitle"
-                        class="form__input">
-                </div>
-                <div class="form__group relative d-flex flex-column">
-                    <label class="form__label">Button Link<span>*</span></label>
-                    <input type="text" id="buttonLink" formControlName="buttonLink" placeholder="Enter Button Link"
-                        class="form__input">
-                </div>
-
-
-                <div class="form__group d-flex flex-column">
-                    <label class="form__label"> Content Alignment <span>*</span></label>
-                    <div class="custom__select">
-                        <app-custom-select [type]="''" [options]="alignments"
-                            [selectedOption]="((DealForm.get('contentAlign')?.value) ? (DealForm.get('contentAlign')?.value) : 'Select Alignment')"
-                            (final_option)="AlignmentHandler($event)"></app-custom-select>
-                    </div>
-                </div>
-
-                <div class="form__group relative d-flex flex-column colors__div" formGroupName="colors">
-                    <label class="form__label">Title Color<span>*</span></label>
-                    <input type="color" id="titleColor" formControlName="titleColor" class="form__input">
-                </div>
-
-                <div class="form__group relative d-flex flex-column colors__div" formGroupName="colors">
-                    <label class="form__label">SubTitle Color<span>*</span></label>
-                    <input type="color" id="titleColor" formControlName="subTitleColor" class="form__input">
-                </div>
-
-                <div class="form__group relative d-flex flex-column colors__div" formGroupName="colors">
-                    <label class="form__label">Background Color<span>*</span></label>
-                    <input type="color" id="backgroundColor" formControlName="backgroundColor" class="form__input">
-                </div>
-
-                <div class="form__group relative d-flex flex-column colors__div" formGroupName="colors">
-                    <label class="form__label">Button Color<span>*</span></label>
-                    <input type="color" id="titleColor" formControlName="buttonColor" class="form__input">
-                </div>
-
-                <div class="form__group relative d-flex flex-column">
-                    <label class="form__label">Button Text<span>*</span></label>
-                    <input type="text" id="buttonText" formControlName="buttonText" placeholder="Enter Button Text"
-                        class="form__input">
-                </div>
-
+                    <ng-container formGroupName="colors">
+                        <span class="tooltip">
+                            <input type="color" id="titleColor" formControlName="titleColor"
+                                class="absolute color-picker-position">
+                            <span class="tooltiptext">
+                                Title Color
+                            </span>
+                        </span>
+                    </ng-container>
+                </span>
             </div>
 
-        </form>
+            <div class="form__group relative d-flex flex-column">
+                <label class="form__label">Sub Title<span>*</span></label>
+                <span class="relative">
+                    <input type="text" id="subTitle" formControlName="subTitle" placeholder="Enter SubTitle"
+                        class="form__input">
+                    <ng-container formGroupName="colors">
+                        <span class="tooltip">
+                            <input type="color" id="titleColor" formControlName="subTitleColor"  class="absolute color-picker-position">
+                            <span class="tooltiptext">
+                                Subtitle Color
+                            </span>
+                        </span>
+                    </ng-container>
+                </span>
+            </div>
+            <div class="form__group relative d-flex flex-column">
+                <label class="form__label">Button Link<span>*</span></label>
+                <span class="relative">
+                    <input type="text " id="buttonLink" formControlName="buttonLink" placeholder="Enter Button Link"
+                        class="form__input color-input" placeholder="http://localhost:4200/explore?gender=female&category=shirt">
+                    <ng-container formGroupName="colors">
+                        <span class="tooltip">
+                            <input type="color" id="titleColor" formControlName="buttonColor" class="absolute color-picker-position">                            <span class="tooltiptext">
+                                Button Color
+                            </span>
+                        </span>
+                    </ng-container>
+
+                </span>
+            </div>
+
+
+            <div class="form__group d-flex flex-column">
+                <label class="form__label"> Content Alignment <span>*</span></label>
+                <div class="custom__select">
+                    <app-custom-select [type]="''" [options]="alignments"
+                        [selectedOption]="((DealForm.get('contentAlign')?.value) ? (DealForm.get('contentAlign')?.value) : 'Select Alignment')"
+                        (final_option)="AlignmentHandler($event)"></app-custom-select>
+                </div>
+            </div>
+
+            <!-- <div class="form__group relative d-flex flex-column colors__div" formGroupName="colors">
+                    <label class="form__label">Title Color<span>*</span></label>
+                    <input type="color" id="titleColor" formControlName="titleColor" class="form__input">
+                </div> -->
+
+            <!-- <div class="form__group relative d-flex flex-column colors__div" formGroupName="colors">
+                    <label class="form__label">SubTitle Color<span>*</span></label>
+                    <input type="color" id="titleColor" formControlName="subTitleColor" class="form__input">
+                </div> -->
+
+            <div class="form__group relative d-flex flex-column colors__div" formGroupName="colors">
+                <label class="form__label">Background Color<span>*</span></label>
+                <input type="color" id="backgroundColor" formControlName="backgroundColor" style="width: 20px; height: 20px;">
+            </div>
+
+            <!-- <div class="form__group relative d-flex flex-column colors__div" formGroupName="colors">
+                <label class="form__label">Button Color<span>*</span></label>
+                <input type="color" id="titleColor" formControlName="buttonColor" class="form__input">
+            </div> -->
+
+            <div class="form__group relative d-flex flex-column">
+                <label class="form__label">Button Text<span>*</span></label>
+                <input type="text" id="buttonText" formControlName="buttonText" placeholder="Enter Button Text"
+                    class="form__input">
+            </div>
+
+        </div>
+
+    </form>
 </div>
-
-

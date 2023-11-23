@@ -12,7 +12,6 @@ import { ToastService } from '../shared/services/toast.service';
 
 export class WishlistComponent {
 
-  // wishlistsArray: any
   list: any = []
   direction: any = 'popup';
   show: boolean = false;
@@ -23,7 +22,7 @@ export class WishlistComponent {
   showTextField: boolean = false;
   showAddLabel: boolean = true;
   productName: string = "";
-  ParentClosed:boolean=false;
+
 
   constructor(private wishlistService: WishlistService,
     private toastService: ToastService) {
@@ -32,7 +31,6 @@ export class WishlistComponent {
   async ngOnInit() {
     this.wishlistService.wishlistPopupData.subscribe((data)=>{
       if(!data) return;
-      
       this.list=data.wishlists;
       this.show=true;        
     })
@@ -40,14 +38,12 @@ export class WishlistComponent {
 
   async addToWishlist(wishlistName: string) {
     this.wishlistService.AddtoWishlist(wishlistName);
-    this.ParentClosed=true;
+    this.show=false;
     this.showTextField=false;
     this.newWishlist = "";
   }
   
-  ParenClosedHandler(event:any){
-  this.ParentClosed=event;
-  }
+
 
   handler(event: any) {
     this.show = event

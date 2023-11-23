@@ -62,7 +62,7 @@ export class CheckoutComponent implements OnInit {
 
 
   ParentClosedFun(event: any) {
-    this.ParenClosed = event;
+
   }
 
   DateParser(el: any) {
@@ -128,7 +128,6 @@ CouponValid: string = 'hidden';
 AllCoupons: any;
 SecureNavBar:Boolean=false;
 CouponApplied: any = '';
-ParenClosed: boolean = false;
 direction: string = 'right';
 show: boolean = false;
 CouponOpener() {
@@ -216,7 +215,7 @@ async ApplyCoupon(coupon: any = '', event: any = '') {
   this.CouponCode.nativeElement.value = '';
   this.cart.amounts.savings += this.CalculateDiscount(this.CouponApplied);
   this.cart.amounts.total -= this.cart.amounts.savings;
-  this.ParenClosed = true;
+  this.show = false;
 
 }
 

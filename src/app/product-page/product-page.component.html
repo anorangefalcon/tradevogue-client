@@ -1,12 +1,8 @@
 <section class="container">
-
-
     <div *ngIf="loading" class="tv-loading">
         <img src="../../assets/logo-mobile.svg" alt="tradeVogue-loading">
         <div class="circle-tv-loader"></div>
     </div>
-
-
     <div *ngIf="!loading">
         <div class="product" *ngIf="data">
             <div class="d-flex gap-30 main">
@@ -29,7 +25,6 @@
                     </owl-carousel-o>
                     <button *ngIf="!productSku" class="btn wishlist-btn d-flex align-item-center absolute"
                         (click)="RemoveOrAddToWishlist(data.wishlisted)">
-
                         <span class="material-symbols-outlined" [ngClass]="data.wishlisted ? 'wishlisted': ''">
                             favorite
                         </span>

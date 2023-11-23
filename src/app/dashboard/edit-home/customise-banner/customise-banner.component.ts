@@ -13,9 +13,10 @@ import { ToastService } from 'src/app/shared/services/toast.service';
 export class CustomiseBannerComponent {
 
   bannerForm!: FormGroup;
+  ParenClosed:boolean=false;
   alignment: string[] = ['Left', 'Right', 'Center'];
   previewImage: any;
-  bannerData: any;
+  bannerData: any = [];
   preview: any;
   checked: boolean = false;
   checked2: boolean = false;
@@ -128,14 +129,23 @@ export class CustomiseBannerComponent {
         this.ngOnInit();
       })
     }
+
+    this.showingPopUp=false;
   }
+
+
+
 
   bannerImageUpload(event: any) {
 
     let file: any = (<HTMLInputElement>event.target)?.files![0];
+    console.log("hi");
+    
 
     this.uploadService.fileupload([{ file: file }]).then((url: any) => {
+      console.log(url, "url");
       this.bannerForm.get('backgroundImage')?.setValue(url[0]);
+      
       this.getImagePreview();
     })
   }
@@ -205,6 +215,8 @@ export class CustomiseBannerComponent {
 
   PopUpChangeHanlder(event: any) {
     this.showingPopUp = event;
+    console.log('showing pop up is ',this.showingPopUp);
+    
   }
   ParentClosedHandler(event: any) {
     this.ParentClosed = event;

@@ -53,45 +53,83 @@
                         <div class="d-flex flex-column mw100 gap-10">
                             <div class="internal-div">
                                 <label class="form__title" for="title">Title</label>
-                                <input class="form__input" type="text" id="title" formControlName="title" />
+                                <span class="relative">
+                                    <input class="form__input" type="text" id="title" formControlName="title" />
+                                    <ng-container formGroupName="colors">
+                                        <span class="tooltip">
+                                            <input class="absolute color-picker-position" type="color" name="" [id]="'titleText'+i"
+                                            formControlName="titleColor">
+                                            <span class="tooltiptext">
+                                                Title Color
+                                            </span>
+                                        </span>
+                                    </ng-container>
+
+                                </span>
                             </div>
                             <div class="internal-div">
                                 <label class="form__title" for="subTitle">SubTitle</label>
-                                <input class="form__input" type="text" id="subTitle" formControlName="subTitle" />
+                                <span class="relative">
+                                    <input class="form__input" type="text" id="subTitle" formControlName="subTitle" />
+                                    <ng-container formGroupName="colors">
+                                        <span class="tooltip">
+                                            <input class="absolute color-picker-position" type="color" [id]="'subTitleText'+i"
+                                            formControlName="subTitleColor" />
+                                            <span class="tooltiptext">
+                                                SubTitle Color
+                                            </span>
+                                        </span>
+                                    </ng-container>
+
+                                </span>
                             </div>
                             <div class="internal-div">
                                 <label class="form__title" for="buttonText">Button</label>
-                                <input class="form__input" type="text" id="buttonText" formControlName="buttonText" />
+                                <span class="relative">
+                                    <input class="form__input" type="text" id="buttonText" formControlName="buttonText" />
+                                    <ng-container formGroupName="colors">
+                                        <span class="tooltip">
+                                            <input class="absolute color-picker-position" type="color" [id]="'subTitleText'+i"
+                                            formControlName="buttonColor" />
+                                            <span class="tooltiptext">
+                                                Button Color
+                                            </span>
+                                        </span>
+                                    </ng-container>
+
+                                </span>
+                                
                             </div>
                             <div class="internal-div">
                                 <label class="form__title" for="buttonLink">Button Link</label>
                                 <input class="form__input" type="text" id="buttonLink" formControlName="buttonLink" />
                             </div>
+                            <div class=" d-flex flex-column gap-5 ">
+                                <label class="form__title " [for]="'buttonText'+i">Background Color</label>
+                                <input type="color" [id]="'buttonText'+i" class="d-flex flex-center" style="width: 20px; height: 20px;"
+                                    formControlName="cardColor" />
+                            </div>
                         </div>
-                        <div class="d-flex flex-column mw100 gap-10">
-                            <ng-container formGroupName="colors">
-                                <div class="internal-div">
+                        <!-- <div class="d-flex flex-column mw100 gap-10"> -->
+                            <!-- <ng-container formGroupName="colors"> -->
+                                <!-- <div class="internal-div">
                                     <label class="form__title" [for]="'titleText'+i">Title Color</label>
                                     <input class="form__input" type="color" name="" [id]="'titleText'+i"
                                         formControlName="titleColor">
-                                </div>
-                                <div class="internal-div">
+                                </div> -->
+                                <!-- <div class="internal-div">
                                     <label class="form__title" [for]="'subTitleText'+i">Subtitle Color</label>
                                     <input class="form__input" type="color" [id]="'subTitleText'+i"
                                         formControlName="subTitleColor" />
-                                </div>
-                                <div class="internal-div">
+                                </div> -->
+                                <!-- <div class="internal-div">
                                     <label class="form__title" [for]="'buttonText'+i">Button Color</label>
                                     <input class="form__input" type="color" [id]="'buttonText'+i"
                                         formControlName="buttonColor" />
-                                </div>
-                                <div class="internal-div">
-                                    <label class="form__title" [for]="'buttonText'+i">Card Color</label>
-                                    <input class="form__input" type="color" [id]="'buttonText'+i"
-                                        formControlName="cardColor" />
-                                </div>
-                            </ng-container>
-                        </div>
+                                </div> -->
+                             
+                            <!-- </ng-container> -->
+                        <!-- </div> -->
                     </div>
                 </div>
             </ng-container>

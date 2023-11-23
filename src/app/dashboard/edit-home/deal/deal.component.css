@@ -107,3 +107,16 @@ form {
 .banner-label{
     color: rgb(var(--blackClr), 0.7);
 }
+input[type="color"]{
+    visibility: visible;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+}
+input[type="color" i]::-webkit-color-swatch-wrapper {
+    padding: 0px  !important;
+}
+input[type="color" i]::-webkit-color-swatch {
+    border-radius: 50%;
+    border: none;
+}

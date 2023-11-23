@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container d-flex flex-column gap-15">
     <div class="card card__pd-20 d-flex justify-content-md-between align-item-center">
         <div class="d-flex gap-5 justify-content-center align-item-center">
             <button class="btn btn-xs customise-back-btn d-flex flex-center" routerLink="/dashboard/customise-home">
@@ -6,7 +6,7 @@
                     arrow_back_ios
                 </span>
             </button>
-            <h3>Customise T and C</h3>
+            <h3>Customise Terms & Conditions</h3>
         </div>
         <button class="btn btn-xs fw-500 btn-rounded btn-primary" (click)="onsubmit()">Update</button>
 
@@ -15,8 +15,6 @@
             <span class="material-symbols-outlined fs-20">add</span>
         </button>
     </div>
-
-
 
 
     <form [formGroup]="yourFormGroup">

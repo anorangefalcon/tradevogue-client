@@ -3,6 +3,7 @@ import { UtilsModule } from '../utils/utils.module';
 import { FetchDataService } from '../shared/services/fetch-data.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { SocialsService } from '../shared/services/custom-UI/socials.service';
+import { ToastService } from '../shared/services/toast.service';
 
 @Component({
   selector: 'app-home',
@@ -23,7 +24,11 @@ export class HomeComponent {
   socialsData! : any;
   loading: Boolean = false;
 
-  constructor(private fb: FormBuilder, private backendUrls: UtilsModule, private fetchDataService: FetchDataService, private socialsService: SocialsService) {
+  constructor(private fb: FormBuilder,
+     private backendUrls: UtilsModule, 
+     private fetchDataService: FetchDataService, 
+     private socialsService: SocialsService,
+     private toastService: ToastService) {
     this.subscribeForm = fb.group({
       email: fb.control('', [Validators.required, Validators.email]),
     })
@@ -50,9 +55,11 @@ export class HomeComponent {
       }
       console.log(body);
       
-       this.fetchDataService.HTTPPOST(this.backendUrls.URLs.subscribeMail, body).subscribe(()=>{
-         console.log("ok");
-
+       this.fetchDataService.HTTPPOST(this.backendUrls.URLs.subscribeMail, body).subscribe((res: any)=>{
+        const toastData = {
+          title: res.message,
+        }
+        this.toastService.successToast(toastData)
        });
        
     }

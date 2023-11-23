@@ -623,7 +623,7 @@
     }
 }
 
-.wishlisted span {
+.wishlisted  {
     color: rgb(var(--danger));
 }
 
@@ -640,29 +640,6 @@
     & p {
         font-size: 16px !important;
     }
-
-    /* & .wishlist-name::before {
-        content: "";
-        position: absolute;
-        width: 18px;
-        height: 18px;
-        border-radius: 50%;
-        border: 1px solid rgb(var(--blackClr), 0.8);
-        background-color: white;
-        bottom: 2px;
-        left: 0px;
-    }
-
-    & .wishlist-name::after {
-        content: "";
-        position: absolute;
-        height: 10px;
-        width: 10px;
-        background-color: white;
-        border-radius: 50%;
-        left: 4px;
-        bottom: 6px;
-    } */
 
     & input[type="radio"]:checked+.wishlist-name::before {
         background-color: red;

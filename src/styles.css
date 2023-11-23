@@ -1262,6 +1262,14 @@ tr:last-child td{
         color: rgb(var(--primaryClr))
     }
 }
+.color-picker-position {
+    inset-block-start: 50%;
+    inset-inline-end: 15px;
+    transform: translateY(-50%);
+}
+.color-input{
+    padding-inline-end: 40px;
+}
 
 
 @keyframes skeleton-loading {

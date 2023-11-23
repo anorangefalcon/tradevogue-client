@@ -11,25 +11,18 @@ export class DrawerComponent {
   @Input() direction!: string;
   @Input() show!: boolean;
   @Output() showChange: EventEmitter<any> = new EventEmitter();
-  @Input() ParenClosed!: boolean;
-  @Output() ParentClosedEmitter: EventEmitter<any> = new EventEmitter();
 
   constructor() { }
 
-  CloseWrapper() {
-    this.translate = '';
-    setTimeout(() => {
-      this.showChange.emit(false);
-      this.ParentClosedEmitter.emit(false);
-    }, 300);
 
-  }
 
   translate!: string;
 
 
   ngOnChanges() {
-    if (this.ParenClosed) { this.CloseWrapper(); return; }
+    console.log('show come up is ',this.show);
+    if(!this.show)this.translate=''; 
+
     if (this.show == true) {
       if (this.direction == 'top') {
         this.translate = 'translateTop';

@@ -30,7 +30,6 @@ export class ProductPageComponent implements OnInit {
   accordianOpen2: boolean = true;
   assetIndex: any = 0;
   sizeIndex: any = 0;
-  isWishlisted: boolean = false;
   isLogin: boolean = false;
   sku: any = "";
   fetchSimilarProducts: any = {};
@@ -89,7 +88,7 @@ export class ProductPageComponent implements OnInit {
     this.sizeIndex = 0;
 
     console.log(params, 'dddd');
-    
+
     if (this.productSku) {
       this.fetchService.HTTPGET(this.backendUrl.URLs.fetchProductDetails, params).subscribe((data: any) => {
         this.updateDataFields(data);
@@ -168,8 +167,8 @@ export class ProductPageComponent implements OnInit {
     this.selectedSize = this.data.assets[this.assetIndex].stockQuantity[this.sizeIndex].size;
     this.outOfStock = (this.data.assets[this.assetIndex].stockQuantity[this.sizeIndex].quantity <= 0) ? true : false;
 
-   
-    
+
+
     if (!(this.getOrderQuantity().includes(this.selectedQ))) this.selectedQ = 0;
   }
 
@@ -177,8 +176,8 @@ export class ProductPageComponent implements OnInit {
     this.wishlistService.ShowWishlist(this.data._id);
   }
 
-  RemoveOrAddToWishlist(event: any = null) {
-    if (!event) {
+  RemoveOrAddToWishlist(isWishlisted: any = null) {
+    if (!isWishlisted) {
       this.wishlistService.ShowWishlist(this.data._id);
     }
     else {
@@ -189,9 +188,9 @@ export class ProductPageComponent implements OnInit {
     }
   }
 
-  getOrderQuantity() {    
+  getOrderQuantity() {
     let limit = this.data.assets[this.assetIndex].stockQuantity[this.sizeIndex].quantity;
-    
+
     let arr = this.data.info.orderQuantity;
     let filteredArray = arr.filter((item: any) => item <= limit);
 

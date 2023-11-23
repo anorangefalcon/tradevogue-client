@@ -124,6 +124,7 @@ app-custom-select {
                 visibility: hidden;
             }
 
+
             & input[type="color" i]::-webkit-color-swatch-wrapper {
                 padding: 0px 0px !important;
             }
@@ -140,6 +141,7 @@ app-custom-select {
                 border-radius: 50%;
                 background-color: transparent;
                 border: 1px solid rgb(var(--blackClr), 0.8);
+
             }
 
             & .input__label {
