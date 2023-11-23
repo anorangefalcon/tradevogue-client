@@ -12,7 +12,7 @@ export class CustomiseTcComponent {
 
   TandC!: FormArray
   yourFormGroup!: FormGroup;
-  contentType: any[] = ['list', 'paragraph']
+  contentType: any[] = ['List', 'Paragraph']
 
 
   constructor(

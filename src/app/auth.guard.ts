@@ -17,6 +17,8 @@ export const authGuard: CanActivateFn = async (route, state) => {
   try{
     const data=await lastValueFrom((FetchService.HTTPGET(BackendUrl.URLs.authorizeUrl)));
 
+    console.log('data ',data);
+    
     if (data != 'admin') {
       loginCheckService.getUser().subscribe((check: any) => {
         if (!check && currentRoutes == 'usersetting') navigateCheck = false;

@@ -8,6 +8,7 @@ import { DatePipe } from '@angular/common';
 import { LoginCheckService } from 'src/app/shared/services/login-check.service';
 import { FetchDataService } from 'src/app/shared/services/fetch-data.service';
 import { UtilsModule } from 'src/app/utils/utils.module';
+import { ToastService } from 'src/app/shared/services/toast.service';
 @Component({
   selector: 'app-account',
   templateUrl: './account.component.html',
@@ -31,6 +32,12 @@ export class AccountComponent implements OnInit {
   showPopup = true;
   area: string = '';
   userToken: any = '';
+  showPassword: boolean = false;
+  showPassword2: boolean = false;
+  showPassword3: boolean = false;
+  password: string = "password";
+  password2: string = "password";
+  password3: string = "password";
 
   constructor(
     private postalCodeService: ApiService,
@@ -39,7 +46,8 @@ export class AccountComponent implements OnInit {
     private datePipe: DatePipe,
     private userService: LoginCheckService,
     private fetchDataService : FetchDataService,
-    private backendURLs : UtilsModule
+    private backendURLs : UtilsModule,
+    private toastService: ToastService
   ) { }
 
 
@@ -269,8 +277,11 @@ export class AccountComponent implements OnInit {
       oldPassword: this.passwordForm.get('currentPassword')?.value,
       newPassword: this.passwordForm.get('newPassword')?.value
     }
-    this.fetchDataService.HTTPPOST(this.backendURLs.URLs.changePassword, body).subscribe((data) => {
-      // this.toastService.successToast({ title: data.message })
+    this.fetchDataService.HTTPPOST(this.backendURLs.URLs.changePassword, body).subscribe((data: any) => {
+      console.log(data);
+      
+      this.toastService.successToast({ title: data.message })
+      this.passwordForm.reset()
     });
   }
 }

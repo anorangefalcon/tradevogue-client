@@ -248,7 +248,8 @@
                         <input [type]="password2" id="email" formControlName="newPassword"
                             placeholder="Enter New Password">
                         <button class="eye-btn flex justify-content-center align-items-center"
-                            (click)="showPassword2 = !showPassword2 ; password2 = showPassword2 ? 'text' : 'password';"><span
+                            (click)="showPassword2 = !showPassword2 ; password2 = showPassword2 ? 'text' : 'password';">
+                            <span
                                 class="material-symbols-outlined eye">{{showPassword2? 'visibility' :
                                 'visibility_off'}}</span>
                         </button>
