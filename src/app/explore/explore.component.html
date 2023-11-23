@@ -184,18 +184,24 @@
                 <div class="circle-tv-loader"></div>
             </div>
 
-            <div *ngIf="!loading" class="explore-cards">
-                <ng-container *ngFor="let product of products">
+
+            <div *ngIf="!loading && products.length;  else noData" class="explore-cards">
+                <ng-container  *ngFor="let product of products">
                     <div class="card-temp">
                         <app-card-template class="d-flex justify-content-center"
                             [product]="product"></app-card-template>
                     </div>
                 </ng-container>
-                <div *ngIf="products.length == 0">
-                    <p>Nothing found</p>
-                </div>
             </div>
+            <ng-template #noData>
+                <div  class="mh100 mw100 d-flex flex-center">
+                    <!-- <p>Nothing found</p> -->
+                    <img src="../../assets/noItemFound.svg" alt="No Item Found" height="140px">
+                </div>
+            </ng-template>
         </div>
+
+
     </div>
 
 </div>

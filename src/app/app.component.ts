@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
-// import { SupportNotificationService } from './shared/services/support-notification.service';
-
+import { SocialsService } from './shared/services/custom-UI/socials.service';
 
 @Component({
   selector: 'app-root',
@@ -10,10 +9,14 @@ import { Component } from '@angular/core';
 export class AppComponent {
   'title': 'tradevogue';
 
-  constructor() { }
+  constructor(private brandService: SocialsService) { }
 
   ngOnInit(): void {
-    // this.notificationService.initialize();
+
+    // this.brandService.getSocials().subscribe((data: any)=>{
+    //   console.log(data, 'heree');
+    // })
+      
   }
 
 }

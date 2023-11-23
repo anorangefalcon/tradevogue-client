@@ -14,6 +14,7 @@ export class CartService {
   constructor(private toastService: ToastService, private router: Router, private http: HttpClient, private backendUrls: UtilsModule, private loginCheckService: LoginCheckService) {
     this.loginCheckService.getUser().subscribe((loggedIn: any) => {
       this.user = loggedIn;
+      this.cartLoading.next(true);
       this.fetchDetails();
     });
   }
@@ -27,14 +28,20 @@ export class CartService {
   // actual data lies here
   private cart$ = this.cartSubject.asObservable();
 
+  cartLoading = new BehaviorSubject<Boolean>(false);
 
   addToCart(data: any) {
+    this.cartLoading.next(true);
+    this.sideCart.next(true);
+
     const cartObj = { "sku": data.sku, "size": data.size, "color": data.color, "quantity": data.quantity };
     if (this.user) {
       this.addToCartWithToken(cartObj);
+      
     }
     else {
       this.addToCartWithoutToken(cartObj);
+      this.cartLoading.next(false);
     }
   }
 
@@ -42,8 +49,9 @@ export class CartService {
     this.http.post(this.backendUrls.URLs.addItemsToCart, [cartObj]).subscribe(
       (details: any) => {
         if (!details.added) {
-          this.toastService.warningToast({ title: 'this Item already exists in cart please select another configuration of this product' });
-          this.router.navigate(['/product/' + cartObj.sku])
+          this.toastService.warningToast({ title: 'Item already exists in cart please select another configuration' });
+          // this.router.navigate(['/product/' + cartObj.sku])
+          this.cartLoading.next(false);
         }
         else {
           this.handleSuccessfulAddToCart();
@@ -67,9 +75,8 @@ export class CartService {
   }
 
   private handleSuccessfulAddToCart() {
+    this.fetchDetails();    
     this.toastService.successToast();
-    this.sideCart.next(true);
-    this.fetchDetails();
   }
 
   // Helper function
@@ -89,6 +96,7 @@ export class CartService {
     if (this.user) {
       this.http.post(this.backendUrls.URLs.updateItemFromCart, data).subscribe((data: any) => {
         if (data.updated) {
+          this.cartLoading.next(true);
           this.fetchDetails();
         }
       });
@@ -112,7 +120,7 @@ export class CartService {
       const myCart = JSON.stringify(this.cartStorage);
       localStorage.setItem("myCart", myCart);
 
-
+      this.cartLoading.next(true);
       this.fetchDetails();
     }
 
@@ -121,12 +129,13 @@ export class CartService {
   fetchDetails() {
     const localCart = localStorage.getItem('myCart');
     let cartDetails = localCart ? JSON.parse(localCart) : null;
-
+    
     if (localCart && this.user) {
       this.http.post(this.backendUrls.URLs.addItemsToCart, cartDetails).subscribe((message: any) => {
         this.clearCart('localOnly');
 
         this.http.post(this.backendUrls.URLs.fetchCart, cartDetails).subscribe((data: any) => {
+          this.cartLoading.next(false);
           this.cartSubject?.next(data);
         });
       });
@@ -136,13 +145,13 @@ export class CartService {
         cartDetails = [];
       }
       this.http.post(this.backendUrls.URLs.fetchCart, cartDetails).subscribe((data: any) => {
+        this.cartLoading.next(false);
         this.cartSubject?.next(data);
       });
     }
   }
 
   removeItem(identifier: any) {
-
     if (this.user) {
       this.http.post(this.backendUrls.URLs.removeItemFromCart, { itemId: identifier }).subscribe((message: any) => {
         // this.ItemDeleted=true;
@@ -165,10 +174,6 @@ export class CartService {
     this.toastService.notificationToast({
       title: 'Item removed!'
     })
-
-  }
-
-  refreshCart() {
 
   }
 

@@ -12,13 +12,13 @@ import { Router } from '@angular/router';
   styleUrls: ['./card-template.component.css']
 })
 export class CardTemplateComponent {
-  
+
   @Input() product: any = {};
   showPopup: boolean = false;
   selectedItem: boolean = false;
 
-  constructor(private cartService: CartService, private popupService: PopupService, private router:Router, private toastService:ToastService, private wishlistService : WishlistService) {    
-   }
+  constructor(private cartService: CartService, private popupService: PopupService, private router: Router, private toastService: ToastService, private wishlistService: WishlistService) {
+  }
 
   avgRating: number = 0;
   productData: any = [];
@@ -28,7 +28,7 @@ export class CardTemplateComponent {
   ngOnInit(): void {
     const sku = this.product.sku;
     this.avgRating = this.product.avgRating;
-  
+
     let limit = this.product.assets[0].stockQuantity[0].quantity;
     let arr = this.product.info.orderQuantity;
     let filteredArray = arr.filter((item: any) => item <= limit);
@@ -38,7 +38,7 @@ export class CardTemplateComponent {
     }
 
     // this.productPageService.orderQuantity.next(filteredArray);
-    this.product.info.orderQuantity=filteredArray;
+    this.product.info.orderQuantity = filteredArray;
     // console.log(this.product , "product is ");
     this.startRotatingTags();
   }
@@ -59,7 +59,7 @@ export class CardTemplateComponent {
     }
   }
 
-  createArrayToIterate(num: number){
+  createArrayToIterate(num: number) {
     const newTotal = Math.floor(num);
     if (newTotal <= 0) {
       return [];
@@ -67,32 +67,32 @@ export class CardTemplateComponent {
     return Array(newTotal).fill(0);
   }
 
-   chooseWishlist() {  
+  chooseWishlist() {
     this.wishlistService.ShowWishlist(this.product._id);
   }
 
-  RemoveOrAddToWishlist(event:any=null){
+  RemoveOrAddToWishlist(event: any = null) {
     console.log(this.product, "which product");
-    
-    if(!event){
+
+    if (!event) {
       this.wishlistService.ShowWishlist(this.product._id);
     }
-    else{
-      this.wishlistService.removeFromWishlist(this.product._id).subscribe((data)=>{  
+    else {
+      this.wishlistService.removeFromWishlist(this.product._id).subscribe((data) => {
         this.wishlistService.getWishlistCount();
         this.product.wishlisted = false;
       });
     }
   }
 
-  
-  addToCart(){
+
+  addToCart() {
     // console.log('product is ',this.product);
     // return;
-    if(this.product.assets[0].stockQuantity[0].quantity<=0){
-this.toastService.errorToast({title:'Please select other variant of this product as it is outofStock'});
-this.router.navigate(['product/'+this.product.sku]);
-return;
+    if (this.product.assets[0].stockQuantity[0].quantity <= 0) {
+      this.toastService.errorToast({ title: 'Please select other variant of this product as it is outofStock' });
+      this.router.navigate(['product/' + this.product.sku]);
+      return;
     }
     const cartItem = {
       sku: this.product.sku,
@@ -100,11 +100,11 @@ return;
       size: this.product.assets[0].stockQuantity[0].size,
       quantity: this.product.info.orderQuantity[0]
     }
-    
+
     this.cartService.addToCart(cartItem);
   }
 
-    customOptions: OwlOptions = {
+  customOptions: OwlOptions = {
     loop: true,
     mouseDrag: true,
     touchDrag: true,
@@ -131,8 +131,8 @@ return;
   }
 
   openPopup() {
-      this.popupService.openPopup();
-      this.showPopup = true;
-    }
+    this.popupService.openPopup();
+    this.showPopup = true;
+  }
 
 }

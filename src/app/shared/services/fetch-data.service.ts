@@ -40,7 +40,7 @@ export class FetchDataService {
 
   HTTPPOST(url: any, body: any) {    
     return this.http.post(url, body).pipe(
-      catchError((data):any =>{              
+      catchError((data):any =>{  
       this.toastService.errorToast({
         title: data.error.message
       });

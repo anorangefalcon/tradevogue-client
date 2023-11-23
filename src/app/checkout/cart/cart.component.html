@@ -1,75 +1,92 @@
+<div class="wrappers d-flex flex-column gap-20">
 
-    <div class="wrappers d-flex flex-column gap-20">
-       
-        <div class="cart-container d-flex flex-wrap default-animation">
-            <div class="cart-items d-flex" *ngFor="let item of cartArr; let i = index">
-                <div class="col gap-25 d-flex">
-                    <div class="product-image d-flex gap-30">
-                        <a routerLink="/product/{{item.sku}}" class="product-img">
-                            <img [src]=item?.image alt="Product Image" class="skeleton">
+    <div class="cart-container d-flex flex-wrap default-animation">
+        <div class="cart-items d-flex" *ngFor="let item of cartArr; let i = index">
+            <div class="col gap-25 d-flex">
+                <div class="product-image d-flex gap-30">
+                    <a routerLink="/product/{{item.sku}}" class="product-img" (click)="closeSideCart()">
+                        <img [src]=item?.image alt="Product Image" class="skeleton">
+                    </a>
+                </div>
+
+                <div class="ProductINFO d-flex gap-15 flex-row align-item-center">
+
+                    <div class="product-info d-flex flex-column justify-content-center gap-5">
+                        <a routerLink="/product/{{item.sku}}" (click)="closeSideCart()">
+                            <h4>{{item?.name}}</h4>
                         </a>
-                    </div>
-        
-        
-                    <div class="ProductINFO d-flex gap-15 flex-row align-item-center">
-        
-                        <div class="product-info d-flex flex-column justify-content-center gap-5">
-                            <a routerLink="/product/{{item.sku}}">
-                                <h4>{{item?.name}}</h4>
-                            </a>
-                            <div class="sizes d-flex gap-10 align-item-center">
-                                <p class="labels">Size:</p>
-                                <p>{{item.size}}</p>
-                            </div>
-                            <div class="colors d-flex gap-10 align-item-center">
-                                <p class="labels">Color:</p>
-                                <div class="color-circle" [ngStyle]="{'background-color': item.color}"></div>
-                            </div>
-                            <div class="mobile-view d-flex gap-10 align-item-center">
-                                <p>{{item.size}}</p>
-                                <div class="color-circle" [ngStyle]="{'background-color': item.color}"></div>
-                            </div>
-        
-                            <div class="d-flex align-item-center gap-10">
-                                <p class="labels">Price: </p>
-                                <p>₹{{item?.price}}</p>
-                            </div>
+                        <div class="sizes d-flex gap-10 align-item-center">
+                            <p class="labels">Size:</p>
+                            <p>{{item.size}}</p>
                         </div>
-        
-                        <div class="d-flex gap-10 align-item-center common">
-                            <div class="quantity-btn-outer">
-                                <div class="quantity">
-                                    <button class="quantity-btn btn" [ngClass]="isDisabled('previous', i, item.quantity) ? 'disable' : ''" (click)="changeQuantity('previous', i, item.quantity)" [disabled]="isDisabled('previous', i, item.quantity)" > 
-                                        <span class="material-symbols-outlined">
-                                            remove
-                                        </span>
-                                    </button>
-                                    <span class="quantity-value fs-14 d-flex align-item-center">
-                                        {{item.quantity}}
+                        <div class="colors d-flex gap-10 align-item-center">
+                            <p class="labels">Color:</p>
+                            <div class="color-circle" [ngStyle]="{'background-color': item.color}"></div>
+                        </div>
+                        <div class="mobile-view d-flex gap-10 align-item-center">
+                            <p>{{item.size}}</p>
+                            <div class="color-circle" [ngStyle]="{'background-color': item.color}"></div>
+                        </div>
+
+                        <div class="d-flex align-item-center gap-10">
+                            <p class="labels">Price: </p>
+                            <p>₹{{item?.price}}</p>
+                        </div>
+                    </div>
+
+                    <div class="d-flex gap-10 align-item-center common">
+                        <div class="quantity-btn-outer">
+                            <div class="quantity">
+                                <button class="quantity-btn btn"
+                                    [ngClass]="isDisabled('previous', i, item.quantity) ? 'disable' : ''"
+                                    (click)="changeQuantity('previous', i, item.quantity)"
+                                    [disabled]="isDisabled('previous', i, item.quantity)">
+                                    <span class="material-symbols-outlined">
+                                        remove
                                     </span>
-                                    <button class="quantity-btn btn" [ngClass]="isDisabled('next', i, item.quantity) ? 'disable' : ''" (click)="changeQuantity('next', i, item.quantity)" [disabled]="isDisabled('next', i, item.quantity)">
-                                        <span class="material-symbols-outlined">
-                                            add
-                                        </span>
-                                    </button>
-                                </div>
-        
-        
+                                </button>
+                                <span class="quantity-value fs-14 d-flex align-item-center">
+                                    {{item.quantity}}
+                                </span>
+                                <button class="quantity-btn btn"
+                                    [ngClass]="isDisabled('next', i, item.quantity) ? 'disable' : ''"
+                                    (click)="changeQuantity('next', i, item.quantity)"
+                                    [disabled]="isDisabled('next', i, item.quantity)">
+                                    <span class="material-symbols-outlined">
+                                        add
+                                    </span>
+                                </button>
                             </div>
-        
-                            <div class="final-price d-flex align-item-center">
-                                <p>₹{{(item?.price * item?.quantity) | number : '1.0-2'}}</p>
-                            </div>
-        
-        
+
+
                         </div>
+
+                        <div class="final-price d-flex align-item-center">
+                            <p>₹{{(item?.price * item?.quantity) | number : '1.0-2'}}</p>
+                        </div>
+
+
                     </div>
-                    <button class="remove-btn d-flex align-item-center" (click)="remove_item(userToken ? item._id : i)">
-                        <span class="material-symbols-outlined">
-                            close
-                        </span>
-                    </button>
+                </div>
+                <button class="remove-btn d-flex align-item-center" (click)="remove_item(userToken ? item._id : i)">
+                    <span class="material-symbols-outlined">
+                        close
+                    </span>
+                </button>
+            </div>
+        </div>
+
+        <div *ngIf="loading" class="dummy-item d-flex gap-35">
+            <div class="image skeleton"></div>
+            <div class="d-flex flex-column gap-15">
+                <div class="d-heading skeleton"></div>
+                <div class="d-flex flex-column gap-10">
+                    <div class="d-text skeleton"></div>
+                    <div class="d-text skeleton"></div>
+                    <div class="d-text-2 skeleton"></div>
                 </div>
             </div>
         </div>
-        </div>
+
+    </div>
+</div>

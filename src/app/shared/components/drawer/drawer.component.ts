@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, HostListener, Input, Output } from '@angular/core';
 
 
 @Component({
@@ -13,11 +13,7 @@ export class DrawerComponent {
   @Output() showChange: EventEmitter<any> = new EventEmitter();
 
   constructor() { }
-
-
-
   translate!: string;
-
 
   ngOnChanges() {
     console.log('show come up is ',this.show);
@@ -44,5 +40,14 @@ export class DrawerComponent {
       }
     }
 
+  }
+
+  @HostListener('document:keyup', ['$event'])
+  handleKeyboardEvent(event: KeyboardEvent) {
+    if (event.key === 'Escape') {
+      this.translate='';
+      this.show = false;
+      this.showChange.emit(false)
+    }
   }
 }

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ChangeDetectorRef, TemplateRef, ViewChild, ViewEncapsulation } from '@angular/core';
+import { TemplateRef, ViewChild, ViewEncapsulation } from '@angular/core';
 import { Router } from '@angular/router';
 import { FetchDataService } from 'src/app/shared/services/fetch-data.service';
 import { ToastService } from 'src/app/shared/services/toast.service';
@@ -180,9 +180,13 @@ export class SelectLayoutComponent {
   }
 
   navigate(name: any){
-    // console.log('name', name);
-    
     this.router.navigate(['/dashboard/customise-home/'+ name]);
   }
 
+  navigateToHighlightProducts(){
+    this.toastService.notificationToast({
+      title: 'Star Products to Show in Carousel'
+    })
+    this.router.navigateByUrl('dashboard/products');
+  }
 }

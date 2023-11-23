@@ -13,17 +13,18 @@ export class CartComponent implements OnInit {
 
   constructor(private cartService: CartService, private router: Router,
     private userService: LoginCheckService) { }
-
-  // nextDisabledBtn: Boolean = false;
-  // PreviousDisabledBtn: Boolean = false;
   cartArr: any[] = [];
   userToken: any = '';
   direction: any = 'right';
+    loading: Boolean = false;
 
   ngOnInit() {
     this.userService.getUser('token').subscribe((token: any) => {
       this.userToken = token;
-
+      this.loading = true;
+      this.cartService.cartLoading.subscribe((data: any)=>{
+        this.loading = data;
+      })
       this.cartService.fetchCart("details").subscribe((data) => {
         this.cartArr = data;
         this.cartArr = this.cartArr?.map((item: any) => {
@@ -41,28 +42,7 @@ export class CartComponent implements OnInit {
     this.cartService.removeItem(identifier);
   }
 
-  isDisabled(what: string, productIndex: any, selectedQuantity: Number){
-
-    const quantityIndex = this.cartArr[productIndex].info.orderQuantity.findIndex((q: any) => {
-      return q == selectedQuantity;
-    });
-
-    if (what == 'next') {
-      if ((quantityIndex >= ((this.cartArr[productIndex].info.orderQuantity.length) - 1)) || quantityIndex == -1) {
-        return true;
-      }
-    }
-
-    if (what == 'previous') {
-      if (quantityIndex == 0 || quantityIndex == -1) {
-        return true;
-      }
-    }
-    return false;
-    
-  }
-
-  changeQuantity(what: string, productIndex: any, selectedQuantity: Number) {
+  isDisabled(what: string, productIndex: any, selectedQuantity: Number) {
 
     const quantityIndex = this.cartArr[productIndex].info.orderQuantity.findIndex((q: any) => {
       return q == selectedQuantity;
@@ -74,8 +54,56 @@ export class CartComponent implements OnInit {
       return stock.size === this.cartArr[productIndex].size;
     }).quantity;
 
-    if (what === 'next' && quantityIndex < (this.cartArr[productIndex].info.orderQuantity.length - 1) && (this.cartArr[productIndex].info.orderQuantity[quantityIndex + 1] <= stockLimit)) {
-      this.cartArr[productIndex].info.quantity = this.cartArr[productIndex].info.orderQuantity[quantityIndex + 1];
+    if (what == 'next') {
+      if (this.cartArr[productIndex].info.orderQuantity[quantityIndex] === stockLimit) {
+        return true;
+      }
+      if ((quantityIndex >= ((this.cartArr[productIndex].info.orderQuantity.length) - 1)) || quantityIndex == -1) {
+        return true;
+      }
+    }
+
+    if (what == 'previous') {
+      if (this.cartArr[productIndex].info.orderQuantity[quantityIndex] === stockLimit && stockLimit <= this.cartArr[productIndex].info.orderQuantity[0] && quantityIndex === -1) {
+        return true;
+      }
+      if (quantityIndex == 0) {
+        return true;
+      }
+    }
+    return false;
+
+  }
+
+  changeQuantity(what: string, productIndex: any, selectedQuantity: Number) {
+
+    let quantityIndex = this.cartArr[productIndex].info.orderQuantity.findIndex((q: any) => {
+      return q == selectedQuantity;
+    });
+
+    const stockLimit = this.cartArr[productIndex].assets.find((asset: any) => {
+      return asset.color === this.cartArr[productIndex].color;
+    }).stockQuantity.find((stock: any) => {
+      return stock.size === this.cartArr[productIndex].size;
+    }).quantity;
+
+    if (quantityIndex === -1) {
+      for (let i = (this.cartArr[productIndex].info.orderQuantity.length - 1); i >= 0; i--) {
+        if (this.cartArr[productIndex].info.orderQuantity[i] < stockLimit) {
+          quantityIndex = i + 1;
+          break;
+        }
+      }
+    }
+
+    if (what === 'next' && quantityIndex <= (this.cartArr[productIndex].info.orderQuantity.length - 1)) {
+      if (this.cartArr[productIndex].info.orderQuantity[quantityIndex + 1] <= stockLimit) {
+        this.cartArr[productIndex].info.quantity = this.cartArr[productIndex].info.orderQuantity[quantityIndex + 1];
+      }
+      else {
+        this.cartArr[productIndex].info.quantity = stockLimit;
+        quantityIndex += 1;
+      }
     }
     else if (what === 'previous' && quantityIndex > 0) {
       this.cartArr[productIndex].info.quantity = this.cartArr[productIndex].info.orderQuantity[quantityIndex - 1];
@@ -101,5 +129,9 @@ export class CartComponent implements OnInit {
       this.router.navigate(['/auth/login']);
     }
     this.cartService.fetchCart().subscribe(() => { });
+  }
+
+  closeSideCart(){
+    this.cartService.sideCart.next(false);
   }
 }

@@ -71,22 +71,6 @@ header.active {
     height: 40px;
 }
 
-/* .search.sub-items{
-    padding: 0px !important;
-
-    & .search-bar{
-        border: 0;
-        outline: none;
-        padding-inline-start: 10px;
-        padding-block: 10px;
-        padding-inline-end: 10px;
-    }
-
-    & .search-bar + button{
-        display: none;
-    }
-} */
-
 .navbar-features,
 .nav-items {
     height: 100%;

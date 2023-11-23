@@ -447,6 +447,13 @@ ul {
 .gap-30 {
     gap: 30px;
 }
+.gap-35 {
+    gap: 35px;
+}
+.gap-40 {
+    gap: 40px;
+}
+
 
 
 /* Positioning */
@@ -1235,29 +1242,12 @@ tr:last-child td{
     }
 }
 
-.skeleton {
-    animation: skeleton-loading 1s linear infinite alternate;
-}
-
-.skeleton-pulse::after {
-    content: '';
-    position: absolute;
-    z-index: -1;
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: 170px;
-    background-color: rgb(131, 131, 131);
-
-    animation: skeleton-left-right 1s linear infinite;
-}
 .customise-back-btn span {
     font-size: 16px;
-    
 }
 .customise-back-btn{
     padding: 5px;
-
+    
     &:hover {
         color: rgb(var(--primaryClr))
     }
@@ -1271,6 +1261,11 @@ tr:last-child td{
     padding-inline-end: 40px;
 }
 
+.skeleton {
+    position: relative;
+    animation: skeleton-loading 1s linear infinite alternate;
+}
+
 
 @keyframes skeleton-loading {
     from {
@@ -1279,15 +1274,5 @@ tr:last-child td{
 
     to {
         background-color: rgba(240, 243, 245, 0.806)
-    }
-}
-
-@keyframes skeleton-left-right {
-    from {
-        transform: translateX(-10%);
-    }
-
-    to {
-        transform: translateX(110%);
     }
 }

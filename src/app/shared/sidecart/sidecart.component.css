@@ -40,7 +40,8 @@
 .app-cart{
     height: calc(100vh - 90px);
     overflow-y: scroll;
-    padding-block: 20px;
+    padding-block-start: 4px;
+    padding-block-end: 70px;
 }
 
 .total-price {

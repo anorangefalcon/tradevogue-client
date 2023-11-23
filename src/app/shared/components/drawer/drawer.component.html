@@ -1,6 +1,6 @@
-<div class="wrapper " [ngClass]="{'show':show}">
+<div class="wrapper" [ngClass]="{'show':show}" (click)="translate=''; show=false; showChange.emit(false)">
 
-  <div class="content-drawer"  [style]="direction"
+  <div class="content-drawer" [style]="direction"
     [ngClass]="{'top':direction=='top',
     'bottom':direction=='bottom',
     'right':direction=='right',
