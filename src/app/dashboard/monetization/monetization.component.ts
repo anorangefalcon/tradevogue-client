@@ -18,8 +18,18 @@ export class MonetizationComponent {
   razorpayPaymentKeys: any[] = []
   selectedItem: any;
   editItem: boolean = false;
+  direction: string = 'right';
+  show: boolean = false;
+  currentTab: string = 'tab1'; // Set default tab
+  title:string="Monetization";
+  showTab(tab: string) {
+    this.currentTab = tab;
+  }
 
-
+  ChangeHanlder(event:any)
+{
+  this.show=event;
+}
   constructor(private formBuilder: FormBuilder, private loginCheckService: LoginCheckService, private util: UtilsModule, private fetch: FetchDataService, private http: HttpClient, private popup: PopupService) { }
 
   ngOnInit(): void {
@@ -77,6 +87,7 @@ export class MonetizationComponent {
   }
 
   edit(key: any) {
+    this.show = true;
     this.selectedItem = key;
     if (key) {
       this.selectedItem = key;

@@ -150,6 +150,13 @@ select {
     margin-bottom: 0px !important;
 }
 
+form label {
+    margin-top: 10px !important;
+}
+
+form .form__group {
+ margin-top: 10px;
+}
 
 .contact-us-page .contact-content .contact-form-warp ul.form-fill {
     display: flex;
@@ -280,7 +287,6 @@ li label {
 
     & form textarea,
     form input {
-        margin-block-end: 15px !important;
         border-radius: 8px !important;
         border: 1px solid transparent !important;
         background-color: rgb(var(--primaryClr), 0.05) !important;

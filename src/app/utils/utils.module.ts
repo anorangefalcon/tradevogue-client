@@ -54,6 +54,7 @@ export class UtilsModule {
     getSellerOrders: 'http://localhost:1000/orders/sellerOrders',
     getSellerOrderDetails: 'http://localhost:1000/orders/sellerOrderDetail',
     getOrderOverallData: 'http://localhost:1000/orders/getOrderOverallData',
+    getLatestOrderId: 'http://localhost:1000/orders/getLatestOrderId',
 
     // stripe
     stripePayment: 'http://localhost:1000/user/create-payment-intent',
@@ -113,7 +114,7 @@ export class UtilsModule {
     // ORDERS
     verifyOrderSummary: 'http://localhost:1000/orders/verifyOrder',
     createOrder: 'http://localhost:1000/orders/create',
-    updateOrder:'http://localhost:1000/orders/update',
+    // updateOrder:'http://localhost:1000/orders/update',
     getParticularUserOrders: 'http://localhost:1000/orders/getparticularUserOrders',
     cancelOrder: 'http://localhost:1000/orders/cancelOrder',
     verifyOrderWithoutCoupon:'http://localhost:1000/orders/verifyOrderWithoutCoupon',
@@ -190,6 +191,8 @@ export class UtilsModule {
 
     // T&C
     getTandC:'http://localhost:1000/tc/get',
+
+    
   }
 }
 

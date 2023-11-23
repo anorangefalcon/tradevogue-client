@@ -7,7 +7,7 @@ import { ToastService } from '../shared/services/toast.service';
 // import { StripPaymentService } from '../shared/services/stripe-Integration/strip-payment.service';
 import { CheckoutService } from './checkout.service';
 import { LoginCheckService } from '../shared/services/login-check.service';
-import { debounceTime, distinctUntilChanged } from 'rxjs';
+import { BehaviorSubject, debounceTime, distinctUntilChanged } from 'rxjs';
 
 
 @Component({
@@ -16,6 +16,14 @@ import { debounceTime, distinctUntilChanged } from 'rxjs';
   styleUrls: ['./checkout.component.css']
 })
 export class CheckoutComponent implements OnInit {
+
+  // orderId send to service 
+  // private _orderIDSubject: BehaviorSubject<string | null> = new BehaviorSubject<string | null>(null);
+  // public readonly orderID$ = this._orderIDSubject.asObservable();
+  // public updateOrderId(orderId: string) {
+  //   this._orderIDSubject.next(orderId);
+  // }
+
 
   // CouponAppliedBtnClicked:any='hidden';
   navbar_scroll_style: boolean = false;
@@ -104,9 +112,6 @@ export class CheckoutComponent implements OnInit {
 
 
 
-
-
- 
 
 
   // cartArr: any[] = [];
@@ -332,10 +337,10 @@ async ApplyCoupon(coupon: any = '', event: any = '') {
       }
       body.products = data.details;
       body.orderID=this.OrderId;
-      this.fetchService.HTTPPOST(this.BackendUrl.URLs.updateOrder, body).subscribe((data: any) => {
-        // console.log(data);
+      // this.fetchService.HTTPPOST(this.BackendUrl.URLs.updateOrder, body).subscribe((data: any) => {
+      //   // console.log(data);
         
-      });
+      // });
     })
   }
 }

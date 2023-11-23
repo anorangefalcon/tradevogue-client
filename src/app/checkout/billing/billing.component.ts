@@ -161,7 +161,10 @@ StripeOpener:Boolean=false;
               };
             });
 
-            this.fetchDataService.HTTPPOST(this.backendURLs.URLs.updateOrderStatus, paymentBody).subscribe((data: any) => { });
+            this.fetchDataService.HTTPPOST(this.backendURLs.URLs.
+              Status, paymentBody).subscribe((data: any) => {
+              console.log(data, "data is ")
+             });
 
             alert('Payment Succeeded');
           },

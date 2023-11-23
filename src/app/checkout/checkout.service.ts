@@ -6,6 +6,7 @@ import { BehaviorSubject } from 'rxjs';
 import { LoginCheckService } from '../shared/services/login-check.service';
 import { CartService } from '../shared/services/cart.service';
 declare var Stripe: any;
+import crypto from 'crypto';
 
 @Injectable({
   providedIn: 'root'
@@ -17,8 +18,9 @@ export class CheckoutService {
   SecretClient: any;
   private secureNavbar = new BehaviorSubject(false);
   secureNavbar$ = this.secureNavbar.asObservable();
-  StripePaymentOpen=new BehaviorSubject(false);
-  StripePaymentOpen$=this.StripePaymentOpen.asObservable();
+  StripePaymentOpen = new BehaviorSubject(false);
+  StripePaymentOpen$ = this.StripePaymentOpen.asObservable();
+  public orderId: string | null = null;
   constructor(
     private backendUri: UtilsModule,
     private fetchData: FetchDataService,
@@ -27,14 +29,13 @@ export class CheckoutService {
     private router:Router
   ) {
 
-   
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
-        if (this.router.url === '/cart/billing' ) {
-      
+        if (this.router.url === '/cart/billing') {
+
           this.secureNavbar.next(true);
         }
-        else{
+        else {
           this.secureNavbar.next(false);
         }
       }
@@ -43,16 +44,17 @@ export class CheckoutService {
 
   }
 
+
   private stripeScript!: HTMLScriptElement | undefined;
 
   loadStripeScript(): Promise<void> {
     return new Promise<void>((resolve, reject) => {
       if (this.stripeScript) {
-        resolve(); // If script already loaded, resolve immediately
+        resolve(); 
       } else {
         this.stripeScript = document.createElement('script');
         this.stripeScript.src = 'https://js.stripe.com/v3/';
-        this.stripeScript.onload = (event: Event) => resolve(); // Define the event handler explicitly
+        this.stripeScript.onload = (event: Event) => resolve(); 
         this.stripeScript.onerror = reject;
         document.body.appendChild(this.stripeScript);
       }
@@ -60,7 +62,7 @@ export class CheckoutService {
   }
 
   getStripeInstance(publicKey: string): any {
-    return Stripe(publicKey); // Return the Stripe instance with the provided public key
+    return Stripe(publicKey); 
   }
 
   unloadStripeScript(): void {
@@ -113,24 +115,23 @@ export class CheckoutService {
       const publicKey = data[0]?.keys[0]?.publicKey;
 
       this.stripe = Stripe(publicKey);
-
       // const clientSecret = new URLSearchParams(window.location.search).get("payment_intent_client_secret");
-      const clientSecret = this.fetchData.HTTPGET(this.backendUri.URLs.getClientSecret).subscribe(async (res)=> {
-        console.log(res, 'res is' );
-        this.SecretClient=res;
+      const clientSecret = this.fetchData.HTTPGET(this.backendUri.URLs.getClientSecret).subscribe(async (res) => {
+        console.log(res, 'res is');
+        this.SecretClient = res;
 
 
-      console.log( res, 'client secret')
+        console.log(res, 'client secret')
 
-      if (!this.SecretClient) return;
+        if (!this.SecretClient) return;
 
-      const { paymentIntent } = await this.stripe.retrievePaymentIntent(this.SecretClient);
+        const { paymentIntent } = await this.stripe.retrievePaymentIntent(this.SecretClient);
 
-      console.log(paymentIntent, 'payment intent');
+        console.log(paymentIntent, 'payment intent');
 
-      this.handlePaymentIntentStatus(paymentIntent);
+        this.handlePaymentIntentStatus(paymentIntent);
 
-    })
+      })
 
     } catch (error) {
       console.error('Error checking order status:', error);
@@ -154,24 +155,34 @@ export class CheckoutService {
   }
 
   private async removeCartItems(paymentIntent: any) {
-    this.fetchData.HTTPPOST(this.backendUri.URLs.removeItems, paymentIntent).subscribe((Data)=> {
-      // console.log(Data)
+    this.fetchData.HTTPPOST(this.backendUri.URLs.removeItems, paymentIntent).subscribe((Data) => {
+      
     })
   }
 
-  private  updateOrderStatus(paymentIntent: any) {
-    let body:any = {};
-    body.newPaymentStatus='success';
-    body.transactionId=paymentIntent.id;
-    body.MOP= paymentIntent.payment_method_types[0]
+  private async updateOrderStatus(paymentIntent: any) {
+    let body: any = {};
     this.cartService.fetchCart().subscribe(async (res) => {
       let result = JSON.parse(JSON.stringify(res));
-      body.products=result.details;
+      // body.products=result.details;
+      this.fetchData.HTTPGET(this.backendUri.URLs.getLatestOrderId).subscribe((data: any) => {
+      
+        body = {
+          buyerId: "token",
+          newPaymentStatus: 'success',
+          transactionId: paymentIntent.id,
+          MOP: paymentIntent.payment_method_types[0],
+          products: result.details,
+          orderID: data.orderID
+        };
   
+        console.log(body, 'body is');
+  
+       this.fetchData.HTTPPOST(this.backendUri.URLs.updateOrderStatus, body).subscribe();
+  
+      });
 
-     this.fetchData.HTTPPOST(this.backendUri.URLs.updateOrderStatus, body)
-      .subscribe();
-    });
+      })
   }
 
   private async sendInvoiceData(paymentIntent: any) {
@@ -180,10 +191,10 @@ export class CheckoutService {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(paymentIntent)
     })
-    .then(response => {
-      if (response.ok) return response.json();
-      throw new Error('Network response was not ok.');
-    })
+      .then(response => {
+        if (response.ok) return response.json();
+        throw new Error('Network response was not ok.');
+      })
   }
 
   //  ADDRESS

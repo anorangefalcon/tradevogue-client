@@ -71,10 +71,12 @@ export class SettingsComponent {
      private dialogBox : DialogBoxService) {
     // this.route.queryParams.subscribe(params => {
     //   const redirectStatus = params['redirect_status'];
-      // if (redirectStatus === 'succeeded') {
-        this.stripePay.checkOrderStatus()
+    //   if (redirectStatus === 'succeeded') {
+    //     this.stripePay.checkOrderStatus()
     //   }
     // });
+
+    this.stripePay.checkOrderStatus()
 
     this.ProfileForm = fb.group(
       {
