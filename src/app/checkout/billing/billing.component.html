@@ -90,7 +90,7 @@
     <div *ngIf="StripeOpener">
 
         <!-- <div *ngIf="selectedPaymentMethod === 'stripe'" class="payment-form"> -->
-            <div class="payment-form">
+            <div class="payment-form"   *ngIf="selectedPaymentMethod === 'stripe'">
             <form id="payment-form">
                 <!-- <button id="load-stripe" class="btn-primary" (click)="loadStripeOnButtonClick()">
                 Load Stripe
@@ -107,20 +107,33 @@
                 </button>
                 <div id="payment-message" class="hidden"></div>
             </form>
-        </div>
 
-
-        <div *ngIf="selectedPaymentMethod === 'razorpay'">
-            <div *ngFor="let item of items">
-                <div class="btn-primary">
-                    Payment Method Selected Proceed To Payment
-                    <form class="hidden btn-primary" (click)="submitForm(item)">
-                        <input type="hidden" name="amount" [value]="item.price">
-                        <button class="hidden" id='razorSubmit' type="submit">pay</button>
-                    </form>
-                </div>
+            <div class="or-div relative">
+                <p class="absolute">or</p>
             </div>
         </div>
+
+        <div class="payment-method-buttons">
+            <button class="btn-secondary btn btn-sm btn-rounded" 
+                    (click)="selectPaymentMethod('razorpay')"
+                    [class.selected]="selectedPaymentMethod === 'razorpay'"
+                    *ngIf="selectedPaymentMethod !== 'razorpay'">
+              Other Payment Method
+            </button>
+          </div>
+          
+          <div *ngIf="selectedPaymentMethod === 'razorpay'">
+            <div *ngFor="let item of items">
+              <div [ngClass]="{'selected-box': selectedPaymentMethod === 'razorpay'}">
+                Payment Method Selected Proceed To Payment
+                <form class="hidden btn-primary" (submit)="submitForm(item)">
+                  <input type="hidden" name="amount" [value]="item.price">
+                  <button class="hidden" id='razorSubmit' type="submit">Pay</button>
+                </form>
+              </div>
+            </div>
+          </div>
+          
 
     </div>
 </div>

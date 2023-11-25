@@ -412,6 +412,10 @@ export class BillingComponent implements OnInit {
     }
   }
 
+  selectPaymentMethod(method: string) {
+    this.selectedPaymentMethod = method;
+  }
+
 
 
   @ViewChild('mydiv') my_div: ElementRef | undefined;
