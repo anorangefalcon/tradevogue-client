@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FetchDataService } from 'src/app/shared/services/fetch-data.service';
+import { ToastService } from 'src/app/shared/services/toast.service';
 import { UtilsModule } from 'src/app/utils/utils.module';
 
 @Component({
@@ -12,11 +13,12 @@ export class CustomiseTcComponent {
 
   TandC!: FormArray
   yourFormGroup!: FormGroup;
-  contentType: any[] = ['List', 'Paragraph']
+  contentType: any[] = ['list', 'paragraph']
 
 
   constructor(
     private fb: FormBuilder,
+    private toastService: ToastService,
     private fetchDataService: FetchDataService,
     private backendUrl: UtilsModule) {
 
@@ -26,7 +28,7 @@ export class CustomiseTcComponent {
         this.fb.group({
 
           heading: this.fb.control([''], Validators.required),
-
+          ContentTYPE: this.fb.control(['list', 'paragraph']),
           contentInfo: this.fb.array([
             this.fb.group({
               content_type: ['', Validators.required],
@@ -43,6 +45,12 @@ export class CustomiseTcComponent {
     this.getData();
   }
 
+
+  getParticularContentType(i: number) {
+    return this.yourFormGroup.get('TandC')?.get(String(i))?.get('ContentTYPE')?.value;
+  }
+
+
   // TandC form Array
   getFormArrayControls() {
     return (<FormArray>this.yourFormGroup.get('TandC')).controls;
@@ -51,6 +59,7 @@ export class CustomiseTcComponent {
   addFormControl() {
     let form = this.fb.group({
       heading: this.fb.control([''], Validators.required),
+      ContentTYPE: this.fb.control(['list', 'paragraph']),
       contentInfo: this.fb.array([
         this.fb.group({
           content_type: ['', Validators.required],
@@ -63,6 +72,10 @@ export class CustomiseTcComponent {
       ])
     });
     (<FormArray>this.yourFormGroup.get('TandC'))?.push(form);
+  }
+
+  removeFormControl(index: number) {
+    (<FormArray>this.yourFormGroup.get('TandC'))?.removeAt(index);
   }
 
   // contentInfo form Array
@@ -79,11 +92,35 @@ export class CustomiseTcComponent {
         })
       ])
     });
-    (<FormArray>this.yourFormGroup.get('TandC')?.get(String(i))?.get('contentInfo'))?.push(form);
+
+    let FormArray = (<FormArray>this.yourFormGroup.get('TandC')?.get(String(i))?.get('contentInfo'));
+    if (FormArray.value.length >= 5) {
+      this.toastService.errorToast({ title: 'You cannot add more than 5 controls ' });
+    }
+    else {
+      (<FormArray>this.yourFormGroup.get('TandC')?.get(String(i))?.get('contentInfo'))?.push(form);
+    }
   }
 
   removeContentFormArrayControls(i: number, index: number) {
-    return (<FormArray>this.yourFormGroup.get('TandC')?.get(String(i))?.get('contentInfo'))?.removeAt(index);
+    (<FormArray>this.yourFormGroup.get('TandC')?.get(String(i))?.get('contentInfo'))?.removeAt(index)
+
+
+    let intialFormArray = (<FormArray>this.yourFormGroup.get('TandC')?.get(String(i))?.get('contentInfo'));
+    let count: any = 0;
+    intialFormArray.value.forEach((element: any) => {
+      if (element.content_type == 'list') count++;
+    });
+
+    console.log('count come in removing is ', count);
+
+    if (count < 2) {
+
+      let arr = this.yourFormGroup.get('TandC')?.get(String(i))?.value;
+      arr.ContentTYPE = ['paragraph', 'list'];
+      this.yourFormGroup.get('TandC')?.get(String(i))?.setValue(arr);
+    }
+
   }
 
   // contentDesc Form Array
@@ -95,11 +132,31 @@ export class CustomiseTcComponent {
     let form = this.fb.group({
       content: ['', Validators.required],
     });
-    (<FormArray>this.yourFormGroup.get('TandC')?.get(String(i))?.get('contentInfo')?.get(String(j))?.get('content_description'))?.push(form);
+
+    let FormArray = (<FormArray>this.yourFormGroup.get('TandC')?.get(String(i))?.get('contentInfo')?.get(String(j))?.get('content_description'));
+    if (FormArray.value.length >= 7) {
+      this.toastService.errorToast({ title: 'You cannot add more than 7 inputs ' });
+    }
+    else {
+      FormArray.push(form);
+    }
+    // console.log('value pushed called------>');
+    
   }
 
+
+
   removeContentDescFormControl(i: number, j: number, index: number) {
-    (<FormArray>this.yourFormGroup.get('TandC')?.get(String(i))?.get('contentInfo')?.get(String(j))?.get('content_description'))?.removeAt(index);
+
+    let FormArray = (<FormArray>this.yourFormGroup.get('TandC')?.get(String(i))?.get('contentInfo')?.get(String(j))?.get('content_description'));
+    if (FormArray.value.length == 1) {
+      this.toastService.errorToast({ title: 'You cannot remove the control ' });
+    }
+    else {
+      (<FormArray>this.yourFormGroup.get('TandC')?.get(String(i))?.get('contentInfo')?.get(String(j))?.get('content_description'))?.removeAt(index);
+
+    }
+
   }
 
   getTandCContent(i: any, j: any, content = 'content_type') {
@@ -113,8 +170,24 @@ export class CustomiseTcComponent {
   }
 
   ContentTypeHandler(event: any, i: number, j: number) {
+
+    let FormArray = (<FormArray>this.yourFormGroup.get('TandC')?.get(String(i))?.get('contentInfo'));
+    let count: any = 0;
     (<FormArray>this.yourFormGroup.get('TandC')?.get(String(i))?.get('contentInfo'))?.get(String(j))?.get('content_type')?.setValue(event);
-    console.log((<FormArray>this.yourFormGroup.get('TandC')?.get(String(i))?.get('contentInfo'))?.get(String(j))?.get('content_type')?.value);
+    FormArray.value.forEach((element: any) => {
+      if (element.content_type == 'list') count++;
+    });
+
+    if (count > 2) {
+      this.toastService.errorToast({ title: 'You cannot add more than 3 lists in one section' });
+      let arr = this.yourFormGroup.get('TandC')?.get(String(i))?.value;
+      arr.ContentTYPE = ['paragraph'];
+      console.log('arr is ', arr);
+      this.yourFormGroup.get('TandC')?.get(String(i))?.setValue(arr);
+      (<FormArray>this.yourFormGroup.get('TandC')?.get(String(i))?.get('contentInfo'))?.get(String(j))?.get('content_type')?.setValue('paragraph');
+
+    }
+
   }
 
   addContentInfo(i: any) {
@@ -122,7 +195,12 @@ export class CustomiseTcComponent {
   }
 
   onsubmit() {
-    console.log(this.yourFormGroup.value);
+    console.log(this.yourFormGroup.value, " status is ", this.yourFormGroup.valid);
+
+    this.fetchDataService.HTTPPOST(this.backendUrl.URLs.setTandC, this.yourFormGroup.value).subscribe((res) => {
+      console.log(res, "save res");
+
+    })
   }
 
   // AddContentInfo(index: any, value: any) {
@@ -146,14 +224,14 @@ export class CustomiseTcComponent {
   getData() {
     this.fetchDataService.HTTPGET(this.backendUrl.URLs.getTandC).subscribe((response: any) => {
 
-      console.log(response);
+      console.log(response, "backend resss");
 
       for (let i = 0; i < response.data.length - 1; i++) {
         this.addFormControl();
         for (let j = 0; j < response.data[i].contentInfo.length - 1; j++) {
           this.addContentFormControl(i);
 
-          for (let k = 0; k < response.data[i].contentInfo[j].content_description.length - 1; k++) {
+          for (let k = 0; k < response.data[i].contentInfo[j].length - 1; k++) {
             this.addContentDescFormControl(i, j);
 
           }
@@ -161,9 +239,8 @@ export class CustomiseTcComponent {
 
       }
 
+      console.log('yourform is ', this.yourFormGroup.value);
       this?.yourFormGroup?.get('TandC')?.patchValue(response?.data);
-
-      console.log('this your form is ', this.yourFormGroup);
 
     })
   }

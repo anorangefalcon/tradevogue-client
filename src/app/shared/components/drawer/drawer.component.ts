@@ -13,6 +13,9 @@ export class DrawerComponent {
   @Output() showChange: EventEmitter<any> = new EventEmitter();
 
   constructor() { }
+
+
+
   translate!: string;
 
   ngOnChanges() {

@@ -20,60 +20,77 @@
     <form [formGroup]="yourFormGroup">
         <div formArrayName="TandC" class="mh100 mw100 d-flex flex-column gap-20">
             <ng-container *ngFor="let data of getFormArrayControls();let i=index">
-                <div [formGroupName]="i" class=" card card__pd-20 mh100 mw100 d-flex flex-column gap-20">
+                <div [formGroupName]="i" class=" card card__pd-20 mh100 mw100 d-flex flex-column gap-20 relative">
                     <h3>Section {{i+1}}</h3>
+
+                    <button (click)="removeFormControl(i)" class="btn absolute del-section-btn d-flex flex-center">
+                        <span class="material-symbols-outlined">
+                            close
+                        </span>
+                    </button>
 
                     <div class="mh100 mw100 d-flex flex-column gap-5">
                         <label class="form__label">Heading</label>
                         <input class="form__input" formControlName="heading" />
                     </div>
-                    <div formArrayName="contentInfo">
+                    <div formArrayName="contentInfo" class=" d-flex flex-column gap-25">
 
                         <ng-container *ngFor="let content of getContentFormArrayControls(i);let j=index">
-                            <div [formGroupName]="j" class="d-flex gap-10 flex-column mw100">
-                                <div class="mw100 d-flex flex-column gap-5">
-                                    <h5>Content {{j+1 }}</h5>
-                                    <div class="d-flex ">
-                                        <app-custom-select [type]="''" [_id]="''+i+j" [options]="contentType"
+                            <div [formGroupName]="j" class="d-flex gap-10 flex-column mw100 content-area" >
+                                <div class="mw100 d-flex gap-5 justify-content-md-between align-item-center">
+                                    <h4>Content {{j+1 }}</h4>
+                                    <div class="d-flex gap-10">
+                                        <app-custom-select [type]="''" [_id]="''+i+j"
+                                            [options]="getParticularContentType(i)"
                                             [selectedOption]="((getTandCContent(i,j) ? (getTandCContent(i,j)) : 'Select Type'))"
                                             (final_option)="ContentTypeHandler($event, i ,j)"></app-custom-select>
-                                    </div>
-                                </div>
 
-                                <!-- <div class="form__radio d-flex gap-20">
-
-                                    <input type="radio" value="paragraph" [id]="'paragraph'+i" [name]="'type'+i" formControlName="content_type">
-                                    <label [for]="'paragraph'+i">Paragraph</label>
-
-                                    <input type="radio" value="list" [id]="'list'+i" [name]="'type'+i" formControlName="content_type">
-                                    <label for="list">List</label>
-
-                                </div> -->
-
-                                <div formArrayName="content_description" class="mw100 d-flex flex-column gap-5">
-
-
-                                    <h5>Content Area</h5>
-                                    <ng-container
-                                        *ngFor="let content of getContentDescFormArrayControls(i,j);let k=index">
-                                        <div [formGroupName]="k" style="height: fit-content;">
-                                            <textarea class="form__textarea mw100" formControlName="content">
-                                            </textarea>
-                                        </div>
-                                    </ng-container>
-                                    <div class="d-flex justify-content-end">
-                                        <button class="btn btn-xs btn-secondary btn-rounded fw-500 d-flex flex-center"
-                                            *ngIf="getTandCContent(i,j) == 'list'"
-                                            (click)="addContentDescFormControl(i, j)">
-                                            <span class="material-symbols-outlined fs-20">add</span>
-                                            Add
+                                        <button
+                                            class="btn btn-xs btn-secondary btn-rounded fw-500 d-flex flex-center gap-5"
+                                            (click)="removeContentFormArrayControls(i,j)" style="width: fit-content;">
+                                            <span class="material-symbols-outlined fs-20">delete</span>
                                         </button>
                                     </div>
                                 </div>
+                                <div formArrayName="content_description" class="mw100 d-flex flex-column gap-5">
+                                    <ng-container>
+                                        <div *ngFor="let content of getContentDescFormArrayControls(i,j);let k=index">
+
+                                            <div [formGroupName]="k" style="height: fit-content;">
+
+                                                <textarea class="form__textarea mw100" formControlName="content"
+                                                    *ngIf="getTandCContent(i,j)=='paragraph'">
+                                                </textarea>
+
+                                                <div class="relative">
+                                                    <input type="text" formControlName="content"
+                                                        *ngIf="getTandCContent(i,j)=='list'" class="mw100">
+                                                    <button
+                                                        class="btn btn-xs fw-500 d-flex flex-center absolute remove-point-btn"
+                                                        *ngIf="getTandCContent(i,j) == 'list'"
+                                                        (click)="removeContentDescFormControl(i,j,k)">
+
+                                                        <span class="material-symbols-outlined">
+                                                            delete
+                                                        </span>
+                                                    </button>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <div class="d-flex justify-content-end">
+                                            <button class="btn d-flex flex-center add-point-btn"
+                                                *ngIf="getTandCContent(i,j) == 'list'"
+                                                (click)="addContentDescFormControl(i, j)">
+                                                add another point
+                                            </button>
+                                        </div>
+                                    </ng-container>
+                                </div>
                             </div>
+
                         </ng-container>
                     </div>
-
                     <div class="d-flex justify-content-end">
                         <button class="btn btn-xs btn-primary btn-rounded fw-500 d-flex flex-center gap-5"
                             (click)="addContentFormControl(i)" style="width: fit-content;">

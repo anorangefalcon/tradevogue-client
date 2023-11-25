@@ -191,7 +191,7 @@ export class UtilsModule {
 
     // T&C
     getTandC:'http://localhost:1000/tc/get',
-
+    setTandC: 'http://localhost:1000/tc/set'
     
   }
 }
