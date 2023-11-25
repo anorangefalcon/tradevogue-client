@@ -1,4 +1,6 @@
-<div class="wrapper" [ngClass]="{'show':show}" (click)="translate=''; show=false; showChange.emit(false)">
+<div class="wrapper" [ngClass]="{'show':show}">
+
+  <div class="backdrop" (click)="translate=''; show=false; showChange.emit(false)"></div>
 
   <div class="content-drawer" [style]="direction"
     [ngClass]="{'top':direction=='top',

@@ -6,8 +6,7 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class ToastService {
 
-  ToastArray:any[]=[];
-  private displaySubject = new BehaviorSubject<any>(this.ToastArray);
+  private displaySubject = new BehaviorSubject<string>('');
   display$ = this.displaySubject.asObservable();
 
   constructor() { }
@@ -20,44 +19,32 @@ export class ToastService {
     }
   };
 
-
-  SendError(sample:any){
-    console.log('this sample is ',this.sample);
-    
-    this.ToastArray.push(this.sample);
-    console.log('toast array is ',this.ToastArray);
-    
-    this.displaySubject.next(this.ToastArray);
-  }
-
   successToast(data: any = ''){
     this.sample.display = 'success';
     this.sample.content.title = data.title || 'Item successfully added to cart!';
     this.sample.content.body = data.body;
-    this.SendError(this.sample);
+    this.displaySubject.next(this.sample);
   }
 
   notificationToast(data: any = ''){
     this.sample.display = 'notification';
     this.sample.content.title = data.title || 'New Notification';
     this.sample.content.body = data.body;
-    this.SendError(this.sample);
+    this.displaySubject.next(this.sample);
   }
 
   warningToast(data: any = ''){
     this.sample.display = 'warning';
     this.sample.content.title = data.title || 'Warning';
     this.sample.content.body = data.body;
-    this.SendError(this.sample);
+    this.displaySubject.next(this.sample);
   }
 
   errorToast(data: any = ''){
-    console.log('data is ',data);
-    
     this.sample.display = 'error';
     this.sample.content.title = data.title || 'Error Occurred';
     this.sample.content.body = data.body;
-    this.SendError(this.sample);
+    this.displaySubject.next(this.sample);
   }
 
 }

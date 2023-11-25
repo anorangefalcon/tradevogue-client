@@ -11,13 +11,16 @@ import { LoginCheckService } from 'src/app/shared/services/login-check.service';
 
 export class CartComponent implements OnInit {
 
-  constructor(private cartService: CartService, private router: Router,
-    private userService: LoginCheckService) { }
+  constructor(
+    private cartService: CartService, 
+    private router: Router,
+    private userService: LoginCheckService) {}
+
   cartArr: any[] = [];
   userToken: any = '';
   direction: any = 'right';
-    loading: Boolean = false;
-
+  loading: Boolean = false;
+  
   ngOnInit() {
     this.userService.getUser('token').subscribe((token: any) => {
       this.userToken = token;
@@ -32,6 +35,7 @@ export class CartComponent implements OnInit {
             return (asset.color) === item.color;
           }).photo[0];
 
+          this.updatingArr = [];
           return item;
         });
       });
@@ -44,7 +48,7 @@ export class CartComponent implements OnInit {
 
   isDisabled(what: string, productIndex: any, selectedQuantity: Number) {
 
-    const quantityIndex = this.cartArr[productIndex].info.orderQuantity.findIndex((q: any) => {
+    let quantityIndex = this.cartArr[productIndex].info.orderQuantity.findIndex((q: any) => {
       return q == selectedQuantity;
     });
 
@@ -62,20 +66,20 @@ export class CartComponent implements OnInit {
         return true;
       }
     }
-
+    
     if (what == 'previous') {
       if (this.cartArr[productIndex].info.orderQuantity[quantityIndex] === stockLimit && stockLimit <= this.cartArr[productIndex].info.orderQuantity[0] && quantityIndex === -1) {
         return true;
       }
-      if (quantityIndex == 0) {
+      if (quantityIndex == 0 || quantityIndex == -1) {
         return true;
       }
     }
     return false;
-
   }
 
   changeQuantity(what: string, productIndex: any, selectedQuantity: Number) {
+    this.appendUpdateArr(productIndex);
 
     let quantityIndex = this.cartArr[productIndex].info.orderQuantity.findIndex((q: any) => {
       return q == selectedQuantity;
@@ -88,11 +92,14 @@ export class CartComponent implements OnInit {
     }).quantity;
 
     if (quantityIndex === -1) {
-      for (let i = (this.cartArr[productIndex].info.orderQuantity.length - 1); i >= 0; i--) {
+      for (let i = (this.cartArr[productIndex].info.orderQuantity.length - 1); i >= 0; i--) {        
         if (this.cartArr[productIndex].info.orderQuantity[i] < stockLimit) {
           quantityIndex = i + 1;
           break;
         }
+      }
+      if(this.cartArr[productIndex].info.orderQuantity[0] > stockLimit){
+        quantityIndex = 0;
       }
     }
 
@@ -133,5 +140,18 @@ export class CartComponent implements OnInit {
 
   closeSideCart(){
     this.cartService.sideCart.next(false);
+  }
+
+  updatingArr: Number[] = [];
+
+  appendUpdateArr(index: any){
+    this.updatingArr.push(index);
+  }
+
+  isUpdating(index: any){
+    if(this.updatingArr.includes(index)){
+      return true;
+    }
+    return false;
   }
 }

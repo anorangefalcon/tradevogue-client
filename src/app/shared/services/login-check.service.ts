@@ -26,12 +26,7 @@ export class LoginCheckService {
         this.previousUrl = prevEvent.url;
       });
 
-      console.log('hehe 2 ', typeof(cookieService.get('userToken')));
     if (cookieService.get('userToken')) {
-      console.log('hehe');
-      
-      console.log(this.userSubject, 'heree');
-      
       let userObj = {
         userToken : this.cookieService.get('userToken'),
         name: cookieService.get('name'),

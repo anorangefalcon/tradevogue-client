@@ -31,7 +31,7 @@
     position: sticky;
     top: 0;
     z-index: 1;
-    width: 30%;
+    width: 35%;
     padding-block: 0px;
     transition: all 0.5s ease-in-out;
 }
@@ -41,8 +41,7 @@
 }
 
 .coupon_applied__div{
-    padding-inline: 10px;
-    padding-block: 4px;
+    padding: 10px;
     border: 1px dashed rgb(var(--textClr), 0.7);
     font-size: 16px;
     font-weight: 500;
@@ -98,6 +97,13 @@
 .items,
 .next {
     width: 33.3%;
+}
+
+.item-name{
+    width: 26ch;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
 }
 
 .next {

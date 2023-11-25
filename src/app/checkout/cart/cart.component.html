@@ -2,7 +2,7 @@
 
     <div class="cart-container d-flex flex-wrap default-animation">
         <div class="cart-items d-flex" *ngFor="let item of cartArr; let i = index">
-            <div class="col gap-25 d-flex">
+            <div class="cart-item col gap-25 d-flex" [ngClass]="isUpdating(i) ? 'disabled-item' : ''">
                 <div class="product-image d-flex gap-30">
                     <a routerLink="/product/{{item.sku}}" class="product-img" (click)="closeSideCart()">
                         <img [src]=item?.image alt="Product Image" class="skeleton">
@@ -28,7 +28,7 @@
                             <div class="color-circle" [ngStyle]="{'background-color': item.color}"></div>
                         </div>
 
-                        <div class="d-flex align-item-center gap-10">
+                        <div class="d-flex align-item-center gap-10 price" [ngClass]="isUpdating(i) ? 'skeleton' : ''">
                             <p class="labels">Price: </p>
                             <p>₹{{item?.price}}</p>
                         </div>
@@ -61,14 +61,14 @@
 
                         </div>
 
-                        <div class="final-price d-flex align-item-center">
+                        <div class="final-price d-flex align-item-center price" [ngClass]="isUpdating(i) ? 'skeleton' : ''">
                             <p>₹{{(item?.price * item?.quantity) | number : '1.0-2'}}</p>
                         </div>
 
 
                     </div>
                 </div>
-                <button class="remove-btn d-flex align-item-center" (click)="remove_item(userToken ? item._id : i)">
+                <button class="remove-btn d-flex align-item-center" (click)="appendUpdateArr(i); remove_item(userToken ? item._id : i)">
                     <span class="material-symbols-outlined">
                         close
                     </span>
@@ -78,7 +78,7 @@
 
         <div *ngIf="loading" class="dummy-item d-flex gap-35">
             <div class="image skeleton"></div>
-            <div class="d-flex flex-column gap-15">
+            <div class="d-flex flex-column gap-10">
                 <div class="d-heading skeleton"></div>
                 <div class="d-flex flex-column gap-10">
                     <div class="d-text skeleton"></div>

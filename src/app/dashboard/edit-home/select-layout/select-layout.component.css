@@ -36,6 +36,9 @@
     }
 }
 
+.card-header{
+    z-index: 2;
+}
 
 .productpage {
     /* height: 470px; */
@@ -125,7 +128,6 @@
     right: 0;
     width: 100%;
     justify-content: space-between;
-    z-index: 2;
 
     & div{
         opacity: 1;

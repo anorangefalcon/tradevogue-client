@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, ViewEncapsulation, HostListener } from '@angular/core';
+import { Component, Input, Output, EventEmitter, ViewEncapsulation } from '@angular/core';
 import { BehaviorSubject, debounceTime, distinctUntilChanged } from 'rxjs';
 
 @Component({
@@ -13,18 +13,18 @@ export class SearchBarComponent {
   @Input() searchPlaceholder: any = 'Search...';
   @Output() searchQuery$ = new EventEmitter <string>();
 
-  private searchQuery!: any;
+  private searchQuery: any = '';
   private searchText$ = new BehaviorSubject<string>('');
+  private emitNow: Boolean = false;
 
-  ngOnChanges(){
-    if(this.onButtonClick === false){
-      this.searchIt();
-    }
+  ngOnInit(){
+    this.searchIt();
   }
 
   typed(e: Event) {
     this.searchQuery = (<HTMLInputElement>e.target).value;
     this.searchQuery = this.searchQuery.trim();
+    this.emitNow = true;
 
     if(!this.onButtonClick) this.searchText$.next(this.searchQuery);
   }
@@ -38,8 +38,10 @@ export class SearchBarComponent {
         debounceTime(delay),
         distinctUntilChanged()
       )
-      .subscribe((searchText: string) => {        
-        this.searchQuery$.emit(searchText);
+      .subscribe((searchText: string) => {  
+        if(this.emitNow){
+          this.searchQuery$.emit(searchText);
+        }      
       });
   }
 

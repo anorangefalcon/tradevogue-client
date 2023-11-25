@@ -239,6 +239,12 @@ input[type="number"] {
     color: rgb(var(--textClr), 0.5);
 }
 
+.no-item-img{
+    & img{
+        transform: translateY(-90px);
+    }
+}
+
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
   -webkit-appearance: none;

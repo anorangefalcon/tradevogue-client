@@ -96,7 +96,6 @@ export class CartService {
     if (this.user) {
       this.http.post(this.backendUrls.URLs.updateItemFromCart, data).subscribe((data: any) => {
         if (data.updated) {
-          this.cartLoading.next(true);
           this.fetchDetails();
         }
       });

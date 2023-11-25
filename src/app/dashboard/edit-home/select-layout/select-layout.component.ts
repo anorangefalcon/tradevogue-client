@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef } from '@angular/core';
 import { TemplateRef, ViewChild, ViewEncapsulation } from '@angular/core';
 import { Router } from '@angular/router';
 import { FetchDataService } from 'src/app/shared/services/fetch-data.service';
@@ -72,6 +72,7 @@ export class SelectLayoutComponent {
       this.currentLayout.layout[index - 1] = tempCurrentVal;
     }
 
+    this.scroll('up');
     this.edited = true;
   }
 
@@ -84,6 +85,7 @@ export class SelectLayoutComponent {
       this.currentLayout.layout[index + 1] = tempCurrentVal;
     }
 
+    this.scroll('down');
     this.edited = true;
   }
 
@@ -143,10 +145,6 @@ export class SelectLayoutComponent {
     return this.currentLayout.layout.findIndex((item: any) => item.name === name);
   }
 
-  // sortElementsAccordingIndex(){
-  //   this.currentLayout.layout.sort((a, b) => a.index - b.index);
-  // }
-
   selectLayout(event: any){
     this.edited = false;
     this.currentLayout = this.layouts.find((item: any) => item.name === event);
@@ -188,5 +186,16 @@ export class SelectLayoutComponent {
       title: 'Star Products to Show in Carousel'
     })
     this.router.navigateByUrl('dashboard/products');
+  }
+
+  scroll(where: String) {
+    var currentPosition = window.pageYOffset;
+    var targetPosition = currentPosition;
+    targetPosition += (where == 'down') ? 300 : -300;
+
+    window.scrollTo({
+        top: targetPosition,
+        behavior: "smooth"
+    });
   }
 }

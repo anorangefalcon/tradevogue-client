@@ -15,6 +15,11 @@
     display: none;
 }
 
+.disabled-item{
+    opacity: 0.6;
+    z-index: -1;
+}
+
 .product-info {
     & h4 {
         width: 25ch;
@@ -75,9 +80,9 @@
     }
 
     & .product-img {
-        border-radius: 10px;
+        border-radius: 5px;
+        overflow: hidden;
         background-color: rgb(var(--secondary), 0.4);
-
     }
 
     & img {
@@ -87,6 +92,13 @@
     }
 }
 
+.price.skeleton{
+    max-width: 100px;
+
+    & p{
+        opacity: 0;
+    }
+}
 .dummy-item{
     width: 100%;
     height: 100px;
@@ -99,17 +111,17 @@
     .d-heading{
         width: 280px;
         height: 16px;
+        padding-block-start: 5px;
     }
 
     .d-text{
         width: 200px;
-        height: 10px;
+        height: 12px;
     }
     .d-text-2{
         width: 160px;
-        height: 10px;
+        height: 16px;
     }
-
 }
 
 .cart-items:last-child {

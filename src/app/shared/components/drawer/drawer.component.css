@@ -12,9 +12,17 @@
     transition: 0.3s ease-in-out;
 }
 
+.backdrop{
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    z-index: 100;
+}
+
 .content-drawer {
     position: absolute;
     height: 100%;
+    z-index: 101;
     width: 100%;
     transition: 0.3s ease-in-out;
     overflow-y: auto;

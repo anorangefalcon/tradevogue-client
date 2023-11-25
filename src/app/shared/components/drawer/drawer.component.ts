@@ -16,7 +16,6 @@ export class DrawerComponent {
   translate!: string;
 
   ngOnChanges() {
-    console.log('show come up is ',this.show);
     if(!this.show)this.translate=''; 
 
     if (this.show == true) {
