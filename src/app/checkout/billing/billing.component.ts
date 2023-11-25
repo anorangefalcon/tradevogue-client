@@ -219,9 +219,9 @@ export class BillingComponent implements OnInit {
           key: res.key_id,
           amount: res.amount,
           currency: 'INR',
-          name: res.product_name,
+          name: 'Trade Vogue',
           description: res.description,
-          image: 'https://dummyimage.com/600x400/000/fff',
+          image: '../../assets/logo-mobile.svg',
           order_id: res.order_id,
           handler: (response: any) => {
 
