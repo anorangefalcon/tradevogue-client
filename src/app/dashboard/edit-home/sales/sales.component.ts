@@ -142,6 +142,7 @@ export class SalesComponent {
   }
 
   onUpdate() {
+
     if (this.salesForm.dirty) {
       if (this.editingIndex !== undefined) {
         const body = {
@@ -151,6 +152,7 @@ export class SalesComponent {
         }
 
         this.fetch.HTTPPOST(this.util.URLs.updateSales, body).subscribe((res) => {
+          console.log(res, 'res')
           this.getSales();
         })
 

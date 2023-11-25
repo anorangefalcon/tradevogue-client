@@ -145,7 +145,7 @@ a:hover {
 
 .large-image {
   max-width: 253px;
-  max-height: 222px;
+  /* max-height: 222px; */
   display: block;
   margin: 0 auto; 
 }

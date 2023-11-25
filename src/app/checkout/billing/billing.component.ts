@@ -127,6 +127,28 @@ StripeOpener:Boolean=false;
   }
 
   async submitForm(item: any): Promise<void> {
+    try {
+
+    this.cartService.fetchCart().subscribe(async (res) => {
+      let result = JSON.parse(JSON.stringify(res));
+      // body.products=result.details;
+      this.fetchDataService.HTTPGET(this.backendURLs.URLs.getLatestOrderId).subscribe((data: any) => {
+      
+        body = {
+          amount: item.price.toString(),
+          buyerId: "token",
+          newPaymentStatus: 'success',
+          products: result.details,
+          orderID: data.orderID
+        };
+  
+        console.log(body, 'body is');
+  
+       this.fetchDataService.HTTPPOST(this.backendURLs.URLs.updateOrderStatus, body).subscribe();
+  
+      });
+
+      })
 
     let body = {};
     this.userService.getUser('token').subscribe((token: any) => {
@@ -137,7 +159,6 @@ StripeOpener:Boolean=false;
       };
     })
 
-    try {
       const res = await this.http.post<any>('http://localhost:1000/razorpay/createUpiPayment', body).toPromise();
 
       if (res.success) {
@@ -161,8 +182,7 @@ StripeOpener:Boolean=false;
               };
             });
 
-            this.fetchDataService.HTTPPOST(this.backendURLs.URLs.
-              Status, paymentBody).subscribe((data: any) => {
+            this.fetchDataService.HTTPPOST(this.backendURLs.URLs.updateOrderStatus, paymentBody).subscribe((data: any) => {
               console.log(data, "data is ")
              });
 
