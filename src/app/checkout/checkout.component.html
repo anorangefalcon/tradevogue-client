@@ -73,7 +73,9 @@
             <!-- (click)="CreateOrder()" -->
             <button class="btn-primary btn btn-md" (click)="verifyOrderSummary()" *ngIf="!SecureNavBar" ><a>Proceed to Checkout</a></button>
 
-            <button class="btn-primary btn btn-md" (click)="nextClicked()" *ngIf="!StripePaymentOpener && SecureNavBar" [disabled]="NextDisabled">Continue</button>
+            <button class="btn-primary btn btn-md" 
+            (click)="nextClicked()" *ngIf="!StripePaymentOpener && SecureNavBar" [disabled]="NextDisabled">
+                Continue</button>
             <button class="btn-primary btn btn-md" *ngIf="SecureNavBar && StripePaymentOpener" (click)="ProceedToPayment()">Proceed to Payment</button>
               
         </div>

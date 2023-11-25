@@ -6,7 +6,6 @@ import { BehaviorSubject } from 'rxjs';
 import { LoginCheckService } from '../shared/services/login-check.service';
 import { CartService } from '../shared/services/cart.service';
 declare var Stripe: any;
-import crypto from 'crypto';
 
 @Injectable({
   providedIn: 'root'
@@ -21,10 +20,12 @@ export class CheckoutService {
   StripePaymentOpen = new BehaviorSubject(false);
   StripePaymentOpen$ = this.StripePaymentOpen.asObservable();
   public orderId: string | null = null;
+
+  loadStripe = new BehaviorSubject<Boolean>(false);
+
   constructor(
     private backendUri: UtilsModule,
     private fetchData: FetchDataService,
-    private userService: LoginCheckService,
     private cartService:CartService,
     private router:Router
   ) {
@@ -202,4 +203,7 @@ export class CheckoutService {
 
   // CreateOrderClicked=new BehaviorSubject(false);
   // createOrderClicked$=this.CreateOrderClicked.asObservable();
+
+
+  
 }

@@ -48,12 +48,65 @@ export class BillingComponent implements OnInit {
   stripe: any;
   items: any;
   selectedPaymentMethod = 'stripe';
-StripeOpener:Boolean=false;
-  ngOnInit(): void {    
-  this.checkOutService.StripePaymentOpen$.subscribe((data)=>{
-    this.StripeOpener=data;
-  })
+  StripeOpener: Boolean = false;
 
+
+  constructor(
+    private cartService: CartService,
+    private checkOutService: CheckoutService,
+    private fetchDataService: FetchDataService,
+    private backendURLs: UtilsModule,
+    private userService: LoginCheckService,
+    private route: ActivatedRoute,
+    private stripePay: CheckoutService,
+    private http: HttpClient
+  ) {
+
+    this.items = JSON.parse(localStorage.getItem('paymentIntent') || '[]');
+    this.proceedToPayment();
+
+    this.stripePay.setLoading = this.stripePay.setLoading.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.stripePay.showMessage = this.stripePay.showMessage.bind(this);
+    this.initialize = this.initialize.bind(this);
+
+    this.cartService.fetchCart().subscribe((data) => {
+      this.cartitems = data;
+    });
+
+    const checkSubTotal = () => {
+      if (this.cartitems.amounts.subTotal !== 0) {
+        this.total = this.totalAmount;
+        this.quantity = this.cartitems.details.map((item: { Quantity: any; }) => item.Quantity);
+
+        this.item = [
+          {
+            "id": this.cartitems.details.map((item: { sku: any; }) => item.sku),
+            "name": this.cartitems.details.map((item: { name: any; }) => item.name),
+            "price": this.cartitems.amounts.total,
+            // "quantity": this.cartitems.details.map((item: { quantity: any; }) => item.quantity),
+          }
+        ];
+        localStorage.setItem('paymentIntent', JSON.stringify(this.item));
+      } else {
+        setTimeout(checkSubTotal, 1000);
+      }
+    };
+
+    checkSubTotal();
+
+  }
+
+  ngOnInit(): void {
+    this.checkOutService.StripePaymentOpen$.subscribe((data) => {
+      this.StripeOpener = data;
+    })
+
+    this.checkOutService.loadStripe.subscribe((isLoaded: any) => {
+      if(isLoaded){
+        this.loadStripe();
+      }
+    })
     try {
       this.route.queryParams.subscribe(async params => {
         const redirectStatus = params['redirect_status'];
@@ -71,24 +124,24 @@ StripeOpener:Boolean=false;
     }
   }
   stripeLoaded: boolean = false;
-  async loadStripeOnButtonClick(): Promise<void> {
+  async loadStripe(): Promise<void> {
     try {
       const response = await fetch(this.backendURLs.URLs.getPaymentKeys);
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
-  
+
       const data = await response.json();
       const publicKey = data[0]?.keys?.[0]?.publicKey;
-  
+
       if (publicKey) {
         const script = document.createElement('script');
         script.src = 'https://js.stripe.com/v3/';
         script.onload = async () => {
-          this.stripeLoaded = true; 
+          this.stripeLoaded = true;
           this.stripe = Stripe(publicKey);
-          await this.initializeStripe(); 
-          await this.proceedToPayment(); 
+          await this.initializeStripe();
+          await this.proceedToPayment();
         };
         document.body.appendChild(script);
       } else {
@@ -129,35 +182,35 @@ StripeOpener:Boolean=false;
   async submitForm(item: any): Promise<void> {
     try {
 
-    this.cartService.fetchCart().subscribe(async (res) => {
-      let result = JSON.parse(JSON.stringify(res));
-      // body.products=result.details;
-      this.fetchDataService.HTTPGET(this.backendURLs.URLs.getLatestOrderId).subscribe((data: any) => {
-      
-        body = {
-          amount: item.price.toString(),
-          buyerId: "token",
-          newPaymentStatus: 'success',
-          products: result.details,
-          orderID: data.orderID
-        };
-  
-        console.log(body, 'body is');
-  
-       this.fetchDataService.HTTPPOST(this.backendURLs.URLs.updateOrderStatus, body).subscribe();
-  
-      });
+      this.cartService.fetchCart().subscribe(async (res) => {
+        let result = JSON.parse(JSON.stringify(res));
+        // body.products=result.details;
+        this.fetchDataService.HTTPGET(this.backendURLs.URLs.getLatestOrderId).subscribe((data: any) => {
+
+          body = {
+            amount: item.price.toString(),
+            buyerId: "token",
+            newPaymentStatus: 'success',
+            products: result.details,
+            orderID: data.orderID
+          };
+
+          console.log(body, 'body is');
+
+          this.fetchDataService.HTTPPOST(this.backendURLs.URLs.updateOrderStatus, body).subscribe();
+
+        });
 
       })
 
-    let body = {};
-    this.userService.getUser('token').subscribe((token: any) => {
-      body = {
-        amount: item.price.toString(),
-        items: item,
-        token: token
-      };
-    })
+      let body = {};
+      this.userService.getUser('token').subscribe((token: any) => {
+        body = {
+          amount: item.price.toString(),
+          items: item,
+          token: token
+        };
+      })
 
       const res = await this.http.post<any>('http://localhost:1000/razorpay/createUpiPayment', body).toPromise();
 
@@ -184,7 +237,7 @@ StripeOpener:Boolean=false;
 
             this.fetchDataService.HTTPPOST(this.backendURLs.URLs.updateOrderStatus, paymentBody).subscribe((data: any) => {
               console.log(data, "data is ")
-             });
+            });
 
             alert('Payment Succeeded');
           },
@@ -262,7 +315,6 @@ StripeOpener:Boolean=false;
     const appearance = {
       theme: 'flat',
       variables: {
-        fontFamily: ' "Gill Sans", sans-serif',
         fontLineHeight: '1.5',
         borderRadius: '10px',
         colorBackground: '#F6F8FA',
@@ -273,19 +325,30 @@ StripeOpener:Boolean=false;
           backgroundColor: 'var(--colorBackground)',
           boxShadow: 'none',
           padding: '12px',
-          // marginBlockEnd: '10px !important',
         },
         '.Input': {
           padding: '12px',
-          backgroundColor: '#fff',
-          border: '1px solid rgb(228 , 228, 228)',
+          backgroundColor: 'transparent',
+          border: '1px solid rgba(0, 0, 0, 0.2)',
+          outline: '1px solid rgba(0, 0, 0, 0.2)',
+        },
+        '.p-Field': {
+          margin: '12px',
         },
         '.Input:disabled, .Input--invalid:disabled': {
           color: 'lightgray'
         },
+        'form':{
+          display: 'flex',
+          gap: '20px'
+        },
+        '.Input:hover': {
+          borderColor: 'rgb(4, 118, 118)',
+          outlineColor: 'rgb(4, 118, 118)',
+        },
         '.Tab': {
           padding: '10px 12px 8px 12px',
-          border: 'none'
+          border: 'none',
         },
         '.Tab:hover': {
           border: 'none',
@@ -323,7 +386,7 @@ StripeOpener:Boolean=false;
 
       // this.checkOutService.checkOrderStatus();
 
-      const { paymentIntent,error } = await this.stripe.confirmPayment({
+      const { paymentIntent, error } = await this.stripe.confirmPayment({
         elements: this.elements,
         confirmParams: {
           return_url: "http://localhost:4200/usersetting/orders",
@@ -337,7 +400,7 @@ StripeOpener:Boolean=false;
         const paymentIntentId = paymentIntent.id;
         const body = { paymentIntentId };
         // this.checkOutService.checkOrderStatus();
-  
+
         this.stripePay.showMessage("Payment successful!");
       } else {
         this.stripePay.showMessage("An unexpected error occurred.");
@@ -350,51 +413,6 @@ StripeOpener:Boolean=false;
   }
 
 
-  constructor(
-    private cartService: CartService,
-    private checkOutService:CheckoutService,
-    private fetchDataService: FetchDataService,
-    private backendURLs: UtilsModule,
-    private userService: LoginCheckService,
-    private route: ActivatedRoute,
-    private stripePay: CheckoutService,
-    private http: HttpClient
-  ) {
-
-    this.items = JSON.parse(localStorage.getItem('paymentIntent') || '[]');
-    this.proceedToPayment();
-
-    this.stripePay.setLoading = this.stripePay.setLoading.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.stripePay.showMessage = this.stripePay.showMessage.bind(this);
-    this.initialize = this.initialize.bind(this);
-
-    this.cartService.fetchCart().subscribe((data) => {
-      this.cartitems = data;
-    });
-
-    const checkSubTotal = () => {
-      if (this.cartitems.amounts.subTotal !== 0) {
-        this.total = this.totalAmount;
-        this.quantity = this.cartitems.details.map((item: { Quantity: any; }) => item.Quantity);
-
-        this.item = [
-          {
-            "id": this.cartitems.details.map((item: { sku: any; }) => item.sku),
-            "name": this.cartitems.details.map((item: { name: any; }) => item.name),
-            "price": this.cartitems.amounts.total,
-            // "quantity": this.cartitems.details.map((item: { quantity: any; }) => item.quantity),
-          }
-        ];
-        localStorage.setItem('paymentIntent', JSON.stringify(this.item));
-      } else {
-        setTimeout(checkSubTotal, 1000);
-      }
-    };
-
-    checkSubTotal();
-
-  }
 
   @ViewChild('mydiv') my_div: ElementRef | undefined;
   search_text: any = '';
@@ -424,14 +442,14 @@ StripeOpener:Boolean=false;
   userAddresses: any[] = [];
   receiveData: any;
   ShowComponent: boolean = false;
-  SecureNavBar:Boolean=false;
-  AddressLength:number=0;
+  SecureNavBar: Boolean = false;
+  AddressLength: number = 0;
   getAddresses() {
     this.fetchDataService.HTTPGET(this.backendURLs.URLs.getAddress)
       .subscribe((data: any) => {
         if (data) {
           data = data.addresses;
-          this.AddressLength=data.length;
+          this.AddressLength = data.length;
           if (data.length != 0) {
             this.userAddresses = data;
           }
@@ -460,12 +478,12 @@ StripeOpener:Boolean=false;
     //edit request updated
     else if (event.index === 0 || event.index) {
       this.userAddresses[event.index] = event.data;
-      this.AddressLength=this.userAddresses.length;
+      this.AddressLength = this.userAddresses.length;
     }
     // // new address added
     else {
       this.userAddresses = event;
-      this.AddressLength=this.userAddresses.length;
+      this.AddressLength = this.userAddresses.length;
     }
 
   }
@@ -474,7 +492,7 @@ StripeOpener:Boolean=false;
     const body = { address_id: address._id }
     this.fetchDataService.HTTPPOST(this.backendURLs.URLs.deleteAddress, body).subscribe((data) => {
       this.userAddresses.splice(index, 1);
-      this.AddressLength=this.userAddresses.length;
+      this.AddressLength = this.userAddresses.length;
     })
   }
 
@@ -482,17 +500,17 @@ StripeOpener:Boolean=false;
   AddAddress() {
     this.ShowComponent = true;
   }
-  
+
 
   addressDelivered!: any[];
 
-  addressChecked:Boolean=false;
-  AddressClicked(address:any){
-    this.userAddresses.forEach((el)=>{
-      el.selected=false;
+  addressChecked: Boolean = false;
+  AddressClicked(address: any) {
+    this.userAddresses.forEach((el) => {
+      el.selected = false;
     })
     address.selected = true;
-    this.checkOutService.addressSelected=(address);
+    this.checkOutService.addressSelected = (address);
     this.addressDelivered = address;
   }
 

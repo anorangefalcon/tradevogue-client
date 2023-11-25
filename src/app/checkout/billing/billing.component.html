@@ -88,16 +88,9 @@
 
 
     <div *ngIf="StripeOpener">
-        <div class="payment-method-buttons">
-            <button class="btn-primary btn btn-sm btn-rounded" (click)="loadStripeOnButtonClick()"
-                [class.selected]="selectedPaymentMethod === 'stripe'">Pay with
-                Stripe</button> &nbsp;
-            <button class="btn-secondary btn btn-sm btn-rounded" (click)="selectedPaymentMethod = 'razorpay'"
-                [class.selected]="selectedPaymentMethod === 'razorpay'">Pay
-                with Razorpay</button>
-        </div>
 
-        <div *ngIf="selectedPaymentMethod === 'stripe'" class="payment-form">
+        <!-- <div *ngIf="selectedPaymentMethod === 'stripe'" class="payment-form"> -->
+            <div class="payment-form">
             <form id="payment-form">
                 <!-- <button id="load-stripe" class="btn-primary" (click)="loadStripeOnButtonClick()">
                 Load Stripe

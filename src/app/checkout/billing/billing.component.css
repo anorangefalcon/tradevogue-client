@@ -87,6 +87,13 @@
   border-block-end: 0.5px solid rgb(var(--textClr), 0.2);
 }
 
+.payment-elements{
+  max-width: 600px;
+  margin: 0 auto;
+  border-radius: 10px;
+  padding-block: 10px;
+}
+
 .hidden {
   display: none;
 }
