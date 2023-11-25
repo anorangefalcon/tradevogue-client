@@ -27,7 +27,7 @@ export class CustomiseTcComponent {
       TandC: this.fb.array([
         this.fb.group({
 
-          heading: this.fb.control([''], Validators.required),
+          heading: this.fb.control('', Validators.required),
           ContentTYPE: this.fb.control(['list', 'paragraph']),
           contentInfo: this.fb.array([
             this.fb.group({
@@ -56,23 +56,7 @@ export class CustomiseTcComponent {
     return (<FormArray>this.yourFormGroup.get('TandC')).controls;
   }
 
-  addFormControl() {
-    let form = this.fb.group({
-      heading: this.fb.control([''], Validators.required),
-      ContentTYPE: this.fb.control(['list', 'paragraph']),
-      contentInfo: this.fb.array([
-        this.fb.group({
-          content_type: ['', Validators.required],
-          content_description: this.fb.array([
-            this.fb.group({
-              content: ['', Validators.required],
-            })
-          ])
-        })
-      ])
-    });
-    (<FormArray>this.yourFormGroup.get('TandC'))?.push(form);
-  }
+
 
   removeFormControl(index: number) {
     (<FormArray>this.yourFormGroup.get('TandC'))?.removeAt(index);
@@ -83,24 +67,7 @@ export class CustomiseTcComponent {
     return (<FormArray>this.yourFormGroup.get('TandC')?.get(String(i))?.get('contentInfo'))?.controls;
   }
 
-  addContentFormControl(i: number) {
-    let form = this.fb.group({
-      content_type: ['', Validators.required],
-      content_description: this.fb.array([
-        this.fb.group({
-          content: ['', Validators.required],
-        })
-      ])
-    });
 
-    let FormArray = (<FormArray>this.yourFormGroup.get('TandC')?.get(String(i))?.get('contentInfo'));
-    if (FormArray.value.length >= 5) {
-      this.toastService.errorToast({ title: 'You cannot add more than 5 controls ' });
-    }
-    else {
-      (<FormArray>this.yourFormGroup.get('TandC')?.get(String(i))?.get('contentInfo'))?.push(form);
-    }
-  }
 
   removeContentFormArrayControls(i: number, index: number) {
     (<FormArray>this.yourFormGroup.get('TandC')?.get(String(i))?.get('contentInfo'))?.removeAt(index)
@@ -197,8 +164,9 @@ export class CustomiseTcComponent {
   onsubmit() {
     console.log(this.yourFormGroup.value, " status is ", this.yourFormGroup.valid);
 
-    this.fetchDataService.HTTPPOST(this.backendUrl.URLs.setTandC, this.yourFormGroup.value).subscribe((res) => {
+    this.fetchDataService.HTTPPOST(this.backendUrl.URLs.setTandC, this.yourFormGroup.value).subscribe((res: any) => {
       console.log(res, "save res");
+      this.toastService.successToast({title: res.message})
 
     })
   }
@@ -221,17 +189,54 @@ export class CustomiseTcComponent {
   //   }
   // }
 
+  addContentFormControl(i: number) {
+    let form = this.fb.group({
+      content_type: ['', Validators.required],
+      content_description: this.fb.array([
+        this.fb.group({
+          content: ['', Validators.required],
+        })
+      ])
+    });
+
+    let FormArray = (<FormArray>this.yourFormGroup.get('TandC')?.get(String(i))?.get('contentInfo'));
+    if (FormArray.value.length >= 5) {
+      this.toastService.errorToast({ title: 'You cannot add more than 5 controls ' });
+    }
+    else {
+      (<FormArray>this.yourFormGroup.get('TandC')?.get(String(i))?.get('contentInfo'))?.push(form);
+    }
+  }
+
+
+
+  addFormControl() {
+    let form = this.fb.group({
+      heading: this.fb.control('', Validators.required),
+      ContentTYPE: this.fb.control(['list', 'paragraph']),
+      contentInfo: this.fb.array([
+        this.fb.group({
+          content_type: ['', Validators.required],
+          content_description: this.fb.array([
+            this.fb.group({
+              content: ['', Validators.required],
+            })
+          ])
+        })
+      ])
+    });
+    (<FormArray>this.yourFormGroup.get('TandC'))?.push(form);
+  }
+
   getData() {
     this.fetchDataService.HTTPGET(this.backendUrl.URLs.getTandC).subscribe((response: any) => {
-
-      console.log(response, "backend resss");
 
       for (let i = 0; i < response.data.length - 1; i++) {
         this.addFormControl();
         for (let j = 0; j < response.data[i].contentInfo.length - 1; j++) {
           this.addContentFormControl(i);
 
-          for (let k = 0; k < response.data[i].contentInfo[j].length - 1; k++) {
+          for (let k = 0; k < response.data[i].contentInfo[j].content_description.length - 1; k++) {
             this.addContentDescFormControl(i, j);
 
           }
@@ -239,9 +244,7 @@ export class CustomiseTcComponent {
 
       }
 
-      console.log('yourform is ', this.yourFormGroup.value);
       this?.yourFormGroup?.get('TandC')?.patchValue(response?.data);
-
     })
   }
 }

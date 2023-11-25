@@ -49,7 +49,7 @@
                     <div class="data-upload-div d-flex flex-column mw100 gap-10">
                         <div class="d-flex flex-column mw100 gap-10">
 
-                            <div class="internal-div">
+                            <div class="internal-div" *ngIf="checkbox">
                                 <label class="form__title" for="title">Title</label>
                                 <span class="relative ">
                                     <input class="form__input color-input" type="text" id="title"
@@ -184,21 +184,18 @@
                             </ng-container>
                             <div class="tooltip" [class.color-circle]="banner?.colors?.titleColor"
                                 [style.background-color]="banner?.colors?.titleColor">
-                                <!-- {{banner?.colors?.titleColor ? "" : '-'}} -->
                                 <span class="tooltiptext">
                                     Title Color
                                 </span>
                             </div>
                             <div class="tooltip" [class.color-circle]="banner?.colors?.subTitleColor"
                                 [style.background-color]="banner?.colors?.subTitleColor">
-                                <!-- {{banner?.colors?.subTitleColor ? "" : '-'}} -->
                                 <span class="tooltiptext">
                                     Subtitle Color
                                 </span>
                             </div>
                             <div class="tooltip" [class.color-circle]="banner?.colors?.buttonColor"
                                 [style.background-color]="banner?.colors?.buttonColor">
-                                <!-- {{banner?.colors?.buttonColor ? "" : '-'}} -->
                                 <span class="tooltiptext">
                                     Button Color
                                 </span>

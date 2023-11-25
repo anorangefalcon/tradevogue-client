@@ -38,7 +38,7 @@ const routes: Routes = [
 
       { path: 'account', component: AccountComponent },
 
-      { path: 'faq', component: FaqsComponent },
+      { path: 'customise-faq', component: FaqsComponent },
       { path: 'coupons', component: CouponsComponent },
       { path: 'support', component: SupportComponent },
       { path: 'tickets', component: TicketsComponent },
@@ -48,8 +48,8 @@ const routes: Routes = [
         path: 'customise-home', loadChildren: () => import('./edit-home/edit-home.module').then(m => m.EditHomeModule)
       },
       { path: 'notification' , component: NotificationsComponent },
-      { path: 'customiseabout', component: AboutComponent },
-      {path:'tandc',component: CustomiseTcComponent},
+      { path: 'customise-about', component: AboutComponent },
+      {path:'customise-tc',component: CustomiseTcComponent},
       
       { path: '**', component: NoPageComponent },
     ]

@@ -42,7 +42,10 @@
 
                 <li class="nav-links d-flex align-item-center mw100 relative transition" [ngClass]="{'nav-link-active': this.showData === 'addresses'}"
                     (click)="changeComponent('addresses')">
-                    <a class="d-flex align-item-center pointer">
+                    <a class="d-flex align-item-center pointer pointer gap-10">
+                        <span class="material-symbols-outlined nav-icons">
+                            home
+                        </span>
                         <span class="nav-txt fs-14 fw-300">Addresses</span>
                     </a>
                     <span class="material-symbols-outlined right__icon">

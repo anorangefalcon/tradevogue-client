@@ -31,10 +31,11 @@ isSalesBtnActive: boolean = false;
     {
       name: 'Customise', route: '', icons: 'build', sublist: [
         { name: 'Home Page', route: '/dashboard/customise-home' },
-        { name: 'Social', route: '/dashboard/socials' },
-        { name: 'FAQs', route: '/dashboard/faq' },
+        { name: 'FAQs', route: '/dashboard/customise-faq' },
+        { name: 'Terms & Conditions', route : '/dashboard/customise-tc'},
+        { name: 'About Us', route: '/dashboard/customise-about'},
+        { name: 'Socials', route: '/dashboard/socials' },
         { name: 'Payment Keys', route: '/dashboard/monetization' },
-        { name: 'About Us', route: '/dashboard/customiseabout'}
       ]
     },
     {

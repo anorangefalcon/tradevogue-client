@@ -148,6 +148,9 @@ input[type="color" i]::-webkit-color-swatch {
 ::placeholder{
     color: rgb(var(--textClr), 0.3);
 }
+.display-none {
+    display: none;
+}
 /* -webkit-color-swatch-wrapper */
 
 @keyframes spinner {

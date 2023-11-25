@@ -38,7 +38,7 @@ export class HeroComponent {
     pullDrag: true,
     dots: false,
     autoplay: true,
-    navSpeed: 500,
+    navSpeed: 400,
     navText: ['', ''],
     responsive: {
       0: {

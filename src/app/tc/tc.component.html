@@ -8,12 +8,20 @@
             </div>
         </div>
     </div>
-
-
-
     <div class="content">
         <div class="container">
-            <h3>Use of our website</h3>
+            <ng-container *ngFor="let section of tcData"> 
+                <h4>{{section.heading}}</h4>
+                <ng-container *ngFor="let content of section.contentInfo">
+                    <p *ngIf="content.content_type == 'paragraph'">{{content.content_description[0].content}}</p>
+                    <ul *ngIf="content.content_type == 'list'" >
+                        <ng-container *ngFor="let list of content.content_description">
+                            <li>{{list.content}}</li>
+                        </ng-container>
+                    </ul>
+                </ng-container>
+            </ng-container>
+            <!-- <h3>Use of our website</h3>
             <p>When you use this website and place orders through it, you agree to:</p>
             <ul>
                 <li>Use this website to make enquiries and legally valid orders only.</li>
@@ -124,7 +132,7 @@
                 <li>Gift wrapping charges will not be refunded if goods are returned.</li>
                 <li>Trade Vogue may refuse a refund request if we find evidence of fraud, refund abuse or other
                     manipulative behaviour that entitles.</li>
-            </ul>
+            </ul> -->
         </div>
     </div>
 </section>

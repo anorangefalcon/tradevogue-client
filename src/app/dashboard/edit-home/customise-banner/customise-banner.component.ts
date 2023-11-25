@@ -23,7 +23,7 @@ export class CustomiseBannerComponent {
   editValue: any = '';
   showForm: boolean = false;
   deleteId: any;
-
+  checkbox: boolean = false;
   popUpDirection: any = 'right';
   showingPopUp: boolean = false;
   ParentClosed: boolean = false;
@@ -70,6 +70,8 @@ export class CustomiseBannerComponent {
   }
 
   ngOnInit() {
+    console.log(this.checkbox, "before");
+    
     this.bannerService.getBanners().subscribe((data: any) => {
       this.bannerData = data;
     }
@@ -78,7 +80,8 @@ export class CustomiseBannerComponent {
 
   isChecked(event: any) {
     let val = (<HTMLInputElement>event.target).checked
-
+    this.checkbox = true;
+    
     if (val == true) {
       this.bannerForm.get('title')?.disable()
       this.bannerForm.get('subTitle')?.disable()
