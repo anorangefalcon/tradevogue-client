@@ -25,6 +25,7 @@ export class CartComponent implements OnInit {
     this.userService.getUser('token').subscribe((token: any) => {
       this.userToken = token;
       this.loading = true;
+
       this.cartService.cartLoading.subscribe((data: any)=>{
         this.loading = data;
       })

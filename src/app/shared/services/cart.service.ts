@@ -11,14 +11,6 @@ import { Router } from '@angular/router';
 })
 export class CartService {
 
-  constructor(private toastService: ToastService, private router: Router, private http: HttpClient, private backendUrls: UtilsModule, private loginCheckService: LoginCheckService) {
-    this.loginCheckService.getUser().subscribe((loggedIn: any) => {
-      this.user = loggedIn;
-      this.cartLoading.next(true);
-      this.fetchDetails();
-    });
-  }
-
   user: boolean = false;
   // used to add items to cart in localStorage
   cartStorage: any[] = [];
@@ -30,18 +22,24 @@ export class CartService {
 
   cartLoading = new BehaviorSubject<Boolean>(false);
 
+  constructor(private toastService: ToastService, private http: HttpClient, private backendUrls: UtilsModule, private loginCheckService: LoginCheckService) {
+    this.loginCheckService.getUser().subscribe((loggedIn: any) => {
+      this.user = loggedIn;
+      this.cartLoading.next(true);
+      this.fetchDetails();
+    });
+  }
+
   addToCart(data: any) {
     this.cartLoading.next(true);
     this.sideCart.next(true);
-
+    
     const cartObj = { "sku": data.sku, "size": data.size, "color": data.color, "quantity": data.quantity };
     if (this.user) {
       this.addToCartWithToken(cartObj);
-      
     }
     else {
       this.addToCartWithoutToken(cartObj);
-      this.cartLoading.next(false);
     }
   }
 
@@ -50,7 +48,6 @@ export class CartService {
       (details: any) => {
         if (!details.added) {
           this.toastService.warningToast({ title: 'Item already exists in cart please select another configuration' });
-          // this.router.navigate(['/product/' + cartObj.sku])
           this.cartLoading.next(false);
         }
         else {
@@ -71,6 +68,7 @@ export class CartService {
     }
     else {
       this.toastService.warningToast({ title: 'Item already exists in cart' });
+      this.cartLoading.next(false);
     }
   }
 
@@ -119,7 +117,6 @@ export class CartService {
       const myCart = JSON.stringify(this.cartStorage);
       localStorage.setItem("myCart", myCart);
 
-      this.cartLoading.next(true);
       this.fetchDetails();
     }
 
@@ -134,8 +131,8 @@ export class CartService {
         this.clearCart('localOnly');
 
         this.http.post(this.backendUrls.URLs.fetchCart, cartDetails).subscribe((data: any) => {
-          this.cartLoading.next(false);
           this.cartSubject?.next(data);
+          this.cartLoading.next(false);
         });
       });
     }
@@ -144,8 +141,8 @@ export class CartService {
         cartDetails = [];
       }
       this.http.post(this.backendUrls.URLs.fetchCart, cartDetails).subscribe((data: any) => {
-        this.cartLoading.next(false);
-        this.cartSubject?.next(data);
+        this.cartSubject?.next(data); 
+        this.cartLoading.next(false);   
       });
     }
   }
@@ -153,7 +150,6 @@ export class CartService {
   removeItem(identifier: any) {
     if (this.user) {
       this.http.post(this.backendUrls.URLs.removeItemFromCart, { itemId: identifier }).subscribe((message: any) => {
-        // this.ItemDeleted=true;
         this.fetchDetails();
       });
     }

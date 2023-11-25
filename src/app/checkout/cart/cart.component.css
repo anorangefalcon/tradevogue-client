@@ -94,6 +94,7 @@
 
 .price.skeleton{
     max-width: 100px;
+    max-height: 20px;
 
     & p{
         opacity: 0;
@@ -152,6 +153,7 @@
     opacity: 0.5;
     background-color: #8080800d;
     border: 1px solid rgb(var(--blackClr), 0.02);
+    cursor: not-allowed;
 }
 
 .color-circle {
