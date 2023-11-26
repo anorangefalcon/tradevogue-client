@@ -20,7 +20,8 @@ import { CartService } from '../services/cart.service';
   // encapsulation: ViewEncapsulation.None 
 })
 export class EyePopupComponent {
-  direction: any = 'eye-popup';
+  direction: any = 'popup';
+  width:any='fit-content';
   show: boolean = false;
   fetchData = new BehaviorSubject<string>('');
   sku: any;

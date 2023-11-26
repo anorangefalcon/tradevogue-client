@@ -13,6 +13,7 @@ import { ToastService } from '../shared/services/toast.service';
 export class WishlistComponent {
 
   list: any = []
+  width:string='300px';
   direction: any = 'popup';
   show: boolean = false;
   new: string = "";

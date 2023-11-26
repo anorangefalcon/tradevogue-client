@@ -58,7 +58,7 @@
 
                     <td class="items slide-button tooggle__btn">
                         <input type="checkbox" [(ngModel)]="data.status.active" [id]="'statusCheck'+i"
-                            (change)="ActiveStatus($event,data)">
+                            (change)="ActiveStatus($event,data,i)">
                         <label [for]="'statusCheck'+i"></label>
                     </td>
                     <!-- <td class="items">
@@ -87,7 +87,7 @@
 
 </div>
 <app-drawer [direction]="direction" [show]="show" (showChange)="ChangeHanlder($event)"
-    (ParentClosedEmitter)="ParenClosedHandler($event)"  [title]="title">
+      [title]="title">
 
     <div class="d-flex flex-column justify-content-md-between gap-25">
         <p>Add your coupon and necessary information from here

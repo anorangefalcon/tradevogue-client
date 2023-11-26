@@ -50,17 +50,7 @@ export class ExploreComponent {
       this.filterApplied = JSON.parse(JSON.stringify(data));
       let actualParams = (Object.keys(this.filterApplied).length > 0) ? this.filterApplied : JSON.parse(JSON.stringify(data));
 
-      this.fetchData.getProducts(actualParams, this.limit, 1).subscribe((data: any) => {
-        data.items.forEach((el:any)=>{
-          this.wishlistService.WishListedProducts.subscribe((response:any)=>{  
-            if(response.includes(el._id)){
-              el.wishlisted=true;
-            } 
-            else{
-              el.wishlisted=false;
-            }
-          })
-        })     
+      this.fetchData.getProducts(actualParams, this.limit, 1).subscribe((data: any) => {     
         this.products = data.items;      
         this.totalProducts = data.total;
         this.loading = false;

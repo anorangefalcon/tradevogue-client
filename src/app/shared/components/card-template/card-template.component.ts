@@ -41,6 +41,15 @@ export class CardTemplateComponent {
     const sku = this.product.sku;
     this.avgRating = this.product.avgRating;
 
+    this.wishlistService.WishListedProducts.subscribe((response:any)=>{  
+      if(response.includes(this.product._id)){
+        this.product.wishlisted=true;
+      } 
+      else{
+        this.product.wishlisted=false;
+      }
+    })
+
     let limit = this.product.assets[0].stockQuantity[0].quantity;
     let arr = this.product.info.orderQuantity;
     let filteredArray = arr.filter((item: any) => item <= limit);

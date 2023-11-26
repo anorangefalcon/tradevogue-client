@@ -127,8 +127,6 @@ export class SettingsComponent {
   }
 
   changeComponent(el: string) {
-    console.log('el comng is ',el);
-    
     this.showData = el;
     this.location.replaceState('usersetting/'+el);
     if(el=='addresses'){

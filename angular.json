@@ -65,6 +65,7 @@
               "sourceMap": true,
               "namedChunks": true
             }
+
           },
           "defaultConfiguration": "production"
         },

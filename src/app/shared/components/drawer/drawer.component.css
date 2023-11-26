@@ -21,7 +21,7 @@
 
 .content-drawer {
     position: absolute;
-    height: fit-content;
+    height: 100%;
     z-index: 101;
     width: 100%;
     transition: 0.3s ease-in-out;
@@ -92,7 +92,6 @@
 }
 
 .popup {
-    width: 350px;
     height: fit-content;
     left: 50%;
     top: 20%;
@@ -105,11 +104,4 @@
     top: 40%;
     opacity: 1;
     transform: translate(-50%, -50%);
-}
-
-.eye_popup_show {
-    width: fit-content;
-    top: 15%;
-    transform: translate(50%, 0%);
-    transition: all 0.3s ease-in-out;
 }

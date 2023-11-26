@@ -1,6 +1,6 @@
-import { NgModule } from '@angular/core';
+import { NgModule,isDevMode } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
+import { environment } from '../../environments/environment';
 @NgModule({
   imports: [
     CommonModule
@@ -9,189 +9,193 @@ import { CommonModule } from '@angular/common';
 
 export class UtilsModule {
 
+  // url:any=process.env.BackendUrl;
+  BackendUrl:String=environment.BackendURL;
   URLs: any = {
-    signupUrl: 'http://localhost:1000/user/signup',
-    loginUrl: 'http://localhost:1000/user/login',
-    subscribeMail: 'http://localhost:1000/user/subscribe',
-    forgetPasswordUrl: 'http://localhost:1000/user/forget',
-    updatePasswordUrl: 'http://localhost:1000/user/update',
-    getDetails: 'http://localhost:1000/user/getDetails',
-    updateDetails: 'http://localhost:1000/user/updateDetails',
-    authorizeUrl: 'http://localhost:1000/checkUser',
-    changePassword: 'http://localhost:1000/user/changePassword',
-    // signupUrl:'http://localhost:5000/user/signup',
-    getAddress: 'http://localhost:1000/user/getAddress',
-    addAddress: 'http://localhost:1000/user/addAddress',
-    updateAddress: 'http://localhost:1000/user/updateAdress',
-    deleteAddress: 'http://localhost:1000/user/deleteAddress',
-    setDefaultAddress: 'http://localhost:1000/user/setDefault',
-    getCoupons: 'http://localhost:1000/offer/getCoupons',
-    // getAddress:'http://localhost:1000/user/getAddress',
-    // addAddress:'http://localhost:1000/user/addAddress',
-    // subscribeMail : 'http://localhost:1000/sendMail',
-    // updateAddress:'http://localhost:1000/user/updateAdress',
-    // deleteAddress:'http://localhost:1000/user/deleteAddress',
-    // setDefaultAddress:'http://localhost:1000/user/setDefault',
+    signupUrl: `${this.BackendUrl}/user/signup`,
+    loginUrl: `${this.BackendUrl}/user/login`,
+    subscribeMail: `${this.BackendUrl}/user/subscribe`,
+    forgetPasswordUrl: `${this.BackendUrl}/user/forget`,
+    updatePasswordUrl: `${this.BackendUrl}/user/update`,
+    getDetails: `${this.BackendUrl}/user/getDetails`,
+    updateDetails: `${this.BackendUrl}/user/updateDetails`,
+    authorizeUrl: `${this.BackendUrl}/checkUser`,
+    changePassword: `${this.BackendUrl}/user/changePassword`,
+    // signupUrl:`http://localhost:5000/user/signup`,
+    getAddress: `${this.BackendUrl}/user/getAddress`,
+    addAddress: `${this.BackendUrl}/user/addAddress`,
+    updateAddress: `${this.BackendUrl}/user/updateAdress`,
+    deleteAddress: `${this.BackendUrl}/user/deleteAddress`,
+    setDefaultAddress: `${this.BackendUrl}/user/setDefault`,
+    getCoupons: `${this.BackendUrl}/offer/getCoupons`,
+    // getAddress:`${this.BackendUrl}/user/getAddress`,
+    // addAddress:`${this.BackendUrl}/user/addAddress`,
+    // subscribeMail : `${this.BackendUrl}/sendMail`,
+    // updateAddress:`${this.BackendUrl}/user/updateAdress`,
+    // deleteAddress:`${this.BackendUrl}/user/deleteAddress`,
+    // setDefaultAddress:`${this.BackendUrl}/user/setDefault`,
    
 
     // Dashboard
-    fetchOverallData: 'http://localhost:1000/admin/getOverallInfo',
-    fetchSalesStats: 'http://localhost:1000/admin/fetchSalesData',
-    fetchCategoryStats: 'http://localhost:1000/admin/fetchCategoryData',
-    fetchReviewStats: 'http://localhost:1000/admin/fetchReviewData',
-    fetchPopularProducts: 'http://localhost:1000/admin/fetchPopularProducts',
+    fetchOverallData: `${this.BackendUrl}/admin/getOverallInfo`,
+    fetchSalesStats: `${this.BackendUrl}/admin/fetchSalesData`,
+    fetchCategoryStats: `${this.BackendUrl}/admin/fetchCategoryData`,
+    fetchReviewStats: `${this.BackendUrl}/admin/fetchReviewData`,
+    fetchPopularProducts: `${this.BackendUrl}/admin/fetchPopularProducts`,
 
-    addproduct: 'http://localhost:1000/admin/addProduct',
-    fetchProductInventory: 'http://localhost:1000/admin/fetchProducts',
-    fetchProductDetails: 'http://localhost:1000/admin/fetchProductDetails',
-    updateproduct: 'http://localhost:1000/admin/updateProduct',
-    highlightProduct: 'http://localhost:1000/admin/updatehighlightProduct',
-    deleteproducts: 'http://localhost:1000/admin/deleteProducts',
-    fetchFeatures: 'http://localhost:1000/admin/fetchProductFeatures',
-    updateFeatures: 'http://localhost:1000/admin/updateProductFeature',
-    updateAccount: 'http://localhost:1000/admin/updateDetails',
-    getAccount: 'http://localhost:1000/admin/getadminDetails',
-    getSellerOrders: 'http://localhost:1000/orders/sellerOrders',
-    getSellerOrderDetails: 'http://localhost:1000/orders/sellerOrderDetail',
-    getOrderOverallData: 'http://localhost:1000/orders/getOrderOverallData',
-    getLatestOrderId: 'http://localhost:1000/orders/getLatestOrderId',
+    addproduct: `${this.BackendUrl}/admin/addProduct`,
+    fetchProductInventory: `${this.BackendUrl}/admin/fetchProducts`,
+    fetchProductDetails: `${this.BackendUrl}/admin/fetchProductDetails`,
+    updateproduct: `${this.BackendUrl}/admin/updateProduct`,
+    highlightProduct: `${this.BackendUrl}/admin/updatehighlightProduct`,
+    deleteproducts: `${this.BackendUrl}/admin/deleteProducts`,
+    fetchFeatures: `${this.BackendUrl}/admin/fetchProductFeatures`,
+    updateFeatures: `${this.BackendUrl}/admin/updateProductFeature`,
+    updateAccount: `${this.BackendUrl}/admin/updateDetails`,
+    getAccount: `${this.BackendUrl}/admin/getadminDetails`,
+    getSellerOrders: `${this.BackendUrl}/orders/sellerOrders`,
+    getSellerOrderDetails: `${this.BackendUrl}/orders/sellerOrderDetail`,
+    getOrderOverallData: `${this.BackendUrl}/orders/getOrderOverallData`,
+    getLatestOrderId: `${this.BackendUrl}/orders/getLatestOrderId`,
 
     // stripe
-    stripePayment: 'http://localhost:1000/user/create-payment-intent',
+    stripePayment: `${this.BackendUrl}/user/create-payment-intent`,
 
     // products
-    fetchProducts: 'http://localhost:1000/products/fetch',
-    fetchProductUrl: 'http://localhost:1000/products/fetchProduct',
-    uniqueProductFields: 'http://localhost:1000/products/uniqueFields',
-    getOriginalProductPrice: 'http://localhost:1000/products/getOriginalPrice',
-    // getProductPrice:'http://localhost:1000/admin/getProductPrice',
+    fetchProducts: `${this.BackendUrl}/products/fetch`,
+    fetchProductUrl: `${this.BackendUrl}/products/fetchProduct`,
+    uniqueProductFields: `${this.BackendUrl}/products/uniqueFields`,
+    getOriginalProductPrice: `${this.BackendUrl}/products/getOriginalPrice`,
+    // getProductPrice:`${this.BackendUrl}/admin/getProductPrice`,
 
     // product reviews
-    addOrUpdateReview: 'http://localhost:1000/reviews/addOrUpdate',
-    deleteReview: 'http://localhost:1000/reviews/delete',
+    addOrUpdateReview: `${this.BackendUrl}/reviews/addOrUpdate`,
+    deleteReview: `${this.BackendUrl}/reviews/delete`,
 
     // CART
-    fetchCart: 'http://localhost:1000/cart/fetch',
-    addItemsToCart: 'http://localhost:1000/cart/add',
-    removeItemFromCart: 'http://localhost:1000/cart/remove',
-    updateItemFromCart: 'http://localhost:1000/cart/update',
-    clearCart: 'http://localhost:1000/cart/clear',
-    removeItems: 'http://localhost:1000/cart/removeItems',
+    fetchCart: `${this.BackendUrl}/cart/fetch`,
+    addItemsToCart: `${this.BackendUrl}/cart/add`,
+    removeItemFromCart: `${this.BackendUrl}/cart/remove`,
+    updateItemFromCart: `${this.BackendUrl}/cart/update`,
+    clearCart: `${this.BackendUrl}/cart/clear`,
+    removeItems: `${this.BackendUrl}/cart/removeItems`,
 
     // OFFER
-    createOffer: 'http://localhost:1000/offer/create',
-    getOffers: 'http://localhost:1000/offer/get',
-    deleteOffer: 'http://localhost:1000/offer/delete',
-    updateOffer: 'http://localhost:1000/offer/update',
-    updateOfferStatus:'http://localhost:1000/offer/statusUpdate',
-    searchOffer:'http://localhost:1000/offer/search',
-    // createOffer:'http://localhost:1000/offer/create',
-    // getOffers:'http://localhost:1000/offer/get',
-    // deleteOffer:'http://localhost:1000/offer/delete',
-    // updateOffer:'http://localhost:1000/offer/update',
-    // getCoupons:'http://localhost:1000/offer/getCoupons',
+    createOffer: `${this.BackendUrl}/offer/create`,
+    getOffers: `${this.BackendUrl}/offer/get`,
+    deleteOffer: `${this.BackendUrl}/offer/delete`,
+    updateOffer: `${this.BackendUrl}/offer/update`,
+    updateOfferStatus:`${this.BackendUrl}/offer/statusUpdate`,
+    searchOffer:`${this.BackendUrl}/offer/search`,
+    // createOffer:`${this.BackendUrl}/offer/create`,
+    // getOffers:`${this.BackendUrl}/offer/get`,
+    // deleteOffer:`${this.BackendUrl}/offer/delete`,
+    // updateOffer:`${this.BackendUrl}/offer/update`,
+    // getCoupons:`${this.BackendUrl}/offer/getCoupons`,
 
     // FAQs User Routes
-    getFaqData: 'http://localhost:1000/getpaginatedData/faq',
+    getFaqData: `${this.BackendUrl}/getpaginatedData/faq`,
 
     // FAQS Admin Routes
-    updateFaqData: 'http://localhost:1000/faqs/update',
-    deleteFaqData: 'http://localhost:1000/faqs/delete',
-    addFaqData: 'http://localhost:1000/faqs/add',
+    updateFaqData: `${this.BackendUrl}/faqs/update`,
+    deleteFaqData: `${this.BackendUrl}/faqs/delete`,
+    addFaqData: `${this.BackendUrl}/faqs/add`,
 
     // pagination common
-    getPaginatedData: 'http://localhost:1000/getPaginatedData',
+    getPaginatedData: `${this.BackendUrl}/getPaginatedData`,
     
     //wishlists
-    showWishlist: 'http://localhost:1000/wishlist/showWishlist',
-    addNewWishlist: 'http://localhost:1000/wishlist/addWishlist',
-    addToWishlist: 'http://localhost:1000/wishlist/addToWishlist',
-    showWishlistCount: 'http://localhost:1000/wishlist/showWishlistCount',
-    showProducts: 'http://localhost:1000/wishlist/showWishlistProducts',
-    deleteFromWishlist: 'http://localhost:1000/wishlist/deleteFromWishlist',
-    removeWishlist : 'http://localhost:1000/wishlist/deleteWishlist',
+    showWishlist: `${this.BackendUrl}/wishlist/showWishlist`,
+    addNewWishlist: `${this.BackendUrl}/wishlist/addWishlist`,
+    addToWishlist: `${this.BackendUrl}/wishlist/addToWishlist`,
+    showWishlistCount: `${this.BackendUrl}/wishlist/showWishlistCount`,
+    showProducts: `${this.BackendUrl}/wishlist/showWishlistProducts`,
+    deleteFromWishlist: `${this.BackendUrl}/wishlist/deleteFromWishlist`,
+    removeWishlist : `${this.BackendUrl}/wishlist/deleteWishlist`,
 
     // ORDERS
-    verifyOrderSummary: 'http://localhost:1000/orders/verifyOrder',
-    createOrder: 'http://localhost:1000/orders/create',
-    // updateOrder:'http://localhost:1000/orders/update',
-    getParticularUserOrders: 'http://localhost:1000/orders/getparticularUserOrders',
-    cancelOrder: 'http://localhost:1000/orders/cancelOrder',
-    verifyOrderWithoutCoupon:'http://localhost:1000/orders/verifyOrderWithoutCoupon',
+    verifyOrderSummary: `${this.BackendUrl}/orders/verifyOrder`,
+    createOrder: `${this.BackendUrl}/orders/create`,
+    // updateOrder:`${this.BackendUrl}/orders/update`,
+    getParticularUserOrders: `${this.BackendUrl}/orders/getparticularUserOrders`,
+    cancelOrder: `${this.BackendUrl}/orders/cancelOrder`,
+    verifyOrderWithoutCoupon:`${this.BackendUrl}/orders/verifyOrderWithoutCoupon`,
 
     // support, ticket 
-    getTicketStatus: 'http://localhost:1000/ticket/get',
-    webPushTokenDetail: 'http://localhost:1000/ticket/tokenDetails',
-    saveTicket: 'http://localhost:1000/ticket/send',
-    updateTitle: 'http://localhost:1000/ticket/updateTitle',
-    addTicketTitle: 'http://localhost:1000/ticket/addTitle',
-    deleteTitle: 'http://localhost:1000/ticket/deleteTitle',
-    getAllTicket: 'http://localhost:1000/ticket/getall',
-    updateTicket: 'http://localhost:1000/ticket/updateTicket',
-    deleteTicket: 'http://localhost:1000/ticket/deleteTicket',
-    ticketMail: 'http://localhost:1000/ticketStatus',
+    getTicketStatus: `${this.BackendUrl}/ticket/get`,
+    webPushTokenDetail: `${this.BackendUrl}/ticket/tokenDetails`,
+    saveTicket: `${this.BackendUrl}/ticket/send`,
+    updateTitle: `${this.BackendUrl}/ticket/updateTitle`,
+    addTicketTitle: `${this.BackendUrl}/ticket/addTitle`,
+    deleteTitle: `${this.BackendUrl}/ticket/deleteTitle`,
+    getAllTicket: `${this.BackendUrl}/ticket/getall`,
+    updateTicket: `${this.BackendUrl}/ticket/updateTicket`,
+    deleteTicket: `${this.BackendUrl}/ticket/deleteTicket`,
+    ticketMail: `${this.BackendUrl}/ticketStatus`,
 
 
     // notifications
-    getFcmToken: 'http://localhost:1000/notification/getfcmToken',
-    getNotification: 'http://localhost:1000/notification/get',
-    setNotifications: 'http://localhost:1000/notification/set',
-    updateNotification: 'http://localhost:1000/notification/update',
-    toggleNotification: 'http://localhost:1000/notification/toggle',
-    comingNotification: 'http://localhost:1000/notification/coming',
+    getFcmToken: `${this.BackendUrl}/notification/getfcmToken`,
+    getNotification: `${this.BackendUrl}/notification/get`,
+    setNotifications: `${this.BackendUrl}/notification/set`,
+    updateNotification: `${this.BackendUrl}/notification/update`,
+    toggleNotification: `${this.BackendUrl}/notification/toggle`,
+    comingNotification: `${this.BackendUrl}/notification/coming`,
 
     // ------ custom-UI ------
 
     // Home-Layout
-    getHomeLayout: 'http://localhost:1000/homeLayout/get',
-    getAllHomeLayouts: 'http://localhost:1000/homeLayout/getAll',
-    createOrUpdateHomeLayout: 'http://localhost:1000/homeLayout/updateOrCreate',
-    deleteHomeLayout: 'http://localhost:1000/homeLayout/delete',
+    getHomeLayout: `${this.BackendUrl}/homeLayout/get`,
+    getAllHomeLayouts: `${this.BackendUrl}/homeLayout/getAll`,
+    createOrUpdateHomeLayout: `${this.BackendUrl}/homeLayout/updateOrCreate`,
+    deleteHomeLayout: `${this.BackendUrl}/homeLayout/delete`,
     
     // Socials
-    setSocials: 'http://localhost:1000/socials/set',
-    getSocials: 'http://localhost:1000/socials/get',
+    setSocials: `${this.BackendUrl}/socials/set`,
+    getSocials: `${this.BackendUrl}/socials/get`,
 
     //banner
-    setBanners : 'http://localhost:1000/banners/setBanners',
-    getBanners : 'http://localhost:1000/banners/getBanners',
-    deleteBanner : 'http://localhost:1000/banners/deleteBanner',
-    updateBanner : 'http://localhost:1000/banners/updateBanner',
-    toggleBanner : 'http://localhost:1000/banners/toggleBanner',
+    setBanners : `${this.BackendUrl}/banners/setBanners`,
+    getBanners : `${this.BackendUrl}/banners/getBanners`,
+    deleteBanner : `${this.BackendUrl}/banners/deleteBanner`,
+    updateBanner : `${this.BackendUrl}/banners/updateBanner`,
+    toggleBanner : `${this.BackendUrl}/banners/toggleBanner`,
 
     // deals
-    setDeals:'http://localhost:1000/deals/set',
-    getDealsDetails:'http://localhost:1000/deals/getDetails',
+    setDeals:`${this.BackendUrl}/deals/set`,
+    getDealsDetails:`${this.BackendUrl}/deals/getDetails`,
 
     // about
-    setAboutDetails:'http://localhost:1000/about/setDetails',
-    getAboutDetails:'http://localhost:1000/about/getDetails',
+    setAboutDetails:`${this.BackendUrl}/about/setDetails`,
+    getAboutDetails:`${this.BackendUrl}/about/getDetails`,
+    getOverAllDetails: `${this.BackendUrl}/about/getOverAllDetails`,
+
     // sale 
-    setSales: 'http://localhost:1000/sales/setSales',
-    getSales: 'http://localhost:1000/sales/getSales',
-    toggleSales: 'http://localhost:1000/sales/toggle',
-    updateSales: 'http://localhost:1000/sales/update',
-    deleteSales: 'http://localhost:1000/sales/delete',
+    setSales: `${this.BackendUrl}/sales/setSales`,
+    getSales: `${this.BackendUrl}/sales/getSales`,
+    toggleSales: `${this.BackendUrl}/sales/toggle`,
+    updateSales: `${this.BackendUrl}/sales/update`,
+    deleteSales: `${this.BackendUrl}/sales/delete`,
 
     // payment keys 
-    addPaymentKeys: 'http://localhost:1000/paymentKeys/add',
-    updatePaymentKeys: 'http://localhost:1000/paymentKeys/update',
-    deletePaymentKeys: 'http://localhost:1000/paymentKeys/delete',
-    getPaymentKeys: 'http://localhost:1000/paymentKeys/get',
+    addPaymentKeys: `${this.BackendUrl}/paymentKeys/add`,
+    updatePaymentKeys: `${this.BackendUrl}/paymentKeys/update`,
+    deletePaymentKeys: `${this.BackendUrl}/paymentKeys/delete`,
+    getPaymentKeys: `${this.BackendUrl}/paymentKeys/get`,
 
     // razorpay
-    razorpayPayment: 'http://localhost:1000/razorpay/createUpiPayment',
+    razorpayPayment: `${this.BackendUrl}/razorpay/createUpiPayment`,
 
     // redis 
-    getClientSecret: 'http://localhost:1000/paymentKeys/get-redis-data',
+    getClientSecret: `${this.BackendUrl}/paymentKeys/get-redis-data`,
 
     // update the order status 
-    updateOrderStatus: 'http://localhost:1000/orders/updateOrderStatus',
-    // getLatestProductForBuyer: 'http://localhost:1000/orders/latestOrder',
+    updateOrderStatus: `${this.BackendUrl}/orders/updateOrderStatus`,
+    // getLatestProductForBuyer: `${this.BackendUrl}/orders/latestOrder`,
 
     // T&C
-    getTandC:'http://localhost:1000/tc/get',
-    setTandC: 'http://localhost:1000/tc/set'
+    getTandC:`${this.BackendUrl}/tc/get`,
+    setTandC: `${this.BackendUrl}/tc/set`
     
   }
 }

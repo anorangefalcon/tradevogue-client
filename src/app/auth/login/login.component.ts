@@ -68,9 +68,7 @@ export class LoginComponent {
   LoginUser(body: any) {
     this.fetchDataService.HTTPPOST(this.backendUrls.URLs.loginUrl, body).subscribe(
       (data: any) => {
-        this.loginService.loginUser({ 'userToken': data.token, 'name': data.firstName });
-        console.log(data, "login data");
-        
+        this.loginService.loginUser({ 'userToken': data.token, 'name': data.firstName });        
       }
     )
     this.loading = false;

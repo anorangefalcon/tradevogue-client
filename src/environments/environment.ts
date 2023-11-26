@@ -9,5 +9,6 @@ export const environment = {
     vpaidkey: "BPgBPO552gWCPJ_rUhzgn02bC3EFAIh1EWhlyib11X58vriYlQXmqeGX9_NJ8Z1h8KjtIDpstdWTgFuC01pdFbw"
   },
 
-  production: false
+  production: false,
+  BackendURL:'http://localhost:1000'
 };

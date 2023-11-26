@@ -23,10 +23,11 @@ export class LoginCheckService {
         pairwise()
       )
       .subscribe(([prevEvent, currentEvent]: [NavigationEnd, NavigationEnd]) => {
-        this.previousUrl = prevEvent.url;
+        console.log('prevous url is ',this.previousUrl);
+        this.previousUrl = prevEvent.url; 
       });
 
-    if (cookieService.get('userToken')) {
+    if (cookieService.get('userToken',)) {
       let userObj = {
         userToken : this.cookieService.get('userToken'),
         name: cookieService.get('name'),
@@ -51,7 +52,10 @@ export class LoginCheckService {
     }
 
     if (redirect) {
-      this.router.navigate([this.previousUrl]);
+      if(this.previousUrl=='/cart' || this.previousUrl.includes('/explore')){
+       this.router.navigate([this.previousUrl]);
+      }  
+      else this.router.navigate(['/']);
     }
   }
 

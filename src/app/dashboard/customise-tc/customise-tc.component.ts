@@ -79,8 +79,6 @@ export class CustomiseTcComponent {
       if (element.content_type == 'list') count++;
     });
 
-    console.log('count come in removing is ', count);
-
     if (count < 2) {
 
       let arr = this.yourFormGroup.get('TandC')?.get(String(i))?.value;
@@ -149,7 +147,6 @@ export class CustomiseTcComponent {
       this.toastService.errorToast({ title: 'You cannot add more than 3 lists in one section' });
       let arr = this.yourFormGroup.get('TandC')?.get(String(i))?.value;
       arr.ContentTYPE = ['paragraph'];
-      console.log('arr is ', arr);
       this.yourFormGroup.get('TandC')?.get(String(i))?.setValue(arr);
       (<FormArray>this.yourFormGroup.get('TandC')?.get(String(i))?.get('contentInfo'))?.get(String(j))?.get('content_type')?.setValue('paragraph');
 

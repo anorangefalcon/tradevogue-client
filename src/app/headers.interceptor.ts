@@ -12,7 +12,6 @@ export class HeadersInterceptor implements HttpInterceptor {
   constructor(private userService: LoginCheckService) { }
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): any {
-
     this.userService.getUser('token').subscribe((token: any) => {
       if(token){  
         request = request.clone({

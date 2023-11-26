@@ -90,6 +90,14 @@ export class AddressComponent {
   // pincode
   onPostalCodeInputChange() {
       const postalCodeValue = this.DetailsForm?.get('pincode')?.value;
+  this.postalCodeService.getDetailsByPostalCode(postalCodeValue).pipe(
+    debounceTime(500),
+    distinctUntilChanged())
+    .subscribe((data)=>{
+    console.log('data come up is ',data); 
+
+       });
+        return;
     this.postalCodeInput.next(postalCodeValue);
   }
 

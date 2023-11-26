@@ -14,7 +14,7 @@
                 *ngIf="!Edit">Edit</button>
             <button class="btn btn-xs fw-500 btn-rounded btn-secondary" (click)="EditClicked()"
                 *ngIf="Edit">Cancel</button>
-            <button class="btn btn-xs fw-500 btn-rounded btn-primary" (click)="Save()" *ngIf="Edit">Save</button>
+            <button class="btn btn-xs fw-500 btn-rounded btn-primary" [disabled]="DealForm.invalid" (click)="Save()" *ngIf="Edit">Save</button>
         </div>
     </div>
 

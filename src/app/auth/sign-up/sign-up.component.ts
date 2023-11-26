@@ -20,12 +20,12 @@ export class SignUpComponent {
 
 constructor(private fb: FormBuilder, private router: Router,private loginService:LoginCheckService, private renderer: Renderer2, private backendURLs: UtilsModule, private fetchDataService: FetchDataService) {
     // Google login
-    // window.addEventListener('signupEvent', async (event: any) => {
-    //     const token = { credential: event.detail.credential }
-    //     const body = { token };
-    //     this.CreateUser(body);
+    window.addEventListener('signupEvent', async (event: any) => {
+        const token = { credential: event.detail.credential }
+        const body = { token };
+        this.CreateUser(body);
 
-    // })
+    })
 
     this.signupForm = fb.group(
       {
@@ -47,10 +47,12 @@ constructor(private fb: FormBuilder, private router: Router,private loginService
   }
 
    CreateUser(body:any){    
-    this.fetchDataService.HTTPPOST(this.backendURLs.URLs.signupUrl, body).subscribe((data:any)=>{
+    this.fetchDataService.HTTPPOST(this.backendURLs.URLs.signupUrl, body).subscribe({next:(data:any)=>{
       this.loginService.loginUser({ 'userToken': data.token, 'name': data.firstName });
       this.loading = false;
-    })
+    },error:()=>{
+      this.loading = false;
+    }})
   }
 
  

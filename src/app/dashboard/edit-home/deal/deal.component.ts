@@ -14,6 +14,7 @@ export class DealComponent {
   DealForm!:FormGroup;
   Edit:boolean=false;
   alignments:any[]=['Left','Right'];
+  CopyDealForm:any
   constructor(private fetchService: FetchDataService,private imageuploadService:ImageUploadService, private toastService:ToastService, private backendURLs: UtilsModule, private fb: FormBuilder) {
     this.DealForm = fb.group(
       {
@@ -32,6 +33,7 @@ export class DealComponent {
       });
 
     this.fetchService.HTTPGET(this.backendURLs.URLs.getDealsDetails).subscribe((data:any)=>{
+      this.CopyDealForm=JSON.parse(JSON.stringify(data));
           this.DealForm.patchValue(data);
       })
       this.FormDisableEnable();
@@ -74,6 +76,9 @@ export class DealComponent {
 
   EditClicked(){
     this.Edit=!this.Edit;
+    if(!this.Edit){
+      this.DealForm.patchValue(this.CopyDealForm);
+    }
     this.FormDisableEnable();
   }
 

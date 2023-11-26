@@ -14,7 +14,12 @@ export class AboutComponent {
   Edit: Boolean = false;
   AboutPageForm!: FormGroup
   AboutPageValues: any
-  constructor(private fb: FormBuilder, private imageuploadService: ImageUploadService, private backendURLs: UtilsModule, private fetchDataService: FetchDataService, private toastService: ToastService) {
+  constructor(
+    private fb: FormBuilder, 
+    private imageuploadService: ImageUploadService, 
+    private backendURLs: UtilsModule, 
+    private fetchDataService: FetchDataService, 
+    private toastService: ToastService) {
 
     this.AboutPageForm = this.fb.group({
       BasicInfo: this.fb.group({
@@ -38,15 +43,14 @@ export class AboutComponent {
         StoreImages: this.fb.control(['',[ this.StoreImageValidator, Validators.required]]),
       }),
       TeamMembers: this.fb.array([
-        this.fb.group({
-          img: ['', Validators.required],
-          name: ['', Validators.required]
-        })
+
       ]),
     })
 
     this.fetchDataService.HTTPGET((this.backendURLs.URLs.getAboutDetails)).subscribe((data: any) => {
-
+      data.TeamMembers.forEach((el:any)=>{
+        this.AddTeamMember();
+      })
       this.AboutPageForm.patchValue(data);
       this.AboutPageValues = JSON.parse(JSON.stringify(data));
     })
@@ -54,9 +58,26 @@ export class AboutComponent {
 
     // this.DummyImages();
     this.FormDisableEnable();
-    // this.getStoreImages();
-    // this.DummyTeamMembers();
+
+        
+    this.fetchStats();
   } 
+
+  ngOnInit(){
+    console.log('ng on it called');
+    
+    this.fetchStats();
+  }
+
+
+  fetchStats(){
+    console.log('this.fetchStats');
+    this.fetchDataService.HTTPGET(this.backendURLs.URLs.getOverallStatus).subscribe({
+      next: (res: any) =>{
+        console.log('About Controller', res);
+      }
+    })
+  }
 
   FoundedYearValidator(control: any) {
     if (!Number(control.value)) return { yearInvalid: true };
@@ -85,8 +106,6 @@ export class AboutComponent {
     this.Edit = !this.Edit;
 
     if (!this.Edit) {
-      console.log('hello --->', this.AboutPageValues);
-
       this.AboutPageForm.patchValue(this.AboutPageValues);
     }
     this.FormDisableEnable();
@@ -174,9 +193,7 @@ export class AboutComponent {
     if (form == 'BasicInfo') {
       let array = this.AboutPageForm.get('BasicInfo.StoreImages')?.value;
       array[index] = '';
-      this.AboutPageForm.get('BasicInfo.StoreImages')?.setValue(array);
-      console.log('this about value is ',this.AboutPageForm.get('BasicInfo.StoreImages')?.value);
-      
+      this.AboutPageForm.get('BasicInfo.StoreImages')?.setValue(array);      
     }
     else {
       (this.AboutPageForm.get('TeamMembers') as FormArray).at(index).get('img')?.setValue('');
