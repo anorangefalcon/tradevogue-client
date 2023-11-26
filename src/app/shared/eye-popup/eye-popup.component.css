@@ -178,9 +178,10 @@
 
 .popup-content {
     background-color: white;
-    width: 100% !important;
+    /* width: 100% !important; */
     overflow-y: auto;
     border-radius: 15px;
+    width: 680px;
     box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.2);
     display: flex;
     justify-content: space-between;
@@ -547,16 +548,10 @@ h2 {
     top: 10%;
     opacity: 1;
     width: 50%;
+    height: 50% !important;
     transform: translate(50%, 0%);
-
-    & .popup-content {
-        width: 50%;
-        height: 50%;
-        border-radius: 0px;
-        box-shadow: none;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-    }
   }
 
+  .content__drawer .eye_popup_show {
+    height: fit-content !important;
+  }
