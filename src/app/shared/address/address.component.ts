@@ -97,7 +97,6 @@ export class AddressComponent {
     console.log('data come up is ',data); 
 
        });
-        return;
     this.postalCodeInput.next(postalCodeValue);
   }
 
