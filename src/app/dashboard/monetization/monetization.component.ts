@@ -5,6 +5,7 @@ import { FetchDataService } from 'src/app/shared/services/fetch-data.service';
 import { HttpClient } from '@angular/common/http';
 import { PopupService } from 'src/app/shared/services/popup.service';
 import { LoginCheckService } from 'src/app/shared/services/login-check.service';
+import { DialogBoxService } from 'src/app/shared/services/dialog-box.service';
 
 @Component({
   selector: 'app-monetization',
@@ -21,21 +22,51 @@ export class MonetizationComponent {
   direction: string = 'right';
   show: boolean = false;
   currentTab: string = 'tab1'; // Set default tab
-  title:string="Monetization";
+  title: string = "Monetization";
   showTab(tab: string) {
     this.currentTab = tab;
   }
 
-  ChangeHanlder(event:any)
-{
-  this.show=event;
-}
-  constructor(private formBuilder: FormBuilder, private loginCheckService: LoginCheckService, private util: UtilsModule, private fetch: FetchDataService, private http: HttpClient, private popup: PopupService) { }
+  ChangeHanlder(event: any) {
+    this.show = event;
+  }
+  constructor(
+    private formBuilder: FormBuilder,
+    private loginCheckService: LoginCheckService,
+    private util: UtilsModule,
+    private fetch: FetchDataService,
+    private http: HttpClient,
+    private dialogService: DialogBoxService,
+    private popup: PopupService) { }
 
   ngOnInit(): void {
     this.createForm();
     this.createRazorpayForm();
     this.fetchData();
+
+    this.dialogService.responseEmitter.subscribe({
+      next: (res: any) => {
+
+        if (this.selectedItem && res && this.delete_type == 'stripe') {
+          const id = this.selectedItem._id;
+          const itemIndex = this.paymentKeys.findIndex((key: any) => key._id === id);
+          console.log(itemIndex, "item index are")
+          if (itemIndex !== -1) {
+            this.paymentKeys.splice(itemIndex, 1);
+          }
+
+          const body = {
+            id
+          }
+
+          this.fetch.HTTPPOST(this.util.URLs.deletePaymentKeys, body)
+            .subscribe((response: any) => {
+            })
+
+        }
+
+      }
+    })
   }
 
   fetchData() {
@@ -113,7 +144,7 @@ export class MonetizationComponent {
         this.fetchData();
       }
         , (error: any) => {
-         
+
         });
     }
 
@@ -144,25 +175,21 @@ export class MonetizationComponent {
     }
   }
 
+  delete_type: string = 'stripe';
+
   delete(key: any) {
     this.selectedItem = key;
-    if (this.selectedItem) {
-      const id = this.selectedItem._id;
-      const itemIndex = this.paymentKeys.findIndex((key: any) => key._id === id);
-      console.log(itemIndex, "item index are")
-      if (itemIndex !== -1) {
-        this.paymentKeys.splice(itemIndex, 1);
-      }
+    this.delete_type = 'stripe';
 
-      const body = {
-        id
-      }
+    let template: any = {
+      title: 'Proceed with Deletion?',
+      subtitle: 'The key will be permanently deleted, and recovery will not be possible. Are you sure you want to proceed?',
+      type: 'confirmation',
+      confirmationText: 'Yes, Delete it',
+      cancelText: 'No, Keep it',
+    };
 
-      this.fetch.HTTPPOST(this.util.URLs.deletePaymentKeys, body)
-        .subscribe((response: any) => {
-        })
-
-    }
+    this.dialogService.confirmationDialogBox(template);
   }
 
   onSubmit() {

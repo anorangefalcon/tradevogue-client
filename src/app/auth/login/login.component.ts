@@ -78,6 +78,7 @@ export class LoginComponent {
 
   onLogin() {
     this.loading = true;
+    
     const body = {
       email: this.loginForm.get('email')?.value,
       password: this.loginForm.get('password')?.value

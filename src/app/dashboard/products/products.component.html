@@ -40,7 +40,7 @@
         <div class="card card__pd-20 d-flex flex-column">
             <div class="product-header filters d-flex gap-15 align-item-center justify-content-md-between mh100 mw100">
                 <span class="search-bar mh100">
-                    <app-search-bar [searchPlaceholder]="'Search by Name, Category.....'"
+                    <app-search-bar [searchPlaceholder]="'Search by Name,Brand,Category...'"
                         (searchQuery$)="updateFields($event, 'search')"></app-search-bar>
                 </span>
                 <!-- Product Inventory
@@ -156,31 +156,28 @@
                                                                     <tr
                                                                         *ngFor="let stock of asset.stockQuantity; let x=index">
                                                                         <td class="items">{{stock.size}}</td>
-                                                                        <td class="items">{{ stock.unitSold}}
-                                                                        </td>
+                                                                        <td class="items">{{ stock.unitSold}}</td>
                                                                         <td class="items">
                                                                             <span class="inventory good"
-                                                                                *ngIf="(stock.quantity) >= filterData(item.orderQuantity,stock.quantity)[filterData(item.orderQuantity,stock.quantity).length -1]; else low_inventry">
+                                                                                *ngIf="(stock.quantity) >= (item.orderQuantity | lessThanOrEqual: stock.quantity)[(item.orderQuantity | lessThanOrEqual: stock.quantity).length -1]  && (item.orderQuantity | lessThanOrEqual: stock.quantity).length > 1; else low_inventry">
                                                                                 In Stock
-                                                                                &#40;{{stock.quantity}}&#41;
+                                                                                &#40;{{stock.quantity}}&#41; 
                                                                             </span>
-
+                
                                                                             <ng-template #low_inventry>
-
-                                                                                <span
-                                                                                    *ngIf="( (stock.quantity) < filterData(item.orderQuantity,stock.quantity)[filterData(item.orderQuantity,stock.quantity).length -1]) && (stock.quantity) >= filterData(item.orderQuantity,stock.quantity)[0]; else empty_inventry"
+                
+                                                                                <span *ngIf="filterData(item.orderQuantity, stock.quantity) else empty_inventry"
                                                                                     class="inventory okay">
                                                                                     Low Inventory &#40;{{
                                                                                     stock.quantity }}&#41;
                                                                                 </span>
-
                                                                                 <ng-template #empty_inventry>
                                                                                     <span class="inventory bad">
                                                                                         Out of Stock &#40;{{
                                                                                         stock.quantity }}&#41;
                                                                                     </span>
                                                                                 </ng-template>
-
+                
                                                                             </ng-template>
                                                                         </td>
                                                                     </tr>
@@ -256,7 +253,6 @@
                                 <td colspan="10">
                                     <div class="noDataFound d-flex flex-column flex-center card__pd-20">
                                         <img src="../../../assets/noDataFound.svg" alt="No Data Found" height="170px">
-                                        <!-- <button class="btn btn-secondary btn-xs btn-rounded fw-500">Add Products</button> -->
                                     </div>
                                 </td>
                             </tr>

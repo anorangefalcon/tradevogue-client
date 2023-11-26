@@ -16,7 +16,7 @@ export class ProductsComponent implements OnInit {
   pageSize: number = 8;
   currentPage: number = 1;
   selectedColor: any = 0;
-  totalCount: any;
+  totalCount: any = 0;
   selectAll: boolean = false;
   highlight: number = 0;
   deleteDataField: any = {};
@@ -50,7 +50,6 @@ export class ProductsComponent implements OnInit {
 
     this.fetchdata.HTTPPOST(this.backendUrl.URLs.fetchFeatures, this.dataField).subscribe({
       next: (res: any) => {
-
         this.categoryOption = res.categories;
         this.fetchData();
       }
@@ -68,6 +67,7 @@ export class ProductsComponent implements OnInit {
   
   async fetchData() {
     try {
+      
       this.fetchdata.HTTPPOST(this.backendUrl.URLs.fetchProductInventory, this.template).subscribe({
         next: (res: any) => {
           if(!res.data.length) this.dataFetchStatus = false;
@@ -179,13 +179,15 @@ export class ProductsComponent implements OnInit {
     }
 
     // reset Pagination
-    this.currentPage = 1
+    this.currentPage = 1;
     this.template.page = 1;
 
     this.fetchData();
   }
 
   clearFields(){
+    console.log('clear fields called');
+    
     this.tempSortData = '';
     this.template.filter.categories = '';
     delete this.template.filter['rating'];
@@ -194,6 +196,8 @@ export class ProductsComponent implements OnInit {
   }
 
   pageChange(e: any) {
+    console.log('page change called');
+    
     this.template.page = e;
     this.currentPage = e;
     this.fetchData();
@@ -210,7 +214,6 @@ export class ProductsComponent implements OnInit {
       return amt <= quantity;
     });
   }
-
 
   // Generate a string array based upon rating transmitted store class from 'font-awesome'
   starRating(rating: any) {
@@ -230,8 +233,16 @@ export class ProductsComponent implements OnInit {
 
   // Purpose to detemine the quantiy of product->color->size based upon orderQuantity
   filterData(array: any, limit: any) {
-    let filteredArray = array.filter((item: any) => item <= limit);
-    return filteredArray;
+
+    const len = array.length;
+    console.log(array, limit);
+    // 30% of Array is
+    const index = Math.round(len * 0.3);
+
+    if( limit <= array[index] && limit > 0){
+      return true;
+    }
+    return false;
   }
 
   displayInfo(e: Event) {
@@ -243,6 +254,7 @@ export class ProductsComponent implements OnInit {
 
   // Handles Excel File Uplaoded
   uploadFile(event: Event) {
+    
     let excelData = this.excelService.handleFileInput(event);
     (<HTMLInputElement>event.target).value = '';
     excelData.then((excel: any) => {

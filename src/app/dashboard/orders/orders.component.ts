@@ -11,8 +11,8 @@ import * as xlsx from 'xlsx';
 })
 export class OrdersComponent {
   order_status:string = 'Completed';
-  payment_status: string = 'Confirmed';
-  paymentStatus: any[] = ['Confirmed', 'Pending', 'Failed', 'Canceled'];
+  payment_status: string = 'Success';
+  paymentStatus: any[] = ['Success', 'Pending', 'Cancelled', 'Failed'];
   orderData: any[] = [];
   pageSize: number = 8;
   currentPage: number = 1;
@@ -22,6 +22,7 @@ export class OrdersComponent {
   updateIndex: any = false; //Purpose of invoice Avalibility
   updateIndexStatus: any; //For puspose of Input status
   filename: string = 'Orders.xlsx';
+  noData: boolean =  false;
 
   orderStats: any = {
     confirmed: 0,
@@ -91,11 +92,15 @@ export class OrdersComponent {
   fetchOrders(){
     this.fetchData.HTTPPOST(this.backendUrl.URLs.getSellerOrders, this.template).subscribe({
       next: (data: any)=>{
-        
+        console.log(data);
+
         if(!data.orders.length){
-          this.orderData = [0];
+          this.orderData = [];
+          this.totalCount = data.total[0].count;
+          this.noData = true;
           return;
         }
+
         this.orderData = [];
 
         data.orders.forEach((order: any)=>{

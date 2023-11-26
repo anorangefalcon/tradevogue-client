@@ -11,6 +11,7 @@ import { ElementRef, HostListener, } from '@angular/core';
 })
 export class CustomSelectComponent {
   @Input() _id!: string;
+  @Input() disableStatus: boolean = false;
   @Input() options!: any[];
   @Input() selectedOption!: any;
   @Input() type: string = ''; // multiSelect //select //searchSelect
