@@ -56,7 +56,8 @@
                     keyboard_backspace
                 </span>
                 <app-search-bar (click)="hamburgerOpen = false" class="search-bar"
-                    [searchPlaceholder]="'Search Products...'" [onButtonClick]="true"  (searchQuery$)="searchExplore($event)"></app-search-bar>
+                    [searchPlaceholder]="'Search Products...'" [onButtonClick]="true" (searchQuery$)="searchExplore($event)">
+                </app-search-bar>
             </div>
             <span (click)="isSearching = !isSearching; hamburgerOpen = false"
                 class="search-icon-mobile material-symbols-outlined">

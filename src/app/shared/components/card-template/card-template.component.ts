@@ -1,13 +1,11 @@
 import { Component, Input } from '@angular/core';
 import { CartService } from '../../services/cart.service';
 import { OwlOptions } from 'ngx-owl-carousel-o';
-import { PopupService } from '../../services/popup.service';
 import { WishlistService } from '../../services/wishlist.service';
 import { ToastService } from '../../services/toast.service';
 import { Router } from '@angular/router';
-import { BehaviorSubject } from 'rxjs';
-import { EyePopupComponent } from '../../eye-popup/eye-popup.component';
 import { EyePopupService } from '../../services/eye-popup.service';
+
 @Component({
   selector: 'app-card-template',
   templateUrl: './card-template.component.html',
@@ -16,30 +14,22 @@ import { EyePopupService } from '../../services/eye-popup.service';
 export class CardTemplateComponent {
 
   @Input() product: any = {};
-  showPopup: boolean = false;
-  selectedItem: boolean = false;
+  assetIndex: any = 0;
 
   constructor(
     private cartService: CartService,
-    private popupService: PopupService,
     private router: Router,
     private toastService: ToastService,
-    private eyepopup: EyePopupComponent,
     private wishlistService: WishlistService,
     private eyePopupService: EyePopupService) {
   }
 
   avgRating: number = 0;
-  productData: any = [];
   offerPercentage: number = 0;
-  selectedColor: string = "";
-
-  showEyePopup = new BehaviorSubject<any>('');
-  eyePopupData = this.showEyePopup.asObservable();
 
   ngOnInit(): void {
-    const sku = this.product.sku;
     this.avgRating = this.product.avgRating;
+    if(this.product.matchedIndex) this.assetIndex = this.product.matchedIndex;
 
     this.wishlistService.WishListedProducts.subscribe((response:any)=>{  
       if(response.includes(this.product._id)){
@@ -60,25 +50,11 @@ export class CardTemplateComponent {
 
     // this.productPageService.orderQuantity.next(filteredArray);
     this.product.info.orderQuantity = filteredArray;
-    // console.log(this.product , "product is ");
-    this.startRotatingTags();
   }
 
   currentIndex = 0;
   tagsToShow = 3;
   slicedTags: string[] = [];
-
-  startRotatingTags(): void {
-    if (this.product && this.product.info && this.product.info.tags) {
-      const productTags = this.product.info.tags;
-
-      setInterval(() => {
-        const endIndex = this.currentIndex + this.tagsToShow;
-        this.slicedTags = productTags.slice(this.currentIndex, endIndex);
-        this.currentIndex = (this.currentIndex + this.tagsToShow) % productTags.length;
-      }, 5000); // Change the time interval as needed (in milliseconds)
-    }
-  }
 
   createArrayToIterate(num: number) {
     const newTotal = Math.floor(num);
@@ -106,10 +82,7 @@ export class CardTemplateComponent {
     }
   }
 
-
   addToCart() {
-    // console.log('product is ',this.product);
-    // return;
     if (this.product.assets[0].stockQuantity[0].quantity <= 0) {
       this.toastService.errorToast({ title: 'Please select other variant of this product as it is outofStock' });
       this.router.navigate(['product/' + this.product.sku]);
@@ -152,7 +125,6 @@ export class CardTemplateComponent {
   }
 
   openPopup() {
-    this.showEyePopup.next(true);
     this.eyePopupService.showEyePopup.next(true);
     this.eyePopupService.ShowEyelist(this.product.sku);
   }

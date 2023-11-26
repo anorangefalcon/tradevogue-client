@@ -10,7 +10,6 @@ import { UtilsModule } from '../utils/utils.module';
 import { FetchDataService } from '../shared/services/fetch-data.service';
 import { HttpParams } from '@angular/common/http';
 
-
 @Component({
   selector: 'app-product-page',
   templateUrl: './product-page.component.html',
@@ -67,17 +66,15 @@ export class ProductPageComponent implements OnInit {
   ngOnInit(): void {
 
     if (this.productSku) {
-      // console.log("HELLO");
       this.sku = this.productSku;
       this.fetchProductData();
     }
     else {
-      this.route.params.subscribe(params => {
-        this.sku = params['sku'];
+      this.route.params.subscribe(routeParams => {
+        this.sku = routeParams['sku'];
         this.fetchProductData();
       });
     }
-
   }
 
   fetchProductData(loading: boolean = true) {
@@ -109,10 +106,35 @@ export class ProductPageComponent implements OnInit {
     this.data.avgRating = data.avgRating ? data.avgRating : 0;
     this.activeIndex = 0;
     this.selectedColor = data.assets[0].color;
-    this.selectedSize = data.assets[this.assetIndex].stockQuantity[0].size;
-
+    this.selectedSize = data.assets[this.assetIndex].stockQuantity[0].size;    
     this.outOfStock = (this.data.assets[this.assetIndex].stockQuantity[this.sizeIndex].quantity <= 0) ? true : false;
 
+    if(this.outOfStock){
+      let assetI = 0;
+      this.data.assets.some((asset: any) => {
+        let stockI = 0;
+        let otherSizeAvailable = asset.stockQuantity.some((stockQ: any)=>{
+          if (stockQ.quantity > 0) {
+            this.updateSizeIndex(stockI);
+            return true;
+          }
+          stockI++;
+          return false;
+        });
+        
+        if (otherSizeAvailable) {
+          return true;
+        }
+
+        assetI++;
+        this.changeColor(assetI);
+        return false;
+      });
+
+      const hehe = () => {
+
+      }
+    }
 
     // if this user has already reviewed:
     if (data.userReview) {
@@ -127,7 +149,15 @@ export class ProductPageComponent implements OnInit {
     this.fetchSimilarProducts = {
       'tags': this.data.info.tags
     };
-    this.loading = false;
+
+    this.route.queryParams.subscribe(queryParam =>{
+      if(queryParam['color']){
+        this.assetIndex = queryParam['color'];
+        this.changeColor(this.assetIndex);
+      }        
+    });
+
+    this.loading = false;    
   }
 
   addToCart() {
@@ -161,11 +191,9 @@ export class ProductPageComponent implements OnInit {
   }
 
   normalizeSizeColorQuantity() {
-    this.selectedColor = this.data.assets[this.assetIndex].color;
-    this.selectedSize = this.data.assets[this.assetIndex].stockQuantity[this.sizeIndex].size;
-    this.outOfStock = (this.data.assets[this.assetIndex].stockQuantity[this.sizeIndex].quantity <= 0) ? true : false;
-
-
+    this.selectedColor = this.data?.assets[this.assetIndex].color;
+    this.selectedSize = this.data?.assets[this.assetIndex].stockQuantity[this.sizeIndex].size;
+    this.outOfStock = (this.data?.assets[this.assetIndex].stockQuantity[this.sizeIndex].quantity <= 0) ? true : false;
 
     if (!(this.getOrderQuantity().includes(this.selectedQ))) this.selectedQ = 0;
   }
@@ -187,9 +215,9 @@ export class ProductPageComponent implements OnInit {
   }
 
   getOrderQuantity() {
-    let limit = this.data.assets[this.assetIndex].stockQuantity[this.sizeIndex].quantity;
+    let limit = this.data?.assets[this.assetIndex].stockQuantity[this.sizeIndex].quantity;
 
-    let arr = this.data.info.orderQuantity;
+    let arr = this.data?.info.orderQuantity;
     let filteredArray = arr.filter((item: any) => item <= limit);
 
     if (!(filteredArray.includes(limit)) && (arr[arr.length - 1] > limit)) {
@@ -224,9 +252,9 @@ export class ProductPageComponent implements OnInit {
   }
 
   deleteReview() {
-    this.reviewService.deleteReview(this.data._id).subscribe((data: any) => {
+    this.reviewService.deleteReview(this.data._id).subscribe(() => {
       this.userReview = '';
-      this.fetchProductData();
+      this.fetchProductData(false);
       this.toastService.notificationToast({
         title: 'Review deleted successfully'
       });

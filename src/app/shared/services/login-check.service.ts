@@ -15,8 +15,6 @@ export class LoginCheckService {
 
   private previousUrl: any = '/';
   constructor(private cookieService: CookieService, private router: Router, private toastService: ToastService) {
-
-  
     this.router.events
       .pipe(
         filter((event): event is NavigationEnd => event instanceof NavigationEnd),

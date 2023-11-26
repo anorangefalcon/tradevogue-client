@@ -35,7 +35,7 @@ export class CartService {
     this.sideCart.next(true);
     
     const cartObj = { "sku": data.sku, "size": data.size, "color": data.color, "quantity": data.quantity };
-    if (this.user) {
+    if (this.user) {``
       this.addToCartWithToken(cartObj);
     }
     else {
@@ -47,7 +47,7 @@ export class CartService {
     this.http.post(this.backendUrls.URLs.addItemsToCart, [cartObj]).subscribe(
       (details: any) => {
         if (!details.added) {
-          this.toastService.warningToast({ title: 'Item already exists in cart please select another configuration' });
+          this.toastService.warningToast({ title: 'Already exists in cart add different variant' });
           this.cartLoading.next(false);
         }
         else {
@@ -67,7 +67,7 @@ export class CartService {
       this.handleSuccessfulAddToCart();
     }
     else {
-      this.toastService.warningToast({ title: 'Item already exists in cart' });
+      this.toastService.warningToast({ title: 'Already exists in cart add different variant' });
       this.cartLoading.next(false);
     }
   }

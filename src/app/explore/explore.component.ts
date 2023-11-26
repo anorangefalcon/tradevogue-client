@@ -18,7 +18,7 @@ export class ExploreComponent {
   limit: number = 8;
   totalProducts: number = 0;
   pageNumber: number = 1;
-  
+
   OriginalData: any = [];
   uniqueData: { [field: string]: any[] } = {};
   filters: any[] = [];
@@ -30,22 +30,24 @@ export class ExploreComponent {
   sizes: string[] = ['XS', 'S', 'M', 'L', 'XL', 'XXL', 'XXXL'];
   colors: string[] = ['#000000', '#ffffff', '#ff0000', '#0357ff', '#008000', '#cf00cf', '#ffff00']
   sorting: any = {
-    titles:  ["Fresh Arrivals", "Highest Rated", "Price: High to Low", "Price: Low to High"],
-    value: ['createdAt:-1','avgRating:-1', 'price:-1', 'price:1']
+    titles: ["Fresh Arrivals", "Highest Rated", "Price: High to Low", "Price: Low to High"],
+    value: ['createdAt:-1', 'avgRating:-1', 'price:-1', 'price:1']
   }
   // genders : string[] = ['male', 'Female'];
-  minPrice : any;
-  maxPrice : any;
+  minPrice: any;
+  maxPrice: any;
   loading: boolean = false;
- 
-  constructor(private fetchData: FetchDataService,private BackendEndUrl:UtilsModule, private wishlistService:WishlistService, private route: ActivatedRoute, private location: Location) { }
+
+  constructor(private fetchData: FetchDataService, private BackendEndUrl: UtilsModule,
+    private wishlistService: WishlistService, private route: ActivatedRoute,
+    private location: Location) { }
 
   ngOnInit() {
 
     this.route.queryParams.subscribe((data: any) => {
-  
+
       this.minPrice = data?.minPrice
-      this.maxPrice = data?.maxPrice    
+      this.maxPrice = data?.maxPrice
       this.loading = true;
       this.filterApplied = JSON.parse(JSON.stringify(data));
       let actualParams = (Object.keys(this.filterApplied).length > 0) ? this.filterApplied : JSON.parse(JSON.stringify(data));
@@ -54,7 +56,7 @@ export class ExploreComponent {
         this.products = data.items;      
         this.totalProducts = data.total;
         this.loading = false;
-      
+
       });
     });
 
@@ -62,44 +64,45 @@ export class ExploreComponent {
       parameter: "all"
     }
 
-    this.fetchData.HTTPPOST(this.BackendEndUrl.URLs.uniqueProductFields,body).subscribe((res: any) => {
+    this.fetchData.HTTPPOST(this.BackendEndUrl.URLs.uniqueProductFields, body).subscribe((res: any) => {
       this.uniqueData = res.data;
     })
   }
 
   onAdd(event: any, field: string) {
-    
-    if (this.minPrice && !this.maxPrice){
-      this.filterApplied['minPrice'] = this.minPrice 
+
+    if (this.minPrice && !this.maxPrice) {
+      this.filterApplied['minPrice'] = this.minPrice
     }
-    else if (this.maxPrice && !this.minPrice){
+    else if (this.maxPrice && !this.minPrice) {
       this.filterApplied['maxPrice'] = this.maxPrice
     }
-    else if (this.minPrice && this.maxPrice){ 
-      this.filterApplied['minPrice'] = this.minPrice 
+    else if (this.minPrice && this.maxPrice) {
+      this.filterApplied['minPrice'] = this.minPrice
       this.filterApplied['maxPrice'] = this.maxPrice
     }
-    
-    if (field == 'sort'){
-      let index = this.sorting.titles.findIndex((title: string)=> title == event);
-      this.sorting.value[index]    
+
+    if (field == 'sort') {
+      let index = this.sorting.titles.findIndex((title: string) => title == event);
+      this.sorting.value[index]
       this.filterApplied[field] = this.sorting.value[index]
     }
-    else if(Array.isArray(event)){
+    else if (Array.isArray(event)) {
       this.filterApplied[field] = event;
     }
     else if (this.filterApplied.hasOwnProperty(field)) {
       this.filterApplied[field] = [this.filterApplied[field]]
-      this.filterApplied[field].push(event.length-1)
+      this.filterApplied[field].push(event.length - 1)
     }
     else {
-      if(event){
-      this.filterApplied[field] = event[0]}
+      if (event) {
+        this.filterApplied[field] = event[0]
+      }
     }
-    
+
     this.setParams()
   }
-  
+
   isValueSelected(value: any, FilterObjectKey: any[]): any {
     if (!FilterObjectKey) return false;
     if (typeof (FilterObjectKey) == 'string') {
@@ -110,18 +113,18 @@ export class ExploreComponent {
     }
   }
 
-  onChecked(event: any, field: string,extraParameter:any='') { 
+  onChecked(event: any, field: string, extraParameter: any = '') {
 
     let value;
 
 
-    if(event){
-       value = field === 'price' ? Number(event?.target?.value) : event.target.value;
+    if (event) {
+      value = field === 'price' ? Number(event?.target?.value) : event.target.value;
     }
-    if ( event && event.target.checked) {
+    if (event && event.target.checked) {
       if (this.filterApplied.hasOwnProperty(field)) {
         if (Array.isArray(this.filterApplied[field])) {
-          this.filterApplied[field].push(value); 
+          this.filterApplied[field].push(value);
         }
         else {
           let intialValue = this.filterApplied[field];
@@ -141,20 +144,20 @@ export class ExploreComponent {
           let newObject = { [field]: value };
           this.filterApplied = newObject;
         }
-      
-        
+
+
       }
 
     }
 
-    else {      
+    else {
       if (Array.isArray(this.filterApplied[field])) {
         let index;
-        if(!event){
-           index = this.filterApplied[field].indexOf(extraParameter);
+        if (!event) {
+          index = this.filterApplied[field].indexOf(extraParameter);
         }
-        else{
-           index = this.filterApplied[field].indexOf(event.target.value);
+        else {
+          index = this.filterApplied[field].indexOf(event.target.value);
         }
         this.filterApplied[field].splice(index, 1);
       }
@@ -198,11 +201,11 @@ export class ExploreComponent {
     this.setParams()
   }
 
-  setParams(){
+  setParams() {
     let param = new HttpParams();
     this.loading = true;
     (Object.keys(this.filterApplied)).forEach(key => {
-   
+
       if (Array.isArray(this.filterApplied[key])) {
         this.filterApplied[key].forEach((element: any) => {
           param = param.append(key, element);
@@ -213,7 +216,7 @@ export class ExploreComponent {
         param = param.set(key, valueString);
       }
     });
-    
+
     const finalURL = '/explore' + '?' + param.toString();
     this.location.replaceState(finalURL);
 
@@ -236,11 +239,11 @@ export class ExploreComponent {
     this.uniqueData[key][-1] = !this.uniqueData[key][-1];
   }
 
-  setPriceLimit(){
+  setPriceLimit() {
 
   }
 
-  changePage(event: any){
+  changePage(event: any) {
     this.pageNumber = event;
     this.setParams();
   }

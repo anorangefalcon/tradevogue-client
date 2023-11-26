@@ -1,8 +1,8 @@
 <div class="card-item-template card-template-structure">
-    <a routerLink='/product/{{product.sku}}' class="pointer d-flex flex-column gap-10">
+    <a [routerLink]="['/product', product.sku]" [queryParams]="(assetIndex != 0) ? { color: assetIndex } : {}" class="pointer d-flex flex-column gap-10">
         <div class="card-item-header skeleton">
-            <img loading="lazy" [src]=product.assets?.[0]?.photo[1] alt="Product Image">
-            <img loading="lazy" class="hover-img" [src]=product.assets?.[0]?.photo[0] alt="Product Image">
+            <img loading="lazy" [src]=product.assets?.[assetIndex]?.photo[1] alt="Product Image">
+            <img loading="lazy" class="hover-img" [src]=product.assets?.[assetIndex]?.photo[0] alt="Product Image">
         </div>
 
         <div class="card-item-content d-flex flex-column align-item-center gap-5">
@@ -51,117 +51,3 @@
         </a>
     </div>
 </div>
-
-<div *ngIf="showPopup" class="popup-overlay relative">
-    <div class="popup-content popup-details" [ngClass]="{'fade-in': showPopup}">
-        <div class="left-side">
-            <owl-carousel-o [options]="customOptions" [ngClass]="{crousel: true}">
-                <ng-template carouselSlide *ngFor="let item of product.assets[0].photo">
-                    <div>
-                        <img class="image-carousel" [src]="item" alt="Product Image">
-                    </div>
-                </ng-template>
-            </owl-carousel-o>
-        </div>
-        <div class="right-side">
-            <h1 class="prod-name">{{ product.name }}</h1>
-
-
-            <!-- <span class="stock-label">In Stock</span> -->
-         
-            <span class="stock-label">In Stock</span>
-
-
-            <h2 class="subTitle">{{productData.subTitle}}
-
-                <div *ngIf="avgRating !== 0" class="rating d-flex align-item-center">
-                    <span *ngFor="let i of createArrayToIterate(avgRating)"
-                        class="material-symbols-outlined filled">star</span>
-                    <span *ngIf="(avgRating % 1) !== 0" class="material-symbols-outlined">star_half</span>
-                    <span *ngFor="let i of createArrayToIterate(5 - avgRating)"
-                        class="material-symbols-outlined">star</span>
-                </div>
-            </h2>
-
-
-            <p id="description">{{productData.description}}</p>
-
-            <div class="price">
-                <h1 id="number-discount">₹{{ product.price}} </h1>
-                <p id="number-full" class="old-price" *ngIf="product?.discount">
-                    ₹{{ product.oldPrice }}
-                </p>
-
-
-            </div>
-
-            <div class="colors d-flex align-item-center gap-15">
-                <p>Color:</p>
-                <div class="colors-opt d-flex gap-10">
-                    <div class="colors-radios d-flex align-item-center" *ngFor="let color of product.assets">
-                        <input type="radio" name="color" [value]="color.color" [style.background-color]="color.color"
-                            [(ngModel)]="selectedColor">
-                    </div>
-                </div>
-            </div>
-
-            <div class="tags d-flex gap-10 d-flex align-item-center">
-                <h4>TAGS :</h4>
-                <ng-container *ngFor="let tag of slicedTags">
-                    <a>{{ tag }}</a>
-                </ng-container>
-            </div>
-            <!-- <a class="close-thik" style="cursor: pointer;" (click)="showPopup = false"></a> -->
-
-            <!-- <div class="flex items-center justify-center w-full space-s-3 sm:space-s-4 ">
-                <div
-                    class="group flex items-center justify-between rounded-md overflow-hidden flex-shrink-0 border h-11 md:h-12 border-gray-300">
-                    <button disabled=""
-                        class="flex items-center !cursor-default text-black justify-center flex-shrink-0 h-full transition ease-in-out duration-300 focus:outline-none w-8 md:w-12 text-heading border-e border-gray-300 hover:text-gray-500"><span
-                            class=" text-base "><svg stroke="currentColor" fill="none" stroke-width="2"
-                                viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" height="1em"
-                                width="1em" xmlns="http://www.w3.org/2000/svg">
-                                <line x1="5" y1="12" x2="19" y2="12"></line>
-                            </svg></span></button>
-                    <p
-                        class="text-black font-semibold flex items-center justify-center h-full transition-colors duration-250 ease-in-out cursor-default flex-shrink-0 text-base text-heading w-8 md:w-20 xl:w-24">
-                        1</p><button
-                        class="  !cursor-default flex items-center justify-center h-full text-black flex-shrink-0 transition ease-in-out duration-300 focus:outline-none w-8 md:w-12 text-heading border-s border-gray-300 hover:text-gray-500"
-                        tabindex="0" disabled=""><span class=" text-base"><svg stroke="currentColor" fill="none"
-                                stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"
-                                height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
-                                <line x1="12" y1="5" x2="12" y2="19"></line>
-                                <line x1="5" y1="12" x2="19" y2="12"></line>
-                            </svg></span></button>
-                </div><button disabled=""
-                    class=" !cursor-default text-sm leading-4 inline-flex items-center  transition ease-in-out duration-300 font-semibold  text-center justify-center border-0 border-transparent rounded-md focus-visible:outline-none focus:outline-none ml-4 text-white px-4  md:px-6 lg:px-8 py-4 md:py-3.5 lg:py-4 hover:text-white bg-emerald-500 hover:bg-emerald-600 w-full h-12">Add
-                    To Cart</button>
-            </div> -->
-
-
-            <div class="cart-div d-flex gap-10 align-item-center">
-                <button style=" padding-inline: 100px;" class="btn-primary d-flex gap-10 align-item-center"
-                    (click)="addToCart()" routerLink="/cart">
-                    <span class="material-symbols-outlined">
-                        shopping_cart
-                    </span>
-                    <p>ADD TO CART</p>
-                </button>
-            </div>
-        </div>
-    </div>
-
-
-    <div (click)="showPopup = false" class="absolute right-5 top-5"><button type="button"
-            class="inline-flex justify-center px-2 py-2 text-base font-medium text-red-500 bg-white border border-transparent rounded-full hover:bg-red-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500"><svg
-                stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 512 512" height="1em"
-                width="1em" xmlns="http://www.w3.org/2000/svg">
-                <path
-                    d="M289.94 256l95-95A24 24 0 00351 127l-95 95-95-95a24 24 0 00-34 34l95 95-95 95a24 24 0 1034 34l95-95 95 95a24 24 0 0034-34z">
-                </path>
-            </svg></button></div>
-
-
-</div>
-
-<!-- <app-product-section ></app-product-section> -->
