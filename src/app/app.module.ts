@@ -50,7 +50,7 @@ import { AboutComponent } from './about/about.component';
     DialogBoxComponent,
     WishlistComponent,
     OffersCarouselComponent,
-    AboutComponent,
+    AboutComponent
   ],
   imports: [
     CarouselModule,

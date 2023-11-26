@@ -87,8 +87,6 @@ export class ProductPageComponent implements OnInit {
     this.assetIndex = 0;
     this.sizeIndex = 0;
 
-    console.log(params, 'dddd');
-
     if (this.productSku) {
       this.fetchService.HTTPGET(this.backendUrl.URLs.fetchProductDetails, params).subscribe((data: any) => {
         this.updateDataFields(data);

@@ -5,7 +5,9 @@ import { PopupService } from '../../services/popup.service';
 import { WishlistService } from '../../services/wishlist.service';
 import { ToastService } from '../../services/toast.service';
 import { Router } from '@angular/router';
-
+import { BehaviorSubject } from 'rxjs';
+import { EyePopupComponent } from '../../eye-popup/eye-popup.component';
+import { EyePopupService } from '../../services/eye-popup.service';
 @Component({
   selector: 'app-card-template',
   templateUrl: './card-template.component.html',
@@ -17,13 +19,23 @@ export class CardTemplateComponent {
   showPopup: boolean = false;
   selectedItem: boolean = false;
 
-  constructor(private cartService: CartService, private popupService: PopupService, private router: Router, private toastService: ToastService, private wishlistService: WishlistService) {
+  constructor(
+    private cartService: CartService,
+    private popupService: PopupService,
+    private router: Router,
+    private toastService: ToastService,
+    private eyepopup: EyePopupComponent,
+    private wishlistService: WishlistService,
+    private eyePopupService: EyePopupService) {
   }
 
   avgRating: number = 0;
   productData: any = [];
   offerPercentage: number = 0;
   selectedColor: string = "";
+
+  showEyePopup = new BehaviorSubject<any>('');
+  eyePopupData = this.showEyePopup.asObservable();
 
   ngOnInit(): void {
     const sku = this.product.sku;
@@ -131,8 +143,9 @@ export class CardTemplateComponent {
   }
 
   openPopup() {
-    this.popupService.openPopup();
-    this.showPopup = true;
+    this.showEyePopup.next(true);
+    this.eyePopupService.showEyePopup.next(true);
+    this.eyePopupService.ShowEyelist(this.product.sku);
   }
 
 }

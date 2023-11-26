@@ -1,0 +1,72 @@
+<div class="drawer" *ngIf="show">
+    <app-drawer [direction]="direction" [show]="show" (showChange)="handler($event)" [title]="list?.name">
+      <div class="popup-content popup-details">
+        <div class="left-side">
+            <owl-carousel-o [options]="customOptions" [ngClass]="{crousel: true}">
+                <ng-template carouselSlide *ngFor="let item of list?.assets[0]?.photo">
+                    <div>
+                        <img class="image-carousel" [src]="item" alt="Product Image">
+                    </div>
+                </ng-template>
+            </owl-carousel-o>
+        </div>
+        <div class="right-side">
+            <h1 class="prod-name">{{ list?.name }}</h1>
+         
+            <span class="stock-label">In Stock</span>
+
+
+            <h2 class="subTitle">{{list?.subTitle}}
+
+                <!-- <div *ngIf="avgRating !== 0" class="rating d-flex align-item-center">
+                    <span *ngFor="let i of createArrayToIterate(avgRating)"
+                        class="material-symbols-outlined filled">star</span>
+                    <span *ngIf="(avgRating % 1) !== 0" class="material-symbols-outlined">star_half</span>
+                    <span *ngFor="let i of createArrayToIterate(5 - avgRating)"
+                        class="material-symbols-outlined">star</span>
+                </div> -->
+            </h2>
+
+
+            <p id="description">{{productData?.description}}</p>
+
+            <div class="price">
+                <h1 id="number-discount">₹{{ list?.price}} </h1>
+                <p id="number-full" class="old-price" *ngIf="list?.discount">
+                    ₹{{ list.oldPrice }}
+                </p>
+
+
+            </div>
+
+            <div class="colors d-flex align-item-center gap-15">
+                <p>Color:</p>
+                <div class="colors-opt d-flex gap-10">
+                    <div class="colors-radios d-flex align-item-center" *ngFor="let color of list?.assets">
+                        <input type="radio" name="color" [value]="color.color" [style.background-color]="color?.color"
+                            [(ngModel)]="selectedColor">
+                    </div>
+                </div>
+            </div>
+
+            <div *ngIf="slicedTags && slicedTags.length" class="tags d-flex gap-10 d-flex align-item-center">
+                <h4>TAGS :</h4>
+                <ng-container *ngFor="let tag of slicedTags">
+                    <a>{{ tag }}</a>
+                </ng-container>
+            </div>
+
+            <div class="cart-div d-flex gap-10 align-item-center">
+                <button style=" padding-inline: 100px;" class="btn-primary d-flex gap-10 align-item-center"
+                    (click)="addToCart()" routerLink="/cart">
+                    <span class="material-symbols-outlined">
+                        shopping_cart
+                    </span>
+                    <p>ADD TO CART</p>
+                </button>
+            </div>
+        </div>
+    </div>
+    </app-drawer>
+  </div>
+  

@@ -282,7 +282,7 @@ export class CheckoutComponent implements OnInit {
     this.checkOutService.loadStripe.next(true);
     if (this.checkOutService.addressSelected) {
 
-      // this.createOrder();
+      this.createOrder();
       // this.NextDisabled=false;
       this.checkOutService.StripePaymentOpen.next(true);
     }

@@ -19,8 +19,11 @@ export class DrawerComponent {
   translate!: string;
 
   ngOnChanges() {
+    console.log('ngOnChanges triggered with show:', this.show);
     if(!this.show)this.translate=''; 
 
+    console.log('show come up is------> ',this.show);
+    
     if (this.show == true) {
       if (this.direction == 'top') {
         this.translate = 'translateTop';
@@ -39,6 +42,10 @@ export class DrawerComponent {
 
       else if (this.direction == 'popup') {
         this.translate = 'popup_show';
+      }
+
+      else if (this.direction == 'eye-popup') {
+        this.translate = 'eye_popup_show';
       }
     }
 

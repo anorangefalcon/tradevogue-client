@@ -28,7 +28,7 @@ export class WishlistComponent {
     private toastService: ToastService) {
   }
 
-  async ngOnInit() {
+  ngOnInit() {
     this.wishlistService.wishlistPopupData.subscribe((data)=>{
       if(!data) return;
       this.list=data.wishlists;
@@ -36,7 +36,7 @@ export class WishlistComponent {
     })
   }
 
-  async addToWishlist(wishlistName: string) {
+   addToWishlist(wishlistName: string) {
     this.wishlistService.AddtoWishlist(wishlistName);
     this.show=false;
     this.showTextField=false;
