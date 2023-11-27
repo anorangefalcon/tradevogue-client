@@ -102,7 +102,7 @@
                 <div class="d-flex flex-column align-item-center product__img__div">
 
                     <!--  LABEL AND SPAN -->
-                    <div class="d-flex flex-column label__product__div align-item-center gap-5"
+                    <div class="d-flex flex-column label__product__div flex-center gap-5" [class.spinner] = "uploading"
                         *ngIf="!OfferForm.get('Image')?.value">
                         <label for="offerImage"
                             class="d-flex align-item-center upload__label flex-column justify-content-center">
@@ -115,8 +115,8 @@
 
 
                     <!-- IMAGE VISIBLE DIV -->
-                    <div *ngIf="OfferForm.get('Image')?.value" class="relative mh100">
-                        <span class="remove-img material-symbols-outlined" (click)="ShowUpload()">
+                    <div *ngIf="OfferForm.get('Image')?.value" class="relative mh100 mh100">
+                        <span class="remove-img absolute fs-18 pointer material-symbols-outlined" (click)="ShowUpload()">
                             close
                         </span>
                         <img [src]="getOfferImage()" class="mh100" alt="Profile Image" />
@@ -124,7 +124,7 @@
 
                     <!-- INPUT WHICH DISPLAY NONE -->
                     <input type="file" [id]="'offerImage'" accept="image/jpg, image/jpeg, image/png"
-                        class="upload__input" multiple (input)="bannerImageUpload($event)">
+                        style="display: none;" (input)="bannerImageUpload($event)">
 
 
                 </div>
@@ -296,11 +296,8 @@
                                 <div class="relative">
                                     <input type="email" id="email" class="form__input" [formControlName]="'email'"
                                         placeholder="Enter Your Email">
-                                    <button (click)="AddEmailFormControl()" *ngIf="i==0"
-                                        class="btn d-flex add__btn btn-rounded absolute">
-                                        <span class="material-symbols-outlined">
-                                            add
-                                        </span>
+                                    <button (click)="AddEmailFormControl()" *ngIf="i==0" class="btn d-flex add__btn btn-rounded absolute">
+                                        <span class="material-symbols-outlined">add</span>
                                     </button>
                                     <button (click)="RemoveEmailFormControl(i)" *ngIf="i!=0" class="btn add__btn btn-rounded absolute d-flex flex-center">
                                         <span class="material-symbols-outlined">
@@ -324,7 +321,7 @@
 
         <div class="d-flex align-item-center justify-content-end btns footer__addOffer">
             <!-- [disabled]="OfferForm.invalid" -->
-            <button class="btn-primary btn btn-sm btn-rounded" (click)="CouponSubmit()"
+            <button class="btn-primary btn-inline btn btn-sm btn-rounded" (click)="CouponSubmit()" [class.spinner] = "dataUpdate"
                 [ngClass]="{disabled:OfferForm.invalid}" [disabled]="OfferForm.invalid"
                 [ngClass]="{'disabled':OfferForm.invalid}">
                 <span *ngIf="!EditRequest else add">Save</span>

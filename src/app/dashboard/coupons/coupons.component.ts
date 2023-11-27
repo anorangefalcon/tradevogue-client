@@ -142,9 +142,6 @@ export class CouponsComponent {
     return null;
   }
 
-
-
-
   OfferTypeHandler(event: any,couponType:any=null) {
     
     this.OfferForm.get('OfferType')?.patchValue(event);
@@ -232,14 +229,11 @@ export class CouponsComponent {
     return (<FormArray>this.OfferForm.get('UserEmails')?.get(String(index)));
   }
 
-
-
   getAllOffers() {
     this.fetchDateService.HTTPGET(this.BackendUrls.URLs.getOffers).subscribe((data) => {
       this.allOffers = data;
     });
   }
-
 
   getOfferImage() {
     return this.OfferForm.get('Image')?.value;
@@ -295,13 +289,15 @@ export class CouponsComponent {
 
   }
 
-
+  dataUpdate: boolean = false;
   async CouponSubmit() {
+    this.dataUpdate = true;
     console.log('this offer form is ', this.OfferForm, this.OfferForm.value);
     if (!this.OfferForm.get('Image')?.value) {
       this.toastService.errorToast('Image is still uploading please try again');
       return;
     }
+
     this.OfferForm.get('startDate')?.setValue(new Date(this.OfferForm.get('startDate')?.value));
 
     let endDate: any = new Date((this.OfferForm.get('endDate')?.value));
@@ -329,6 +325,7 @@ export class CouponsComponent {
       }
       this.show = false;
       this.OfferForm.reset();
+      this.dataUpdate = false;
     });
     return;
 
@@ -424,14 +421,15 @@ export class CouponsComponent {
     })
   }
 
+  uploading: boolean = false;
 
   bannerImageUpload(event: any) {
+    this.uploading = true;
     let file: any = (<HTMLInputElement>event.target)?.files![0];
     this.imageuploadService.fileupload([{ file: file }]).then((url: any) => {
-      console.log('url come up is ', url[0]);
-
       this.OfferForm.get('Image')?.setValue(url[0]);
 
+      this.uploading = false;
     })
   }
 

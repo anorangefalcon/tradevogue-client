@@ -102,7 +102,9 @@ export class CustomiseBannerComponent {
     }
   }
 
+  saveData: boolean = false;
   onSave() {
+    this.saveData = true;
 
     if (!this.editValue) {
       this.bannerService.setBanners(this.bannerForm.value).subscribe((data: any) => {
@@ -113,6 +115,7 @@ export class CustomiseBannerComponent {
         this.bannerForm.reset()
         this.bannerForm.get('colors')?.reset();
         this.ngOnInit();
+        this.saveData = false;
       })
     }
     else {
@@ -129,26 +132,23 @@ export class CustomiseBannerComponent {
         this.bannerForm.reset()
         this.bannerForm.get('colors')?.reset();
         this.ngOnInit();
+        this.saveData = false;
       })
     }
 
     this.showingPopUp=false;
   }
 
-
-
-
+  uploading: boolean = false;
   bannerImageUpload(event: any) {
 
     let file: any = (<HTMLInputElement>event.target)?.files![0];
-    console.log("hi");
-    
+    this.uploading = true;
 
     this.uploadService.fileupload([{ file: file }]).then((url: any) => {
-      console.log(url, "url");
       this.bannerForm.get('backgroundImage')?.setValue(url[0]);
-      
       this.getImagePreview();
+      this.uploading = false;
     })
   }
 

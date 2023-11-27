@@ -261,7 +261,9 @@ export class ProductsComponent implements OnInit {
     (<HTMLInputElement>event.target).value = '';
     excelData.then((excel: any) => {
 
-      if (excel.errors) {
+      console.log(excel);
+
+      if (!excel.errors.length) {
         let errorObj: any = {
           title: 'Some Rows were Rejected',
           body: []
@@ -273,16 +275,19 @@ export class ProductsComponent implements OnInit {
 
         this.toastService.errorToast(errorObj);
       }
-      const formData = {
-        type: 'bulk',
-        data: excel.data
-      };
-      this.fetchdata.HTTPPOST(this.backendUrl.URLs.addproduct, formData).subscribe({
-        next: (res: any) => {
-          this.toastService.successToast("Data Uploaded Successfuly");
-          this.fetchData();
-        }
-      })
+      if(excel.data.length){
+        
+        const formData = {
+          type: 'bulk',
+          data: excel.data
+        };
+        this.fetchdata.HTTPPOST(this.backendUrl.URLs.addproduct, formData).subscribe({
+          next: (res: any) => {
+            this.toastService.successToast("Data Uploaded Successfuly");
+            this.fetchData();
+          }
+        })
+      }
       
     })
   }

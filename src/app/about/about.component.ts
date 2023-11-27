@@ -15,8 +15,9 @@ export class AboutComponent {
     fetchDataService.HTTPGET((this.backendUrls.URLs.getAboutDetails)).subscribe((data)=>{
       this.Data=data;
     });
-    // fetchDataService.HTTPGET((this.backendUrls.URLs.getOverAllDetails)).subscribe((data)=>{
-    // });
+    this.fetchDataService.HTTPGET((this.backendUrls.URLs.getOverAllDetails)).subscribe((data: any)=>{
+      console.log('res', data)
+    });
   }
 
 }

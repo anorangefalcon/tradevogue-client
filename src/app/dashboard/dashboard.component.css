@@ -87,7 +87,7 @@
             }
         }
 
-        
+
         & .account__icon {
 
             inset-block-end: -1px;
@@ -150,15 +150,15 @@
             transition: all 0.3s ease-in-out;
         }
 
-        & .navlist{
-            overflow: scroll;
+        & .navlist {
+            overflow-y: scroll;
 
             &::-webkit-scrollbar {
                 width: 3px;
                 border-radius: 5px;
                 background-color: rgb(var(--secondary), 0.4);
             }
-    
+
             &::-webkit-scrollbar-thumb {
                 border-radius: 5px;
                 background-color: rgb(var(--primaryClr), 0.8);
@@ -169,14 +169,16 @@
 
             padding-inline: 10px;
 
+            &:not(:last-child):hover a.nav-links {
+                color: rgb(var(--primaryClr));
+            }
+
             & a {
                 padding: 15px 15px;
                 transition: all 0.2s ease-in-out;
-
-                &:not(:last-child):hover {
-                    color: rgb(var(--primaryClr));
-                }
             }
+
+
 
             & .icons {
                 font-size: 20px;
@@ -200,24 +202,24 @@
         }
 
 
-        & .navlist li a.nav-links.active, 
+        & .navlist li a.nav-links.active,
         .sub-navlist li a.active,
-        a.dropdown:has(+ .sub-navlist.active){
+        a.dropdown:has(+ .sub-navlist.active) {
             color: rgb(var(--primaryClr));
         }
 
         /* a.dropdown:has(+ .sub-navlist.active) + .sub-navlist */
 
-        & .navlist li:hover > .sub-navlist {
+        & .navlist li:hover>.sub-navlist {
             height: max-content;
             opacity: 1;
         }
 
-        & a.dropdown:has(+ .sub-navlist.active) .sub-navlist{
+        /* & a.dropdown:has(+ .sub-navlist.active) .sub-navlist{
 
-        }
+        } */
 
-        & .navlist li:hover > a.dropdown::after {
+        & .navlist li:hover>a.dropdown::after {
             rotate: 0deg;
         }
 
@@ -243,7 +245,7 @@
         background-color: rgba(var(--secondary), 1);
         min-height: 100%;
         padding: 65px 0px 0px 240px;
-        
+
         & .content {
             width: min(1400px, 100%);
             min-height: calc(100vh - 65px);
@@ -251,7 +253,7 @@
             margin-inline: auto;
         }
     }
-    
+
     @media screen and (min-width: 992px) {
 
         & .header.active {
@@ -326,7 +328,7 @@
 
         }
 
-        & .sidebar.active + .main {
+        & .sidebar.active+.main {
             padding: 65px 0px 0px 50px;
         }
     }
@@ -369,11 +371,11 @@
     }
 
     @media screen and (max-width: 767px) {
-        
-        .main{
+
+        .main {
 
             .content {
- 
+
                 padding: 16px;
 
             }
@@ -447,19 +449,20 @@
 }
 
 @keyframes rotate {
-    from { 
-        transform: rotate(0deg); 
+    from {
+        transform: rotate(0deg);
     }
-    to { 
-        transform: rotate(360deg); 
+
+    to {
+        transform: rotate(360deg);
     }
 }
 
 /* Table CSS */
 main {
-    .noDataFound{
+    .noDataFound {
 
-        & img{
+        & img {
             height: 170px;
             opacity: 0.7;
         }
@@ -473,7 +476,7 @@ main {
             border-radius: 5px;
             background-color: rgb(var(--secondary), 0.4);
         }
-        
+
         & .table__item-image {
 
             & img {
@@ -577,7 +580,7 @@ main {
                     color: rgb(var(--blackClr), 0.7);
                     cursor: pointer;
 
-                    &:hover{
+                    &:hover {
                         color: rgb(var(--primaryClr));
                     }
                 }
@@ -587,16 +590,16 @@ main {
     }
 }
 
-.card{
+.card {
     background-color: rgb(var(--whiteClr));
     border: 1px solid rgba(var(--blackClr), 0.1);
     border-radius: 10px;
 }
 
-.card__pd-20{
+.card__pd-20 {
     padding: 20px;
 }
 
-.card__pd-25{
+.card__pd-25 {
     padding: 25px;
 }

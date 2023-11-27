@@ -862,8 +862,8 @@ tr:last-child td{
 }
 
 .btn-inline {
-    display: inline;
-    width: fit-content;
+    display: inline !important;
+    width: fit-content !important;
 }
 
 .btn-primary:disabled {
@@ -1135,7 +1135,7 @@ tr:last-child td{
     align-items: center;
     justify-content: center;
     position: relative;
-    background-color: antiquewhite;
+    background-color: rgb(var(--blackClr), 0.05);
 }
 
 .spinner::before {
@@ -1148,6 +1148,11 @@ tr:last-child td{
     border-style: solid;
     border-color: rgb(var(--primaryClr)) rgb(var(--primaryClr)) rgb(var(--whiteClr)) rgb(var(--whiteClr));
     animation: spinner .8s linear infinite;
+}
+
+div.spinner::before{
+    inset-inline-end: 12px;
+    inset-block-end: 12px;
 }
 
 @media screen and (max-width: 450px) {

@@ -47,7 +47,7 @@ export class OrdersComponent {
     private fetchData: FetchDataService, 
     private backendUrl: UtilsModule){}
 
-  async ngOnInit(){
+  ngOnInit(){
     this.fetchStats();
     this.fetchOrders();
 
@@ -151,14 +151,27 @@ export class OrdersComponent {
     this.fetchOrders();
   }
 
+  getCurrentDate(){
+    return (new Date()).toISOString().split('T')[0];
+  }
+
   updateFields(e: any, type: string){
     this.template.filter[type] = e;
     this.fetchOrders();
   }
 
   updateDateFields(e: Event, field: string){
-    
     this.template.filter[field] = (<HTMLInputElement>e.target).value;
+    this.fetchOrders();
+  }
+
+  resetField(){
+    this.template.filter = {
+      search: '',
+      payment_status: '',
+      dateto: '',
+      datefrom: ''
+    }
     this.fetchOrders();
   }
 

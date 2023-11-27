@@ -22,7 +22,7 @@
             <div class="mw100 relative d-flex flex-column gap-20">
                 <div class="d-flex flex-column mw100 gap-15">
                     <div class="image-upload-div d-flex justify-content-center align-item-center relative">
-                        <div class="upload-image d-flex flex-column gap-10 align-item-center">
+                        <div class="upload-image d-flex flex-column gap-10 align-item-center" [class.spinner]="uploading">
                             <input type="file" [id]="'backgroundImage'"
                                 accept="image/jpg, image/jpeg, image/png, image/avif"
                                 (input)="bannerImageUpload($event)" />
@@ -108,7 +108,7 @@
                         <div class="d-flex flex-column mw100 gap-10">
                             <div class="internal-div">
                                 <label class="form__title" for="contentAlign">Content Align</label>
-                                <app-custom-select [_id]="'alignment'" [options]="alignment" [disableStatus]="checkbox"
+                                <app-custom-select [_id]="'alignment'" [type]="'select'" [disableStatus]="true" [options]="alignment" [disableStatus]="checkbox"
                                     [selectedOption]="(bannerForm.get('contentAlign')?.value ? bannerForm.get('contentAlign')?.value : 'Select..')"
                                     (final_option)="this.bannerForm.get('contentAlign')?.setValue($event);">
                                 </app-custom-select>
@@ -119,7 +119,7 @@
 
             </div>
         </form>
-        <button class="btn btn-md fw-500 btn-rounded btn-primary save-btn" (click)="onSave()" *ngIf="showForm == true"
+        <button class="btn btn-md fw-500 btn-rounded btn-primary btn-inline save-btn" [class.spinner]="saveData"  (click)="onSave()" *ngIf="showForm == true"
             [ngClass]="{'disabled':bannerForm.invalid}" [disabled]="this.bannerForm.invalid">Save</button>
     </app-drawer>
 

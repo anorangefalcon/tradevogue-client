@@ -46,15 +46,16 @@
             <app-custom-select [options]="paymentStatus" [selectedOption]="'Filter by Payment Status'"
                 (final_option)="updateFields($event, 'payment_status')"></app-custom-select>
             <span class="d-flex relative justify-content-md-between flex-column gap-5">
-                <label class="form__title" for="todate">To: </label>
-                <input class="form__input todate" (input)="updateDateFields($event, 'dateto')" type="date" id="todate">
-            </span>
-            <span class="d-flex relative justify-content-md-between flex-column gap-5">
                 <label class="form__title" for="fromdate">From: </label>
-                <input class="form__input fromdate" (input)="updateDateFields($event, 'datefrom')" type="date"
+                <input class="form__input fromdate" (input)="updateDateFields($event, 'datefrom')"   type="date"
                     id="fromdate">
             </span>
-            <button class="btn-primary btn-rounded btn-xs">Clear</button>
+            <span class="d-flex relative justify-content-md-between flex-column gap-5">
+                <label class="form__title" for="todate">To: </label>
+                <input class="form__input todate" (input)="updateDateFields($event, 'dateto')" [max]="getCurrentDate()"
+                    type="date" id="todate">
+            </span>
+            <button class="btn-primary btn-rounded btn-xs" (click)="resetField()">Clear</button>
         </span>
     </div>
 

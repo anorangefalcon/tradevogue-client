@@ -15,7 +15,7 @@
 
 .upload__label {
     border-radius: 50%;
-    padding: 17px;
+    padding: 12px;
     font-size: 10px;
     font-weight: 500;
     color: rgb(var(--blackClr), 0.6);
@@ -115,19 +115,10 @@ form {
 
 
 .remove-img {
-    position: absolute;
-    right: 0;
     background: #ffffffc2;
     border-radius: 50%;
-    top: 5px;
-    right: 5px;
-    cursor: pointer;
-    font-size: 18px;
-}
-
-
-.upload__input {
-    display: none;
+    inset-block-start: 5px;
+    inset-inline-end: 5px;
 }
 
 .add__btn {
