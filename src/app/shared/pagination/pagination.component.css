@@ -22,7 +22,7 @@
 
 .page-link {
   padding: 0;
-  color: #333;
+  color: rgb(var(--textClr));
   border-radius: 4px;
   transition: background-color 0.3s ease;
   display: flex;
@@ -34,12 +34,13 @@
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
   font-weight: 400;
   cursor: pointer;
-  border-width: 1px;
+  /* border-width: 1px; */
+  background-color: rgba(var(--whiteClr));
 }
 
 .page-item.active .page-link {
   background-color: rgba(var(--primaryClr));
-  color: #fff;
+  color: rgb(var(--textClr));
   border-color: rgba(var(--primaryClr));
   box-shadow: 0 0 8px rgba(0, 0, 0, 0.2); /* Slightly stronger shadow */
 }
@@ -47,7 +48,7 @@
 .page-item.disabled .page-link {
   pointer-events: none;
   background-color: rgba(var(--whiteClr));
-  color: #888;
+  color: rgb(var(--textClr));
   border-color: #ccc;
 }
 

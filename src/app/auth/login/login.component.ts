@@ -26,7 +26,7 @@ export class LoginComponent {
     private backendUrls: UtilsModule,
     private fetchDataService: FetchDataService,
     private dialogService: DialogBoxService,
-    private renderer: Renderer2) {
+    private renderer: Renderer2)  {
 
     this.loginForm = fb.group(
       {

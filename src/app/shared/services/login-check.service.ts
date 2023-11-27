@@ -3,6 +3,8 @@ import { NavigationEnd, Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 import { BehaviorSubject, Observable, filter, map, pairwise } from 'rxjs';
 import { ToastService } from './toast.service';
+import { FetchDataService } from './fetch-data.service';
+import { UtilsModule } from 'src/app/utils/utils.module';
 
 @Injectable({
   providedIn: 'root'
@@ -13,8 +15,8 @@ export class LoginCheckService {
   private userSubject = new BehaviorSubject({});
   private user$ = this.userSubject.asObservable();
 
-  private previousUrl: any = '/';
-  constructor(private cookieService: CookieService, private router: Router, private toastService: ToastService) {
+   previousUrl: any = '/';
+  constructor(private cookieService: CookieService, private router: Router, private toastService: ToastService,private BackendUrl:UtilsModule, private FetchDataService:FetchDataService) {
     this.router.events
       .pipe(
         filter((event): event is NavigationEnd => event instanceof NavigationEnd),
@@ -52,7 +54,17 @@ export class LoginCheckService {
       if(this.previousUrl=='/cart' || this.previousUrl.includes('/explore')){
        this.router.navigate([this.previousUrl]);
       }  
-      else this.router.navigate(['/']);
+
+      this.FetchDataService.HTTPGET(this.BackendUrl.URLs.authorizeUrl).subscribe((data)=>{
+        if(data=='admin'){
+          this.router.navigate(['/dashboard']);
+        }
+        else{
+          this.router.navigate(['/']);
+
+        }
+      })
+
     }
   }
 

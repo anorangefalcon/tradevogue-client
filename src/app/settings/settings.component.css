@@ -323,7 +323,7 @@ label span {
 }
 
 .particularAddress:not(:last-child) {
-    border-block-end: 0.5px solid rgb(var(--textClr), 0.09);
+    border-block-end: 0.5px solid rgb(var(--textClr), 0.3);
     padding-block-end: 8px;
 }
 

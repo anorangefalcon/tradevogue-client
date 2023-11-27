@@ -43,6 +43,8 @@ export class CheckoutComponent implements OnInit {
       this.SecureNavBar = data;
     })
     this.checkOutService.StripePaymentOpen$.subscribe((data) => {
+      console.log('data inside constructor is---------> ',data);
+      
       this.StripePaymentOpener = data;
     })
 
@@ -182,15 +184,11 @@ export class CheckoutComponent implements OnInit {
             return;
           }
           this.CouponApplied = coupon;
-          this.checkOutService.CouponApplied=coupon;
-          console.log('coupon aplied done');
-          
           this.CouponValid = 'valid';
           break;
         }
       }
       if (this.CouponValid != 'valid') {
-        this.checkOutService.CouponApplied=null;
         this.CouponValid = 'invalid';
         return;
       }
@@ -198,13 +196,14 @@ export class CheckoutComponent implements OnInit {
 
     else {
       this.CouponApplied = coupon;
-      this.checkOutService.CouponApplied=coupon;
-      console.log('coupon aplied done else part');
       this.CouponValid = 'valid';
     }
 
-    if (this.CouponApplied?.discountType == 'percentage' && !this.CheckMinimumPurchase(this.CouponApplied)) {
-      this.toastService.errorToast({ title: 'Coupon', body: `minimum purchase amount is ${coupon.minimumPurchaseAmount}` });
+    if (!this.CheckMinimumPurchase(this.CouponApplied)) {
+      this.toastService.errorToast({ title:  `minimum purchase amount is ${coupon.minimumPurchaseAmount}` });
+      this.CouponValid='invalid';
+      this.CouponApplied=null;
+      this.show=false;
       return;
     }
 

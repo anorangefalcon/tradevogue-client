@@ -17,8 +17,6 @@ export const authGuard: CanActivateFn = async (route, state) => {
   const BackendUrl = inject(UtilsModule);
 
   let navigateCheck = true;
-  // console.log('check comeup is ',typeof(loginCheckService.getUser()));
-  //  let check= await lastValueFrom(loginCheckService.getUser());
   let check=cookie.get('userToken');
   let data;
     if(check){

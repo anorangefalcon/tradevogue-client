@@ -22,7 +22,7 @@
                 <div [formGroupName]="i" class=" card card__pd-20 mh100 mw100 d-flex flex-column gap-20 relative">
                     <h4>Section {{i+1}}</h4>
 
-                    <button (click)="removeFormControl(i)" class="btn absolute del-section-btn d-flex flex-center">
+                    <button (click)="removeFormControl(i)" *ngIf="i!==0" class="btn absolute del-section-btn d-flex flex-center">
                         <span class="material-symbols-outlined">
                             close
                         </span>
@@ -63,7 +63,7 @@
 
                                                 <div class="relative">
                                                     <input type="text" formControlName="content"
-                                                        *ngIf="getTandCContent(i,j)=='list'" class="mw100">
+                                                        *ngIf="getTandCContent(i,j)=='list'" class="mw100 form__input">
                                                     <button
                                                         class="btn btn-xs fw-500 d-flex flex-center absolute remove-point-btn"
                                                         *ngIf="getTandCContent(i,j) == 'list'"

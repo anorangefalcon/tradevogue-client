@@ -101,6 +101,7 @@ select {
     /* --primaryClr: 10, 82, 131; */
 
     --secondary: 249, 250, 251;
+    color: rgb(42, 41, 41);
 
     --danger: 223, 22, 33;
     --success: 60, 167, 23;
@@ -134,6 +135,7 @@ body.dark{
     --textClr: 222,222,222;
     --input-text-bg : 152, 150, 150;
     --primaryClr: 2, 208, 208;
+    --secondary : 42, 41, 41;
 
 
     background-color: rgb(var(--whiteClr), 0.9) !important;
@@ -966,10 +968,12 @@ tr:last-child td{
     height: 40px;
     padding-inline: 15px;
     border-radius: 4px;
+    background-color: transparent;
     outline: 1px solid rgba(var(--blackClr), 0.2);
     font-size: 13px;
     font-weight: 400;
     border: none;
+    color: rgb(var(--textClr));
     
 
     &:is(:focus, :hover, .active) {

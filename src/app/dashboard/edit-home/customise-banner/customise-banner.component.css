@@ -8,7 +8,7 @@
 }
 
 .image-upload-div {
-    background: rgb(var(--secondary));
+    background: rgb(var(--blackClr), 0.03);
     border-radius: 10px;
     padding-block: 15px;
     height: 200px;
@@ -39,8 +39,9 @@
     }
 
     & .upload_icon {
-        font-size: 48px;
+        font-size: 38px;
         opacity: 0.7;
+        color: rgb(var(--blackClr), 0.4);
     }
 
 }

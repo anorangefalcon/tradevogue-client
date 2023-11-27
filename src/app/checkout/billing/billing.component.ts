@@ -100,6 +100,8 @@ export class BillingComponent implements OnInit {
   ngOnInit(): void {
     
     this.checkOutService.StripePaymentOpen$.subscribe((data) => {
+      console.log('data inside billing componen t is ',data);
+      
       this.StripeOpener = data;
     })
 

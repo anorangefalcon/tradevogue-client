@@ -28,6 +28,7 @@
 
 <script>
   function LoginGoogleHandler(res){
+    console.log(res);
     const event = new CustomEvent('loginEvent', { detail: res });
     window.dispatchEvent(event);
   }

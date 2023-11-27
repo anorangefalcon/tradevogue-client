@@ -15,7 +15,7 @@
 
 .breadcrumb-link {
   text-decoration: none;
-  color: #050505;
+  color: rgb(var(--textClr));
   transition: color 0.3s;
 }
 
@@ -30,4 +30,5 @@
 
 .breadcrumb-last {
   font-weight: bold; 
+  color: rgb(var(--textClr));
 }
