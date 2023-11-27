@@ -16,9 +16,9 @@ import { authGuard } from './auth.guard';
 import { OffersCarouselComponent } from './offers-carousel/offers-carousel.component';
 import { AboutComponent } from './about/about.component';
 import { redirectGuard } from './checkout/redirect.guard';
+import { EyePopupComponent } from './shared/eye-popup/eye-popup.component';
 
 const routes: Routes = [
-
   {
     path: '', component: LayoutComponent, data: { breadcrumb: 'Home' },
     children: [
@@ -58,7 +58,7 @@ const routes: Routes = [
   {path:'offerc',component:OffersCarouselComponent},
   {
     path: '**', component: NoPageComponent, data: { breadcrumb: '404' } 
-  },
+  }
 ];
 
 @NgModule({

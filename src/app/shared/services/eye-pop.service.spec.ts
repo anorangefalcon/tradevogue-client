@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { EyePopupService } from './eye-popup.service';
+import { EyePopService } from './eye-pop.service';
 
-describe('EyePopupService', () => {
-  let service: EyePopupService;
+describe('EyePopService', () => {
+  let service: EyePopService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(EyePopupService);
+    service = TestBed.inject(EyePopService);
   });
 
   it('should be created', () => {

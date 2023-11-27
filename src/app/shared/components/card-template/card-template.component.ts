@@ -4,7 +4,7 @@ import { OwlOptions } from 'ngx-owl-carousel-o';
 import { WishlistService } from '../../services/wishlist.service';
 import { ToastService } from '../../services/toast.service';
 import { Router } from '@angular/router';
-import { EyePopupService } from '../../services/eye-popup.service';
+import { EyePopService } from '../../services/eye-pop.service';
 
 @Component({
   selector: 'app-card-template',
@@ -21,8 +21,9 @@ export class CardTemplateComponent {
     private router: Router,
     private toastService: ToastService,
     private wishlistService: WishlistService,
-    private eyePopupService: EyePopupService) {
-  }
+    private eyePopupService: EyePopService) {
+
+    }
 
   avgRating: number = 0;
   offerPercentage: number = 0;
@@ -125,7 +126,7 @@ export class CardTemplateComponent {
   }
 
   openPopup() {
-    this.eyePopupService.showEyePopup.next(true);
+    // this.eyePopupService.showEyePopup.next(true);
     this.eyePopupService.ShowEyelist(this.product.sku);
   }
 

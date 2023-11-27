@@ -36,6 +36,7 @@
     /* height: calc(100vh - 60px); */
     overflow: scroll;
     background-color: rgba(var(--whiteClr));
+    /* height: calc(100vh - 60px); */
 }
 
 .show {
@@ -85,7 +86,6 @@
 }
 
 .drawer__header {
-    /* position: relative; */
     padding: 15px 24px;
     background-color: rgb(var(--secondary));
     box-shadow: 0px 1px 5px rgba(var(--blackClr), 0.1);
@@ -111,3 +111,10 @@
     transform: translate(-50%, -50%);
     height: fit-content;
 }
+
+/* .eye_popup_show {
+    width: fit-content;
+    top: 10%;
+    transform: translate(50%, 0%);
+    transition: all 0.3s ease-in-out;
+} */

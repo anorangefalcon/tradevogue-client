@@ -1,5 +1,5 @@
-<div class="eye__popup">
-    <app-drawer [direction]="direction" [show]="show" (showChange)="handler($event)"  [width]="width">
+<div class="eye__popup product">
+    <app-drawer [direction]="direction" [show]="show" (showChange)="handler($event)" [title]="'Product'"  [width]="width">
       <div class="popup-content popup-details">
         <div class="left-side">
             <owl-carousel-o *ngIf="list && list.assets && list.assets.length > 0" [options]="customOptions" [ngClass]="{crousel: true}">
@@ -27,7 +27,7 @@
 
             <p id="description">{{productData?.description}}</p>
            
-            <div class="d-flex gap-30">
+            <div class="d-flex gap-30 align-item-center ">
 
             <div *ngIf="list.avgRating !== 0" class="rating d-flex align-item-center">
                 <span *ngFor="let i of createArrayToIterate(list.avgRating)"
@@ -38,8 +38,10 @@
                     class="material-symbols-outlined">star</span>
             </div>
 
-            <span class="stock-label">In Stock</span>
-
+            <div *ngIf="!productSku && !outOfStock && list.assets[assetIndex]?.stockQuantity[sizeIndex]?.quantity !== undefined" class="stockAvailable">
+                <p class="stock-label">Stock: {{ list.assets[assetIndex]?.stockQuantity[sizeIndex]?.quantity }}</p>
+            </div>
+            
             </div>
 
             <div class="colors d-flex align-item-center gap-15">
@@ -48,6 +50,18 @@
                     <div class="colors-radios d-flex align-item-center" *ngFor="let color of list?.assets">
                         <input type="radio" name="color" [value]="color.color" [style.background-color]="color?.color"
                             [(ngModel)]="selectedColor">
+                    </div>
+                </div>
+            </div>
+
+            <div class="sizes d-flex align-item-center gap-20" id="sizes">
+                <p>Size:</p>
+                <div class="sizes-opt d-flex gap-10">
+                    <div *ngFor="let stock of list.assets[assetIndex].stockQuantity; let j = index"
+                        class="sizes-radios relative">
+                        <input type="radio" name="size" [value]=stock.size id="size_{{ stock.size }}"
+                            [(ngModel)]="selectedSize" (click)="updateSizeIndex(j)">
+                        <label for="size_{{ stock.size }}">{{ stock.size }}</label>
                     </div>
                 </div>
             </div>
@@ -66,7 +80,6 @@
 
             </div>
 
-            <div class="d-flex gap-10">
 
                 <div class="price">
                     <h1 id="number-discount">₹{{ list?.price}} </h1>
@@ -85,14 +98,12 @@
                     </button>
                 </div>
 
-            </div>
-
-            <div *ngIf="slicedTags" style="margin-top: 5px;" class="tags d-flex gap-10 d-flex align-item-center">
-                <h2>TAGS :</h2>
-                <ng-container *ngFor="let tag of slicedTags">
-                    <a>{{ tag }}</a>
-                </ng-container>
-            </div>
+                <div class="tags d-flex gap-10 d-flex align-item-center">
+                    <a [routerLink]="['/explore']" [queryParams]="{ tags: tag }" *ngFor="let tag of slicedTags">
+                        {{ tag }}
+                    </a>
+                </div>
+                
 
         </div>
     </div>
