@@ -134,7 +134,7 @@ header.active {
         opacity: 0;
         visibility: hidden;
 
-        background-color: rgba(255, 255, 255, 0.9);
+        background-color: rgba(var(--whiteClr));
         box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
         border-radius: 5px;
         backdrop-filter: blur(10px);
@@ -186,8 +186,8 @@ header.active {
         padding: 20px;
         opacity: 0;
         visibility: hidden;
-        background-color: rgba(255, 255, 255, 0.9);
-        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        background-color: rgb(var(--whiteClr));
+        box-shadow: 0px 4px 10px rgba(var(--blackClr), 0.07);
         border-radius: 5px;
         backdrop-filter: blur(10px);
         transition: all 0.3s ease-in-out;
@@ -477,7 +477,7 @@ header.active {
                     height: 14px;
                     width: 14px;
                     background-color: rgb(var(--primaryClr), 1);
-                    color: rgb(var(--whiteClr), 1);
+                    color: rgb(var(--textClr));
                     inset-inline-end: -4px;
                     inset-block-start: -4px;
                     border-radius: 100%;

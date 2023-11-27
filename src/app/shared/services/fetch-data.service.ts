@@ -1,13 +1,16 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { ToastService } from './toast.service';
-import {catchError } from 'rxjs';
+import {BehaviorSubject, catchError } from 'rxjs';
 import { UtilsModule } from 'src/app/utils/utils.module';
 @Injectable({
   providedIn: 'root',
 })
 
 export class FetchDataService {
+
+  theme = new BehaviorSubject<any>('false');
+  themeColor$ = this.theme.asObservable();
 
   constructor(private http: HttpClient, private toastService: ToastService, private backendUrls: UtilsModule) { }
   

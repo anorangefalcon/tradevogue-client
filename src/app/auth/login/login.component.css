@@ -138,10 +138,11 @@
         padding-inline-start: 40px;
         padding-inline-end: 30px;
         border-radius: 8px;
-        border: 1px solid transparent;
-        background-color: #f5f5f5cf;
+        border: 1px solid rgb(var(--blackClr), 0.08);
+        background-color: rgba(var(--blackClr),0.05);
         font-size: 14px;
         outline: none;
+        color: rgb(var(--textClr));
 
     }
 

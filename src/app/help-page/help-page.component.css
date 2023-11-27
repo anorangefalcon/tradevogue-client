@@ -90,19 +90,15 @@ form {
     margin-bottom: 0;
 }
 
-input,
+/* input,
 textarea,
 select {
     color: #6f6f6f !important;
     font-size: 14px !important;
-    padding: 12px 15px !important;
     width: 100% !important;
-    background-color: #fff !important;
     text-transform: none !important;
     font-weight: 400 !important;
-    border: 1px solid #e2e2e2 !important;
-    border-radius: 0 !important;
-}
+} */
 
 .btn-style2 {
     color: #fff;
@@ -287,9 +283,9 @@ li label {
 
     & form textarea,
     form input {
-        border-radius: 8px !important;
-        border: 1px solid transparent !important;
-        background-color: rgb(var(--primaryClr), 0.05) !important;
+        
+        
+        
         padding: 7px !important;
     }
 
@@ -324,14 +320,11 @@ textarea:focus {
     border: 1px solid rgba(var(--textClr), 0.8) !important;
 }
 
-button {
-    border-radius: 8px !important;
-    height: 42px !important;
-    margin-inline-end: 0 !important;
 
-}
 
 textarea {
+    background-color: rgba(var(--blackClr),0.05) !important;
+    border: 1px solid rgb(var(--blackClr), 0.08) !important;
     resize: none !important;
 }
 
@@ -361,8 +354,4 @@ textarea {
         padding-block: 35px;
     }
 
-}
-
-button {
-    padding-block: 0px !important;
 }

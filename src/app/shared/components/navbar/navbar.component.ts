@@ -114,6 +114,7 @@ export class NavbarComponent implements OnInit {
   toggleTheme(){
     // document.getElementById('tv-body').
     this.darkTheme = !this.darkTheme
+    this.fetchDataService.theme.next(this.darkTheme)
     $('#tv-body').toggleClass("dark")
   }
 

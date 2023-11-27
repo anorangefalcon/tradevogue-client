@@ -17,6 +17,8 @@
     & input{
         padding-inline: 16px 35px;
         cursor: pointer;
+        background-color: transparent;
+        color: rgb(var(--blackClr));
     }
 
     &::after{

@@ -1,13 +1,19 @@
 .home__block:nth-child(2n){
   padding-block: 90px;
 }
+.home__black {
+  background-color: rgb(var(--whiteClr));
+}
 
 .py-start-100 {
   padding-block-start: 100px;
 }
-
+/* 
+section {
+  background-color: rgb(var(--whiteClr));
+} */
 .facilities {
-  color: rgb(var(--new-text-black));
+  color: rgb(var(--textClr));
   /* background-color: aquamarine;
   min-height: 200px; */
 
@@ -67,16 +73,18 @@
     font-weight: 600;
     letter-spacing: 0.7px;
     text-align: center;
+    color: rgb(var(--whiteClr));
   }
 
   & input {
     width: 42%;
     font-size: 14px;
     padding: 12px 15px;
-    background-color: rgb(var(--whiteClr));
+    background-color: rgb(var(--whiteClr),0.8);
     border: none;
     border-radius: 5px;
     outline: none;
+    color: rgb(var(--textClr));
   }
 
   &::placeholder {
