@@ -128,10 +128,10 @@
 
     & input[type="radio"] + label::after {
         content: '';
-        display: flex;
+        display: block;
         position: absolute;
-        width: 5px;
-        height: 5px;
+        width: 6px;
+        height: 6px;
         border-radius: 50%;
         background-color: transparent;
         transition: all 0.3 ease-in-out;
@@ -139,6 +139,7 @@
 
     & input[type="radio"]:checked + label::after {
         background-color: rgb(var(--whiteClr));
+        border: 1px solid rgb(var(--blackClr), 0.4);
     }
 
     & .items {
@@ -151,7 +152,7 @@
 tr:not(:first-child, :last-child) td.items.displayInfo .popup{
     inset-block-start: 0%;
     inset-inline-start: 100%;
-    transform: translateY(-50%);
+    transform: translateY(-54%);
 }
 
 tr:last-child td.items.displayInfo .popup{

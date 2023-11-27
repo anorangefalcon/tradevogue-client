@@ -50,16 +50,18 @@
             <ul class="navlist d-flex flex-column mh100 relative">
                 <li class="transition" *ngFor="let item of navitems">
 
-                    <a [routerLink]="item.route ? item.route: null" (click)="item.name.toLowerCase() == 'logout' ? logout() : null" [class.dropdown]="item.sublist" [class.active]="isProductBtnActive == true"
+                    <a [routerLink]="item.route ? item.route: null" 
+                        (click)="item.name.toLowerCase() == 'logout' ? logout() : null" 
+                        [class.dropdown]="item.sublist" [routerLinkActive]="'active'"
                         class="nav-links relative align-item-center d-flex gap-15 pointer">
                         <i class="icons material-symbols-outlined">{{item.icons}}</i>
                         <span class="nav-text">{{item.name}}</span>
                     </a>
 
-                    <ul class="sub-navlist" *ngIf="item.sublist">
+                    <ul class="sub-navlist" *ngIf="item.sublist"  routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
 
                         <li class="sub-links"  *ngFor="let subitem of item.sublist">
-                            <a [routerLink]="subitem.route">{{subitem.name}}</a>
+                            <a class="mw100" [routerLink]="subitem.route" routerLinkActive="active"  [routerLinkActiveOptions]="{exact: true}">{{subitem.name}}</a>
                         </li>
 
                     </ul>

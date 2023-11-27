@@ -101,7 +101,7 @@
             </div>
         
             <div class="row-2">
-                <canvas id="barChart">{{barChart}}</canvas>
+                <canvas id="lineChart">{{lineChart}}</canvas>
             </div>
         </div>
     
@@ -181,7 +181,7 @@
                 <table class="category-row d-flex flex-column gap-20">
                     <tr *ngFor="let category of category_sales; let i=index">
                         <span class="d-flex justify-content-md-between align-item-center">
-                            <h4 class="text-captialize">{{category.field}}</h4>
+                            <h4 class="text-capitalize">{{category.field}}</h4>
                             <span class="Category-price">&#8377; {{category.sales}}</span>
                         </span>
                         <progress [value]="category.sales" max="1000000"></progress>
@@ -194,6 +194,7 @@
                     <img src="../../../assets/noDataFound.svg" alt="No Data Found" height="170px">
                 </div>
             </ng-template>
+            <!-- <canvas id="barChart">{{barChart}}</canvas> -->
         </div>
     
     </div>

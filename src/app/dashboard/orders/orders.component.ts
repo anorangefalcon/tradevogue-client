@@ -78,6 +78,7 @@ export class OrdersComponent {
   fetchStats(){
     this.fetchData.HTTPGET(this.backendUrl.URLs.getOrderOverallData).subscribe({
       next: (stats: any)=>{
+
         this.orderStats = stats;
 
         stats.forEach((data: any)=>{
@@ -92,11 +93,12 @@ export class OrdersComponent {
   fetchOrders(){
     this.fetchData.HTTPPOST(this.backendUrl.URLs.getSellerOrders, this.template).subscribe({
       next: (data: any)=>{
+
         console.log(data);
 
         if(!data.orders.length){
           this.orderData = [];
-          this.totalCount = data.total[0].count;
+          this.totalCount = data.total.length;
           this.noData = true;
           return;
         }
@@ -118,6 +120,9 @@ export class OrdersComponent {
         });
 
         this.totalCount = data.total[0].count;
+      },
+      error: (res: any) => {
+        this.noData = true;
       }
     });
   }

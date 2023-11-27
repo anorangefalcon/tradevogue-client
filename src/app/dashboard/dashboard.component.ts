@@ -11,8 +11,6 @@ import { LoginCheckService } from '../shared/services/login-check.service';
 export class DashboardComponent {
 
   isCollapse: boolean = false;
-isSalesBtnActive: boolean = false;
-  isProductBtnActive: boolean = false;
   adminName: String = '';
 
   constructor(private userService: LoginCheckService){}
@@ -67,14 +65,6 @@ isSalesBtnActive: boolean = false;
     //   }
     //   this.isCollapse = false;
     // });
-  }
-
-  sales_dropdown() {
-    this.isSalesBtnActive = !this.isSalesBtnActive;
-  }
-
-  product_dropdown() {
-    this.isProductBtnActive = !this.isProductBtnActive;
   }
 
   logout(){    

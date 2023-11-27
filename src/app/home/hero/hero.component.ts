@@ -36,7 +36,7 @@ export class HeroComponent {
     mouseDrag: true,
     touchDrag: true,
     pullDrag: true,
-    dots: false,
+    dots: true,
     autoplay: true,
     navSpeed: 400,
     navText: ['', ''],

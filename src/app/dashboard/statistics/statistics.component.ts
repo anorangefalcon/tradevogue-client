@@ -25,8 +25,9 @@ export class StatisticsComponent implements OnInit {
   productList: any[] = [];
   selectedType: string = 'monthly';
 
-  barChart: any;
+  lineChart: any;
   donutChart: any;
+  barChart: any;
   table: any;
   reviewDataLabel: any[] = ['Satisfied', 'Neutral', 'Unsatisfied'];
   reviewData: any[] = [50, 50, 50];
@@ -40,6 +41,7 @@ export class StatisticsComponent implements OnInit {
   ngOnInit(): void {
     this.createLineChart();
     this.createDonut();
+    // this.createBarChart();
     this.resetMonthly();
 
     // Fetch Data
@@ -172,7 +174,7 @@ export class StatisticsComponent implements OnInit {
 
   createLineChart() {
 
-    this.barChart = new Chart("barChart", {
+    this.lineChart = new Chart("lineChart", {
 
       type: 'line',
       data: {
@@ -186,14 +188,16 @@ export class StatisticsComponent implements OnInit {
             pointStyle: 'circle',
             borderWidth: 1.5,
             pointBackgroundColor: 'white',
+            // yAxisID: 'y',
           },
           {
             label: "Sales",
             data: this.salesData,
             backgroundColor: 'rgba(57, 62, 70)',
             borderColor: 'rgba(57, 62, 70)',
-            borderWidth: 2,
+            borderWidth: 1.5,
             pointBorderColor: 'white',
+            // yAxisID: 'y1',
           },
         ]
       },
@@ -222,10 +226,21 @@ export class StatisticsComponent implements OnInit {
             },
           },
           y: {
+            type: 'linear',
+            display: true,
+            position: 'left',
             grid: {
               color: 'rgba(0, 0, 0, 0.1)',
             },
-          }
+          },
+          // y1: {
+          //   type: 'linear',
+          //   display: true,
+          //   position: 'left',
+          //   grid: {
+          //     drawOnChartArea: false, // only want the grid lines for one axis to show up
+          //   },
+          // }
         }
 
       }
@@ -234,7 +249,7 @@ export class StatisticsComponent implements OnInit {
   }
 
   resetLineChart() {
-    this.barChart.destroy();
+    this.lineChart.destroy();
     this.createLineChart();
   }
 
@@ -280,5 +295,24 @@ export class StatisticsComponent implements OnInit {
   resetDonut() {
     this.donutChart.destroy();
     this.createDonut();
+  }
+
+
+  createBarChart(){
+    this.barChart = new Chart('barChart', {
+      type: 'bar',
+
+      data: {
+        labels: this.reviewDataLabel,
+        datasets: [{
+          data: this.reviewData,
+          backgroundColor: [
+            'rgba(0, 28, 48, 0.9)',
+            'rgb(0, 173, 181)',
+            'rgba(57, 62, 70, 0.2)'
+          ]
+        }]
+      },
+    })
   }
 }

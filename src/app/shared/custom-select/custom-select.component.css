@@ -46,9 +46,9 @@
     position: absolute;
     width: 100%;
     z-index: 1;
-    box-shadow: 0 10px 10px rgba(0, 0, 0, 0.07);
-    background-color: #fff;
-    border: 1px solid #00000020;
+    box-shadow: 0 10px 10px rgba(var(--blackClr), 0.07);
+    background-color: rgb(var(--whiteClr));
+    border: 1px solid rgb(var(--blackClr), 0.2);
     border-radius: 5px;
     max-height: 0px;
     visibility: hidden;

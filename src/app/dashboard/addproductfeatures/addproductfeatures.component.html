@@ -19,8 +19,8 @@
                     <span class="tooltiptext">Upload Excel</span>
                 </span>
                 <span class="tooltip">
-                    <a class="d-flex flex-center" 
-                       [href]="'../../../assets/ExcelSampleFile/'+ item.file_name + '.xlsx'" download>
+                    <a class="d-flex flex-center" [href]="'../../../assets/ExcelSampleFile/'+ item.file_name + '.xlsx'"
+                        download>
                         <i class=" transition material-symbols-outlined fs-22 fw-300">download</i>
                     </a>
                     <span class="tooltiptext">Download Sample</span>
@@ -28,20 +28,32 @@
             </div>
         </div>
         <div class="row row-2 card-data">
-            <ng-container *ngIf="field_data; else noData">
+            <ng-container *ngIf="field_data; else fetchData">
                 <div style="height: fit-content;" class="d-flex gap-10 flex-wrap">
                     <div class="data__field d-flex justify-content-md-between align-item-center gap-10 transition "
-                    *ngFor="let option of field_data[item.type] | productFilter: filter[item.filter]; let j = index">
-                    <span class="data-field__text fs-12">{{option}}</span>
-                    <span class="pointer d-flex fs-16 flex-center transition material-symbols-outlined"
-                        (click)="deleteItem(item.type, j)">close</span>
-                </div>
+                        *ngFor="let option of field_data[item.type] | productFilter: filter[item.filter]; let j = index">
+                        <span class="data-field__text fs-12">{{option}}</span>
+                        <span class="pointer d-flex fs-16 flex-center transition material-symbols-outlined"
+                            (click)="deleteItem(item.type, j)">close</span>
+                    </div>
                 </div>
             </ng-container>
-            <ng-template #noData> 
-                <div class="noDataFound d-flex flex-column flex-center ">
-                    <img src="../../../assets/noDataFound.svg" alt="No Data Found" style="height: 150px !important;">
-                </div>
+            <ng-template #fetchData>
+                <ng-container *ngIf="isfetch; else noData">
+                    <div style="height: fit-content;"  class="d-flex gap-10 flex-wrap">
+                        <div style="width: 80px;" class="skeleton data__field d-flex justify-content-md-between align-item-center gap-10 transition "
+                            *ngFor="let x of tableGenerator(10); let j = index">
+                            <span class="data-field__text fs-12" style="color: transparent;">{{x}}</span>
+                        </div>
+                    </div>
+                </ng-container>
+
+                <ng-template #noData>
+                    <div class="noDataFound d-flex flex-column flex-center">
+                        <img src="../../../assets/noDataFound.svg" alt="No Data Found" style="height: 150px !important;">
+                    </div>
+                </ng-template>
+
             </ng-template>
         </div>
         <div class="row row-3 relative mw100">
@@ -49,8 +61,9 @@
                 [(ngModel)]='filter[item.filter]' />
 
             <div class="button absolute inset-inline-end-0 inset-block-start-0">
-                <button class="btn-primary d-flex flex-center" type="submit" (click)="addItem(item.filter, item.type)">
-                    <span class="pointer-none material-symbols-outlined">add</span>
+                <button class="btn fw-500 btn-primary d-flex flex-center" type="submit"
+                    (click)="addItem(item.filter, item.type)">
+                    <span class="pointer fs-20 material-symbols-outlined">add</span>
                 </button>
             </div>
         </div>

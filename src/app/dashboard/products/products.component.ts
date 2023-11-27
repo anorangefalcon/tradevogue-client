@@ -152,7 +152,14 @@ export class ProductsComponent implements OnInit {
 
   // Delete Entry
   deleteItem(entry: any, name: string = '', type: string = 'single') {
-    this.dialogBoxService.confirmationDialogBox();
+    let template: any = {
+      title: 'Proceed with Deletion?',
+      subtitle: `The item will be permanently deleted, and recovery will not be possible. Are you sure you want to proceed?`,
+      type: 'confirmation',
+      confirmationText: 'Yes, Delete it',
+      cancelText: 'No, Keep it',
+    };
+    this.dialogBoxService.confirmationDialogBox(template);
     this.deleteDataField.type = type,
       this.deleteDataField.data = entry;
   }
@@ -185,9 +192,7 @@ export class ProductsComponent implements OnInit {
     this.fetchData();
   }
 
-  clearFields(){
-    console.log('clear fields called');
-    
+  clearFields(){    
     this.tempSortData = '';
     this.template.filter.categories = '';
     delete this.template.filter['rating'];
@@ -196,7 +201,6 @@ export class ProductsComponent implements OnInit {
   }
 
   pageChange(e: any) {
-    console.log('page change called');
     
     this.template.page = e;
     this.currentPage = e;
@@ -235,7 +239,6 @@ export class ProductsComponent implements OnInit {
   filterData(array: any, limit: any) {
 
     const len = array.length;
-    console.log(array, limit);
     // 30% of Array is
     const index = Math.round(len * 0.3);
 
@@ -275,13 +278,14 @@ export class ProductsComponent implements OnInit {
         type: 'bulk',
         data: excel.data
       };
-      console.log("Excel", excel.data);
+      
       this.fetchdata.HTTPPOST(this.backendUrl.URLs.addproduct, formData).subscribe({
         next: (res: any) => {
           this.toastService.successToast("Data Uploaded Successfuly");
           this.fetchData();
         }
       })
+      
     })
   }
 

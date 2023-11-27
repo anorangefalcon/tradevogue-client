@@ -1,5 +1,11 @@
 <section id="order-section" class="d-flex flex-column gap-20">
-    <h3>Order List</h3>
+    <div class="d-flex align-item-center justify-content-md-between">
+        <h3>Order List</h3>
+        <button class="btn btn-rounded btn-secondary btn-sm fw-500 d-flex flex-center gap-5" (click)="downloadExcel()">
+            <span class="material-symbols-outlined fs-20 fw-300">download</span>
+            Download Orders
+        </button>
+    </div>
 
     <div class="order-info-cards grid gap-20">
         <div class="card card__pd-20 column col-2">
@@ -33,21 +39,23 @@
     </div>
 
 
-    <div class="filters card card__pd-20 grid gap-20 justify-content-end">
+    <div class="filters card card__pd-20 d-flex gap-20 align-item-center justify-content-md-between">
         <app-search-bar [searchPlaceholder]="'Search Orders...'"
             (searchQuery$)="updateFields($event, 'search')"></app-search-bar>
-        <app-custom-select [options]="paymentStatus" [selectedOption]="'Filter by Payment Status'"
-            (final_option)="updateFields($event, 'payment_status')"></app-custom-select>
-        <span class="d-flex relative justify-content-md-between flex-column gap-5">
-            <label class="form__title" for="todate">To: </label>
-            <input class="form__input todate" (input)="updateDateFields($event, 'dateto')" type="date" id="todate">
+        <span class="d-flex gap-20 align-item-center">
+            <app-custom-select [options]="paymentStatus" [selectedOption]="'Filter by Payment Status'"
+                (final_option)="updateFields($event, 'payment_status')"></app-custom-select>
+            <span class="d-flex relative justify-content-md-between flex-column gap-5">
+                <label class="form__title" for="todate">To: </label>
+                <input class="form__input todate" (input)="updateDateFields($event, 'dateto')" type="date" id="todate">
+            </span>
+            <span class="d-flex relative justify-content-md-between flex-column gap-5">
+                <label class="form__title" for="fromdate">From: </label>
+                <input class="form__input fromdate" (input)="updateDateFields($event, 'datefrom')" type="date"
+                    id="fromdate">
+            </span>
+            <button class="btn-primary btn-rounded btn-xs">Clear</button>
         </span>
-        <span class="d-flex relative justify-content-md-between flex-column gap-5">
-            <label class="form__title" for="fromdate">From: </label>
-            <input class="form__input fromdate" (input)="updateDateFields($event, 'datefrom')" type="date"
-                id="fromdate">
-        </span>
-        <button class="btn btn-rounded btn-primary btn-md" (click)="downloadExcel()">Download All Orders</button>
     </div>
 
     <div class="order-list d-flex flex-column gap-20">
@@ -110,6 +118,7 @@
                 </tbody>
 
                 <ng-template #fetchData>
+
                     <tbody *ngIf="!noData; else noDataFound">
                         <tr *ngFor="let i of tableGenerator(pageSize)">
                             <td *ngFor="let i of tableGenerator(7)" class="items">

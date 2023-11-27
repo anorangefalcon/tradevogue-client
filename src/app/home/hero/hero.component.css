@@ -67,9 +67,30 @@
     background-color: rgba(0, 0, 0, 0.23);
 }
 
-.skeleton{
+div.banner.skeleton{
     height: 100vh;
     width: 100%;
+}
+
+.owl-dots {
+    position: absolute;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    inset-inline-start: 0px;
+    inset-block-end: 8px;
+}
+
+.owl-dot.ng-star-inserted > span {
+    background: rgba(var(--whiteClr), 0.9) !important;
+    box-shadow: 0px 0px 5px rgba(var(--blackClr), 0.3);
+    transition: all 0.5s ease-in-out;
+}
+
+.owl-dot.active.ng-star-inserted > span {
+    background: rgba(var(--primaryClr), 0.9) !important;
+    width: 30px;
 }
 
 /* @media screen and (max-width: 768px) {

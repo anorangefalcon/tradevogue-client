@@ -4,7 +4,10 @@
     pointer-events: none;
     z-index: 99;
     background-color: rgb(var(--blackClr), 0.1);
+    transition: all 0.2s ease-in-out;
 }
+
+
 
 .dialogBox.open{
     visibility: visible;

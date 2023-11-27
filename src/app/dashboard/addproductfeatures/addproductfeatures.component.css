@@ -88,12 +88,10 @@ input[type="file"]+label:hover, .file-section span:hover {
 }
 
 .btn-primary {
-    font-weight: 500;
     padding-block: 7px;
     padding-inline: 8px;
     height: 40px;
     border-radius: 0px 4px 4px 0px;
-    background-color: rgb(var(--primaryClr));
 }
 
 @media (max-width: 768px) {
