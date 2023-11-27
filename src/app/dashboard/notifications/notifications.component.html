@@ -8,8 +8,8 @@
                 Add Notification
             </button>
 
-            <button class="btn btn-xs btn-rounded fw-500 btn-primary" [ngStyle]="{'display': notificationForm.disabled? 'none': 'flex'}"
-                (click)="onUpdate()">Update</button>
+            <button class="btn btn-xs btn-rounded fw-500 btn-primary"
+                [ngStyle]="{'display': notificationForm.disabled? 'none': 'flex'}" (click)="onUpdate()">Update</button>
         </div>
     </div>
     <form class="form__card d-flex gap-15 flex-column" [formGroup]="notificationForm">
@@ -94,7 +94,6 @@
                     <th class="items">SubTitle</th>
                     <th class="items">icon</th>
                     <th class="items">Link</th>
-                    <!-- <th class="items">Subcribed Users</th> -->
                     <th class="items">In-App Notification</th>
                     <th class="items">Action</th>
                 </tr>
@@ -106,7 +105,6 @@
                     <td class="ellipsis items">{{item.notification.body}}</td>
                     <td class="ellipsis items">{{item.notification.icon}}</td>
                     <td class="ellipsis items">{{item.notification.url}}</td>
-                    <!-- <td class="ellipsis items">{{item.registration_ids}}</td> -->
                     <td class="items">
                         <div class="slide-button d-flex align-item-center">
                             <input type="checkbox" [checked]="item.state" (change)="toggle(item)"
@@ -119,7 +117,7 @@
 
                             <span class="tooltip">
                                 <span class="fs-20 action__btn-icon pointer material-symbols-outlined"
-                                (click)="sendNotification(item)">notifications</span>
+                                    (click)="sendNotification(item)">notifications</span>
                                 <span class="tooltiptext">Notification</span>
                             </span>
 
@@ -131,7 +129,7 @@
 
                             <span class="tooltip">
                                 <span class="fs-20 action__btn-icon pointer material-symbols-outlined"
-                                (click)="deleteItem(item)">delete</span>
+                                    (click)="deleteItem(item)">delete</span>
                                 <span class="tooltiptext">Delete</span>
                             </span>
 

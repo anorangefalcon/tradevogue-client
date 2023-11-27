@@ -11,6 +11,7 @@ export class UtilsModule {
 
   // url:any=process.env.BackendUrl;
   BackendUrl:String=environment.BackendURL;
+  pincodeUrl:String=environment.Pincode;
   URLs: any = {
     signupUrl: `${this.BackendUrl}/user/signup`,
     loginUrl: `${this.BackendUrl}/user/login`,
@@ -142,6 +143,10 @@ export class UtilsModule {
     toggleNotification: `${this.BackendUrl}/notification/toggle`,
     comingNotification: `${this.BackendUrl}/notification/coming`,
 
+    // breadCrumbs
+    getBreadCrumbs: `${this.BackendUrl}/breadcrumbs/get`,
+    setBreadCrumbs: `${this.BackendUrl}/breadcrumbs/set`,
+
     // ------ custom-UI ------
 
     // Home-Layout
@@ -195,7 +200,10 @@ export class UtilsModule {
 
     // T&C
     getTandC:`${this.BackendUrl}/tc/get`,
-    setTandC: `${this.BackendUrl}/tc/set`
+    setTandC: `${this.BackendUrl}/tc/set`,
+
+    // pincode
+    getPincode: `${this.pincodeUrl}/api/purchaser/getDetailsByPostalCode`,
     
   }
 }

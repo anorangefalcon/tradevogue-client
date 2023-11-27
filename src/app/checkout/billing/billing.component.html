@@ -8,47 +8,39 @@
             <p class="common" [ngClass]="{'selected_step':StripeOpener}">Payment</p>
         </div>
     </div>
-    <!-- ADDRESS STARTS -->
 
+    <!-- ADDRESS STARTS -->
     <div class="address d-flex flex-column gap-20" *ngIf="!StripeOpener">
         <div class="d-flex flex-column gap-10">
-
             <div class="d-flex justify-content-md-between align-item-center overall__div">
-
                 <h2>SELECT DELIVERY ADDRESS
                 </h2>
-
-
                 <div class="d-flex align-item-center pointer addAddress__div" (click)="AddAddress()">
                     <span class="material-symbols-outlined">
                         add_circle
                     </span>
                     <p>ADD NEW ADDRESS</p>
-
                 </div>
             </div>
         </div>
 
-    <!-- show address -->
+        <!-- show address -->
         <div class="d-flex flex-column gap-20 " [ngClass]="{'main-address':AddressLength} ">
             <ng-container *ngFor="let address of userAddresses; let i=index" class="d-flex address__firstdiv ">
                 <div class="single-address">
-                        <input type="radio" id="radio{{i}}" name="address" value="address" class="d-flex"
-                            [checked]="address.selected">
-                
-
+                    <input type="radio" id="radio{{i}}" name="address" value="address" class="d-flex"
+                        [checked]="address.selected">
                     <label for="radio{{i}}" id="{{i}}" class="d-flex align-item-center pointer relative"
                         (click)="AddressClicked(address)">
-
                         <div class="d-flex gap-10 justify-content-md-between   mw100">
                             <div class="address-part d-flex flex-column gap-5">
                                 <div class="d-flex justify-content-md-between">
                                     <div class="d-flex gap-10">
-                                        <p class="name pointer-none">{{address.firstname | titlecase}} {{address.lastname | titlecase}}</p>
+                                        <p class="name pointer-none">{{address.firstname | titlecase}}
+                                            {{address.lastname | titlecase}}</p>
                                         <button class="default__btn btn" *ngIf="address?.selected">Deliver Here</button>
                                     </div>
                                 </div>
-
                                 <p>{{address.apartment}} {{address.area}} {{address.landmark}}, {{address.town_city}}
                                 </p>
                                 <p>{{address.state}}- {{address.pincode}}</p>
@@ -63,38 +55,25 @@
                                     delete
                                 </span>
                             </div>
-
                         </div>
-
-
                     </label>
                 </div>
             </ng-container>
         </div>
 
-
         <!-- new address  -->
         <div [ngClass]="{'show':ShowComponent==true}">
             <app-address [ShowComponent]="ShowComponent" [receiveData]="receiveData"
                 (AddressHandler)="AddressHandler($event)"></app-address>
-
-
         </div>
-
     </div>
 
     <!-- ADDRESS FINISH -->
 
-
-
+    <!-- PAYMENT STARTS -->
     <div *ngIf="StripeOpener">
-
-        <!-- <div *ngIf="selectedPaymentMethod === 'stripe'" class="payment-form"> -->
-            <div class="payment-form"   *ngIf="selectedPaymentMethod === 'stripe'">
+        <div class="payment-form" *ngIf="selectedPaymentMethod === 'stripe'">
             <form id="payment-form">
-                <!-- <button id="load-stripe" class="btn-primary" (click)="loadStripeOnButtonClick()">
-                Load Stripe
-            </button> -->
                 <div class="payment-elements">
                     <!-- Stripe.js elements -->
                     <div id="payment-request-button"></div>
@@ -114,26 +93,22 @@
         </div>
 
         <div class="payment-method-buttons">
-            <button class="btn-secondary btn btn-sm btn-rounded" 
-                    (click)="selectPaymentMethod('razorpay')"
-                    [class.selected]="selectedPaymentMethod === 'razorpay'"
-                    *ngIf="selectedPaymentMethod !== 'razorpay'">
-              Other Payment Method
+            <button class="btn-secondary btn btn-sm btn-rounded" (click)="selectPaymentMethod('razorpay')"
+                [class.selected]="selectedPaymentMethod === 'razorpay'" *ngIf="selectedPaymentMethod !== 'razorpay'">
+                Other Payment Method
             </button>
-          </div>
-          
-          <div *ngIf="selectedPaymentMethod === 'razorpay'">
-            <div *ngFor="let item of items">
-              <div [ngClass]="{'selected-box': selectedPaymentMethod === 'razorpay'}">
-                Payment Method Selected Proceed To Payment
-                <form class="hidden btn-primary" (submit)="submitForm(item)">
-                  <input type="hidden" name="amount" [value]="item.price">
-                  <button class="hidden" id='razorSubmit' type="submit">Pay</button>
-                </form>
-              </div>
-            </div>
-          </div>
-          
+        </div>
 
+        <div *ngIf="selectedPaymentMethod === 'razorpay'">
+            <div *ngFor="let item of items">
+                <div [ngClass]="{'selected-box': selectedPaymentMethod === 'razorpay'}">
+                    Payment Method Selected Proceed To Payment
+                    <form class="hidden btn-primary" (submit)="submitForm(item)">
+                        <input type="hidden" name="amount" [value]="item.price">
+                        <button class="hidden" id='razorSubmit' type="submit">Pay</button>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
 </div>

@@ -25,6 +25,7 @@ export class SupportComponent {
   selectedProduct: any;
   buttonsHidden: boolean = false;
   previousOrders: any[] = [];
+  username: any= '';
 
 
   constructor(private util: UtilsModule, private fetchData: FetchDataService,
@@ -46,9 +47,19 @@ export class SupportComponent {
           this.orderDetails = data.latestProduct;
           this.loadingProducts = false;
         } else {
+          return;
           // console.log("No data found because you have not ordered anything yet");
         }
       });
+    });
+
+    this.userService.getUser('name').subscribe((name: any) => {
+      if (name) {
+        this.username = name;
+      }
+      else{
+        this.username = 'Bot';
+      }
     });
   
   }

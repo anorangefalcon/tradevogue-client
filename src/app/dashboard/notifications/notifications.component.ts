@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, FormArray, FormControl, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
 import { NotificationService } from 'src/app/shared/services/custom-UI/notification.service';
 import { ImageUploadService } from 'src/app/shared/services/image-upload.service';
 import { FetchDataService } from 'src/app/shared/services/fetch-data.service';
@@ -150,7 +150,7 @@ export class NotificationsComponent {
 
 
 
-      const apiUrl = 'http://localhost:3000/send-notification';
+      const apiUrl = 'http://localhost:1000/send-notification';
 
 
       // this.fetch.HTTPPOST(apiUrl, data).subscribe((response)=> {

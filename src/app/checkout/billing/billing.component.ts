@@ -1,4 +1,4 @@
-import { Component, ElementRef, Renderer2, ViewChild, OnInit } from '@angular/core';
+import { Component, ElementRef, ViewChild, OnInit, Renderer2 } from '@angular/core';
 import { FetchDataService } from 'src/app/shared/services/fetch-data.service';
 import { UtilsModule } from 'src/app/utils/utils.module';
 import { CartService } from 'src/app/shared/services/cart.service';
@@ -6,7 +6,7 @@ import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { CheckoutService } from '../checkout.service';
 import { LoginCheckService } from 'src/app/shared/services/login-check.service';
-declare var Stripe: any;
+declare let Stripe: any;
 
 interface PaymentOptions {
   key: string;
@@ -50,6 +50,11 @@ export class BillingComponent implements OnInit {
   selectedPaymentMethod = 'stripe';
   StripeOpener: Boolean = false;
 
+  loadRazorpayScript() {
+    const script = this.renderer.createElement('script');
+    script.src = 'https://checkout.razorpay.com/v1/checkout.js';
+    this.renderer.appendChild(document.body, script);
+  }
 
   constructor(
     private cartService: CartService,
@@ -59,21 +64,18 @@ export class BillingComponent implements OnInit {
     private userService: LoginCheckService,
     private route: ActivatedRoute,
     private stripePay: CheckoutService,
-    private http: HttpClient
+    private http: HttpClient,
+    private renderer: Renderer2
   ) {
-
     this.items = JSON.parse(localStorage.getItem('paymentIntent') || '[]');
-    this.proceedToPayment();
-
+    // this.proceedToPayment();
     this.stripePay.setLoading = this.stripePay.setLoading.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.stripePay.showMessage = this.stripePay.showMessage.bind(this);
     this.initialize = this.initialize.bind(this);
-
     this.cartService.fetchCart().subscribe((data) => {
       this.cartitems = data;
     });
-
     const checkSubTotal = () => {
       if (this.cartitems.amounts.subTotal !== 0) {
         this.total = this.totalAmount;
@@ -92,9 +94,7 @@ export class BillingComponent implements OnInit {
         setTimeout(checkSubTotal, 1000);
       }
     };
-
     checkSubTotal();
-
   }
 
   ngOnInit(): void {
@@ -102,27 +102,22 @@ export class BillingComponent implements OnInit {
       this.StripeOpener = data;
     })
 
+    this.loadRazorpayScript();
+
     this.checkOutService.loadStripe.subscribe((isLoaded: any) => {
-      if(isLoaded){
+      if (isLoaded) {
         this.loadStripe();
       }
     })
+
     try {
-      this.route.queryParams.subscribe(async params => {
-        const redirectStatus = params['redirect_status'];
-
-        if (redirectStatus === 'succeeded') {
-          await this.proceedToPayment();
-        }
-      });
-
       this.getAddresses();
-      // this.load();
-
     } catch (error) {
       console.error('Error loading Stripe scripts:', error);
     }
+
   }
+  
   stripeLoaded: boolean = false;
   async loadStripe(): Promise<void> {
     try {
@@ -151,7 +146,6 @@ export class BillingComponent implements OnInit {
       console.error('Error loading Stripe scripts:', error);
     }
   }
-
 
   async initializeStripe(): Promise<void> {
     try {
@@ -186,7 +180,6 @@ export class BillingComponent implements OnInit {
         let result = JSON.parse(JSON.stringify(res));
         // body.products=result.details;
         this.fetchDataService.HTTPGET(this.backendURLs.URLs.getLatestOrderId).subscribe((data: any) => {
-
           body = {
             amount: item.price.toString(),
             buyerId: "token",
@@ -194,13 +187,9 @@ export class BillingComponent implements OnInit {
             products: result.details,
             orderID: data.orderID
           };
-
           console.log(body, 'body is');
-
           this.fetchDataService.HTTPPOST(this.backendURLs.URLs.updateOrderStatus, body).subscribe();
-
         });
-
       })
 
       let body = {};
@@ -213,7 +202,6 @@ export class BillingComponent implements OnInit {
       })
 
       const res = await this.http.post<any>('http://localhost:1000/razorpay/createUpiPayment', body).toPromise();
-
       if (res.success) {
         const options: PaymentOptions = {
           key: res.key_id,
@@ -224,7 +212,6 @@ export class BillingComponent implements OnInit {
           image: '../../assets/logo-mobile.svg',
           order_id: res.order_id,
           handler: (response: any) => {
-
             let paymentBody = {};
             this.userService.getUser('token').subscribe((token: any) => {
               paymentBody = {
@@ -253,7 +240,6 @@ export class BillingComponent implements OnInit {
             color: '#2300a3',
           },
         };
-
         const razorpayObject = new (window as any).Razorpay(options);
         razorpayObject.on('payment.failed', (response: any) => {
           alert('Payment Failed');
@@ -267,14 +253,12 @@ export class BillingComponent implements OnInit {
     }
   }
 
-
   async proceedToPayment(): Promise<void> {
     try {
       const response = await fetch(this.backendURLs.URLs.getPaymentKeys);
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
-
       const data = await response.json();
       const publicKey = data[0]?.keys?.[0]?.publicKey;
 
@@ -332,19 +316,11 @@ export class BillingComponent implements OnInit {
           border: '1px solid rgba(0, 0, 0, 0.2)',
           outline: '1px solid rgba(0, 0, 0, 0.2)',
         },
-        '.p-Field': {
-          margin: '12px',
-        },
         '.Input:disabled, .Input--invalid:disabled': {
           color: 'lightgray'
         },
-        'form':{
-          display: 'flex',
-          gap: '20px'
-        },
         '.Input:hover': {
-          borderColor: 'rgb(4, 118, 118)',
-          outlineColor: 'rgb(4, 118, 118)',
+          borderColor: 'rgb(4, 118, 118)'
         },
         '.Tab': {
           padding: '10px 12px 8px 12px',
@@ -416,8 +392,6 @@ export class BillingComponent implements OnInit {
     this.selectedPaymentMethod = method;
   }
 
-
-
   @ViewChild('mydiv') my_div: ElementRef | undefined;
   search_text: any = '';
   visible_data: any[] = [];
@@ -442,7 +416,6 @@ export class BillingComponent implements OnInit {
 
 
   // ADDRESS TS FILE---------------------
-
   userAddresses: any[] = [];
   receiveData: any;
   ShowComponent: boolean = false;
@@ -461,35 +434,27 @@ export class BillingComponent implements OnInit {
       })
   }
 
-
-
-
-
-
   EditAddress(address: any, index: any) {
     const data = this.userAddresses[index];
     this.receiveData = { data, index };
     this.ShowComponent = true;
   }
 
-
   AddressHandler(event: any) {
     if (!event) {
       this.ShowComponent = event;
     }
-
 
     //edit request updated
     else if (event.index === 0 || event.index) {
       this.userAddresses[event.index] = event.data;
       this.AddressLength = this.userAddresses.length;
     }
-    // // new address added
+    // new address added
     else {
       this.userAddresses = event;
       this.AddressLength = this.userAddresses.length;
     }
-
   }
 
   RemoveAddress(address: any, index: any) {
@@ -500,14 +465,11 @@ export class BillingComponent implements OnInit {
     })
   }
 
-
   AddAddress() {
     this.ShowComponent = true;
   }
 
-
   addressDelivered!: any[];
-
   addressChecked: Boolean = false;
   AddressClicked(address: any) {
     this.userAddresses.forEach((el) => {
@@ -517,9 +479,4 @@ export class BillingComponent implements OnInit {
     this.checkOutService.addressSelected = (address);
     this.addressDelivered = address;
   }
-
-
-
-
-
 }

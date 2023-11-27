@@ -6,6 +6,7 @@
 /out-tsc
 /bazel-out
 /.firebase
+/.scannerwork
 
 # Node
 /node_modules

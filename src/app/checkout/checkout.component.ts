@@ -4,10 +4,8 @@ import { Router } from '@angular/router';
 import { UtilsModule } from '../utils/utils.module';
 import { FetchDataService } from '../shared/services/fetch-data.service';
 import { ToastService } from '../shared/services/toast.service';
-// import { StripPaymentService } from '../shared/services/stripe-Integration/strip-payment.service';
 import { CheckoutService } from './checkout.service';
 import { LoginCheckService } from '../shared/services/login-check.service';
-import { BehaviorSubject, debounceTime, distinctUntilChanged } from 'rxjs';
 
 
 @Component({
@@ -24,6 +22,11 @@ export class CheckoutComponent implements OnInit {
   //   this._orderIDSubject.next(orderId);
   // }
 
+  loadRazorpayScript() {
+    const script = this.renderer.createElement('script');
+    script.src = 'https://checkout.razorpay.com/v1/checkout.js';
+    this.renderer.appendChild(document.body, script);
+  }
 
   // CouponAppliedBtnClicked:any='hidden';
   navbar_scroll_style: boolean = false;
@@ -58,18 +61,7 @@ export class CheckoutComponent implements OnInit {
       this.loading = false;
 
     });
-
-
-
-
-
-  }
-
-
-
-
-
-  ParentClosedFun(event: any) {
+    this.loadRazorpayScript();
 
   }
 
@@ -225,7 +217,7 @@ export class CheckoutComponent implements OnInit {
   }
 
 
-  async verifyOrderSummary(navigate: Boolean = true) {
+  async verifyOrderSummary(navigate: boolean = true) {
     this.cartService.fetchCart().subscribe(async (res) => {
       let result = JSON.parse(JSON.stringify(res));
       if (result.length == 0) return;
@@ -265,9 +257,9 @@ export class CheckoutComponent implements OnInit {
     this.CouponCode.nativeElement.value = '';
   }
 
-  StripePaymentOpener: Boolean = false;
+  StripePaymentOpener: boolean = false;
   AddressSelected: any = null;
-  NextDisabled: Boolean = false;
+  NextDisabled: boolean = false;
 
   nextClicked() {
 
@@ -282,14 +274,13 @@ export class CheckoutComponent implements OnInit {
     this.checkOutService.loadStripe.next(true);
     if (this.checkOutService.addressSelected) {
 
-      // this.createOrder();
-      // this.NextDisabled=false;
+      this.createOrder();
       this.checkOutService.StripePaymentOpen.next(true);
     }
   }
 
 
-  OrderId: String = '';
+  OrderId: string = '';
   createOrder() {
     let body: any = {};
     body.address = this.AddressSelected;
@@ -339,7 +330,7 @@ export class CheckoutComponent implements OnInit {
     }
 
 
-    await this.cartService.fetchCart().subscribe((data) => {
+   this.cartService.fetchCart().subscribe((data) => {
       if (this.CouponApplied) {
         body.coupon = this.CouponApplied;
         body.discount = data.amounts.savings;

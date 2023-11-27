@@ -3,9 +3,8 @@ import { UtilsModule } from '../utils/utils.module';
 import { FetchDataService } from '../shared/services/fetch-data.service';
 import { NavigationEnd, Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
-import { LoginCheckService } from '../shared/services/login-check.service';
 import { CartService } from '../shared/services/cart.service';
-declare var Stripe: any;
+declare let Stripe: any;
 
 @Injectable({
   providedIn: 'root'
@@ -67,7 +66,7 @@ export class CheckoutService {
   }
 
   unloadStripeScript(): void {
-    if (this.stripeScript && this.stripeScript.parentNode) {
+    if (this?.stripeScript && this.stripeScript?.parentNode) {
       this.stripeScript.parentNode.removeChild(this.stripeScript);
     }
   }
@@ -116,8 +115,7 @@ export class CheckoutService {
       const publicKey = data[0]?.keys[0]?.publicKey;
 
       this.stripe = Stripe(publicKey);
-      // const clientSecret = new URLSearchParams(window.location.search).get("payment_intent_client_secret");
-      const clientSecret = this.fetchData.HTTPGET(this.backendUri.URLs.getClientSecret).subscribe(async (res) => {
+      this.fetchData.HTTPGET(this.backendUri.URLs.getClientSecret).subscribe(async (res) => {
         console.log(res, 'res is');
         this.SecretClient = res;
 

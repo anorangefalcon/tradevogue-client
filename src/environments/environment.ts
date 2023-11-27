@@ -10,5 +10,6 @@ export const environment = {
   },
 
   production: false,
-  BackendURL:'http://localhost:1000'
+  BackendURL:'http://localhost:1000',
+  Pincode:'http://54.157.29.156:4000',
 };

@@ -96,7 +96,7 @@ export class FaqsComponent {
         ],
       };
 
-      await this.fetchDataService.HTTPPOST(this.bgURL.URLs.addFaqData, dataToSend).subscribe((data) => {
+     this.fetchDataService.HTTPPOST(this.bgURL.URLs.addFaqData, dataToSend).subscribe((data) => {
         if (data) {
           this.toast.successToast({ title: "FAQ added successfully" });
         } else {
@@ -144,7 +144,7 @@ export class FaqsComponent {
       };
 
       try {
-        const data: any = await this.fetchDataService.HTTPPOST(this.bgURL.URLs.updateFaqData, updatedFaqItem).subscribe((res)=> {
+        const data: any = this.fetchDataService.HTTPPOST(this.bgURL.URLs.updateFaqData, updatedFaqItem).subscribe((res)=> {
         });
         if (data) {
           this.toast.successToast({ title: "FAQ updated successfully" });

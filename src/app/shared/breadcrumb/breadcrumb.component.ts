@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
-import { filter } from 'rxjs';
 import { BreadcrumbService } from 'src/app/shared/services/breadcrumb.service';
 import { SalesService } from '../services/custom-UI/sales.service';
 
@@ -12,26 +11,12 @@ import { SalesService } from '../services/custom-UI/sales.service';
 export class BreadcrumbComponent implements OnInit {
   breadcrumbs: Array<{ label: string; url: string }> = [];
   currentRoute: string = '';
-  activeSku:any;
+  activeSku: any;
   saleData: any[] = [];
   marqueeData: string[] = [];
   marqueeDirection: string = 'left';
   private marqueeElement: HTMLMarqueeElement | undefined;
 
-  // Function to pause the marquee
-  pauseMarquee() {
-    this.marqueeElement = document.querySelector('.marquee-container marquee') as HTMLMarqueeElement;
-    if (this.marqueeElement) {
-      this.marqueeElement.stop();
-    }
-  }
-
-  // Function to resume the marquee
-  resumeMarquee() {
-    if (this.marqueeElement) {
-      this.marqueeElement.start();
-    }
-  }
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
@@ -41,7 +26,7 @@ export class BreadcrumbComponent implements OnInit {
     this.router.events.subscribe((event) => {
       this.router.events.subscribe(event => {
         if (event instanceof NavigationEnd) {
-          this.currentRoute = event.url; 
+          this.currentRoute = event.url;
         }
       });
       if (event instanceof NavigationEnd) {

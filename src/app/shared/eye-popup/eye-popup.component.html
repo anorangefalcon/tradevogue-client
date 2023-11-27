@@ -2,8 +2,8 @@
     <app-drawer [direction]="direction" [show]="show" (showChange)="handler($event)" [title]="list?.name" [width]="width">
       <div class="popup-content popup-details">
         <div class="left-side">
-            <owl-carousel-o [options]="customOptions" [ngClass]="{crousel: true}">
-                <ng-template carouselSlide *ngFor="let item of list?.assets[0]?.photo">
+            <owl-carousel-o *ngIf="list && list.assets && list.assets.length > 0" [options]="customOptions" [ngClass]="{crousel: true}">
+                <ng-template carouselSlide *ngFor="let item of list.assets[0]?.photo">
                     <div>
                         <img class="image-carousel" [src]="item" alt="Product Image">
                     </div>
