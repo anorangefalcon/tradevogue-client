@@ -1,6 +1,6 @@
 <div>
     <app-drawer [direction]="direction" [show]="show" (showChange)="handler($event)" [title]="list?.name" [width]="width">
-      <div class="popup-content popup-details">
+      <!-- <div class="popup-content popup-details">
         <div class="left-side">
             <owl-carousel-o *ngIf="list && list.assets && list.assets.length > 0" [options]="customOptions" [ngClass]="{crousel: true}">
                 <ng-template carouselSlide *ngFor="let item of list.assets[0]?.photo">
@@ -18,13 +18,6 @@
 
             <h2 class="subTitle">{{list?.subTitle}}
 
-                <!-- <div *ngIf="avgRating !== 0" class="rating d-flex align-item-center">
-                    <span *ngFor="let i of createArrayToIterate(avgRating)"
-                        class="material-symbols-outlined filled">star</span>
-                    <span *ngIf="(avgRating % 1) !== 0" class="material-symbols-outlined">star_half</span>
-                    <span *ngFor="let i of createArrayToIterate(5 - avgRating)"
-                        class="material-symbols-outlined">star</span>
-                </div> -->
             </h2>
 
 
@@ -66,7 +59,9 @@
                 </button>
             </div>
         </div>
-    </div>
+    </div> -->
+
+
     </app-drawer>
-  </div>
+  <!-- </div> -->
   

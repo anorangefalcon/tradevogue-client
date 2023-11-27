@@ -94,8 +94,6 @@ export class AddressComponent {
     debounceTime(500),
     distinctUntilChanged())
     .subscribe((data)=>{
-    console.log('data come up is ',data); 
-
        });
     this.postalCodeInput.next(postalCodeValue);
   }
@@ -124,14 +122,16 @@ export class AddressComponent {
   }
 
   async SaveAddress() {
-    try {
       let result;
       if (this.receiveData) {
         const body =this.DetailsForm.value;
         body._id = this.receiveData.data._id;
-        this.fetchService.HTTPPOST(this.backendURLs.URLs.updateAddress, body).subscribe((result)=>{
+        this.fetchService.HTTPPOST(this.backendURLs.URLs.updateAddress, body).subscribe({next:(result)=>{
           this.AddressHandler.next({ data: body, index: this.receiveData.index });
-        });
+        },error:()=>{
+          this.DetailsForm.reset();
+      this.show = false;
+        }});
       }
       else {
     this.fetchService.HTTPPOST(this.backendURLs.URLs.addAddress, JSON.parse(JSON.stringify(this.DetailsForm.value))).subscribe((result)=>{
@@ -140,11 +140,10 @@ export class AddressComponent {
       }
 
       
-    }
-    catch (error) {
-    }
+    
     this.DetailsForm.reset();
-      this.show = false;
+    this.show = false;
+    this.AddressHandler.emit(false);
   }
 
   StateHandler(event: any) {

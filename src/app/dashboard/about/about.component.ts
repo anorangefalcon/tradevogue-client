@@ -13,6 +13,7 @@ import { UtilsModule } from 'src/app/utils/utils.module';
 export class AboutComponent {
   Edit: Boolean = false;
   AboutPageForm!: FormGroup
+  AboutPageFormCopy!:FormGroup
   AboutPageValues: any
   constructor(
     private fb: FormBuilder, 
@@ -20,8 +21,8 @@ export class AboutComponent {
     private backendURLs: UtilsModule, 
     private fetchDataService: FetchDataService, 
     private toastService: ToastService) {
-
-    this.AboutPageForm = this.fb.group({
+    
+    this.AboutPageForm =  this.fb.group({
       BasicInfo: this.fb.group({
         content: this.fb.group({
           name: ['', Validators.required],
@@ -43,19 +44,11 @@ export class AboutComponent {
         StoreImages: this.fb.control(['',[ this.StoreImageValidator, Validators.required]]),
       }),
       TeamMembers: this.fb.array([
-
       ]),
     })
 
-    this.fetchDataService.HTTPGET((this.backendURLs.URLs.getAboutDetails)).subscribe((data: any) => {
-      data.TeamMembers.forEach((el:any)=>{
-        this.AddTeamMember();
-      })
-      this.AboutPageForm.patchValue(data);
-      this.AboutPageValues = JSON.parse(JSON.stringify(data));
-    })
 
-
+    this.getDetails();
     // this.DummyImages();
     this.FormDisableEnable();
 
@@ -64,11 +57,44 @@ export class AboutComponent {
   } 
 
   ngOnInit(){
-    console.log('ng on it called');
-    
     this.fetchStats();
   }
 
+
+  getDetails(){
+    this.fetchDataService.HTTPGET((this.backendURLs.URLs.getAboutDetails)).subscribe((data: any) => {
+      this.AboutPageForm = this.fb.group({
+        BasicInfo: this.fb.group({
+          content: this.fb.group({
+            name: ['', Validators.required],
+            tagline: ['', Validators.required],
+            description: ['', Validators.required],
+            foundedYear: ['', [Validators.required, this.FoundedYearValidator]],
+            growthDescription: ['', Validators.required],
+            Feature1: this.fb.group({
+              heading: ['', Validators.required],
+              description: ['', Validators.required],
+            }),
+  
+            Feature2: this.fb.group({
+              heading: ['', Validators.required],
+              description: ['', Validators.required],
+            }),
+  
+          }),
+          StoreImages: this.fb.control(['',[ this.StoreImageValidator, Validators.required]]),
+        }),
+        TeamMembers: this.fb.array([
+        ]),
+      })
+      data.TeamMembers.forEach((el:any)=>{
+        this.AddTeamMember();
+      })
+      this.AboutPageForm.patchValue(data);
+      this.AboutPageValues = JSON.parse(JSON.stringify(data));
+    })
+
+  }
 
   fetchStats(){
     console.log('this.fetchStats');
@@ -126,6 +152,8 @@ export class AboutComponent {
 
   Save() {
     this.fetchDataService.HTTPPOST(this.backendURLs.URLs.setAboutDetails, this.AboutPageForm.value).subscribe((response) => {
+      this.EditClicked();
+      this.getDetails();
     })
 
   }

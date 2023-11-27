@@ -22,6 +22,7 @@ export class NavbarComponent implements OnInit {
   cart_count: number = 0;
   wishlistCount: number = 0;
   isLogin: boolean = false;
+  darkTheme : boolean = false;
 
   cartArr: any[] = [];
   navbar_scroll_style: boolean = false;
@@ -108,6 +109,12 @@ export class NavbarComponent implements OnInit {
       this.navbar_scroll_style = false;
     }
 
+  }
+
+  toggleTheme(){
+    // document.getElementById('tv-body').
+    this.darkTheme = !this.darkTheme
+    $('#tv-body').toggleClass("dark")
   }
 
 

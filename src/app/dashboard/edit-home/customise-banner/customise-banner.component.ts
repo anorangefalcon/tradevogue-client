@@ -74,19 +74,19 @@ export class CustomiseBannerComponent {
     
     this.bannerService.getBanners().subscribe((data: any) => {
       this.bannerData = data;
+      
     }
     )
   }
 
-  isChecked(event: any) {
-    let val = (<HTMLInputElement>event.target).checked
-    this.checkbox = true;
+  isChecked() {
+    let val = this.checkbox;
     
-    if (val == true) {
+    if (val) {
       this.bannerForm.get('title')?.disable()
       this.bannerForm.get('subTitle')?.disable()
       this.bannerForm.get('buttonText')?.disable()
-      this.bannerForm.get('contentAlign')?.disable()
+      this.bannerForm.get('contentAlign')?.disable();
       this.bannerForm.get('colors')?.get('titleColor')?.disable()
       this.bannerForm.get('colors')?.get('subTitleColor')?.disable()
       this.bannerForm.get('colors')?.get('buttonColor')?.disable()
@@ -100,7 +100,6 @@ export class CustomiseBannerComponent {
       this.bannerForm.get('colors')?.get('subTitleColor')?.enable()
       this.bannerForm.get('colors')?.get('buttonColor')?.enable()
     }
-
   }
 
   onSave() {
@@ -186,9 +185,12 @@ export class CustomiseBannerComponent {
   }
 
   edit(index: any) {
-    const value = this.bannerData[index]
+    const value = this.bannerData[index];
+    this.bannerForm.reset();
 
     if (value.title) {
+      this.checkbox = false;
+
       this.bannerForm.patchValue({
         backgroundImage: value.backgroundImage,
         title: value.title,
@@ -204,11 +206,13 @@ export class CustomiseBannerComponent {
       })
     }
     else {
+      this.checkbox = true;
       this.bannerForm.patchValue({
         backgroundImage: value.backgroundImage,
         buttonLink: value.buttonLink
-      })
+      });
     }
+    this.isChecked();
     this.editValue = value;
   }
 

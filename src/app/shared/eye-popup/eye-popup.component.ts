@@ -21,7 +21,7 @@ import { CartService } from '../services/cart.service';
 })
 export class EyePopupComponent {
   direction: any = 'popup';
-  width:any='fit-content';
+  width:any='200px';
   show: boolean = false;
   fetchData = new BehaviorSubject<string>('');
   sku: any;

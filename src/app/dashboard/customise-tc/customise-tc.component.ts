@@ -25,21 +25,6 @@ export class CustomiseTcComponent {
     this.yourFormGroup = this.fb.group({
 
       TandC: this.fb.array([
-        this.fb.group({
-
-          heading: this.fb.control('', Validators.required),
-          ContentTYPE: this.fb.control(['list', 'paragraph']),
-          contentInfo: this.fb.array([
-            this.fb.group({
-              content_type: ['', Validators.required],
-              content_description: this.fb.array([
-                this.fb.group({
-                  content: ['', Validators.required],
-                })
-              ])
-            })
-          ])
-        })
       ])
     });
     this.getData();
@@ -190,9 +175,9 @@ export class CustomiseTcComponent {
     let form = this.fb.group({
       content_type: ['', Validators.required],
       content_description: this.fb.array([
-        this.fb.group({
-          content: ['', Validators.required],
-        })
+        // this.fb.group({
+        //   content: ['', Validators.required],
+        // })
       ])
     });
 
@@ -201,7 +186,7 @@ export class CustomiseTcComponent {
       this.toastService.errorToast({ title: 'You cannot add more than 5 controls ' });
     }
     else {
-      (<FormArray>this.yourFormGroup.get('TandC')?.get(String(i))?.get('contentInfo'))?.push(form);
+      FormArray.push(form);
     }
   }
 
@@ -212,30 +197,21 @@ export class CustomiseTcComponent {
       heading: this.fb.control('', Validators.required),
       ContentTYPE: this.fb.control(['list', 'paragraph']),
       contentInfo: this.fb.array([
-        this.fb.group({
-          content_type: ['', Validators.required],
-          content_description: this.fb.array([
-            this.fb.group({
-              content: ['', Validators.required],
-            })
-          ])
-        })
       ])
     });
+
     (<FormArray>this.yourFormGroup.get('TandC'))?.push(form);
   }
 
   getData() {
     this.fetchDataService.HTTPGET(this.backendUrl.URLs.getTandC).subscribe((response: any) => {
-
-      for (let i = 0; i < response.data.length - 1; i++) {
+      for (let i = 0; i <=response.data.length-1; i++) {
         this.addFormControl();
-        for (let j = 0; j < response.data[i].contentInfo.length - 1; j++) {
+        for (let j = 0; j < response.data[i].contentInfo.length; j++) {
           this.addContentFormControl(i);
 
-          for (let k = 0; k < response.data[i].contentInfo[j].content_description.length - 1; k++) {
+          for (let k = 0; k < response.data[i].contentInfo[j].content_description.length; k++) { 
             this.addContentDescFormControl(i, j);
-
           }
         }
 

@@ -32,10 +32,7 @@ export class DealComponent {
         })
       });
 
-    this.fetchService.HTTPGET(this.backendURLs.URLs.getDealsDetails).subscribe((data:any)=>{
-      this.CopyDealForm=JSON.parse(JSON.stringify(data));
-          this.DealForm.patchValue(data);
-      })
+      this.getDetails();
       this.FormDisableEnable();
   }
 
@@ -43,6 +40,12 @@ export class DealComponent {
     this.DealForm.get('contentAlign')?.setValue(event);
   }
 
+  getDetails(){
+    this.fetchService.HTTPGET(this.backendURLs.URLs.getDealsDetails).subscribe((data:any)=>{
+      this.CopyDealForm=JSON.parse(JSON.stringify(data));
+          this.DealForm.patchValue(data);
+      })
+  }
 
  
 
@@ -53,6 +56,7 @@ export class DealComponent {
     }
     this.fetchService.HTTPPOST(this.backendURLs.URLs.setDeals,this.DealForm.value).subscribe((data)=>{
     this.toastService.successToast({title:'Sucessfully Uploaded Deal Details'});
+    this.getDetails();
     })
     this.EditClicked();
   }

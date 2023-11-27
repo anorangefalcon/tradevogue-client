@@ -9,13 +9,14 @@
             <h3>Customise Banner</h3>
         </div>
         <div class="operation_button d-flex gap-10">
-            <button class="btn btn-xs fw-500 btn-rounded btn-primary" (click)="showForm = true; showingPopUp=true">Add
+            <button class="btn btn-xs fw-500 btn-rounded btn-primary" (click)="showForm = true; showingPopUp=true; bannerForm.reset()">Add
                 banner</button>
         </div>
     </div>
 
 
-    <app-drawer [direction]="popUpDirection" [show]="showingPopUp" (showChange)="PopUpChangeHanlder($event)" (ParentClosedEmitter)="ParentClosedHandler($event)" [title]="'Customise Banner'">
+    <app-drawer [direction]="popUpDirection" [show]="showingPopUp" (showChange)="PopUpChangeHanlder($event)"
+        (ParentClosedEmitter)="ParentClosedHandler($event)" [title]="'Customise Banner'">
         <form class="form__card d-flex gap-15 default-animation flex-column" [formGroup]="bannerForm"
             *ngIf="showForm === true">
             <div class="mw100 relative d-flex flex-column gap-20">
@@ -42,14 +43,14 @@
                         </div>
                     </div>
                     <div class="d-flex gap-10 checkbox align-item-center">
-                        <input type="checkbox" name="layput" id="layout" (change)="isChecked($event)"
-                            class="custom-check">
+                        <input type="checkbox" name="layput" id="layout" (change)="checkbox = !checkbox; isChecked();"
+                            class="custom-check" [checked]="checkbox">
                         <label for="layout">Add only banner and link</label>
                     </div>
                     <div class="data-upload-div d-flex flex-column mw100 gap-10">
                         <div class="d-flex flex-column mw100 gap-10">
 
-                            <div class="internal-div" *ngIf="checkbox">
+                            <div class="internal-div">
                                 <label class="form__title" for="title">Title</label>
                                 <span class="relative ">
                                     <input class="form__input color-input" type="text" id="title"
@@ -107,24 +108,11 @@
                         <div class="d-flex flex-column mw100 gap-10">
                             <div class="internal-div">
                                 <label class="form__title" for="contentAlign">Content Align</label>
-                                <app-custom-select [_id]="'alignment'" [options]="alignment"
+                                <app-custom-select [_id]="'alignment'" [options]="alignment" [disableStatus]="checkbox"
                                     [selectedOption]="(bannerForm.get('contentAlign')?.value ? bannerForm.get('contentAlign')?.value : 'Select..')"
-                                    (final_option)="this.bannerForm.get('contentAlign')?.setValue($event);"></app-custom-select>
+                                    (final_option)="this.bannerForm.get('contentAlign')?.setValue($event);">
+                                </app-custom-select>
                             </div>
-                            <!-- <ng-container formGroupName="colors">
-                                <div class="internal-div">
-                                    <label class="form__title" [for]="'titleText'">Title Color</label>
-                                    <input type="color" name="" [id]="'titleText'" formControlName="titleColor">
-                                </div>
-                                <div class="internal-div">
-                                    <label class="form__title" [for]="'subTitleText'">Subtitle Color</label>
-                                    <input type="color" [id]="'subTitleText'" formControlName="subTitleColor" />
-                                </div>
-                                <div class="internal-div">
-                                    <label class="form__title" [for]="'buttonText'">Button Color</label>
-                                    <input type="color" [id]="'buttonText'" formControlName="buttonColor" />
-                                </div>
-                            </ng-container> -->
                         </div>
                     </div>
                 </div>

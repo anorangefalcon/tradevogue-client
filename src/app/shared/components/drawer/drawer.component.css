@@ -93,7 +93,8 @@
 }
 
 .popup {
-    height: fit-content;
+    /* height: fit-content; */
+    height: 200px;
     left: 50%;
     top: 20%;
     border-radius: 8px;
