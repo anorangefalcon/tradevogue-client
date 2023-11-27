@@ -19,8 +19,6 @@ export class FooterComponent {
 
   constructor(private routerService: RouterLinksService, private router: Router, private socialsService: SocialsService, private fetchDataService : FetchDataService, private backendUrls : UtilsModule) {
     this.fetchDataService.themeColor$.subscribe((color)=>{
-      console.log(color, "hua change?");
-      
       this.theme = color;
     })
   }
