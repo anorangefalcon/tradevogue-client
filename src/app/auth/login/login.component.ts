@@ -1,10 +1,7 @@
 import { Component, Renderer2 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
-import { UserDataService } from '../user-data.service';
 import { UtilsModule } from 'src/app/utils/utils.module';
 import { FetchDataService } from 'src/app/shared/services/fetch-data.service';
-import { WishlistService } from 'src/app/shared/services/wishlist.service';
 import { LoginCheckService } from 'src/app/shared/services/login-check.service';
 import { DialogBoxService } from 'src/app/shared/services/dialog-box.service';
 
@@ -14,8 +11,6 @@ import { DialogBoxService } from 'src/app/shared/services/dialog-box.service';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
-
-
   loginForm: FormGroup;
   forgetPasswordForm: FormGroup;
   passwordFieldType: string = 'password';
@@ -26,12 +21,12 @@ export class LoginComponent {
   loading: boolean = false;
 
   constructor(
-    private fb: FormBuilder,
+    fb: FormBuilder,
     private loginService: LoginCheckService,
-     private backendUrls: UtilsModule, 
-     private fetchDataService: FetchDataService, 
-     private dialogService: DialogBoxService,
-     private renderer: Renderer2) {
+    private backendUrls: UtilsModule,
+    private fetchDataService: FetchDataService,
+    private dialogService: DialogBoxService,
+    private renderer: Renderer2) {
 
     this.loginForm = fb.group(
       {
@@ -45,11 +40,11 @@ export class LoginComponent {
     })
 
     // Google login
-    window.addEventListener('loginEvent',(event:any)=>{
+    window.addEventListener('loginEvent', (event: any) => {
       const token = { credential: event.detail.credential }
-        const body = { token };
+      const body = { token };
       this.LoginUser(body);
-    } );
+    });
   }
 
   ngOnInit() {
@@ -64,7 +59,7 @@ export class LoginComponent {
   LoginUser(body: any) {
     this.fetchDataService.HTTPPOST(this.backendUrls.URLs.loginUrl, body).subscribe(
       (data: any) => {
-        this.loginService.loginUser({ 'userToken': data.token, 'name': data.firstName });        
+        this.loginService.loginUser({ 'userToken': data.token, 'name': data.firstName });
       }
     )
     this.loading = false;
@@ -72,7 +67,7 @@ export class LoginComponent {
 
   onLogin() {
     this.loading = true;
-    
+
     const body = {
       email: this.loginForm.get('email')?.value,
       password: this.loginForm.get('password')?.value
@@ -95,5 +90,9 @@ export class LoginComponent {
   togglePasswordVisibility() {
     this.showPassword = !this.showPassword;
     this.passwordFieldType = this.showPassword ? 'text' : 'password';
+  }
+
+  ngOnDestroy() {
+    this.renderer.removeChild(document.body, this.script);
   }
 }

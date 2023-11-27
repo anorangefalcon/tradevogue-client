@@ -160,6 +160,7 @@
     width: 10px;
     height: 10px;
     border-radius: 50%;
+    border: 1px solid rgb(var(--blackClr), 0.2);
 }
 
 .quantity {
