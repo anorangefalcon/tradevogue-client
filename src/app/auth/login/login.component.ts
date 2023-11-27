@@ -28,10 +28,6 @@ export class LoginComponent {
   constructor(
     private fb: FormBuilder,
     private loginService: LoginCheckService,
-     private wishlistService: WishlistService, 
-     private router: Router, 
-     private userData: UserDataService, 
-     private route: ActivatedRoute, 
      private backendUrls: UtilsModule, 
      private fetchDataService: FetchDataService, 
      private dialogService: DialogBoxService,

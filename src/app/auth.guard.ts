@@ -5,6 +5,7 @@ import { UtilsModule } from './utils/utils.module';
 import { LoginCheckService } from './shared/services/login-check.service';
 import { last, lastValueFrom } from 'rxjs';
 import { CookieService } from 'ngx-cookie-service';
+import { ToastService } from './shared/services/toast.service';
 
 export const authGuard: CanActivateFn = async (route, state) => {
   const currentRoutes = state.url.split('/')[1];
@@ -12,14 +13,16 @@ export const authGuard: CanActivateFn = async (route, state) => {
   const cookie=inject(CookieService);
   const FetchService = inject(FetchDataService);
   const loginCheckService = inject(LoginCheckService);
+  const toastService=inject(ToastService);
   const BackendUrl = inject(UtilsModule);
 
   let navigateCheck = true;
   // console.log('check comeup is ',typeof(loginCheckService.getUser()));
   //  let check= await lastValueFrom(loginCheckService.getUser());
   let check=cookie.get('userToken');
+  let data;
     if(check){
-      const data=await lastValueFrom((FetchService.HTTPGET(BackendUrl.URLs.authorizeUrl)));
+      data=await lastValueFrom((FetchService.HTTPGET(BackendUrl.URLs.authorizeUrl)));
       if (data != 'admin') { 
           if (!check && currentRoutes == 'usersetting') navigateCheck = false;
           if (currentRoutes == 'auth' && check) navigateCheck = false;
@@ -37,44 +40,13 @@ export const authGuard: CanActivateFn = async (route, state) => {
       else navigateCheck=false;
     }
     
-  if (!navigateCheck) {
+
+  if(data=='admin' && state.url == '/cart/billing'){
+    toastService.errorToast({title:'Admin are not allowed to order'});
+  }
+  else if(!navigateCheck) {
     router.navigate(['/']);
   }
   
   return navigateCheck;
 };
-  // const currentRoutes = state.url.split('/')[1];
-  // const router = inject(Router);
-  // const FetchService = inject(FetchDataService);
-  // const BackendUrl = inject(UtilsModule);
-  // if(currentRoutes=='usersetting'){
-  //   try {
-  //     let data=await lastValueFrom(FetchService.HTTPGET(BackendUrl.URLs.authorizeUrl));
-  //  if(data=='admin'){
-  //   router.navigate(['/']);
-  //   return false;
-  //  }
-  //  return true;
-  //   } catch (error) {
-  //     router.navigate(['/']);
-  //     return false;
-  //   }
-   
-  // }
-
-  // if (currentRoutes == 'dashboard') {
-  //   try {
-  //     let data =await lastValueFrom(FetchService.HTTPGET(BackendUrl.URLs.authorizeUrl));
-  //     if(data=='admin') return true;
-  //     else {
-  //       router.navigate(['/']);
-  //       return false;
-  //     }
-  //   } catch (error) {
-  //     router.navigate(['/'])
-  //       return false;
-  //   }
-
-  // }
-
- 

@@ -56,16 +56,18 @@ export class LoginCheckService {
     }
   }
 
-  logoutUser() {
+  logoutUser(navigate: Boolean = true) {
     // this.cookieService.deleteAll();
     this.cookieService.delete('userToken', '/');
     this.cookieService.delete('name', '/');
     this.userSubject.next({ 'loggedIn': false })
-    this.toastService.notificationToast({
-      title: 'Logged Out Successfully'
-    });
-
-    this.router.navigate(['/']);
+    
+    if(navigate){
+      this.toastService.notificationToast({
+        title: 'Logged Out Successfully'
+      });
+      this.router.navigate(['/']);
+    } 
   }
 
   setFcmToken(currentToken: any) {
@@ -105,6 +107,16 @@ export class LoginCheckService {
         return data.loggedIn
       })
     );
+  }
+
+  updateDetails(details: any){
+    let userObj = {
+      userToken : this.cookieService.get('userToken'),
+      name: details.name.firstname,
+      fcmToken: this.cookieService.get('fcmToken') ? this.cookieService.get('fcmToken') : ''
+    }
+
+    this.userSubject.next({ 'user': userObj, 'loggedIn': true });
   }
 
 }

@@ -22,6 +22,7 @@ export class CheckoutComponent implements OnInit {
   //   this._orderIDSubject.next(orderId);
   // }
 
+  LoginUser:Boolean=false;
   loadRazorpayScript() {
     const script = this.renderer.createElement('script');
     script.src = 'https://checkout.razorpay.com/v1/checkout.js';
@@ -33,7 +34,7 @@ export class CheckoutComponent implements OnInit {
   cartCount: number = 0;
   updateBoolean: boolean = false;
   cart: any = {};
-
+  StripePaymentOpener: boolean = false;
   loading: boolean = false;
   @ViewChild('CouponCode') CouponCode: any;
 
@@ -45,7 +46,11 @@ export class CheckoutComponent implements OnInit {
       this.StripePaymentOpener = data;
     })
 
-    this.verifyOrderSummary(false);
+    this.loginCheckService.getUser().subscribe((checkToken)=>{
+      this.LoginUser=checkToken;
+    })
+
+   
 
   }
 
@@ -59,7 +64,7 @@ export class CheckoutComponent implements OnInit {
     this.cartService.fetchCart().subscribe((data) => {
       this.cart = data;
       this.loading = false;
-
+      this.verifyOrderSummary(false);
     });
     this.loadRazorpayScript();
 
@@ -145,6 +150,7 @@ export class CheckoutComponent implements OnInit {
     this.cart.amounts.savings -= this.CalculateDiscount(this.CouponApplied);
     this.CouponApplied = false;
     this.cart.amounts.total = this.cart.amounts.subTotal;
+    this.checkOutService.CouponApplied=null;
   }
 
 
@@ -176,11 +182,15 @@ export class CheckoutComponent implements OnInit {
             return;
           }
           this.CouponApplied = coupon;
+          this.checkOutService.CouponApplied=coupon;
+          console.log('coupon aplied done');
+          
           this.CouponValid = 'valid';
           break;
         }
       }
       if (this.CouponValid != 'valid') {
+        this.checkOutService.CouponApplied=null;
         this.CouponValid = 'invalid';
         return;
       }
@@ -188,6 +198,8 @@ export class CheckoutComponent implements OnInit {
 
     else {
       this.CouponApplied = coupon;
+      this.checkOutService.CouponApplied=coupon;
+      console.log('coupon aplied done else part');
       this.CouponValid = 'valid';
     }
 
@@ -217,15 +229,20 @@ export class CheckoutComponent implements OnInit {
   }
 
 
-   verifyOrderSummary(navigate: boolean = true) {
-    this.cartService.fetchCart().subscribe( (res) => {
 
+
+
+   verifyOrderSummary(navigate: boolean = true) {
+      let res=this.cart;
+      console.log('cart is ',this.cart);
+      
       if(res?.details?.length==0) return;
       let result = JSON.parse(JSON.stringify(res));
     
       if (result.length == 0) return;
       if (this.CouponApplied) {
         result.CouponApplied = this.CouponApplied;
+        this.checkOutService.CouponApplied=this.CouponApplied;
       }
 
       if (!navigate) {
@@ -235,10 +252,7 @@ export class CheckoutComponent implements OnInit {
       }
 
       else {
-        console.log('also calling for true');
-
-        this.loginCheckService.getUser().subscribe((checkToken) => {
-          if (!checkToken) {
+          if (!this.LoginUser) {
             this.router.navigate(['/auth/login']);
           }
           else {
@@ -249,10 +263,9 @@ export class CheckoutComponent implements OnInit {
             });
           }
 
-        })
       }
 
-    });
+
   }
 
   ChangeHanlder(event: any) {
@@ -260,12 +273,11 @@ export class CheckoutComponent implements OnInit {
     this.CouponCode.nativeElement.value = '';
   }
 
-  StripePaymentOpener: boolean = false;
+
   AddressSelected: any = null;
   NextDisabled: boolean = false;
 
   nextClicked() {
-
     if (!this.checkOutService.addressSelected) {
       this.toastService.errorToast({ title: 'Please select some address' });
       return;
@@ -274,11 +286,8 @@ export class CheckoutComponent implements OnInit {
     if (this.AddressSelected) {
       this.NextDisabled = true;
     }
-    this.checkOutService.loadStripe.next(true);
     if (this.checkOutService.addressSelected) {
-
       this.createOrder();
-      this.checkOutService.StripePaymentOpen.next(true);
     }
   }
 
@@ -287,21 +296,23 @@ export class CheckoutComponent implements OnInit {
   createOrder() {
     let body: any = {};
     body.address = this.AddressSelected;
-    this.cartService.fetchCart().subscribe((data) => {
+
+    // this.cartService.fetchCart().subscribe((data) => {
       if (this.CouponApplied) {
         body.coupon = this.CouponApplied;
-        body.discount = data.amounts.savings;
+        body.discount = this.cart.amounts.savings;
       }
-      body.products = data.details;
+      body.products = this.cart.details;
 
       this.fetchService.HTTPPOST(this.BackendUrl.URLs.createOrder, body).subscribe((data: any) => {
-        this.checkOutService.StripePaymentOpen.next(true);
+        this.checkOutService.loadStripe.next(true);
+        this.checkOutService.StripePaymentEmitter(true);
         this.checkOutService.orderID = data.orderId;
       });
 
 
       this.NextDisabled = false;
-    })
+    // })
   }
 
   // COUPONS CODE FINSIH-------------------

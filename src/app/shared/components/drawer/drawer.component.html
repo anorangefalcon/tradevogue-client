@@ -13,7 +13,7 @@
       'left_show':translate=='translateLeft',
       'popup_show' : translate == 'popup_show'
     }" [ngStyle]="{width:width}">
-    <div class="drawer__header d-flex justify-content-md-between align-item-center">
+    <div class="drawer__header d-flex justify-content-md-between align-item-center" *ngIf="title"> 
       <h3>{{title}}</h3>
       <span class="pointer material-symbols-outlined close__icon" (click)="translate=''; show=false; showChange.emit(false)">
         close

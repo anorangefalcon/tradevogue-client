@@ -14,10 +14,12 @@ export class CheckoutService {
   stripe: any;
   orderID:any=''
   SecretClient: any;
+  CouponApplied:any=null;
   private secureNavbar = new BehaviorSubject(false);
   secureNavbar$ = this.secureNavbar.asObservable();
-  StripePaymentOpen = new BehaviorSubject(false);
+  StripePaymentOpen = new BehaviorSubject<boolean>(false);
   StripePaymentOpen$ = this.StripePaymentOpen.asObservable();
+
   public orderId: string | null = null;
 
   loadStripe = new BehaviorSubject<Boolean>(false);
@@ -42,6 +44,11 @@ export class CheckoutService {
     })
 
 
+  }
+
+
+  StripePaymentEmitter(value:boolean){
+    this.StripePaymentOpen.next(value);
   }
 
 
@@ -143,6 +150,7 @@ export class CheckoutService {
         await this.updateOrderStatus(paymentIntent);
         await this.sendInvoiceData(paymentIntent);
         await this.removeCartItems(paymentIntent);
+
         break;
       case "processing":
         break;
@@ -158,6 +166,8 @@ export class CheckoutService {
       
     })
   }
+
+
 
   private async updateOrderStatus(paymentIntent: any) {
     let body: any = {};
@@ -176,7 +186,9 @@ export class CheckoutService {
         };
   
         console.log(body, 'body is');
-  
+        body.coupon=this.CouponApplied;
+        console.log('coupon capplied si ',body.coupon);
+        
        this.fetchData.HTTPPOST(this.backendUri.URLs.updateOrderStatus, body).subscribe();
   
       });

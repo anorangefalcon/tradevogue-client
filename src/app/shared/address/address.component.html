@@ -35,9 +35,9 @@
     </div>
     
     <div class="form__group relative d-flex flex-column">
-        <label class="form__label">Pincode<span>*</span></label>
+        <label class="form__label">Pin Code<span>*</span></label>
         <!-- <span class="material-symbols-outlined form__icon absolute">person</span> -->
-        <input type="text" id="pincode" formControlName="pincode" placeholder="Enter Your Username" class="form__input" (input)="onPostalCodeInputChange()">
+        <input type="text" id="pincode" formControlName="pincode" placeholder="Enter Your Pin Code" class="form__input" (input)="onPostalCodeInputChange()">
     </div>
     
     
@@ -51,7 +51,7 @@
         <label class="form__label">State<span>*</span></label>
 
         <input class="form__input" formControlName="state" type="text" id="state" [value]="states" required
-                                placeholder="State" [disabled]="!pincodeFilled" />
+                                placeholder="Enter Your State" [disabled]="!pincodeFilled" />
     
         <!-- <app-custom-select [type]="''"  [options]="states" [selectedOption]="((DetailsForm.get('state')?.value) ? (DetailsForm.get('state')?.value) : 'Select State')"
         (final_option)="StateHandler($event)"></app-custom-select> -->
@@ -59,7 +59,7 @@
     </div>
     
     <div class="form__group relative d-flex flex-column">
-        <label class="form__label">Mobile No. <span>*</span></label>
+        <label class="form__label">Mobile No.<span>*</span></label>
         <!-- <span class="material-symbols-outlined form__icon absolute">person</span> -->
         <input type="text" id="town_city" formControlName="mobile" placeholder="Enter Your Phone Number" class="form__input">
         <!-- -->
@@ -69,7 +69,7 @@
     
     </form>
     
-    <div class="d-flex gap-15">
+    <div class="d-flex justify-content-end">
         <!-- <button class="width-160 cancelbtn">Cancel</button> -->
 
         <button class="btn-primary btn btn-sm btn-rounded" #EditBtn (click)="SaveAddress()" [disabled]="DetailsForm.invalid"  [ngClass]="{'disabled':DetailsForm.invalid}">

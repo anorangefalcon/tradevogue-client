@@ -83,14 +83,14 @@
 
                     <div class="d-flex gap-15">
                         <button class="btn-secondary  btn btn-sm btn-rounded"
-                            [ngStyle]="{'display': ProfileForm.disabled? 'none': 'block'}"
-                            (click)="ProfileForm.disable()">Cancel</button>
+                            [ngStyle]="{'display': ProfileDisabled? 'none': 'block'}"
+                            (click)="DisableForm(true)">Cancel</button>
                         <button class="btn-primary btn btn-sm btn-rounded"
-                            [ngStyle]="{'display': !ProfileForm.disabled? 'none': 'block'}"
-                            (click)="ProfileForm.enable()">Edit</button>
+                            [ngStyle]="{'display': !ProfileDisabled? 'none': 'block'}"
+                            (click)="DisableForm(false)">Edit</button>
                         <button class="btn-primary btn btn-sm btn-rounded"
-                            [ngStyle]="{'display': ProfileForm.disabled? 'none': 'block'}"
-                            (click)="saveDetails(); ProfileForm.enable()">Save</button>
+                            [ngStyle]="{'display': ProfileDisabled? 'none': 'block'}"
+                            (click)="saveDetails(); DisableForm(true)" [disabled]="ProfileForm.invalid">Save</button>
                     </div>
 
                 </div>
@@ -100,19 +100,19 @@
                     <div class="form__group relative d-flex flex-column">
                         <label class="form__label">First Name<span>*</span></label>
                         <span class="material-symbols-outlined form__icon absolute">person</span>
-                        <input type="text" id="firstname" formControlName="firstname"
+                        <input type="text" id="firstname"  formControlName="firstname"
                             placeholder="Enter Your First Name">
                     </div>
 
                     <div class="form__group relative d-flex flex-column">
                         <label class="form__label">Last Name<span>*</span></label>
                         <span class="material-symbols-outlined form__icon absolute">person</span>
-                        <input type="text" id="lastname" formControlName="lastname" placeholder="Enter Your Last Name">
+                        <input type="text" id="lastname"  formControlName="lastname" placeholder="Enter Your Last Name">
                     </div>
                     <div class="form__group relative d-flex flex-column">
                         <label class="form__label">Email<span>*</span></label>
                         <span class="material-symbols-outlined form__icon absolute">mail</span>
-                        <input type="text" id="email" formControlName="email" placeholder="Enter Your Email">
+                        <input type="text" id="email"  formControlName="email" placeholder="Enter Your Email">
                         <small *ngIf="ProfileForm.get('email')?.hasError('email') && ProfileForm.get('email')?.touched"
                             class="invalid">
                             *Please enter valid Email.
@@ -123,7 +123,7 @@
                     <div class="form__group relative d-flex flex-column">
                         <label class="form__label">Mobile No.<span>*</span></label>
                         <span class="material-symbols-outlined form__icon absolute">call</span>
-                        <input type="text" id="mobile" formControlName="mobile" placeholder="Enter Your MobileNo">
+                        <input type="text" id="mobile"  formControlName="mobile" placeholder="Enter Your MobileNo">
 
                         <small
                             *ngIf="ProfileForm.get('mobile')?.hasError('notvalid') && ProfileForm.get('mobile')?.touched"
@@ -136,17 +136,17 @@
                     <div class="form__group relative d-flex flex-column">
                         <label class="form__label">Date of Birth<span>*</span></label>
                         <span class="material-symbols-outlined form__icon absolute">person</span>
-                        <input type="date" id="dob" formControlName="dob" placeholder="Enter Your Username">
+                        <input type="date" id="dob"  formControlName="dob" placeholder="Enter Your Username">
                     </div>
 
                     <div class="form__group relative d-flex flex-column">
                         <label class="form__label">Gender<span>*</span></label>
                         <div class="form__group relative radio d-flex gap-20 align-item-center">
-                            <input type="radio" id="male" name="gender" value="male" formControlName="gender"
+                            <input type="radio" id="male"  name="gender" value="male" formControlName="gender"
                                 [attr.checked]="this?.ProfileForm?.get('gender')?.value=='male' ? true: null">
                             <label for="male" class="d-flex flex-center relative gap-5 pointer">Male</label>
 
-                            <input type="radio" id="female" name="gender" formControlName="gender" value="female"
+                            <input type="radio" id="female" name="gender"  formControlName="gender" value="female"
                                 [attr.checked]="this?.ProfileForm?.get('gender')?.value=='female'  ? true : null">
                             <label for="female" class="d-flex flex-center relative gap-5 pointer"> Female </label>
                         </div>

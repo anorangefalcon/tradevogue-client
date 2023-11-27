@@ -127,10 +127,10 @@ export class AddressComponent {
         const body =this.DetailsForm.value;
         body._id = this.receiveData.data._id;
         this.fetchService.HTTPPOST(this.backendURLs.URLs.updateAddress, body).subscribe({next:(result)=>{
-          this.AddressHandler.next({ data: body, index: this.receiveData.index });
+          // this.AddressHandler.next({ data: body, index: this.receiveData.index });
         },error:()=>{
-          this.DetailsForm.reset();
-      this.show = false;
+          // this.DetailsForm.reset();
+      // this.show = false;
         }});
       }
       else {

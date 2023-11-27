@@ -98,6 +98,7 @@ export class BillingComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    
     this.checkOutService.StripePaymentOpen$.subscribe((data) => {
       this.StripeOpener = data;
     })
@@ -115,8 +116,11 @@ export class BillingComponent implements OnInit {
     } catch (error) {
       console.error('Error loading Stripe scripts:', error);
     }
-
   }
+
+  // ngOnDestroy(){
+  //   this.checkOutService.StripePaymentOpen.unsubscribe();
+  // }
   
   stripeLoaded: boolean = false;
   async loadStripe(): Promise<void> {

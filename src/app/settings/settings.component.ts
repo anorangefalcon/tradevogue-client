@@ -13,6 +13,8 @@ import { CheckoutService } from '../checkout/checkout.service';
 import { WishlistService } from '../shared/services/wishlist.service';
 import { DialogBoxService } from '../shared/services/dialog-box.service';
 import { ToastService } from '../shared/services/toast.service';
+import { CookieService } from 'ngx-cookie-service';
+import { LoginCheckService } from '../shared/services/login-check.service';
 
 
 @Component({
@@ -24,6 +26,8 @@ export class SettingsComponent {
   // showData: string = "profile";
   showData: string ="addresses"
   AllOrders!: any
+  ProfileDisabled:boolean=true;
+  emailDisabled:boolean=true;
   AddressLength:number=0;
   changePasswordForm: FormGroup;
   ShowComponent: boolean = false;
@@ -62,13 +66,15 @@ export class SettingsComponent {
   constructor(private backendURLs: UtilsModule,
      private wishlistService: WishlistService, 
      private fetchDataService: FetchDataService, 
-     private fb: FormBuilder,
+     fb: FormBuilder,
      private cartService: CartService, 
      private route: ActivatedRoute, 
      private location: Location,
      private stripePay: CheckoutService,
      private toastService : ToastService,
-     private dialogBox : DialogBoxService) {
+     private dialogBox : DialogBoxService,
+     private userService: LoginCheckService
+    ) {
     // this.route.queryParams.subscribe(params => {
     //   const redirectStatus = params['redirect_status'];
     //   if (redirectStatus === 'succeeded') {
@@ -80,7 +86,7 @@ export class SettingsComponent {
 
     this.ProfileForm = fb.group(
       {
-        firstname: fb.control(''),
+        firstname: fb.control('',[Validators.required]),
         lastname: fb.control(''),
         email: fb.control('', [Validators.email, Validators.required]),
         mobile: fb.control('', [MobileNoValidator]),
@@ -107,8 +113,35 @@ export class SettingsComponent {
       }
     });
 
-    this.ProfileForm.disable();
+
+  this.DisableForm(true);
+  this.ProfileForm.get('email')?.disable();
+
   };
+
+
+
+  DisableForm(check:boolean){
+  
+    if(check){
+    this.ProfileForm.get('firstname')?.disable();
+    this.ProfileForm.get('lastname')?.disable();
+    this.ProfileForm.get('gender')?.disable();
+    this.ProfileForm.get('dob')?.disable();
+    this.ProfileForm.get('mobile')?.disable();
+    this.ProfileDisabled=true;
+    }
+    else{
+      this.ProfileForm.get('firstname')?.enable();
+      this.ProfileForm.get('lastname')?.enable();
+      this.ProfileForm.get('gender')?.enable();
+      this.ProfileForm.get('dob')?.enable();
+      this.ProfileForm.get('mobile')?.enable();
+      this.ProfileDisabled=false;
+    }
+
+    return check;
+  }
 
   ngOnInit() {
     this.fetchDataService.HTTPGET(this.backendURLs.URLs.getDetails).subscribe((data: any) => {
@@ -141,17 +174,18 @@ export class SettingsComponent {
   }
 
 
-  async saveDetails() {
+  async saveDetails() {    
     let body = {
       name: { firstname: this.ProfileForm.get('firstname')?.value, lastname: this.ProfileForm.get('lastname')?.value },
-      email: this.ProfileForm.get('email')?.value,
       mobile: this.ProfileForm.get('mobile')?.value,
       "info.gender": this.ProfileForm.get('gender')?.value,
       "info.dob": new Date(this.ProfileForm.get('dob')?.value)
     }
     this.fetchDataService.HTTPPOST(this.backendURLs.URLs.updateDetails, body).subscribe((data) => {
       this.ProfileForm.disable();
-    })
+      this.userService.updateDetails(body);
+    });
+
 
   }
 

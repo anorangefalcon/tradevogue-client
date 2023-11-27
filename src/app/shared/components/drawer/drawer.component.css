@@ -32,7 +32,9 @@
 .drawer__content {
     padding-inline: 24px;
     padding-block: 20px;
-    /* height: calc(100vh - 60px); */
+    /* height: 100%; */
+    height: calc(100vh - 60px);
+    overflow: scroll;
 }
 
 .show {
@@ -82,6 +84,7 @@
 }
 
 .drawer__header {
+    /* position: relative; */
     padding: 15px 24px;
     background-color: rgb(var(--secondary));
     box-shadow: 0px 1px 5px rgba(var(--blackClr), 0.1);
