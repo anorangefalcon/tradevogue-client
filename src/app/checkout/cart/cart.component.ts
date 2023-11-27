@@ -22,6 +22,7 @@ export class CartComponent implements OnInit {
   loading: Boolean = false;
   
   ngOnInit() {
+    
     this.userService.getUser('token').subscribe((token: any) => {
       this.userToken = token;
       this.loading = true;
@@ -59,8 +60,20 @@ export class CartComponent implements OnInit {
       return stock.size === this.cartArr[productIndex].size;
     }).quantity;
 
-    if (what == 'next') {
-      if (this.cartArr[productIndex].info.orderQuantity[quantityIndex] === stockLimit) {
+    if (quantityIndex === -1) {
+      for (let i = (this.cartArr[productIndex].info.orderQuantity.length - 1); i >= 0; i--) {        
+        if (this.cartArr[productIndex].info.orderQuantity[i] < stockLimit) {
+          quantityIndex = i + 1;
+          break;
+        }
+      }
+      if(this.cartArr[productIndex].info.orderQuantity[0] > stockLimit){
+        quantityIndex = 0;
+      }
+    }
+
+    if (what == 'next' && quantityIndex <= (this.cartArr[productIndex].info.orderQuantity.length - 1)) {
+      if (this.cartArr[productIndex].info.orderQuantity[quantityIndex] >= stockLimit) {
         return true;
       }
       if ((quantityIndex >= ((this.cartArr[productIndex].info.orderQuantity.length) - 1)) || quantityIndex == -1) {

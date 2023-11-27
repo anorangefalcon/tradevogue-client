@@ -217,9 +217,12 @@ export class CheckoutComponent implements OnInit {
   }
 
 
-  async verifyOrderSummary(navigate: boolean = true) {
-    this.cartService.fetchCart().subscribe(async (res) => {
+   verifyOrderSummary(navigate: boolean = true) {
+    this.cartService.fetchCart().subscribe( (res) => {
+
+      if(res?.details?.length==0) return;
       let result = JSON.parse(JSON.stringify(res));
+    
       if (result.length == 0) return;
       if (this.CouponApplied) {
         result.CouponApplied = this.CouponApplied;

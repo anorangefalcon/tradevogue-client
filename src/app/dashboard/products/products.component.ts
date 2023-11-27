@@ -192,7 +192,7 @@ export class ProductsComponent implements OnInit {
     this.fetchData();
   }
 
-  clearFields(){    
+  clearFields(){
     this.tempSortData = '';
     this.template.filter.categories = '';
     delete this.template.filter['rating'];
@@ -201,7 +201,6 @@ export class ProductsComponent implements OnInit {
   }
 
   pageChange(e: any) {
-    
     this.template.page = e;
     this.currentPage = e;
     this.fetchData();
@@ -278,7 +277,6 @@ export class ProductsComponent implements OnInit {
         type: 'bulk',
         data: excel.data
       };
-      
       this.fetchdata.HTTPPOST(this.backendUrl.URLs.addproduct, formData).subscribe({
         next: (res: any) => {
           this.toastService.successToast("Data Uploaded Successfuly");

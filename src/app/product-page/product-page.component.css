@@ -86,9 +86,8 @@
             position: absolute;
             width: 100%;
             height: 100%;
-            background-color: #ffffff2a;
-            border: 1px solid rgb(var(--primaryClr));
-            backdrop-filter: blur(1px);
+            background-color: rgba(2, 2, 2, 0.308);
+            border: 1px solid rgb(var(--blackClr), 0.3);
             z-index: 1;
             border-radius: 3px;
         }

@@ -21,7 +21,6 @@ export class LoginCheckService {
         pairwise()
       )
       .subscribe(([prevEvent, currentEvent]: [NavigationEnd, NavigationEnd]) => {
-        console.log('prevous url is ',this.previousUrl);
         this.previousUrl = prevEvent.url; 
       });
 

@@ -21,7 +21,7 @@
 
 .content-drawer {
     position: absolute;
-    height: fit-content;
+    height: 100%;
     z-index: 101;
     width: 100%;
     transition: 0.3s ease-in-out;
@@ -32,8 +32,7 @@
 .drawer__content {
     padding-inline: 24px;
     padding-block: 20px;
-    /* height: 100%; */
-    height: calc(100vh - 60px);
+    /* height: calc(100vh - 60px); */
 }
 
 .show {
@@ -107,10 +106,3 @@
     opacity: 1;
     transform: translate(-50%, -50%);
 }
-
-/* .eye_popup_show {
-    width: fit-content;
-    top: 10%;
-    transform: translate(50%, 0%);
-    transition: all 0.3s ease-in-out;
-} */

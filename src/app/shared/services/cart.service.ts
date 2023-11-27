@@ -4,7 +4,6 @@ import { ToastService } from './toast.service';
 import { HttpClient } from '@angular/common/http';
 import { UtilsModule } from './../../utils/utils.module';
 import { LoginCheckService } from './login-check.service';
-import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -34,8 +33,14 @@ export class CartService {
     this.cartLoading.next(true);
     this.sideCart.next(true);
     
-    const cartObj = { "sku": data.sku, "size": data.size, "color": data.color, "quantity": data.quantity };
-    if (this.user) {``
+    const cartObj = { 
+      "sku": data.sku,
+      "size": data.size,
+      "color": data.color,
+      "quantity": data.quantity 
+    };
+
+    if (this.user) {
       this.addToCartWithToken(cartObj);
     }
     else {
@@ -194,14 +199,13 @@ export class CartService {
   }
 
   clearCart(which: string = '') {
-
     if (!which) {
       if (this.user) {
-        this.http.get(this.backendUrls.URLs.clearCart).subscribe((message: any) => {
-        });
+        this.http.get(this.backendUrls.URLs.clearCart).subscribe(() => {});
       }
     }
     localStorage.removeItem("myCart");
+    this.fetchDetails();
   }
 
 }
