@@ -273,8 +273,11 @@ export class SettingsComponent {
       oldPassword: this.changePasswordForm.get('currentPassword')?.value,
       newPassword: this.changePasswordForm.get('newPassword')?.value
     }
-    this.fetchDataService.HTTPPOST(this.backendURLs.URLs.changePassword, body).subscribe((data) => {
-      // this.toastService.successToast({ title: data.message })
+    this.fetchDataService.HTTPPOST(this.backendURLs.URLs.changePassword, body).subscribe((data: any) => {
+      console.log(data);
+      
+      this.toastService.successToast({ title: data.message })
+      this.changePasswordForm.reset()
     });
   }
 

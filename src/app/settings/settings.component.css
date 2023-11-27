@@ -217,7 +217,7 @@ label span {
 }
 
 .accordian__body {
-    padding-block-end: 10px;
+    /* padding-block-end: 10px; */
     display: none;
     transition: all 0.3s ease-in-out;
 }

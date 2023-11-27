@@ -21,7 +21,7 @@
 
 .content-drawer {
     position: absolute;
-    height: 100%;
+    height: fit-content;
     z-index: 101;
     width: 100%;
     transition: 0.3s ease-in-out;
@@ -32,7 +32,8 @@
 .drawer__content {
     padding-inline: 24px;
     padding-block: 20px;
-    /* height: calc(100vh - 60px); */
+    /* height: 100%; */
+    height: calc(100vh - 60px);
 }
 
 .show {

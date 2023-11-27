@@ -297,7 +297,7 @@ export class CouponsComponent {
 
 
   async CouponSubmit() {
-    console.log('this offer form is ', this.OfferForm);
+    console.log('this offer form is ', this.OfferForm, this.OfferForm.value);
     if (!this.OfferForm.get('Image')?.value) {
       this.toastService.errorToast('Image is still uploading please try again');
       return;

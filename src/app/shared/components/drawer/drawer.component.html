@@ -1,8 +1,7 @@
 <div class="wrapper" [ngClass]="{'show':show}" >
 
   <div class="backdrop" (click)="translate=''; show=false; showChange.emit(false)"></div>
-
-  <div class="content-drawer" [style]="direction"
+  <div class="content-drawer"  [style]="direction"
     [ngClass]="{'top':direction=='top',
     'bottom':direction=='bottom',
     'right':direction=='right',
