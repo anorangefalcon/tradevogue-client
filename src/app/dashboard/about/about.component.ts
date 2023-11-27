@@ -4,6 +4,7 @@ import { FetchDataService } from 'src/app/shared/services/fetch-data.service';
 import { ImageUploadService } from 'src/app/shared/services/image-upload.service';
 import { ToastService } from 'src/app/shared/services/toast.service';
 import { UtilsModule } from 'src/app/utils/utils.module';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'app-about',
@@ -13,16 +14,16 @@ import { UtilsModule } from 'src/app/utils/utils.module';
 export class AboutComponent {
   Edit: Boolean = false;
   AboutPageForm!: FormGroup
-  AboutPageFormCopy!:FormGroup
   AboutPageValues: any
+  AboutForm:FormGroup
   constructor(
     private fb: FormBuilder, 
     private imageuploadService: ImageUploadService, 
     private backendURLs: UtilsModule, 
     private fetchDataService: FetchDataService, 
     private toastService: ToastService) {
-    
-    this.AboutPageForm =  this.fb.group({
+
+    this.AboutForm = this.fb.group({
       BasicInfo: this.fb.group({
         content: this.fb.group({
           name: ['', Validators.required],
@@ -41,69 +42,33 @@ export class AboutComponent {
           }),
 
         }),
-        StoreImages: this.fb.control(['',[ this.StoreImageValidator, Validators.required]]),
+        StoreImages: this.fb.control(['',[ Validators.required]]),
       }),
       TeamMembers: this.fb.array([
       ]),
     })
 
 
-    this.getDetails();
-    // this.DummyImages();
-    this.FormDisableEnable();
+    this.AboutPageForm=_.cloneDeep(this.AboutForm);
 
-        
-    this.fetchStats();
+    this.FetchDetails();
+    // this.FormDisableEnable();
   } 
 
-  ngOnInit(){
-    this.fetchStats();
-  }
 
-
-  getDetails(){
+  FetchDetails(){
+    this.AboutPageForm=_.cloneDeep(this.AboutForm);
     this.fetchDataService.HTTPGET((this.backendURLs.URLs.getAboutDetails)).subscribe((data: any) => {
-      this.AboutPageForm = this.fb.group({
-        BasicInfo: this.fb.group({
-          content: this.fb.group({
-            name: ['', Validators.required],
-            tagline: ['', Validators.required],
-            description: ['', Validators.required],
-            foundedYear: ['', [Validators.required, this.FoundedYearValidator]],
-            growthDescription: ['', Validators.required],
-            Feature1: this.fb.group({
-              heading: ['', Validators.required],
-              description: ['', Validators.required],
-            }),
-  
-            Feature2: this.fb.group({
-              heading: ['', Validators.required],
-              description: ['', Validators.required],
-            }),
-  
-          }),
-          StoreImages: this.fb.control(['',[ this.StoreImageValidator, Validators.required]]),
-        }),
-        TeamMembers: this.fb.array([
-        ]),
-      })
       data.TeamMembers.forEach((el:any)=>{
         this.AddTeamMember();
       })
       this.AboutPageForm.patchValue(data);
       this.AboutPageValues = JSON.parse(JSON.stringify(data));
-    })
-
-  }
-
-  fetchStats(){
-    console.log('this.fetchStats');
-    this.fetchDataService.HTTPGET(this.backendURLs.URLs.getOverallStatus).subscribe({
-      next: (res: any) =>{
-        console.log('About Controller', res);
-      }
+      this.FormDisableEnable();
     })
   }
+
+
 
   FoundedYearValidator(control: any) {
     if (!Number(control.value)) return { yearInvalid: true };
@@ -141,6 +106,8 @@ export class AboutComponent {
     Object.keys(this.AboutPageForm.controls).forEach(controlName => {
       const control = this.AboutPageForm.get(controlName);
       if (control && !this.Edit) {
+        console.log('conrol disable started');
+        
         control.disable();
       }
       else {
@@ -153,7 +120,7 @@ export class AboutComponent {
   Save() {
     this.fetchDataService.HTTPPOST(this.backendURLs.URLs.setAboutDetails, this.AboutPageForm.value).subscribe((response) => {
       this.EditClicked();
-      this.getDetails();
+      this.FetchDetails();
     })
 
   }
@@ -180,8 +147,6 @@ export class AboutComponent {
       }
 
       else if (FormGroupName == 'TeamMembers') {
-        // console.log('previous value is ',this.AboutPageForm.get('TeamMembers') as FormArray).at(index-1)?.get('img')?.value);
-        console.log('previous value is ', (this.AboutPageForm.get('TeamMembers') as FormArray).at(index - 1)?.get('img')?.value)
         if (index != 0 && !(this.AboutPageForm.get('TeamMembers') as FormArray).at(index - 1)?.get('img')?.value) {
           this.toastService.errorToast({ title: 'Please upload another images first' });
           return;
@@ -210,7 +175,7 @@ export class AboutComponent {
 
   RemoveMember(index: any) {
     if ((this.AboutPageForm.get('TeamMembers') as FormArray).length <= 1) {
-      this.toastService.errorToast('You cannot delete member any more');
+      this.toastService.errorToast({title:'You cannot delete member any more'});
       return;
     }
     (this.AboutPageForm.get('TeamMembers') as FormArray).removeAt(index);
@@ -240,31 +205,8 @@ export class AboutComponent {
 
 
 
-  DummyImages() {
-    const imgArray: any = this.AboutPageForm.get('BasicInfo.StoreImages')?.value;
-    let arr = [
-      'https://images.pexels.com/photos/3965551/pexels-photo-3965551.jpeg?auto=compress&cs=tinysrgb&w=600',
-      'https://images.pexels.com/photos/5864264/pexels-photo-5864264.jpeg?auto=compress&cs=tinysrgb&w=600',
-      'https://images.pexels.com/photos/1311590/pexels-photo-1311590.jpeg?auto=compress&cs=tinysrgb&w=600',
-      'https://images.pexels.com/photos/1884583/pexels-photo-1884583.jpeg?auto=compress&cs=tinysrgb&w=600'
-    ];
-    if (imgArray.length == 0) {
-      this.AboutPageForm.get('BasicInfo.StoreImages')?.setValue(arr);
-    }
-  }
 
-  DummyTeamMembers() {
-    let img = 'https://images.pexels.com/photos/7063781/pexels-photo-7063781.jpeg?auto=compress&cs=tinysrgb&w=600';
-    let imgArray: any = (this.AboutPageForm.get('TeamMembers')?.get('memberInfo') as FormArray).controls;
-    for (let image of imgArray) {
-      image.get('imgLink').setValue(img);
-    }
-  }
 
-  StoreImageValidator(control: FormControl) {
-    console.log(control.value,"====>---->--------------------->")
-    return null;
-  }
 
 }
 

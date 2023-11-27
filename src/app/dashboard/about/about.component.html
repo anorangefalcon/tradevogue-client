@@ -45,7 +45,7 @@
               <span class="remove-img material-symbols-outlined" *ngIf="Edit" (click)="ShowUpload(i,'BasicInfo')">
                 close
               </span>
-              <img  [src]="link" class="mh100 mw100"  required alt="Profile Image" />
+              <img  [src]="link" class="mh100 mw100" alt="Profile Image" />
             </div>
 
             <!-- INPUT WHICH DISPLAY NONE -->
@@ -70,7 +70,7 @@
               class="form__input">
             <span
               *ngIf="AboutPageForm.get('BasicInfo')?.get('content')?.get('foundedYear')?.hasError('yearInvalid') && AboutPageForm.get('BasicInfo')?.get('content')?.get('foundedYear')?.touched">
-              Please enter a valid value matching the pattern.
+              Please enter a valid value year.
             </span>
           </div>
 
@@ -185,7 +185,16 @@
             </div>
 
             <!-- name -->
-            <input type="text" id="title" formControlName="name" placeholder="Enter Name" class="form__input">
+            <div class="relative">
+              <input type="text" id="title" formControlName="name" placeholder="Enter Name" class="form__input">
+              <button class="delete__icon" [disabled]="!Edit" (click)="RemoveMember(i)">
+                <span class="material-symbols-outlined " >
+                  delete
+                  </span>
+              </button>
+            
+            </div>
+
           </div>
           </ng-container>
         </div>

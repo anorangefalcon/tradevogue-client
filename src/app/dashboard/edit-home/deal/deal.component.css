@@ -24,6 +24,7 @@ form {
 }
 
 .img-upload{
+    height: 323px;
     background-color: rgba(128, 128, 128, 0.079);
     border-radius: 10px;
 
@@ -82,7 +83,7 @@ form {
     right: 0;
     background: #ffffffc2;
     border-radius: 50%;
-    top: 5px;
+    top:20px;
     right: 5px;
     cursor: pointer;
     font-size: 18px;

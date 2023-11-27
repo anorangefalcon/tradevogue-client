@@ -23,7 +23,7 @@ export class DealComponent {
         subTitle: fb.control('', [Validators.required]),
         buttonLink: ['', Validators.required],
         buttonText:['',Validators.required],
-        contentAlign: ['Left', Validators.required],
+        contentAlign: ['', Validators.required],
         colors: this.fb.group({
           titleColor: ['', Validators.required],
           subTitleColor: ['', Validators.required],

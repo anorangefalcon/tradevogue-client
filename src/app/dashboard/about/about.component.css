@@ -187,3 +187,18 @@ width: 217px;
         color: rgba(var(--danger));
     }
 }
+
+
+.delete__icon{
+    position: absolute;
+    right: 5px;
+    top: 9px;
+    font-size: 21px;
+    cursor: pointer;
+    background: transparent;
+    border: none;
+}
+
+.delete__icon:hover{
+    color: rgba(var(--danger));
+}
