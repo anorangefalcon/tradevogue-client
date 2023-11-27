@@ -145,6 +145,7 @@ export class EyePopupComponent {
     else {
       this.cartService.addToCart(cartItem);
     }
+      this.show = false;
   }
 
   changeColor(index: any) {

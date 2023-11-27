@@ -29,18 +29,19 @@
            
             <div class="d-flex gap-30 align-item-center ">
 
-            <div *ngIf="list.avgRating !== 0" class="rating d-flex align-item-center">
-                <span *ngFor="let i of createArrayToIterate(list.avgRating)"
-                    class="material-symbols-outlined filled">star</span>
-                <span *ngIf="(list.avgRating % 1) !== 0"
-                    class="material-symbols-outlined">star_half</span>
-                <span *ngFor="let i of createArrayToIterate(5 - list.avgRating)"
-                    class="material-symbols-outlined">star</span>
-            </div>
+                <div *ngIf="list && list.avgRating !== undefined && list.avgRating !== null && list.avgRating !== 0" class="rating d-flex align-item-center">
+                    <span *ngFor="let i of createArrayToIterate(list.avgRating)"
+                        class="material-symbols-outlined filled">star</span>
+                    <span *ngIf="(list.avgRating % 1) !== 0"
+                        class="material-symbols-outlined">star_half</span>
+                    <span *ngFor="let i of createArrayToIterate(5 - list.avgRating)"
+                        class="material-symbols-outlined">star</span>
+                </div>
+                
 
-            <div *ngIf="!productSku && !outOfStock && list.assets[assetIndex]?.stockQuantity[sizeIndex]?.quantity !== undefined" class="stockAvailable">
-                <p class="stock-label">Stock: {{ list.assets[assetIndex]?.stockQuantity[sizeIndex]?.quantity }}</p>
-            </div>
+            <div *ngIf="!productSku && !outOfStock && list?.assets?.[assetIndex]?.stockQuantity?.[sizeIndex]?.quantity !== undefined" class="stockAvailable">
+                <p class="stock-label">Stock: {{ list?.assets?.[assetIndex]?.stockQuantity?.[sizeIndex]?.quantity }}</p>
+            </div>            
             
             </div>
 
@@ -54,17 +55,18 @@
                 </div>
             </div>
 
-            <div class="sizes d-flex align-item-center gap-20" id="sizes">
+            <div class="sizes d-flex align-item-center gap-20" id="sizes" *ngIf="list?.assets?.[assetIndex]?.stockQuantity">
                 <p>Size:</p>
                 <div class="sizes-opt d-flex gap-10">
-                    <div *ngFor="let stock of list.assets[assetIndex].stockQuantity; let j = index"
+                    <div *ngFor="let stock of list?.assets?.[assetIndex]?.stockQuantity; let j = index"
                         class="sizes-radios relative">
-                        <input type="radio" name="size" [value]=stock.size id="size_{{ stock.size }}"
+                        <input type="radio" name="size" [value]="stock?.size" id="size_{{ stock?.size }}"
                             [(ngModel)]="selectedSize" (click)="updateSizeIndex(j)">
-                        <label for="size_{{ stock.size }}">{{ stock.size }}</label>
+                        <label for="size_{{ stock?.size }}">{{ stock?.size }}</label>
                     </div>
                 </div>
             </div>
+            
 
             <div class="d-flex flex-column">
 
