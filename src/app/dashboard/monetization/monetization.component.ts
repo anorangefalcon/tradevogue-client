@@ -61,6 +61,7 @@ export class MonetizationComponent {
 
           this.fetch.HTTPPOST(this.util.URLs.deletePaymentKeys, body)
             .subscribe((response: any) => {
+              this.fetchData();
             })
 
         }
@@ -84,7 +85,24 @@ export class MonetizationComponent {
     });
   }
   toggleRazorpayPayment(key: any) {
+    this.selectedItem = key;
+    console.log(this.selectedItem, "selected item are")
+    if (this.selectedItem) {
+      const id = this.selectedItem._id;
+      const enable = !this.selectedItem.enable;
+      const rzpIdKey = this.selectedItem.rzpIdKey;
+      const rzpSecretKey = this.selectedItem.rzpSecretKey;
+      const body = {
+        id, enable , rzpIdKey , rzpSecretKey
+      }
 
+      this.fetch.HTTPPOST(this.util.URLs.updatePaymentKeys, body).subscribe((response: any) => {
+        this.fetchData();
+      }
+        , (error: any) => {
+
+        });
+    }
   }
 
   viewRazorpay(key: any) {
@@ -136,8 +154,10 @@ export class MonetizationComponent {
     if (this.selectedItem) {
       const id = this.selectedItem._id;
       const enable = !this.selectedItem.enable;
+      const publicKey = this.selectedItem.publicKey;
+      const privateKey = this.selectedItem.privateKey;
       const body = {
-        id, enable
+        id, enable , publicKey , privateKey
       }
 
       this.fetch.HTTPPOST(this.util.URLs.updatePaymentKeys, body).subscribe((response: any) => {
@@ -205,6 +225,8 @@ export class MonetizationComponent {
         }
 
         this.fetch.HTTPPOST(this.util.URLs.addPaymentKeys, body).subscribe((response: any) => {
+          this.fetchData();
+          this.stripeKeysForm.reset();
         });
       });
     } else {
@@ -221,6 +243,8 @@ export class MonetizationComponent {
         };
         this.fetch.HTTPPOST(this.util.URLs.addPaymentKeys, razorpayBody).subscribe((response: any) => {
           // console.log(response, "response are")
+          this.fetchData();
+          this.razorpayKeysForm.reset();
         });
       })
     }

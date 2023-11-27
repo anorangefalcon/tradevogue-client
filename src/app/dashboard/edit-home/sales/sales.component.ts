@@ -5,6 +5,7 @@ import { ImageUploadService } from 'src/app/shared/services/image-upload.service
 import { FetchDataService } from 'src/app/shared/services/fetch-data.service';
 import { UtilsModule } from 'src/app/utils/utils.module';
 import { DialogBoxService } from 'src/app/shared/services/dialog-box.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-sales',
@@ -19,6 +20,7 @@ export class SalesComponent {
   selectedItem: any;
   itemId: any;
   editingIndex: any;
+  showEditIcon: any = true;
 
   getSales() {
     this.salesService.getSales().subscribe((res) => {
@@ -32,7 +34,8 @@ export class SalesComponent {
     private uploadService: ImageUploadService, 
     private fetch: FetchDataService, 
     private dialogService: DialogBoxService,
-    private util: UtilsModule) {
+    private util: UtilsModule,
+    private router: Router) {
 
     this.getSales();
 
@@ -88,6 +91,15 @@ export class SalesComponent {
       })
 
     }
+  }
+
+  getLink(link: string){
+    const toLink = '/' + link.split('/')[3];    
+    this.router.navigateByUrl(toLink);
+  }
+
+  onCancel() {
+    this.salesForm.reset();
   }
 
   showItemDetails(item: any, index: any) {

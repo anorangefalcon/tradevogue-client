@@ -1,7 +1,8 @@
 <div class="wrapper" [ngClass]="{'show':show}" >
 
   <div class="backdrop" (click)="translate=''; show=false; showChange.emit(false)"></div>
-  <div class="content-drawer"  [style]="direction"
+
+  <div class="content-drawer" [style]="direction"
     [ngClass]="{'top':direction=='top',
     'bottom':direction=='bottom',
     'right':direction=='right',
@@ -13,7 +14,7 @@
       'left_show':translate=='translateLeft',
       'popup_show' : translate == 'popup_show'
     }" [ngStyle]="{width:width}">
-    <div class="drawer__header d-flex justify-content-md-between align-item-center" *ngIf="title"> 
+    <div class="drawer__header d-flex justify-content-md-between align-item-center" *ngIf="title">
       <h3>{{title}}</h3>
       <span class="pointer material-symbols-outlined close__icon" (click)="translate=''; show=false; showChange.emit(false)">
         close

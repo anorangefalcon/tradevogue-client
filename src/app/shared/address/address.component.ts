@@ -78,6 +78,12 @@ export class AddressComponent {
           this.town_city = data[0].COUNTY;
           this.area = data[0].CITY;
 
+          if(this.country) {
+            this.DetailsForm.get('state')?.setValue(this.states);
+            this.DetailsForm.get('town_city')?.setValue(this.town_city);
+            this.DetailsForm.get('area')?.setValue(this.area);
+          }
+
         } else {
           this.country = '';
           this.states = '';
@@ -89,7 +95,7 @@ export class AddressComponent {
 
   // pincode
   onPostalCodeInputChange() {
-      const postalCodeValue = this.DetailsForm?.get('pincode')?.value;
+  const postalCodeValue = this.DetailsForm?.get('pincode')?.value;
   this.postalCodeService.getDetailsByPostalCode(postalCodeValue).pipe(
     debounceTime(500),
     distinctUntilChanged())
@@ -107,19 +113,19 @@ export class AddressComponent {
 
 
   ngOnChanges() {
-    if (this.ShowComponent == true) {
-      this.show = true;
+    if (!this.receiveData) {
+        this.title = 'Add New Address';
+        this.DetailsForm.reset();
+    } else {
+        this.title = 'Edit Address';
+        this.DetailsForm.patchValue(this.receiveData.data);
     }
-    if (this.receiveData) {
-      this.title='Edit Address';
-      this.DetailsForm.patchValue(this.receiveData.data);
+
+    if (this.ShowComponent) {
+        this.show = true;
     }
-    if(!this.receiveData){
-      this.title='Add New Address';
-      this.DetailsForm.reset();
-    } 
-      
-  }
+}
+
 
   async SaveAddress() {
       let result;

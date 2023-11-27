@@ -8,7 +8,6 @@ import { UtilsModule } from 'src/app/utils/utils.module';
 })
 export class ApiService {
  private apiUrl = this.util.URLs.getPincode;
-// private apiUrl = 'http://localhost:4000/api/purchaser/getDetailsByPostalCode'
 
   constructor(private http: HttpClient,
     private util: UtilsModule) { }

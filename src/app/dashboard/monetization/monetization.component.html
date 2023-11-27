@@ -167,7 +167,7 @@
 
       <div class="d-flex justify-content-md-between align-item-center default-animation">
         <h2 class="form-heading">Razorpay Payment Keys</h2>
-        <button type="button" [disabled]="!razorpayKeysForm.valid" class="btn btn-xs fw-500 btn-rounded btn-primary"
+        <button type="button" [hidden]="!razorpayKeysForm.valid" [disabled]="!razorpayKeysForm.valid" class="btn btn-xs fw-500 btn-rounded btn-primary"
           (click)="onSubmit()">Submit</button>
       </div>
 

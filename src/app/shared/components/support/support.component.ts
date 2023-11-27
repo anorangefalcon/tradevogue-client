@@ -58,7 +58,7 @@ export class SupportComponent {
         this.username = name;
       }
       else{
-        this.username = 'Bot';
+        this.username = 'User';
       }
     });
   

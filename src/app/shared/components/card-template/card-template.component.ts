@@ -2,6 +2,8 @@ import { Component, Input } from '@angular/core';
 import { CartService } from '../../services/cart.service';
 import { OwlOptions } from 'ngx-owl-carousel-o';
 import { WishlistService } from '../../services/wishlist.service';
+import { ToastService } from '../../services/toast.service';
+import { Router } from '@angular/router';
 import { EyePopupService } from '../../services/eye-popup.service';
 
 @Component({
@@ -16,6 +18,8 @@ export class CardTemplateComponent {
 
   constructor(
     private cartService: CartService,
+    private router: Router,
+    private toastService: ToastService,
     private wishlistService: WishlistService,
     private eyePopupService: EyePopupService) {
   }
@@ -36,6 +40,16 @@ export class CardTemplateComponent {
       }
     })
 
+    let limit = this.product.assets[0].stockQuantity[0].quantity;
+    let arr = this.product.info.orderQuantity;
+    let filteredArray = arr.filter((item: any) => item <= limit);
+
+    if (!(filteredArray.includes(limit)) && (arr[arr.length - 1] > limit)) {
+      filteredArray.push(limit);
+    }
+
+    // this.productPageService.orderQuantity.next(filteredArray);
+    this.product.info.orderQuantity = filteredArray;
   }
 
   currentIndex = 0;
@@ -69,32 +83,15 @@ export class CardTemplateComponent {
   }
 
   addToCart() {
-    let assetIndex = this.product.matchedIndex ? this.product.matchedIndex : 0;
-    let sizeIndex = 0;
-
-    if (this.product.assets[assetIndex].stockQuantity[0].quantity <= 0) {
-      const ifMatchesSize = (this.product.assets[assetIndex].stockQuantity).some((stockQ: any)=>{
-        if(stockQ.quantity > 0) return true;
-        sizeIndex++;
-        return false;
-      });
-
-      if(!ifMatchesSize) sizeIndex = 0;
+    if (this.product.assets[0].stockQuantity[0].quantity <= 0) {
+      this.toastService.errorToast({ title: 'Please select other variant of this product as it is outofStock' });
+      this.router.navigate(['product/' + this.product.sku]);
+      return;
     }
-
-    let limit = this.product.assets[assetIndex].stockQuantity[sizeIndex].quantity;
-    let arr = this.product.info.orderQuantity;
-    let filteredArray = arr.filter((item: any) => item <= limit);
-
-    if (!(filteredArray.includes(limit)) && (arr[arr.length - 1] > limit)) {
-      filteredArray.push(limit);
-    }
-    this.product.info.orderQuantity = filteredArray;
-
     const cartItem = {
       sku: this.product.sku,
-      color: this.product.assets[assetIndex].color,
-      size: this.product.assets[assetIndex].stockQuantity[sizeIndex].size,
+      color: this.product.assets[0].color,
+      size: this.product.assets[0].stockQuantity[0].size,
       quantity: this.product.info.orderQuantity[0]
     }
 

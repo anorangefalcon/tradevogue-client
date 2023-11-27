@@ -1,8 +1,5 @@
-import { Component, EventEmitter, Injectable, Injector, Output, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, Injectable, Injector, Output, ViewEncapsulation } from '@angular/core';
 import { BehaviorSubject, Subscription } from 'rxjs';
-import { FetchDataService } from '../services/fetch-data.service';
-import { UtilsModule } from 'src/app/utils/utils.module';
-import { HttpParams } from '@angular/common/http';
 import { EyePopupService } from '../services/eye-popup.service';
 import { OwlOptions } from 'ngx-owl-carousel-o';
 import { ToastService } from '../services/toast.service';
@@ -21,7 +18,7 @@ import { CartService } from '../services/cart.service';
 })
 export class EyePopupComponent {
   direction: any = 'popup';
-  width:any='200px';
+  width:any='fit-content';
   show: boolean = false;
   fetchData = new BehaviorSubject<string>('');
   sku: any;
@@ -29,51 +26,56 @@ export class EyePopupComponent {
   avgRating: number = 0;
   productData: any = [];
   selectedColor: string = "";
+  accordianOpen: boolean = false;
+  accordianOpen2: boolean = true;
   slicedTags: string[] = [];
   currentIndex = 0;
-  tagsToShow = 3;
+  tagsToShow = 2;
   private drawerSubscription!: Subscription;
 
   constructor(private eyePopService: EyePopupService,
     private toastService: ToastService,
     private router: Router,
-    private cartService: CartService) {
+    private cartService: CartService,
+    private changeDetector: ChangeDetectorRef) {
 
      }
 
-  ngOnInit() {
-    this.avgRating = this.list.avgRating;
-    this.eyePopService.EyePopupData.subscribe((data) => {
-      if (!data) return;
-      this.list = data;
-      this.show = true;
-    })
-    this.startRotatingTags();
-  }
-
-  startRotatingTags(): void {
-    if (this?.list && this.list?.info && this.list?.info?.tags) {
-      const productTags = this?.list?.info?.tags;
-
-      setInterval(() => {
-        const endIndex = this.currentIndex + this.tagsToShow;
-        this.slicedTags = productTags.slice(this.currentIndex, endIndex);
-        this.currentIndex = (this.currentIndex + this.tagsToShow) % productTags.length;
-      }, 5000); 
+     ngOnInit() {
+      this.avgRating = this.list.avgRating;
+      this.eyePopService.EyePopupData.subscribe((data) => {
+        console.log(data, "data is ");
+        if (!data) return;
+        this.list = data;
+        this.show = true;
+        this.startRotatingTags();
+      });
     }
-  }
-
-  // createArrayToIterate(num: number) {
-  //   const newTotal = Math.floor(num);
-  //   if (newTotal <= 0) {
-  //     return [];
-  //   }
-  //   return Array(newTotal).fill(0);
-  // }
+    
+    startRotatingTags(): void {
+      if (this.list?.info?.tags) {
+        const productTags = this.list?.info?.tags;
+    
+        setInterval(() => {
+          const endIndex = this.currentIndex + this.tagsToShow;
+          this.slicedTags = productTags.slice(this.currentIndex, endIndex);
+          this.currentIndex = (this.currentIndex + this.tagsToShow) % productTags.length;
+    
+          // Trigger change detection
+          this.changeDetector.detectChanges();
+        }, 3000);
+      }
+    }
+    
+    createArrayToIterate(num: number) {
+      const newTotal = Math.floor(num);
+      if (newTotal <= 0) {
+        return [];
+      }
+      return Array(newTotal).fill(0);
+    }
 
   addToCart() {
-    // console.log('product is ',this.product);
-    // return;
     if (this.list.assets[0].stockQuantity[0].quantity <= 0) {
       this.toastService.errorToast({ title: 'Please select other variant of this product as it is outofStock' });
       this.router.navigate(['product/' + this.list.sku]);

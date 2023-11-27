@@ -28,5 +28,4 @@ export class EyePopupService {
         this.showEyePopup.next(data);
       });
     }
-  
 }
