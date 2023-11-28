@@ -14,8 +14,7 @@ export class LoginCheckService {
 
   private userSubject = new BehaviorSubject({});
   private user$ = this.userSubject.asObservable();
-
-   previousUrl: any = '/';
+  previousUrl: any = '/';
   constructor(private cookieService: CookieService, private router: Router, private toastService: ToastService,private BackendUrl:UtilsModule, private FetchDataService:FetchDataService) {
     this.router.events
       .pipe(
@@ -37,8 +36,11 @@ export class LoginCheckService {
       if (Object.keys(this.userSubject.getValue()).length > 0) {
         return;
       }
+
       this.loginUser(userObj, false);
     }
+    
+
   }
 
   loginUser(userObj: any, redirect: Boolean = true) {    
@@ -78,6 +80,7 @@ export class LoginCheckService {
       this.toastService.notificationToast({
         title: 'Logged Out Successfully'
       });
+      ``
       this.router.navigate(['/']);
     } 
   }

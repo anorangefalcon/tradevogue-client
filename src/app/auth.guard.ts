@@ -42,6 +42,7 @@ export const authGuard: CanActivateFn = async (route, state) => {
   if(data=='admin' && state.url == '/cart/billing'){
     toastService.errorToast({title:'Admin are not allowed to order'});
   }
+
   else if(!navigateCheck) {
     router.navigate(['/']);
   }

@@ -469,4 +469,11 @@ export class BillingComponent implements OnInit {
     this.checkOutService.addressSelected = (address);
     this.addressDelivered = address;
   }
+
+  DummyPayment(){
+    let body={orderID:this.checkOutService.orderID};
+    this.fetchDataService.HTTPPOST(this.backendURLs.URLs.updateOrder,body).subscribe((data)=>{
+      console.log('data come up is ',data);  
+    })
+  }
 }

@@ -117,7 +117,7 @@ export class UtilsModule {
     // ORDERS
     verifyOrderSummary: `${this.BackendUrl}/orders/verifyOrder`,
     createOrder: `${this.BackendUrl}/orders/create`,
-    // updateOrder:`${this.BackendUrl}/orders/update`,
+    updateOrder:`${this.BackendUrl}/orders/update`,
     getParticularUserOrders: `${this.BackendUrl}/orders/getparticularUserOrders`,
     cancelOrder: `${this.BackendUrl}/orders/cancelOrder`,
     verifyOrderWithoutCoupon:`${this.BackendUrl}/orders/verifyOrderWithoutCoupon`,

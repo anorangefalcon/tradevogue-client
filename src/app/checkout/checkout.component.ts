@@ -143,11 +143,9 @@ export class CheckoutComponent implements OnInit {
 
 
   RemoveAppliedCoupon() {
-
     this.cart.amounts.savings -= this.CalculateDiscount(this.CouponApplied);
     this.CouponApplied = false;
     this.cart.amounts.total = this.cart.amounts.subTotal;
-    this.checkOutService.CouponApplied=null;
   }
 
 
@@ -228,15 +226,12 @@ export class CheckoutComponent implements OnInit {
 
    verifyOrderSummary(navigate: boolean = true) {
       let res=this.cart;
-      console.log('cart is ',this.cart);
-      
       if(res?.details?.length==0) return;
       let result = JSON.parse(JSON.stringify(res));
     
       if (result.length == 0) return;
       if (this.CouponApplied) {
         result.CouponApplied = this.CouponApplied;
-        this.checkOutService.CouponApplied=this.CouponApplied;
       }
 
       if (!navigate) {
@@ -262,7 +257,7 @@ export class CheckoutComponent implements OnInit {
 
   }
 
-  ChangeHanlder(event: any) {
+  ChangeHandler(event: any) {
     this.show = event;
     this.CouponCode.nativeElement.value = '';
   }
@@ -337,18 +332,5 @@ export class CheckoutComponent implements OnInit {
       razorpayButton.click();
     }
 
-
-   this.cartService.fetchCart().subscribe((data) => {
-      if (this.CouponApplied) {
-        body.coupon = this.CouponApplied;
-        body.discount = data.amounts.savings;
-      }
-      body.products = data.details;
-      body.orderID = this.OrderId;
-      // this.fetchService.HTTPPOST(this.BackendUrl.URLs.updateOrder, body).subscribe((data: any) => {
-      //   // console.log(data);
-
-      // });
-    })
   }
 }

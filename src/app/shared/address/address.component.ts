@@ -135,8 +135,6 @@ export class AddressComponent {
         this.fetchService.HTTPPOST(this.backendURLs.URLs.updateAddress, body).subscribe({next:(result)=>{
           this.AddressHandler.next({ data: body, index: this.receiveData.index });
         },error:()=>{
-          this.DetailsForm.reset();
-      this.show = false;
         }});
       }
       else {

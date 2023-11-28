@@ -32,6 +32,8 @@ export class NavbarComponent implements OnInit {
     women: []
   }
   secureNavbar: boolean=false;
+
+  UserRole!:String
   
   constructor(private cartService: CartService, private userService: LoginCheckService, private checkOutService:CheckoutService, private BackendEndUrl: UtilsModule, private fetchDataService: FetchDataService, private router: Router, private wishlistService: WishlistService) {
 
@@ -39,6 +41,12 @@ export class NavbarComponent implements OnInit {
       this.secureNavbar = data;
     });
 
+    this.userService.getUser('token').subscribe((data)=>{
+      if(!data) return;
+      this.fetchDataService.HTTPGET(this.BackendEndUrl.URLs.authorizeUrl).subscribe((data:any)=>{
+        if(data=='admin') this.UserRole=data;
+      })
+    })
 
     this.userService.getUser('name').subscribe((name: any) => {
       if (name) {

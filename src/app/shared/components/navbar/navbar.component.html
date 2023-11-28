@@ -114,6 +114,7 @@
                             <li *ngIf="purchaser!=''" class="name border">
                                 Welcome <span style="color: teal;"> {{purchaser}}</span>
                             </li>
+                            <li [routerLink]="['dashboard']" *ngIf="UserRole">Dashboard</li>
                             <li [routerLink]="['usersetting/orders']">Orders</li>
                             <li [routerLink]="['usersetting/wishlist']">Wishlist</li>
                             <li routerLink="/usersetting/addresses">Saved Addresses</li>

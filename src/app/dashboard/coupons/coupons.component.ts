@@ -20,10 +20,19 @@ export class CouponsComponent {
   show: boolean = false;
   todayDate: any = Date.now();
 
+  totalCount:number = 0;
+  currentPage: number = 1;
+
+  template:any= {
+    search: '',
+    currentPage: this.currentPage,
+    limit: 8
+  }
 
 
   ChangeHanlder(event: any) {
     this.show = event;
+    this.OfferForm.reset();
   }
 
   OfferType = ['coupon', 'discount'];
@@ -142,28 +151,25 @@ export class CouponsComponent {
     return null;
   }
 
+   controls: any = [
+    { name: 'couponcode', validator: this.CouponCodeValidator },
+    { name: 'couponType', },
+    { name: 'minimumPurchaseAmount' },
+  ];
+
   OfferTypeHandler(event: any,couponType:any=null) {
     
-    this.OfferForm.get('OfferType')?.patchValue(event);
-    console.log('Offer fiorm is ',this.OfferForm);
+    this.OfferForm.get('OfferType')?.setValue(event);
 
-    const controls: any = [
-      { name: 'couponcode', validator: this.CouponCodeValidator },
-      { name: 'couponType', },
-  
-      { name: 'minimumPurchaseAmount' },
-    ];
     if (event == 'coupon') { 
-      console.log('couponType is ',event);
-      
       if(couponType!='custom'){
-        controls.push(  { name: 'couponUsersLimit' });
+        this.controls.push(  { name: 'couponUsersLimit' });
       }
       if (this.OfferForm.get('ExtraInfo')) {
         this.OfferForm.removeControl('ExtraInfo');
         this.OfferForm.removeControl('DiscountPercentageHandler');
       }
-      controls.forEach((el: any) => {
+      this.controls.forEach((el: any) => {
         if (el.validator) {
           this.OfferForm.addControl(el.name, this.fb.control('', [Validators.required, el.validator]));
         }
@@ -177,7 +183,9 @@ export class CouponsComponent {
     }
 
     if (event == 'discount') {
-      controls.forEach((el: any) => {
+      this.controls.forEach((el: any) => {
+        console.log('edeleted element is ',el);
+        
         this.OfferForm.removeControl(el.name);
       })
       let ExtraInfo = this.fb.group({
@@ -229,9 +237,15 @@ export class CouponsComponent {
     return (<FormArray>this.OfferForm.get('UserEmails')?.get(String(index)));
   }
 
-  getAllOffers() {
-    this.fetchDateService.HTTPGET(this.BackendUrls.URLs.getOffers).subscribe((data) => {
-      this.allOffers = data;
+  getAllOffers(limit:number=10,page:number=1) {
+    let parameters={
+      search: '',
+      page: 1, 
+      limit: 10
+    }
+    this.fetchDateService.HTTPPOST(this.BackendUrls.URLs.getOffers,parameters).subscribe((data:any) => {
+      this.allOffers = data[0].document;
+      this.totalCount=data[0].count;
     });
   }
 
@@ -242,7 +256,7 @@ export class CouponsComponent {
   async ngOnInit() {
     this.getAllOffers();
   }
-  currentPage: number = 1
+
   pageChange(e: any) {
     this.currentPage = e;
     // this.fetchData();
@@ -293,6 +307,7 @@ export class CouponsComponent {
   async CouponSubmit() {
     this.dataUpdate = true;
     console.log('this offer form is ', this.OfferForm, this.OfferForm.value);
+
     if (!this.OfferForm.get('Image')?.value) {
       this.toastService.errorToast('Image is still uploading please try again');
       return;
@@ -415,9 +430,13 @@ export class CouponsComponent {
       this.getAllOffers();
       return;
     }
-    const body = { searchWord: event };
-    this.fetchDateService.HTTPPOST(this.BackendUrls.URLs.searchOffer, body).subscribe((data) => {
-      this.allOffers = data;
+    let parameters={
+      search: event,
+      page: 1, 
+      limit: 10
+    }
+    this.fetchDateService.HTTPPOST(this.BackendUrls.URLs.getOffers, parameters).subscribe((data:any) => {
+      this.allOffers = data[0].document;
     })
   }
 

@@ -14,7 +14,6 @@ export class CheckoutService {
   stripe: any;
   orderID:any=''
   SecretClient: any;
-  CouponApplied:any=null;
   private secureNavbar = new BehaviorSubject(false);
   secureNavbar$ = this.secureNavbar.asObservable();
   StripePaymentOpen = new BehaviorSubject<boolean>(false);
@@ -185,9 +184,6 @@ export class CheckoutService {
           orderID: data.orderID
         };
   
-        console.log(body, 'body is');
-        body.coupon=this.CouponApplied;
-        console.log('coupon capplied si ',body.coupon);
         
        this.fetchData.HTTPPOST(this.backendUri.URLs.updateOrderStatus, body).subscribe();
   
