@@ -17,7 +17,7 @@
 
 .disabled-item{
     opacity: 0.6;
-    z-index: -1;
+    pointer-events: none;
 }
 
 .product-info {
