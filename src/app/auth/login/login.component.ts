@@ -57,6 +57,8 @@ export class LoginComponent {
 
 
   LoginUser(body: any) {
+    console.log('here was falcon');
+    
     this.fetchDataService.HTTPPOST(this.backendUrls.URLs.loginUrl, body).subscribe(
       (data: any) => {
         this.loginService.loginUser({ 'userToken': data.token, 'name': data.firstName });
@@ -93,6 +95,7 @@ export class LoginComponent {
   }
 
   ngOnDestroy() {
+    console.log("login destroy");
     this.renderer.removeChild(document.body, this.script);
   }
 }

@@ -153,6 +153,9 @@ export class SettingsComponent {
       }
       this.ProfileForm.patchValue(data);
     })
+    this.toggleAccordian(0);
+    this.showWishlistedProducts('my wishlist');
+    
   }
 
   TranslateBack() {
@@ -219,6 +222,7 @@ export class SettingsComponent {
       }
       this.toastService.warningToast(toast);
       this.showWishlists()
+      this.wishlistService.getWishlistCount()
     })
   }
 
@@ -330,7 +334,7 @@ export class SettingsComponent {
 
   // orders code 
    getOrders(){
-    this.toggleAccordian(0);
+    
     setTimeout(()=>{
       this.TranslateData=true;
     },300)

@@ -52,8 +52,8 @@ export class ExploreComponent {
       this.filterApplied = JSON.parse(JSON.stringify(data));
       let actualParams = (Object.keys(this.filterApplied).length > 0) ? this.filterApplied : JSON.parse(JSON.stringify(data));
 
-      this.fetchData.getProducts(actualParams, this.limit, 1).subscribe((data: any) => {     
-        this.products = data.items;      
+      this.fetchData.getProducts(actualParams, this.limit, 1).subscribe((data: any) => {
+        this.products = data.items;
         this.totalProducts = data.total;
         this.loading = false;
 
@@ -65,6 +65,8 @@ export class ExploreComponent {
     }
 
     this.fetchData.HTTPPOST(this.BackendEndUrl.URLs.uniqueProductFields, body).subscribe((res: any) => {
+      console.log(res);
+
       this.uniqueData = res.data;
     })
   }
@@ -116,8 +118,6 @@ export class ExploreComponent {
   onChecked(event: any, field: string, extraParameter: any = '') {
 
     let value;
-
-
     if (event) {
       value = field === 'price' ? Number(event?.target?.value) : event.target.value;
     }
@@ -133,8 +133,6 @@ export class ExploreComponent {
       }
 
       else {
-
-
         if (Object.keys(this.filterApplied).length > 0) {
           this.filterApplied[field] = {};
           this.filterApplied[field] = value;
