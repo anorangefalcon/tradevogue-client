@@ -38,20 +38,17 @@ export class SupportComponent {
   }
 
   loadLatestOrder() {
-    this.userService.getUser('token').subscribe((token: any) => {
-      if (!token) return;
       this.showOrder = true;
       this.fetchData.HTTPGET(this.util.URLs.getParticularUserOrders).subscribe((data: any) => {
+        console.log(data, "data is ");
         if (data) {
-          this.products = data.latestProduct.products;
-          this.orderDetails = data.latestProduct;
+          this.products = data[0].products;
+          this.orderDetails = data[0];
           this.loadingProducts = false;
         } else {
-          return;
-          // console.log("No data found because you have not ordered anything yet");
+          console.log("No data found because you have not ordered anything yet");
         }
       });
-    });
 
     this.userService.getUser('name').subscribe((name: any) => {
       if (name) {
