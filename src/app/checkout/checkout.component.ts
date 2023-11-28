@@ -22,7 +22,7 @@ export class CheckoutComponent implements OnInit {
   //   this._orderIDSubject.next(orderId);
   // }
 
-  LoginUser:Boolean=false;
+  LoginUser:boolean=false;
   loadRazorpayScript() {
     const script = this.renderer.createElement('script');
     script.src = 'https://checkout.razorpay.com/v1/checkout.js';
@@ -94,11 +94,6 @@ export class CheckoutComponent implements OnInit {
         });
     }
   }
-
-
-
-
-
 
   @HostListener('window:scroll', []) onScroll() {
     if (window.scrollY > 80) {

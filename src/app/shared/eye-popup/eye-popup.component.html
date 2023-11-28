@@ -1,5 +1,5 @@
 <div class="eye__popup product">
-    <app-drawer [direction]="direction" [show]="show" (showChange)="handler($event)" [title]="'Product'"  [width]="width">
+    <app-drawer [direction]="direction" [show]="show" (showChange)="handler($event)"  [width]="width">
       <div class="popup-content popup-details">
         <div class="left-side">
             <owl-carousel-o *ngIf="list && list.assets && list.assets.length > 0" [options]="customOptions" [ngClass]="{crousel: true}">

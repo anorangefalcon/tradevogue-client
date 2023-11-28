@@ -181,22 +181,7 @@ export class BillingComponent implements OnInit {
 
   async submitForm(item: any): Promise<void> {
     try {
-
-      this.cartService.fetchCart().subscribe(async (res) => {
-        let result = JSON.parse(JSON.stringify(res));
-        // body.products=result.details;
-        this.fetchDataService.HTTPGET(this.backendURLs.URLs.getLatestOrderId).subscribe((data: any) => {
-          body = {
-            amount: item.price.toString(),
-            buyerId: "token",
-            newPaymentStatus: 'success',
-            products: result.details,
-            orderID: data.orderID
-          };
-          console.log(body, 'body is');
-          this.fetchDataService.HTTPPOST(this.backendURLs.URLs.updateOrderStatus, body).subscribe();
-        });
-      })
+      let paymentBody = {};
 
       let body = {};
       this.userService.getUser('token').subscribe((token: any) => {
@@ -208,7 +193,7 @@ export class BillingComponent implements OnInit {
       })
 
       const res = await this.http.post<any>('http://localhost:1000/razorpay/createUpiPayment', body).toPromise();
-      if (res.success) {
+      if (res) {
         const options: PaymentOptions = {
           key: res.key_id,
           amount: res.amount,
@@ -218,19 +203,28 @@ export class BillingComponent implements OnInit {
           image: '../../assets/logo-mobile.svg',
           order_id: res.order_id,
           handler: (response: any) => {
-            let paymentBody = {};
+            this.cartService.fetchCart().subscribe(async (res) => {
+            this.fetchDataService.HTTPGET(this.backendURLs.URLs.getLatestOrderId).subscribe((data: any) => {
             this.userService.getUser('token').subscribe((token: any) => {
+              let result = JSON.parse(JSON.stringify(res));
               paymentBody = {
                 buyerId: token,
                 newPaymentStatus: 'success',
                 transactionId: response.razorpay_payment_id,
                 MOP: 'razorpay',
+                orderID: data.orderID,
+                response: response,
+                products: result.details,
               };
-            });
+              this.fetchDataService.HTTPPOST(this.backendURLs.URLs.updateOrderStatus, paymentBody).subscribe((data: any) => {
+                console.log(data, "data is ")
+              });
 
-            this.fetchDataService.HTTPPOST(this.backendURLs.URLs.updateOrderStatus, paymentBody).subscribe((data: any) => {
-              console.log(data, "data is ")
+              console.log(paymentBody, 'payment body is');
             });
+          });
+          });
+            console.log(paymentBody, 'payment body is');
 
             alert('Payment Succeeded');
           },
