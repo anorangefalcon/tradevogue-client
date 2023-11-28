@@ -60,7 +60,11 @@
     padding: 2px;
     font-size: 18px;
 }
-
+.banner-small {
+    width: 70px;
+    height: 40px;
+    border-radius: 4px;
+}
 .banner-label {
     color: rgb(var(--blackClr), 0.7)
 }

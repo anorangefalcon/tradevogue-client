@@ -26,7 +26,7 @@
     width: 100%;
     transition: 0.3s ease-in-out;
     overflow-y: auto;
-    background-color: white;
+    background-color: rgb(var(--whiteClr));
 }
 
 .drawer__content {

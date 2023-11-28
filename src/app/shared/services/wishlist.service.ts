@@ -25,7 +25,7 @@ export class WishlistService {
   deleteProduct = new BehaviorSubject<any>('');
   delete$ = this.deleteProduct.asObservable();
 
-  productId: any;
+  public productId: any;
   private userIsLoggedIn: Boolean = false;
 
   constructor(
@@ -49,6 +49,8 @@ export class WishlistService {
     if (this.userIsLoggedIn) {
       this.productId = productId;
       this.fetchDataService.HTTPGET(this.backendUrls.URLs.showWishlist).subscribe((data: any) => {
+        console.log(data, "data");
+        
         this.showWishlistPopup.next(data);
       });
     }
@@ -70,22 +72,22 @@ export class WishlistService {
       }
   }
 
-  AddtoWishlist(wishlistName: string) {
-    if (!this.productId) return;
-    const body = {
-      wishlistName: wishlistName,
-      productId: this.productId,
-    }
-    this.fetchDataService.HTTPPOST(this.utils.URLs.addToWishlist, body).subscribe((response: any) => {
-      if (!response) return;
-      const toast = {
-        title: response.message
-      }
-      this.toastService.notificationToast(toast);
-      // this.WishlistCount.next(this.WishlistCount.value + 1);
-      this.getWishlistCount();
-    })
-  }
+  // AddtoWishlist(wishlistName: string) {
+  //   if (!this.productId) return;
+  //   const body = {
+  //     wishlistName: wishlistName,
+  //     productId: this.productId,
+  //   }
+  //   this.fetchDataService.HTTPPOST(this.utils.URLs.addToWishlist, body).subscribe((response: any) => {
+  //     if (!response) return;
+  //     const toast = {
+  //       title: response.message
+  //     }
+  //     this.toastService.notificationToast(toast);
+  //     // this.WishlistCount.next(this.WishlistCount.value + 1);
+  //     this.getWishlistCount();
+  //   })
+  // }
 
   removeFromWishlist(productId: any, wishlistName: string = '') {
     const delProduct: any = {

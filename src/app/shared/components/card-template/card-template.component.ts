@@ -54,10 +54,8 @@ export class CardTemplateComponent {
     this.wishlistService.ShowWishlist(this.product._id);
   }
 
-  RemoveOrAddToWishlist(event: any = null) {
-    console.log(this.product, "which product");
-
-    if (!event) {
+  RemoveOrAddToWishlist(isWishlisted:any = null){    
+    if(!isWishlisted){
       this.wishlistService.ShowWishlist(this.product._id);
     }
     else {
