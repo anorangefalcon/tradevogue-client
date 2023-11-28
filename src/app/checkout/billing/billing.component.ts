@@ -167,8 +167,7 @@ export class BillingComponent implements OnInit {
         } else {
           console.error("Payment form not found");
         }
-      } else {
-      }
+      } 
     } catch (error) {
       console.error('Error occurred:', error);
     }
@@ -212,9 +211,8 @@ export class BillingComponent implements OnInit {
                 newPaymentStatus: 'success',
                 transactionId: response.razorpay_payment_id,
                 MOP: 'razorpay',
-                orderID: data.orderID,
                 response: response,
-                products: result.details,
+                orderID: data.orderID,
               };
               this.fetchDataService.HTTPPOST(this.backendURLs.URLs.updateOrderStatus, paymentBody).subscribe((data: any) => {
                 console.log(data, "data is ")

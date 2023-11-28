@@ -46,6 +46,7 @@ export class SupportComponent {
           this.orderDetails = data[0];
           this.loadingProducts = false;
         } else {
+          return;
           console.log("No data found because you have not ordered anything yet");
         }
       });

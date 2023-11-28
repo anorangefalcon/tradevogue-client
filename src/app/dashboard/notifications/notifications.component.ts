@@ -30,9 +30,7 @@ export class NotificationsComponent {
       this.registrationIds = res;
     })
 
-    this.fetch.HTTPGET(this.util.URLs.getFcmToken).subscribe((res)=> {
-      this.fcmTokens= res;
-    })
+    this.getFcmTokens();
 
 
     this.notificationService.getNotifications().subscribe((res)=> {
@@ -53,6 +51,12 @@ export class NotificationsComponent {
     });
   }
 
+  getFcmTokens() {
+    this.fetch.HTTPGET(this.util.URLs.getFcmToken).subscribe((res)=> {
+      this.fcmTokens= res;
+    })
+  }
+
   deleteItem(key: any){
     this.selectedItem = key;
     if(this.selectedItem) {
@@ -63,6 +67,7 @@ export class NotificationsComponent {
       }
 
       this.fetch.HTTPPOST(this.util.URLs.deleteSales, body).subscribe((data=> {
+        this.getFcmTokens()
       }))
       
     }
@@ -79,6 +84,7 @@ export class NotificationsComponent {
       }
 
       this.fetch.HTTPPOST(this.util.URLs.toggleNotification , body).subscribe((res)=> {
+        this.getFcmTokens()
       })
 
     }
@@ -164,9 +170,7 @@ export class NotificationsComponent {
 
       this.http.post(apiUrl, data).subscribe(
         (response:  any) => {
-          // Reset the form and close the popup
           this.notificationForm.reset();
-          // this.selectedTicket = {};
         },
         (error: any) => {
           console.error('Error sending notification:', error);
@@ -186,10 +190,12 @@ export class NotificationsComponent {
         }
 
         this.fetch.HTTPPOST(this.util.URLs.updateNotification , body).subscribe((res)=> {
+          this.getFcmTokens()
         })
         
       } else {
         this.notificationService.setNotifications(this.notificationForm.value).subscribe((data) => {
+          this.getFcmTokens()
         });
       }
     } else {

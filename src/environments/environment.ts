@@ -12,4 +12,5 @@ export const environment = {
   production: false,
   BackendURL:'http://localhost:1000',
   Pincode:'http://54.157.29.156:4000',
+  vapidKeyNotification: 'BPgBPO552gWCPJ_rUhzgn02bC3EFAIh1EWhlyib11X58vriYlQXmqeGX9_NJ8Z1h8KjtIDpstdWTgFuC01pdFbw'
 };

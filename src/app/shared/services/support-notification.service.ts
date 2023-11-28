@@ -70,7 +70,7 @@ export class SupportNotificationService {
     }
 
     const messaging = getMessaging();
-    getToken(messaging, { vapidKey: 'BPgBPO552gWCPJ_rUhzgn02bC3EFAIh1EWhlyib11X58vriYlQXmqeGX9_NJ8Z1h8KjtIDpstdWTgFuC01pdFbw' })
+    getToken(messaging, { vapidKey: environment.vapidKeyNotification })
       .then((currentToken) => {
         if (currentToken) {
            this.fetchData.HTTPPOST(this.utils.URLs.webPushTokenDetail, {'token': currentToken}).subscribe((response: any) => {
