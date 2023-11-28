@@ -41,7 +41,7 @@ export class SupportComponent {
       this.showOrder = true;
       this.fetchData.HTTPGET(this.util.URLs.getParticularUserOrders).subscribe((data: any) => {
         console.log(data, "data is ");
-        if (data) {
+        if (data !== null || data !== undefined) {
           this.products = data[0].products;
           this.orderDetails = data[0];
           this.loadingProducts = false;
