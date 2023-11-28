@@ -25,14 +25,14 @@ export class CardTemplateComponent {
 
   ngOnInit(): void {
     this.avgRating = this.product.avgRating;
-    if(this.product.matchedIndex) this.assetIndex = this.product.matchedIndex;
+    if (this.product.matchedIndex) this.assetIndex = this.product.matchedIndex;
 
-    this.wishlistService.WishListedProducts.subscribe((response:any)=>{  
-      if(response.includes(this.product._id)){
-        this.product.wishlisted=true;
-      } 
-      else{
-        this.product.wishlisted=false;
+    this.wishlistService.WishListedProducts.subscribe((response: any) => {
+      if (response.includes(this.product._id)) {
+        this.product.wishlisted = true;
+      }
+      else {
+        this.product.wishlisted = false;
       }
     })
 
@@ -54,14 +54,14 @@ export class CardTemplateComponent {
     this.wishlistService.ShowWishlist(this.product._id);
   }
 
-  RemoveOrAddToWishlist(event:any=null){
+  RemoveOrAddToWishlist(event: any = null) {
     console.log(this.product, "which product");
-    
-    if(!event){
+
+    if (!event) {
       this.wishlistService.ShowWishlist(this.product._id);
     }
-    else{
-      this.wishlistService.removeFromWishlist(this.product._id).subscribe((data)=>{  
+    else {
+      this.wishlistService.removeFromWishlist(this.product._id).subscribe((data) => {
         this.wishlistService.getWishlistCount();
         this.product.wishlisted = false;
       });

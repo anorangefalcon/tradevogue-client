@@ -2,7 +2,7 @@ import { Component, ElementRef, ViewChild, OnInit, Renderer2 } from '@angular/co
 import { FetchDataService } from 'src/app/shared/services/fetch-data.service';
 import { UtilsModule } from 'src/app/utils/utils.module';
 import { CartService } from 'src/app/shared/services/cart.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { CheckoutService } from '../checkout.service';
 import { LoginCheckService } from 'src/app/shared/services/login-check.service';
@@ -65,7 +65,8 @@ export class BillingComponent implements OnInit {
     private route: ActivatedRoute,
     private stripePay: CheckoutService,
     private http: HttpClient,
-    private renderer: Renderer2
+    private renderer: Renderer2,
+    private router: Router,
   ) {
     this.items = JSON.parse(localStorage.getItem('paymentIntent') || '[]');
     // this.proceedToPayment();
@@ -202,28 +203,16 @@ export class BillingComponent implements OnInit {
           image: '../../assets/logo-mobile.svg',
           order_id: res.order_id,
           handler: (response: any) => {
-            this.cartService.fetchCart().subscribe(async (res) => {
-            this.fetchDataService.HTTPGET(this.backendURLs.URLs.getLatestOrderId).subscribe((data: any) => {
-            this.userService.getUser('token').subscribe((token: any) => {
-              let result = JSON.parse(JSON.stringify(res));
               paymentBody = {
-                buyerId: token,
                 newPaymentStatus: 'success',
                 transactionId: response.razorpay_payment_id,
                 MOP: 'razorpay',
-                response: response,
-                orderID: data.orderID,
+                orderID: this.checkOutService.orderID,
               };
               this.fetchDataService.HTTPPOST(this.backendURLs.URLs.updateOrderStatus, paymentBody).subscribe((data: any) => {
                 console.log(data, "data is ")
               });
-
-              console.log(paymentBody, 'payment body is');
-            });
-          });
-          });
             console.log(paymentBody, 'payment body is');
-
             alert('Payment Succeeded');
           },
           prefill: {
@@ -363,10 +352,13 @@ export class BillingComponent implements OnInit {
       const { paymentIntent, error } = await this.stripe.confirmPayment({
         elements: this.elements,
         confirmParams: {
-          return_url: "http://localhost:4200/usersetting/orders",
+          // return_url: "http://localhost:4200/usersetting/orders",
           receipt_email: this.emailAddress,
-        }
+        },
+        redirect: 'if_required'
       });
+
+      this.router.navigate(['/usersetting/orders']);
 
       if (error) {
         this.stripePay.showMessage(error.message);
