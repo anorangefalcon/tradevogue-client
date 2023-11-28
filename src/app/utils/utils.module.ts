@@ -9,7 +9,6 @@ import { environment } from '../../environments/environment';
 
 export class UtilsModule {
 
-  // url:any=process.env.BackendUrl;
   BackendUrl:String=environment.BackendURL;
   pincodeUrl:String=environment.Pincode;
   URLs: any = {

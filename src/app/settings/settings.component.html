@@ -137,7 +137,7 @@
                     <div class="form__group relative d-flex flex-column">
                         <label class="form__label">Date of Birth<span>*</span></label>
                         <span class="material-symbols-outlined form__icon absolute">person</span>
-                        <input type="date" id="dob" formControlName="dob" placeholder="Enter Your Username">
+                        <input type="date" id="dob" formControlName="dob" placeholder="Enter Your Date of Birth">
                     </div>
 
                     <div class="form__group relative d-flex flex-column">
@@ -340,7 +340,8 @@
                 </p>
 
                 <div class="AllOrders d-flex flex-column gap-25">
-                    <div *ngFor="let order of AllOrders ; let i=index" class="particularOrder">
+                    <ng-container *ngFor="let order of AllOrders ; let i=index" >
+                        <div *ngIf="i < TemplatePagination.limit" class="particularOrder">
                         <div class="order__firstDiv d-flex gap-25 justify-content-md-between">
                             <div class=" d-flex gap-25 align-item-center order__basic">
                                 <div>
@@ -419,7 +420,13 @@
                             </div>
                         </ng-container>
                     </div>
+                    </ng-container>
                 </div>
+                <div *ngIf="AllOrders?.length>0">
+                    <app-pagination #pagination [collectionSize]="totalCount" [pageSize]="TemplatePagination.limit" [currentPage]="currentPage"
+                    (activePage)="pageChange($event)"></app-pagination>
+                </div>
+  
             </div>
 
             <div *ngIf="showData=='wishlist'" class="wishlist">

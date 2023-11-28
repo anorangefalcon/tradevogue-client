@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { limit } from 'firebase/firestore';
+import { template } from 'lodash';
 import { DialogBoxService } from 'src/app/shared/services/dialog-box.service';
 import { FetchDataService } from 'src/app/shared/services/fetch-data.service';
 import { ImageUploadService } from 'src/app/shared/services/image-upload.service';
@@ -23,10 +25,10 @@ export class CouponsComponent {
   totalCount:number = 0;
   currentPage: number = 1;
 
-  template:any= {
+  TemplatePagination:any= {
     search: '',
     currentPage: this.currentPage,
-    limit: 8
+    limit: 1
   }
 
 
@@ -42,7 +44,7 @@ export class CouponsComponent {
   Brands: any;
   EditIndex: any;
   EditRequest: any;
-  allOffers: any;
+  allOffers: any=[];
   Categories: any;
   // Filters = ['categories', 'brands'];
   CouponRequest: boolean = false;
@@ -237,15 +239,18 @@ export class CouponsComponent {
     return (<FormArray>this.OfferForm.get('UserEmails')?.get(String(index)));
   }
 
-  getAllOffers(limit:number=10,page:number=1) {
-    let parameters={
-      search: '',
-      page: 1, 
-      limit: 10
-    }
-    this.fetchDateService.HTTPPOST(this.BackendUrls.URLs.getOffers,parameters).subscribe((data:any) => {
-      this.allOffers = data[0].document;
-      this.totalCount=data[0].count;
+  notData: boolean = false;
+  getAllOffers() {
+    this.fetchDateService.HTTPPOST(this.BackendUrls.URLs.getOffers,this.TemplatePagination).subscribe((data:any) => {
+      if(!data.length){
+        this.notData = true;
+        this.totalCount = 0;
+        this.allOffers = []
+        return;
+      }
+      this.allOffers = data[0]?.document;
+      this.totalCount=data[0]?.count;
+      
     });
   }
 
@@ -254,12 +259,14 @@ export class CouponsComponent {
   }
 
   async ngOnInit() {
-    this.getAllOffers();
+    // this.getAllOffers();
+    this.pageChange(this.currentPage);
   }
 
-  pageChange(e: any) {
-    this.currentPage = e;
-    // this.fetchData();
+  pageChange(pageNo: any,searchWord:String='') {
+    this.currentPage=pageNo;
+    this.TemplatePagination.search = searchWord;
+    this.getAllOffers();
   }
 
 
@@ -306,8 +313,6 @@ export class CouponsComponent {
   dataUpdate: boolean = false;
   async CouponSubmit() {
     this.dataUpdate = true;
-    console.log('this offer form is ', this.OfferForm, this.OfferForm.value);
-
     if (!this.OfferForm.get('Image')?.value) {
       this.toastService.errorToast('Image is still uploading please try again');
       return;
@@ -320,6 +325,8 @@ export class CouponsComponent {
     endDate.setMinutes(endDate.getMinutes() - 1);
     this.OfferForm.get('endDate')?.setValue(endDate);
 
+console.log('coupon value is ',this.OfferForm.value);
+// return;
 
     let url;
     let body: any = this.OfferForm.value;
@@ -330,18 +337,22 @@ export class CouponsComponent {
     else {
       url = this.BackendUrls.URLs.createOffer;
     }
+    console.log('url come is ',url);
+    
     this.fetchDateService.HTTPPOST(url, body).subscribe((data) => {
       if (this.EditRequest) {
         this.allOffers[this.EditIndex] = data;
         this.EditRequest = false;
       }
       else {
-        this.allOffers.unshift(data);
+        this.allOffers?.unshift(data);
       }
-      this.show = false;
-      this.OfferForm.reset();
-      this.dataUpdate = false;
+    
     });
+
+    this.show = false;
+    this.OfferForm.reset();
+    this.dataUpdate = false;
     return;
 
   }
@@ -427,17 +438,11 @@ export class CouponsComponent {
 
   updateFields(event: any) {
     if (!event) {
-      this.getAllOffers();
+    this.pageChange(1);
       return;
     }
-    let parameters={
-      search: event,
-      page: 1, 
-      limit: 10
-    }
-    this.fetchDateService.HTTPPOST(this.BackendUrls.URLs.getOffers, parameters).subscribe((data:any) => {
-      this.allOffers = data[0].document;
-    })
+
+    this.pageChange(1,event);
   }
 
   uploading: boolean = false;
@@ -455,6 +460,15 @@ export class CouponsComponent {
 
   ShowUpload() {
     this.OfferForm.get('Image')?.setValue('');
+  }
+
+
+  tableGenerator(len: number){
+    let temp = []
+    for(let i=0;i<len;i++){
+      temp.push(0);
+    }
+    return temp;
   }
 
 }

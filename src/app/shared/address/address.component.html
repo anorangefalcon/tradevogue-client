@@ -1,86 +1,95 @@
+
+
+
     
 <app-drawer [direction]="direction" [show]="show" (showChange)="ChangeHanlder($event)"  [title]="title">
-        <div class="addressFormContent">
-    <div class="d-flex flex-column gap-20">
+    <div class="addressFormContent">
+<div class="d-flex flex-column gap-20">
 
-    <form [formGroup]="DetailsForm" class="d-flex gap-15">
-    <div class="form__group relative d-flex flex-column">
-        <label class="form__label">First Name<span>*</span></label>
-        <input type="text" id="firstname" formControlName="firstname" placeholder="Enter Your First Name" class="form__input">
-    </div>
-    
-    <div class="form__group relative d-flex flex-column">
-        <label class="form__label">Last Name<span>*</span></label>
-        <input type="text" id="lastname" formControlName="lastname" placeholder="Enter Your Last Name" class="form__input">
-    </div>
-    <div class="form__group relative d-flex flex-column">
-        <label class="form__label">Apartment<span>*</span></label>
-        <input type="text" id="apartment" formControlName="apartment" placeholder="Enter Your apartment no" class="form__input">
-    </div>
-    
-    
-    <div class="form__group relative d-flex flex-column">
-        <label class="form__label">Area<span>*</span></label>
-        <!-- <span class="material-symbols-outlined form__icon absolute">call</span> -->
-        <input type="text" id="area" formControlName="area" placeholder="Enter Your area" [value]="area" class="form__input">
-    </div>
-    
-    
-    
-    
-    <div class="form__group relative d-flex flex-column">
-        <label class="form__label">Landmark<span>*</span></label>
-        <!-- <span class="material-symbols-outlined form__icon absolute">person</span> -->
-        <input type="text" id="landmark" formControlName="landmark" placeholder="Enter Your landmark" class="form__input">
-    </div>
-    
-    <div class="form__group relative d-flex flex-column">
-        <label class="form__label">Pin Code<span>*</span></label>
-        <!-- <span class="material-symbols-outlined form__icon absolute">person</span> -->
-        <input type="text" id="pincode" formControlName="pincode" placeholder="Enter Your Pin Code" class="form__input" (input)="onPostalCodeInputChange()">
-    </div>
-    
-    
-    <div class="form__group relative d-flex flex-column">
-        <label class="form__label">Town/City<span>*</span></label>
-        <!-- <span class="material-symbols-outlined form__icon absolute">person</span> -->
-        <input type="text" id="town_city" formControlName="town_city" [value]="town_city" placeholder="Enter Your Town/City" class="form__input">
-    </div>
-    
-    <div class="form__group relative d-flex flex-column">
-        <label class="form__label">State<span>*</span></label>
+<form [formGroup]="DetailsForm" class="d-flex gap-15">
+<div class="form__group relative d-flex flex-column">
+    <label class="form__label">First Name<span>*</span></label>
+    <input type="text" id="firstname" formControlName="firstname" placeholder="Enter Your First Name" class="form__input">
+</div>
 
-        <input class="form__input" formControlName="state" type="text" id="state" [value]="states" required
-                                placeholder="Enter Your State" [disabled]="!pincodeFilled" />
-    
-        <!-- <app-custom-select [type]="''"  [options]="states" [selectedOption]="((DetailsForm.get('state')?.value) ? (DetailsForm.get('state')?.value) : 'Select State')"
-        (final_option)="StateHandler($event)"></app-custom-select> -->
-    
-    </div>
-    
-    <div class="form__group relative d-flex flex-column">
-        <label class="form__label">Mobile No.<span>*</span></label>
-        <!-- <span class="material-symbols-outlined form__icon absolute">person</span> -->
-        <input type="text" id="town_city" formControlName="mobile" placeholder="Enter Your Phone Number" class="form__input">
-        <!-- -->
-        <span *ngIf="DetailsForm.get('mobile')?.hasError('invalidPhoneNo')  && DetailsForm.get('mobile')?.touched ">Invlaid Phone No</span>
-    </div>
-    
-    
-    </form>
-    
-    <div class="d-flex justify-content-end">
-        <!-- <button class="width-160 cancelbtn">Cancel</button> -->
+<div class="form__group relative d-flex flex-column">
+    <label class="form__label">Last Name<span>*</span></label>
+    <input type="text" id="lastname" formControlName="lastname" placeholder="Enter Your Last Name" class="form__input">
+</div>
+<div class="form__group relative d-flex flex-column">
+    <label class="form__label">Apartment<span>*</span></label>
+    <input type="text" id="apartment" formControlName="apartment" placeholder="Enter Your apartment no" class="form__input">
+</div>
 
-        <button class="btn-primary btn btn-sm btn-rounded" #EditBtn (click)="SaveAddress()" [disabled]="DetailsForm.invalid"  [ngClass]="{'disabled':DetailsForm.invalid}">
-            <span *ngIf="receiveData">Update</span>
-            <span *ngIf="!receiveData">Save</span>
-        </button>
-    </div>
-    
-    </div>
-    
-    </div>
-     
+
+<div class="form__group relative d-flex flex-column">
+    <label class="form__label">Area<span>*</span></label>
+    <!-- <span class="material-symbols-outlined form__icon absolute">call</span> -->
+    <input type="text" id="area" formControlName="area" placeholder="Enter Your area" [value]="area" class="form__input">
+</div>
+
+
+
+
+<div class="form__group relative d-flex flex-column">
+    <label class="form__label">Landmark<span>*</span></label>
+    <!-- <span class="material-symbols-outlined form__icon absolute">person</span> -->
+    <input type="text" id="landmark" formControlName="landmark" placeholder="Enter Your landmark" class="form__input">
+</div>
+
+<div class="form__group relative d-flex flex-column">
+    <label class="form__label">Pin Code<span>*</span></label>
+    <!-- <span class="material-symbols-outlined form__icon absolute">person</span> -->
+    <input type="text" id="pincode" formControlName="pincode" placeholder="Enter Your Pin Code" class="form__input" (input)="onPostalCodeInputChange()">
+</div>
+
+
+<div class="form__group relative d-flex flex-column">
+    <label class="form__label">Town/City<span>*</span></label>
+    <!-- <span class="material-symbols-outlined form__icon absolute">person</span> -->
+    <input type="text" id="town_city" formControlName="town_city" [value]="town_city" placeholder="Enter Your Town/City" class="form__input">
+</div>
+
+<div class="form__group relative d-flex flex-column">
+    <label class="form__label">State<span>*</span></label>
+
+    <input class="form__input" formControlName="state" type="text" id="state" [value]="states" required
+                            placeholder="Enter Your State" [disabled]="!pincodeFilled" />
+
+    <!-- <app-custom-select [type]="''"  [options]="states" [selectedOption]="((DetailsForm.get('state')?.value) ? (DetailsForm.get('state')?.value) : 'Select State')"
+    (final_option)="StateHandler($event)"></app-custom-select> -->
+
+</div>
+
+<div class="form__group relative d-flex flex-column">
+    <label class="form__label">Mobile No.<span>*</span></label>
+    <!-- <span class="material-symbols-outlined form__icon absolute">person</span> -->
+    <input type="text" id="town_city" formControlName="mobile" placeholder="Enter Your Phone Number" class="form__input">
+    <!-- -->
+    <span *ngIf="DetailsForm.get('mobile')?.hasError('error')  && DetailsForm.get('mobile')?.touched " class="errors">Invalid Phone No</span>
+</div>
+
+
+</form>
+
+<div class="d-flex justify-content-end">
+    <!-- <button class="width-160 cancelbtn">Cancel</button> -->
+
+    <button class="btn-primary btn btn-sm btn-rounded" #EditBtn (click)="SaveAddress()" [disabled]="DetailsForm.invalid"  [ngClass]="{'disabled':DetailsForm.invalid}">
+        <span *ngIf="receiveData">Update</span>
+        <span *ngIf="!receiveData">Save</span>
+    </button>
+</div>
+
+</div>
+
+</div>
+ 
 </app-drawer>
+
+
+
+
+
+
 

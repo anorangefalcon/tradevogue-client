@@ -7,6 +7,7 @@ import { ApiService } from 'src/app/dashboard/services/api.service';
 // import {}
 import { PhoneNumberValidator } from '../../auth/validators';
 import { Subject, debounceTime, distinctUntilChanged, switchMap } from 'rxjs';
+import { min } from 'lodash';
 
 
 @Component({
@@ -46,7 +47,7 @@ export class AddressComponent {
         pincode: fb.control('', [Validators.required,]),
         town_city: fb.control('', [Validators.required,]),
         state: fb.control('', [Validators.required,]),
-        mobile: ['', [Validators.required, PhoneNumberValidator]],
+        mobile: ['', [Validators.required,this.PhoneNoValidator,]],
       });
   }
 
@@ -153,4 +154,15 @@ export class AddressComponent {
   StateHandler(event: any) {
     this.DetailsForm.get('state')?.setValue(event);
   }
+
+
+  PhoneNoValidator(control: FormControl){
+    if(control.value?.length<10) return {error:true};
+    if(!Number(control.value)) return {error:true};
+    return null;
+    
+  }
+
 }
+
+

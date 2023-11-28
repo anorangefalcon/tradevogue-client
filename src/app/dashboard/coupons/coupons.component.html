@@ -34,55 +34,79 @@
                 <th class="items">Status</th>
                 <th class="items">Actions</th>
             </tr>
-            <ng-container *ngFor="let data of allOffers; let i=index">
-                <tr *ngIf="i < template.limit">
-                    <td class="items item-check">
-                        <input [(ngModel)]="data.checked" type="checkbox" (change)="checkboxChanged(i); updateCheckList();"
-                            id="itemId_{{i}}">
-                        <label class="d-flex flex-center" for='itemId_{{i}}'>
-                            <span class="d-flex flex-center material-symbols-outlined">done</span>
-                        </label>
-                    </td>
-    
-                    <ng-container>
-                        <td class="items">
-                            <p *ngIf="!data.couponcode">{{data.Title}}</p>
-                            <p *ngIf="data.couponcode">{{data.couponcode}}</p>
+            <tbody *ngIf="allOffers.length;">
+                <ng-container *ngFor="let data of allOffers; let i=index">
+                    <tr *ngIf="i < TemplatePagination.limit">
+                        <td class="items item-check">
+                            <input [(ngModel)]="data.checked" type="checkbox" (change)="checkboxChanged(i); updateCheckList();"
+                                id="itemId_{{i}}">
+                            <label class="d-flex flex-center" for='itemId_{{i}}'>
+                                <span class="d-flex flex-center material-symbols-outlined">done</span>
+                            </label>
                         </td>
-    
-                        <td class="items text-capitalize">{{data.OfferType}}</td>
-                        <td class="items text-capitalize">{{data.discountType}}</td>
-                        <td class="items">{{data.discountAmount}}</td>
-                        <td class="items">{{(data.startDate.split('T')[0])}}</td>
-                        <td class="items">{{data.endDate.split('T')[0]}}</td>
-    
-                        <td class="items slide-button tooggle__btn">
-                            <input type="checkbox" [(ngModel)]="data.status.active" [id]="'statusCheck'+i"
-                                (change)="ActiveStatus($event,data,i)">
-                            <label [for]="'statusCheck'+i"></label>
+        
+                        <ng-container>
+                            <td class="items">
+                                <p *ngIf="!data.couponcode">{{data.Title}}</p>
+                                <p *ngIf="data.couponcode">{{data.couponcode}}</p>
+                            </td>
+        
+                            <td class="items text-capitalize">{{data.OfferType}}</td>
+                            <td class="items text-capitalize">{{data.discountType}}</td>
+                            <td class="items">{{data.discountAmount}}</td>
+                            <td class="items">{{(data.startDate.split('T')[0])}}</td>
+                            <td class="items">{{data.endDate.split('T')[0]}}</td>
+        
+                            <td class="items slide-button tooggle__btn">
+                                <input type="checkbox" [(ngModel)]="data.status.active" [id]="'statusCheck'+i"
+                                    (change)="ActiveStatus($event,data,i)">
+                                <label [for]="'statusCheck'+i"></label>
+                            </td>
+                            <!-- <td class="items">
+                                <input type="radio" [attr.checked]="data.status.active">
+                            </td> -->
+                            <td class="items action-btns">
+                                <span class="d-flex align-item-center ">
+                                    <a class="tooltip edit__btn" (click)="EditOffer(data,i)">
+                                        <span class="pointer fs-18 action__btn-icon material-symbols-outlined">edit</span>
+                                        <span class="tooltiptext">Edit</span>
+                                    </a>
+                                    <a class="tooltip delete__btn">
+                                        <span class="pointer fs-18 action__btn-icon material-symbols-outlined"
+                                            (click)="DeleteOffer(data)">
+                                            delete
+                                        </span>
+                                        <span class="tooltiptext">Remove</span>
+                                    </a>
+                                </span>
+                            </td>
+                        </ng-container>
+        
+                    </tr>
+                </ng-container>
+            </tbody>
+
+            <ng-template #fetchData>
+                <tbody class="items" *ngIf="noData; else noData">
+                    <tr *ngFor="let i of tableGenerator(TemplatePagination.limit)">
+                        <td *ngFor="let i of tableGenerator(9)" class="items">
+                            <div class="skeleton" style="border-radius: 5px; color: transparent"> d</div>
                         </td>
-                        <!-- <td class="items">
-                            <input type="radio" [attr.checked]="data.status.active">
-                        </td> -->
-                        <td class="items action-btns">
-                            <span class="d-flex align-item-center ">
-                                <a class="tooltip edit__btn" (click)="EditOffer(data,i)">
-                                    <span class="pointer fs-18 action__btn-icon material-symbols-outlined">edit</span>
-                                    <span class="tooltiptext">Edit</span>
-                                </a>
-                                <a class="tooltip delete__btn">
-                                    <span class="pointer fs-18 action__btn-icon material-symbols-outlined"
-                                        (click)="DeleteOffer(data)">
-                                        delete
-                                    </span>
-                                    <span class="tooltiptext">Remove</span>
-                                </a>
-                            </span>
-                        </td>
-                    </ng-container>
-    
-                </tr>
-            </ng-container>
+                    </tr>
+                </tbody>
+
+                <ng-template #noData>
+                    <tbody>
+                        <tr>
+                            <td colspan="10">
+                                <div class="noDataFound d-flex flex-column flex-center card__pd-20">
+                                    <img src="../../../assets/noDataFound.svg" alt="No Data Found" height="170px">
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </ng-template>
+            </ng-template>
         </table>
     </div>
 
@@ -336,5 +360,5 @@
 
 </app-drawer>
 
-<app-pagination #pagination [collectionSize]="totalCount" [pageSize]="template.limit" [currentPage]="currentPage"
+<app-pagination #pagination [collectionSize]="totalCount" [pageSize]="TemplatePagination.limit" [currentPage]="currentPage"
     (activePage)="pageChange($event)"></app-pagination>

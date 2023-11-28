@@ -24,8 +24,10 @@ import { LoginCheckService } from '../shared/services/login-check.service';
 })
 export class SettingsComponent {
   // showData: string = "profile";
-  showData: string ="addresses"
-  AllOrders!: any
+  showData: string ="addresses";
+  totalCount:number=0;
+  currentPage:number=1;
+  AllOrders: any=[];
   ProfileDisabled:boolean=true;
   emailDisabled:boolean=true;
   AddressLength:number=0;
@@ -49,6 +51,12 @@ export class SettingsComponent {
   productStatus: any = 'cancelled';
 
   body:any;
+
+
+  TemplatePagination:any= {
+    currentPage: this.currentPage,
+    limit: 8
+  }
 
   template: any = {
     title: 'Are You Sure! Want to Cancel?',
@@ -107,8 +115,7 @@ export class SettingsComponent {
     this.dialogBox.responseEmitter.subscribe(async (res: boolean) => {
       if (res == true) {
         this.fetchDataService.HTTPPOST(this.backendURLs.URLs.cancelOrder, this.body).subscribe((data)=>{
-          this.getOrders();
-          
+          this.pageChange(1); 
         })
       }
     });
@@ -172,7 +179,7 @@ export class SettingsComponent {
       this.showWishlists();
     }
     if(el=='orders'){
-      this.getOrders();
+      this.pageChange(1);
     }
   }
 
@@ -333,13 +340,21 @@ export class SettingsComponent {
   }
 
   // orders code 
-   getOrders(){
-    
-    setTimeout(()=>{
-      this.TranslateData=true;
-    },300)
-     this.fetchDataService.HTTPGET(this.backendURLs.URLs.getParticularUserOrders).subscribe((data:any)=>{
-        this.AllOrders=data;   
+   getOrders(pageNo:any){
+    this.toggleAccordian(0);
+    // setTimeout(()=>{
+    //   this.TranslateData=true;
+    // },300)
+
+     this.fetchDataService.HTTPPOST(this.backendURLs.URLs.getParticularUserOrders,this.TemplatePagination).subscribe((data:any)=>{
+      if(!data.length){
+        // this.notData = true;
+        this.totalCount = 0;
+        this.AllOrders = []
+        return;
+      }
+      this.AllOrders = data[0]?.document;
+      this.totalCount=data[0]?.count;  
     });      
   }
 
@@ -363,6 +378,11 @@ export class SettingsComponent {
     };
     this.dialogBox.confirmationDialogBox(this.template);
 
+  }
+
+  pageChange(pageNo:any){
+    this.currentPage=pageNo;
+      this.getOrders(pageNo)
   }
 
 }

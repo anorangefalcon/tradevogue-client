@@ -108,3 +108,8 @@ button {
     background: transparent;
     border: 1px solid #e7e7e7;
 }
+
+.errors{
+    padding-block-start: 5px;
+    color: rgb(var(--danger));
+}

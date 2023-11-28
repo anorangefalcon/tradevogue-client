@@ -132,3 +132,8 @@ form {
         font-size: 15px;
     }
 }
+
+
+.form__input{
+    padding-inline-end: 5px;
+}

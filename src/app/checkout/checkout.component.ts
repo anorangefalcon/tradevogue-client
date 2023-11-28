@@ -108,7 +108,6 @@ export class CheckoutComponent implements OnInit {
   CouponOpener() {
     this.fetchService.HTTPGET(this.BackendUrl.URLs.getCoupons).subscribe((data: any) => {
       this.AllCoupons = data;
-      this.loading = false;
       this.show = true;
     });
   }
@@ -250,8 +249,6 @@ export class CheckoutComponent implements OnInit {
   createOrder() {
     let body: any = {};
     body.address = this.AddressSelected;
-
-    // this.cartService.fetchCart().subscribe((data) => {
       if (this.CouponApplied) {
         body.coupon = this.CouponApplied;
         body.discount = this.cart.amounts.savings;
@@ -262,9 +259,7 @@ export class CheckoutComponent implements OnInit {
         this.checkOutService.loadStripe.next(true);
         this.checkOutService.orderID = data.orderId;
       });
-
       this.NextDisabled = false;
-    // })
   }
 
   // COUPONS CODE FINSIH-------------------
