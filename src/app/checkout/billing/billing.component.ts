@@ -49,6 +49,8 @@ export class BillingComponent implements OnInit {
   items: any;
   selectedPaymentMethod = 'stripe';
   StripeOpener: Boolean = false;
+  stripeScript!: any;
+  clientSecret!: any;
 
   loadRazorpayScript() {
     const script = this.renderer.createElement('script');
@@ -99,16 +101,11 @@ export class BillingComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    
-    this.checkOutService.StripePaymentOpen$.subscribe((data) => {
-      console.log('data inside billing componen t is ',data);
-      
-      this.StripeOpener = data;
-    })
-
     this.loadRazorpayScript();
 
+
     this.checkOutService.loadStripe.subscribe((isLoaded: any) => {
+      this.StripeOpener = isLoaded;
       if (isLoaded) {
         this.loadStripe();
       }
@@ -125,33 +122,34 @@ export class BillingComponent implements OnInit {
   //   this.checkOutService.StripePaymentOpen.unsubscribe();
   // }
   
-  stripeLoaded: boolean = false;
   async loadStripe(): Promise<void> {
     try {
       const response = await fetch(this.backendURLs.URLs.getPaymentKeys);
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-
       const data = await response.json();
       const publicKey = data[0]?.keys?.[0]?.publicKey;
 
       if (publicKey) {
-        const script = document.createElement('script');
-        script.src = 'https://js.stripe.com/v3/';
-        script.onload = async () => {
-          this.stripeLoaded = true;
+        this.stripeScript = this.renderer.createElement('script');
+        this.stripeScript.src = 'https://js.stripe.com/v3/';
+        this.stripeScript.async = true;
+        
+        this.stripeScript.onload = async () => {
           this.stripe = Stripe(publicKey);
           await this.initializeStripe();
           await this.proceedToPayment();
         };
-        document.body.appendChild(script);
+        this.renderer.appendChild(document.body, this.stripeScript);
+        // document.body.appendChild(script);
       } else {
         console.error('Public key not found');
       }
     } catch (error) {
       console.error('Error loading Stripe scripts:', error);
     }
+  }
+
+  ngOnDestroy() {
+    this.renderer.removeChild(document.body, this.stripeScript);
   }
 
   async initializeStripe(): Promise<void> {
@@ -171,72 +169,6 @@ export class BillingComponent implements OnInit {
       } 
     } catch (error) {
       console.error('Error occurred:', error);
-    }
-  }
-
-  async onStripeButtonClick(): Promise<void> {
-    this.selectedPaymentMethod = 'stripe';
-    await this.initializeStripe();
-  }
-
-  async submitForm(item: any): Promise<void> {
-    try {
-      let paymentBody = {};
-
-      let body = {};
-      this.userService.getUser('token').subscribe((token: any) => {
-        body = {
-          amount: item.price.toString(),
-          items: item,
-          token: token
-        };
-      })
-
-      const res = await this.http.post<any>('http://localhost:1000/razorpay/createUpiPayment', body).toPromise();
-      if (res) {
-        const options: PaymentOptions = {
-          key: res.key_id,
-          amount: res.amount,
-          currency: 'INR',
-          name: 'Trade Vogue',
-          description: res.description,
-          image: '../../assets/logo-mobile.svg',
-          order_id: res.order_id,
-          handler: (response: any) => {
-              paymentBody = {
-                newPaymentStatus: 'success',
-                transactionId: response.razorpay_payment_id,
-                MOP: 'razorpay',
-                orderID: this.checkOutService.orderID,
-              };
-              this.fetchDataService.HTTPPOST(this.backendURLs.URLs.updateOrderStatus, paymentBody).subscribe((data: any) => {
-                console.log(data, "data is ")
-              });
-            console.log(paymentBody, 'payment body is');
-            alert('Payment Succeeded');
-          },
-          prefill: {
-            contact: res.contact,
-            name: res.name,
-            email: res.email,
-          },
-          notes: {
-            description: res.description,
-          },
-          theme: {
-            color: '#2300a3',
-          },
-        };
-        const razorpayObject = new (window as any).Razorpay(options);
-        razorpayObject.on('payment.failed', (response: any) => {
-          alert('Payment Failed');
-        });
-        razorpayObject.open();
-      } else {
-        alert(res.msg);
-      }
-    } catch (error) {
-      console.error('Error creating order:', error);
     }
   }
 
@@ -281,7 +213,8 @@ export class BillingComponent implements OnInit {
       body: JSON.stringify({ items }),
     });
 
-    const { clientSecret } = await response.json();
+    const { clientSecret }  = await response.json();
+    this.clientSecret = clientSecret;
 
     const appearance = {
       theme: 'flat',
@@ -341,6 +274,7 @@ export class BillingComponent implements OnInit {
     const paymentElement = this.elements.create("payment", paymentElementOptions);
     paymentElement.mount("#payment-element");
   }
+
   // this.stripePay.checkOrderStatus()
   async handleSubmit(e: Event): Promise<void> {
     try {
@@ -358,21 +292,18 @@ export class BillingComponent implements OnInit {
         redirect: 'if_required'
       });
 
-      this.router.navigate(['/usersetting/orders']);
-
       if (error) {
         this.stripePay.showMessage(error.message);
       } else if (paymentIntent && paymentIntent.id) {
-        const paymentIntentId = paymentIntent.id;
-        const body = { paymentIntentId };
-        // this.checkOutService.checkOrderStatus();
-
-        this.stripePay.showMessage("Payment successful!");
+        this.checkOutService.checkOrderStatus(this.clientSecret);
       } else {
         this.stripePay.showMessage("An unexpected error occurred.");
       }
 
       this.stripePay.setLoading(false);
+      this.cartService.clearCart();
+      this.router.navigate(['/usersetting/orders']);
+      
     } catch (error) {
 
     }
@@ -403,6 +334,68 @@ export class BillingComponent implements OnInit {
   clicked() {
     this.my_div?.nativeElement.classList.toggle('display_none');
   }
+
+    //razorpay
+    async submitForm(item: any): Promise<void> {
+      try {
+        let paymentBody = {};
+  
+        let body = {};
+        this.userService.getUser('token').subscribe((token: any) => {
+          body = {
+            amount: item.price.toString(),
+            items: item,
+            token: token
+          };
+        })
+  
+        const res = await this.http.post<any>('http://localhost:1000/razorpay/createUpiPayment', body).toPromise();
+        if (res) {
+          const options: PaymentOptions = {
+            key: res.key_id,
+            amount: res.amount,
+            currency: 'INR',
+            name: 'Trade Vogue',
+            description: res.description,
+            image: '../../assets/logo-mobile.svg',
+            order_id: res.order_id,
+            handler: (response: any) => {
+                paymentBody = {
+                  newPaymentStatus: 'success',
+                  transactionId: response.razorpay_payment_id,
+                  MOP: 'razorpay',
+                  orderID: this.checkOutService.orderID,
+                };
+                this.fetchDataService.HTTPPOST(this.backendURLs.URLs.updateOrderStatus, paymentBody).subscribe((data: any) => {
+                  console.log(data, "data is ")
+                });
+              console.log(paymentBody, 'payment body is');
+              alert('Payment Succeeded');
+            },
+            prefill: {
+              contact: res.contact,
+              name: res.name,
+              email: res.email,
+            },
+            notes: {
+              description: res.description,
+            },
+            theme: {
+              color: '#2300a3',
+            },
+          };
+          const razorpayObject = new (window as any).Razorpay(options);
+          razorpayObject.on('payment.failed', (response: any) => {
+            alert('Payment Failed');
+          });
+          razorpayObject.open();
+        } else {
+          alert(res.msg);
+        }
+      } catch (error) {
+        console.error('Error creating order:', error);
+      }
+    }
 
 
   // ADDRESS TS FILE---------------------
@@ -470,10 +463,5 @@ export class BillingComponent implements OnInit {
     this.addressDelivered = address;
   }
 
-  DummyPayment(){
-    let body={orderID:this.checkOutService.orderID};
-    this.fetchDataService.HTTPPOST(this.backendURLs.URLs.updateOrder,body).subscribe((data)=>{
-      console.log('data come up is ',data);  
-    })
-  }
+
 }

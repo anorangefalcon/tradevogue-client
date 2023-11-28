@@ -205,6 +205,8 @@ export class CartService {
       }
     }
     localStorage.removeItem("myCart");
+    console.log('hello vivekkkkkkkkk');
+    
     this.fetchDetails();
   }
 

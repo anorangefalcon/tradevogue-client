@@ -82,7 +82,7 @@ export class SettingsComponent {
     //   }
     // });
 
-    this.stripePay.checkOrderStatus()
+    // this.stripePay.checkOrderStatus()
 
     this.ProfileForm = fb.group(
       {

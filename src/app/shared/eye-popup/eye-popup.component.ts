@@ -143,9 +143,10 @@ export class EyePopupComponent {
       });
     }
     else {
+      this.show = false;
       this.cartService.addToCart(cartItem);
     }
-      this.show = false;
+      
   }
 
   changeColor(index: any) {
@@ -166,8 +167,6 @@ export class EyePopupComponent {
 
     if (!(this.getOrderQuantity().includes(this.selectedQ))) this.selectedQ = 0;
   }
-
-
 
   getOrderQuantity() {
     let limit = this.list?.assets[this.assetIndex].stockQuantity[this.sizeIndex].quantity;

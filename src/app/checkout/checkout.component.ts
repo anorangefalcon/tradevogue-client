@@ -7,20 +7,12 @@ import { ToastService } from '../shared/services/toast.service';
 import { CheckoutService } from './checkout.service';
 import { LoginCheckService } from '../shared/services/login-check.service';
 
-
 @Component({
   selector: 'app-checkout',
   templateUrl: './checkout.component.html',
   styleUrls: ['./checkout.component.css']
 })
 export class CheckoutComponent implements OnInit {
-
-  // orderId send to service 
-  // private _orderIDSubject: BehaviorSubject<string | null> = new BehaviorSubject<string | null>(null);
-  // public readonly orderID$ = this._orderIDSubject.asObservable();
-  // public updateOrderId(orderId: string) {
-  //   this._orderIDSubject.next(orderId);
-  // }
 
   LoginUser:boolean=false;
   loadRazorpayScript() {
@@ -42,34 +34,24 @@ export class CheckoutComponent implements OnInit {
     this.checkOutService.secureNavbar$.subscribe((data) => {
       this.SecureNavBar = data;
     })
-    this.checkOutService.StripePaymentOpen$.subscribe((data) => {
-      console.log('data inside constructor is---------> ',data);
-      
+    this.checkOutService.loadStripe.subscribe((data: any) => {
       this.StripePaymentOpener = data;
     })
 
     this.loginCheckService.getUser().subscribe((checkToken)=>{
       this.LoginUser=checkToken;
     })
-
-   
-
   }
-
 
   async ngOnInit() {
     this.loading = true;
-    this.cartService.fetchCart('count').subscribe((data) => {
-      this.cartCount = data;
-    });
-
     this.cartService.fetchCart().subscribe((data) => {
+      this.cartCount = data.details?.length;
       this.cart = data;
       this.loading = false;
-      this.verifyOrderSummary(false);
     });
+    this.verifyOrderSummary(false);
     this.loadRazorpayScript();
-
   }
 
   DateParser(el: any) {
@@ -105,9 +87,6 @@ export class CheckoutComponent implements OnInit {
   }
 
 
-
-
-
   // cartArr: any[] = [];
   GetProducts() {
     return new Promise((res, rej) => {
@@ -118,9 +97,6 @@ export class CheckoutComponent implements OnInit {
     })
 
   }
-
-
-
 
   // COUPONS CODE STARTS-------------------
   CouponValid: string = 'hidden';
@@ -199,8 +175,7 @@ export class CheckoutComponent implements OnInit {
       this.show=false;
       return;
     }
-
-
+    
     if (this.CouponValid == 'valid') {
       this.toastService.successToast({
         title: 'Coupon applied successfully'
@@ -217,12 +192,7 @@ export class CheckoutComponent implements OnInit {
     this.cart.amounts.savings += this.CalculateDiscount(this.CouponApplied);
     this.cart.amounts.total -= this.cart.amounts.savings;
     this.show = false;
-
   }
-
-
-
-
 
    verifyOrderSummary(navigate: boolean = true) {
       let res=this.cart;
@@ -251,17 +221,13 @@ export class CheckoutComponent implements OnInit {
               this.router.navigate(['/cart/billing']);
             });
           }
-
       }
-
-
   }
 
   ChangeHandler(event: any) {
     this.show = event;
     this.CouponCode.nativeElement.value = '';
   }
-
 
   AddressSelected: any = null;
   NextDisabled: boolean = false;
@@ -280,7 +246,6 @@ export class CheckoutComponent implements OnInit {
     }
   }
 
-
   OrderId: string = '';
   createOrder() {
     let body: any = {};
@@ -295,10 +260,8 @@ export class CheckoutComponent implements OnInit {
 
       this.fetchService.HTTPPOST(this.BackendUrl.URLs.createOrder, body).subscribe((data: any) => {
         this.checkOutService.loadStripe.next(true);
-        this.checkOutService.StripePaymentEmitter(true);
         this.checkOutService.orderID = data.orderId;
       });
-
 
       this.NextDisabled = false;
     // })
@@ -319,10 +282,6 @@ export class CheckoutComponent implements OnInit {
     // response of payment here 
     const paymentButton = document.getElementById('submit') as HTMLButtonElement;
     const razorpayButton = document.getElementById('razorSubmit') as HTMLButtonElement;
-    const loadStripeElements = document.getElementById('loadStripeElements') as HTMLButtonElement;
-    if(loadStripeElements) {
-      loadStripeElements.click();
-    }
 
     if (paymentButton) {
       paymentButton.click();

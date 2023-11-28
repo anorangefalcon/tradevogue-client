@@ -27,11 +27,7 @@ export const redirectGuard: CanActivateFn = async(route, state) => {
   }
   emittedBoolean = await waitForDialogResponse();
   if(emittedBoolean){
-    console.log('emittedbollena called redirect called----------->');
-    
-    checkOutService.StripePaymentEmitter(false);
     checkOutService.addressSelected=(null);
-  // router.navigate(['/']);
   }
   dialogBox.responseEmitter.next(false);
   
