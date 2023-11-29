@@ -46,7 +46,7 @@
     "rxfire": "^6.0.4",
     "rxjs": "~7.8.0",
     "select2": "^4.1.0-rc.0",
-    "stripe": "^13.8.0",
+    "stripe": "^13.11.0",
     "swiper": "^10.2.0",
     "tslib": "^2.6.1",
     "xlsx": "https://cdn.sheetjs.com/xlsx-0.20.0/xlsx-0.20.0.tgz",

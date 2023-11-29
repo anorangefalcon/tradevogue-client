@@ -267,13 +267,6 @@ export class CheckoutComponent implements OnInit {
   async ProceedToPayment() {
     let body: any = {};
     body.address = this.AddressSelected;
-
-    // if(!body.address){
-    //   this.toastService.errorToast({title:'Please select some address'});
-    //   return;
-    // }
-
-
     // response of payment here 
     const paymentButton = document.getElementById('submit') as HTMLButtonElement;
     const razorpayButton = document.getElementById('razorSubmit') as HTMLButtonElement;

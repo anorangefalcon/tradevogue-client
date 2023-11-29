@@ -38,18 +38,19 @@ export class SupportComponent {
   }
 
   loadLatestOrder() {
-      this.showOrder = true;
-      this.fetchData.HTTPGET(this.util.URLs.getParticularUserOrders).subscribe((data: any) => {
-        console.log(data, "data is ");
-        if (Array.isArray(data) && data.length > 0) {
-          this.products = data[0].products;
-          this.orderDetails = data[0];
+    if (this.showOrder) {
+      this.fetchData.HTTPGET(this.util.URLs.getParticularUserOrders).subscribe(
+        (data: any) => {
+          if (Array.isArray(data) && data.length !== 0) {
+            this.products = data[0].products;
+            this.orderDetails = data[0];
+            
+          } 
           this.loadingProducts = false;
-        } else {
-          return;
-          console.log("No data found because you have not ordered anything yet");
         }
-      });
+      );
+    }
+    
 
     this.userService.getUser('name').subscribe((name: any) => {
       if (name) {

@@ -71,7 +71,6 @@ export class BillingComponent implements OnInit {
     private router: Router,
   ) {
     this.items = JSON.parse(localStorage.getItem('paymentIntent') || '[]');
-    // this.proceedToPayment();
     this.stripePay.setLoading = this.stripePay.setLoading.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.stripePay.showMessage = this.stripePay.showMessage.bind(this);

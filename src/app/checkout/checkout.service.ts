@@ -143,6 +143,8 @@ export class CheckoutService {
 
   private async updateOrderStatus(paymentIntent: any) {
 
+
+
     let body: any = {};
     body = {
       newPaymentStatus: 'success',
