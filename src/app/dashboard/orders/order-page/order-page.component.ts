@@ -33,7 +33,7 @@ export class OrderPageComponent {
    let params: HttpParams = new HttpParams().set("orderID", this.orderId);
     this.fetchDataService.HTTPGET(this.backendUrl.URLs.getSellerOrderDetails, params).subscribe({
       next: (data: any)=>{
-        // console.log("DATA-----", data);
+        console.log("DATA-----", data);
         this.orderInfo = data;
 
         let totalQty = 0;
@@ -41,13 +41,13 @@ export class OrderPageComponent {
 
         data.products.forEach((product: any)=>{
             totalQty += product.quantity;
-            totalAmount += product.amount;
+            // totalAmount += product.amount;
         });
 
         this.orderInfo.orderDate = new Date(this.orderInfo.orderDate).toDateString()
 
         this.orderInfo['totalQty'] = totalQty;
-        this.orderInfo['totalAmount'] = totalAmount;
+        // this.orderInfo['totalAmount'] = totalAmount;
       }
     })
   }

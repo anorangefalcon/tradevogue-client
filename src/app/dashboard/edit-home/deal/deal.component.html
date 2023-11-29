@@ -21,8 +21,8 @@
     <form [formGroup]="DealForm" class="d-flex gap-15 card card__pd-20 default-animation-slow" [ngStyle]="{'flex-direction': DealForm.get('contentAlign')?.value === 'Right' ? 'row' : 'row-reverse'}">
 
         <div
-            class="form__group image__div width-40 relative d-flex flex-column img-upload justify-content-center align-item-center">
-            <div class="d-flex align-item-center justify-content-center">
+            class="form__group width-40 relative d-flex flex-column img-upload justify-content-center align-item-center">
+            <div class="d-flex align-item-center justify-content-center" [class.spinner] = "imageUpload">
 
                 <!--  LABEL AND SPAN -->
                 <div class="d-flex flex-column align-item-center gap-5" *ngIf="!getProductImage()">
@@ -41,13 +41,12 @@
                     <span class="remove-img material-symbols-outlined" *ngIf="Edit" (click)="CloseIconClicked()">
                         close
                     </span>
-                    <img [src]="getProductImage()" alt="Product Image" class="mh100 mw100" />
+                    <img [src]="getProductImage()" [class.skeleton]="imageUpload" alt="Product Image" class="mh100 mw100" />
                 </div>
 
                 <!-- INPUT WHICH DISPLAY NONE -->
                 <input type="file" class="image__upload__input" [id]="'deal_image'"
                     accept="image/jpg, image/jpeg, image/png" multiple (input)="bannerImageUpload($event)">
-
 
             </div>
         </div>

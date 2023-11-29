@@ -32,11 +32,13 @@
 .drawer__content {
     padding-inline: 24px;
     padding-block: 20px;
-    /* height: 100%; */
-    /* height: calc(100dvh - 60px); */
-    overflow: scroll;
+    height: calc(100% - 60px);
+    overflow-y: scroll;
     background-color: rgba(var(--whiteClr));
-    /* height: calc(100dvh - 60px); */
+
+    &::-webkit-scrollbar {
+        width: 0px;
+    }
 }
 
 .show {

@@ -80,8 +80,5 @@
 }
 
 .total td.items, th.items {
-    font-weight: 700 !important;
-    padding: 8px 10px !important;
-    background-color: #f4f5f778;
     color: rgb(var(--blackClr), 0.9);
 }

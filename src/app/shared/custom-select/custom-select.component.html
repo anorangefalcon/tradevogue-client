@@ -26,7 +26,7 @@
 
   </ul>
 
-  <div id="selected__container" class="relative" (click)="isactive = !isactive">
+  <div id="selected__container" class="relative" (click)="isactive = (!disableStatus? !isactive: false)">
     <input type="search" [disabled]="disableStatus" class="form__input" (input)="filterData($event)" [value]="selected"
       [placeholder]="selectedOption" *ngSwitchCase="'searchSelect'">
 

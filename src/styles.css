@@ -754,7 +754,6 @@ tr:last-child td{
 & .heading {
     font-size: 48px;
     font-weight: 400;
-    /* letter-spacing: 1.2px; */
     margin-bottom: 50px;
     font-weight: 500;
 
@@ -1127,7 +1126,7 @@ tr:last-child td{
     }
 
     & input[type="checkbox"]:checked+label {
-        background-color: rgb(var(--success));
+        background-color: rgb(var(--primaryClr));
     }
 }
 

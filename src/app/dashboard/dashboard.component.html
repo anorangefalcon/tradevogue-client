@@ -32,7 +32,7 @@
                     [routerLink]="'/dashboard/account'">
                     <span class="photo-section relative d-flex justify-content-center align-item-center">
                         <img id="profile__photo" src="../../../assets/avatars/try.svg" alt="">
-                        <span class="account__icon absolute material-symbols-outlined">settings</span>               
+                        <!-- <span class="account__icon absolute material-symbols-outlined">settings</span>                -->
                     </span>
 
                     <span class="profile-content d-flex flex-column justify-content-center">
@@ -63,7 +63,7 @@
                 <li class="transition" *ngFor="let item of navitems">
 
                     <a [routerLink]="item.route ? item.route: null" 
-                        (click)="item.name.toLowerCase() == 'logout' ? logout() : null" 
+                        (click)="item.name.toLowerCase() == 'logout' ? logout() : null; checkRoute()" 
                         [class.dropdown]="item.sublist" [routerLinkActive]="'active'"
                         class="nav-links relative align-item-center d-flex gap-15 pointer">
                         <i class="icons material-symbols-outlined">{{item.icons}}</i>

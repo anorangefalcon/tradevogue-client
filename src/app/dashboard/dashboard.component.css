@@ -106,7 +106,7 @@
     }
 
     & .sidebar {
-        width: 240px;
+        width: min(240px, 100%);
         height: 100%;
         z-index: 10;
         border-right: 1px solid rgba(var(--blackClr), 0.1);
@@ -211,7 +211,7 @@
         /* a.dropdown:has(+ .sub-navlist.active) + .sub-navlist */
 
         & .navlist li:hover>.sub-navlist {
-            height: max-content;
+            height: auto;
             opacity: 1;
         }
 
@@ -241,11 +241,31 @@
         }
     }
 
+    & .sidebar.active .navbar .navlist > li:last-child {
+
+        .nav-text{
+            display: none;
+        }
+
+        /* & a {
+            background-color: rgba(var(--primaryClr), 1);
+            justify-content: center;
+            color: rgb(var(--whiteClr));
+            margin-bottom: 10px;
+            border-radius: 5px;
+
+            &:hover {
+                background-color: rgba(var(--primaryClr), 0.8);
+            }
+        } */
+    }
+
     & .main {
         background-color: rgba(var(--secondary), 1);
-        /* color: rgb(105, 106, 106); */
         min-height: 100%;
-        padding: 65px 0px 0px 240px;
+
+        padding-inline: 240px 0px;
+        padding-block: 65px 0px;
 
         & .content {
             width: min(1400px, 100%);
@@ -295,7 +315,7 @@
         }
 
         & .sidebar.active:hover {
-            width: 240px;
+            width: min(240px, 100%);
             background-color: rgb(var(--whiteClr));
 
             & .branding {
@@ -330,7 +350,7 @@
         }
 
         & .sidebar.active+.main {
-            padding: 65px 0px 0px 50px;
+            padding-inline: 50px 0px;
         }
     }
 
@@ -354,11 +374,11 @@
         }
 
         & .main {
-            padding: 65px 0px 0px 0px;
+            padding-inline: 0px 0px;
         }
 
         & .sidebar.active {
-            width: 240px !important;
+            width: min(240px, 100%) !important;
             inset-block-start: 65px;
             background-color: rgb(var(--whiteClr));
             opacity: 1;
@@ -470,7 +490,7 @@ main {
     }
 
     .table-list {
-        overflow-x: auto;
+        /* overflow-x: auto; */
 
         &::-webkit-scrollbar {
             height: 3px;
@@ -530,6 +550,7 @@ main {
             width: 100%;
             border-collapse: collapse;
             border-style: hidden;
+            overflow: hidden;
 
             & .items {
                 font-weight: 600;
@@ -544,7 +565,7 @@ main {
 
             & th {
                 padding: 12px 16px;
-                background-color: rgb(var(--whiteClr));
+                background-color: rgb(var(--blackClr), 0.03);
                 color: rgb(var(--blackClr), 0.7);
             }
 

@@ -1,6 +1,7 @@
 import { Component, ViewEncapsulation } from '@angular/core';
 import { LoginCheckService } from '../shared/services/login-check.service';
 import { FetchDataService } from '../shared/services/fetch-data.service';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -16,6 +17,7 @@ export class DashboardComponent {
   darkTheme: Boolean = false;
 
   constructor(private userService: LoginCheckService,
+    private router: Router,
     private fetchDataService: FetchDataService) {
     this.fetchDataService.themeColor$.subscribe((color) => {
       this.darkTheme = color;
@@ -78,6 +80,11 @@ export class DashboardComponent {
     //   }
     //   this.isCollapse = false;
     // });
+    // this.checkRoute();
+  }
+
+  checkRoute(){
+    console.log(this.router.routerState.snapshot.url.split('/dashboard'));
   }
 
   logout() {

@@ -67,7 +67,7 @@
                                 <span>{{item.name}}</span>
                             </div>
                         </td>
-                        <td class="items"><span class="item__color d-flex" style="width: 20px;height: 20px;border-radius: 50%;" [style.background-color]="item.color"> </span></td>
+                        <td class="items"><span class="item__color d-flex" style="width: 15px;height: 15px; border: 1px solid rgb(var(--blackClr), 0.04); border-radius: 50%;" [style.background-color]="item.color"> </span></td>
                         <td class="items">{{item.size}}</td>
                         <td class="items">&#8377; {{item.price}}</td>
                         <td class="items text-capitalize">{{item.shipmentStatus}}</td>
@@ -75,9 +75,34 @@
                         <td class="items">&#8377; {{item.price * item.quantity}}</td>
                     </tr>
                     <tr class="total">
-                        <td class="items text-center" colspan="6">Total</td>
-                        <td class="items">{{orderInfo.totalQty}}</td>
-                        <td class="items">&#8377; {{orderInfo.totalAmount}}</td>
+                        <td class="items"></td>
+                        <td class="items"></td>
+                        <td class="items"></td>
+                        <td class="items"></td>
+                        <td class="items"></td>
+                        <td class="items fw-500">Total</td>
+                        <td class="items fw-500">{{orderInfo.totalQty}}</td>
+                        <td class="items fw-500">&#8377; {{orderInfo.orderAmount}}</td>
+                    </tr>
+                    <tr class="total">
+                        <td class="items"></td>
+                        <td class="items"></td>
+                        <td class="items"></td>
+                        <td class="items"></td>
+                        <td class="items"></td>
+                        <td class="items fw-500">Discount</td>
+                        <td class="items">-</td>
+                        <td class="items fw-500">&#8377; {{orderInfo.discount}}</td>
+                    </tr>
+                    <tr class="total">
+                        <td class="items"></td>
+                        <td class="items"></td>
+                        <td class="items"></td>
+                        <td class="items"></td>
+                        <td class="items"></td>
+                        <td class="items fw-500">Total</td>
+                        <td class="items fw-500">{{orderInfo.totalQty}}</td>
+                        <td class="items fw-500">&#8377; {{orderInfo.orderValueAfterDiscount}}</td>
                     </tr>
                 </tbody>
             </table>

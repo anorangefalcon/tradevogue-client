@@ -271,6 +271,34 @@ input[type="radio"]:checked+label {
     }
 }
 
+
+@media screen and (max-width: 768px) {
+    h1{
+        font-size: 16px !important;
+    }
+
+    h4{
+        font-size: 14px !important;
+    }
+
+    td p{
+        font-size: 12px;
+    }
+
+    .gap-24{
+        gap: 15px;
+    }
+
+    .product-name {
+
+        & .img-title{
+          width: 10ch;
+          text-overflow: ellipsis;
+          overflow: hidden;  
+        }
+    }
+}
+
 @media screen and (max-width: 480px) {
     #overview-section {
         & .card-value {

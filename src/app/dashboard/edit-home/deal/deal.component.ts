@@ -70,10 +70,14 @@ export class DealComponent {
     this.DealForm.get('productImage')?.setValue('');
   }
 
+  imageUpload: boolean = false;
+
   bannerImageUpload(event: any) {
     let file: any = (<HTMLInputElement>event.target)?.files![0];
+    this.imageUpload = true;
     this.imageuploadService.fileupload([{ file: file }]).then((url: any) => {
       this.DealForm.get('productImage')?.setValue(url[0]);
+      this.imageUpload = false;
       // this.Edit=!this.Edit;
     })
   }

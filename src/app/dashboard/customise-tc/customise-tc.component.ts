@@ -27,6 +27,7 @@ export class CustomiseTcComponent {
       TandC: this.fb.array([
       ])
     });
+    
     this.getData();
   }
 

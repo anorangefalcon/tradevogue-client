@@ -27,7 +27,7 @@ export class EyePopupComponent {
   show: boolean = false;
   fetchData = new BehaviorSubject<string>('');
   sku: any;
-  list: any = [];
+  list: any;
   avgRating: number = 0;
   productData: any = [];
   selectedColor: string = "";
@@ -54,79 +54,16 @@ export class EyePopupComponent {
   }
 
   ngOnInit() {
-    this.avgRating = this.list.avgRating;
+    // this.avgRating = this.list.avgRating;
     this.eyePopService.EyePopupData.subscribe((data) => {
       console.log(data, "eye data is ");
       if (!data) return;
       this.list = data;
       this.show = true;
-      this.startRotatingTags();
+      // this.startRotatingTags();
     });
   }
 
-  fetchProductData(loading: boolean = true) {
-    this.loading = loading;
-    let params = new HttpParams();
-    params = params.set("sku", this.sku);
-    this.assetIndex = 0;
-    this.sizeIndex = 0;
-
-    if (this.productSku) {
-      this.fetchDataService.HTTPGET(this.backendUrl.URLs.fetchProductDetails, params).subscribe((data: any) => {
-        this.updateDataFields(data);
-      });
-    }
-  }
-
-  updateDataFields(data: any) {
-    this.list = data;
-    this.list.avgRating = data.avgRating ? data.avgRating : 0;
-    this.activeIndex = 0;
-    this.selectedColor = data.assets[0].color;
-    this.selectedSize = data.assets[this.assetIndex].stockQuantity[0].size;
-    this.outOfStock = (this.list.assets[this.assetIndex].stockQuantity[this.sizeIndex].quantity <= 0) ? true : false;
-
-    if (this.outOfStock) {
-      let assetI = 0;
-      this.list.assets.some((asset: any) => {
-        let stockI = 0;
-        let otherSizeAvailable = asset.stockQuantity.some((stockQ: any) => {
-          if (stockQ.quantity > 0) {
-            this.updateSizeIndex(stockI);
-            return true;
-          }
-          stockI++;
-          return false;
-        });
-
-        if (otherSizeAvailable) {
-          return true;
-        }
-
-        assetI++;
-        this.changeColor(assetI);
-        return false;
-      });
-
-      const hehe = () => {
-
-      }
-    }
-
-    this.selectedQ = this.getOrderQuantity()[0];
-    this.fetchSimilarProducts = {
-      'tags': this.list.info.tags
-    };
-
-    this.route.queryParams.subscribe(queryParam => {
-      if (queryParam['color']) {
-        this.assetIndex = queryParam['color'];
-        this.changeColor(this.assetIndex);
-      }
-    });
-
-    this.loading = false;
-  }
 
   addToCart() {
     const cartItem = {
@@ -181,20 +118,20 @@ export class EyePopupComponent {
     return filteredArray;
   }
 
-  startRotatingTags(): void {
-    if (this.list?.info?.tags) {
-      const productTags = this.list?.info?.tags;
+  // startRotatingTags(): void {
+  //   if (this.list?.info?.tags) {
+  //     const productTags = this.list?.info?.tags;
 
-      setInterval(() => {
-        const endIndex = this.currentIndex + this.tagsToShow;
-        this.slicedTags = productTags.slice(this.currentIndex, endIndex);
-        this.currentIndex = (this.currentIndex + this.tagsToShow) % productTags.length;
+  //     setInterval(() => {
+  //       const endIndex = this.currentIndex + this.tagsToShow;
+  //       this.slicedTags = productTags.slice(this.currentIndex, endIndex);
+  //       this.currentIndex = (this.currentIndex + this.tagsToShow) % productTags.length;
 
-        // Trigger change detection
-        this.changeDetector.detectChanges();
-      }, 4000);
-    }
-  }
+  //       // Trigger change detection
+  //       this.changeDetector.detectChanges();
+  //     }, 4000);
+  //   }
+  // }
 
   createArrayToIterate(num: number) {
     const newTotal = Math.floor(num);
@@ -213,10 +150,9 @@ export class EyePopupComponent {
     mouseDrag: true,
     touchDrag: true,
     pullDrag: true,
-    dots: false,
-    nav: true,
+    dots: true,
+    nav: false,
     autoplay: true,
-    navText: ['<span class="material-symbols-outlined">chevron_left</span>', '<span class="material-symbols-outlined">chevron_right</span>'],
     navSpeed: 600,
     responsive: {
       0: {

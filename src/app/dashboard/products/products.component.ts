@@ -70,7 +70,10 @@ export class ProductsComponent implements OnInit {
       
       this.fetchdata.HTTPPOST(this.backendUrl.URLs.fetchProductInventory, this.template).subscribe({
         next: (res: any) => {
-          if(!res.data.length) this.dataFetchStatus = false;
+          if(!res.data.length) {
+            this.dataFetchStatus = false;
+            this.totalCount = 0;
+          };
 
 
           this.productArray = res;
