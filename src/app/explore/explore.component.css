@@ -159,10 +159,8 @@ input[type="checkbox"]:checked + label::after {
     inset-inline: 0;
     width: 100%;
     height: 54px;
-    background-color: rgb(195, 195, 195);
+    background-color: rgb(var(--whiteClr));
     z-index: 94;
-
-    background-color: rgba(255, 255, 255, 0.9);
     box-shadow: 0px -10px 18px 8px rgba(0, 0, 0, 0.1);
     border-radius: 5px;
     backdrop-filter: blur(10px);
@@ -206,7 +204,11 @@ input[type="checkbox"]:checked + label::after {
 .colors-radios input::before {
     text-align: center;
 }
-
+.sort-heading{
+    border-block-end: 1px solid rgb(var(--textClr), 0.2);
+    padding-block-end: 10px;
+    margin-block-end: 10px;
+}
 .colors-radios input:checked::after {
     content: "\e5ca";
     font-family: 'Material Symbols Outlined';
@@ -268,6 +270,49 @@ input::-webkit-inner-spin-button {
 .ranges p {
     font-size: 10px !important;
 }
+input[type="radio"] {
+    display: none;
+  }
+  
+  input[type='radio']:checked+label::before {
+    background-color: rgba(var(--primaryClr));
+    border: none;
+  }
+  
+  input[type='radio']:checked+label {
+    color: rgba(var(--blackClr), 0.9);
+  }
+  
+  /* input[type='radio']+label::before {
+    content: "";
+    position: absolute;
+    height: 15px;
+    transition: all 0.5s;
+    width: 15px;
+    background-color: #fff;
+    border: 1px solid black;
+    border-radius: 50%;
+    left: -23px;
+    top: 6px;
+  }
+  
+  input[type='radio']+label::after {
+    content: "";
+    height: 7px;
+    width: 7px;
+    position: absolute;
+    border: none;
+    background-color: rgb(var(--whiteClr));
+    border-radius: 50%;
+    left: -19.7px;
+    top: 10px;
+  } */
+  
+  
+  .selected-box {
+    border: 2px dotted #000;
+    padding: 10px;
+  }
 @media screen and (max-width: 974px) {
     .explore-cards {
         /* width: 100%; */
@@ -276,12 +321,15 @@ input::-webkit-inner-spin-button {
 }
 
 @media screen and (max-width: 737px) {
-    .filters {
+    .sort-custom{
+        display: none;
+    }
+    .filters , .sort-mobile{
         position: fixed;
         padding-inline: 25px;
         padding-block-start: 30px;
         padding-block-end: 60px;
-        background-color: rgb(255, 255, 255);
+        background-color: rgb(var(--whiteClr));
         z-index: 93;
         bottom: 0;
         inset-block-start: 0;
@@ -295,14 +343,23 @@ input::-webkit-inner-spin-button {
         transition: transform 0.4s ease-out, visibility 0.4s ease-out, opacity 0.4s ease-out;
     }
 
-    .filter-mobile-active {
+    .sort-mobile {
+        height: 270px;
+        inset-block-end : 0;
+        inset-block-start: initial
+    }
+    
+
+    .filter-mobile-active, .sort-mobile-active {
         visibility: visible;
         z-index: 97;
         transform: translateY(0%);
         opacity: 1;
     }
+ 
+    
 
-    .filter-icon-div {
+    .filter-icon-div, .sort-icon-div {
         & span {
             animation: rotateAndScale 0.7s ease-in-out;
         }
@@ -355,4 +412,3 @@ input::-webkit-inner-spin-button {
         transform: rotate(180deg) scale(1);
     }
 }
-

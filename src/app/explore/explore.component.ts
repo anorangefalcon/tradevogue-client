@@ -25,6 +25,7 @@ export class ExploreComponent {
   filterApplied: { [field: string]: any } = {};
 
   filtersOpen: boolean = false;
+  sortingOpen : boolean = false;
   filterKeys: any = {}
   data: any;
   sizes: string[] = ['XS', 'S', 'M', 'L', 'XL', 'XXL', 'XXXL'];
@@ -70,9 +71,16 @@ export class ExploreComponent {
       this.uniqueData = res.data;
     })
   }
-
+  onclick(value: any){
+    console.log(value);
+    
+  }
   onAdd(event: any, field: string) {
 
+    console.log('event ',event,field);
+    
+    
+    
     if (this.minPrice && !this.maxPrice) {
       this.filterApplied['minPrice'] = this.minPrice
     }
@@ -116,7 +124,7 @@ export class ExploreComponent {
   }
 
   onChecked(event: any, field: string, extraParameter: any = '') {
-
+    console.log(event, "event");
     let value;
     if (event) {
       value = field === 'price' ? Number(event?.target?.value) : event.target.value;

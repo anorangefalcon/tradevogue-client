@@ -166,7 +166,9 @@ export class SettingsComponent {
   }
 
   TranslateBack() {
-    this.TranslateData = false;
+    setTimeout(()=>{
+      this.TranslateData = false;
+    },300);
   }
 
   changeComponent(el: string) {
@@ -181,6 +183,7 @@ export class SettingsComponent {
     if(el=='orders'){
       this.pageChange(1);
     }
+
   }
 
 
@@ -342,10 +345,6 @@ export class SettingsComponent {
   // orders code 
    getOrders(pageNo:any){
     this.toggleAccordian(0);
-    // setTimeout(()=>{
-    //   this.TranslateData=true;
-    // },300)
-
      this.fetchDataService.HTTPPOST(this.backendURLs.URLs.getParticularUserOrders,this.TemplatePagination).subscribe((data:any)=>{
       if(!data.length){
         // this.notData = true;

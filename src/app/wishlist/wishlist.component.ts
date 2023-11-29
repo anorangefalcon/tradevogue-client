@@ -69,6 +69,7 @@ export class WishlistComponent {
   handler(event: any) {
     this.showTextField = false;
     this.show = event
+    // this.wishlistService.showWishlistPopup.
   }
 }
 

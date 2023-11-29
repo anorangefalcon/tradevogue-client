@@ -1,6 +1,6 @@
 <div class="deal__container d-flex flex-column gap-20">
     <div class="d-flex justify-content-md-between card card__pd-20 default-animation">
-        <div class="d-flex gap-5 justify-content-center align-item-center">
+        <div class="d-flex gap-5 align-item-center header__div">
             <button class="btn btn-xs customise-back-btn d-flex flex-center" routerLink="/dashboard/customise-home">
                 <span class="material-symbols-outlined">
                     arrow_back_ios
@@ -21,7 +21,7 @@
     <form [formGroup]="DealForm" class="d-flex gap-15 card card__pd-20 default-animation-slow" [ngStyle]="{'flex-direction': DealForm.get('contentAlign')?.value === 'Right' ? 'row' : 'row-reverse'}">
 
         <div
-            class="form__group width-40 relative d-flex flex-column img-upload justify-content-center align-item-center">
+            class="form__group image__div width-40 relative d-flex flex-column img-upload justify-content-center align-item-center">
             <div class="d-flex align-item-center justify-content-center">
 
                 <!--  LABEL AND SPAN -->
@@ -52,7 +52,7 @@
             </div>
         </div>
 
-        <div class="width-60 d-flex flex-wrap gap-20">
+        <div class="width-60 content__div d-flex flex-wrap gap-20">
 
             <div class="form__group relative d-flex flex-column">
                 <label class="form__label">Title<span>*</span></label>

@@ -1,6 +1,6 @@
 <div class="explore-container container d-flex">
-    
-    <div class="phone-icons" [ngClass]="filtersOpen ? 'phone-icons-active' : ''">
+
+    <div class="phone-icons" [ngClass]="filtersOpen || sortingOpen ? 'phone-icons-active' : ''">
         <div class="filter-icon-div" (click)="filtersOpen = !filtersOpen">
             <span *ngIf="!filtersOpen" class="material-symbols-outlined">
                 discover_tune
@@ -12,17 +12,33 @@
                 FILTER
             </p>
         </div>
-        <div class="sorting-icon-div">
+        <div class="sort-icon-div" (click)="sortingOpen=!sortingOpen">
             <span class="filter-icon material-symbols-outlined">
                 swap_vert
             </span>
             <p>
                 SORT
             </p>
+
         </div>
 
     </div>
+    <div class="sort-mobile" [ngClass]="(sortingOpen === true) ? 'sort-mobile-active' : '' "
+        *ngIf="sortingOpen == true">
+        <div class="sort-heading d-flex justify-content-md-between align-item-center">
+            <h4>Sort By</h4>
+            <button class="clear-btn btn" (click)="clearAll()">Reset</button>
+        </div>
+        <div class="d-flex flex-column gap-10">
+            <div *ngFor="let title of sorting.titles;let i=index">
+                <!-- <input type="radio" value="title" name="sort"> -->
+                <label (click)="onAdd(sorting.titles[i], 'sort'); sortingOpen = !sortingOpen" class="pointer">
+                    {{title}}
+                </label>
+            </div>
+        </div>
 
+    </div>
     <div class="d-flex gap-20 mw100">
         <div class="filters d-flex flex-column gap-10"
             [ngClass]="(filtersOpen === true) ? 'filter-mobile-active' : '' ">
@@ -60,7 +76,8 @@
                         <div *ngFor="let value of filter.value | slice:3; let i = index"
                             class="d-flex gap-10 align-item-center">
                             <input type="checkbox" [name]="filter.key" [value]="value" id={{value}} class="checkboxes"
-                                (change)="onChecked($event, filter.key)"  [checked]="isValueSelected(value,filterApplied[filter.key])">
+                                (change)="onChecked($event, filter.key)"
+                                [checked]="isValueSelected(value,filterApplied[filter.key])">
                             <label [for]="value" class="capital">{{ value}}</label>
                         </div>
                     </div>
@@ -110,40 +127,28 @@
                     </div>
                 </div>
             </div>
-
-            <!-- <div class="types">
-                <div class="category d-flex flex-column gap-10">
-                    <p>Size</p>
-                    <div *ngFor="let size of sizes" class="d-flex gap-10 ">
-                        <input type="checkbox" [name]="size" [value]="size" id={{size}} class="checkboxes">
-                        <label [for]="size" class="capital">{{size}}</label>
-                    </div>
-                </div>
-            </div> -->
         </div>
 
         <div class="non-filters">
             <div class="d-flex justify-content-end sort">
                 <div class="d-flex gap-20">
-                    <!-- <app-custom-select [_id]="'colors'" [options]="colors" [selectedOption]="'Select Colors'"
-                    [type]="'multiSelect'" (SelectedList)="onAdd($event, 'colors')"></app-custom-select> -->
                     <app-custom-select [_id]="'sizes'" [options]="sizes" [selectedOption]="'Select Sizes'"
                         [type]="'multiSelect'" (SelectedList)="onAdd($event, 'size')"></app-custom-select>
-
                     <app-custom-select [_id]="'sort'" [options]="sorting.titles" [selectedOption]="'Sort By'"
-                        (final_option)="onAdd($event, 'sort')"></app-custom-select>
+                        (final_option)="onAdd($event, 'sort')" class="sort-custom"></app-custom-select>
                 </div>
                 <div>
                 </div>
             </div>
             <div class="d-flex cards">
 
-             <div class="tags-inside d-flex flex-row gap-10">
+                <div class="tags-inside d-flex flex-row gap-10">
                     <ng-container *ngFor="let filter of filterApplied | keyvalue">
-                   
-                        <span class="d-flex gap-10" >
 
-                            <div   class="d-flex gap-10" *ngIf="filter.key !== 'sort' && filter.key !== 'size' && filter.key !== 'minPrice' && filter.key!='color' && filter.key !== 'maxPrice' && filter.key !== 'search'" >
+                        <span class="d-flex gap-10">
+
+                            <div class="d-flex gap-10"
+                                *ngIf="filter.key !== 'sort' && filter.key !== 'size' && filter.key !== 'minPrice' && filter.key!='color' && filter.key !== 'maxPrice' && filter.key !== 'search'">
                                 <div *ngIf="isString(filter.value)">
                                     <div class="d-flex tags align-item-center justify-content-center ">
                                         <p>{{filter.value}}</p>
@@ -155,27 +160,27 @@
                                         </a>
                                     </div>
                                 </div>
-                                
+
                                 <ng-container *ngIf="!isString(filter.value)">
-                                    <div  class="d-flex gap-10 tags align-item-center justify-content-center "
-                                    *ngFor="let val of filter?.value  ">
-                                    <p>{{val}}</p>
-                                    <a class="d-flex justify-content-center align-item-center">
-                                        <span class="material-symbols-outlined pointer"
-                                            (click)="onChecked(false, filter.key,val)">
-                                            close
-                                        </span>
-                                    </a>
-                                </div>
+                                    <div class="d-flex gap-10 tags align-item-center justify-content-center "
+                                        *ngFor="let val of filter?.value  ">
+                                        <p>{{val}}</p>
+                                        <a class="d-flex justify-content-center align-item-center">
+                                            <span class="material-symbols-outlined pointer"
+                                                (click)="onChecked(false, filter.key,val)">
+                                                close
+                                            </span>
+                                        </a>
+                                    </div>
 
                                 </ng-container>
-                          
-    
+
+
                             </div>
                         </span>
                     </ng-container>
-                  
-                </div> 
+
+                </div>
 
             </div>
 
@@ -186,7 +191,7 @@
 
 
             <div *ngIf="!loading && products.length;  else noData" class="explore-cards">
-                <ng-container  *ngFor="let product of products">
+                <ng-container *ngFor="let product of products">
                     <div class="card-temp">
                         <app-card-template class="d-flex justify-content-center"
                             [product]="product"></app-card-template>
@@ -204,5 +209,6 @@
     </div>
 
 </div>
+
 <app-pagination [collectionSize]="totalProducts" [currentPage]="pageNumber" [pageSize]="limit"
     (activePage)="changePage($event)"></app-pagination>

@@ -194,6 +194,8 @@ export class CheckoutComponent implements OnInit {
   }
 
    verifyOrderSummary(navigate: boolean = true) {
+    console.log('verify order sumaarycaled ',this.cart);
+    
       let res=this.cart;
       if(res?.details?.length==0) return;
       let result = JSON.parse(JSON.stringify(res));
@@ -204,7 +206,9 @@ export class CheckoutComponent implements OnInit {
       }
 
       if (!navigate) {
+        
         this.fetchService.HTTPPOST(this.BackendUrl.URLs.verifyOrderWithoutCoupon, result).subscribe((response) => {
+          console.log('response come up is ',response);
           this.cart.amounts = response;
         });
       }
@@ -214,7 +218,7 @@ export class CheckoutComponent implements OnInit {
             this.router.navigate(['/auth/login']);
           }
           else {
-            this.fetchService.HTTPPOST(this.BackendUrl.URLs.verifyOrderSummary, result).subscribe((response) => {
+            this.fetchService.HTTPPOST(this.BackendUrl.URLs.verifyOrderSummary, result).subscribe((response) => {              
               this.cart.amounts = response;
 
               this.router.navigate(['/cart/billing']);

@@ -1,8 +1,8 @@
 <section>
-    <div class="container d-flex">
+    <div class="container d-flex" [ngClass]="{'expand':TranslateData}">
         <nav class="navbar d-flex flex-column align-item-center gap-25">
             <ul class="nav-items d-flex flex-column align-item-center mh100 mw100">
-                <li class="nav-links d-flex align-item-center mw100 relative transition"
+                <li class="nav-links d-flex align-item-center mw100 relative transition" (click)="TranslateData=true;"
                     [ngClass]="{'nav-link-active': this.showData === 'profile'}" (click)="changeComponent('profile')">
                     <a class="d-flex align-item-center pointer gap-10">
                         <span class="material-symbols-outlined nav-icons">
@@ -10,11 +10,11 @@
                         </span>
                         <span class="nav-txt fs-14 fw-300">Profile</span>
                     </a>
-                    <span class="material-symbols-outlined right__icon">
-                        chevron_right
+                    <span class="material-symbols-outlined right__icon" >
+                        chevron_right 
                     </span>
                 </li>
-                <li class="nav-links d-flex align-item-center mw100 relative transition"
+                <li class="nav-links d-flex align-item-center mw100 relative transition" (click)="TranslateData=true;"
                     [ngClass]="{'nav-link-active': this.showData === 'orders'}" (click)="changeComponent('orders')">
                     <a class="d-flex align-item-center pointer gap-10">
                         <span class="material-symbols-outlined nav-icons">
@@ -22,11 +22,11 @@
                         </span>
                         <span class="nav-txt fs-14 fw-300">Orders</span>
                     </a>
-                    <span class="material-symbols-outlined right__icon">
-                        chevron_right
+                    <span class="material-symbols-outlined right__icon" >
+                        chevron_right 
                     </span>
                 </li>
-                <li class="nav-links d-flex align-item-center mw100 relative transition"
+                <li class="nav-links d-flex align-item-center mw100 relative transition" (click)="TranslateData=true;"
                     [ngClass]="{'nav-link-active': this.showData === 'wishlist'}" (click)="changeComponent('wishlist')">
                     <a class="d-flex align-item-center pointer gap-10">
                         <span class="material-symbols-outlined nav-icons">
@@ -34,13 +34,13 @@
                         </span>
                         <span class="nav-txt fs-14 fw-300">Wishlists</span>
                     </a>
-                    <span class="material-symbols-outlined right__icon">
-                        chevron_right
+                    <span class="material-symbols-outlined right__icon"  >
+                        chevron_right 
                     </span>
                 </li>
 
 
-                <li class="nav-links d-flex align-item-center mw100 relative transition"
+                <li class="nav-links d-flex align-item-center mw100 relative transition" (click)="TranslateData=true;"
                     [ngClass]="{'nav-link-active': this.showData === 'addresses'}"
                     (click)="changeComponent('addresses')">
                     <a class="d-flex align-item-center pointer pointer gap-10">
@@ -50,11 +50,11 @@
                         <span class="nav-txt fs-14 fw-300">Addresses</span>
                     </a>
                     <span class="material-symbols-outlined right__icon">
-                        chevron_right
+                        chevron_right 
                     </span>
                 </li>
 
-                <li class="nav-links d-flex align-item-center mw100 relative transition"
+                <li class="nav-links d-flex align-item-center mw100 relative transition" (click)="TranslateData=true;"
                     [ngClass]="{'nav-link-active': this.showData === 'changePassword'}"
                     (click)="changeComponent('changePassword')">
                     <a class="d-flex align-item-center pointer gap-10">
@@ -63,24 +63,27 @@
                         </span>
                         <span class="nav-txt fs-14 fw-300">Security</span>
                     </a>
-                    <span class="material-symbols-outlined right__icon">
-                        chevron_right
+                    <span class="material-symbols-outlined right__icon" >
+                        chevron_right 
                     </span>
                 </li>
             </ul>
         </nav>
 
-        <div class="content" [ngClass]="{'expand':TranslateData}">
+        <div class="content" >
             <div class="profile d-flex flex-column gap-20" *ngIf="showData=='profile'">
 
-                <div class="d-flex align-item-center justify-content-md-between pointer h2_div"
-                    (click)="TranslateBack()">
-                    <!-- <span class="material-symbols-outlined left__icon">
+                <div class="d-flex  align-item-center pointer  justify-content-md-between default-animation" 
+                   >
+
+                   <div class="d-flex align-item-center gap-5">
+                    <span class="material-symbols-outlined left__icon"  (click)="TranslateBack()" *ngIf="TranslateData" >
                         chevron_left
-                    </span> -->
+                    </span>
                     <h2>
                         Profile Details
                     </h2>
+                </div>
 
                     <div class="d-flex gap-15">
                         <button class="btn-secondary  btn btn-sm btn-rounded"
@@ -97,7 +100,7 @@
                 </div>
 
 
-                <form [formGroup]="ProfileForm" class="d-flex gap-15 disableInput flex-wrap">
+                <form [formGroup]="ProfileForm" class="d-flex gap-15 disableInput flex-wrap default-animation-slow">
                     <div class="form__group relative d-flex flex-column">
                         <label class="form__label">First Name<span>*</span></label>
                         <span class="material-symbols-outlined form__icon absolute">person</span>
@@ -159,26 +162,27 @@
             </div>
 
             <div *ngIf="showData=='addresses'" class="address">
-                <div class="d-flex  align-item-center justify-content-md-between pointer" (click)="TranslateBack()">
+                <div class="d-flex address_header align-item-center justify-content-md-between pointer default-animation">
 
-                    <div class="d-flex align-item-center pointer" (click)="TranslateBack()">
-                        <!-- <span class="material-symbols-outlined left__icon">
+                    <div class="d-flex align-item-center gap-5">
+                        <span class="material-symbols-outlined left__icon"  (click)="TranslateBack()" *ngIf="TranslateData" >
                             chevron_left
-                        </span> -->
+                        </span>
                         <h2>
-                            My Addresses
+                            My  Addresses
                         </h2>
                     </div>
 
+
                     <div class="d-flex align-item-center addAddress__div" (click)="AddAddress()">
-                        <span class="material-symbols-outlined">
+                        <span class="material-symbols-outlined address__icon">
                             add_circle
                         </span>
-                        <p>ADD NEW ADDRESS</p>
+                        <p class="text_address">ADD NEW ADDRESS</p>
                     </div>
 
                 </div>
-                <div class="d-flex flex-column gap-10">
+                <div class="d-flex flex-column gap-10 default-animation-slow ">
                     <div class="d-flex flex-column gap-20" [ngClass]="{'addressDiv':AddressLength>0}">
                         <ng-container *ngFor="let address of userAddresses;let i=index">
                             <div class="d-flex mw100 particularAddress justify-content-md-between">
@@ -218,10 +222,10 @@
             </div>
 
             <div class="changePassword" *ngIf="showData=='changePassword'">
-                <div class="d-flex align-item-center pointer" (click)="TranslateBack()">
-                    <!-- <span class="material-symbols-outlined left__icon">
+                <div class="d-flex align-item-center pointer h2_div default-animation">
+                    <span class="material-symbols-outlined left__icon"  (click)="TranslateBack()" *ngIf="TranslateData" >
                         chevron_left
-                    </span> -->
+                    </span>
                     <h2>
                         Change Password
                     </h2>
@@ -229,7 +233,7 @@
 
                 </div>
 
-                <form [formGroup]="changePasswordForm" class="d-flex flex-column flex-wrap">
+                <form [formGroup]="changePasswordForm" class="d-flex flex-column flex-wrap default-animation-slow ">
 
 
                     <div class="form__group relative d-flex flex-column">
@@ -325,9 +329,10 @@
             </div>
 
             <div class="Orders  d-flex flex-column gap-20" *ngIf="showData=='orders'">
-
+             
+                <div class="default-animation ">
                 <div class="d-flex align-item-center pointer h2_div" (click)="TranslateBack()">
-                    <span class="material-symbols-outlined left__icon">
+                    <span class="material-symbols-outlined left__icon"  (click)="TranslateBack()" *ngIf="TranslateData" >
                         chevron_left
                     </span>
                     <h2 style="font-weight: 600;">
@@ -338,8 +343,9 @@
                 </div>
                 <p class="orders__p">Check the status of recent orders, view invoice and manage returns.
                 </p>
+            </div>
 
-                <div class="AllOrders d-flex flex-column gap-25">
+                <div class="AllOrders d-flex flex-column gap-25 default-animation-slow">
                     <ng-container *ngFor="let order of AllOrders ; let i=index" >
                         <div *ngIf="i < TemplatePagination.limit" class="particularOrder">
                         <div class="order__firstDiv d-flex gap-25 justify-content-md-between">
@@ -431,17 +437,17 @@
 
             <div *ngIf="showData=='wishlist'" class="wishlist">
 
-                <div class="d-flex align-item-center pointer" (click)="TranslateBack()">
-                    <!-- <span class="material-symbols-outlined left__icon">
+                <div class="d-flex align-item-center pointer wishlist__div h2_div default-animation" (click)="TranslateBack()">
+                    <span class="material-symbols-outlined left__icon"  (click)="TranslateBack()" *ngIf="TranslateData" >
                         chevron_left
-                    </span> -->
-                    <h2 style="margin-block-end: 15px;">
+                    </span>
+                    <h2 >
                         Wishlists
                     </h2>
                 </div>
 
 
-                <div class="d-flex flex-column">
+                <div class="d-flex flex-column default-animation-slow">
                     <div class="accordian mw-100" *ngFor="let item of productsArray; let i = index">
                         <div class="accordian__head pointer d-flex justify-content-md-between"
                             (click)="showWishlistedProducts(item.wishlistName); toggleAccordian(i);">

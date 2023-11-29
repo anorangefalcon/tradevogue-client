@@ -1,7 +1,5 @@
 import { Component } from '@angular/core';
 import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { limit } from 'firebase/firestore';
-import { template } from 'lodash';
 import { DialogBoxService } from 'src/app/shared/services/dialog-box.service';
 import { FetchDataService } from 'src/app/shared/services/fetch-data.service';
 import { ImageUploadService } from 'src/app/shared/services/image-upload.service';
@@ -28,13 +26,26 @@ export class CouponsComponent {
   TemplatePagination:any= {
     search: '',
     currentPage: this.currentPage,
-    limit: 1
+    limit: 10
   }
 
 
+  clearFormArray = (formArray: any) => {
+    while (formArray?.length !== 0) {
+      formArray.removeAt(0)
+    }
+  }
+
+  clearForm(){
+    this.clearFormArray(this.OfferForm.get('UserEmails'));
+    this.OfferForm.reset();
+  }
+
   ChangeHanlder(event: any) {
     this.show = event;
-    this.OfferForm.reset();
+    // this.clearFormArray(this.OfferForm.get('UserEmails'));
+    // this.OfferForm.reset();
+    this.clearForm();
   }
 
   OfferType = ['coupon', 'discount'];
@@ -272,9 +283,11 @@ export class CouponsComponent {
 
   AddCoupon() {
     this.newEntry = true;
-    this.OfferForm.reset();
+    // this.OfferForm.reset();
+    this.clearForm();
     this.show = true;
     this.EditRequest = false;
+    this.pageChange(this.currentPage);
   }
 
 
@@ -325,8 +338,6 @@ export class CouponsComponent {
     endDate.setMinutes(endDate.getMinutes() - 1);
     this.OfferForm.get('endDate')?.setValue(endDate);
 
-console.log('coupon value is ',this.OfferForm.value);
-// return;
 
     let url;
     let body: any = this.OfferForm.value;
@@ -337,8 +348,7 @@ console.log('coupon value is ',this.OfferForm.value);
     else {
       url = this.BackendUrls.URLs.createOffer;
     }
-    console.log('url come is ',url);
-    
+
     this.fetchDateService.HTTPPOST(url, body).subscribe((data) => {
       if (this.EditRequest) {
         this.allOffers[this.EditIndex] = data;
@@ -351,8 +361,10 @@ console.log('coupon value is ',this.OfferForm.value);
     });
 
     this.show = false;
-    this.OfferForm.reset();
+    this.clearForm();
+    // this.OfferForm.reset();
     this.dataUpdate = false;
+    this.pageChange(this.currentPage);
     return;
 
   }
@@ -376,6 +388,10 @@ console.log('coupon value is ',this.OfferForm.value);
 
   CustomTypeHandler(value: any) {
     this.OfferForm.addControl('UserEmails', this.fb.array([]));
+    console.log('value come up is ',value);
+    console.log(this.OfferForm.get('UserEmails')?.value," abcd is ")
+    let difference=this.OfferForm.get('UserEmails')?.value.length;
+
     value.forEach((el: any) => {
       (<FormArray>this.OfferForm.get('UserEmails')).push(this.fb.group({
         email: ['', Validators.required]

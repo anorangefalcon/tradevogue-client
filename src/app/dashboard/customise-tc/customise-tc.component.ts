@@ -192,6 +192,10 @@ export class CustomiseTcComponent {
     }
   }
 
+
+
+
+
   addFormControl() {
     let form = this.fb.group({
       heading: this.fb.control('', Validators.required),
