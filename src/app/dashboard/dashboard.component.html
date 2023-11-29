@@ -22,6 +22,12 @@
                     </span>
                 </li> -->
 
+                <li class="header_links">
+                    <span class="mh100 notification d-flex align-item-center relative" (click)="toggleTheme()">
+                        <span class="pointer transition icons material-symbols-outlined" *ngIf="!darkTheme"> dark_mode</span>
+                        <span class="pointer transition icons material-symbols-outlined" *ngIf="darkTheme">light_mode</span>
+                    </span>
+                </li> 
                 <li class="header_links profile d-flex align-item-center gap-10 pointer"
                     [routerLink]="'/dashboard/account'">
                     <span class="photo-section relative d-flex justify-content-center align-item-center">
@@ -40,9 +46,15 @@
 
     <div class="sidebar fixed inset-block-start-0 inset-inline-start-0 transition" [class.active]="isCollapse">
         <span class="branding d-flex align-item-center">
-            <a [routerLink]="'/'">
-                <img class="brand-logo" src="../../assets/logo.svg" [class.active]="isCollapse" alt="Logo">
-                <img class="mobile-logo" src="../../assets/logo-mobile.svg" alt="Logo" alt="">
+            <a [routerLink]="['/']">
+                <ng-container *ngIf="!darkTheme; else lightTheme">
+                    <img class="brand-logo" src="../../assets/logo-light.svg" [class.active]="isCollapse" alt="Logo">
+                    <img class="mobile-logo" src="../../assets/logo-mobile-light.svg" alt="Logo" alt="">
+                </ng-container>
+                <ng-template #lightTheme>
+                    <img class="brand-logo" src="../../assets/logo.svg" [class.active]="isCollapse" alt="Logo">
+                    <img class="mobile-logo" src="../../assets/logo-mobile.svg" alt="Logo" alt="">
+                </ng-template>
             </a>
         </span>
 

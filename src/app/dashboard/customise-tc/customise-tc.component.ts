@@ -13,8 +13,6 @@ export class CustomiseTcComponent {
 
   TandC!: FormArray
   yourFormGroup!: FormGroup;
-  contentType: any[] = ['list', 'paragraph']
-
 
   constructor(
     private fb: FormBuilder,
@@ -29,7 +27,6 @@ export class CustomiseTcComponent {
     });
     this.getData();
   }
-
 
   getParticularContentType(i: number) {
     return this.yourFormGroup.get('TandC')?.get(String(i))?.get('ContentTYPE')?.value;
@@ -139,45 +136,42 @@ export class CustomiseTcComponent {
 
   }
 
-  addContentInfo(i: any) {
-    console.log(this.getFormArrayControls(), " abc si ")
-  }
 
   onsubmit() {
-    console.log(this.yourFormGroup.value, " status is ", this.yourFormGroup.valid);
-
     this.fetchDataService.HTTPPOST(this.backendUrl.URLs.setTandC, this.yourFormGroup.value).subscribe((res: any) => {
-      console.log(res, "save res");
       this.toastService.successToast({title: res.message})
 
     })
   }
 
-  // AddContentInfo(index: any, value: any) {
-  //   if (Array.isArray(value)) {
-  //     (<FormArray>(<FormArray>this.yourFormGroup.get('TandC')?.get(String(index))).get('contentInfo')).push(
-  //       this.fb.group({
-  //         content_type: ['', Validators.required],
-  //         content_description: this.fb.array(['', Validators.required])
-  //       }))
+  // NEW CODE
+  // addContentFormControl(i: number) {
+  //   let form = this.fb.group({
+  //     content_type: ['', Validators.required],
+  //     content_description: this.fb.array([
+  //       // this.fb.group({
+  //       //   content: ['', Validators.required],
+  //       // })
+  //     ])
+  //   });
+
+  //   let FormArray = (<FormArray>this.yourFormGroup.get('TandC')?.get(String(i))?.get('contentInfo'));
+  //   if (FormArray.value.length >= 5) {
+  //     this.toastService.errorToast({ title: 'You cannot add more than 5 controls ' });
   //   }
   //   else {
-  //     (<FormArray>(<FormArray>this.yourFormGroup.get('TandC')?.get(String(index))).get('contentInfo')).push(
-  //       this.fb.group({
-  //         content_type: ['', Validators.required],
-  //         content_description: ['', Validators.required]
-  //       })
-  //     )
+  //     FormArray.push(form);
   //   }
   // }
+
 
   addContentFormControl(i: number) {
     let form = this.fb.group({
       content_type: ['', Validators.required],
       content_description: this.fb.array([
-        // this.fb.group({
-        //   content: ['', Validators.required],
-        // })
+        this.fb.group({
+          content: ['', Validators.required],
+        })
       ])
     });
 
@@ -186,11 +180,9 @@ export class CustomiseTcComponent {
       this.toastService.errorToast({ title: 'You cannot add more than 5 controls ' });
     }
     else {
-      FormArray.push(form);
+      (<FormArray>this.yourFormGroup.get('TandC')?.get(String(i))?.get('contentInfo'))?.push(form);
     }
   }
-
-
 
   addFormControl() {
     let form = this.fb.group({
@@ -210,7 +202,7 @@ export class CustomiseTcComponent {
         for (let j = 0; j < response.data[i].contentInfo.length; j++) {
           this.addContentFormControl(i);
 
-          for (let k = 0; k < response.data[i].contentInfo[j].content_description.length; k++) { 
+          for (let k = 0; k < response.data[i].contentInfo[j].content_description.length-1; k++) { 
             this.addContentDescFormControl(i, j);
           }
         }

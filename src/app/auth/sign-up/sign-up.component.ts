@@ -20,7 +20,7 @@ export class SignUpComponent {
 
   constructor(fb: FormBuilder, router: Router, private loginService: LoginCheckService, private renderer: Renderer2, private backendURLs: UtilsModule, private fetchDataService: FetchDataService) {
     // Google login
-    window.addEventListener('signupEvent', async (event: any) => {
+    window.addEventListener('auth', async (event: any) => {
       const token = { credential: event.detail.credential }
       const body = { token };
       this.CreateUser(body);

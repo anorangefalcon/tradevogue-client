@@ -94,6 +94,10 @@ export class NavbarComponent implements OnInit {
       this.categories.women = data.data.female.category;        
     })
 
+    this.fetchDataService.themeColor$.subscribe((color) => {
+      this.darkTheme = color;
+    })
+
   }
 
   searchExplore(query: string) {
@@ -120,13 +124,9 @@ export class NavbarComponent implements OnInit {
   }
 
   toggleTheme(){
-    // document.getElementById('tv-body').
-    this.darkTheme = !this.darkTheme
-    this.fetchDataService.theme.next(this.darkTheme)
-    $('#tv-body').toggleClass("dark")
+    this.darkTheme = !this.darkTheme;
+    this.fetchDataService.theme.next(this.darkTheme);
+    $('#tv-body').toggleClass("dark");
   }
-
-
-
 
 }

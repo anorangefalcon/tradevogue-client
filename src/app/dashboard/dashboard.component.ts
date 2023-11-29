@@ -1,5 +1,6 @@
 import { Component, ViewEncapsulation } from '@angular/core';
 import { LoginCheckService } from '../shared/services/login-check.service';
+import { FetchDataService } from '../shared/services/fetch-data.service';
 
 
 @Component({
@@ -12,8 +13,21 @@ export class DashboardComponent {
 
   isCollapse: boolean = false;
   adminName: String = '';
+  darkTheme: boolean = false;
 
-  constructor(private userService: LoginCheckService){}
+  constructor(private userService: LoginCheckService,
+    private fetchDataService: FetchDataService) {
+    this.fetchDataService.themeColor$.subscribe((color) => {
+      this.darkTheme = color;
+    })
+
+  }
+
+  toggleTheme(){
+    this.darkTheme = !this.darkTheme
+    this.fetchDataService.theme.next(this.darkTheme)
+    $('#tv-body').toggleClass("dark")
+  }
 
   navitems = [
     { name: 'Dashboard', icons: 'grid_view', route: '/dashboard' },
@@ -30,8 +44,8 @@ export class DashboardComponent {
       name: 'Customise', route: '', icons: 'build', sublist: [
         { name: 'Home Page', route: '/dashboard/customise-home' },
         { name: 'FAQs', route: '/dashboard/customise-faq' },
-        { name: 'Terms & Conditions', route : '/dashboard/customise-tc'},
-        { name: 'About Us', route: '/dashboard/customise-about'},
+        { name: 'Terms & Conditions', route: '/dashboard/customise-tc' },
+        { name: 'About Us', route: '/dashboard/customise-about' },
         { name: 'Socials', route: '/dashboard/socials' },
         { name: 'Payment Keys', route: '/dashboard/monetization' },
       ]
@@ -46,7 +60,7 @@ export class DashboardComponent {
     {
       name: 'Notifications', route: '/dashboard/notification', icons: 'notifications'
     },
-    { name: 'Logout', icons: 'logout', route: '' , function:'logout()'}
+    { name: 'Logout', icons: 'logout', route: '', function: 'logout()' }
   ]
 
   ngOnInit() {
@@ -57,7 +71,7 @@ export class DashboardComponent {
 
     // window.addEventListener("resize", () => {
     //   let check = window.matchMedia("(min-width: 768px)");
-  
+
     //   if (check.matches) {
     //     this.isCollapse = true;
     //     console.log("this.co", this.isCollapse);
@@ -67,7 +81,7 @@ export class DashboardComponent {
     // });
   }
 
-  logout(){    
+  logout() {
     this.userService.logoutUser();
   }
 }

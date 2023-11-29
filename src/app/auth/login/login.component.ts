@@ -26,7 +26,7 @@ export class LoginComponent {
     private backendUrls: UtilsModule,
     private fetchDataService: FetchDataService,
     private dialogService: DialogBoxService,
-    private renderer: Renderer2)  {
+    private renderer: Renderer2) {
 
     this.loginForm = fb.group(
       {
@@ -40,7 +40,7 @@ export class LoginComponent {
     })
 
     // Google login
-    window.addEventListener('loginEvent', (event: any) => {
+    window.addEventListener('auth', (event: any) => {
       const token = { credential: event.detail.credential }
       const body = { token };
       this.LoginUser(body);
@@ -58,7 +58,7 @@ export class LoginComponent {
 
   LoginUser(body: any) {
     console.log('here was falcon');
-    
+
     this.fetchDataService.HTTPPOST(this.backendUrls.URLs.loginUrl, body).subscribe(
       (data: any) => {
         this.loginService.loginUser({ 'userToken': data.token, 'name': data.firstName });

@@ -25,14 +25,9 @@
 </body>
 
 <script>
-  function LoginGoogleHandler(res){
+  function googleAuth(res){
     console.log(res);
-    const event = new CustomEvent('loginEvent', { detail: res });
-    window.dispatchEvent(event);
-  }
-
-  function SignupGoogleHandler(res){
-    const event = new CustomEvent('signupEvent', { detail: res });
+    const event = new CustomEvent('auth', { detail: res });
     window.dispatchEvent(event);
   }
 </script>
