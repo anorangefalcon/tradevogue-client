@@ -4,11 +4,11 @@
 </div>
 
 <!--- Faq Q/A --->
-<section class="faq_section d-flex flex-column gap-5 containerwidth">
+<section class="container faq_section d-flex flex-column gap-10 justify-content-center align-item-center">
   <div *ngFor="let section of faqData" class="container accordion_wrapper">
 
     <!--- Parent --->
-    <button class="btn d-flex align-item-center justify-content-md-between pointer relative accordion main_acc content"
+    <button class="btn heading-btn-acc d-flex align-item-center justify-content-md-between pointer relative accordion main_acc content"
       (click)="toggleParent(section)" [ngClass]="{ expanded: section.expanded }">
       {{ section.title }}
     </button>
@@ -18,7 +18,7 @@
       <div *ngFor="let child of section.childrens">
 
         <!--- Child Questions --->
-        <button class="btn  main_acc custom-title" (click)="toggleChild(child)">
+        <button class="btn main_acc custom-title" (click)="toggleChild(child)">
           <div>{{ child.title }}</div>
           <div class="custom">{{ child.expanded ? '-' : '+' }}</div>
 

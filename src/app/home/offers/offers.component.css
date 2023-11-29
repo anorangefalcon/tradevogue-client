@@ -55,73 +55,12 @@ img {
   width: 137px;
 }
 
-/* 
-
-.btn-style3:hover {
-  color: rgb(var(--primaryClr));
-  background-color: #0000;
-  border: 2px solid rgb(var(--primaryClr));
-  box-shadow: 0 0 10px #0000000d;
-} */
-
 a,
 a:hover {
   text-decoration: none;
   transition: all 0.3s ease-in-out ;
 }
 
-
-@media screen and (max-width: 1024px) {
-  img {
-    max-height: 240px;
-  }
-
-  .col{
-    padding: 15px;
-    min-height: 240px;
-  }
-
-  .offer-title {
-    font-size: 28px !important;
-    margin-block-end: 20px;
-  }  
-
-  .btn-style3 {
-    font-size: 12px;
-    padding: 10px 12px;
-    font-weight: 500;
-    width: 123px;
-  }
-}
-
-@media screen and (max-width: 768px) {
-  img {
-    max-height: 210px;
-  }
-
-  .row{
-    flex-wrap: wrap;
-  }
-
-  .col{
-    padding: 10px;
-    width: 100%;
-  }
-
-  .subtitle{
-    font-size: 14px;
-  }
-
-  .offer-title {
-    font-weight: 600;
-    font-size: 24px !important;
-  }  
-
-  .btn-style3 {
-    font-size: 12px;
-    width: 105px;
-  }
-}
 
 .col {
   display: flex;
@@ -130,7 +69,7 @@ a:hover {
   justify-content: space-evenly;
   padding-inline: 40px;
   padding-block: 50px;
-  width: 50%;
+  width: 100%;
   border-radius: 16px;
 }
 
@@ -144,8 +83,71 @@ a:hover {
 }
 
 .large-image {
-  max-width: 253px;
+  /* max-width: 253px; */
   /* max-height: 222px; */
   display: block;
   margin: 0 auto; 
 }
+
+
+@media screen and (max-width: 1024px) {
+  img {
+    max-height: 240px;
+  }
+
+  .col{
+    padding: 15px;
+    /* min-height: 240px; */
+  }
+
+  .offer-title {
+    font-size: 28px !important;
+    margin-block-end: 20px;
+  }  
+
+  .btn-style3 {
+    padding: 6px 6px;
+    font-weight: 500;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  img {
+    max-height: 210px;
+  }
+
+  .row{
+    flex-wrap: wrap;
+  }
+
+  .banner-text {
+    display: flex;
+    flex-direction: column;
+    gap: 4px !important;
+    width: 50%;
+  }
+
+  .col{
+    padding: 10px;
+    width: 100%;
+    padding-inline: 25px;
+    padding-block: 25px;
+  }
+
+
+  .subtitle{
+    font-size: 8px;
+  }
+
+  .offer-title {
+    font-size: 13px !important;
+    margin-block-end: 20px;
+    line-height: 1.2 !important;
+  }  
+
+  .btn-style3 {
+    font-size: 9px;
+    max-width: 80px;
+  }
+}
+

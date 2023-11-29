@@ -111,6 +111,8 @@ export class CheckoutService {
       const publicKey = data[0]?.keys[0]?.publicKey;
 
       this.stripe = Stripe(publicKey);
+
+
       // this.fetchData.HTTPGET(this.backendUri.URLs.getClientSecret).subscribe(async (res) => {
       //   console.log(res, 'res is');
       //   this.SecretClient = res;
@@ -121,6 +123,8 @@ export class CheckoutService {
       
       const { paymentIntent } = await this.stripe.retrievePaymentIntent(clientSecret);
       this.handlePaymentIntentStatus(paymentIntent);
+
+      
 
     } catch (error) {
       console.error('Error checking order status:', error);
@@ -143,8 +147,6 @@ export class CheckoutService {
 
   private async updateOrderStatus(paymentIntent: any) {
 
-
-
     let body: any = {};
     body = {
       newPaymentStatus: 'success',
@@ -153,6 +155,7 @@ export class CheckoutService {
       orderID: this.orderID
     };
     this.fetchData.HTTPPOST(this.backendUri.URLs.updateOrderStatus, body).subscribe();
+    // this.fetchData.HTTPPOST(this.backendUri.URLs.webhook, paymentIntent).subscribe();
   }
 
   // private async sendInvoiceData(paymentIntent: any) {

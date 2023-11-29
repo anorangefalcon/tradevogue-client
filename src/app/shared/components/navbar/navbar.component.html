@@ -12,17 +12,11 @@
 
             <a class="logo" [routerLink]="['/']" (click)="hamburgerOpen = false">
                 <picture>
-
-                    <ng-container *ngIf="!darkTheme; else lightMode">
-                        <source media="(min-width: 480px)" srcset="../../assets/logo.svg" >
-                        <img src="../../../../assets/logo-mobile.svg" alt="Trade Vogue Logo">
-                    </ng-container>
-
-                    <ng-template #lightMode>
-                        <source media="(min-width: 480px)" srcset="../../assets/logo-light.svg">
-                        <img src="../../../../assets/logo-mobile-light.svg" alt="Trade Vogue Logo" >
-                    </ng-template>
-
+                    <source media="(min-width: 480px)" srcset="../../assets/logo.svg" *ngIf="!darkTheme">
+                    <source media="(min-width: 480px)" srcset="../../assets/logo-light.svg" *ngIf="darkTheme">
+                    
+                    <img src="../../../../assets/logo-mobile.svg" alt="Trade Vogue Logo" *ngIf="!darkTheme">
+                    <img src="../../../../assets/logo-mobile-light.svg" alt="Trade Vogue Logo" *ngIf="darkTheme">
                 </picture>
             </a>
 
@@ -76,6 +70,41 @@
                     class="search-icon-mobile material-symbols-outlined">
                     search
                 </span>
+                <li>
+                    <a class="icons" href="javscript:void(0);">
+                        <span class="material-symbols-outlined">
+                            notifications
+                            <span *ngIf="notifications.length > 0" class="count" id="notifications">{{notifications.length - 1}}</span>
+                        </span>
+                    </a>
+
+                    <!-- notifications -->
+                    <ul class="sub-items d-flex flex-column gap-15">
+
+                        <div class="notification-container"
+                            *ngIf="notifications.length > 0 && hasVisibleNotifications()">
+                            <div class="notification-scroll">
+                                <div *ngFor="let notification of visibleNotifications()" class="notification-item pointer"
+                                    (click)="redirectToUrl(notification.notification.url)">
+                                    <div class="notification-icon">
+                                        <img [src]="notification.notification.icon" alt="Notification Icon">
+                                    </div>
+                                    <div class="notification-details pointer">
+                                        <div class="notification-title">{{ notification.notification.title }}</div>
+                                        <div class="notification-body">{{ notification.notification.body }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <ul *ngIf="!fcmToken && !notification.hasPermission" class="pointer">
+                                <li class="subscribe btn-secondary btn-rounded btn-sm" (click)="subscribeToNotifications()">
+                                    <i class="bi bi-bell"></i> Subscribe to Notifications
+                                </li>
+                            </ul>
+                        </div>
+
+                    </ul>
+
+                </li>
                 <li>
                     <a class="icons" href="javscript:void(0);" routerLink="/usersetting/wishlist">
                         <span class="wishlist_count material-symbols-outlined" *ngIf="purchaser != ''">

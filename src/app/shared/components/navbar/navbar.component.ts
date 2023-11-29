@@ -6,6 +6,7 @@ import { WishlistService } from '../../services/wishlist.service';
 import { UtilsModule } from 'src/app/utils/utils.module';
 import { LoginCheckService } from '../../services/login-check.service';
 import { CheckoutService } from 'src/app/checkout/checkout.service';
+import { SupportNotificationService } from '../../services/support-notification.service';
 
 // declare var doSignout:any;
 @Component({
@@ -24,6 +25,12 @@ export class NavbarComponent implements OnInit {
   isLogin: boolean = false;
   darkTheme : Boolean = false;
 
+  // notification start
+  showBellIcon: boolean = true;
+  fcmToken: any;
+  notifications: any[] = [];
+  // notification end
+
   cartArr: any[] = [];
   navbar_scroll_style: boolean = false;
   shadowed: boolean = true;
@@ -35,7 +42,16 @@ export class NavbarComponent implements OnInit {
 
   UserRole!:String
   
-  constructor(private cartService: CartService, private userService: LoginCheckService, private checkOutService:CheckoutService, private BackendEndUrl: UtilsModule, private fetchDataService: FetchDataService, private router: Router, private wishlistService: WishlistService) {
+  constructor(private cartService: CartService,
+     private userService: LoginCheckService,
+      private checkOutService:CheckoutService, 
+      private BackendEndUrl: UtilsModule,
+       private fetchDataService: FetchDataService,
+         private wishlistService: WishlistService,
+         public notification: SupportNotificationService,
+         private fetchService: FetchDataService,
+         private router: Router,
+         private util: UtilsModule,) {
 
     this.checkOutService.secureNavbar$.subscribe((data)=>{
       this.secureNavbar = data;
@@ -97,6 +113,17 @@ export class NavbarComponent implements OnInit {
     this.fetchDataService.themeColor$.subscribe((color) => {
       this.darkTheme = color;
     })
+    this.userService.getUser('fcm').subscribe((token: any)=>{
+      this.fcmToken = token;
+    });
+    
+    this.notification.notificationOptions$.subscribe((options) => {
+    });
+
+    this.fetchService.HTTPGET(this.util.URLs.comingNotification)
+      .subscribe((res: any) => {
+        this.notifications = res;
+      });
 
   }
 
@@ -127,5 +154,59 @@ export class NavbarComponent implements OnInit {
     this.darkTheme = !this.darkTheme;
     this.fetchDataService.toggleTheme(this.darkTheme);
   }
+
+
+// notification start
+async subscribeToNotifications() {
+// Add your subscribe logic here if needed
+this.notification.initialize();
+}
+
+// toggle() {
+// const chatBox = document.querySelector('.messengers');
+// this.showBellIcon = !this.showBellIcon;
+// if (chatBox) {
+//   setTimeout(() => {
+//     chatBox.classList.toggle('expanded');
+//   }, 100);
+// }
+// }
+
+// Helper method to filter visible notifications
+visibleNotifications(): any[] {
+return this.notifications.filter(notification => notification.state);
+}
+
+// Helper method to check if there are any visible notifications
+hasVisibleNotifications(): boolean {
+return this.notifications.some(notification => notification.state);
+}
+
+redirectToUrl(url: string) {
+const baseUrl = window.location.origin;
+if (url.startsWith(baseUrl)) {
+  const path = url.substring(baseUrl.length);
+  this.router.navigate([path]);
+} else {
+  this.router.navigate([url]);
+}
+}
+
+shareNotification(notification: any) {
+if (navigator.share) {
+  navigator.share({
+    title: notification.notification.title,
+    text: notification.notification.body,
+    url: notification.notification.url
+  })
+    .catch((error) => console.error('Error sharing:', error));
+} else {
+  // Fallback for browsers that do not support Web Share API
+}
+}
+  
+
+
+
 
 }

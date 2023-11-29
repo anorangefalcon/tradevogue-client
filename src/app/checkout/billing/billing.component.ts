@@ -1,3 +1,4 @@
+
 import { Component, ElementRef, ViewChild, OnInit, Renderer2 } from '@angular/core';
 import { FetchDataService } from 'src/app/shared/services/fetch-data.service';
 import { UtilsModule } from 'src/app/utils/utils.module';
@@ -7,7 +8,6 @@ import { HttpClient } from '@angular/common/http';
 import { CheckoutService } from '../checkout.service';
 import { LoginCheckService } from 'src/app/shared/services/login-check.service';
 declare let Stripe: any;
-
 interface PaymentOptions {
   key: string;
   amount: number;
@@ -29,7 +29,6 @@ interface PaymentOptions {
     color: string;
   };
 }
-
 @Component({
   selector: 'app-billing',
   templateUrl: './billing.component.html',
@@ -51,13 +50,11 @@ export class BillingComponent implements OnInit {
   StripeOpener: Boolean = false;
   stripeScript!: any;
   clientSecret!: any;
-
   loadRazorpayScript() {
     const script = this.renderer.createElement('script');
     script.src = 'https://checkout.razorpay.com/v1/checkout.js';
     this.renderer.appendChild(document.body, script);
   }
-
   constructor(
     private cartService: CartService,
     private checkOutService: CheckoutService,
@@ -82,7 +79,6 @@ export class BillingComponent implements OnInit {
       if (this.cartitems.amounts.subTotal !== 0) {
         this.total = this.totalAmount;
         this.quantity = this.cartitems.details.map((item: { Quantity: any; }) => item.Quantity);
-
         this.item = [
           {
             "id": this.cartitems.details.map((item: { sku: any; }) => item.sku),
@@ -98,25 +94,20 @@ export class BillingComponent implements OnInit {
     };
     checkSubTotal();
   }
-
   ngOnInit(): void {
     this.loadRazorpayScript();
-
-
     this.checkOutService.loadStripe.subscribe((isLoaded: any) => {
       this.StripeOpener = isLoaded;
       if (isLoaded) {
         this.loadStripe();
       }
     })
-
     try {
       this.getAddresses();
     } catch (error) {
       console.error('Error loading Stripe scripts:', error);
     }
   }
-
   // ngOnDestroy(){
   //   this.checkOutService.StripePaymentOpen.unsubscribe();
   // }
@@ -126,7 +117,6 @@ export class BillingComponent implements OnInit {
       const response = await fetch(this.backendURLs.URLs.getPaymentKeys);
       const data = await response.json();
       const publicKey = data[0]?.keys?.[0]?.publicKey;
-
       if (publicKey) {
         this.stripeScript = this.renderer.createElement('script');
         this.stripeScript.src = 'https://js.stripe.com/v3/';
@@ -146,19 +136,15 @@ export class BillingComponent implements OnInit {
       console.error('Error loading Stripe scripts:', error);
     }
   }
-
   ngOnDestroy() {
     this.renderer.removeChild(document.body, this.stripeScript);
   }
-
   async initializeStripe(): Promise<void> {
     try {
       if (this.stripePay.publicKey) {
         this.stripe = Stripe(this.stripePay.publicKey);
         await this.initialize(this.stripe);
-
         const paymentForm = document.querySelector("#payment-form");
-
         if (paymentForm) {
           paymentForm.removeEventListener("submit", this.handleSubmit);
           paymentForm.addEventListener("submit", this.handleSubmit);
@@ -170,7 +156,6 @@ export class BillingComponent implements OnInit {
       console.error('Error occurred:', error);
     }
   }
-
   async proceedToPayment(): Promise<void> {
     try {
       const response = await fetch(this.backendURLs.URLs.getPaymentKeys);
@@ -179,11 +164,9 @@ export class BillingComponent implements OnInit {
       }
       const data = await response.json();
       const publicKey = data[0]?.keys?.[0]?.publicKey;
-
       if (publicKey) {
         this.stripe = Stripe(publicKey);
         this.initialize(this.stripe);
-
         const paymentForm = document.querySelector("#payment-form");
         if (paymentForm) {
           paymentForm.addEventListener("submit", this.handleSubmit);
@@ -195,15 +178,12 @@ export class BillingComponent implements OnInit {
     } catch (error) {
       console.error('Error loading Stripe scripts:', error);
     }
-
     this.route.queryParams.subscribe(params => {
       const redirectStatus = params['redirect_status'];
       if (redirectStatus === 'succeeded') {
-
       }
     });
   }
-
   async initialize(stripe: any): Promise<void> {
     const items = JSON.parse(localStorage.getItem('paymentIntent') || '[]');
     const response = await fetch("http://localhost:1000/create-payment-intent", {
@@ -211,10 +191,8 @@ export class BillingComponent implements OnInit {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ items }),
     });
-
     const { clientSecret }  = await response.json();
     this.clientSecret = clientSecret;
-
     const appearance = {
       theme: 'flat',
       variables: {
@@ -259,29 +237,22 @@ export class BillingComponent implements OnInit {
         }
       }
     };
-
     this.elements = stripe.elements({ clientSecret, appearance });
-
     const linkAuthenticationElement = this.elements.create("linkAuthentication");
     linkAuthenticationElement.mount("#link-authentication-element");
-
     linkAuthenticationElement.on('change', (event: any) => {
       this.emailAddress = event.value.email;
     });
-
     const paymentElementOptions = { layout: "tabs" };
     const paymentElement = this.elements.create("payment", paymentElementOptions);
     paymentElement.mount("#payment-element");
   }
-
   // this.stripePay.checkOrderStatus()
   async handleSubmit(e: Event): Promise<void> {
     try {
       e.preventDefault();
       await this.stripePay.setLoading(true);
-
       // this.checkOutService.checkOrderStatus();
-
       const { paymentIntent, error } = await this.stripe.confirmPayment({
         elements: this.elements,
         confirmParams: {
@@ -290,7 +261,6 @@ export class BillingComponent implements OnInit {
         },
         redirect: 'if_required'
       });
-
       if (error) {
         this.stripePay.showMessage(error.message);
       } else if (paymentIntent && paymentIntent.id) {
@@ -298,42 +268,31 @@ export class BillingComponent implements OnInit {
       } else {
         this.stripePay.showMessage("An unexpected error occurred.");
       }
-
       this.stripePay.setLoading(false);
       this.cartService.clearCart();
       this.router.navigate(['/usersetting/orders']);
       
     } catch (error) {
-
     }
   }
-
   selectPaymentMethod(method: string) {
     this.selectedPaymentMethod = method;
   }
-
   @ViewChild('mydiv') my_div: ElementRef | undefined;
   search_text: any = '';
   visible_data: any[] = [];
-
-
   not_visible_data: any[] = ['Plain', 'Relaxed', 'Solid', 'Washed'];
-
   remove_data(el: any) {
     this.not_visible_data.push(el);
     this.visible_data = this.visible_data.filter((e) => { return el != e })
   }
-
   add_data(el: any) {
     this.visible_data.push(el);
     this.not_visible_data = this.not_visible_data.filter((e) => { return el != e })
-
   }
-
   clicked() {
     this.my_div?.nativeElement.classList.toggle('display_none');
   }
-
     //razorpay
     async submitForm(item: any): Promise<void> {
       try {
@@ -395,8 +354,6 @@ export class BillingComponent implements OnInit {
         console.error('Error creating order:', error);
       }
     }
-
-
   // ADDRESS TS FILE---------------------
   userAddresses: any[] = [];
   receiveData: any;
@@ -415,18 +372,15 @@ export class BillingComponent implements OnInit {
         }
       })
   }
-
   EditAddress(address: any, index: any) {
     const data = this.userAddresses[index];
     this.receiveData = { data, index };
     this.ShowComponent = true;
   }
-
   AddressHandler(event: any) {
     if (!event) {
       this.ShowComponent = event;
     }
-
     //edit request updated
     else if (event.index === 0 || event.index) {
       this.userAddresses[event.index] = event.data;
@@ -438,7 +392,6 @@ export class BillingComponent implements OnInit {
       this.AddressLength = this.userAddresses.length;
     }
   }
-
   RemoveAddress(address: any, index: any) {
     const body = { address_id: address._id }
     this.fetchDataService.HTTPPOST(this.backendURLs.URLs.deleteAddress, body).subscribe((data) => {
@@ -446,11 +399,9 @@ export class BillingComponent implements OnInit {
       this.AddressLength = this.userAddresses.length;
     })
   }
-
   AddAddress() {
     this.ShowComponent = true;
   }
-
   addressDelivered!: any[];
   addressChecked: Boolean = false;
   AddressClicked(address: any) {
@@ -461,6 +412,4 @@ export class BillingComponent implements OnInit {
     this.checkOutService.addressSelected = (address);
     this.addressDelivered = address;
   }
-
-
 }

@@ -31,7 +31,11 @@ export class FaqsComponent {
   isMenuActive = false;
   isDrawerOpen: boolean = false;
   pageSize: number = 5;
+  show: boolean = false;
+  direction: string = 'right';
   currentPage: number = 1;
+  popUpDirection:any='popup';
+  showingPopUp: boolean = false;
 
   constructor(private toast: ToastService, public pagination: PaginationService, private formBuilder: FormBuilder, private bgURL: UtilsModule, private fetchDataService: FetchDataService, private popupService: PopupService) {
     this.loadData();
@@ -45,7 +49,7 @@ export class FaqsComponent {
         '',
         [
           Validators.required,
-          Validators.minLength(2),
+          Validators.minLength(10),
           Validators.maxLength(100),
         ],
       ],
@@ -66,6 +70,8 @@ export class FaqsComponent {
       this.faq = this.faqData.map((name)=> {
         return name.title
       });
+
+      this.retrieveContent(this.faq[0])
     });
   }
 
@@ -76,6 +82,10 @@ export class FaqsComponent {
 
   updateFormFields(event: any) {
   
+  }
+
+  PopUpChangeHanlder(event: any){
+    this.showingPopUp = event;
   }
   
 
@@ -110,7 +120,8 @@ export class FaqsComponent {
 
   showItemDetails(item: any) {
     this.selectedItem = item;
-    this.popupService.openPopup();
+    // this.popupService.openPopup();
+    this.showingPopUp = true;
     // this.showPopup = true;
   }
 
@@ -157,7 +168,11 @@ export class FaqsComponent {
   }
 
   openDrawer() {
-    this.isDrawerOpen = true;
+      this.show = true;
+  }
+
+  ChangeHandler(event: any) {
+    this.show = event;
   }
 
   closeDrawer() {

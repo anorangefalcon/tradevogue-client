@@ -1,14 +1,4 @@
 <section id="setting" class="d-flex flex-column gap-20">
-    <!-- <ng-container [ngSwitch]="form_type"> -->
-    <!-- 
-        <div class="switch__options d-flex flex-center gap-20">
-            <p class="pointer" [ngClass]="{'active_form': form_type == 'profileForm'}" (click)="form_type='profileForm'">Profile Info</p>
-            <p class="pointer" [ngClass]="{'active_form': form_type == 'AccountForm'}" (click)="form_type='AccountForm'">Account Info</p>
-            <p class="pointer" [ngClass]="{'active_form': form_type == 'change_password'}"
-                (click)="form_type='change_password'">Change Password</p>
-        </div> -->
-
-    <!-- <ng-container *ngSwitchCase="'profileForm'"> -->
     <div class="form__card basic__info d-flex flex-column gap-20">
 
         <div class="d-flex justify-content-md-between align-item-center ">
@@ -28,24 +18,6 @@
         </div>
 
         <form [formGroup]="profileForm" class="d-flex flex-wrap gap-20">
-
-            <!-- <div class="d-flex gap-20">
-
-                            <div class="form__group card_image d-flex flex-column align-item-center gap-15">
-                                <img *ngIf="userPhoto != ''; else dummy" [src]="userPhoto" alt="UserPhoto">
-                                <ng-template #dummy>
-                                    <img id="profile__photo" src="../../../assets/avatars/try.svg" alt="UserPhoto">
-                                </ng-template>
-                                <input type="file" id="seller_image" (change)="uploadImage($event)" />
-                                <label for="seller_image">
-                                    <i class="camera__icon fa-solid fa-camera"></i>
-                                </label> 
-                            </div>
-
-                            <div class="name__block d-flex flex-column gap-20" style="width: calc(100% - 150px);">
-
-                            </div>
-                        </div> -->
 
             <div class="form__group">
                 <label class="form__title" for="firstName">First Name</label>
@@ -130,28 +102,6 @@
                     </div>
                 </div>
             </div>
-            <!-- 
-                        <div class="form__group">
-                            <label class="form__title" for="password">Password</label>
-                            <div class="password__input__field relative">
-                                <input type="{{ passwordVisible ? 'text' : 'password' }}" id="password"
-                                    class="form__input" formControlName="password" required placeholder="Password" />
-                                <span class="eye-icon d-flex justify-content-center align-item-center absolute"
-                                    (click)="togglePasswordVisibility()">
-                                    <i class="fa" [class.fa-eye]="passwordVisible"
-                                        [class.fa-eye-slash]="!passwordVisible"></i>
-                                </span>
-                            </div>
-                            <span
-                                *ngIf="profileForm.get('password')?.invalid && (profileForm.get('password')?.dirty || profileForm.get('password')?.touched)"
-                                class="error">
-                                <small *ngIf="profileForm.get('password')?.hasError('required')">Field required.</small>
-                                <small *ngIf="profileForm.get('password')?.hasError('minlength')">Minimum 8 characters
-                                    required</small>
-                                <small *ngIf="profileForm.get('password')?.hasError('pattern')">Must contain atleast one
-                                    captial letter & one special character</small>
-                            </span>
-                        </div> -->
 
             <div class="form__group">
                 <label class="form__title" for="address">Address</label>
@@ -196,10 +146,7 @@
             </div>
         </form>
     </div>
-    <!-- </ng-container> -->
 
-
-    <!-- <ng-container *ngSwitchCase="'AccountForm'"> -->
     <div class="form__card account__info d-flex flex-column gap-20">
 
         <div class="d-flex justify-content-md-between align-item-center ">
@@ -242,9 +189,7 @@
                 <small *ngIf="AccountForm?.get('AccountNo')?.hasError('required') && Check == true">Field
                     Required</small>
             </div>
-            <!-- </div>
 
-                    <div class="col col-2 d-flex flex-column gap-5"> -->
             <!-- IFSC -->
             <div class="form__group">
                 <label class="form__title" for="IFSC">IFSC <span class="important">*</span></label>
@@ -260,13 +205,9 @@
                 <small *ngIf="AccountForm?.get('GST')?.hasError('required') && Check == true">Field
                     Required</small>
             </div>
-            <!-- </div> -->
         </form>
     </div>
-    <!-- </ng-container> -->
 
-
-    <!-- <ng-container *ngSwitchCase="'change_password'"> -->
 
     <div class="form__card password_form d-flex flex-column gap-20">
 

@@ -171,6 +171,12 @@ export class AccountComponent implements OnInit {
           this.county = data[0].COUNTY;
           this.city = data[0].CITY;
 
+          if(this.country) {
+            this.profileForm.get('country')?.setValue(this.country);
+            this.profileForm.get('state')?.setValue(this.state);
+            this.profileForm.get('city')?.setValue(this.city);
+            this.profileForm.get('area')?.setValue(this.county);
+          }
         } else {
           this.country = '';
           this.state = '';
