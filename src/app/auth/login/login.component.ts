@@ -1,15 +1,9 @@
 import { Component, Renderer2 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { passwordStrengthValidator } from '../validators';
-import { CookieService } from 'ngx-cookie-service';
-import { Router, ActivatedRoute } from '@angular/router';
-import { UserDataService } from '../user-data.service';
 import { UtilsModule } from 'src/app/utils/utils.module';
 import { FetchDataService } from 'src/app/shared/services/fetch-data.service';
-import { WishlistService } from 'src/app/shared/services/wishlist.service';
 import { LoginCheckService } from 'src/app/shared/services/login-check.service';
-
-
+import { DialogBoxService } from 'src/app/shared/services/dialog-box.service';
 
 @Component({
   selector: 'app-login',
@@ -17,8 +11,6 @@ import { LoginCheckService } from 'src/app/shared/services/login-check.service';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
-
-
   loginForm: FormGroup;
   forgetPasswordForm: FormGroup;
   passwordFieldType: string = 'password';
@@ -26,10 +18,16 @@ export class LoginComponent {
   showPasswordForm: boolean = false;
   isactive: boolean = false;
   script: any;
-  loading : boolean = false;
+  loading: boolean = false;
 
-  constructor(private fb: FormBuilder,private loginService:LoginCheckService, private wishlistService:WishlistService, private cookies: CookieService, private router: Router, private userData: UserDataService, private route: ActivatedRoute, private backendUrls: UtilsModule, private fetchDataService: FetchDataService, private renderer: Renderer2) {
-   
+  constructor(
+    fb: FormBuilder,
+    private loginService: LoginCheckService,
+    private backendUrls: UtilsModule,
+    private fetchDataService: FetchDataService,
+    private dialogService: DialogBoxService,
+    private renderer: Renderer2) {
+
     this.loginForm = fb.group(
       {
         email: fb.control('', [Validators.required, Validators.email]),
@@ -42,13 +40,13 @@ export class LoginComponent {
     })
 
     // Google login
-    window.addEventListener('loginEvent',(event:any)=>{
+    window.addEventListener('auth', (event: any) => {
       const token = { credential: event.detail.credential }
-        const body = { token };
+      const body = { token };
       this.LoginUser(body);
-    } );
+    });
   }
-  
+
   ngOnInit() {
     this.script = this.renderer.createElement('script');
     this.script.src = 'https://accounts.google.com/gsi/client';
@@ -58,17 +56,20 @@ export class LoginComponent {
   }
 
 
-  LoginUser(body:any){ 
+  LoginUser(body: any) {
+    console.log('here was falcon');
+
     this.fetchDataService.HTTPPOST(this.backendUrls.URLs.loginUrl, body).subscribe(
       (data: any) => {
-        this.loginService.loginUser({'userToken': data.token, 'name': data.firstName});
-      },    
+        this.loginService.loginUser({ 'userToken': data.token, 'name': data.firstName });
+      }
     )
-    this.loading=false;
+    this.loading = false;
   }
 
   onLogin() {
     this.loading = true;
+
     const body = {
       email: this.loginForm.get('email')?.value,
       password: this.loginForm.get('password')?.value
@@ -77,18 +78,24 @@ export class LoginComponent {
   }
 
   async onResetPassword() {
-      const body = {
-        email: this.forgetPasswordForm.get('passwordEmail')?.value
+    const body = {
+      email: this.forgetPasswordForm.get('passwordEmail')?.value
+    }
+    this.fetchDataService.HTTPPOST(this.backendUrls.URLs.forgetPasswordUrl, body).subscribe(
+      (data: any) => {
+        this.isactive = true;
+        this.dialogService.infoDialogBox();
       }
-      this.fetchDataService.HTTPPOST(this.backendUrls.URLs.forgetPasswordUrl, body).subscribe(
-        (data: any) => {
-          this.isactive = true;
-        }
-      )
+    )
   }
 
   togglePasswordVisibility() {
     this.showPassword = !this.showPassword;
     this.passwordFieldType = this.showPassword ? 'text' : 'password';
+  }
+
+  ngOnDestroy() {
+    console.log("login destroy");
+    this.renderer.removeChild(document.body, this.script);
   }
 }

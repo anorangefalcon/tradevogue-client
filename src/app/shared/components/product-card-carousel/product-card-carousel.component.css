@@ -23,7 +23,7 @@
 }
 
 .section-header{
-    padding-block: 30px;
+    padding-block-end: 30px;
 }
 
 @media screen and (max-width: 440px) {
@@ -40,7 +40,7 @@
             & span {
                 color: rgb(var(--textClr));
                 font-size: 26px !important;
-                background-color: white!important; ;
+                background-color: rgb(var(--whiteClr))!important; ;
             } 
         }
 

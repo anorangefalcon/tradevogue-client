@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, HostListener, Input, Output } from '@angular/core';
 
 
 @Component({
@@ -8,28 +8,21 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 })
 export class DrawerComponent {
   @Input() title!: string;
+  @Input() width!:string;
   @Input() direction!: string;
   @Input() show!: boolean;
   @Output() showChange: EventEmitter<any> = new EventEmitter();
-  @Input() ParenClosed!: boolean;
-  @Output() ParentClosedEmitter: EventEmitter<any> = new EventEmitter();
 
   constructor() { }
 
-  CloseWrapper() {
-    this.translate = '';
-    setTimeout(() => {
-      this.showChange.emit(false);
-      this.ParentClosedEmitter.emit(false);
-    }, 300);
 
-  }
+  // width:string='300px';
 
   translate!: string;
 
-
   ngOnChanges() {
-    if (this.ParenClosed) { this.CloseWrapper(); return; }
+    if(!this.show)this.translate=''; 
+
     if (this.show == true) {
       if (this.direction == 'top') {
         this.translate = 'translateTop';
@@ -51,5 +44,14 @@ export class DrawerComponent {
       }
     }
 
+  }
+
+  @HostListener('document:keyup', ['$event'])
+  handleKeyboardEvent(event: KeyboardEvent) {
+    if (event.key === 'Escape') {
+      this.translate='';
+      this.show = false;
+      this.showChange.emit(false)
+    }
   }
 }

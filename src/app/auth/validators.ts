@@ -49,9 +49,6 @@ export function matchPasswordValidator(control:any,signupForm:FormGroup) {
     } else {
       return { passwordMismatch: true };
     }
-
-
-
 }
 
 

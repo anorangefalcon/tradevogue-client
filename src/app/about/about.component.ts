@@ -9,11 +9,15 @@ import { UtilsModule } from '../utils/utils.module';
 })
 export class AboutComponent {
   Data:any;
-  constructor(private fetchDataService:FetchDataService,private backendUrls:UtilsModule){
-    this.fetchDataService.HTTPGET((this.backendUrls.URLs.getAboutDetails)).subscribe((data)=>{
-      this.Data=data;
 
-    })
+  constructor(private fetchDataService:FetchDataService,private backendUrls:UtilsModule){
+
+    fetchDataService.HTTPGET((this.backendUrls.URLs.getAboutDetails)).subscribe((data)=>{
+      this.Data=data;
+    });
+    this.fetchDataService.HTTPGET((this.backendUrls.URLs.getOverAllDetails)).subscribe((data: any)=>{
+      console.log('res', data)
+    });
   }
 
 }

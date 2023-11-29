@@ -16,7 +16,7 @@ import { HttpParams } from '@angular/common/http';
   styleUrls: ['./product-page.component.css']
 })
 export class ProductPageComponent implements OnInit {
-  @Input() productSku: any;
+  @Input() productSku: any = '';
 
   data: any = null;
   cartStorage: any[] = [];
@@ -29,7 +29,6 @@ export class ProductPageComponent implements OnInit {
   accordianOpen2: boolean = true;
   assetIndex: any = 0;
   sizeIndex: any = 0;
-  isWishlisted: boolean = false;
   isLogin: boolean = false;
   sku: any = "";
   fetchSimilarProducts: any = {};
@@ -49,7 +48,6 @@ export class ProductPageComponent implements OnInit {
     private route: ActivatedRoute,
     private fetchService: FetchDataService,
     private backendUrl: UtilsModule,
-
     private cartService: CartService,
     private wishlistService: WishlistService,
     private reviewService: ReviewService,
@@ -69,23 +67,23 @@ export class ProductPageComponent implements OnInit {
 
     if (this.productSku) {
       this.sku = this.productSku;
-
       this.fetchProductData();
     }
     else {
-      this.route.params.subscribe(params => {
-        this.sku = params['sku'];
+      this.route.params.subscribe(routeParams => {
+        this.sku = routeParams['sku'];
         this.fetchProductData();
       });
     }
-
   }
 
-  fetchProductData() {
-    this.loading = true;
+  fetchProductData(loading: boolean = true) {
+    this.loading = loading;
     let params = new HttpParams();
     params = params.set("sku", this.sku);
-    
+    this.assetIndex = 0;
+    this.sizeIndex = 0;
+
     if (this.productSku) {
       this.fetchService.HTTPGET(this.backendUrl.URLs.fetchProductDetails, params).subscribe((data: any) => {
         this.updateDataFields(data);
@@ -93,6 +91,7 @@ export class ProductPageComponent implements OnInit {
     }
     else {
       this.fetchService.HTTPGET(this.backendUrl.URLs.fetchProductUrl, params).subscribe((data: any) => {
+        
         this.wishlistService.WishListedProducts.subscribe((response: any) => {
           if (response.includes(data._id)) {
             data.wishlisted = true;
@@ -105,12 +104,38 @@ export class ProductPageComponent implements OnInit {
 
   updateDataFields(data: any) {
     this.data = data;
+    
     this.data.avgRating = data.avgRating ? data.avgRating : 0;
     this.activeIndex = 0;
+    
     this.selectedColor = data.assets[0].color;
-    this.selectedSize = data.assets[this.assetIndex].stockQuantity[0].size;
-
+    this.selectedSize = data.assets[this.assetIndex].stockQuantity[0].size;    
     this.outOfStock = (this.data.assets[this.assetIndex].stockQuantity[this.sizeIndex].quantity <= 0) ? true : false;
+
+    if(this.outOfStock){
+      let assetI = 0;
+      this.data.assets.some((asset: any) => {
+        let stockI = 0;
+        let otherSizeAvailable = asset.stockQuantity.some((stockQ: any)=>{
+          if (stockQ.quantity > 0) {
+            this.updateSizeIndex(stockI);
+            return true;
+          }
+          stockI++;
+          return false;
+        });
+        
+        if (otherSizeAvailable) {
+          return true;
+        }
+
+        assetI++;
+        this.changeColor(assetI);
+        return false;
+      });
+
+
+    }
 
     // if this user has already reviewed:
     if (data.userReview) {
@@ -121,10 +146,19 @@ export class ProductPageComponent implements OnInit {
         review: data.userReview.comment
       })
     }
-    this.fetchSimilarProducts = { 
+    this.selectedQ = this.getOrderQuantity()[0];
+    this.fetchSimilarProducts = {
       'tags': this.data.info.tags
     };
-    this.loading = false;
+
+    this.route.queryParams.subscribe(queryParam =>{
+      if(queryParam['color']){
+        this.assetIndex = queryParam['color'];
+        this.changeColor(this.assetIndex);
+      }        
+    });
+
+    this.loading = false;    
   }
 
   addToCart() {
@@ -147,6 +181,7 @@ export class ProductPageComponent implements OnInit {
   }
 
   changeColor(index: any) {
+    
     this.assetIndex = index;
     this.sizeIndex = 0;
     this.normalizeSizeColorQuantity();
@@ -158,9 +193,10 @@ export class ProductPageComponent implements OnInit {
   }
 
   normalizeSizeColorQuantity() {
-    this.selectedColor = this.data.assets[this.assetIndex].color;
-    this.selectedSize = this.data.assets[this.assetIndex].stockQuantity[this.sizeIndex].size;
-    this.outOfStock = (this.data.assets[this.assetIndex].stockQuantity[this.sizeIndex].quantity <= 0) ? true : false;
+    
+    this.selectedColor = this.data?.assets[this.assetIndex].color;
+    this.selectedSize = this.data?.assets[this.assetIndex].stockQuantity[this.sizeIndex].size;
+    this.outOfStock = (this.data?.assets[this.assetIndex].stockQuantity[this.sizeIndex].quantity <= 0) ? true : false;
 
     if (!(this.getOrderQuantity().includes(this.selectedQ))) this.selectedQ = 0;
   }
@@ -169,10 +205,22 @@ export class ProductPageComponent implements OnInit {
     this.wishlistService.ShowWishlist(this.data._id);
   }
 
+  RemoveOrAddToWishlist(isWishlisted: any = null) {
+    if (!isWishlisted) {
+      this.wishlistService.ShowWishlist(this.data._id);
+    }
+    else {
+      this.wishlistService.removeFromWishlist(this.data._id).subscribe((data) => {
+        this.wishlistService.getWishlistCount();
+        this.data.wishlisted = false;
+      });
+    }
+  }
 
   getOrderQuantity() {
-    let limit = this.data.assets[this.assetIndex].stockQuantity[this.sizeIndex].quantity;
-    let arr = this.data.info.orderQuantity;
+    let limit = this.data?.assets[this.assetIndex].stockQuantity[this.sizeIndex].quantity;
+
+    let arr = this.data?.info.orderQuantity;
     let filteredArray = arr.filter((item: any) => item <= limit);
 
     if (!(filteredArray.includes(limit)) && (arr[arr.length - 1] > limit)) {
@@ -197,8 +245,8 @@ export class ProductPageComponent implements OnInit {
       comment: this.ratingForm.controls['review'].value
     }
 
-    this.reviewService.addReview(review).subscribe(() => {      
-      this.fetchProductData();
+    this.reviewService.addReview(review).subscribe(() => {
+      this.fetchProductData(false);
       this.showReview = false;
       this.toastService.successToast({
         title: 'Review successfully ' + (this.userReview ? 'updated' : 'posted')
@@ -207,9 +255,9 @@ export class ProductPageComponent implements OnInit {
   }
 
   deleteReview() {
-    this.reviewService.deleteReview(this.data._id).subscribe((data: any) => {
+    this.reviewService.deleteReview(this.data._id).subscribe(() => {
       this.userReview = '';
-      this.fetchProductData();
+      this.fetchProductData(false);
       this.toastService.notificationToast({
         title: 'Review deleted successfully'
       });
@@ -252,20 +300,23 @@ export class ProductPageComponent implements OnInit {
     // navText: ['<span class="material-symbols-outlined">chevron_left</span>', '<span class="material-symbols-outlined">chevron_right</span>'],
     navText: ['', ''],
     navSpeed: 600,
-    // responsive: {
-    //   0: {
-    //     items: 1
-    //   },
-    //   400: {
-    //     items: 1
-    //   },
-    //   740: {
-    //     items: 1
-    //   },
-    //   940: {
-    //     items: 1
-    //   }
-    // },
+    responsive: {
+      0: {
+        items: 1
+      },
+      400: {
+        items: 3
+      },
+      740: {
+        items: 4
+      },
+      940: {
+        items: 4
+      },
+      1060: {
+        items: 5
+      }
+    },
   }
   carouselOption: OwlOptions = this.customOptions;
   atDefault: boolean = true;

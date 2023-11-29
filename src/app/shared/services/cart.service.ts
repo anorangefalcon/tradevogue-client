@@ -10,16 +10,6 @@ import { LoginCheckService } from './login-check.service';
 })
 export class CartService {
 
-  constructor(private toastService: ToastService, private http: HttpClient, private backendUrls: UtilsModule, private loginCheckService: LoginCheckService) { 
-    
-    this.loginCheckService.getUser().subscribe((loggedIn: any) => { 
-      this.user = loggedIn;
-    });
-    this.fetchDetails();
-    
-
-  }
-
   user: boolean = false;
   // used to add items to cart in localStorage
   cartStorage: any[] = [];
@@ -29,9 +19,26 @@ export class CartService {
   // actual data lies here
   private cart$ = this.cartSubject.asObservable();
 
+  cartLoading = new BehaviorSubject<Boolean>(false);
+
+  constructor(private toastService: ToastService, private http: HttpClient, private backendUrls: UtilsModule, private loginCheckService: LoginCheckService) {
+    this.loginCheckService.getUser().subscribe((loggedIn: any) => {
+      this.user = loggedIn;
+      this.cartLoading.next(true);
+      this.fetchDetails();
+    });
+  }
 
   addToCart(data: any) {
-    const cartObj = { "sku": data.sku, "size": data.size, "color": data.color, "quantity": data.quantity };
+    this.cartLoading.next(true);
+    this.sideCart.next(true);
+    
+    const cartObj = { 
+      "sku": data.sku,
+      "size": data.size,
+      "color": data.color,
+      "quantity": data.quantity 
+    };
 
     if (this.user) {
       this.addToCartWithToken(cartObj);
@@ -45,7 +52,8 @@ export class CartService {
     this.http.post(this.backendUrls.URLs.addItemsToCart, [cartObj]).subscribe(
       (details: any) => {
         if (!details.added) {
-          this.toastService.warningToast({ title: 'Item already exists in cart' });
+          this.toastService.warningToast({ title: 'Already exists in cart add different variant' });
+          this.cartLoading.next(false);
         }
         else {
           this.handleSuccessfulAddToCart();
@@ -64,14 +72,14 @@ export class CartService {
       this.handleSuccessfulAddToCart();
     }
     else {
-      this.toastService.warningToast({ title: 'Item already exists in cart' });
+      this.toastService.warningToast({ title: 'Already exists in cart add different variant' });
+      this.cartLoading.next(false);
     }
   }
 
   private handleSuccessfulAddToCart() {
+    this.fetchDetails();    
     this.toastService.successToast();
-    this.sideCart.next(true);
-    this.fetchDetails();
   }
 
   // Helper function
@@ -114,7 +122,6 @@ export class CartService {
       const myCart = JSON.stringify(this.cartStorage);
       localStorage.setItem("myCart", myCart);
 
-
       this.fetchDetails();
     }
 
@@ -123,13 +130,14 @@ export class CartService {
   fetchDetails() {
     const localCart = localStorage.getItem('myCart');
     let cartDetails = localCart ? JSON.parse(localCart) : null;
-
+    
     if (localCart && this.user) {
       this.http.post(this.backendUrls.URLs.addItemsToCart, cartDetails).subscribe((message: any) => {
         this.clearCart('localOnly');
 
         this.http.post(this.backendUrls.URLs.fetchCart, cartDetails).subscribe((data: any) => {
           this.cartSubject?.next(data);
+          this.cartLoading.next(false);
         });
       });
     }
@@ -138,16 +146,15 @@ export class CartService {
         cartDetails = [];
       }
       this.http.post(this.backendUrls.URLs.fetchCart, cartDetails).subscribe((data: any) => {
-        this.cartSubject?.next(data);
+        this.cartSubject?.next(data); 
+        this.cartLoading.next(false);   
       });
     }
   }
 
   removeItem(identifier: any) {
-
     if (this.user) {
       this.http.post(this.backendUrls.URLs.removeItemFromCart, { itemId: identifier }).subscribe((message: any) => {
-        // this.ItemDeleted=true;
         this.fetchDetails();
       });
     }
@@ -167,10 +174,6 @@ export class CartService {
     this.toastService.notificationToast({
       title: 'Item removed!'
     })
-
-  }
-
-  refreshCart() {
 
   }
 
@@ -196,14 +199,15 @@ export class CartService {
   }
 
   clearCart(which: string = '') {
-
     if (!which) {
       if (this.user) {
-        this.http.get(this.backendUrls.URLs.clearCart).subscribe((message: any) => {
-        });
+        this.http.get(this.backendUrls.URLs.clearCart).subscribe(() => {});
       }
     }
     localStorage.removeItem("myCart");
+    console.log('hello vivekkkkkkkkk');
+    
+    this.fetchDetails();
   }
 
 }

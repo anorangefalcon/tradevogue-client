@@ -11,8 +11,6 @@
                     <label class="form__label">Email</label>
                     <span class="material-symbols-outlined person form__icon absolute">person</span>
                     <input type="text" placeholder="Enter Your Email" formControlName="email">
-
-
                 </div>
 
                 <!-- PASSWORD INPUT  -->
@@ -22,7 +20,7 @@
                     <label class="d-flex  password-label">Password</label>
                     <span class="material-symbols-outlined key  form__icon absolute">key</span>
                     <input [type]="passwordFieldType" placeholder="Enter Your Password" formControlName="password">
-                    <a class="eye-btn flex justify-content-center align-item-center"
+                    <a class="eye-btn flex justify-content-center align-item-center pointer"
                         (click)="togglePasswordVisibility()">
                         <span class="material-symbols-outlined eye">{{ showPassword ? 'visibility' :
                             'visibility_off'}}</span>
@@ -47,8 +45,8 @@
                     <div class="google-btn ">
                         <div id="g_id_onload"
                             data-client_id="772184715446-gek74bjj4p973rl3jtcbhmmrtsdp2dsl.apps.googleusercontent.com"
-                            data-context="signin" data-ux_mode="popup" data-callback="LoginGoogleHandler"
-                            data-auto_prompt="false">
+                            data-context="signin" data-ux_mode="popup" data-callback="googleAuth"
+                            data-itp_support="true">
                         </div>
 
                         <div class="g_id_signin" data-type="standard" data-shape="rectangular" data-theme="outline"
@@ -78,7 +76,7 @@
                     </small>
                 </div>
                 <a class="forgot-pass pointer" (click)="showPasswordForm=false">Go Back</a>
-                <button class="btn-primary loginbtn" [disabled]="forgetPasswordForm.invalid"
+                <button class="btn-primary loginbtn btn-md btn btn-rounded" [disabled]="forgetPasswordForm.invalid"
                     (click)="onResetPassword();">Reset Password</button>
             </form>
         </div>

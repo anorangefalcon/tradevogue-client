@@ -16,7 +16,7 @@ export class ProductsComponent implements OnInit {
   pageSize: number = 8;
   currentPage: number = 1;
   selectedColor: any = 0;
-  totalCount: any;
+  totalCount: any = 0;
   selectAll: boolean = false;
   highlight: number = 0;
   deleteDataField: any = {};
@@ -37,6 +37,7 @@ export class ProductsComponent implements OnInit {
   productArray: any = [];
   deleteList: any = [];
   productList: any[] = [];
+  dataFetchStatus: boolean = true;
 
   constructor(private element: ElementRef,
     private fetchdata: FetchDataService,
@@ -46,6 +47,7 @@ export class ProductsComponent implements OnInit {
     private toastService: ToastService) { }
 
   async ngOnInit() {
+
     this.fetchdata.HTTPPOST(this.backendUrl.URLs.fetchFeatures, this.dataField).subscribe({
       next: (res: any) => {
         this.categoryOption = res.categories;
@@ -62,11 +64,18 @@ export class ProductsComponent implements OnInit {
       }
     });
   }
-
+  
   async fetchData() {
     try {
+      
       this.fetchdata.HTTPPOST(this.backendUrl.URLs.fetchProductInventory, this.template).subscribe({
-        next: (res) => {
+        next: (res: any) => {
+          if(!res.data.length) {
+            this.dataFetchStatus = false;
+            this.totalCount = 0;
+          };
+
+
           this.productArray = res;
           this.productList = [];
           this.totalCount = this.productArray.pageInfo[0].count;
@@ -96,6 +105,7 @@ export class ProductsComponent implements OnInit {
         }
       });
     } catch (err) {
+
     }
   }
 
@@ -145,18 +155,28 @@ export class ProductsComponent implements OnInit {
 
   // Delete Entry
   deleteItem(entry: any, name: string = '', type: string = 'single') {
-    this.dialogBoxService.confirmationDialogBox();
+    let template: any = {
+      title: 'Proceed with Deletion?',
+      subtitle: `The item will be permanently deleted, and recovery will not be possible. Are you sure you want to proceed?`,
+      type: 'confirmation',
+      confirmationText: 'Yes, Delete it',
+      cancelText: 'No, Keep it',
+    };
+    this.dialogBoxService.confirmationDialogBox(template);
     this.deleteDataField.type = type,
       this.deleteDataField.data = entry;
   }
 
   // Filter Handling function
+  tempSortData: string = '';
+
   updateFields(e: any, field: string = '') {
 
     if (field) {
       this.template.filter[field] = e;
 
     } else {
+      this.tempSortData = e;
       let data = e.split(':');
       delete this.template.filter['rating'];
       delete this.template.filter['stockQuantity'];
@@ -169,9 +189,17 @@ export class ProductsComponent implements OnInit {
     }
 
     // reset Pagination
-    this.currentPage = 1
+    this.currentPage = 1;
     this.template.page = 1;
 
+    this.fetchData();
+  }
+
+  clearFields(){
+    this.tempSortData = '';
+    this.template.filter.categories = '';
+    delete this.template.filter['rating'];
+    delete this.template.filter['stockQuantity'];
     this.fetchData();
   }
 
@@ -193,7 +221,6 @@ export class ProductsComponent implements OnInit {
     });
   }
 
-
   // Generate a string array based upon rating transmitted store class from 'font-awesome'
   starRating(rating: any) {
     let ratingArray = [];
@@ -212,8 +239,15 @@ export class ProductsComponent implements OnInit {
 
   // Purpose to detemine the quantiy of product->color->size based upon orderQuantity
   filterData(array: any, limit: any) {
-    let filteredArray = array.filter((item: any) => item <= limit);
-    return filteredArray;
+
+    const len = array.length;
+    // 30% of Array is
+    const index = Math.round(len * 0.3);
+
+    if( limit <= array[index] && limit > 0){
+      return true;
+    }
+    return false;
   }
 
   displayInfo(e: Event) {
@@ -225,11 +259,14 @@ export class ProductsComponent implements OnInit {
 
   // Handles Excel File Uplaoded
   uploadFile(event: Event) {
+    
     let excelData = this.excelService.handleFileInput(event);
     (<HTMLInputElement>event.target).value = '';
     excelData.then((excel: any) => {
 
-      if (excel.errors) {
+      console.log(excel);
+
+      if (!excel.errors.length) {
         let errorObj: any = {
           title: 'Some Rows were Rejected',
           body: []
@@ -241,17 +278,20 @@ export class ProductsComponent implements OnInit {
 
         this.toastService.errorToast(errorObj);
       }
-      const formData = {
-        type: 'bulk',
-        data: excel.data
-      };
-
-      this.fetchdata.HTTPPOST(this.backendUrl.URLs.addproduct, formData).subscribe({
-        next: (res: any) => {
-          this.toastService.successToast("Data Uploaded Successfuly");
-          this.fetchData();
-        }
-      })
+      if(excel.data.length){
+        
+        const formData = {
+          type: 'bulk',
+          data: excel.data
+        };
+        this.fetchdata.HTTPPOST(this.backendUrl.URLs.addproduct, formData).subscribe({
+          next: (res: any) => {
+            this.toastService.successToast("Data Uploaded Successfuly");
+            this.fetchData();
+          }
+        })
+      }
+      
     })
   }
 

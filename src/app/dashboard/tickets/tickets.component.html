@@ -33,7 +33,7 @@
               <span class="tooltip">
                 <i class="fs-20 action__btn-icon pointer material-symbols-outlined"
                 (click)="showItemDetails(item)">confirmation_number</i>
-                <span class="tooltiptext">Replay</span>
+                <span class="tooltiptext">Reply</span>
               </span>
 
               <span class="tooltip">
@@ -43,8 +43,8 @@
               </span>
 
               <span class="tooltip">
-                <i class="fs-20 action__btn-icon pointer material-symbols-outlined">delete</i>
-                <span class="tooltiptext" (click)="deleteTicketTitle(item)">Remove</span>
+                <i (click)="deleteTicketTitle(item)" class="fs-20 action__btn-icon pointer material-symbols-outlined">delete</i>
+                <span class="tooltiptext">Remove</span>
               </span>
 
             </span>
@@ -100,7 +100,7 @@
       </div>
 
 
-      <button class="btn-primary" (click)="updateItem()">Update</button>
+      <button class="btn-primary btn-rounded btn-sm" (click)="updateItem()">Update</button>
     </div>
   </app-pop-up>
 
@@ -131,7 +131,7 @@
             required>
         </div>
 
-        <button type="submit" class="btn-secondary">Send</button>
+        <button type="submit" class="btn-primary btn-rounded btn-md">Send</button>
       </form>
     </div>
   </div>

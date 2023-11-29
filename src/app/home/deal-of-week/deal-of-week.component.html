@@ -5,12 +5,13 @@
             <!-- <p>Starts at ₹499</p>   -->
             <h3 [style]="'color:'+Details.colors.titleColor"><span style="font-weight: 700;">{{Details.Title.split(' ')[0]}}</span> {{Details.Title.split(' ')[1]}} <span></span></h3>
             <div class="shop__button d-flex gap-5 align-item-center">
-                <a [href]="Details.buttonLink" class="btn" [style]="'color:'+Details.colors.buttonColor">{{Details.buttonText}}</a>
+                <a class="btn" 
+                [style]="'color:'+Details.colors.buttonColor" (click)="getLink(Details.buttonLink)">{{Details.buttonText}}</a>
                 <span class="icons material-symbols-outlined">arrow_right_alt</span>
             </div>
         </div>
         <div class="deal-week-img d-flex justify-content-center">
-            <img src="../../../assets/deal-of-week-component/shirt.png" alt="Product on deal">
+            <img [src]='Details.productImage' alt="Product on deal">
         </div>
     </div>
 </section>

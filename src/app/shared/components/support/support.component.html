@@ -17,7 +17,7 @@
           <div class="home">
             <div class="box">
               <div class="icon_home">
-                <a mat-button (click)="navigateTo('chat')">
+                <a mat-button (click)="navigateTo('support')">
                   <i class="fa-regular fa-comment"
                     style="font-size: 30px; color: #22385d; align-items: center; text-align: center;"></i>
                   <h1 class="chat-h1">Chat</h1>
@@ -38,7 +38,7 @@
         </div>
       </mat-tab>
 
-      <mat-tab label="Chat" id="chat-bot" #chatBot>
+      <mat-tab label="Support" id="chat-bot" #chatBot>
         <div class="timestamp">04:45 AM</div>
         <div class="chatroom">
           <div class="msg msg-left">
@@ -49,51 +49,6 @@
             </div>
           </div>
           <h6 class="name">Your Latest Orders</h6>
-          <!-- <div class="msg msg-right">
-            <div class="bubble">
-              Oh! Look at you. You are awesome
-            </div>
-          </div>
-          <div class="msg msg-right">
-            <div class="bubble">
-              Can you please tell me who created you?
-            </div>
-          </div>
-          <div class="msg msg-left">
-            <div class="bubble">
-              Yes, Of course! Vivek Dhiman created me. <br />
-              He's behind my awesomeness. He did a great job. didn't he?
-            </div>
-          </div>
-          <div class="msg msg-right">
-            <div class="bubble">
-              Yeah! He did an amazing job.<br />
-              How can I contact him?
-            </div>
-          </div>
-          <div class="msg msg-left">
-            <div class="bubble">
-              Here's my boss' Fiverr Username. <br />
-              <a href="www.fiverr.com/vivekdhiman" target="_blank">fiverr.com/vivekdhiman</a>
-            </div>
-          </div>
-          <div class="msg msg-right">
-            <div class="bubble">
-              Thanks alot. See you next time. Good bye
-            </div>
-          </div>
-
-          <div class="msg msg-left">
-            <div class="bubble">
-              Good bye. Take care
-            </div>
-          </div> -->
-          <!-- msgs  -->
-          <!-- <div class="msg msg-left">
-            <div class="bubble">
-              Good bye. Take care
-            </div>
-          </div>  -->
 
           <div class="msg msg-left">
             <ng-container *ngIf="loadingProducts">
@@ -120,29 +75,22 @@
             </ng-container>
           </div>
 
-
-
-
-
-
           <div class="msg msg-left">
             <div class="name">
               Need More Detail
             </div>
             <div class="button-container">
               <button *ngIf="!Clicked" class="btn" (click)="onYesClick()">Yes</button>
-              <button *ngIf="!Clicked" class="btn">No</button>
+              <button *ngIf="!Clicked" class="btn" (click)="onNoClick()">No</button>
             </div>
           </div>
-
 
           <div *ngIf="showNewSection">
             <div class="bubble msg msg-right">
               Yes
             </div>
 
-
-            <div class="msg msg-left">
+            <div id="orderDetail" class="msg msg-left orderDetail">
               <h6 class="name">Your Order Details</h6>
               <div class="name" *ngIf="orderDetails">
                 You have ordered this item on <strong>{{ orderDetails.orderDate | date: 'MMM d, y' }}</strong> <br>.
@@ -150,7 +98,6 @@
                 <strong>{{ orderDetails.invoice_status }}.</strong><br> MOP is <strong>{{ orderDetails.MOP }}</strong>.
               </div>
             </div>
-
 
             <div class="msg msg-left">
               <div class="name">
@@ -218,38 +165,9 @@
               </div>
             </div>
 
-
-            <!-- <div class="user-action-buttons">
-              <button (click)="chatWithHuman()">Chat with Human</button>
-              <button (click)="markResolved()">Resolved</button>
-          </div> -->
-
-
-
-
-            <!-- <div class="chat-container" *ngIf="showTextView">
-                <div class="chat-box">
-                    <div *ngFor="let message of messages" class="chat-message">
-                        <p>{{ message.content }}</p>
-                    </div>
-                </div>
-                <div class="input-box">
-                    <input type="text" [(ngModel)]="newMessage" (keyup.enter)="sendMessage()">
-                    <button (click)="sendMessage()">Send</button>
-                </div>
-            </div> -->
-
-
-
           </div>
 
         </div>
-        <!-- <div class="type-area">
-          <input type="text" class="typing" placeholder="Type Here...">
-          <span class="send">
-            <i class="bi bi-arrow-return-left"></i>
-          </span>
-        </div> -->
       </mat-tab>
       <mat-tab label="Help">
         <div class="accordion">
@@ -292,7 +210,8 @@
   <div class="icon-support" (click)="toggleChat()" style="font-size: 15px; text-align: center;">
     <div class="user" style="font-size: 15px; font-size: 15px;">
       <i class="bi bi-person-circle me-2 "></i>
-      Vivek Dhiman
+            <!-- username  -->
+      {{username}}
     </div>
     <i class="bi bi-chat fa-1x icons chat-icon" style="right: 18px; position: absolute;"></i>
     <i class="bi bi-x-lg fa-1x icons-visible cross-icon" style="right: 18px; position: absolute;"></i>

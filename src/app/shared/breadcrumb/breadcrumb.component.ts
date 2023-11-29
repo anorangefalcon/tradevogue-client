@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { BreadcrumbService } from 'src/app/shared/services/breadcrumb.service';
+import { SalesService } from '../services/custom-UI/sales.service';
 
 @Component({
   selector: 'app-breadcrumb',
@@ -10,16 +11,22 @@ import { BreadcrumbService } from 'src/app/shared/services/breadcrumb.service';
 export class BreadcrumbComponent implements OnInit {
   breadcrumbs: Array<{ label: string; url: string }> = [];
   currentRoute: string = '';
-  activeSku:any;
+  activeSku: any;
+  saleData: any[] = [];
+  marqueeData: string[] = [];
+  marqueeDirection: string = 'left';
+  private marqueeElement: HTMLMarqueeElement | undefined;
+
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    private breadcrumbService: BreadcrumbService
+    private breadcrumbService: BreadcrumbService,
+    private salesService: SalesService
   ) {
     this.router.events.subscribe((event) => {
       this.router.events.subscribe(event => {
         if (event instanceof NavigationEnd) {
-          this.currentRoute = event.url; 
+          this.currentRoute = event.url;
         }
       });
       if (event instanceof NavigationEnd) {
@@ -40,6 +47,11 @@ export class BreadcrumbComponent implements OnInit {
 
   ngOnInit(): void {
     this.breadcrumbs = this.breadcrumbService.getBreadcrumbs();
+    this.salesService.getSales().subscribe((data: any) => {
+      this.saleData = data.filter((item: any) => item.enable);
+      // console.log(this.saleData, "sale data ")
+      this.marqueeData = this.saleData.map((item: any) => item.title);
+    });
   }
 
   private createBreadcrumbs(
@@ -63,11 +75,20 @@ export class BreadcrumbComponent implements OnInit {
       breadcrumbs.push({ label: breadcrumbLabel, url });
     }
 
+    // if (breadcrumbLabel === 'Product' && this.activeSku) {
+    //   const existingSkuIndex = breadcrumbs.findIndex((item) => item.label === this.activeSku);
+    //   if (existingSkuIndex === -1) {
+    //     breadcrumbs.push({ label: this.activeSku, url });
+    //   } else {
+    //     breadcrumbs[existingSkuIndex].url = url;
+    //   }
+    // }
+
     // Recursion
     if (route.children.length > 0) {
       return this.createBreadcrumbs(route.children[0], url, breadcrumbs);
     }
-    return breadcrumbs;``
+    return breadcrumbs;
   }
 
 }

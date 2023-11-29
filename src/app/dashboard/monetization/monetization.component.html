@@ -1,83 +1,5 @@
 <section class="d-flex flex-column gap-20 ">
-    <form [formGroup]="stripeKeysForm" (ngSubmit)="onSubmit()" class="card card__pd-25 d-flex flex-column gap-15">
 
-      <div class="d-flex justify-content-md-between align-item-center">
-        <h2 class="form-heading">Stripe Payment Keys</h2>
-          <button type="submit" [disabled]="!stripeKeysForm.valid" class="btn btn-xs fw-500 btn-rounded btn-primary">Submit</button>
-      </div>
-
-      <div class="d-flex gap-25 flex-wrap justify-content-md-between">
-        <div class="form-group d-flex flex-column gap-5">
-          <label for="publicKey" class="form__label">Public Key</label>
-          <input type="text" id="publicKey" formControlName="publicKey" class="form__input">
-          <div *ngIf="stripeKeysForm.get('publicKey')?.invalid && stripeKeysForm.get('publicKey')?.touched"
-            class="error-message">
-            Public Key is required.
-          </div>
-        </div>
-    
-        <div class="form-group d-flex flex-column gap-5">
-          <label for="privateKey" class="form__label">Private Key</label>
-          <input type="text" id="privateKey" formControlName="privateKey" class="form__input">
-          <div *ngIf="stripeKeysForm.get('privateKey')?.invalid && stripeKeysForm.get('privateKey')?.touched"
-            class="error-message">
-            Private Key is required.
-          </div>
-        </div>
-      </div>
-
-    </form>
-
-  <div class="card card__pd-25 d-flex flex-column gap-15 ">
-    <h2 class="form-heading">User Keys Table</h2>
-    <div class="table-wrapper table-list">
-      <table class="keys-table">
-        <thead>
-          <tr>
-            <th class="items">Seller Email</th>
-            <th class="items">Public Key</th>
-            <th class="items">Private Key</th>
-            <th class="items">Enable</th>
-            <th class="items">Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let key of paymentKeys[0]?.keys; let i = index">
-            <td class="items keys-wrap">{{ key.adminId?.email }}</td>
-            <td class="items keys-wrap">{{ key.publicKey }}</td>
-            <td class="items keys-wrap">{{ key.privateKey }}</td>
-            <td class="items">
-              <div class="slide-button d-flex align-item-center">
-                <input type="checkbox" [checked]="key.enable" (change)="togglePayment(key)" [name]="i + 'Available'"
-                  [id]="i + 'Available'" />
-                <label [for]="i + 'Available'"></label>
-              </div>
-            </td>
-            <td class="items action-btns">
-
-              <span class="d-flex align-item-center">
-                <span class="tooltip" (click)="view(key)">
-                  <i class="fs-18 pointer action__btn-icon material-symbols-outlined">visibility</i>
-                  <span class="tooltiptext">View</span>
-                </span>
-  
-                <span class="tooltip" (click)="edit(key)">
-                  <i class="fs-18 pointer action__btn-icon material-symbols-outlined">Edit</i>
-                  <span class="tooltiptext">Edit</span>
-                </span>
-  
-                <span class="tooltip" (click)="delete(key)">
-                  <i class="fs-18 pointer action__btn-icon material-symbols-outlined">delete</i>
-                  <span class="tooltiptext">Delete</span>
-                </span>
-              </span>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-  
   <app-pop-up>
     <div *ngIf="selectedItem" class="details-container">
       <div>
@@ -94,129 +16,234 @@
       </div>
     </div>
   </app-pop-up>
-  
-  
-  <div *ngIf="editItem" class="slider">
-    <div *ngIf="selectedItem" class="details-container">
-      <div class="form-card d-flex flex-column gap-20">
-        <div class="d-flex justify-content-md-between align-item-center">
-          <h3>Info</h3>
-          <div class="operation-button d-flex gap-10">
-            <button class="btn-primary" [hidden]="stripeKeysForm.enabled" (click)="stripeKeysForm.enable()">Edit</button>
-            <button class="btn-secondary" [hidden]="stripeKeysForm.disabled"
-              (click)="stripeKeysForm.disable()">Cancel</button>
-            <button class="btn-primary" [hidden]="stripeKeysForm.disabled" (click)="onUpdate()">Update</button>
-          </div>
-        </div>
-  
-        <form [formGroup]="stripeKeysForm" class="d-flex gap-25 flex-wrap justify-content-md-between">
-          <div class="form-group d-flex flex-column gap-5">
-            <label class="form__label" for="publicKey">Public Key</label>
-            <input type="text" class="form__input" id="publicKey" formControlName="publicKey" required />
-            <div *ngIf="stripeKeysForm.get('publicKey')?.invalid && stripeKeysForm.get('publicKey')?.touched"
-              class="error-message">
-              <div *ngIf="stripeKeysForm.get('publicKey')?.hasError('required')">Public Key is required.</div>
-            </div>
-          </div>
-  
-          <div class="form-group d-flex flex-column gap-5">
-            <label class="form__label" for="privateKey">Private Key</label>
-            <input type="text" class="form__input" id="privateKey" formControlName="privateKey" required />
-            <div *ngIf="stripeKeysForm.get('privateKey')?.invalid && stripeKeysForm.get('privateKey')?.touched"
-              class="error-message">
-              <div *ngIf="stripeKeysForm.get('privateKey')?.hasError('required')">Private Key is required.</div>
-            </div>
-          </div>
-  
-          <!-- Dropdown for 'true' and 'false' -->
-          <div class="form-group d-flex flex-column gap-5">
-            <label class="form__label" for="enableDropdown">Enable</label>
-            <select id="enableDropdown" formControlName="enableDropdown" class="form__input">
-              <option value="true">True</option>
-              <option value="false">False</option>
-            </select>
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>
-  
-  <div class="card card__pd-25 d-flex flex-column gap-15">
-    
-    <div class="d-flex justify-content-md-between align-item-center">
-      <h2 class="form-heading">Razorpay Payment Keys</h2>
-      <button type="submit" [disabled]="!razorpayKeysForm.valid" class="btn btn-xs fw-500 btn-rounded btn-primary">Submit</button>
-    </div>
 
-    <form [formGroup]="razorpayKeysForm" (ngSubmit)="onSubmit()" class="form d-flex gap-25">
-      <div class="form-group d-flex flex-column gap-5">
-        <label for="rzpPublicKey" class="form__label">Razorpay Public Key</label>
-        <input type="text" id="rzpPublicKey" formControlName="rzpPublicKey" class="form__input">
-        <div *ngIf="razorpayKeysForm.get('rzpPublicKey')?.invalid && razorpayKeysForm.get('rzpPublicKey')?.touched"
-          class="error-message">
-          Razorpay Public Key is required.
-        </div>
-      </div>
-  
-      <div class="form-group d-flex flex-column gap-5">
-        <label for="rzpPrivateKey" class="form__label">Razorpay Private Key</label>
-        <input type="text" id="rzpPrivateKey" formControlName="rzpPrivateKey" class="form__input">
-        <div *ngIf="razorpayKeysForm.get('rzpPrivateKey')?.invalid && razorpayKeysForm.get('rzpPrivateKey')?.touched"
-          class="error-message">
-          Razorpay Private Key is required.
-        </div>
-      </div>
-      </form>
-  </div>
-  
-  
-  <div class="card card__pd-25 d-flex flex-column gap-15">
-    <h2 class="form-heading">Razorpay Keys Table</h2>
-    <div class="table-wrapper table-list">
-      <table class="keys-table">
-        <thead>
-          <tr>
-            <th class="items">Seller Email</th>
-            <th class="items">Razorpay Public Key</th>
-            <th class="items">Razorpay Private Key</th>
-            <th class="items">Enable</th>
-            <th class="items">Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let key of razorpayPaymentKeys[0]?.razorKey; let i = index">
-            <td class="items keys-wrap">{{ key.adminId?.email }}</td>
-            <td class="items keys-wrap">{{ key.rzpIdKey }}</td>
-            <td class="items keys-wrap">{{ key.rzpSecretKey }}</td>
-            <td class="items">
-              <div class="slide-button d-flex align-item-center">
-                <input type="checkbox" [checked]="key.enable" (change)="toggleRazorpayPayment(key)"
-                  [name]="i + 'Available'" [id]="i + 'Available'" />
-                <label [for]="i + 'Available'"></label>
+
+  <app-drawer [direction]="direction" [show]="show" (showChange)="ChangeHanlder($event)" [title]="title">
+    <div *ngIf="editItem" class="slider">
+      <div *ngIf="selectedItem" class="details-container">
+        <div class="form-card d-flex flex-column gap-20">
+          <div class="d-flex justify-content-md-between align-item-center">
+            <h3>Info</h3>
+            <div class="operation-button d-flex gap-10">
+              <button class="btn btn-xs fw-500 btn-rounded btn-primary" [hidden]="stripeKeysForm.enabled"
+                (click)="stripeKeysForm.enable()">Edit</button>
+              <!-- <button class="btn btn-xs fw-500 btn-rounded btn-rounded" [hidden]="stripeKeysForm.disabled"
+                (click)="stripeKeysForm.disable()">Cancel Edit</button> -->
+              <button [hidden]="!stripeKeysForm.dirty" class="btn btn-xs fw-500 btn-rounded btn-primary"
+                (click)="onUpdate()">Update</button>
+            </div>
+          </div>
+
+          <form [formGroup]="stripeKeysForm" class="d-flex gap-25 flex-wrap justify-content-md-between">
+            <div class="form-group d-flex flex-column gap-5">
+              <label class="form__label" for="publicKey">Public Key</label>
+              <input type="text" class="form__input2" id="publicKey" formControlName="publicKey" required />
+              <div *ngIf="stripeKeysForm.get('publicKey')?.invalid && stripeKeysForm.get('publicKey')?.touched"
+                class="error-message">
+                <div *ngIf="stripeKeysForm.get('publicKey')?.hasError('required')">Public Key is required.</div>
               </div>
-            </td>
-            <td class="items action-btns">
+            </div>
 
-              <span class="d-flex align-item-center">
-                <span class="tooltip" (click)="viewRazorpay(key)">
-                  <i class="fs-18 pointer action__btn-icon material-symbols-outlined">visibility</i>
-                  <span class="tooltiptext">View</span>
+            <div class="form-group d-flex flex-column gap-5">
+              <label class="form__label" for="privateKey">Private Key</label>
+              <input type="text" class="form__input2" id="privateKey" formControlName="privateKey" required />
+              <div *ngIf="stripeKeysForm.get('privateKey')?.invalid && stripeKeysForm.get('privateKey')?.touched"
+                class="error-message">
+                <div *ngIf="stripeKeysForm.get('privateKey')?.hasError('required')">Private Key is required.</div>
+              </div>
+            </div>
+
+            <!-- Dropdown for 'true' and 'false' -->
+            <div class="form-group d-flex flex-column gap-5">
+              <label class="form__label" for="enableDropdown">Enable</label>
+              <select id="enableDropdown" formControlName="enableDropdown" class="form__input">
+                <option value="true">True</option>
+                <option value="false">False</option>
+              </select>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </app-drawer>
+
+
+</section>
+
+
+<div class="d-flex flex-column gap-20">
+  <div class="d-flex flex-center gap-20 default-animation">
+    <button class="btn btn-xs fw-500 btn-rounded btn-primary" (click)="showTab('tab1')"
+      [class.active]="currentTab === 'tab1'">Stripe Payment Keys</button>
+    <button class="btn btn-xs fw-500 btn-rounded btn-primary" (click)="showTab('tab2')"
+      [class.active]="currentTab === 'tab2'">RazorPay Payment Keys</button>
+  </div>
+
+  <div *ngIf="currentTab === 'tab1'" class="d-flex flex-column gap-20">
+    <form [formGroup]="stripeKeysForm" (ngSubmit)="onSubmit()"
+      class="card card__pd-25 d-flex flex-column gap-15 default-animation">
+
+      <div class="d-flex justify-content-md-between align-item-center">
+        <h2 class="form-heading">Stripe Payment Keys</h2>
+        <button type="submit" [hidden]="!stripeKeysForm.valid" [disabled]="!stripeKeysForm.valid"
+          class="btn btn-xs fw-500 btn-rounded btn-primary">Submit</button>
+      </div>
+
+      <div class="d-flex gap-25 flex-wrap justify-content-md-between">
+        <div class="form-group d-flex flex-column gap-5">
+          <label for="publicKey" class="form__label">Public Key</label>
+          <input type="text" id="publicKey" formControlName="publicKey" class="form__input">
+          <div *ngIf="stripeKeysForm.get('publicKey')?.invalid && stripeKeysForm.get('publicKey')?.touched"
+            class="error-message">
+            Public Key is required.
+          </div>
+        </div>
+
+        <div class="form-group d-flex flex-column gap-5">
+          <label for="privateKey" class="form__label">Private Key</label>
+          <input type="text" id="privateKey" formControlName="privateKey" class="form__input">
+          <div *ngIf="stripeKeysForm.get('privateKey')?.invalid && stripeKeysForm.get('privateKey')?.touched"
+            class="error-message">
+            Private Key is required.
+          </div>
+        </div>
+      </div>
+
+    </form>
+
+    <div class="card card__pd-25 d-flex flex-column gap-15 default-animation-slow">
+      <h2 class="form-heading">Stripe Keys Table</h2>
+      <div class="table-wrapper table-list">
+        <table class="keys-table">
+          <thead>
+            <tr>
+              <th class="items">Seller Email</th>
+              <th class="items">Public Key</th>
+              <th class="items">Private Key</th>
+              <th class="items">Enable</th>
+              <th class="items">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let key of paymentKeys[0]?.keys; let i = index">
+              <td class="items keys-wrap">{{ key.adminId?.email }}</td>
+              <td class="items keys-wrap">{{ key.publicKey }}</td>
+              <td class="items keys-wrap">{{ key.privateKey }}</td>
+              <td class="items">
+                <div class="slide-button d-flex align-item-center">
+                  <input type="checkbox" [checked]="key.enable" (change)="togglePayment(key)" [name]="i + 'Available'"
+                    [id]="i + 'Available'" />
+                  <label [for]="i + 'Available'"></label>
+                </div>
+              </td>
+              <td class="items action-btns">
+
+                <span class="d-flex align-item-center gap-5 transition">
+                  <span class="tooltip" (click)="view(key)">
+                    <i class="fs-20 pointer action__btn-icon material-symbols-outlined">visibility</i>
+                    <span class="tooltiptext">View</span>
+                  </span>
+
+                  <span class="tooltip" (click)="edit(key)">
+                    <i class="fs-20 pointer action__btn-icon material-symbols-outlined">Edit</i>
+                    <span class="tooltiptext">Edit</span>
+                  </span>
+
+                  <span class="tooltip" (click)="delete(key)">
+                    <i class="fs-20 pointer action__btn-icon material-symbols-outlined">delete</i>
+                    <span class="tooltiptext">Delete</span>
+                  </span>
                 </span>
-  
-                <span class="tooltip" (click)="editRazorpay(key)">
-                  <i class="fs-18 pointer action__btn-icon material-symbols-outlined">Edit</i>
-                  <span class="tooltiptext">Edit</span>
-                </span>
-  
-                <span class="tooltip" (click)="deleteRazorpay(key)">
-                  <i class="fs-18 pointer action__btn-icon material-symbols-outlined">delete</i>
-                  <span class="tooltiptext">Delete</span>
-                </span>
-              </span>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
-</section>
+
+  <div *ngIf="currentTab === 'tab2'" class="d-flex flex-column gap-20">
+    <div class="card card__pd-25 d-flex flex-column gap-15">
+
+      <div class="d-flex justify-content-md-between align-item-center default-animation">
+        <h2 class="form-heading">Razorpay Payment Keys</h2>
+        <button type="button" [hidden]="!razorpayKeysForm.valid" [disabled]="!razorpayKeysForm.valid" class="btn btn-xs fw-500 btn-rounded btn-primary"
+          (click)="onSubmit()">Submit</button>
+      </div>
+
+      <form [formGroup]="razorpayKeysForm" (ngSubmit)="onSubmit()" class="form d-flex gap-25 default-animation">
+        <div class="form-group d-flex flex-column gap-5">
+          <label for="rzpPublicKey" class="form__label">Razorpay Public Key</label>
+          <input type="text" id="rzpPublicKey" formControlName="rzpPublicKey" class="form__input">
+          <div *ngIf="razorpayKeysForm.get('rzpPublicKey')?.invalid && razorpayKeysForm.get('rzpPublicKey')?.touched"
+            class="error-message">
+            Razorpay Public Key is required.
+          </div>
+        </div>
+
+        <div class="form-group d-flex flex-column gap-5">
+          <label for="rzpPrivateKey" class="form__label">Razorpay Private Key</label>
+          <input type="text" id="rzpPrivateKey" formControlName="rzpPrivateKey" class="form__input">
+          <div *ngIf="razorpayKeysForm.get('rzpPrivateKey')?.invalid && razorpayKeysForm.get('rzpPrivateKey')?.touched"
+            class="error-message">
+            Razorpay Private Key is required.
+          </div>
+        </div>
+      </form>
+    </div>
+
+
+    <div class="card card__pd-25 d-flex flex-column gap-15 default-animation-slow">
+      <h2 class="form-heading">Razorpay Keys Table</h2>
+      <div class="table-wrapper table-list">
+        <table class="keys-table">
+          <thead>
+            <tr>
+              <th class="items">Seller Email</th>
+              <th class="items">Razorpay Public Key</th>
+              <th class="items">Razorpay Private Key</th>
+              <th class="items">Enable</th>
+              <th class="items">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let key of razorpayPaymentKeys[0]?.razorKey; let i = index">
+              <td class="items keys-wrap">{{ key.adminId?.email }}</td>
+              <td class="items keys-wrap">{{ key.rzpIdKey }}</td>
+              <td class="items keys-wrap">{{ key.rzpSecretKey }}</td>
+              <td class="items">
+                <div class="slide-button d-flex align-item-center">
+                  <input type="checkbox" [checked]="key.enable" (change)="toggleRazorpayPayment(key)"
+                    [name]="i + 'Available'" [id]="i + 'Available'" />
+                  <label [for]="i + 'Available'"></label>
+                </div>
+              </td>
+              <td class="items action-btns">
+
+                <span class="d-flex align-item-center gap-5 transition">
+
+                  <span class="tooltip" (click)="viewRazorpay(key)">
+                    <i class="fs-20 pointer action__btn-icon material-symbols-outlined">visibility</i>
+                    <span class="tooltiptext">View</span>
+                  </span>
+
+                  <span class="tooltip" (click)="editRazorpay(key)">
+                    <i class="fs-20 pointer action__btn-icon material-symbols-outlined">Edit</i>
+                    <span class="tooltiptext">Edit</span>
+                  </span>
+
+                  <span class="tooltip" (click)="deleteRazorpay(key)">
+                    <i class="fs-20 pointer action__btn-icon material-symbols-outlined">delete</i>
+                    <span class="tooltiptext">Delete</span>
+
+                  </span>
+
+                </span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

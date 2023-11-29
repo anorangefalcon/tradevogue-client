@@ -9,10 +9,10 @@ import { Subscription } from 'rxjs';
 })
 export class PopUpComponent implements OnDestroy {
   showPopup = false;
-  private subscription: Subscription;
+  subscription: Subscription;
 
   constructor(private popupService: PopupService) {
-    this.subscription = this.popupService.showPopup$.subscribe((show) => {
+    this.subscription =  this.popupService.showPopup$.subscribe((show) => {
       this.showPopup = show;
       if (!show) {
         this.closePopup();
@@ -26,5 +26,6 @@ export class PopUpComponent implements OnDestroy {
 
   closePopup() {
     this.showPopup = false;
+    this.popupService.closePopup();
   }
 }

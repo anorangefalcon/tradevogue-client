@@ -37,7 +37,7 @@ html:focus-within {
 
 /* Set core body defaults */
 body {
-    min-height: 100vh;
+    min-height: 100dvh;
     text-rendering: optimizeSpeed;
     line-height: 1.5;
     font-size: 14px;
@@ -81,6 +81,7 @@ select {
 }
 
 
+
 /* Global CSS (main) */
 :root {
     --whiteClr: 255, 255, 255;
@@ -96,22 +97,23 @@ select {
     /* teal dark */
     --primaryClr: 4, 118, 118;
 
-
     /* --primaryClr: 9, 63, 126; */
     /* --primaryClr: 10, 82, 131; */
 
     --secondary: 249, 250, 251;
+    color: rgb(42, 41, 41);
 
     --danger: 223, 22, 33;
     --success: 60, 167, 23;
-    --warning: 183, 146, 2;
+    --warning: 163, 125, 0;
     --info: 0, 98, 227;
 
 
     --gray: 247, 248, 250;
     --new-text-black: 51, 51, 51;
     --text-gray: 111, 111, 111;
-    --input-text-bg: #f5f5f5cf;
+    --input-text-bg: 245, 245, 245, 0.8;
+    /* color: rgba(152, 150, 150, 0.823); */
 
     --blue-clr: 24, 138, 226;
     --yellow-clr: 249, 165, 80;
@@ -119,6 +121,24 @@ select {
     --red-clr: var(--danger);
     --goldClr: 254, 151, 4;
 
+}
+body {
+    font-family: 'Poppins', sans-serif;
+    font-size: 13px;
+    color: rgb(var(--textClr));
+    background-color: rgb(var(--blackClr), 0.02);
+}
+
+body.dark{
+    --whiteClr: 0, 0, 0;
+    --blackClr: 255, 255, 255;
+    --textClr: 222,222,222;
+    --input-text-bg : 152, 150, 150;
+    --primaryClr: 2, 208, 208;
+    --secondary : 42, 41, 41;
+
+
+    background-color: rgb(var(--whiteClr), 0.9) !important;
 }
 
 h1 {
@@ -158,13 +178,16 @@ h6 {
     font-weight: 500;
 }
 
-body {
-    font-family: 'Poppins', sans-serif;
-    font-size: 13px;
-    color: rgb(var(--textClr));
+
+/* .light{
+
+    --whiteClr: 255, 255, 255;
+    --blackClr: 0, 0, 0;
+    --textClr: 34, 34, 34;
+
     background-color: rgb(var(--blackClr), 0.02);
 
-}
+} */
 
 h3 {
     font-size: 20px !important;
@@ -181,10 +204,6 @@ h6 {
 p {
     font-size: 14px !important;
 }
-
-/* input[type="text"], textarea{
-    background-color: #f5f5f5cf !important;
-} */
 .container {
     width: 100%;
     max-width: 1170px;
@@ -215,6 +234,10 @@ a {
 
 ul {
     list-style: none;
+}
+
+.fs-10 {
+    font-size: 10px !important;
 }
 
 .fs-12 {
@@ -443,6 +466,13 @@ ul {
 .gap-30 {
     gap: 30px;
 }
+.gap-35 {
+    gap: 35px;
+}
+.gap-40 {
+    gap: 40px;
+}
+
 
 
 /* Positioning */
@@ -536,15 +566,15 @@ ul {
 
 /* Tool tip Styling */
 
+
 .tooltip {
     position: relative;
 }
 
 .tooltiptext {
-    visibility: hidden;
-    opacity: 0;
-    transition: all 0.3s ease-in-out;
     position: absolute;
+    opacity: 0;
+    pointer-events: none;
     background-color: rgb(var(--blackClr)) !important;
     color: rgb(var(--whiteClr)) !important;
     font-size: 11px !important;
@@ -552,28 +582,116 @@ ul {
     padding: 5px 10px;
     border-radius: 3px;
     z-index: 99;
-    inset-block-start: 120%;
-    inset-inline-start: 50%;
-    transform: translateX(-50%);
-    box-shadow: 0px 0px 5px rgba(151, 114, 114, 0.37);
     text-align: center;
+    box-shadow: 0px 0px 5px rgba(151, 114, 114, 0.37);
+    transition: all 0.3s ease-in-out;
 }
 
 .tooltiptext::before {
     content: "";
     position: absolute;
-    inset-block-end: 100%;
-    inset-inline-start: 50%;
     margin-left: -5px;
     border-width: 5px;
     border-style: solid;
     border-color: transparent transparent rgb(var(--blackClr)) transparent;
 }
 
-.tooltip:is(:hover, :active) .tooltiptext {
-    visibility: visible;
-    opacity: 1;
+.tooltip:last-child .tooltiptext{
+    inset-block-start: 120%;
+    inset-inline-end: 0%;
 
+    &::before {
+        inset-block-end: 100%;
+        inset-inline-end: 5px;
+    } 
+}
+
+.tooltip:not(:first-child, :last-child) .tooltiptext {
+    inset-block-start: 120%;
+    inset-inline-start: 50%;
+    transform: translateX(-50%);
+
+    &::before {
+        inset-block-end: 100%;
+        inset-inline-start: 50%;
+    }
+}
+
+.tooltip:first-child .tooltiptext {
+    inset-block-start: 120%;
+    inset-inline-start: 5%;
+
+    &::before {
+        inset-block-end: 100%;
+        inset-inline-start: 9px;
+    }
+}
+
+tr:last-child td{
+
+    & .tooltip .tooltiptext{
+        inset-block-end: 120%;
+        inset-block-start: initial;
+    }
+
+    & .tooltip .tooltiptext::before{
+        display: none;
+    }
+
+    & .tooltip .tooltiptext::after{
+        content: "";
+        position: absolute;
+        margin-left: -5px;
+        border-width: 5px;
+        border-style: solid;
+        border-color: rgb(var(--blackClr)) transparent transparent transparent;
+    }
+
+    .tooltip:not(:first-child, :last-child) .tooltiptext::after {
+        inset-block-start: 100%;
+        inset-inline-start: 50%;
+    }
+    
+    .tooltip:first-child .tooltiptext::after {
+        inset-block-start: 100%;
+        inset-inline-start: 9px;
+    }
+    
+    .tooltip:last-child .tooltiptext::after {
+        inset-block-start: 100%;
+        inset-inline-end: 9px;
+    }
+}
+
+.tooltip:first-child:not(:has(+tr)) .tooltiptext::before, .tooltip:first-child:not(:has(+tr)) .tooltiptext::after{
+    inset-inline-end: initial !important;
+}
+
+/* tr:first-child:not(:has( + tr)) td{
+
+    & .tooltip .tooltiptext{
+        inset-block-end: initial;
+        inset-block-start: 50%;
+        inset-block-start: 100%;
+    }
+
+    & .tooltip .tooltiptext::before{
+        display: none;
+    }
+
+    & .tooltip .tooltiptext::after{
+        content: "";
+        position: absolute;
+        margin-left: -5px;
+        border-width: 5px;
+        border-style: solid;
+        border-color: rgb(var(--blackClr)) transparent transparent transparent;
+    } 
+} */
+
+.tooltip:is(:hover, :active) .tooltiptext {
+    opacity: 1;
+    pointer-events: all;
 }
 
 /* Buttons Style */
@@ -636,7 +754,6 @@ ul {
 & .heading {
     font-size: 48px;
     font-weight: 400;
-    /* letter-spacing: 1.2px; */
     margin-bottom: 50px;
     font-weight: 500;
 
@@ -672,11 +789,8 @@ ul {
 
 .title {
     font-size: 16px !important;
-    font-weight: 500;
-    /* letter-spacing: 0.32px; */
-    line-height: 17.6px;
-    color: rgb(var(--dash-title-clr));
-    margin-bottom: 10px;
+    font-weight: 400;
+   line-height: 1.2;
 }
 
 /* Sub Section Heading, Subheading, Styling */
@@ -749,15 +863,20 @@ ul {
 }
 
 .btn-inline {
-    display: inline;
-    width: fit-content;
+    display: inline !important;
+    width: fit-content !important;
 }
 
-.btn:disabled {
+.btn-primary:disabled {
     cursor: no-drop;
-    background-color: rgb(var(--primaryClr), 0.8);
+    background-color: rgba(var(--primaryClr), 0.8);
     border: 1px solid transparent;
+}
 
+.btn-secondary:disabled {
+    cursor: no-drop;
+    border: 1px solid rgba(var(--primaryClr), 0.6);
+    color: rgba(var(--primaryClr), 0.6);
 }
 
 .btn-primary {
@@ -790,7 +909,7 @@ ul {
 }
 
 
-.text-ellipsis{
+.text-ellipsis {
     width: 16ch;
     overflow: auto;
     text-overflow: ellipsis;
@@ -848,10 +967,13 @@ ul {
     height: 40px;
     padding-inline: 15px;
     border-radius: 4px;
+    background-color: transparent;
     outline: 1px solid rgba(var(--blackClr), 0.2);
     font-size: 13px;
     font-weight: 400;
     border: none;
+    color: rgb(var(--textClr));
+    
 
     &:is(:focus, :hover, .active) {
         border-color: rgb(var(--primaryClr));
@@ -1004,23 +1126,36 @@ ul {
     }
 
     & input[type="checkbox"]:checked+label {
-        background-color: rgb(var(--success));
+        background-color: rgb(var(--primaryClr));
     }
 }
 
 /* Button loading  */
+.spinner{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    background-color: rgb(var(--blackClr), 0.05);
+}
+
 .spinner::before {
     content: '';
     position: absolute;
-    top: 34%;
-    left: 47%;
     width: 20px;
     height: 20px;
     border-radius: 50%;
-    border: 2px solid #ffffff;
-    border-top-color: rgb(var(--primaryClr));
-    ;
+    border-width: 2px;
+    border-style: solid;
+    border-color: rgb(var(--primaryClr)) rgb(var(--primaryClr)) rgb(var(--whiteClr)) rgb(var(--whiteClr));
     animation: spinner .8s linear infinite;
+}
+
+div.spinner::before{
+    inset-inline-end: 12px;
+    inset-block-end: 12px;
 }
 
 @media screen and (max-width: 450px) {
@@ -1067,12 +1202,16 @@ ul {
         }
     }
 
+    .section-header{
+        padding-block-end: 20px;
+    }
+
     .section-heading {
-        font-size: 30px !important;
+        font-size: 24px !important;
     }
 
     .section-sub-heading {
-        font-size: 14px !important;
+        font-size: 12px !important;
         font-weight: 300 !important;
     }
 }
@@ -1094,7 +1233,9 @@ ul {
 .default-animation {
     animation: show-animation 0.5s ease-in-out;
 }
-
+.default-animation-slow {
+    animation: show-animation 1s ease-in-out;
+}
 
 @keyframes show-animation {
     0% {
@@ -1108,15 +1249,14 @@ ul {
     }
 }
 
-
 .tv-loading {
-    height: 70vh;
+    height: 100vh;
     width: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
     position: relative;
-    transform: translateY(-50px);
+    transform: translateY(-130px);
 
     & img {
         height: 100px;
@@ -1125,7 +1265,6 @@ ul {
         z-index: 1;
         transform: translateY(12px);
         animation: tv-loading 1s ease-in-out infinite;
-
     }
 
     & .circle-tv-loader {
@@ -1167,41 +1306,37 @@ ul {
     }
 }
 
+.customise-back-btn span {
+    font-size: 16px;
+}
+.customise-back-btn{
+    padding: 5px;
+    
+    &:hover {
+        color: rgb(var(--primaryClr))
+    }
+}
+.color-picker-position {
+    inset-block-start: 50%;
+    inset-inline-end: 15px;
+    transform: translateY(-50%);
+}
+.color-input{
+    padding-inline-end: 40px;
+}
+
 .skeleton {
+    position: relative;
     animation: skeleton-loading 1s linear infinite alternate;
 }
-
-.skeleton-pulse::after {
-    content: '';
-    position: absolute;
-    z-index: -1;
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: 170px;
-    background-color: rgb(131, 131, 131);
-
-    animation: skeleton-left-right 1s linear infinite;
-}
-
 
 
 @keyframes skeleton-loading {
     from {
-        background-color: rgba(151, 162, 160, 0.64)
+        background-color: rgba(151, 162, 160, 0.385)
     }
 
     to {
-        background-color: rgba(240, 243, 245, 0.806)
-    }
-}
-
-@keyframes skeleton-left-right {
-    from {
-        transform: translateX(-10%);
-    }
-
-    to {
-        transform: translateX(110%);
+        background-color: rgba(240, 243, 245, 0.407)
     }
 }

@@ -1,8 +1,9 @@
 <div class="card-item-template card-template-structure">
-    <a routerLink='/product/{{product.sku}}' class="pointer d-flex flex-column gap-10">
+    <a [routerLink]="['/product', product.sku]" [queryParams]="(assetIndex != 0) ? { color: assetIndex } : {}"
+        class="pointer d-flex flex-column gap-10">
         <div class="card-item-header skeleton">
-            <img loading="lazy" [src]=product.assets?.[0]?.photo[1] alt="Product Image">
-            <img loading="lazy" class="hover-img" [src]=product.assets?.[0]?.photo[0] alt="Product Image">
+            <img loading="lazy" [src]=product.assets?.[assetIndex]?.photo[1] alt="Product Image">
+            <img loading="lazy" class="hover-img" [src]=product.assets?.[assetIndex]?.photo[0] alt="Product Image">
         </div>
 
         <div class="card-item-content d-flex flex-column align-item-center gap-5">
@@ -18,16 +19,16 @@
 
             <div class="price d-flex gap-5 align-item-center justify-content-center ">
                 <p class="current-price">
-                        ₹{{ product.price}}    </p>
+                    ₹{{ product.price}} </p>
                 <p class="old-price" *ngIf="product?.discount">
-                    ₹{{ product.oldPrice }} 
+                    ₹{{ product.oldPrice }}
                 </p>
                 <p *ngIf="product.discountType!== 0" class="offer-percentage">
                     <span *ngIf="product.discountPercentage"> ({{ product.discountPercentage }}% off)</span>
-                    <span *ngIf="!product.discountPercentage && product.discountAmount"> ({{ product.discount }} Flat off)</span>
-                   
+                    <span *ngIf="!product.discountPercentage && product.discountAmount"> ({{ product.discount }} Flat
+                        off)</span>
                 </p>
-               
+
             </div>
 
         </div>
@@ -38,15 +39,10 @@
             </span>
         </span>
 
-        <!-- <a (click)="showPopup = true" class="options-icon eye-logo"><span class="material-symbols-outlined">
+        <a (click)="openPopup()" class="options-icon eye-logo"><span class="material-symbols-outlined">
                 visibility
             </span>
-        </a> -->
-
-        <a (click)="openPopup()" class="options-icon eye-logo"><span class="material-symbols-outlined">
-            visibility
-        </span>
-    </a>
+        </a>
 
         <!-- (click)="chooseWishlist()" -->
         <a class="options-icon wishlist-logo" (click)="RemoveOrAddToWishlist(product.wishlisted)">
@@ -56,95 +52,3 @@
         </a>
     </div>
 </div>
-
-<app-pop-up *ngIf="showPopup">
-    <div>
-        hello
-    </div>
-</app-pop-up>
-
-<!-- <div *ngIf="showPopup" class="popup-overlay relative">
-    <div class="popup-content popup-details" [ngClass]="{'fade-in': showPopup}">
-hello
-    </div>
-
-
-    <div (click)="showPopup = false" class="absolute right-5 top-5"><button type="button"
-            class="inline-flex justify-center px-2 py-2 text-base font-medium text-red-500 bg-white border border-transparent rounded-full hover:bg-red-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500"><svg
-                stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 512 512" height="1em"
-                width="1em" xmlns="http://www.w3.org/2000/svg">
-                <path
-                    d="M289.94 256l95-95A24 24 0 00351 127l-95 95-95-95a24 24 0 00-34 34l95 95-95 95a24 24 0 1034 34l95-95 95 95a24 24 0 0034-34z">
-                </path>
-            </svg></button></div>
-
-
-</div> -->
-
-
-<!-- <div class="left-side">
-    <owl-carousel-o [options]="customOptions" [ngClass]="{crousel: true}">
-        <ng-template carouselSlide *ngFor="let item of product.assets[0].photo">
-            <div>
-                <img class="image-carousel" [src]="item" alt="Product Image">
-            </div>
-        </ng-template>
-    </owl-carousel-o>
-</div>
-<div class="right-side">
-    <h1 class="prod-name">{{ product.name }}</h1>
-
-
-    <div class="relative"><span
-            class="left-text bg-emerald-100 text-emerald-500 rounded-full inline-flex items-center justify-center px-2 py-0 text-xs font-semibold font-serif">Stock
-            :<span class="text-red-500 dark:text-red-400 pl-1 font-bold right-text">250 </span></span></div>
-
-
-    <h2 class="subTitle">{{productData.subTitle}}
-
-        <div *ngIf="avgRating !== 0" class="rating d-flex align-item-center">
-            <span *ngFor="let i of createArrayToIterate(avgRating)"
-                class="material-symbols-outlined filled">star</span>
-            <span *ngIf="(avgRating % 1) !== 0" class="material-symbols-outlined">star_half</span>
-            <span *ngFor="let i of createArrayToIterate(5 - avgRating)"
-                class="material-symbols-outlined">star</span>
-        </div>
-    </h2>
-
-
-    <p id="description">{{productData.description}}</p>
-    
-    <div class="price">
-        <h1 id="number-discount">₹{{ product.price - product.discount }}</h1>
-        <p id="number-full" *ngIf="product.price !== (undefined || 0)">₹{{product.price}}</p>
-    </div>
-
-    <div class="colors d-flex align-item-center gap-15">
-        <p>Color:</p>
-        <div class="colors-opt d-flex gap-10">
-            <div class="colors-radios d-flex align-item-center" *ngFor="let color of productData.assets">
-                <input type="radio" name="color" [value]="color.color" [style.background-color]="color.color"
-                    [(ngModel)]="selectedColor">
-            </div>
-        </div>
-    </div>
-
-    <div class="tags d-flex gap-10 d-flex align-item-center">
-        <h4>TAGS :</h4>
-        <a *ngFor="let tag of product.info.tags">
-            {{ tag }}
-        </a>
-    </div>
-
-    <div class="cart-div d-flex gap-10 align-item-center">
-        <button style=" padding-inline: 100px;" class="btn-primary d-flex gap-10 align-item-center"
-            (click)="addToCart()" routerLink="/cart">
-            <span class="material-symbols-outlined">
-                shopping_cart
-            </span>
-            <p>ADD TO CART</p>
-        </button>
-    </div>
-</div> -->
-
-<!-- <app-product-section ></app-product-section> -->

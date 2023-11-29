@@ -15,8 +15,13 @@ import { UtilsModule } from 'src/app/utils/utils.module';
 export class FooterComponent {
 
   socialsData! : any;
+  theme: Boolean = false;
 
-  constructor(private routerService: RouterLinksService, private router: Router, private socialsService: SocialsService, private fetchDataService : FetchDataService, private backendUrls : UtilsModule) {}
+  constructor(private routerService: RouterLinksService, private router: Router, private socialsService: SocialsService, private fetchDataService : FetchDataService, private backendUrls : UtilsModule) {
+    this.fetchDataService.themeColor$.subscribe((color)=>{
+      this.theme = color;
+    })
+  }
 
   ngOnInit(){
     this.socialsService.getSocials().subscribe((data:any)=>{
@@ -30,6 +35,8 @@ export class FooterComponent {
         this.categories = data.data.category;
       }
     )
+
+
   }
 
   @ViewChild('cancellation') cancellation!: ElementRef;

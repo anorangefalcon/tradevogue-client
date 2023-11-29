@@ -12,8 +12,8 @@ import { ToastService } from '../shared/services/toast.service';
 
 export class WishlistComponent {
 
-  // wishlistsArray: any
   list: any = []
+  width: string = '300px';
   direction: any = 'popup';
   show: boolean = false;
   new: string = "";
@@ -23,34 +23,53 @@ export class WishlistComponent {
   showTextField: boolean = false;
   showAddLabel: boolean = true;
   productName: string = "";
-  ParentClosed:boolean=false;
+
 
   constructor(private wishlistService: WishlistService,
-    private toastService: ToastService) {
+    private toastService: ToastService,
+    private fetchDataService: FetchDataService,
+    private utils: UtilsModule,) {
   }
 
-  async ngOnInit() {
-    this.wishlistService.wishlistPopupData.subscribe((data)=>{
-      if(!data) return;
-      
-      this.list=data.wishlists;
-      this.show=true;        
+  ngOnInit() {
+    this.wishlistService.wishlistPopupData.subscribe((data) => {
+      console.log(data, "wishlist data init");
+
+      if (!data) return;
+      this.list = data.wishlists;
+      this.show = true;
     })
   }
 
-  async addToWishlist(wishlistName: string) {
-    this.wishlistService.AddtoWishlist(wishlistName);
-    this.ParentClosed=true;
-    this.showTextField=false;
-    this.newWishlist = "";
-  }
-  
-  ParenClosedHandler(event:any){
-  this.ParentClosed=event;
+  addToWishlist(wishlistName: string, type: String = '') {
+
+    const body = {
+      wishlistName: wishlistName,
+      productId: this.wishlistService.productId,
+      type : type
+    }
+    this.fetchDataService.HTTPPOST(this.utils.URLs.addToWishlist, body).subscribe(
+      {
+        next: (res: any) => {
+          if (!res) return;
+          const toast = {
+            title: res.message
+          }
+          this.toastService.notificationToast(toast);
+          this.wishlistService.getWishlistCount();
+          
+          this.newWishlist = "";
+          this.showTextField = false;
+          this.show = false;
+        }
+      }
+    )
   }
 
   handler(event: any) {
+    this.showTextField = false;
     this.show = event
+    // this.wishlistService.showWishlistPopup.
   }
 }
 

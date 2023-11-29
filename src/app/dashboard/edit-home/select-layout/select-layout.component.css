@@ -1,0 +1,231 @@
+.p-b-20 {
+    padding-block: 20px;
+}
+
+.p-i-20 {
+    padding-inline: 20px;
+}
+
+.card-hero-app {
+    position: relative;
+    z-index: 0;
+    background-color: rgb(var(--whiteClr));
+    border: 1px solid rgba(var(--blackClr), 0.1);
+    border-radius: 10px;
+    width: 100%;
+
+    & div {
+        /* height: fit-content; */
+        height: 100%;
+
+        & .hero-section {
+            height: 500px !important;
+            object-position: top;
+        }
+    }
+
+    & .hero-model-img {
+        & img {
+            object-position: center !important;
+        }
+    }
+
+    & .hero-text-container{
+        transform: translateY(35%);
+        scale: 0.8;
+    }
+
+    & .owl-dots{
+        display: none;
+    }
+
+    pointer-events: none;
+}
+
+.card-header{
+    z-index: 2;
+}
+
+.productpage {
+    /* height: 470px; */
+    padding-block: 20px;
+    overflow: hidden;
+
+    /* products */
+    & .card-container {
+        display: flex !important;
+        flex-wrap: nowrap;
+        justify-content: flex-start;
+
+        & .card-item-template {
+            width: 200px;
+        }
+    }
+}
+
+.app-div {
+    pointer-events: none;
+}
+
+.card {
+    display: flex;
+    align-items: center;
+    position: relative;
+    width: 100%;
+
+    & .app-div {
+        width: 100%;
+
+        /* collections */
+        & .collections {
+            padding-block: 20px;
+        }
+
+        .grid-container {
+            height: 300px !important;
+        }
+
+        /* deal of week */
+        & #deal-of-week {
+
+            & .sub-heading {
+                padding-inline-start: 30px;
+                transform: scale(0.8);
+            }
+
+            & .container {
+                min-height: 0;
+                height: 300px;
+            }
+
+            & .deal-week-img {
+                transform: scale(0.8);
+            }
+        }
+
+
+        /* offers */
+        & .offer-container {
+            & img {
+                height: 170px;
+            }
+
+            .offer-title[_ngcontent-ng-c2956826697] {
+                font-size: 21px !important;
+                margin-bottom: 20px;
+            }
+
+            .btn-style3[_ngcontent-ng-c2956826697] {
+                font-size: 10px;
+                padding: 10px 15px;
+                width: 100px;
+            }
+        }
+
+    }
+}
+
+.controls {
+    position: absolute;
+    display: flex;
+    gap: 20px;
+    padding-inline: 10px;
+    top: -5px;
+    right: 0;
+    width: 100%;
+    justify-content: space-between;
+
+    & div{
+        opacity: 1;
+        transition: all 0.3s ease-in-out;
+    }
+    transition: all 0.3s linear;
+}
+
+.restrict-height {
+    height: fit-content;
+    overflow: hidden;
+}
+
+
+.padding {
+    padding: 40px;
+}
+
+.disabledElement{
+    & .app-div{
+        filter: grayscale(1);
+    }
+
+    & .controls{
+        background: rgb(var(--danger));
+        background: linear-gradient(270deg, rgb(207, 207, 207) 12%, rgba(255, 255, 255, 0) 100%);
+
+    }
+    
+}
+
+.operation_button{
+    position: fixed;
+    bottom: 0;
+    right: 35px;
+    z-index: 5;
+    background: white;
+    padding-block-end: 14px;
+    padding-block-start: 20px;
+    padding-inline: 16px;
+    border-top-left-radius: 16px;
+    border-top-right-radius: 16px;
+    border: 1px solid rgba(var(--blackClr), 0.1);
+    box-shadow: 0 0 5px rgba(var(--blackClr), 0.1);
+
+}
+
+.operation_button button {
+    border: 1px solid;
+    padding: 12px;
+    padding-block: 8px;
+    padding-inline: 18px;
+}
+
+/* .form__card__head{
+    position: sticky;
+    top: 75px;
+    z-index: 5;
+    box-shadow: 5px 5px 5px 0px #afafaf36;
+} */
+
+.edit-name{
+    right: 28px;
+    opacity: 0.8;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 15px;
+    
+    &:hover{
+        color: rgb(var(--primaryClr));
+        opacity: 1;
+    }
+}
+
+.add-layout{
+    padding: 6px;
+    border-radius: 5px;
+    border: 1px solid rgba(var(--blackClr), 0.2);
+    color: rgba(var(--blackClr), 0.6);
+
+    &:hover{
+        color: rgb(var(--whiteClr));
+        background-color: rgb(var(--primaryClr));
+        border-color: transparent;
+    }
+}
+
+@media screen and (max-width: 420px) {
+    .card-header {
+      background-color: transparent;
+      border: none;
+      border-radius: 0;
+      padding: 0 !important;
+    }
+  }

@@ -22,11 +22,11 @@ picture {
 .form__card {
 
     & .image-upload-div {
-        width: 40%;
+        width: 50%;
     }
 
     & .data-upload-div {
-        width: 60%;
+        width: 50%;
     }
 
     & .internal-div {
@@ -130,4 +130,40 @@ picture {
     to {
         transform: rotate(360deg);
     }
+}
+
+.sale-image-circle{
+    overflow: hidden;
+    object-fit: cover;
+    z-index: 10;
+    width: 15px !important;
+}
+
+.color-circle {
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    border: 0.5px solid black;
+}
+
+.link-icon {
+    font-size: 12px;
+    color: rgb(var(--blue-clr));
+}
+
+.tooltip {
+    z-index: 100 !important;
+}
+input[type="color"]{
+    visibility: visible;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+}
+input[type="color" i]::-webkit-color-swatch-wrapper {
+    padding: 0px  !important;
+}
+input[type="color" i]::-webkit-color-swatch {
+    border-radius: 50%;
+    border: none;
 }

@@ -15,9 +15,10 @@ import { NoPageComponent } from './no-page/no-page.component';
 import { authGuard } from './auth.guard';
 import { OffersCarouselComponent } from './offers-carousel/offers-carousel.component';
 import { AboutComponent } from './about/about.component';
+import { redirectGuard } from './checkout/redirect.guard';
+import { EyePopupComponent } from './shared/eye-popup/eye-popup.component';
 
 const routes: Routes = [
-
   {
     path: '', component: LayoutComponent, data: { breadcrumb: 'Home' },
     children: [
@@ -41,13 +42,14 @@ const routes: Routes = [
         data: { breadcrumb: 'Cart' },
         children: [
           { path: '', component: CartComponent, data: { breadcrumb: 'Cart' } },
-          { path: 'billing', component: BillingComponent, data: { breadcrumb: 'Billing' } }
+          { path: 'billing', component: BillingComponent, data: { breadcrumb: 'Billing' }, canDeactivate: [redirectGuard],canActivate:[authGuard] }
         ]
       },
     ]
   },
   {
-    path: 'dashboard', loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule),canActivate: [authGuard]
+    path: 'dashboard', loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule),
+    canActivate: [authGuard]
   },
   {
     path: 'auth', data: { breadcrumb: 'Auth' }, loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule),canActivate: [authGuard]
@@ -56,9 +58,7 @@ const routes: Routes = [
   {path:'offerc',component:OffersCarouselComponent},
   {
     path: '**', component: NoPageComponent, data: { breadcrumb: '404' } 
-  },
-  
-
+  }
 ];
 
 @NgModule({

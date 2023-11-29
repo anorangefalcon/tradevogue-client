@@ -12,7 +12,7 @@
                     </h2>
                     <form class="d-flex flex-column gap-5" [formGroup]="contactForm" (ngSubmit)="onSubmit()">
                         <label for="ContactFormName">Your Name</label>
-                        <input type="text" placeholder="Enter your name" formControlName="name" id="ContactFormName">
+                        <input type="text" placeholder="Enter your name" formControlName="name" id="ContactFormName" class="form__input">
                         <div *ngIf="contactForm.get('name')?.hasError('required') && contactForm.get('name')?.touched"
                             class="error">
                             Name is required.
@@ -20,7 +20,7 @@
 
                         <label for="ContactFormEmail">Email</label>
                         <input type="email" placeholder="Enter your email address*" formControlName="email"
-                            id="ContactFormEmail">
+                            id="ContactFormEmail" class="form__input">
                         <div *ngIf="contactForm.get('email')?.hasError('required') && contactForm.get('email')?.touched"
                             class="error">
                             Email is required.
@@ -56,7 +56,7 @@
                         </div>
 
                         <div>
-                            <button type="submit" class="btn-primary">Submit</button>
+                            <button type="submit" class="btn-primary btn-rounded btn-md">Submit</button>
                         </div>
                     </form>
                 </div>

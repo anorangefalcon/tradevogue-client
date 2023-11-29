@@ -1,3 +1,7 @@
+.section-header{
+  margin-block-end: 30px;
+}
+
 .gallery {
   width: 100%;
   display: flex;

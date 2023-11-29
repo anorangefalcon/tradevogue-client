@@ -1,19 +1,23 @@
 <section class="container offer-container">
-    <div class="row d-flex justify-content-center align-item-center gap-20">
-      <ng-container *ngFor="let item of saleData">
-        <div *ngIf="item.enable" class="col">
-          <div class="left-content">
-            <div class="banner-text">
-              <span class="subtitle" [style.color]="item.colors.subTitleColor">{{ item.subTitle }}</span>
-              <h2 class="offer-title" [style.color]="item.colors.titleColor">{{ item.title }}</h2>
-              <a [href]="item.buttonLink" class="btn-style3" [style.backgroundColor]="item.colors.buttonColor">{{ item.buttonText }}</a>
-            </div>
-          </div>
-          <div class="right-content">
-            <img *ngIf="item.enable" [src]="item.backgroundImage" alt="offers" class="large-image">
+  <div class="row d-flex justify-content-center align-item-center gap-20">
+    <ng-container *ngFor="let item of saleData">
+      <div *ngIf="item.enable" class="col overflow-hidden" [style.background]="item.colors.cardColor">
+        <div class="left-content">
+          <div class="banner-text">
+            <span class="subtitle" [style.color]="item.colors.subTitleColor">{{ item.subTitle }}</span>
+            <h2 class="offer-title" [style.color]="item.colors.titleColor">{{ item.title }}</h2>
+            <a [href]="item.buttonLink" class="btn-style3" [style.backgroundColor]="item.colors.buttonColor"
+              [style.color]="item.hover ? 'white' : ''"
+              [style.backgroundColor]=" item.hover ? 'transparent' : item.colors.buttonColor"
+              [style.color]="item.hover ? item.colors.buttonColor : ''"
+              [style.border]="item.hover ? '2px solid' + item.colors.buttonColor : '2px solid' + item.colors.buttonColor"
+              (mouseover)="item.hover = true" (mouseout)="item.hover = false">{{ item.buttonText }}</a>
           </div>
         </div>
-      </ng-container>
-    </div>
-  </section>
-  
+        <div class="right-content">
+          <img *ngIf="item.enable" style="scale: 1.5;" [src]="item.backgroundImage" alt="offers" class="large-image">
+        </div>
+      </div>
+    </ng-container>
+  </div>
+</section>

@@ -26,14 +26,14 @@
 
   </ul>
 
-  <div id="selected__container" class="relative" (click)="isactive = !isactive">
-    <input type="search" class="form__input" (input)="filterData($event)" [value]="selected"
+  <div id="selected__container" class="relative" (click)="isactive = (!disableStatus? !isactive: false)">
+    <input type="search" [disabled]="disableStatus" class="form__input" (input)="filterData($event)" [value]="selected"
       [placeholder]="selectedOption" *ngSwitchCase="'searchSelect'">
 
-    <input type="text" class="form__input" [value]="multiSelected.join(' , ')" [placeholder]="selectedOption"
+    <input type="text" [disabled]="disableStatus" class="form__input" [value]="multiSelected.join(' , ')" [placeholder]="selectedOption"
       *ngSwitchCase="'multiSelect'" readonly>
 
-    <input type="text" class="form__input" readonly (input)="filterData($event)" [value]="selected"
+    <input [disabled]="disableStatus" type="text" class="form__input" readonly (input)="filterData($event)" [value]="selected"
       [placeholder]="selectedOption" *ngSwitchDefault>
   </div>
   

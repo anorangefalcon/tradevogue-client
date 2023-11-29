@@ -7,14 +7,18 @@ import { BehaviorSubject, Observable } from 'rxjs';
 export class PopupService {
   private showPopupSubject = new BehaviorSubject<boolean>(false);
   showPopup$: Observable<boolean> = this.showPopupSubject.asObservable();
-
+  private isPopupOpen = false; 
   constructor() { }
 
   openPopup() {
-    this.showPopupSubject.next(true);
+    if (!this.isPopupOpen) { 
+      this.showPopupSubject.next(true);
+      this.isPopupOpen = true;
+    }
   }
 
   closePopup() {
     this.showPopupSubject.next(false);
+    this.isPopupOpen = false;
   }
 }

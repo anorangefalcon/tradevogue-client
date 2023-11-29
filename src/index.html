@@ -14,39 +14,21 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&amp;family=Roboto:wght@100;300;400;500;700;900&amp;display=swap" rel="stylesheet">
   <link rel="preconnect" href="https://fonts.gstatic.com">
-  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
-  <!-- <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> -->
   <script src="https://cdn.lordicon.com/bhenfmcm.js"></script>
   <script src="//static.filestackapi.com/filestack-js/3.x.x/filestack.min.js"></script>
-  
-  <script defer src="https://js.stripe.com/v3/"></script>
-  <!-- <script src="http://localhost:1000/checkout.js"></script> -->
-  <!-- <link rel="manifest" href="manifest.json"> -->
-  <meta name="theme-color" content="#1976d2">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+
 
 </head>
-<body>
+<body class="light" id="tv-body">
   <app-root></app-root>
-
-
-  <!-- <noscript>Please enable JavaScript to continue using this application.</noscript> -->
 </body>
 
 <script>
-  function LoginGoogleHandler(res){
-    const event = new CustomEvent('loginEvent', { detail: res });
+  function googleAuth(res){
+    console.log(res);
+    const event = new CustomEvent('auth', { detail: res });
     window.dispatchEvent(event);
   }
-
-  function SignupGoogleHandler(res){
-    const event = new CustomEvent('signupEvent', { detail: res });
-    window.dispatchEvent(event);
-  }
-
 </script>
-
-<!-- <script defer src="https://js.stripe.com/v3/"></script>
-  <script src="http://localhost:1000/checkout.js"></script> -->
-
-
 </html>

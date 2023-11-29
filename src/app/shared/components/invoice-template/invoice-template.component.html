@@ -1,18 +1,26 @@
-<section #invoicePage id="invoicePage" *ngIf="orderInfo" class="invoice-section fixed mw100 mh100 flex-center inset-block-start-0 inset-inline-start-0 ">
+<section #invoicePage  id="invoicePage" *ngIf="orderInfo" class="invoice-section fixed mw100 mh100 flex-center inset-block-start-0 inset-inline-start-0 ">
     <div class="invoice-template d-flex flex-column gap-20 relative">
         <i class="fs-20 pointer close__icon absolute material-symbols-outlined" (click)="close()">close</i>
         <div class="invoice__heading row d-flex align-item-center justify-content-md-between">
             <div class="invoice__title d-flex flex-column">
                 <h2>Invoice</h2>
-                <span class="d-flex justify-content-center align-item-center gap-5 text-capitalize fs-12">
-                    <p class="invoice__sub-title d-flex justify-content-center align-item-center">Status:</p> {{orderInfo.payment_status}}
+                <span class="d-flex align-item-center gap-5 text-capitalize fs-10 fw-500">
+                    <p class="invoice__sub-title mh100">Payment:</p> 
+                    <span *ngIf="orderInfo.payment_status.toLowerCase() == 'success'; else failed" style="color: rgb(var(--green-clr));">{{orderInfo.payment_status.toUpperCase()}}</span>
+                    <ng-template #failed>
+                        <span *ngIf="orderInfo.payment_status.toLowerCase() == 'failed'; else processing" style="color: rgb(var(--red-clr));">{{orderInfo.payment_status.toUpperCase()}}</span>
+                        <ng-template #processing>
+                            <span style="color: rgb(var(--blue-clr));">{{orderInfo.payment_status.toUpperCase()}}</span>
+                        </ng-template>
+                    </ng-template>
+
                 </span>
             </div>
             <img src="../../../../assets//logo.svg" alt="TradeVogue" width="160" height="160">
         </div>
         <div class="d-flex flex-column">
             <span class="d-flex align-items-center gap-5 fs-12">
-                <p class="invoice__sub-title">Order ID:</p> {{orderInfo.orderID}}
+                <p class="invoice__sub-title">Order ID:</p> {{orderInfo.orderID.toUpperCase()}}
             </span>
             <span class="d-flex align-items-center gap-5 fs-12">
                 <p class="invoice__sub-title">Order Time:</p> {{orderInfo.orderDate}}
@@ -70,9 +78,11 @@
                         <td class="items">&#8377; {{item.price * item.quantity}}</td>
                     </tr>
                     <tr class="total">
-                        <td class="items text-center" colspan="3">Total</td>
+                        <td class="items"></td>
+                        <td class="items"></td>
+                        <td class="items">Total</td>
                         <td class="items">{{orderInfo.totalQty}}</td>
-                        <td class="items">&#8377; {{orderInfo.totalAmount}}</td>
+                        <td class="items">&#8377; {{orderInfo.orderAmount}}</td>
                     </tr>
                 </tbody>
             </table> 
@@ -97,6 +107,6 @@
                         {{orderInfo.orderValueAfterDiscount}} </b></p>
             </div>
         </div>
-        <button class="btn-primary" (click)="printInvoice()">Download</button>
+        <button class="download-btn btn btn-xs btn-inline btn-rounded fw-500 btn-primary" (click)="printInvoice()">Download</button>
     </div>
 </section>

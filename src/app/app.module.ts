@@ -2,13 +2,10 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AsyncPipe, CommonModule } from '@angular/common';
-import { ReactiveFormsModule } from '@angular/forms';
-import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { DataTablesModule } from 'angular-datatables';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { SharedModule } from './shared/shared.module';
@@ -18,10 +15,8 @@ import { ProductPageModule } from './product-page/product-page.module';
 import { FaqPageModule } from './faq-page/faq-page.module';
 import { CheckoutModule } from './checkout/checkout.module';
 import { UtilsModule } from './utils/utils.module';
-
 import { CookieService } from 'ngx-cookie-service';
 import { HeadersInterceptor } from './headers.interceptor';
-
 import { LayoutComponent } from './layout/layout.component';
 import { TcComponent } from './tc/tc.component';
 import { ExploreComponent } from './explore/explore.component';
@@ -32,21 +27,11 @@ import { BreadcrumbComponent } from './shared/breadcrumb/breadcrumb.component';
 import { ToastComponent } from './toast/toast.component';
 import { SidecartComponent } from './shared/sidecart/sidecart.component';
 import { DialogBoxComponent } from './dialog-box/dialog-box.component';
-// import { environment } from 'src/environments/environment';
 import { WishlistComponent } from './wishlist/wishlist.component';
-// import { initializeApp } from 'firebase/app';
-// import { AngularFireModule } from '@angular/fire/compat';
-// import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
-// import { AngularFireAuthModule } from '@angular/fire/compat/auth';
-// import { AngularFireMessagingModule } from '@angular/fire/compat/messaging';
 import { MessagingService } from './shared/services/messaging-service';
 import { OffersCarouselComponent } from './offers-carousel/offers-carousel.component';
-
-
-// initializeApp(environment.firebase);
 import { CarouselModule } from 'ngx-owl-carousel-o';
 import { AboutComponent } from './about/about.component';
-
 
 @NgModule({
   declarations: [
@@ -63,7 +48,7 @@ import { AboutComponent } from './about/about.component';
     DialogBoxComponent,
     WishlistComponent,
     OffersCarouselComponent,
-    AboutComponent,
+    AboutComponent
   ],
   imports: [
     CarouselModule,
@@ -82,11 +67,7 @@ import { AboutComponent } from './about/about.component';
     FaqPageModule,
     CheckoutModule,
     HttpClientModule,
-    UtilsModule,
-    // AngularFireDatabaseModule,
-    // AngularFireAuthModule,
-    // AngularFireMessagingModule,
-    // AngularFireModule.initializeApp(environment.firebase),
+    UtilsModule
   ],
   exports: [
   ],
@@ -97,8 +78,4 @@ import { AboutComponent } from './about/about.component';
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule {
-  constructor() {
-
-  }
-}
+export class AppModule {}

@@ -13,14 +13,12 @@ export class ToastComponent {
   start_time: any;
   timeoutVar: any;
 
-  loadingWidth: number = 0;
-
   content: any = {
     title: 'Item successfully added to cart!',
     body: []
   }
 
-  constructor(private toastService: ToastService) {
+  constructor(toastService: ToastService) {
     toastService.display$.subscribe((data: any) => {
       this.display = '';
       this.timeout = 5000;

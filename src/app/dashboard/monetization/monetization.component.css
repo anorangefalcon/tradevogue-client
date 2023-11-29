@@ -17,6 +17,42 @@
     margin-top: 5px;
   }
 
+  .form__input2 {
+    width: 200% !important;
+    height: 40px;
+    padding-inline: 15px;
+    border-radius: 4px;
+    outline: 1px solid rgba(var(--blackClr), 0.2);
+    font-size: 13px;
+    font-weight: 400;
+    border: none;
+
+    &:is(:focus, :hover, .active) {
+        border-color: rgb(var(--primaryClr));
+        outline-color: rgb(var(--primaryClr));
+    }
+
+    &:disabled:hover {
+        outline: 1px solid rgba(var(--blackClr), 0.2);
+    }
+
+    &::placeholder {
+        font-size: 13px;
+    }
+
+    &::-webkit-datetime-edit {
+        font-size: 12px;
+        color: rgba(var(--textClr)) !important;
+    }
+
+    &::-webkit-calendar-picker-indicator#picker {
+        background-color: transparent;
+        padding: 5px;
+
+    }
+
+  }
+
   
   /* Table styling */
   

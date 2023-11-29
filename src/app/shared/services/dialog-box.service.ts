@@ -11,7 +11,7 @@ export class DialogBoxService {
   public contentEmitter = new BehaviorSubject<string>('');
 
   template1: any = {
-    title: 'Are You Sure! Want to Delete?',
+    title: 'Proceed with Deletion?',
     subtitle: "You can't view this in your list anymore if you delete!",
     confirmationText: 'Yes, Delete it',
     cancelText: 'No, Keep it',

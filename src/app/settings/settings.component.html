@@ -1,71 +1,106 @@
 <section>
-    <div class="container d-flex">
+    <div class="container d-flex" [ngClass]="{'expand':TranslateData}">
         <nav class="navbar d-flex flex-column align-item-center gap-25">
-            <ul class="nav-items d-flex flex-column align-item-center">
-                <li class="nav-links" [ngClass]="{'nav-link-active': this.showData === 'profile'}"
-                    (click)="changeComponent('profile')"><a class="d-flex">
-                        <span class="nav-txt">Profile</span>
+            <ul class="nav-items d-flex flex-column align-item-center mh100 mw100">
+                <li class="nav-links d-flex align-item-center mw100 relative transition" (click)="TranslateData=true;"
+                    [ngClass]="{'nav-link-active': this.showData === 'profile'}" (click)="changeComponent('profile')">
+                    <a class="d-flex align-item-center pointer gap-10">
+                        <span class="material-symbols-outlined nav-icons">
+                            person
+                        </span>
+                        <span class="nav-txt fs-14 fw-300">Profile</span>
                     </a>
-                    <span class="material-symbols-outlined right__icon">
-                        chevron_right
+                    <span class="material-symbols-outlined right__icon" >
+                        chevron_right 
                     </span>
                 </li>
-                <li class="nav-links" [ngClass]="{'nav-link-active': this.showData === 'orders'}" (click)="getOrders()">
-                    <a>
-                        <span class="nav-txt">My Order</span>
+                <li class="nav-links d-flex align-item-center mw100 relative transition" (click)="TranslateData=true;"
+                    [ngClass]="{'nav-link-active': this.showData === 'orders'}" (click)="changeComponent('orders')">
+                    <a class="d-flex align-item-center pointer gap-10">
+                        <span class="material-symbols-outlined nav-icons">
+                            package_2
+                        </span>
+                        <span class="nav-txt fs-14 fw-300">Orders</span>
                     </a>
-                    <span class="material-symbols-outlined right__icon">
-                        chevron_right
+                    <span class="material-symbols-outlined right__icon" >
+                        chevron_right 
                     </span>
                 </li>
-                <li class="nav-links" [ngClass]="{'nav-link-active': this.showData === 'wishlist'}"
-                    (click)="changeComponent('wishlist')"><a>
-                        <span class="nav-txt">My Wishlist</span>
+                <li class="nav-links d-flex align-item-center mw100 relative transition" (click)="TranslateData=true;"
+                    [ngClass]="{'nav-link-active': this.showData === 'wishlist'}" (click)="changeComponent('wishlist')">
+                    <a class="d-flex align-item-center pointer gap-10">
+                        <span class="material-symbols-outlined nav-icons">
+                            favorite
+                        </span>
+                        <span class="nav-txt fs-14 fw-300">Wishlists</span>
                     </a>
-                    <span class="material-symbols-outlined right__icon">
-                        chevron_right
+                    <span class="material-symbols-outlined right__icon"  >
+                        chevron_right 
                     </span>
                 </li>
 
 
-                <li class="nav-links" [ngClass]="{'nav-link-active': this.showData === 'addresses'}"
-                    (click)="getAddresses()"><a>
-                        <span class="nav-txt">Addresses</span>
+                <li class="nav-links d-flex align-item-center mw100 relative transition" (click)="TranslateData=true;"
+                    [ngClass]="{'nav-link-active': this.showData === 'addresses'}"
+                    (click)="changeComponent('addresses')">
+                    <a class="d-flex align-item-center pointer pointer gap-10">
+                        <span class="material-symbols-outlined nav-icons">
+                            home
+                        </span>
+                        <span class="nav-txt fs-14 fw-300">Addresses</span>
                     </a>
                     <span class="material-symbols-outlined right__icon">
-                        chevron_right
+                        chevron_right 
                     </span>
                 </li>
 
-                <li class="nav-links" [ngClass]="{'nav-link-active': this.showData === 'changePassword'}"
-                    (click)="changeComponent('changePassword')"><a>
-
-                        <span class="nav-txt">Change Password</span>
+                <li class="nav-links d-flex align-item-center mw100 relative transition" (click)="TranslateData=true;"
+                    [ngClass]="{'nav-link-active': this.showData === 'changePassword'}"
+                    (click)="changeComponent('changePassword')">
+                    <a class="d-flex align-item-center pointer gap-10">
+                        <span class="material-symbols-outlined nav-icons" style="rotate: 90deg;">
+                            key
+                        </span>
+                        <span class="nav-txt fs-14 fw-300">Security</span>
                     </a>
-                    <span class="material-symbols-outlined right__icon">
-                        chevron_right
+                    <span class="material-symbols-outlined right__icon" >
+                        chevron_right 
                     </span>
                 </li>
             </ul>
         </nav>
 
-        <div class="content" [ngClass]="{'expand':TranslateData}">
-            <div class="profile selected d-flex flex-column gap-20" *ngIf="showData=='profile'">
+        <div class="content" >
+            <div class="profile d-flex flex-column gap-20" *ngIf="showData=='profile'">
 
-                <div class="d-flex align-item-center pointer h2_div" (click)="TranslateBack()">
-                    <span class="material-symbols-outlined left__icon">
+                <div class="d-flex  align-item-center pointer  justify-content-md-between default-animation" 
+                   >
+
+                   <div class="d-flex align-item-center gap-5">
+                    <span class="material-symbols-outlined left__icon"  (click)="TranslateBack()" *ngIf="TranslateData" >
                         chevron_left
                     </span>
                     <h2>
                         Profile Details
                     </h2>
+                </div>
 
+                    <div class="d-flex gap-15">
+                        <button class="btn-secondary  btn btn-sm btn-rounded"
+                            [ngStyle]="{'display': ProfileDisabled? 'none': 'block'}"
+                            (click)="DisableForm(true)">Cancel</button>
+                        <button class="btn-primary btn btn-sm btn-rounded"
+                            [ngStyle]="{'display': !ProfileDisabled? 'none': 'block'}"
+                            (click)="DisableForm(false)">Edit</button>
+                        <button class="btn-primary btn btn-sm btn-rounded"
+                            [ngStyle]="{'display': ProfileDisabled? 'none': 'block'}"
+                            (click)="saveDetails(); DisableForm(true)" [disabled]="ProfileForm.invalid">Save</button>
+                    </div>
 
                 </div>
 
 
-                <form [formGroup]="ProfileForm" class="d-flex gap-15 disableInput flex-wrap"
-                    [ngClass]="isReadOnly === true ? 'disableInput' : 'enableInput'">
+                <form [formGroup]="ProfileForm" class="d-flex gap-15 disableInput flex-wrap default-animation-slow">
                     <div class="form__group relative d-flex flex-column">
                         <label class="form__label">First Name<span>*</span></label>
                         <span class="material-symbols-outlined form__icon absolute">person</span>
@@ -105,82 +140,81 @@
                     <div class="form__group relative d-flex flex-column">
                         <label class="form__label">Date of Birth<span>*</span></label>
                         <span class="material-symbols-outlined form__icon absolute">person</span>
-                        <input type="date" id="dob" formControlName="dob" placeholder="Enter Your Username">
+                        <input type="date" id="dob" formControlName="dob" placeholder="Enter Your Date of Birth">
                     </div>
 
-                    <div class="form__group relative radio d-flex" *ngIf="!isReadOnly">
-
-                        <label for="male" class="d-flex align-item-center">
+                    <div class="form__group relative d-flex flex-column">
+                        <label class="form__label">Gender<span>*</span></label>
+                        <div class="form__group relative radio d-flex gap-20 align-item-center">
                             <input type="radio" id="male" name="gender" value="male" formControlName="gender"
                                 [attr.checked]="this?.ProfileForm?.get('gender')?.value=='male' ? true: null">
-                            <span>
-                                Male
-                            </span>
-                        </label>
+                            <label for="male" class="d-flex flex-center relative gap-5 pointer">Male</label>
 
-                        <label>
                             <input type="radio" id="female" name="gender" formControlName="gender" value="female"
                                 [attr.checked]="this?.ProfileForm?.get('gender')?.value=='female'  ? true : null">
-                            <span>
-                                female
-                            </span>
-                        </label>
+                            <label for="female" class="d-flex flex-center relative gap-5 pointer"> Female </label>
+                        </div>
                     </div>
 
                 </form>
 
 
-                <div class="d-flex gap-15">
-                    <button class="btn btn-md btn-rounded btn-secondary" (click)="editClick()" *ngIf="!isReadOnly">Cancel</button>
-                    <button class="btn btn-md btn-rounded btn-primary" #EditBtn (click)="editClick()" *ngIf="isReadOnly">Edit
-                        Profile</button>
-                    <button class="btn btn-md btn-rounded btn-primary" #EditBtn (click)="saveDetails()"
-                        *ngIf="!isReadOnly">Save</button>
-                </div>
-
-
-
             </div>
 
             <div *ngIf="showData=='addresses'" class="address">
-                <div class="d-flex  align-item-center justify-content-md-between pointer h2_div"
-                    (click)="TranslateBack()">
+                <div class="d-flex address_header align-item-center justify-content-md-between pointer default-animation">
 
-                    <div class="d-flex align-item-center pointer h2_div" (click)="TranslateBack()">
-                        <span class="material-symbols-outlined left__icon">
+                    <div class="d-flex align-item-center gap-5">
+                        <span class="material-symbols-outlined left__icon"  (click)="TranslateBack()" *ngIf="TranslateData" >
                             chevron_left
                         </span>
                         <h2>
-                            My Addresses
+                            My  Addresses
                         </h2>
                     </div>
 
+
                     <div class="d-flex align-item-center addAddress__div" (click)="AddAddress()">
-                        <span class="material-symbols-outlined">
+                        <span class="material-symbols-outlined address__icon">
                             add_circle
                         </span>
-                        <p>ADD NEW ADDRESS</p>
+                        <p class="text_address">ADD NEW ADDRESS</p>
                     </div>
 
                 </div>
-                <div class="d-flex flex-column gap-10">
-                    <div *ngFor="let address of userAddresses;let i=index" class="addressDiv d-flex flex-column gap-15">
-                        <div class="d-flex justify-content-md-between align-item-center address__firstdiv">
-                            <p class="name text-capitalize">{{address.firstname}} {{address.lastname}}</p>
-                            <div class="d-flex">
-                                <span *ngIf="address.defaultAddress">Default Address</span>
-                                <button class="btn default__btn" (click)="MakeDefault(address,i)" *ngIf="i!=0">Make this
-                                    Defult</button>
+                <div class="d-flex flex-column gap-10 default-animation-slow ">
+                    <div class="d-flex flex-column gap-20" [ngClass]="{'addressDiv':AddressLength>0}">
+                        <ng-container *ngFor="let address of userAddresses;let i=index">
+                            <div class="d-flex mw100 particularAddress justify-content-md-between">
+                                <div class="d-flex flex-column  gap-10 address__firstdiv">
+                                    <div class="d-flex gap-10">
+                                        <p class="name">{{address.firstname}} {{address.lastname}}</p>
+                                        <button class="default__btn" (click)="MakeDefault(address,i)" *ngIf="i!=0">set
+                                            default</button>
+                                    </div>
+                                    <div>
+                                        <p>{{address.apartment}} {{address.area}} {{address.landmark}},
+                                            {{address.town_city}}</p>
+                                        <p>{{address.state}}- {{address.pincode}}</p>
+                                    </div>
+                                </div>
+                                <div class="d-flex">
+                                    <div class="d-flex flex-column gap-5">
+                                        <span class="material-symbols-outlined edit__btn"
+                                            (click)="EditAddress(address,i)">
+                                            edit
+                                        </span>
 
-                                <button class="edit__btn d-flex align-item-center btn"
-                                    (click)="EditAddress(address,i)">Edit</button>
-                                <button class="remove btn " (click)="RemoveAddress(address,i)">Remove</button>
+                                        <span class="material-symbols-outlined remove__btn"
+                                            (click)="RemoveAddress(address,i)">
+                                            delete
+                                        </span>
+                                    </div>
+
+                                </div>
                             </div>
-                        </div>
-                        <div>
-                            <p>{{address.apartment}} {{address.area}} {{address.landmark}}, {{address.town_city}}</p>
-                            <p>{{address.state}}- {{address.pincode}}</p>
-                        </div>
+                        </ng-container>
+
                     </div>
                 </div>
 
@@ -188,8 +222,8 @@
             </div>
 
             <div class="changePassword" *ngIf="showData=='changePassword'">
-                <div class="d-flex align-item-center pointer h2_div" (click)="TranslateBack()">
-                    <span class="material-symbols-outlined left__icon">
+                <div class="d-flex align-item-center pointer h2_div default-animation">
+                    <span class="material-symbols-outlined left__icon"  (click)="TranslateBack()" *ngIf="TranslateData" >
                         chevron_left
                     </span>
                     <h2>
@@ -199,7 +233,7 @@
 
                 </div>
 
-                <form [formGroup]="changePasswordForm" class="d-flex flex-column flex-wrap">
+                <form [formGroup]="changePasswordForm" class="d-flex flex-column flex-wrap default-animation-slow ">
 
 
                     <div class="form__group relative d-flex flex-column">
@@ -221,14 +255,14 @@
                         <input [type]="password2" id="email" formControlName="newPassword"
                             placeholder="Enter New Password">
                         <button class="eye-btn flex justify-content-center align-items-center"
-                            (click)="showPassword2 = !showPassword2 ; password2 = showPassword2 ? 'text' : 'password';"><span
-                                class="material-symbols-outlined eye">{{showPassword2? 'visibility' :
+                            (click)="showPassword2 = !showPassword2 ; password2 = showPassword2 ? 'text' : 'password';">
+                            <span class="material-symbols-outlined eye">{{showPassword2? 'visibility' :
                                 'visibility_off'}}</span>
                         </button>
                         <div class="password-helper d-flex justify-content-md-between">
 
 
-                            <div class="helper-inside d-flex flex-column ">
+                            <div class="d-flex flex-column helper-inside">
                                 <p [ngClass]="{'red-text': changePasswordForm.get('newPassword')?.hasError('minlength') && !changePasswordForm.get('newPassword')?.hasError('required'),
                      'green-text': !changePasswordForm.get('newPassword')?.hasError('minlength') && !changePasswordForm.get('newPassword')?.hasError('required')}"
                                     *ngIf="!changePasswordForm.get('newPassword')?.hasError('required')">
@@ -254,7 +288,7 @@
                                 </p>
                             </div>
 
-                            <div class="helper-inside d-flex flex-column ">
+                            <div class="d-flex flex-column helper-inside">
                                 <p [ngClass]="{'red-text': changePasswordForm.get('newPassword')?.hasError('digit') && !changePasswordForm.get('newPassword')?.hasError('required'),
                'green-text': !changePasswordForm.get('newPassword')?.hasError('digit') && !changePasswordForm.get('newPassword')?.hasError('required')}"
                                     *ngIf="!changePasswordForm?.get('newPassword')?.hasError('required')">
@@ -291,13 +325,14 @@
                 </form>
 
 
-                <button class="btn btn-md btn-rounded btn-primary btn-inline" (click)="onPasswordChange()">Save</button>
+                <button class="btn-primary btn-rounded btn-sm btn-inline" (click)="onPasswordChange()">Save</button>
             </div>
 
             <div class="Orders  d-flex flex-column gap-20" *ngIf="showData=='orders'">
-
+             
+                <div class="default-animation ">
                 <div class="d-flex align-item-center pointer h2_div" (click)="TranslateBack()">
-                    <span class="material-symbols-outlined left__icon">
+                    <span class="material-symbols-outlined left__icon"  (click)="TranslateBack()" *ngIf="TranslateData" >
                         chevron_left
                     </span>
                     <h2 style="font-weight: 600;">
@@ -306,11 +341,13 @@
 
 
                 </div>
-                <p class="orders__p">Check the status of recent orders, manage returns, and discover similar products
+                <p class="orders__p">Check the status of recent orders, view invoice and manage returns.
                 </p>
+            </div>
 
-                <div class="AllOrders d-flex flex-column gap-25">
-                    <div *ngFor="let order of AllOrders ; let i=index" class="particularOrder">
+                <div class="AllOrders d-flex flex-column gap-25 default-animation-slow">
+                    <ng-container *ngFor="let order of AllOrders ; let i=index" >
+                        <div *ngIf="i < TemplatePagination.limit" class="particularOrder">
                         <div class="order__firstDiv d-flex gap-25 justify-content-md-between">
                             <div class=" d-flex gap-25 align-item-center order__basic">
                                 <div>
@@ -323,30 +360,31 @@
                                 </div>
                                 <div>
                                     <p>Total Amount</p>
-                                    <span>{{order.orderAmount}}</span>
+                                    <span>{{order.orderValueAfterDiscount}}</span>
                                 </div>
                             </div>
 
                             <div class="d-flex gap-20 order__firstDiv__btn">
-                                <button>View Order</button>
-                                <button>View Invoice</button>
+                                <button class="btn-rounded btn" (click)="toggleAccordian(i)">View Order</button>
+                                <button class="btn-rounded btn">View Invoice</button>
                             </div>
 
                         </div>
                         <ng-container *ngFor="let product of order.products">
-                            <div class="order d-flex flex-column gap-20" *ngIf="product.shipmentStatus!='cancelled'">
+                            <div class="order d-flex flex-column gap-20 default-animation"
+                                [class.active]="openedAccordionIndex === i">
                                 <div class=" d-flex justify-content-md-between">
                                     <div class="d-flex gap-15">
                                         <!-- <div > -->
-                                        <img src={{product.image}} class="imgDiv">
+                                        <img src={{product.image}} class="imgDiv skeleton">
                                         <!-- </div> -->
-                                        <div class="d-flex flex-column productDetails">
+                                        <div class="d-flex flex-column productDetails gap-5">
                                             <p class="prodName">{{product.name}}</p>
                                             <div class="d-flex align-item-center gap-5">
-                                                <p>Product</p>
+                                                <p>Color :</p>
                                                 <div [style.background-color]="product.color" class="color__div"></div>
                                             </div>
-                                            <p>Qty - {{product.quantity}}</p>
+                                            <p>Qty : {{product.quantity}}</p>
                                             <!-- <p>Order Id - {{order._id}}</p> -->
                                         </div>
                                     </div>
@@ -356,34 +394,31 @@
                                 </div>
                                 <div class="deliverDiv d-flex justify-content-md-between">
 
-
                                     <div class="d-flex gap-10 delivery align-item-center">
-                                        <span class="material-symbols-outlined"
+                                        <span class="material-symbols-outlined pending-icon d-flex flex-center"
                                             *ngIf="product.shipmentStatus=='pending'">
-                                            pending
+                                            hourglass_empty
                                         </span>
-
-                                        <span class="material-symbols-outlined"
+                                        <span class="material-symbols-outlined deliver-icon"
                                             *ngIf="product.shipmentStatus=='delivered'">
-                                            done
+                                            check
                                         </span>
-                                        <p class="delivery-status">{{product.shipmentStatus}}</p>
+                                        <p class="delivery-status">{{product.shipmentStatus | titlecase}}</p>
                                     </div>
                                     <div class="d-flex gap-10 btns">
-                                        <button routerLink="/product/{{product.sku}}">
+                                        <button class="btn" routerLink="/product/{{product.sku}}">
                                             View Product
                                         </button>
-                                        <p>|</p>
+                                        <p *ngIf="product.shipmentStatus!='cancelled'">|</p>
                                         <!-- <button (click)="BuyAgain(product)">
                                             Buy Again
                                         </button> -->
-
-                                        <button *ngIf="product.shipmentStatus=='pending'"
-                                            (click)="CancelProduct(order._id,product._id)">
+                                        <button class="btn" *ngIf="product.shipmentStatus=='pending'"
+                                            (click)="CancelProduct(order._id,product.sku)">
                                             Cancel Product
                                         </button>
 
-                                        <button *ngIf="product.shipmentStatus=='delivered'">
+                                        <button class="btn" *ngIf="product.shipmentStatus=='delivered'">
                                             Exchange Product
                                         </button>
                                     </div>
@@ -391,34 +426,40 @@
                             </div>
                         </ng-container>
                     </div>
-
+                    </ng-container>
                 </div>
-
+                <div *ngIf="AllOrders?.length>0">
+                    <app-pagination #pagination [collectionSize]="totalCount" [pageSize]="TemplatePagination.limit" [currentPage]="currentPage"
+                    (activePage)="pageChange($event)"></app-pagination>
+                </div>
+  
             </div>
 
             <div *ngIf="showData=='wishlist'" class="wishlist">
 
-                <div class="d-flex align-item-center pointer h2_div" (click)="TranslateBack()">
-                    <span class="material-symbols-outlined left__icon">
+                <div class="d-flex align-item-center pointer wishlist__div h2_div default-animation" (click)="TranslateBack()">
+                    <span class="material-symbols-outlined left__icon"  (click)="TranslateBack()" *ngIf="TranslateData" >
                         chevron_left
                     </span>
-                    <h2 style="margin-block-end: 15px;">
+                    <h2 >
                         Wishlists
                     </h2>
                 </div>
 
 
-                <div class="d-flex flex-column">
+                <div class="d-flex flex-column default-animation-slow">
                     <div class="accordian mw-100" *ngFor="let item of productsArray; let i = index">
                         <div class="accordian__head pointer d-flex justify-content-md-between"
                             (click)="showWishlistedProducts(item.wishlistName); toggleAccordian(i);">
-                            <p class="wishlist-name">{{item.wishlistName}}</p>
+                            <p class="wishlist-name">{{item.wishlistName | titlecase}}</p>
                             <div class="d-flex gap-5 align-items-center">
                                 <p *ngIf="item.products.length === 0" class="no-item-label">No items</p>
-                                <span class="material-symbols-outlined" (click)="removeWishlist(i)" *ngIf="i!=0">
+                                <span class="material-symbols-outlined d-flex flex-center" (click)="removeWishlist(i)"
+                                    *ngIf="i!=0">
                                     delete
                                 </span>
-                                <span class="material-symbols-outlined" *ngIf="item.products.length !== 0">
+                                <span class="material-symbols-outlined expand d-flex flex-center"
+                                    *ngIf="item.products.length !== 0">
                                     expand_more
                                 </span>
                             </div>
@@ -426,11 +467,11 @@
                         <div class="accordian__body d-flex flex-column gap-10"
                             [class.active]="openedAccordionIndex === i">
                             <ng-container *ngFor="let product of wishlistedProducts">
-                                <div class="product d-flex justify-content-md-between mw100">
+                                <div class="product d-flex justify-content-md-between mw100 default-animation">
                                     <div class="d-flex gap-20">
                                         <div class="prod-img relative">
                                             <a href="/product/{{product.productDetails.sku}}">
-                                                <img [src]="product.productDetails.assets[0].photo[0]"
+                                                <img class="skeleton" [src]="product.productDetails.assets[0].photo[0]"
                                                     alt="Product Image">
                                             </a>
                                             <button
@@ -442,21 +483,29 @@
                                             </button>
                                         </div>
                                         <div class="d-flex flex-column gap-5">
-                                            <p class="prod-name">
-                                                {{product.productDetails.name}}
-                                            </p>
+                                            <a routerLink="/product/{{product.productDetails.sku}}">
+                                                <p class="prod-name">
+                                                    {{product.productDetails.name}}
+                                                </p>
+                                            </a>
                                             <p>{{product.productDetails.info.brand}}</p>
-                                            <p>Price: {{ product.productDetails.price }}</p>
+                                            <p>Price: ₹{{ product.productDetails.price }}</p>
                                         </div>
                                     </div>
-                                    <div class="d-flex justify-content-center align-item-center">
-                                        <button class="btn-secondary cart-btn d-flex align-items-center gap-5"
+                                    <div>
+                                        <button *ngIf="product.productDetails.active == true; else outofStock"
+                                            class="btn-secondary fs-14 btn btn-sm btn-rounded d-flex align-items-center gap-5 btn-rounded"
                                             (click)="moveToCart(product.productDetails.sku) ; removeFromWishlist(product.productDetails._id, item.wishlistName) ">
                                             Move to
-                                            <span class="material-symbols-outlined">
+                                            <span class="fs-18 material-symbols-outlined">
                                                 shopping_cart
                                             </span>
                                         </button>
+                                        <ng-template #outofStock>
+                                            <div class="d-flex gap-15 align-item-center stockAvailable out-of-stock">
+                                                <p>Out Of Stock</p>
+                                            </div>
+                                        </ng-template>
                                     </div>
                                 </div>
                             </ng-container>

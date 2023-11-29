@@ -36,11 +36,23 @@
     }
 }
 
-
 .app-cart{
-    height: calc(100vh - 90px);
+    height: calc(100dvh - 90px);
     overflow-y: scroll;
-    padding-block: 20px;
+    padding-block-start: 4px;
+    padding-block-end: 70px;
+
+    &::-webkit-scrollbar{
+        width: 7px;
+    }
+    &::-webkit-scrollbar-track{
+        background: #f1f1f1;
+        border-radius: 25px;
+    }
+    &::-webkit-scrollbar-thumb{
+        background: #ccc;
+        border-radius: 25px;
+    }
 }
 
 .total-price {
@@ -58,4 +70,16 @@
     inset-inline-end: 0px;
     z-index: 2; 
 
+}
+
+@media screen and (max-width: 560px) {
+    .app-cart {
+        & .product-image {
+            width: 21%;
+        }
+
+        & .common{
+            flex-direction: row;
+        }
+    }
 }

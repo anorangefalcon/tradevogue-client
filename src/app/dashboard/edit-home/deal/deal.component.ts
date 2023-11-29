@@ -14,6 +14,7 @@ export class DealComponent {
   DealForm!:FormGroup;
   Edit:boolean=false;
   alignments:any[]=['Left','Right'];
+  CopyDealForm:any
   constructor(private fetchService: FetchDataService,private imageuploadService:ImageUploadService, private toastService:ToastService, private backendURLs: UtilsModule, private fb: FormBuilder) {
     this.DealForm = fb.group(
       {
@@ -22,7 +23,7 @@ export class DealComponent {
         subTitle: fb.control('', [Validators.required]),
         buttonLink: ['', Validators.required],
         buttonText:['',Validators.required],
-        contentAlign: ['Left', Validators.required],
+        contentAlign: ['', Validators.required],
         colors: this.fb.group({
           titleColor: ['', Validators.required],
           subTitleColor: ['', Validators.required],
@@ -31,9 +32,7 @@ export class DealComponent {
         })
       });
 
-    this.fetchService.HTTPGET(this.backendURLs.URLs.getDealsDetails).subscribe((data:any)=>{
-          this.DealForm.patchValue(data);
-      })
+      this.getDetails();
       this.FormDisableEnable();
   }
 
@@ -41,6 +40,12 @@ export class DealComponent {
     this.DealForm.get('contentAlign')?.setValue(event);
   }
 
+  getDetails(){
+    this.fetchService.HTTPGET(this.backendURLs.URLs.getDealsDetails).subscribe((data:any)=>{
+      this.CopyDealForm=JSON.parse(JSON.stringify(data));
+          this.DealForm.patchValue(data);
+      })
+  }
 
  
 
@@ -51,20 +56,37 @@ export class DealComponent {
     }
     this.fetchService.HTTPPOST(this.backendURLs.URLs.setDeals,this.DealForm.value).subscribe((data)=>{
     this.toastService.successToast({title:'Sucessfully Uploaded Deal Details'});
+    this.getDetails();
     })
     this.EditClicked();
   }
 
+  
+  getProductImage(){
+    return this.DealForm.get('productImage')?.value;
+  }
+
+  CloseIconClicked(){
+    this.DealForm.get('productImage')?.setValue('');
+  }
+
+  imageUpload: boolean = false;
+
   bannerImageUpload(event: any) {
     let file: any = (<HTMLInputElement>event.target)?.files![0];
+    this.imageUpload = true;
     this.imageuploadService.fileupload([{ file: file }]).then((url: any) => {
       this.DealForm.get('productImage')?.setValue(url[0]);
+      this.imageUpload = false;
       // this.Edit=!this.Edit;
     })
   }
 
   EditClicked(){
     this.Edit=!this.Edit;
+    if(!this.Edit){
+      this.DealForm.patchValue(this.CopyDealForm);
+    }
     this.FormDisableEnable();
   }
 

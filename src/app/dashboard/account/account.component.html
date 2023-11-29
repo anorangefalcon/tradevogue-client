@@ -1,332 +1,281 @@
 <section id="setting" class="d-flex flex-column gap-20">
-    <!-- <ng-container [ngSwitch]="form_type"> -->
-<!-- 
-        <div class="switch__options d-flex flex-center gap-20">
-            <p class="pointer" [ngClass]="{'active_form': form_type == 'profileForm'}" (click)="form_type='profileForm'">Profile Info</p>
-            <p class="pointer" [ngClass]="{'active_form': form_type == 'AccountForm'}" (click)="form_type='AccountForm'">Account Info</p>
-            <p class="pointer" [ngClass]="{'active_form': form_type == 'change_password'}"
-                (click)="form_type='change_password'">Change Password</p>
-        </div> -->
+    <div class="form__card basic__info d-flex flex-column gap-20">
 
-        <!-- <ng-container *ngSwitchCase="'profileForm'"> -->
-            <div class="form__card basic__info d-flex flex-column gap-20">
+        <div class="d-flex justify-content-md-between align-item-center ">
+            <h3>Profile Info</h3>
 
-                <div class="d-flex justify-content-md-between align-item-center ">
-                    <h3>Profile Info</h3>
+            <div class="operation_button d-flex gap-10">
+                <button class="btn btn-xs fw-500 btn-rounded btn-primary"
+                    [ngStyle]="{'display': !profileForm.disabled? 'none': 'block'}"
+                    (click)="profileForm.enable()">Edit</button>
+                <button class="btn btn-xs fw-500 btn-rounded btn-secondary"
+                    [ngStyle]="{'display': profileForm.disabled? 'none': 'block'}"
+                    (click)="profileForm.disable()">Cancel</button>
+                <button class="btn btn-xs fw-500 btn-rounded btn-primary"
+                    [ngStyle]="{'display': profileForm.disabled? 'none': 'block'}"
+                    (click)="updateDetails(profileForm.value)">Update</button>
+            </div>
+        </div>
 
-                    <div class="operation_button d-flex gap-10">
-                        <button class="btn-primary" [ngStyle]="{'display': !profileForm.disabled? 'none': 'block'}" (click)="profileForm.enable()" >Edit</button>
-                        <button class="btn-secondary" [ngStyle]="{'display': profileForm.disabled? 'none': 'block'}" (click)="profileForm.disable()" >Cancel</button>
-                        <button class="btn-primary" [ngStyle]="{'display': profileForm.disabled? 'none': 'block'}" (click)="updateDetails(profileForm.value)" >Update</button>
+        <form [formGroup]="profileForm" class="d-flex flex-wrap gap-20">
+
+            <div class="form__group">
+                <label class="form__title" for="firstName">First Name</label>
+                <input type="text" class="form__input" id="firstName" formControlName="firstName"
+                    placeholder="First Name" required minlength="2" maxlength="50" (keypress)="validateNames($event)" />
+                <div *ngIf="profileForm.get('firstName')?.invalid && (profileForm.get('firstName')?.dirty || profileForm.get('firstName')?.touched)"
+                    class="error-message">
+                    <div *ngIf="profileForm.get('firstName')?.hasError('required')">First Name is required.
+                    </div>
+                    <div *ngIf="profileForm.get('firstName')?.hasError('minlength')">First Name should have at
+                        least 2 characters.</div>
+                    <div *ngIf="profileForm.get('firstName')?.hasError('maxlength')">First Name should have at
+                        most 50 characters.</div>
+                </div>
+            </div>
+
+            <div class="form__group">
+                <label class="form__title" for="lastName">Last Name</label>
+                <input type="text" class="form__input" id="lastName" formControlName="lastName" placeholder="Last Name"
+                    (keypress)="validateNames($event)" />
+                <div *ngIf="profileForm.get('lastName')?.invalid && (profileForm.get('lastName')?.dirty || profileForm.get('lastName')?.touched)"
+                    class="error-message">
+                    <div *ngIf="profileForm.get('lastName')?.hasError('required')">Last Name is required.</div>
+                    <div *ngIf="profileForm.get('lastName')?.hasError('minlength')">Last Name should have at least 2
+                        characters.</div>
+                    <div *ngIf="profileForm.get('lastName')?.hasError('maxlength')">Last Name should have at most 50
+                        characters.</div>
+                </div>
+            </div>
+
+            <div class="form__group">
+                <label class="form__title">Gender</label>
+                <span class="form__radio d-flex align-item-center gap-20 ">
+                    <span>
+                        <input type="radio" id="male" name="gender" value="male" required formControlName="gender" />
+                        <label for="male">Male</label>
+                    </span>
+                    <span>
+                        <input type="radio" id="female" required name="gender" value="female"
+                            formControlName="gender" />
+                        <label for="female">Female</label>
+                    </span>
+                </span>
+                <span
+                    *ngIf="profileForm.get('email')?.invalid && (profileForm.get('email')?.dirty || profileForm.get('email')?.touched)"
+                    class="error">
+                    <small *ngIf="profileForm.get('email')?.hasError('required')">Field required.</small>
+                    <small *ngIf="profileForm.get('email')?.hasError('pattern')">Invalid Format.</small>
+                </span>
+            </div>
+
+            <div class="form__group">
+                <label class="form__title" for="email">DOB</label>
+                <input type="date" class="form__input" id="dob" required placeholder="DOB" formControlName="dob" />
+                <span
+                    *ngIf="profileForm.get('dob')?.invalid && (profileForm.get('dob')?.dirty || profileForm.get('dob')?.touched)"
+                    class="error">
+                    <small *ngIf="profileForm.get('dob')?.hasError('required')">Field required.</small>
+                    <small *ngIf="profileForm.get('dob')?.hasError('pattern')">Invalid Format.</small>
+                </span>
+            </div>
+
+            <div class="form__group">
+                <label class="form__title" for="email">Email</label>
+                <input type="email" class="form__input" id="email" required placeholder="Email"
+                    formControlName="email" />
+                <div
+                    *ngIf="profileForm.controls['email'].invalid && (profileForm.controls['email'].dirty || profileForm.controls['email'].touched)">
+                    <div *ngIf="profileForm.controls['email'].errors?.['required']">Email is required.</div>
+                    <div *ngIf="profileForm.controls['email'].errors?.['required']">Invalid email format.</div>
+                </div>
+            </div>
+
+            <div class="form__group">
+                <label class="form__title" for="mobile">Mobile</label>
+                <input type="number" class="form__input" id="mobile" formControlName="mobile" required minlength="10"
+                    placeholder="Mobile" pattern="[0-9]{10}" />
+                <div
+                    *ngIf="profileForm.controls['mobile'].invalid && (profileForm.controls['mobile'].dirty || profileForm.controls['mobile'].touched)">
+                    <div *ngIf="profileForm.controls['mobile'].errors?.['required']">Mobile is required.</div>
+                    <div *ngIf="profileForm.controls['mobile'].errors?.['required']">Mobile should be a 10-digit number.
                     </div>
                 </div>
-
-                <form [formGroup]="profileForm" class="d-flex flex-wrap gap-20">
-
-                        <!-- <div class="d-flex gap-20">
-
-                            <div class="form__group card_image d-flex flex-column align-item-center gap-15">
-                                <img *ngIf="userPhoto != ''; else dummy" [src]="userPhoto" alt="UserPhoto">
-                                <ng-template #dummy>
-                                    <img id="profile__photo" src="../../../assets/avatars/try.svg" alt="UserPhoto">
-                                </ng-template>
-                                <input type="file" id="seller_image" (change)="uploadImage($event)" />
-                                <label for="seller_image">
-                                    <i class="camera__icon fa-solid fa-camera"></i>
-                                </label> 
-                            </div>
-
-                            <div class="name__block d-flex flex-column gap-20" style="width: calc(100% - 150px);">
-
-                            </div>
-                        </div> -->
-
-                        <div class="form__group">
-                            <label class="form__title" for="firstName">First Name</label>
-                            <input type="text" class="form__input" id="firstName" formControlName="firstName"
-                                placeholder="First Name" required minlength="2" maxlength="50"
-                                (keypress)="validateNames($event)" />
-                                <div *ngIf="profileForm.get('firstName')?.invalid && (profileForm.get('firstName')?.dirty || profileForm.get('firstName')?.touched)"
-                                class="error-message">
-                                <div *ngIf="profileForm.get('firstName')?.hasError('required')">First Name is required.
-                                </div>
-                                <div *ngIf="profileForm.get('firstName')?.hasError('minlength')">First Name should have at
-                                    least 2 characters.</div>
-                                <div *ngIf="profileForm.get('firstName')?.hasError('maxlength')">First Name should have at
-                                    most 50 characters.</div>
-                            </div>
-                        </div>
-
-                        <div class="form__group">
-                            <label class="form__title" for="lastName">Last Name</label>
-                            <input type="text" class="form__input" id="lastName" formControlName="lastName"
-                                placeholder="Last Name" (keypress)="validateNames($event)" />
-                                <div *ngIf="profileForm.get('lastName')?.invalid && (profileForm.get('lastName')?.dirty || profileForm.get('lastName')?.touched)"
-                                class="error-message">
-                                <div *ngIf="profileForm.get('lastName')?.hasError('required')">Last Name is required.</div>
-                                <div *ngIf="profileForm.get('lastName')?.hasError('minlength')">Last Name should have at least 2
-                                    characters.</div>
-                                <div *ngIf="profileForm.get('lastName')?.hasError('maxlength')">Last Name should have at most 50
-                                    characters.</div>
-                            </div>
-                        </div>
-
-                        <div class="form__group">
-                            <label class="form__title" >Gender</label>
-                            <span class="form__radio d-flex align-item-center gap-20 ">
-                                <span>
-                                    <input type="radio" id="male" name="gender" value="male" required
-                                formControlName="gender" />
-                                    <label for="male">Male</label> 
-                                </span>
-                                <span>
-                                    <input type="radio" id="female" required name="gender" value="female"
-                                    formControlName="gender" /> 
-                                    <label for="female">Female</label> 
-                                </span>
-                            </span>
-                            <span
-                                *ngIf="profileForm.get('email')?.invalid && (profileForm.get('email')?.dirty || profileForm.get('email')?.touched)"
-                                class="error">
-                                <small *ngIf="profileForm.get('email')?.hasError('required')">Field required.</small>
-                                <small *ngIf="profileForm.get('email')?.hasError('pattern')">Invalid Format.</small>
-                            </span>
-                        </div>
-
-                        <div class="form__group">
-                            <label class="form__title" for="email">DOB</label>
-                            <input type="date" class="form__input" id="dob" required placeholder="DOB"
-                                formControlName="dob" />
-                            <span
-                                *ngIf="profileForm.get('dob')?.invalid && (profileForm.get('dob')?.dirty || profileForm.get('dob')?.touched)"
-                                class="error">
-                                <small *ngIf="profileForm.get('dob')?.hasError('required')">Field required.</small>
-                                <small *ngIf="profileForm.get('dob')?.hasError('pattern')">Invalid Format.</small>
-                            </span>
-                        </div>
-
-                        <div class="form__group">
-                            <label class="form__title" for="email">Email</label>
-                            <input type="email" class="form__input" id="email" required placeholder="Email"
-                                formControlName="email" />
-                                <div
-                                *ngIf="profileForm.controls['email'].invalid && (profileForm.controls['email'].dirty || profileForm.controls['email'].touched)">
-                                <div *ngIf="profileForm.controls['email'].errors?.['required']">Email is required.</div>
-                                <div *ngIf="profileForm.controls['email'].errors?.['required']">Invalid email format.</div>
-                            </div>
-                        </div>
-
-                        <div class="form__group">
-                            <label class="form__title" for="mobile">Mobile</label>
-                            <input type="number" class="form__input" id="mobile" formControlName="mobile" required
-                                minlength="10" placeholder="Mobile" pattern="[0-9]{10}" />
-                                <div
-                                *ngIf="profileForm.controls['mobile'].invalid && (profileForm.controls['mobile'].dirty || profileForm.controls['mobile'].touched)">
-                                <div *ngIf="profileForm.controls['mobile'].errors?.['required']">Mobile is required.</div>
-                                <div *ngIf="profileForm.controls['mobile'].errors?.['required']">Mobile should be a 10-digit number.
-                                </div>
-                            </div>
-                        </div>
-<!-- 
-                        <div class="form__group">
-                            <label class="form__title" for="password">Password</label>
-                            <div class="password__input__field relative">
-                                <input type="{{ passwordVisible ? 'text' : 'password' }}" id="password"
-                                    class="form__input" formControlName="password" required placeholder="Password" />
-                                <span class="eye-icon d-flex justify-content-center align-item-center absolute"
-                                    (click)="togglePasswordVisibility()">
-                                    <i class="fa" [class.fa-eye]="passwordVisible"
-                                        [class.fa-eye-slash]="!passwordVisible"></i>
-                                </span>
-                            </div>
-                            <span
-                                *ngIf="profileForm.get('password')?.invalid && (profileForm.get('password')?.dirty || profileForm.get('password')?.touched)"
-                                class="error">
-                                <small *ngIf="profileForm.get('password')?.hasError('required')">Field required.</small>
-                                <small *ngIf="profileForm.get('password')?.hasError('minlength')">Minimum 8 characters
-                                    required</small>
-                                <small *ngIf="profileForm.get('password')?.hasError('pattern')">Must contain atleast one
-                                    captial letter & one special character</small>
-                            </span>
-                        </div> -->
-
-                        <div class="form__group">
-                            <label class="form__title" for="address">Address</label>
-                            <input class="form__input" type="text" id="address" formControlName="address" required
-                                placeholder="Address" />
-                            <span
-                                *ngIf="profileForm.get('address')?.invalid && (profileForm.get('address')?.dirty || profileForm.get('address')?.touched)"
-                                class="error">
-                                <small *ngIf="profileForm.get('address')?.hasError('required')">Field Required</small>
-                            </span>
-                        </div>
-
-                        
-                        <div class="form__group">
-                            <label class="form__title" for="postalCode">Pincode</label>
-                            <input class="form__input" type="text" placeholder="Enter Pincode" id="postalCode"
-                                formControlName="postalCode" (input)="onPostalCodeInputChange()">
-                        </div>
-
-                        <div class="form__group">
-                            <label class="form__title" for="country">Country</label>
-                            <input class="form__input" formControlName="country" type="text" id="country" [value]="country" required
-                                placeholder="Country" [disabled]="!pincodeFilled" />
-                        </div>
-
-                        <div class="form__group">
-                            <label class="form__title" for="state">State</label>
-                            <input class="form__input" formControlName="state" type="text" id="state" [value]="state" required
-                                placeholder="State" [disabled]="!pincodeFilled" />
-                        </div>
-
-                        <div class="form__group">
-                            <label class="form__title" for="county">City</label>
-                            <input class="form__input" formControlName="town_city" type="text" id="county" [value]="county" required
-                                placeholder="City" [disabled]="!pincodeFilled" />
-                        </div>
-
-                        <div class="form__group">
-                            <label class="form__title" for="city">Area</label>
-                            <input class="form__input" formControlName="city" type="text" id="city" [value]="city" required
-                                placeholder="Area" [disabled]="!pincodeFilled" />
-                        </div>
-                </form>
             </div>
-        <!-- </ng-container> -->
+
+            <div class="form__group">
+                <label class="form__title" for="address">Address</label>
+                <input class="form__input" type="text" id="address" formControlName="address" required
+                    placeholder="Address" />
+                <span
+                    *ngIf="profileForm.get('address')?.invalid && (profileForm.get('address')?.dirty || profileForm.get('address')?.touched)"
+                    class="error">
+                    <small *ngIf="profileForm.get('address')?.hasError('required')">Field Required</small>
+                </span>
+            </div>
 
 
-        <!-- <ng-container *ngSwitchCase="'AccountForm'"> -->
-            <div class="form__card account__info d-flex flex-column gap-20">
+            <div class="form__group">
+                <label class="form__title" for="postalCode">Pincode</label>
+                <input class="form__input" type="text" placeholder="Enter Pincode" id="postalCode"
+                    formControlName="postalCode" (input)="onPostalCodeInputChange()">
+            </div>
 
-                <div class="d-flex justify-content-md-between align-item-center ">
-                    <h3>Account Info</h3>
+            <div class="form__group">
+                <label class="form__title" for="country">Country</label>
+                <input class="form__input" formControlName="country" type="text" id="country" [value]="country" required
+                    placeholder="Country" [disabled]="!pincodeFilled" />
+            </div>
 
-                    <div class="operation_button d-flex gap-10">
-                        <div class="operation_button d-flex gap-10">
-                            <button class="btn-primary" [ngStyle]="{'display': !AccountForm.disabled? 'none': 'block'}" (click)="AccountForm.enable()" >Edit</button>
-                            <button class="btn-secondary" [ngStyle]="{'display': AccountForm.disabled? 'none': 'block'}" (click)="AccountForm.disable()" >Cancel</button>
-                            <button class="btn-primary" [ngStyle]="{'display': AccountForm.disabled? 'none': 'block'}" (click)="updateDetails(AccountForm.value)" >Update</button>
-                        </div>
+            <div class="form__group">
+                <label class="form__title" for="state">State</label>
+                <input class="form__input" formControlName="state" type="text" id="state" [value]="state" required
+                    placeholder="State" [disabled]="!pincodeFilled" />
+            </div>
+
+            <div class="form__group">
+                <label class="form__title" for="city">City</label>
+                <input class="form__input" formControlName="city" type="text" id="city" [value]="county" required
+                    placeholder="City" [disabled]="!pincodeFilled" />
+            </div>
+
+            <div class="form__group">
+                <label class="form__title" for="city">Area</label>
+                <input class="form__input" formControlName="area" type="text" id="area" [value]="city" required
+                    placeholder="Area" [disabled]="!pincodeFilled" />
+            </div>
+        </form>
+    </div>
+
+    <div class="form__card account__info d-flex flex-column gap-20">
+
+        <div class="d-flex justify-content-md-between align-item-center ">
+            <h3>Account Info</h3>
+
+            <div class="operation_button d-flex gap-10">
+                <div class="operation_button d-flex gap-10">
+                    <button class="btn-primary" [ngStyle]="{'display': !AccountForm.disabled? 'none': 'block'}"
+                        (click)="AccountForm.enable()">Edit</button>
+                    <button class="btn-secondary" [ngStyle]="{'display': AccountForm.disabled? 'none': 'block'}"
+                        (click)="AccountForm.disable()">Cancel</button>
+                    <button class="btn-primary" [ngStyle]="{'display': AccountForm.disabled? 'none': 'block'}"
+                        (click)="updateDetails(AccountForm.value)">Update</button>
+                </div>
+            </div>
+        </div>
+
+        <form action="" class="d-flex flex-wrap gap-20" [formGroup]="AccountForm">
+
+            <div class="form__group">
+                <label class="form__title" for="BankName">Bank Name <span class="important">*</span></label>
+                <input class="form__input" type="text" required formControlName="BankName" />
+                <small *ngIf="AccountForm?.get('BankName')?.hasError('required') && Check == true">Field
+                    Required</small>
+            </div>
+
+            <!-- Account Holder -->
+            <div class="form__group">
+                <label class="form__title" for="AccountHolder">Account Holder <span class="important">*</span></label>
+                <input class="form__input" type="text" required formControlName="AccountHolder" />
+                <small *ngIf="AccountForm?.get('AccountHolder')?.hasError('required') && Check == true">Field
+                    Required</small>
+            </div>
+
+            <!-- Account Number -->
+            <div class="form__group">
+                <label class="form__title" for="AccountNo">Account Number <span class="important">*</span></label>
+                <input class="form__input" type="number" required maxlength="17" minlength="5"
+                    formControlName="AccountNo" />
+                <small *ngIf="AccountForm?.get('AccountNo')?.hasError('required') && Check == true">Field
+                    Required</small>
+            </div>
+
+            <!-- IFSC -->
+            <div class="form__group">
+                <label class="form__title" for="IFSC">IFSC <span class="important">*</span></label>
+                <input class="form__input" type="text" required maxlength="11" formControlName="IFSC" />
+                <small *ngIf="AccountForm?.get('IFSC')?.hasError('required') && Check == true">Field
+                    Required</small>
+            </div>
+
+            <!-- GST -->
+            <div class="form__group">
+                <label class="form__title" for="GST">GST<span class="important">*</span></label>
+                <input class="form__input" type="text" required maxlength="15" formControlName="GST" />
+                <small *ngIf="AccountForm?.get('GST')?.hasError('required') && Check == true">Field
+                    Required</small>
+            </div>
+        </form>
+    </div>
+
+
+    <div class="form__card password_form d-flex flex-column gap-20">
+
+
+        <div class="d-flex justify-content-md-between align-item-center ">
+            <h3>Change Password</h3>
+            <div class="operation_button">
+                <button class="btn-primary" (click)="onResetPassword()">Reset</button>
+            </div>
+        </div>
+
+        <form [formGroup]="passwordForm" class="d-flex flex-wrap gap-20">
+
+            <div class="form__group relative">
+                <label class="form__title" for="currentpassword">Current Password</label>
+                <div class="relative">
+                    <input [type]="password" class="form__input" id="currentpassword" formControlName="currentPassword"
+                        placeholder="Current Password" />
+                    <span class="eye-icon d-flex justify-content-center align-item-center absolute pointer"
+                        (click)="showPassword = !showPassword ; password = showPassword ? 'text' : 'password';">
+                        <span class="material-symbols-outlined eye">{{showPassword2? 'visibility' :
+                            'visibility_off'}}</span>
+                    </span>
+                </div>
+                <div *ngIf="passwordForm.controls['currentPassword'].invalid && (passwordForm.controls['currentPassword'].dirty || passwordForm.controls['currentPassword'].touched)"
+                    class="error-message">
+                    <div *ngIf="passwordForm.controls['currentPassword'].hasError('required')">Password is required.
+                    </div>
+                    <div *ngIf="passwordForm.controls['currentPassword'].hasError('minlength')">Password should have a
+                        minimum length of 8 characters.</div>
+                    <div *ngIf="passwordForm.controls['currentPassword'].hasError('pattern')">
+                        Password should contain at least one capital letter and at least one special
+                        character.
                     </div>
                 </div>
-
-                <form action="" class="d-flex flex-wrap gap-20" [formGroup]="AccountForm">
-
-                        <div class="form__group">
-                            <label class="form__title" for="BankName">Bank Name <span class="important">*</span></label>
-                            <input class="form__input" type="text" required formControlName="BankName" />
-                            <small *ngIf="AccountForm?.get('BankName')?.hasError('required') && Check == true">Field
-                                Required</small>
-                        </div>
-
-                        <!-- Account Holder -->
-                        <div class="form__group">
-                            <label class="form__title" for="AccountHolder">Account Holder <span
-                                    class="important">*</span></label>
-                            <input class="form__input" type="text" required formControlName="AccountHolder" />
-                            <small
-                                *ngIf="AccountForm?.get('AccountHolder')?.hasError('required') && Check == true">Field
-                                Required</small>
-                        </div>
-
-                        <!-- Account Number -->
-                        <div class="form__group">
-                            <label class="form__title" for="AccountNo">Account Number <span
-                                    class="important">*</span></label>
-                            <input class="form__input" type="number" required maxlength="17" minlength="5"
-                                formControlName="AccountNo" />
-                            <small *ngIf="AccountForm?.get('AccountNo')?.hasError('required') && Check == true">Field
-                                Required</small>
-                        </div>
-                    <!-- </div>
-
-                    <div class="col col-2 d-flex flex-column gap-5"> -->
-                        <!-- IFSC -->
-                        <div class="form__group">
-                            <label class="form__title" for="IFSC">IFSC <span class="important">*</span></label>
-                            <input class="form__input" type="text" required maxlength="11" formControlName="IFSC" />
-                            <small *ngIf="AccountForm?.get('IFSC')?.hasError('required') && Check == true">Field
-                                Required</small>
-                        </div>
-
-                        <!-- GST -->
-                        <div class="form__group">
-                            <label class="form__title" for="GST">GST<span class="important">*</span></label>
-                            <input class="form__input" type="text" required maxlength="15" formControlName="GST" />
-                            <small *ngIf="AccountForm?.get('GST')?.hasError('required') && Check == true">Field
-                                Required</small>
-                        </div>
-                    <!-- </div> -->
-                </form>
             </div>
-        <!-- </ng-container> -->
 
+            <div class="form__group relative">
+                <label class="form__title" for="newpassword">New Password</label>
+                <div class="relative">
+                    <input [type]="password2" class="form__input" id="newpassword" formControlName="newPassword"
+                        placeholder="New Password" />
 
-        <!-- <ng-container *ngSwitchCase="'change_password'"> -->
-
-            <div class="form__card password_form d-flex flex-column gap-20">
-
-
-                <div class="d-flex justify-content-md-between align-item-center ">
-                    <h3>Change Password</h3>
-                    <div class="operation_button">
-                        <button class="btn-primary">Reset</button>
-                    </div>
+                        <span class="eye-icon d-flex justify-content-center align-item-center absolute pointer"
+                        (click)="showPassword2 = !showPassword2 ; password2 = showPassword2 ? 'text' : 'password';">
+                        <span class="material-symbols-outlined eye">{{showPassword2? 'visibility' :
+                            'visibility_off'}}</span>
+                    </span>
                 </div>
-
-                <form [formGroup]="passwordForm" class="d-flex flex-wrap gap-20">
-
-                    <div class="form__group relative">
-                        <label class="form__title" for="currentpassword">Current Password</label>
-                        <div class="relative">
-                            <input type="password" class="form__input" id="currentpassword" formControlName="currentPassword" placeholder="Current Password" />
-                            <span class="eye-icon d-flex justify-content-center align-item-center absolute" (click)="togglePasswordVisibility()">
-                                <i class="fa" [class.fa-eye]="passwordVisible" [class.fa-eye-slash]="!passwordVisible"></i>
-                            </span>
-                        </div>
-                        <div *ngIf="passwordForm.controls['currentPassword'].invalid && (passwordForm.controls['currentPassword'].dirty || passwordForm.controls['currentPassword'].touched)"
-                        class="error-message">
-                        <div *ngIf="passwordForm.controls['currentPassword'].hasError('required')">Password is required.</div>
-                        <div *ngIf="passwordForm.controls['currentPassword'].hasError('minlength')">Password should have a
-                            minimum length of 8 characters.</div>
-                        <div *ngIf="passwordForm.controls['currentPassword'].hasError('pattern')">
-                            Password should contain at least one capital letter and at least one special
-                            character.
-                        </div>
-                    </div>
-                    </div>
-
-                    <div class="form__group relative">
-                        <label class="form__title" for="newpassword">New Password</label>
-                        <div class="relative">
-                            <input type="password" class="form__input" id="newpassword" formControlName="newPassword"
-                            placeholder="New Password" />
-    
-                        <span class="eye-icon d-flex justify-content-center align-item-center absolute"
-                            (click)="togglePasswordVisibility()">
-                            <i class="fa" [class.fa-eye]="passwordVisible" [class.fa-eye-slash]="!passwordVisible"></i>
-                        </span>
-                        </div>
-                        <span
-                            *ngIf="profileForm.get('newPassword')?.invalid && (profileForm.get('newPassword')?.dirty || profileForm.get('newPassword')?.touched)"
-                            class="error">
-                            <small *ngIf="profileForm.get('newPassword')?.hasError('required')">Field Required</small>
-                        </span>
-                    </div>
-
-                    <div class="form__group ">
-                        <label class="form__title" for="repassword">Confirm New Password</label>
-                        <input type="password" class="form__input" id="repassword" placeholder="Confirm New Password" />
-                        <span
-                            *ngIf="profileForm.get('repassword')?.invalid && (profileForm.get('repassword')?.dirty || profileForm.get('repassword')?.touched)"
-                            class="error">
-                            <small *ngIf="profileForm.get('repassword')?.hasError('required')">Field Required</small>
-                        </span>
-                    </div>
-                </form>
+                <span
+                    *ngIf="profileForm.get('newPassword')?.invalid && (profileForm.get('newPassword')?.dirty || profileForm.get('newPassword')?.touched)"
+                    class="error">
+                    <small *ngIf="profileForm.get('newPassword')?.hasError('required')">Field Required</small>
+                </span>
             </div>
-        <!-- </ng-container> -->
 
-    <!-- </ng-container> -->
+            <div class="form__group ">
+                <label class="form__title" for="repassword">Confirm New Password</label>
+                <div class="relative">
+                    <input [type]="password3" class="form__input" id="repassword" placeholder="Confirm New Password"
+                        formControlName="againNewPassword" />
+                        <span class="eye-icon d-flex justify-content-center align-item-center absolute pointer"
+                        (click)="showPassword3 = !showPassword3 ; password3 = showPassword3 ? 'text' : 'password';">
+                        <span class="material-symbols-outlined eye">{{showPassword2? 'visibility' :
+                            'visibility_off'}}</span>
+                    </span>
+                </div>
+            </div>
+        </form>
+    </div>
 </section>

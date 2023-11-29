@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, FormArray, FormControl, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { BannerService } from 'src/app/shared/services/custom-UI/banner.service';
+import { DialogBoxService } from 'src/app/shared/services/dialog-box.service';
 import { ImageUploadService } from 'src/app/shared/services/image-upload.service';
 import { ToastService } from 'src/app/shared/services/toast.service';
 
@@ -12,50 +13,80 @@ import { ToastService } from 'src/app/shared/services/toast.service';
 export class CustomiseBannerComponent {
 
   bannerForm!: FormGroup;
+  ParenClosed:boolean=false;
   alignment: string[] = ['Left', 'Right', 'Center'];
   previewImage: any;
-  bannerData: any;
+  bannerData: any = [];
   preview: any;
   checked: boolean = false;
   checked2: boolean = false;
   editValue: any = '';
   showForm: boolean = false;
+  deleteId: any;
+  checkbox: boolean = false;
+  popUpDirection: any = 'right';
+  showingPopUp: boolean = false;
+  ParentClosed: boolean = false;
 
   constructor(private fb: FormBuilder,
     private bannerService: BannerService,
     private uploadService: ImageUploadService,
+    private dialogService: DialogBoxService,
     private toastService: ToastService) {
 
     this.bannerForm = this.fb.group({
-      backgroundImage: ['', Validators.required],
+      backgroundImage: ['',
+        // Validators.required
+      ],
       title: '',
       subTitle: '',
       buttonText: '',
-      buttonLink: ['', Validators.required],
+      buttonLink: ['',
+        Validators.required
+      ],
       contentAlign: '',
       colors: this.fb.group({
         titleColor: '',
         subTitleColor: '',
         buttonColor: ''
       })
-    })
+    });
+
+    dialogService.responseEmitter.subscribe({
+      next: (res: any) => {
+        if (res) {
+          console.log("asjdhasjdhakj", res);
+          this.bannerService.deleteBanner({id: this.deleteId}).subscribe((res: any) => {
+            const toast = {
+              title: res.message
+            }
+            this.toastService.successToast(toast);
+            this.ngOnInit()
+          });
+        }
+      }
+    });
+
   }
 
   ngOnInit() {
+    console.log(this.checkbox, "before");
+    
     this.bannerService.getBanners().subscribe((data: any) => {
       this.bannerData = data;
+      
     }
     )
   }
 
-  isChecked(event: any) {
-    let val = (<HTMLInputElement>event.target).checked
-   
-    if (val == true) {
+  isChecked() {
+    let val = this.checkbox;
+    
+    if (val) {
       this.bannerForm.get('title')?.disable()
       this.bannerForm.get('subTitle')?.disable()
       this.bannerForm.get('buttonText')?.disable()
-      this.bannerForm.get('contentAlign')?.disable()
+      this.bannerForm.get('contentAlign')?.disable();
       this.bannerForm.get('colors')?.get('titleColor')?.disable()
       this.bannerForm.get('colors')?.get('subTitleColor')?.disable()
       this.bannerForm.get('colors')?.get('buttonColor')?.disable()
@@ -69,13 +100,14 @@ export class CustomiseBannerComponent {
       this.bannerForm.get('colors')?.get('subTitleColor')?.enable()
       this.bannerForm.get('colors')?.get('buttonColor')?.enable()
     }
-
   }
 
+  saveData: boolean = false;
   onSave() {
+    this.saveData = true;
+
     if (!this.editValue) {
       this.bannerService.setBanners(this.bannerForm.value).subscribe((data: any) => {
-
         const toast = {
           title: data.message
         }
@@ -83,6 +115,7 @@ export class CustomiseBannerComponent {
         this.bannerForm.reset()
         this.bannerForm.get('colors')?.reset();
         this.ngOnInit();
+        this.saveData = false;
       })
     }
     else {
@@ -99,17 +132,23 @@ export class CustomiseBannerComponent {
         this.bannerForm.reset()
         this.bannerForm.get('colors')?.reset();
         this.ngOnInit();
+        this.saveData = false;
       })
     }
+
+    this.showingPopUp=false;
   }
 
+  uploading: boolean = false;
   bannerImageUpload(event: any) {
 
     let file: any = (<HTMLInputElement>event.target)?.files![0];
+    this.uploading = true;
 
     this.uploadService.fileupload([{ file: file }]).then((url: any) => {
       this.bannerForm.get('backgroundImage')?.setValue(url[0]);
       this.getImagePreview();
+      this.uploading = false;
     })
   }
 
@@ -119,19 +158,20 @@ export class CustomiseBannerComponent {
     return value;
   }
 
-  onRemove() {
+  onImageRemove() {
     this.bannerForm.get('backgroundImage')?.reset('');
   }
 
   delete(id: any) {
-    const data = { id }
-    this.bannerService.deleteBanner(data).subscribe((res: any) => {
-      const toast = {
-        title: res.message
-      }
-      this.toastService.warningToast(toast);
-      this.ngOnInit()
-    })
+    this.deleteId = id;
+    let template: any = {
+      title: 'Proceed with Deletion?',
+      subtitle: 'The banner will be permanently deleted, and recovery will not be possible. Are you sure you want to proceed?',
+      type: 'confirmation',
+      confirmationText: 'Yes, Delete it',
+      cancelText: 'No, Keep it',
+    };
+    this.dialogService.confirmationDialogBox(template);
   }
 
   toggleBanner(id: any, event: any) {
@@ -145,9 +185,12 @@ export class CustomiseBannerComponent {
   }
 
   edit(index: any) {
-    const value = this.bannerData[index]
+    const value = this.bannerData[index];
+    this.bannerForm.reset();
 
     if (value.title) {
+      this.checkbox = false;
+
       this.bannerForm.patchValue({
         backgroundImage: value.backgroundImage,
         title: value.title,
@@ -163,15 +206,26 @@ export class CustomiseBannerComponent {
       })
     }
     else {
+      this.checkbox = true;
       this.bannerForm.patchValue({
         backgroundImage: value.backgroundImage,
         buttonLink: value.buttonLink
-      })
+      });
     }
+    this.isChecked();
     this.editValue = value;
   }
 
   showLoading(i: number): boolean {
     return !this.getImagePreview();
+  }
+
+  PopUpChangeHanlder(event: any) {
+    this.showingPopUp = event;
+    console.log('showing pop up is ',this.showingPopUp);
+    
+  }
+  ParentClosedHandler(event: any) {
+    this.ParentClosed = event;
   }
 }

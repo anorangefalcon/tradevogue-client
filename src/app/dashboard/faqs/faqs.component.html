@@ -1,31 +1,23 @@
 <section class="d-flex flex-column gap-20">
-  <div class="card card__pd-20 d-flex align-item-center justify-content-md-between">
+
+  <!-- select Category -->
+  <div class="card card__pd-20 d-flex align-item-center justify-content-md-between default-animation">
     <h3>FAQs</h3>
-    <app-custom-select [selectedOption]="'select Category'" (final_option)="retrieveContent($event)"
+    <app-custom-select [selectedOption]="faq[0]" (final_option)="retrieveContent($event)"
       [options]="faq"></app-custom-select>
     <button (click)="openDrawer()" class="btn-primary btn btn-sm fw-500 btn-rounded d-flex align-item-center gap-5">
-      <i class="material-symbols-outlined operational-buttons-icons">add</i>
-      <span style="font-weight: bold;">Add New Category</span>
+      <i class="material-symbols-outlined operational-buttons-icons">add</i>Add New Category
     </button>
   </div>
 
-  <div class="drawer" [ngClass]="{ 'open': isDrawerOpen }">
-    <div (click)="closeDrawer()" class="close-button">
-      <svg class="close-icon" width="24" height="24" viewBox="0 0 24 24" fill="none">
-        <path
-          d="M18.2929 5.70711C18.6834 6.09763 18.6834 6.73079 18.2929 7.12132L13.4142 12L18.2929 16.8787C18.6834 17.2692 18.6834 17.9024 18.2929 18.2929C17.9024 18.6834 17.2692 18.6834 16.8787 18.2929L12 13.4142L7.12132 18.2929C6.73079 18.6834 6.09763 18.6834 5.70711 18.2929C5.31658 17.9024 5.31658 17.2692 5.70711 16.8787L10.5858 12L5.70711 7.12132C5.31658 6.73079 5.31658 6.09763 5.70711 5.70711C6.09763 5.31658 6.73079 5.31658 7.12132 5.70711L12 10.5858L16.8787 5.70711C17.2692 5.31658 17.9024 5.31658 18.2929 5.70711Z"
-          fill="currentColor" />
-      </svg>
-    </div>
-
+<!-- drawer -->
+<app-drawer [direction]="direction" [show]="show" (showChange)="ChangeHandler($event)" [title]="'Create Faqs'"> 
     <form [formGroup]="faqForm">
       <div>
         <select formControlName="selectedOption">
           <option value="" disabled>Select a Category</option>
           <option *ngFor="let item of faqData" [value]="item.title">{{item.title}}</option>
         </select>
-        <!-- <app-custom-select [selectedOption]="'select Category'" (final_option)="retrieveContent($event)"
-          [options]="faqData"></app-custom-select> -->
       </div>
 
       <div class="form-group">
@@ -42,12 +34,24 @@
         </div>
       </div>
 
-      <button (click)="addCategory()" [disabled]="faqForm.invalid">Add Category</button>
+      <button class="btn-primary btn-sm btn-rounded" style="margin-top: 10px;" (click)="addCategory()" [disabled]="faqForm.invalid">Add Category</button>
     </form>
-  </div>
+</app-drawer>
 
-  <div *ngIf="selectedCategory" class="table-list card">
-    <table class="selected-category-table">
+<!-- pop-up -->
+<app-drawer [direction]="popUpDirection" [show]="showingPopUp" (showChange)="PopUpChangeHanlder($event)"
+[title]="'Layout Settings'">
+<div *ngIf="selectedItem" class="details-container">
+  <p class="detail-item"><strong>Serial Number:</strong> {{ (currentPage - 1) * pageSize +
+    selectedCategory.childrens.indexOf(selectedItem) + 1 }}</p>
+  <p class="detail-item"><strong>Query:</strong> {{ selectedItem.title }}</p>
+  <p class="detail-item"><strong>Answer:</strong> {{ selectedItem.content }}</p>
+</div>
+</app-drawer>
+
+ <!-- table -->
+  <div *ngIf="selectedCategory" class="table-list card default-animation-slow">
+    <table summary="faqs" class="selected-category-table">
       <thead>
         <tr>
           <th class="items">Serial Number</th>
@@ -98,21 +102,13 @@
     </table>
   </div>
 
-  <app-pagination #pagination [collectionSize]="selectedCategory.childrens.length" [pageSize]="3"
+<!-- pagination -->
+<app-pagination #pagination [collectionSize]="selectedCategory.childrens.length" [pageSize]="3"
     [currentPage]="currentPage" (activePage)="handlePageChange($event)" [firstLastButtons]="true"
-    [nextPreviousButtons]="true" [small]="true"></app-pagination>
+    [nextPreviousButtons]="true" [small]="true">
+</app-pagination>
 
-
-
-  <app-pop-up>
-    <div *ngIf="selectedItem" class="details-container">
-      <p class="detail-item"><strong>Serial Number:</strong> {{ (currentPage - 1) * pageSize +
-        selectedCategory.childrens.indexOf(selectedItem) + 1 }}</p>
-      <p class="detail-item"><strong>Query:</strong> {{ selectedItem.title }}</p>
-      <p class="detail-item"><strong>Answer:</strong> {{ selectedItem.content }}</p>
-    </div>
-  </app-pop-up>
-
+ <!-- edit cancel update  -->
   <div *ngIf="editItem" class="slider">
     <div *ngIf="selectedItem" class="details-container">
       <div class="form__card basic__info form__card d-flex flex-column gap-20">
@@ -130,19 +126,20 @@
           </div>
         </div>
 
+        <!-- edit form -->
         <form [formGroup]="faqForm" class="d-flex flex-wrap gap-20">
           <div class="form__group">
             <label class="form__title" for="query">Query</label>
             <input type="text" class="form__input" id="query" formControlName="query" required minlength="2"
-              maxlength="50" />
+              maxlength="500" />
             <div *ngIf="faqForm.get('query')?.invalid && (faqForm.get('query')?.dirty || faqForm.get('query')?.touched)"
               class="error-message">
               <div *ngIf="faqForm.get('query')?.hasError('required')">query is required.
               </div>
               <div *ngIf="faqForm.get('query')?.hasError('minlength')">query should have at
-                least 2 characters.</div>
+                least 10 characters.</div>
               <div *ngIf="faqForm.get('query')?.hasError('maxlength')">query should have at
-                most 50 characters.</div>
+                most 500 characters.</div>
             </div>
           </div>
 

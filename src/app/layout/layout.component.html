@@ -1,10 +1,10 @@
-<ng-container *ngIf="ShowNavBar">
-    <app-navbar></app-navbar>
-    <div class="bread">
+<app-navbar></app-navbar>
+<ng-container *ngIf="!secureNavBar">
+    <div class="bread" [ngClass]="{'no-padding': isHomePage()}">
         <app-breadcrumb></app-breadcrumb>
-    </div>
+      </div>
 </ng-container>
 <router-outlet></router-outlet>
-<app-notification></app-notification>
+<!-- <app-notification></app-notification> -->
 <app-support></app-support>
 <app-footer></app-footer>

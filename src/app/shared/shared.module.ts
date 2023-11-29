@@ -24,6 +24,7 @@ import { InvoiceTemplateComponent } from './components/invoice-template/invoice-
 import { GalleryComponent } from '../home/gallery/gallery.component';
 import { HeroComponent } from '../home/hero/hero.component';
 import { NotificationComponent } from './components/notification/notification.component';
+import { EyePopupComponent } from './eye-popup/eye-popup.component';
 
 @NgModule({
   declarations: [
@@ -44,6 +45,7 @@ import { NotificationComponent } from './components/notification/notification.co
     DrawerComponent,
     InvoiceTemplateComponent,
     NotificationComponent,
+    EyePopupComponent,
   ],
   imports: [
     CommonModule,
@@ -73,7 +75,8 @@ import { NotificationComponent } from './components/notification/notification.co
     PaginationComponent,
     DrawerComponent,
     InvoiceTemplateComponent,
-    NotificationComponent
+    NotificationComponent,
+    EyePopupComponent
   ]
 
 })

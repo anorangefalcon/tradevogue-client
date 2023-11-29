@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { SocialsService } from 'src/app/shared/services/custom-UI/socials.service';
-import { ImageUploadService } from 'src/app/shared/services/image-upload.service';
 import { ToastService } from 'src/app/shared/services/toast.service';
 
 @Component({
@@ -13,7 +12,7 @@ export class SocialsComponent {
   socialsForm!: FormGroup;
   show: boolean = false;
   constructor(private fb: FormBuilder, private toastService: ToastService, 
-    private socialsService: SocialsService, private uploadService: ImageUploadService) { }
+    private socialsService: SocialsService) { }
 
   ngOnInit() {
     this.socialsForm = this.fb.group({
@@ -25,7 +24,6 @@ export class SocialsComponent {
       instagramLink: '',
       accountID: '',
       accessToken: '',
-
       desktopLogo: ['', Validators.required],
       mobileLogo: ['', Validators.required]
     });
@@ -44,8 +42,7 @@ export class SocialsComponent {
         desktopLogo: data.logos.desktop,
         mobileLogo: data.logos.mobile
       });
-      console.log(this.socialsForm.value);
-      
+
     });
     
     this.socialsForm.disable();
@@ -65,18 +62,4 @@ export class SocialsComponent {
     this.show = event;
   }
 
-  bannerImageUpload(event: any, logoType: any) {
-    let file: any = (<HTMLInputElement>event.target)?.files![0];
-
-    this.uploadService.fileupload([{ file: file }]).then((url: any) => {
-      this.socialsForm.get(logoType)?.setValue(url[0]);
-      this.getImagePreview(logoType);
-    });
-  }
-
-
-  getImagePreview(logoType: any) {
-    return this.socialsForm.get(logoType)?.value;
-  }
-  
 }

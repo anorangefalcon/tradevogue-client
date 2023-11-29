@@ -1,7 +1,7 @@
 <section *ngIf="orderInfo" id="OrderDetails" class="d-flex flex-column gap-20" >
     <div class="action-btns d-flex justify-content-end gap-10">
-        <button class="btn-secondary" [routerLink]="['/dashboard/orders']">Back</button>
-        <button class="btn-primary" (click)="viewInvoice()">View Invoice</button>
+        <button class="btn btn-xs fw-500 btn-rounded btn-secondary" [routerLink]="['/dashboard/orders']">Back</button>
+        <button class="btn btn-xs fw-500 btn-rounded btn-primary" (click)="viewInvoice()">View Invoice</button>
     </div>
     <div class="card card__pd-25 d-flex flex-column gap-20">
         <div class="order-header d-flex justify-content-md-between">
@@ -9,11 +9,18 @@
                 <div class="invoice__title d-flex flex-column gap-5">
                     <h2>Order Details</h2>
                     <div class="d-flex flex-column">
-                        <span class="d-flex align-items-center gap-5">
-                            <p class="invoice__sub-title">Payment:</p> {{orderInfo.payment_status}}
+                        <span class="d-flex align-items-center gap-5 fw-500">
+                            <p class="invoice__sub-title">Payment:</p> 
+                            <span *ngIf="orderInfo.payment_status.toLowerCase() == 'success'; else failed" style="color: rgb(var(--green-clr));">{{orderInfo.payment_status.toUpperCase()}}</span>
+                            <ng-template #failed>
+                                <span *ngIf="orderInfo.payment_status.toLowerCase() == 'failed'; else processing" style="color: rgb(var(--red-clr));">{{orderInfo.payment_status.toUpperCase()}}</span>
+                                <ng-template #processing>
+                                    <span style="color: rgb(var(--blue-clr));">{{orderInfo.payment_status.toUpperCase()}}</span>
+                                </ng-template>
+                            </ng-template>
                         </span>
                         <span class="d-flex align-items-center gap-5">
-                            <p class="invoice__sub-title">Order ID:</p> {{orderInfo.orderID}}
+                            <p class="invoice__sub-title">Order ID:</p> {{orderInfo.orderID.toUpperCase()}}
                         </span>
                         <span class="d-flex align-items-center gap-5">
                             <p class="invoice__sub-title">Order Time:</p> {{orderInfo.orderDate}}
@@ -21,7 +28,7 @@
                     </div>
                 </div>
             </div>
-            <div class="customerInfo buyer__details text-right">
+            <div class="customerInfo buyer__details text-right" *ngIf="orderInfo.address">
                 <h4>Shipping Address</h4>
                 <p class="text-capitalize">{{orderInfo.address.firstname + ' ' + orderInfo.address.lastname}}</p>
                 <p>{{orderInfo.buyerId.email}}</p>
@@ -60,7 +67,7 @@
                                 <span>{{item.name}}</span>
                             </div>
                         </td>
-                        <td class="items"><span class="item__color d-flex" style="width: 20px;height: 20px;border-radius: 50%;" [style.background-color]="item.color"> </span></td>
+                        <td class="items"><span class="item__color d-flex" style="width: 15px;height: 15px; border: 1px solid rgb(var(--blackClr), 0.04); border-radius: 50%;" [style.background-color]="item.color"> </span></td>
                         <td class="items">{{item.size}}</td>
                         <td class="items">&#8377; {{item.price}}</td>
                         <td class="items text-capitalize">{{item.shipmentStatus}}</td>
@@ -68,9 +75,34 @@
                         <td class="items">&#8377; {{item.price * item.quantity}}</td>
                     </tr>
                     <tr class="total">
-                        <td class="items text-center" colspan="6">Total</td>
-                        <td class="items">{{orderInfo.totalQty}}</td>
-                        <td class="items">&#8377; {{orderInfo.totalAmount}}</td>
+                        <td class="items"></td>
+                        <td class="items"></td>
+                        <td class="items"></td>
+                        <td class="items"></td>
+                        <td class="items"></td>
+                        <td class="items fw-500">Total</td>
+                        <td class="items fw-500">{{orderInfo.totalQty}}</td>
+                        <td class="items fw-500">&#8377; {{orderInfo.orderAmount}}</td>
+                    </tr>
+                    <tr class="total">
+                        <td class="items"></td>
+                        <td class="items"></td>
+                        <td class="items"></td>
+                        <td class="items"></td>
+                        <td class="items"></td>
+                        <td class="items fw-500">Discount</td>
+                        <td class="items">-</td>
+                        <td class="items fw-500">&#8377; {{orderInfo.discount}}</td>
+                    </tr>
+                    <tr class="total">
+                        <td class="items"></td>
+                        <td class="items"></td>
+                        <td class="items"></td>
+                        <td class="items"></td>
+                        <td class="items"></td>
+                        <td class="items fw-500">Total</td>
+                        <td class="items fw-500">{{orderInfo.totalQty}}</td>
+                        <td class="items fw-500">&#8377; {{orderInfo.orderValueAfterDiscount}}</td>
                     </tr>
                 </tbody>
             </table>

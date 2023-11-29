@@ -13,19 +13,11 @@ import { first, take } from 'rxjs';
 })
 export class AddproductfeaturesComponent {
 
-  // Data array
-  dataList: any = {
-    categoriesList: [],
-    brandsList: [],
-    sizesList: [],
-    tagsList: [],
-    orderQuantityList: [],
-  }
+  isfetch:boolean = false;
 
-  // Template for Toast
-  data_template: any = {
-    title: '',
-    body: []
+  // Toast template
+  template = {
+    title: ''
   }
 
   //Data
@@ -34,7 +26,7 @@ export class AddproductfeaturesComponent {
     brand: '',
     sizes: '',
     tags: '',
-    quantity: ''
+    orderQuantity: ''
   }
 
   field_data: any;
@@ -49,9 +41,9 @@ export class AddproductfeaturesComponent {
   // Type Name should be same as that of backend (avoiding conflicts)
   card_template: any = [
     { name: 'Category', type: 'categories', filter: 'category', file_name: 'Categories_Sample' },
-    { name: 'Brand', type: 'brands', filter: 'brand' },
-    { name: 'Order Quantity', type: 'orderQuantity', filter: 'quantity' },
-    { name: 'Product Tags', type: 'tags', filter: 'tags' }
+    { name: 'Brand', type: 'brands', filter: 'brand', file_name: 'Brands_Sample' },
+    { name: 'Order Quantity', type: 'orderQuantity', filter: 'orderQuantity', file_name: 'orderQuantity_Sample' },
+    { name: 'Product Tags', type: 'tags', filter: 'tags', file_name: 'Tags_Sample' }
   ];
 
   dataField: string[] = ['categories', 'brands', 'orderQuantity', 'tags'];
@@ -63,76 +55,89 @@ export class AddproductfeaturesComponent {
     private DialogBoxService: DialogBoxService,
     private backendurls: UtilsModule) { }
 
-  async ngOnInit() {
+  ngOnInit() {
 
-    this.DialogBoxService.responseEmitter.subscribe(async (res) => {
-
+    this.DialogBoxService.responseEmitter.subscribe((res) => {
       if (res == true) {
         this.field_data[this.deleteObject.field].splice(this.deleteObject.index, 1);
-
-        const data = {
-          'field': this.deleteObject.field,
-          'data': this.field_data[this.deleteObject.field]
-        };
-
-        this.dataService.HTTPPOST(this.backendurls.URLs.updateFeatures, data).subscribe({
-          next: ()=>{
-            this.toastService.successToast({ title: 'Item Deleted Successfully' });
-          }
-        }); 
+        this.template.title = 'Item Deleted Successfully';
+        this.crudData(this.deleteObject.field);
       }
-
     })
-
-
+    this.isfetch = true;
     this.dataService.HTTPPOST(this.backendurls.URLs.fetchFeatures, this.dataField).subscribe({
       next: (res: any) => {
         this.field_data = res;
+        this.isfetch = false;
       }
     });
   }
 
   uploadFile(event: Event, field: string) {
-    const fieldList = field.toLowerCase() + 'List';
     const dataObserver = this.uploadExcel.handleFileInput(event, field);
-   
+
     dataObserver.then((resolve) => {
-     
       let items = resolve['data'];
 
-      items.forEach((item: any) => {
-        if (!this.dataList[fieldList].includes(item))
-          this.dataList[fieldList].push(item);
-      })
-    })
+      if (!items.length) this.toastService.errorToast({ title: 'File Data Format Mismatched' });
+      else {
+        items.forEach((item: any) => {
+          let res = this.field_data[field].some((data: any) => (String(data)).toLowerCase() == (String(item)).toLowerCase());
+          if (!res) this.field_data[field].push(item);
+        });
+        this.template.title = 'Items Added Successfully'
+        this.crudData(field);
+      }
+    });
   }
 
   deleteItem(field: string, index: number) {
     this.deleteObject.field = field;
     this.deleteObject.index = index;
-    this.DialogBoxService.confirmationDialogBox();
+    let template: any = {
+      title: 'Proceed with Deletion?',
+      subtitle: `The item will be permanently deleted, and recovery will not be possible. Are you sure you want to proceed?`,
+      type: 'confirmation',
+      confirmationText: 'Yes, Delete it',
+      cancelText: 'No, Keep it',
+    };
+    this.DialogBoxService.confirmationDialogBox(template);
   }
 
-  async addItem(item: any, field: string) {
-    try {
+  addItem(item: any, field: string) {
+    if (!this.field_data[field].includes(this.filter[item])) {
 
-      if (!this.field_data[field].includes(this.filter[item])) {
+      console.log(/[!@#$%^&*(),.?":{}|<>]/.test(item));
+    if (/[!@#$%^&*(),.?":{}|<>]/.test(item)) {
+      this.toastService.errorToast({title: 'Special Character not Allowed'});
+      return;
+    }
 
-        this.field_data[field].push(this.filter[item]);
-        this.filter[item] = '';
-
-        const data = {
-          'field': field,
-          'data': this.field_data[field]
-        };
-        this.dataService.HTTPPOST(this.backendurls.URLs.updateFeatures, data).subscribe({
-          next: (res: any) => {
-            this.toastService.successToast({ title: 'Item Added Successfully' });
-          }
-        });
-      }
-    } catch (err) {
-  
+      this.field_data[field].push(this.filter[item]);
+      this.filter[item] = '';
+      this.template.title = 'Item Added Successfully'
+      this.crudData(field);
     }
   }
+
+  crudData(field: any) {
+    let data: any = {
+      'field': field,
+      'data': this.field_data[field]
+    };
+    this.dataService.HTTPPOST(this.backendurls.URLs.updateFeatures, data).subscribe({
+      next: (res: any) => {
+        this.toastService.successToast(this.template);
+      }
+    });
+  }
+
+  tableGenerator(len: number){
+    let temp = []
+    for(let i=0;i<len;i++){
+      temp.push(0);
+    }
+    return temp;
+  }
 }
+

@@ -1,12 +1,8 @@
 <section class="container">
-
-
     <div *ngIf="loading" class="tv-loading">
         <img src="../../assets/logo-mobile.svg" alt="tradeVogue-loading">
         <div class="circle-tv-loader"></div>
     </div>
-
-
     <div *ngIf="!loading">
         <div class="product" *ngIf="data">
             <div class="d-flex gap-30 main">
@@ -17,6 +13,7 @@
                             *ngFor="let image of data?.assets[assetIndex]?.photo; let i = index" [ngStyle]="{ 'background': 'url(' + image + ')', 'background-size': 'cover', 'background-position': 'center' }
                              " (click)="switchImage(i)" [ngClass]="{ active: i === activeIndex }">
                         </div>
+
                     </div>
                     <owl-carousel-o [options]="atDefault ? customOptions : carouselOption" [ngClass]="{crousel: true}"
                         class="bigcarousel overflow-hidden">
@@ -27,8 +24,7 @@
                         </ng-template>
                     </owl-carousel-o>
                     <button *ngIf="!productSku" class="btn wishlist-btn d-flex align-item-center absolute"
-                        (click)="chooseWishlist()">
-
+                        (click)="RemoveOrAddToWishlist(data.wishlisted)">
                         <span class="material-symbols-outlined" [ngClass]="data.wishlisted ? 'wishlisted': ''">
                             favorite
                         </span>
@@ -100,7 +96,7 @@
                             </div>
                         </div>
 
-                        <div *ngIf="!outOfStock" class="d-flex gap-15 align-item-center">
+                        <div *ngIf="!outOfStock" class="d-flex gap-15 align-item-center flex-wrap">
                             <div class="customSelect">
                                 <app-custom-select [selectedOption]="selectedQ !== 0 ? selectedQ : 'Select Quantity'"
                                     (final_option)="updateSelectedField($event)" [options]="getOrderQuantity()">
@@ -267,27 +263,29 @@
                             </p>
                         </div>
                     </div>
-                    <div class="review-card d-flex flex-column gap-10" *ngFor="let review of data.reviews">
-                        <div>
-                            <p class="rev">
-                                {{ review.comment }}
-                            </p>
-                        </div>
-                        <div class="person-info d-flex justify-content-md-between">
-                            <div *ngIf="review.rating !== 0" class="rating d-flex align-item-center">
-                                <span *ngFor="let i of createArrayToIterate(review.rating)"
-                                    class="material-symbols-outlined filled">star</span>
-                                <span *ngIf="(review.rating % 1) !== 0"
-                                    class="material-symbols-outlined">star_half</span>
-                                <span *ngFor="let i of createArrayToIterate(5 - review.rating)"
-                                    class="material-symbols-outlined">star</span>
+                    <ng-container *ngIf="data.reviews.length">
+                        <div class="review-card d-flex flex-column gap-10" *ngFor="let review of data.reviews">
+                            <div>
+                                <p class="rev">
+                                    {{ review.comment }}
+                                </p>
                             </div>
-                            <p class="fw-600 opacity-70">{{ review?.userId?.name.firstname +' '+
-                                review?.userId?.name.lastname
-                                }} · {{
-                                review.date | date: 'dd/MM/yyyy' }}</p>
+                            <div class="person-info d-flex justify-content-md-between">
+                                <div *ngIf="review.rating !== 0" class="rating d-flex align-item-center">
+                                    <span *ngFor="let i of createArrayToIterate(review.rating)"
+                                        class="material-symbols-outlined filled">star</span>
+                                    <span *ngIf="(review.rating % 1) !== 0"
+                                        class="material-symbols-outlined">star_half</span>
+                                    <span *ngFor="let i of createArrayToIterate(5 - review.rating)"
+                                        class="material-symbols-outlined">star</span>
+                                </div>
+                                <p class="fw-600 opacity-70">{{ review?.userId?.name.firstname +' '+
+                                    review?.userId?.name.lastname
+                                    }} · {{
+                                    review.date | date: 'dd/MM/yyyy' }}</p>
+                            </div>
                         </div>
-                    </div>
+                    </ng-container>
 
                 </div>
 
@@ -295,9 +293,7 @@
                     <div class="add-review-btn" *ngIf="!userReview">
                         <button class="btn btn-sm fw-500 btn-rounded btn-primary d-flex align-item-center gap-5"
                             *ngIf="!showReview" (click)="showReview = true; scroll(addReview)">
-                            <span class="fs-18 material-symbols-outlined">
-                                add
-                            </span>
+                            <span class="fs-18 material-symbols-outlined">add</span>
                             Add a Review
                         </button>
                     </div>
@@ -334,7 +330,6 @@
                 </div>
             </ng-container>
         </div>
-
 
         <div *ngIf="!productSku" style="padding-block-end: 50px;">
             <app-product-card-carousel [titles]=carouselTitles

@@ -1,7 +1,7 @@
 <div class="d-flex flex-column gap-20">
 
 
-  <div class="card card__pd-20 form__card__head d-flex justify-content-md-between align-item-center">
+  <div class="card card__pd-20 form__card__head d-flex justify-content-md-between align-item-center default-animation">
     <h3>Social Info</h3>
     <div class="operation_button d-flex gap-10">
       <button class="btn btn-rounded btn-xs btn-primary" [ngStyle]="{'display': !socialsForm.disabled? 'none': 'block'}"
@@ -14,44 +14,9 @@
   </div>
 
   <form [formGroup]="socialsForm"
-    class="card card__pd-25 form__card second_card d-flex flex-wrap gap-20 justify-content-center">
+    class="card card__pd-25 form__card second_card d-flex flex-wrap gap-20 justify-content-center default-animation-slow">
 
-    <div class="image-upload-div internal-div d-flex justify-content-center align-item-center relative">
-      <div class="upload-image d-flex flex-column gap-10 align-item-center">
-        <input type="file" [id]="'desktopLogo'" accept="image/jpg, image/jpeg, image/png, image/svg+xml"
-          (input)="bannerImageUpload($event, 'desktopLogo')" formControlName="desktopLogo"/>
-        <label [for]="'desktopLogo'" class="upload__block d-flex flex-column flex-center pointer">
-          <span class="upload_icon material-symbols-outlined">
-            desktop_windows
-          </span>
-        </label>
-        <small class="banner-label">Upload Brand Logo</small>
-        <!-- <img [src]="getImagePreview('desktopLogo')" [style.display]="getImagePreview('desktopLogo') ? 'flex' : 'none'" class="banner-image"> -->
-        <img [src]="getImagePreview('desktopLogo')" [style.display]="getImagePreview('desktopLogo') ? 'flex' : 'none'" class="banner-image">
-        <span class="material-symbols-outlined remove-btn pointer" [style.display]="getImagePreview('desktopLogo') ? 'flex' : 'none'">
-          close
-        </span>
-      </div>
-    </div>
-
-    <div class="image-upload-div internal-div d-flex justify-content-center align-item-center relative">
-      <div class="upload-image d-flex flex-column gap-10 align-item-center">
-        <input type="file" [id]="'mobileLogo'" accept="image/jpg, image/jpeg, image/png, image/svg"
-          (input)="bannerImageUpload($event, 'mobileLogo')" formControlName="mobileLogo"/>
-        <label [for]="'mobileLogo'" class="upload__block d-flex flex-column flex-center pointer">
-          <span class="upload_icon material-symbols-outlined">
-            smartphone
-          </span>
-        </label>
-        <small class="banner-label">Upload
-          Mobile Friendly Logo</small>
-        <!-- <img [src]="getImagePreview('mobileLogo')" [style.display]="getImagePreview('mobileLogo') ? 'flex' : 'none'" class="banner-image"> -->
-        <img [src]="getImagePreview('mobileLogo')" [style.display]="getImagePreview('mobileLogo') ? 'flex' : 'none'" class="banner-image">
-        <span class="material-symbols-outlined remove-btn pointer" [style.display]="getImagePreview('mobileLogo') ? 'flex' : 'none'">
-          close
-        </span>
-      </div>
-    </div>
+  
 
     <div class="internal-div">
       <label class="form__title" for="email">E-Mail</label>

@@ -1,8 +1,8 @@
 import { Component, Input } from '@angular/core';
 import { CartService } from '../../services/cart.service';
 import { OwlOptions } from 'ngx-owl-carousel-o';
-import { PopupService } from '../../services/popup.service';
 import { WishlistService } from '../../services/wishlist.service';
+import { EyePopService } from '../../services/eye-pop.service';
 
 @Component({
   selector: 'app-card-template',
@@ -10,25 +10,39 @@ import { WishlistService } from '../../services/wishlist.service';
   styleUrls: ['./card-template.component.css']
 })
 export class CardTemplateComponent {
-  
+
   @Input() product: any = {};
-  showPopup: boolean = false;
-  selectedItem: boolean = false;
+  assetIndex: any = 0;
 
-  constructor(private cartService: CartService, private popupService: PopupService, private wishlistService : WishlistService,) {    
-   }
-
-  avgRating: number = 0;
-  productData: any = [];
-  offerPercentage: number = 0;
-  selectedColor: string = "";
-
-  ngOnInit(): void {
-    const sku = this.product.sku;
-    this.avgRating = this.product.avgRating;
+  constructor(
+    private cartService: CartService,
+    private wishlistService: WishlistService,
+    private eyePopupService: EyePopService) {
   }
 
-  createArrayToIterate(num: number){
+  avgRating: number = 0;
+  offerPercentage: number = 0;
+
+  ngOnInit(): void {
+    this.avgRating = this.product.avgRating;
+    if (this.product.matchedIndex) this.assetIndex = this.product.matchedIndex;
+
+    this.wishlistService.WishListedProducts.subscribe((response: any) => {
+      if (response.includes(this.product._id)) {
+        this.product.wishlisted = true;
+      }
+      else {
+        this.product.wishlisted = false;
+      }
+    })
+
+  }
+
+  currentIndex = 0;
+  tagsToShow = 3;
+  slicedTags: string[] = [];
+
+  createArrayToIterate(num: number) {
     const newTotal = Math.floor(num);
     if (newTotal <= 0) {
       return [];
@@ -36,34 +50,56 @@ export class CardTemplateComponent {
     return Array(newTotal).fill(0);
   }
 
-   chooseWishlist() {  
+  chooseWishlist() {
     this.wishlistService.ShowWishlist(this.product._id);
   }
 
-  RemoveOrAddToWishlist(event:any=null){
-    if(!event){
+  RemoveOrAddToWishlist(isWishlisted:any = null){    
+    if(!isWishlisted){
       this.wishlistService.ShowWishlist(this.product._id);
     }
-    else{
-      this.wishlistService.removeFromWishlist(this.product._id).subscribe((data)=>{        
+    else {
+      this.wishlistService.removeFromWishlist(this.product._id).subscribe((data) => {
+        this.wishlistService.getWishlistCount();
+        this.product.wishlisted = false;
       });
     }
   }
 
-  
-  addToCart(){
-    
+  addToCart() {
+    let assetIndex = this.product.matchedIndex ? this.product.matchedIndex : 0;
+    let sizeIndex = 0;
+
+    if (this.product.assets[assetIndex].stockQuantity[0].quantity <= 0) {
+      const ifMatchesSize = (this.product.assets[assetIndex].stockQuantity).some((stockQ: any)=>{
+        if(stockQ.quantity > 0) return true;
+        sizeIndex++;
+        return false;
+      });
+
+      if(!ifMatchesSize) sizeIndex = 0;
+    }
+
+    let limit = this.product.assets[assetIndex].stockQuantity[sizeIndex].quantity;
+    let arr = this.product.info.orderQuantity;
+    let filteredArray = arr.filter((item: any) => item <= limit);
+
+    if (!(filteredArray.includes(limit)) && (arr[arr.length - 1] > limit)) {
+      filteredArray.push(limit);
+    }
+    this.product.info.orderQuantity = filteredArray;
+
     const cartItem = {
       sku: this.product.sku,
-      color: this.product.assets[0].color,
-      size: this.product.assets[0].stockQuantity[0].size,
+      color: this.product.assets[assetIndex].color,
+      size: this.product.assets[assetIndex].stockQuantity[sizeIndex].size,
       quantity: this.product.info.orderQuantity[0]
     }
-    
+
     this.cartService.addToCart(cartItem);
   }
 
-    customOptions: OwlOptions = {
+  customOptions: OwlOptions = {
     loop: true,
     mouseDrag: true,
     touchDrag: true,
@@ -89,8 +125,8 @@ export class CardTemplateComponent {
     },
   }
 
-  openPopup() {
-      this.popupService.openPopup();
-      this.showPopup = true;
-    }
+  openPopup(){
+    this.eyePopupService.ShowEyelist(this.product.sku);
+  }
+
 }

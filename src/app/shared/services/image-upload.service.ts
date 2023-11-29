@@ -11,7 +11,7 @@ import * as filestack from 'filestack-js';
 export class ImageUploadService {
 
   url = "";
-  apiKey = "ARgE3F7qBQjeuAxvR8qLfz";
+  apiKey = "AjWhTOs3lSdmypsuHOHmTz";
   policy = "eyJleHBpcnkiOjE3MjIzNjc4MDAsImNhbGwiOlsiY29udmVydCIsInJlbW92ZSJdfQ==";
   signature = "89ee78e81fbecd371307f893768d12d46f89c3806bd25d6a76ccf67d31f2deab";
 

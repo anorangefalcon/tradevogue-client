@@ -1,96 +1,31 @@
-<section class="hero-section">
+<div *ngIf="!bannerData" class="banner skeleton"></div>
+<section class="hero-section default-animation">
     <div *ngIf="bannerData">
         <owl-carousel-o [options]="customOptions">
             <ng-container *ngFor="let banner of bannerData">
                 <ng-template carouselSlide>
                     <ng-container *ngIf="!banner.title; else bannerData1">
-                        <a [routerLink]="[getLink(banner.buttonLink)]">
-                            <div class="banner-background" [ngStyle]="{
-                            'background-image': 'url(' + banner.backgroundImage + ')',
-                            'background-size': 'cover',
-                            'background-position': 'center'
-                          }">
-                            </div>
-                        </a>
+                        <div class="banner-background pointer" (click)="getLink(banner.buttonLink)"
+                            [ngStyle]="{ 'background-image': 'url(' + banner.backgroundImage + ')' }">
+                        </div>
                     </ng-container>
                     <ng-template #bannerData1>
-                        <div class="banner-background relative" [ngStyle]="{
-                        'background-image': 'url(' + banner.backgroundImage + ')',
-                        'background-size': 'cover',
-                        'background-position': 'center'
-                      }">
-                            <div class="overlay absolute mh100 mw100"></div>
-                            <!-- <ng-container *ngIf="banner.contentAlign">
-                                <div class="container d-flex align-item-center default-animation mh100"
-                                    [ngStyle]="{ 'justify-content': banner.contentAlign === 'Center' ? 'center' : banner.contentAlign === 'Right' ? 'flex-end' : 'flex-start' }">
-                                    <div class="hero-text-container d-flex flex-column gap-10"
-                                        [ngClass]="{ 'align-item-center': banner.contentAlign === 'Center', 'align-item-flex-end': banner.contentAlign === 'Right' }">
-                                        <p class="title" [ngStyle]="{'color': banner.colors.subTitleColor}">
-                                            {{ banner.subTitle }}
-                                        </p>
-                                        <h3 [ngStyle]="{'color': banner.colors.titleColor}">
-                                            {{ banner.title }}
-                                        </h3>
-                                        <a [routerLink]="[getLink(banner.buttonLink)]">
-                                            <button class="heading-button"
-                                                [ngStyle]="{'color': banner.colors.buttonColor, 'border-color': banner.colors.buttonColor}">
-                                                Explore More
-                                            </button>
-                                        </a>
-                                    </div>
-                                </div>
-                            </ng-container> -->
+                        <div class="text-banner banner-background relative " [ngStyle]="{
+                        'background-image': 'url(' + banner.backgroundImage + ')' }">
 
-                            <ng-container *ngIf="banner.contentAlign == 'Left'">
-                                <div class="container d-flex align-item-center default-animation mh100"
-                                    style="justify-content: flex-start;">
-                                    <div class="hero-text-container d-flex flex-column gap-10">
+                                <div [class]="'container d-flex align-item-center default-animation mh100' + banner.contentAlign.toLowerCase()">
+                                    <div class="hero-text-container d-flex flex-column gap-5">
                                         <p class="title" [ngStyle]="{'color' : banner.colors.subTitleColor}">
                                             {{banner.subTitle}}</p>
-                                        <h3 [ngStyle]="{'color' : banner.colors.titleColor}">{{banner.title}}</h3>
-                                        <a [routerLink]="[getLink(banner.buttonLink)]">
-                                            <button class="heading-button" [ngStyle]="{'color' : banner.colors.buttonColor, 
-                                'border-color' : banner.colors.buttonColor}">Explore
-                                                More</button>
-                                        </a>
+                                        <h1 [ngStyle]="{'color' : banner.colors.titleColor}">{{banner.title}}</h1>
+
+                                        <button class="heading-button btn btn-md btn-rounded btn-inline"
+                                            (click)="getLink(banner.buttonLink)"
+                                            [ngStyle]="{'color' : banner.colors.buttonColor, 'border': '1.5px solid ' + banner.colors.buttonColor}">
+                                            Explore More
+                                        </button>
                                     </div>
                                 </div>
-                            </ng-container>
-                            
-                            <ng-container *ngIf="banner.contentAlign == 'Center'">
-                                <div class="container d-flex align-item-center default-animation mh100"
-                                    style="justify-content: center;">
-                                    <div class="hero-text-container d-flex flex-column gap-10 align-item-center">
-                                    
-                                            <p class="title" [ngStyle]="{'color' : banner.colors.subTitleColor}">
-                                                {{banner.subTitle}}</p>
-                                            <h3 [ngStyle]="{'color' : banner.colors.titleColor}">{{banner.title}}</h3>
-                            
-                                        <a [routerLink]="[getLink(banner.buttonLink)]">
-                                            <button class="heading-button" [ngStyle]="{'color' : banner.colors.buttonColor, 
-                                'border-color' : banner.colors.buttonColor}">Explore
-                                                More</button>
-                                        </a>
-                                    </div>
-                                </div>
-                            </ng-container>
-                            <ng-container *ngIf="banner.contentAlign == 'Right'">
-                                <div class="container d-flex align-item-center default-animation mh100"
-                                    style="justify-content: flex-end;">
-                                    <div class="hero-text-container d-flex flex-column gap-10" style="align-items: flex-end;">
-                                     
-                                            <p class="title" [ngStyle]="{'color' : banner.colors.subTitleColor}">
-                                                {{banner.subTitle}}</p>
-                                            <h3 [ngStyle]="{'color' : banner.colors.titleColor}">{{banner.title}}</h3>
-                             
-                                        <a [routerLink]="[getLink(banner.buttonLink)]">
-                                            <button class="heading-button" [ngStyle]="{'color' : banner.colors.buttonColor, 
-                                'border-color' : banner.colors.buttonColor}">Explore
-                                                More</button>
-                                        </a>
-                                    </div>
-                                </div>
-                            </ng-container>
 
                         </div>
                     </ng-template>
@@ -112,9 +47,10 @@
                                 <h1 class="heading">
                                     <p class="title">NEW TRENDS</p>
                                     WINTER SALE
-                                    <h3>GIRLS</h3>
+                                    <h1>GIRLS</h1>
                                 </h1>
-                                <a [routerLink]="['explore']"> <button class="heading-button">Explore More</button></a>
+                                <a [routerLink]="['explore']"> <button class="btn-rounded heading-button btn">Explore
+                                        More</button></a>
                             </div>
                         </div>
                     </div>
@@ -129,10 +65,11 @@
                                 <h1 class="heading">
                                     <p class="title">HOT DEALS</p>
                                     TRENDING STYLES
-                                    <h3>BOYS</h3>
+                                    <h1>BOYS</h1>
                                 </h1>
 
-                                <a [routerLink]="['explore']"> <button class="heading-button">Explore More</button></a>
+                                <a [routerLink]="['explore']"> <button
+                                        class="heading-button btn btn-sm btn-rounded">Explore More</button></a>
                             </div>
 
                         </div>

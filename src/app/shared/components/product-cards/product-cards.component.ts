@@ -15,7 +15,7 @@ export class ProductCardsComponent {
   constructor(public fetchProducts: FetchDataService){}
 
   ngOnInit(){
-    this.fetchProducts.getProducts('', 5).subscribe((data:any)=>{         
+    this.fetchProducts.getProducts({sort: 'createdAt:-1'}, 5).subscribe((data:any)=>{      
       this.products = data.items;
     })
   }

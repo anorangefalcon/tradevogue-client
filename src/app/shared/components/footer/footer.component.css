@@ -1,7 +1,7 @@
 footer {
     /* background-color: rgb(var(--secondary),0.5); */
     .bg-color{
-        background-color: rgb(var(--gray));
+        background-color: rgb(var(--blackClr), 0.01);
     }
     .accordian {
         display: none;
@@ -12,7 +12,7 @@ footer {
     & .footer-content{
         padding-block: 80px;   
         width: 100%;
-        color: rgb(var(--new-text-black));
+        color: rgb(var(--textClr));
         
 
         & .first-col {
@@ -41,7 +41,7 @@ footer {
         display: flex;
         font-size: 14px;
         transition: 0.3s ease-in-out;
-        color: rgb(var(--new-text-black));
+        color: rgb(var(--textClr));
         
     }
     & ul li a:hover{

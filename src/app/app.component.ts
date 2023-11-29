@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-// import { SupportNotificationService } from './shared/services/support-notification.service';
+import { FetchDataService } from './shared/services/fetch-data.service';
 
 
 @Component({
@@ -10,10 +10,9 @@ import { Component } from '@angular/core';
 export class AppComponent {
   'title': 'tradevogue';
 
-  constructor() { }
+  constructor(private fetchDataService: FetchDataService) { }
 
-  ngOnInit(): void {
-    // this.notificationService.initialize();
+  ngOnInit(): void {      
   }
 
 }

@@ -4,7 +4,7 @@
   right: 0;
   bottom: 0;
   width: 300px;
-  background-color: #fff;
+  background-color: rgb(var(--whiteClr));
   box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease;
   transform: translateX(100%);
@@ -47,8 +47,8 @@ form {
 }
 
 
-.error-message {
-  color: #ff0000;
+.error-message, .error-message {
+  color: rgb(var(--danger));
   font-size: 14px;
   margin-top: 5px;
 }
@@ -94,7 +94,7 @@ justify-content: center;
 .selected-category-table {
   width: 100%;
   border-collapse: collapse;
-  background-color: #f8f8f8; /* Example background color */
+  background-color: rgb(var(--whiteClr)); /* Example background color */
 }
 
 .selected-category-table th,
@@ -104,10 +104,12 @@ justify-content: center;
 }
 
 .selected-category-table th {
-  background-color: #eee; /* Example header background color */
+  background-color: rgb(var(--whiteClr)); /* Example header background color */
 }
 
 .selected-category-table td {
+  background-color: rgb(var(--whiteClr));
+  color: rgb(var(--textClr));
   border-bottom: 1px solid #ddd; /* Example border between rows */
 }
 
@@ -208,7 +210,7 @@ justify-content: center;
 
 .form__title {
   font-weight: bold;
-  color: #555;
+  color: rgb(var(--textClr));
 }
 
 .form__input {
@@ -218,10 +220,7 @@ justify-content: center;
   border-radius: 4px;
 }
 
-.error-message {
-  color: #ff0000; /* Red color for error messages */
-  font-size: 14px;
-}
+
 
 
 .circular-button {

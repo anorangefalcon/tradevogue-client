@@ -1,5 +1,7 @@
 import { Component, ViewEncapsulation } from '@angular/core';
 import { LoginCheckService } from '../shared/services/login-check.service';
+import { FetchDataService } from '../shared/services/fetch-data.service';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -11,11 +13,22 @@ import { LoginCheckService } from '../shared/services/login-check.service';
 export class DashboardComponent {
 
   isCollapse: boolean = false;
-  isSalesBtnActive: boolean = false;
-  isProductBtnActive: boolean = false;
   adminName: String = '';
+  darkTheme: Boolean = false;
 
-  constructor(private userService: LoginCheckService){}
+  constructor(private userService: LoginCheckService,
+    private router: Router,
+    private fetchDataService: FetchDataService) {
+    this.fetchDataService.themeColor$.subscribe((color) => {
+      this.darkTheme = color;
+    })
+
+  }
+
+  toggleTheme(){
+    this.darkTheme = !this.darkTheme;
+    this.fetchDataService.toggleTheme(this.darkTheme);
+  }
 
   navitems = [
     { name: 'Dashboard', icons: 'grid_view', route: '/dashboard' },
@@ -30,13 +43,12 @@ export class DashboardComponent {
     { name: 'Promo Code', icons: 'redeem', route: '/dashboard/coupons' },
     {
       name: 'Customise', route: '', icons: 'build', sublist: [
-        { name: 'HomePage', route: '/dashboard/customise-home' },
-        { name: 'Banner', route: '/dashboard/customise-banner' },
-        { name: 'Deal', route: '/dashboard/customise-deal' },
-        { name: 'Branding', route: '/dashboard/socials' },
-        { name: 'FAQs', route: '/dashboard/faq' },
+        { name: 'Home Page', route: '/dashboard/customise-home' },
+        { name: 'FAQs', route: '/dashboard/customise-faq' },
+        { name: 'Terms & Conditions', route: '/dashboard/customise-tc' },
+        { name: 'About Us', route: '/dashboard/customise-about' },
+        { name: 'Socials', route: '/dashboard/socials' },
         { name: 'Payment Keys', route: '/dashboard/monetization' },
-        { name: 'Sales', route: '/dashboard/sales' }
       ]
     },
     {
@@ -49,7 +61,7 @@ export class DashboardComponent {
     {
       name: 'Notifications', route: '/dashboard/notification', icons: 'notifications'
     },
-    { name: 'Logout', icons: 'logout', route: '' , function:'logout()'}
+    { name: 'Logout', icons: 'logout', route: '', function: 'logout()' }
   ]
 
   ngOnInit() {
@@ -58,26 +70,24 @@ export class DashboardComponent {
       this.adminName = data;
     });
 
-    window.addEventListener("resize", () => {
-      let check = window.matchMedia("(max-width: 992px)");
-  
-      if (check.matches) {
-        this.isCollapse = true;
-        return;
-      }
-      this.isCollapse = false;
-    });
+    // window.addEventListener("resize", () => {
+    //   let check = window.matchMedia("(min-width: 768px)");
+
+    //   if (check.matches) {
+    //     this.isCollapse = true;
+    //     console.log("this.co", this.isCollapse);
+    //     return;
+    //   }
+    //   this.isCollapse = false;
+    // });
+    // this.checkRoute();
   }
 
-  sales_dropdown() {
-    this.isSalesBtnActive = !this.isSalesBtnActive;
+  checkRoute(){
+    console.log(this.router.routerState.snapshot.url.split('/dashboard'));
   }
 
-  product_dropdown() {
-    this.isProductBtnActive = !this.isProductBtnActive;
-  }
-
-  logout(){    
+  logout() {
     this.userService.logoutUser();
   }
 }

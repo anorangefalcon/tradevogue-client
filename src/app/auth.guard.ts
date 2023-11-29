@@ -2,30 +2,51 @@ import { inject } from '@angular/core';
 import { CanActivateFn, Router } from '@angular/router';
 import { FetchDataService } from './shared/services/fetch-data.service';
 import { UtilsModule } from './utils/utils.module';
-import { lastValueFrom } from 'rxjs';
+import { LoginCheckService } from './shared/services/login-check.service';
+import { last, lastValueFrom } from 'rxjs';
+import { CookieService } from 'ngx-cookie-service';
+import { ToastService } from './shared/services/toast.service';
 
 export const authGuard: CanActivateFn = async (route, state) => {
-  return true;
   const currentRoutes = state.url.split('/')[1];
-  // const service = inject(userService);
   const router = inject(Router);
+  const cookie=inject(CookieService);
+  const FetchService = inject(FetchDataService);
+  const loginCheckService = inject(LoginCheckService);
+  const toastService=inject(ToastService);
+  const BackendUrl = inject(UtilsModule);
 
-  // let userLogin=await lastValueFrom(service.SubscrbingUserSubject());
-  // if (currentRoutes == 'auth' && userLogin) {
-  //   router.navigate(['/']);
-  //   return false;
-  // }
-
-  if (currentRoutes == 'dashboard') {
-      const FetchService = inject(FetchDataService);
-      const BackendUrl = inject(UtilsModule);
-      let a =await lastValueFrom(FetchService.HTTPGET(BackendUrl.URLs.authorizeUrl));
-      if(a) return true;
-      else {
-        router.navigate(['/']);
-        return false;
+  let navigateCheck = true;
+  let check=cookie.get('userToken');
+  let data;
+    if(check){
+      data=await lastValueFrom((FetchService.HTTPGET(BackendUrl.URLs.authorizeUrl)));
+      if (data != 'admin') { 
+          if (!check && currentRoutes == 'usersetting') navigateCheck = false;
+          if (currentRoutes == 'auth' && check) navigateCheck = false;
+          if (currentRoutes == 'dashboard'){ 
+            navigateCheck = false;
+          }
       }
+      else {
+          if (currentRoutes == 'auth' && check) navigateCheck = false;        
+          if (state.url == '/cart/billing') navigateCheck = false;
+      }
+    }
+    else{
+      if(currentRoutes=='auth') navigateCheck=true;
+      else navigateCheck=false;
+    }
+    
+
+  if(data=='admin' && state.url == '/cart/billing'){
+    toastService.errorToast({title:'Admin are not allowed to order'});
+    router.navigate(['/dashboard']);
   }
 
-  return true;
+  else if(!navigateCheck) {
+    router.navigate(['/']);
+  }
+  
+  return navigateCheck;
 };

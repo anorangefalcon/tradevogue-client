@@ -56,8 +56,9 @@
 }
 
 .invoice-template {
-    width: min(100%, 620px);
-    height: 100vh;
+    height: 100dvh;
+    width: min(100%, 580px);
+    height: fit-content;
     padding: 30px;
     background-color: rgb(var(--whiteClr));
     border: 1px solid rgba(var(--blackClr), 0.1);
@@ -74,8 +75,6 @@
 
 .total td.items, th.items {
     font-weight: 700 !important;
-    padding: 8px 10px !important;
-    background-color: #f4f5f778;
     color: rgb(var(--blackClr), 0.9);
 }
 
@@ -86,6 +85,7 @@
         size: auto;  
         margin: 0; 
     }
+      
 
     .invoice-template {
         width: 100%;
@@ -94,6 +94,10 @@
         background-color: rgb(var(--whiteClr));
         border: 0px solid rgba(var(--blackClr), 0.1);
         border-radius: 0px;
+    }
+
+    .close__icon{
+        display: none;
     }
 
     .main {
@@ -111,10 +115,9 @@
         white-space: wrap !important;
     }
 
-    .btn-primary {
+    .download-btn{
         display: none;
     }
-
 }
 
 p{

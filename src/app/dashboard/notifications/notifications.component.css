@@ -13,23 +13,18 @@
 }
 
 .ellipsis {
+    max-width: 20ch;
     white-space: nowrap !important;
     overflow: hidden !important;
     text-overflow: ellipsis !important;
-  }
+}
 
-  td {
-    max-width: 200px; /* Adjust the max-width to your preference */
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
-
-  img, picture {
+img,
+picture {
     max-width: 30% !important;
     display: block !important;
 }
-  
+
 
 .form__card {
 
@@ -131,23 +126,4 @@
     position: absolute;
     top: 0;
     border-radius: 6px;
-}
-
-.loader {
-    position: absolute;
-    right: 20px;
-    bottom: 20px;
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    border: 2px solid #ffffff;
-    border-top-color: rgb(var(--primaryClr));
-    ;
-    animation: spinner .8s linear infinite;
-}
-
-@keyframes spinner {
-    to {
-        transform: rotate(360deg);
-    }
 }

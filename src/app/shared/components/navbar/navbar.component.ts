@@ -1,11 +1,12 @@
 import { Component, HostListener, OnInit } from '@angular/core';
 import { CartService } from '../../services/cart.service';
-import { CookieService } from 'ngx-cookie-service';
 import { FetchDataService } from '../../services/fetch-data.service';
 import { NavigationEnd, Router } from '@angular/router';
 import { WishlistService } from '../../services/wishlist.service';
 import { UtilsModule } from 'src/app/utils/utils.module';
 import { LoginCheckService } from '../../services/login-check.service';
+import { CheckoutService } from 'src/app/checkout/checkout.service';
+import { SupportNotificationService } from '../../services/support-notification.service';
 
 // declare var doSignout:any;
 @Component({
@@ -22,6 +23,13 @@ export class NavbarComponent implements OnInit {
   cart_count: number = 0;
   wishlistCount: number = 0;
   isLogin: boolean = false;
+  darkTheme : Boolean = false;
+
+  // notification start
+  showBellIcon: boolean = true;
+  fcmToken: any;
+  notifications: any[] = [];
+  // notification end
 
   cartArr: any[] = [];
   navbar_scroll_style: boolean = false;
@@ -30,12 +38,38 @@ export class NavbarComponent implements OnInit {
     men: [],
     women: []
   }
+  secureNavbar: boolean=false;
 
-  constructor(private cartService: CartService, private userService: LoginCheckService, private BackendEndUrl: UtilsModule, private cookie: CookieService, private fetchDataService: FetchDataService, private router: Router, private wishlistService: WishlistService, private utils: UtilsModule) {
+  UserRole!:String
+  
+  constructor(private cartService: CartService,
+     private userService: LoginCheckService,
+      private checkOutService:CheckoutService, 
+      private BackendEndUrl: UtilsModule,
+       private fetchDataService: FetchDataService,
+         private wishlistService: WishlistService,
+         public notification: SupportNotificationService,
+         private fetchService: FetchDataService,
+         private router: Router,
+         private util: UtilsModule,) {
+
+    this.checkOutService.secureNavbar$.subscribe((data)=>{
+      this.secureNavbar = data;
+    });
+
+    this.userService.getUser('token').subscribe((data)=>{
+      if(!data) return;
+      this.fetchDataService.HTTPGET(this.BackendEndUrl.URLs.authorizeUrl).subscribe((data:any)=>{
+        if(data=='admin') this.UserRole=data;
+      })
+    })
 
     this.userService.getUser('name').subscribe((name: any) => {
       if (name) {
         this.purchaser = name;
+      }
+      else{
+        this.purchaser = '';
       }
     });
   }
@@ -49,9 +83,9 @@ export class NavbarComponent implements OnInit {
         this.cart_count = item_count;
       })
 
-    this.wishlistService.getWishlistCount();
+    // this.wishlistService.getWishlistCount();
     this.wishlistService.WishlistCount$.subscribe((data) => {
-      if (data) {
+      if (data || data==0) {
         this.wishlistCount = data;
       }
     })
@@ -76,10 +110,30 @@ export class NavbarComponent implements OnInit {
       this.categories.women = data.data.female.category;        
     })
 
+    this.fetchDataService.themeColor$.subscribe((color) => {
+      this.darkTheme = color;
+    })
+    this.userService.getUser('fcm').subscribe((token: any)=>{
+      this.fcmToken = token;
+    });
+    
+    this.notification.notificationOptions$.subscribe((options) => {
+    });
+
+    this.fetchService.HTTPGET(this.util.URLs.comingNotification)
+      .subscribe((res: any) => {
+        this.notifications = res;
+      });
+
   }
 
   searchExplore(query: string) {
-    this.router.navigateByUrl(`/explore?search=${query}`);
+    if(query == ''){
+      this.router.navigateByUrl(`/explore`);
+    }
+    else{
+      this.router.navigateByUrl(`/explore?search=${query}`);
+    }
   }
 
   onLogout() {
@@ -95,6 +149,62 @@ export class NavbarComponent implements OnInit {
     }
 
   }
+
+  toggleTheme(){
+    this.darkTheme = !this.darkTheme;
+    this.fetchDataService.toggleTheme(this.darkTheme);
+  }
+
+
+// notification start
+async subscribeToNotifications() {
+// Add your subscribe logic here if needed
+this.notification.initialize();
+}
+
+// toggle() {
+// const chatBox = document.querySelector('.messengers');
+// this.showBellIcon = !this.showBellIcon;
+// if (chatBox) {
+//   setTimeout(() => {
+//     chatBox.classList.toggle('expanded');
+//   }, 100);
+// }
+// }
+
+// Helper method to filter visible notifications
+visibleNotifications(): any[] {
+return this.notifications.filter(notification => notification.state);
+}
+
+// Helper method to check if there are any visible notifications
+hasVisibleNotifications(): boolean {
+return this.notifications.some(notification => notification.state);
+}
+
+redirectToUrl(url: string) {
+const baseUrl = window.location.origin;
+if (url.startsWith(baseUrl)) {
+  const path = url.substring(baseUrl.length);
+  this.router.navigate([path]);
+} else {
+  this.router.navigate([url]);
+}
+}
+
+shareNotification(notification: any) {
+if (navigator.share) {
+  navigator.share({
+    title: notification.notification.title,
+    text: notification.notification.body,
+    url: notification.notification.url
+  })
+    .catch((error) => console.error('Error sharing:', error));
+} else {
+  // Fallback for browsers that do not support Web Share API
+}
+}
+  
 
 
 

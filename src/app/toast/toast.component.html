@@ -1,15 +1,15 @@
-<div *ngIf="display" (mouseenter)="hoverIn()" (mouseleave)="hoverOut()" class="container">
-    <div class="toast">
+<div (mouseenter)="hoverIn()" (mouseleave)="hoverOut()" class="container">
+    <div class="toast" [ngClass]="display ? 'active' : ''">
 
         <div class="toast-header d-flex align-item-center">
 
-            <div class="loader {{display}}-bg"></div>
+            <div *ngIf="display" class="loader {{display}}-bg"></div>
 
             <div class="logo d-flex flex-center">
                 <i *ngIf="display === 'success'" class="success material-symbols-outlined">done</i>
                 <i *ngIf="display === 'error'" class="error material-symbols-outlined">error</i>
                 <i *ngIf="display === 'warning'" class="warning material-symbols-outlined">warning</i>
-                <i *ngIf="display === 'notification'" class="notification material-symbols-outlined">notifications</i>
+                <i *ngIf="display === 'notification'" class="notification material-symbols-outlined">info</i>
             </div>
 
             <div class="text {{display}}">

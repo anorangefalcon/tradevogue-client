@@ -4,6 +4,8 @@ import { SalesService } from 'src/app/shared/services/custom-UI/sales.service';
 import { ImageUploadService } from 'src/app/shared/services/image-upload.service';
 import { FetchDataService } from 'src/app/shared/services/fetch-data.service';
 import { UtilsModule } from 'src/app/utils/utils.module';
+import { DialogBoxService } from 'src/app/shared/services/dialog-box.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-sales',
@@ -18,12 +20,24 @@ export class SalesComponent {
   selectedItem: any;
   itemId: any;
   editingIndex: any;
+  showEditIcon: any = true;
 
-  constructor(private fb: FormBuilder, private salesService: SalesService, private uploadService: ImageUploadService, private fetch: FetchDataService, private util : UtilsModule) {
-
-    this.salesService.getSales().subscribe((res)=> {
+  getSales() {
+    this.salesService.getSales().subscribe((res) => {
       this.tableData = res;
     })
+  }
+
+  constructor(
+    private fb: FormBuilder, 
+    private salesService: SalesService, 
+    private uploadService: ImageUploadService, 
+    private fetch: FetchDataService, 
+    private dialogService: DialogBoxService,
+    private util: UtilsModule,
+    private router: Router) {
+
+    this.getSales();
 
     this.salesForm = this.fb.group({
       sale: this.fb.array([
@@ -36,25 +50,31 @@ export class SalesComponent {
           colors: this.fb.group({
             titleColor: '',
             subTitleColor: '',
-            buttonColor: ''
+            buttonColor: '',
+            cardColor: ''
           })
         })
       ])
-    })
+    });
 
-  }
-  deleteItem(key: any){
-    this.selectedItem = key;
-    if(this.selectedItem) {
-      const id = this.selectedItem._id;
-
-      const body = {
-        _id: id
+    this.dialogService.responseEmitter.subscribe({
+      next: (res: any)=>{
+        if(res){
+          this.fetch.HTTPPOST(this.util.URLs.deleteSales, {_id: this.deleteId}).subscribe((data => {
+          }));
+          this.getSales();
+        }
       }
+    })
+  }
+  
+  deleteId: any;
 
-      this.fetch.HTTPPOST(this.util.URLs.deleteSales, body).subscribe((data=> {
-      }))
-      
+  deleteItem(key: any) {
+    this.selectedItem = key;
+    if (this.selectedItem) {
+      this.deleteId =  this.selectedItem._id;
+      this.dialogService.confirmationDialogBox()
     }
   }
 
@@ -64,21 +84,30 @@ export class SalesComponent {
       const id = this.selectedItem._id;
       const enable = !this.selectedItem.enable;
       const body = {
-        id , enable
+        id, enable
       }
 
-      this.fetch.HTTPPOST(this.util.URLs.toggleSales , body).subscribe((res)=> {
+      this.fetch.HTTPPOST(this.util.URLs.toggleSales, body).subscribe((res) => {
       })
 
     }
   }
 
-  showItemDetails(item: any , index: any) {
+  getLink(link: string){
+    const toLink = '/' + link.split('/')[3];    
+    this.router.navigateByUrl(toLink);
+  }
+
+  onCancel() {
+    this.salesForm.reset();
+  }
+
+  showItemDetails(item: any, index: any) {
     this.selectedItem = item;
     this.itemId = item._id;
     this.editingIndex = index;
-    
-  
+
+
     this.salesForm.patchValue({
       sale: [
         {
@@ -90,7 +119,8 @@ export class SalesComponent {
           colors: {
             titleColor: item.colors.titleColor,
             subTitleColor: item.colors.subTitleColor,
-            buttonColor: item.colors.buttonColor
+            buttonColor: item.colors.buttonColor,
+            cardColor: item.colors.cardColor
           }
         }
       ]
@@ -99,7 +129,6 @@ export class SalesComponent {
 
   addSale() {
     const saleGroup = this.fb.group({
-      // Define your form controls here
       backgroundImage: ['', Validators.required],
       title: ['', Validators.required],
       subTitle: ['', Validators.required],
@@ -108,14 +137,13 @@ export class SalesComponent {
       colors: this.fb.group({
         titleColor: '',
         subTitleColor: '',
-        buttonColor: ''
+        buttonColor: '',
+        cardColor: ''
       })
     });
 
-    (this.salesForm.get('sale') as FormArray).push(saleGroup); 
+    (this.salesForm.get('sale') as FormArray).push(saleGroup);
   }
-
-
 
   getSale() {
     return (this.salesForm.get('sale') as FormArray).controls;
@@ -126,7 +154,8 @@ export class SalesComponent {
   }
 
   onUpdate() {
-    if (this.salesForm.dirty) { 
+
+    if (this.salesForm.dirty) {
       if (this.editingIndex !== undefined) {
         const body = {
           index: this.editingIndex,
@@ -134,11 +163,14 @@ export class SalesComponent {
           data: this.salesForm.value
         }
 
-        this.fetch.HTTPPOST(this.util.URLs.updateSales , body).subscribe((res)=> {
+        this.fetch.HTTPPOST(this.util.URLs.updateSales, body).subscribe((res) => {
+          console.log(res, 'res')
+          this.getSales();
         })
-        
+
       } else {
         this.salesService.setSales(this.salesForm.value).subscribe((data) => {
+          this.getSales();
         });
       }
     } else {
@@ -157,6 +189,8 @@ export class SalesComponent {
 
   saleImageUpload(event: any, formIndex: any) {
 
+    console.log(event, 'file', formIndex, "index");
+
     let file: any = (<HTMLInputElement>event.target)?.files![0];
 
     this.uploadService.fileupload([{ file: file }]).then((url: any) => {
@@ -167,6 +201,8 @@ export class SalesComponent {
 
   getImagePreview(index: any) {
     let value = <FormArray>((this?.salesForm?.get('sale'))?.get(String(index)))?.get('backgroundImage')?.value;
+    // console.log(value, 'linkkk');
+
     return value;
   }
 
@@ -175,6 +211,7 @@ export class SalesComponent {
     const saleControl = saleArray.at(index) as FormGroup;
     saleControl.get('backgroundImage')?.reset('');
   }
+
   showLoading(i: number): boolean {
     return !this.getImagePreview(i);
   }

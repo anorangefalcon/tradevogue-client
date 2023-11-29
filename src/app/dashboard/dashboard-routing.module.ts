@@ -16,12 +16,9 @@ import { TicketsComponent } from './tickets/tickets.component';
 import { SocialsComponent } from './socials/socials.component';
 import { MonetizationComponent } from './monetization/monetization.component';
 import { NoPageComponent } from '../no-page/no-page.component';
-import { DealComponent } from './deal/deal.component';
-import { SalesComponent } from './sales/sales.component';
-import { CustomiseBannerComponent } from './customise-banner/customise-banner.component';
 import { NotificationsComponent } from './notifications/notifications.component';
 import { AboutComponent } from './about/about.component';
-
+import { CustomiseTcComponent } from './customise-tc/customise-tc.component';
 
 const routes: Routes = [ 
   {
@@ -41,22 +38,19 @@ const routes: Routes = [
 
       { path: 'account', component: AccountComponent },
 
-      { path: 'faq', component: FaqsComponent },
+      { path: 'customise-faq', component: FaqsComponent },
       { path: 'coupons', component: CouponsComponent },
       { path: 'support', component: SupportComponent },
       { path: 'tickets', component: TicketsComponent },
       { path: 'monetization', component: MonetizationComponent },
       { path: 'socials', component: SocialsComponent },
-      { path: 'customise-banner', component: CustomiseBannerComponent},
-      { path: 'sales', component: SalesComponent},
       {
         path: 'customise-home', loadChildren: () => import('./edit-home/edit-home.module').then(m => m.EditHomeModule)
       },
-      { path: 'customise-deal', component: DealComponent },
       { path: 'notification' , component: NotificationsComponent },
-      { path: 'customiseabout', component: AboutComponent },
+      { path: 'customise-about', component: AboutComponent },
+      {path:'customise-tc',component: CustomiseTcComponent},
       
-
       { path: '**', component: NoPageComponent },
     ]
   },

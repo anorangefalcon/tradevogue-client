@@ -1,13 +1,5 @@
 .form__card {
-
-    & .image-upload-div {
-        width: 40%;
-    }
-
-    & .data-upload-div {
-        width: 60%;
-    }
-
+    padding-block: 5px;
     & .internal-div {
         display: flex;
         flex-direction: column;
@@ -16,8 +8,11 @@
 }
 
 .image-upload-div {
-    background: rgb(var(--secondary));
+    background: rgb(var(--blackClr), 0.03);
     border-radius: 10px;
+    padding-block: 15px;
+    height: 200px;
+    overflow: hidden;
 
     & input[type="file"] {
         display: none;
@@ -29,7 +24,7 @@
 
     & .upload__block {
         border-radius: 50%;
-        padding: 50px;
+        padding: 35px;
         font-size: 10px;
         font-weight: 500;
         color: rgb(var(--blackClr), 0.6);
@@ -44,8 +39,9 @@
     }
 
     & .upload_icon {
-        font-size: 48px;
+        font-size: 38px;
         opacity: 0.7;
+        color: rgb(var(--blackClr), 0.4);
     }
 
 }
@@ -64,7 +60,11 @@
     padding: 2px;
     font-size: 18px;
 }
-
+.banner-small {
+    width: 70px;
+    height: 40px;
+    border-radius: 4px;
+}
 .banner-label {
     color: rgb(var(--blackClr), 0.7)
 }
@@ -86,24 +86,21 @@
 }
 
 .color-circle {
-    width: 20px;
-    height: 20px;
+    width: 15px;
+    height: 15px;
     border-radius: 50%;
     border: 0.5px solid black;
 }
 
 .checkbox label {
     font-size: 12px;
-    /* font-style: italic; */
-    /* color: rgb(var(--primaryClr)); */
-
 }
+
 .custom-check {
     appearance: none;
     width: 15px;
     height: 15px;
     border: 1px solid rgb(var(--blackClr), 0.4);
-    /* border-radius: 4px; */
 }
 .custom-check:checked {
     background-color: rgb(var(--primaryClr));
@@ -125,6 +122,41 @@
     left: -26px;
     top: -5px;
 }
+
+.banner-image-circle{
+    width: 40px;
+    height: 25px;
+    border-radius: 2px;
+    overflow: hidden;
+    object-fit: cover;
+}
+.link-icon {
+    font-size: 12px;
+    color: rgb(var(--blue-clr));
+}
+.save-btn {
+    margin-block-start: 10px;
+}
+input[type="color"]{
+    visibility: visible;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+}
+input[type="color" i]::-webkit-color-swatch-wrapper {
+    padding: 0px  !important;
+}
+input[type="color" i]::-webkit-color-swatch {
+    border-radius: 50%;
+    border: none;
+}
+::placeholder{
+    color: rgb(var(--textClr), 0.3);
+}
+.display-none {
+    display: none;
+}
+/* -webkit-color-swatch-wrapper */
 
 @keyframes spinner {
     to {transform: rotate(360deg);}

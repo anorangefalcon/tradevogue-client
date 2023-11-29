@@ -1,147 +1,21 @@
-.heading__section {
-    background-color: white;
-    padding: 20px;
-}
-
-.width-50 {
-    width: 50%;
-}
-
+/* 
 .width-100{
     width: 100%;
 }
 
 
-form {
-    /* background-color: white;
-    padding: 20px;
-    width: 100%; */
+.remove-btn {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    background-color: rgb(var(--whiteClr), 0.6);
+    border-radius: 50%;
+    padding: 2px;
+    font-size: 18px;
 }
 
-.basicInfo,.Statistics,.TeamMembers{
-    background-color: white;
-    padding: 20px;
-    border-radius: 5px;
-    width: 100%;
-
-}
-
-
-.particular_team_member{
-    border: 1px solid rgba(0,0,0,0.2);
-}
-
-.Statistics{
-    & .common__formGroup{
-        width: calc(50% - 10px);
-    }
-}
-
-
-.content {
-    flex-wrap: wrap;
-}
-
-/* .about-image-div{
-    & .common{
-        width: calc(50% - 5px);
-        height: 25%;
-    }
-} */
-
-
-/* .about-image-div {
-    display: grid;
-    width: 50%;
-    grid-template-columns: repeat(10, 0.2fr);
-    grid-template-rows: repeat(10, 0.2fr);
-    gap: 15px;
-
-
-
-    & .common img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        border-radius: 10px;
-    }
-
-
-    & .common1 {
-        grid-column: 1/ 5;
-        grid-row: 1/ 6;
-    }
-
-    & .common2 {
-        grid-column: 5/11;
-        grid-row: 2/6;
-    }
-
-    & .common3 {
-        grid-row: 6/9;
-        grid-column: 1/4;
-        & .upload__div{
-            padding: 30px;
-        }
-    }
-
-    & .common4 {
-        grid-column: 4/11;
-        grid-row: 6/11;
-
-    }
-
-
-
-
-}  */
-
-
-.ImageDiv{
-    width: 50%;
-
-    & .common{
-        width:calc(50% - 5px);
-        height:calc(50% - 5px);
-        border-radius: 10px;
-       & img{
-        height: 100%;
-       }
-    }
-   
-}
-.form__label {
-    font-size: 14px;
-    color: rgb(var(--textClr), 0.9);
-    padding-bottom: 5px;
-
-    & span {
-        color: rgb(var(--danger));
-    }
-}
-
-.form__input {
-    width: 100%;
-    height: 42px;
-    padding-inline: 15px;
-    border-radius: 8px;
-    font-size: 14px;
-    outline: 1px solid rgba(var(--blackClr), 0.2);
-    background-color: transparent;
-}
-
-.formControl{
-    width:calc(50% - 10px);
-    /* display: flex;
-    flex-direction: column;
-    gap: 1px; */
-}
-
-
-.commitment,.features , .common__formGroup{
-    padding: 15px;
-    border: 1px solid rgba(0,0,0,0.2);
-    border-radius: 6px;
+.red {
+    color: rgb(var(--danger))
 }
 
 
@@ -151,6 +25,7 @@ form {
     & textarea{
         border: 1px solid rgba(0,0,0,0.2);
         background-color: rgb(var(--whiteClr));
+        resize: none;
         position: relative;
         padding-block: 10px;
     padding-inline: 10px;
@@ -158,68 +33,12 @@ form {
     }
 }
 
-textarea::placeholder{
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-}
-
 
 .all__members{
     gap: 30px;
     width: 100%;
 }
-.member__div{
-    width: calc((100% - 2 * 30px) / 3);
-    height: fit-content;
-    position: relative;
-    border: 1px solid rgba(0,0,0,0.2);
-    padding: 20px;
-    border-radius: 5px;
 
-    & img{
-        height: 250px;
-    }
-}
-
-
-.upload__div{
-    border-radius: 50%;
-    padding: 50px;
-    font-size: 10px;
-    font-weight: 500;
-    color: rgb(var(--blackClr), 0.6);
-    background-color: rgb(var(--whiteClr));
-
-    & .upload_icon{
-        font-size: 48px;
-         opacity: 0.7;
-
-    }
-}
-
-
-.image__upload__input{
-    display: none;
-}
-
-.img__div{
-    background-color: rgba(128, 128, 128, 0.079);
-    border-radius: 10px;
-    padding-block: 10px;
- 
-}
-
-
-.colors__input{
-    padding: 0px;
-}
-
-.tooggle__btn{
-    display: flex;
-    align-items: center;
-    border: none;
-}
 
 .add__icon,.close__icon{
   color:  rgba(0,0,0,0.6);
@@ -233,42 +52,153 @@ textarea::placeholder{
     display: flex;
     align-items: center;
     padding: 2px;
-    /* border: 1px solid rgba(0,0,0,0.2); */
     position: absolute;
     top: -13px;
     right: -13px;
     background: white;
 }
+ */
+
+
+
+
+
+/*  NEW CSSS */
+
+.basicInfo__content{
+    width: 50%;
+}
+
+
+
 .common__h2{
     color:  rgba(0,0,0,0.6);
 }
 
-.height-100{
-    height: 100%;
+.ImageDiv{
+    width: 50%;
 }
-
-
-.cancel__btn{
-    background: transparent;
-    border: 1px solid rgb(var(--primaryClr));
-}
-
-.save__btn,.Edit__btn{
-    border: 1px solid rgb(var(--primaryClr));
-    background-color: rgb(var(--primaryClr));
-    color: rgb(var(--whiteClr));
-}
-
-
-img{
-overflow: hidden;
-}
-
-.image__uploaded{
-    right: 10px;
-    position: absolute;
-    height: 70px !important;
-    width: 70px !important;
-    bottom: 10px;
+.input-form{
+    width: calc(50% - 10px);
     border-radius: 10px;
+    overflow: hidden;
+    background: rgb(var(--secondary));
+}
+
+.formControl{
+    width:calc(50% - 10px);
+}
+
+
+
+.image-container{
+    position: relative;
+    border-radius: 10px;
+    height: 100%;
+    & img{
+        height: 100%;
+    }
+}
+
+.remove-img{
+    position: absolute;
+    right: 0;
+    background: #ffffffc2;
+    border-radius: 50%;
+    top: 5px;
+    right: 5px;
+    cursor: pointer;
+    font-size: 18px;
+}
+
+
+.image__upload__input{
+    display: none;
+}
+
+
+.upload__label{
+    border-radius: 50%;
+    padding: 25px;
+    font-size: 10px;
+    font-weight: 500;
+    color: rgb(var(--blackClr), 0.6);
+    background-color: rgb(var(--whiteClr));
+}
+
+
+.upload_icon{
+        font-size: 48px;
+        opacity: 0.7; 
+    }
+
+
+.banner-label{
+    color: rgb(var(--blackClr), 0.7);
+}
+
+.features{
+    width: 100%;
+    & .feature1, .feature2{
+        width: calc(50% - 10px);
+    }
+
+    & .feature1,& .feature2{
+        border: 1px solid rgb(var(--blackClr), 0.1);
+        padding: 20px;
+        border-radius: 5px;
+    }
+}
+
+.particular_team_member{
+height: 280px;
+width: 217px;
+}
+
+.team_member_img{
+    height: 80%;
+    overflow: hidden;
+    width: 100%;
+    background: rgb(var(--secondary));
+}
+
+.img_and_close_icon{
+    height: 100%;
+    width: 100%;
+    position: relative;
+}
+
+
+.formControl__textArea{
+    width: 100%;
+    & textarea{
+        border: 1px solid rgba(0,0,0,0.2);
+        background-color: rgb(var(--whiteClr));
+        resize: none;
+        position: relative;
+        padding-block: 10px;
+    padding-inline: 10px;
+    border-radius: 5px;
+    }
+}
+
+.form__label{
+    & span{
+        color: rgba(var(--danger));
+    }
+}
+
+
+.delete__icon{
+    position: absolute;
+    right: 5px;
+    top: 9px;
+    font-size: 21px;
+    cursor: pointer;
+    background: transparent;
+    border: none;
+}
+
+.delete__icon:hover{
+    color: rgba(var(--danger));
 }

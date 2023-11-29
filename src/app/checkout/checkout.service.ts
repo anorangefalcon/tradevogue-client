@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
 import { UtilsModule } from '../utils/utils.module';
-import { CookieService } from 'ngx-cookie-service';
 import { FetchDataService } from '../shared/services/fetch-data.service';
-declare var Stripe: any;
+import { NavigationEnd, Router } from '@angular/router';
+import { BehaviorSubject } from 'rxjs';
+import { CartService } from '../shared/services/cart.service';
+declare let Stripe: any;
 
 @Injectable({
   providedIn: 'root'
@@ -10,12 +12,61 @@ declare var Stripe: any;
 export class CheckoutService {
   publicKey: any;
   stripe: any;
+  orderID: any = ''
+  private secureNavbar = new BehaviorSubject(false);
+  secureNavbar$ = this.secureNavbar.asObservable();
+  StripePaymentOpen = new BehaviorSubject<boolean>(false);
+  // StripePaymentOpen$ = this.StripePaymentOpen.asObservable();
+
+  public orderId: string | null = null;
+
+  loadStripe = new BehaviorSubject<Boolean>(false);
 
   constructor(
     private backendUri: UtilsModule,
     private fetchData: FetchDataService,
-    private cookie: CookieService
-  ) {}
+    private cartService: CartService,
+    private router: Router
+  ) {
+
+    this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        if (this.router.url === '/cart/billing') {
+
+          this.secureNavbar.next(true);
+        }
+        else {
+          this.secureNavbar.next(false);
+        }
+      }
+    })
+  }
+
+  private stripeScript!: HTMLScriptElement | undefined;
+
+  loadStripeScript(): Promise<void> {
+    return new Promise<void>((resolve, reject) => {
+      if (this.stripeScript) {
+        resolve();
+      } else {
+        this.stripeScript = document.createElement('script');
+        this.stripeScript.src = 'https://js.stripe.com/v3/';
+        this.stripeScript.onload = (event: Event) => resolve();
+        this.stripeScript.onerror = reject;
+        document.body.appendChild(this.stripeScript);
+      }
+    });
+  }
+
+  getStripeInstance(publicKey: string): any {
+    return Stripe(publicKey);
+  }
+
+  unloadStripeScript(): void {
+    if (this?.stripeScript && this.stripeScript?.parentNode) {
+      this.stripeScript.parentNode.removeChild(this.stripeScript);
+    }
+  }
 
   async showMessage(messageText: any) {
     const messageContainer = document.querySelector("#payment-message");
@@ -51,7 +102,7 @@ export class CheckoutService {
     }
   };
 
-  async checkOrderStatus(): Promise<void> {
+  async checkOrderStatus(clientSecret: any): Promise<void> {
     try {
       const response = await fetch(this.backendUri.URLs.getPaymentKeys);
       if (!response.ok) throw new Error('Network response was not ok');
@@ -61,12 +112,19 @@ export class CheckoutService {
 
       this.stripe = Stripe(publicKey);
 
-      const clientSecret = new URLSearchParams(window.location.search).get("payment_intent_client_secret");
-      if (!clientSecret) return;
 
+      // this.fetchData.HTTPGET(this.backendUri.URLs.getClientSecret).subscribe(async (res) => {
+      //   console.log(res, 'res is');
+      //   this.SecretClient = res;
+      //   if (!this.SecretClient) return;
+
+        
+      // })
+      
       const { paymentIntent } = await this.stripe.retrievePaymentIntent(clientSecret);
-
       this.handlePaymentIntentStatus(paymentIntent);
+
+      
 
     } catch (error) {
       console.error('Error checking order status:', error);
@@ -77,38 +135,47 @@ export class CheckoutService {
     switch (paymentIntent.status) {
       case "succeeded":
         await this.updateOrderStatus(paymentIntent);
-        await this.sendInvoiceData(paymentIntent);
+        // await this.sendInvoiceData(paymentIntent);
         break;
-      case "processing":
-        break;
-      case "requires_payment_method":
-        break;
-      default:
-        break;
+
+      // case "processing":
+      //   break;
+      // case "requires_payment_method":
+      //   break;
     }
   }
 
   private async updateOrderStatus(paymentIntent: any) {
-    const body: any = {
-      buyerId: this.cookie.get('userToken'),
+
+    let body: any = {};
+    body = {
       newPaymentStatus: 'success',
       transactionId: paymentIntent.id,
       MOP: paymentIntent.payment_method_types[0],
+      orderID: this.orderID
     };
-
-    await this.fetchData.HTTPPOST(this.backendUri.URLs.updateOrderStatus, body)
-      .subscribe();
+    this.fetchData.HTTPPOST(this.backendUri.URLs.updateOrderStatus, body).subscribe();
+    // this.fetchData.HTTPPOST(this.backendUri.URLs.webhook, paymentIntent).subscribe();
   }
 
-  private async sendInvoiceData(paymentIntent: any) {
-    await fetch('http://localhost:1000/invoiceSend', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(paymentIntent)
-    })
-    .then(response => {
-      if (response.ok) return response.json();
-      throw new Error('Network response was not ok.');
-    })
-  }
+  // private async sendInvoiceData(paymentIntent: any) {
+  //   await fetch('http://localhost:1000/invoiceSend', {
+  //     method: 'POST',
+  //     headers: { 'Content-Type': 'application/json' },
+  //     body: JSON.stringify(paymentIntent)
+  //   })
+  //     .then(response => {
+  //       if (response.ok) return response.json();
+  //       throw new Error('Network response was not ok.');
+  //     })
+  // }
+
+  //  ADDRESS
+  addressSelected: any = null;
+
+  // CreateOrderClicked=new BehaviorSubject(false);
+  // createOrderClicked$=this.CreateOrderClicked.asObservable();
+
+
+
 }

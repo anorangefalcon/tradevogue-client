@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { DialogBoxService } from 'src/app/shared/services/dialog-box.service';
 import { FetchDataService } from 'src/app/shared/services/fetch-data.service';
 import { ImageUploadService } from 'src/app/shared/services/image-upload.service';
 import { ToastService } from 'src/app/shared/services/toast.service';
@@ -19,19 +20,42 @@ export class CouponsComponent {
   show: boolean = false;
   todayDate: any = Date.now();
 
+  totalCount:number = 0;
+  currentPage: number = 1;
 
+  TemplatePagination:any= {
+    search: '',
+    currentPage: this.currentPage,
+    limit: 10
+  }
+
+
+  clearFormArray = (formArray: any) => {
+    while (formArray?.length !== 0) {
+      formArray.removeAt(0)
+    }
+  }
+
+  clearForm(){
+    this.clearFormArray(this.OfferForm.get('UserEmails'));
+    this.OfferForm.reset();
+  }
 
   ChangeHanlder(event: any) {
     this.show = event;
+    // this.clearFormArray(this.OfferForm.get('UserEmails'));
+    // this.OfferForm.reset();
+    this.clearForm();
   }
 
   OfferType = ['coupon', 'discount'];
   discountType = ['percentage', 'flat'];
   couponType = ['global', 'custom', 'new'];
+  newEntry: Boolean = false;
   Brands: any;
   EditIndex: any;
   EditRequest: any;
-  allOffers: any;
+  allOffers: any=[];
   Categories: any;
   // Filters = ['categories', 'brands'];
   CouponRequest: boolean = false;
@@ -40,10 +64,17 @@ export class CouponsComponent {
 
 
 
-  constructor(private fb: FormBuilder, private toastService:ToastService, private imageuploadService:ImageUploadService, private fetchDateService: FetchDataService, private BackendUrls: UtilsModule) {
+  constructor(
+    private fb: FormBuilder,
+    private toastService: ToastService,
+    private imageuploadService: ImageUploadService,
+    private fetchDateService: FetchDataService,
+    private dialogService: DialogBoxService,
+    private BackendUrls: UtilsModule) {
+
     this.OfferForm = fb.group(
       {
-        Image:fb.control('',[Validators.required]),
+        Image: fb.control('', [Validators.required]),
         OfferType: fb.control('', [Validators.required]),
         Title: fb.control('', [Validators.required]),
         Description: fb.control('', [Validators.required]),
@@ -57,10 +88,22 @@ export class CouponsComponent {
     )
     const body = ['categories', 'brands']
     this.fetchDateService.HTTPPOST(this.BackendUrls.URLs.fetchFeatures, body).subscribe((data: any) => {
-      this.Brands = data.brands;
+      this.Brands = data.brands;      
       this.Categories = data.categories;
-    })
+    });
 
+    this.dialogService.responseEmitter.subscribe({
+      next: (res: any) => {
+        console.log
+
+        if (res) {
+          this.fetchDateService.HTTPPOST(this.BackendUrls.URLs.deleteOffer, { id: this.deleteId }).subscribe((data) => {
+            this.allOffers = data;
+          });
+        }
+
+      }
+    })
   }
 
 
@@ -121,23 +164,25 @@ export class CouponsComponent {
     return null;
   }
 
+   controls: any = [
+    { name: 'couponcode', validator: this.CouponCodeValidator },
+    { name: 'couponType', },
+    { name: 'minimumPurchaseAmount' },
+  ];
 
+  OfferTypeHandler(event: any,couponType:any=null) {
+    
+    this.OfferForm.get('OfferType')?.setValue(event);
 
-
-  OfferTypeHandler(event: any) {
-    this.OfferForm.get('OfferType')?.patchValue(event);
-    const controls: any = [
-      { name: 'couponcode', validator: this.CouponCodeValidator },
-      { name: 'couponType', },
-      { name: 'couponUsersLimit' },
-      { name: 'minimumPurchaseAmount' },
-    ];
-    if (event == 'coupon') {
+    if (event == 'coupon') { 
+      if(couponType!='custom'){
+        this.controls.push(  { name: 'couponUsersLimit' });
+      }
       if (this.OfferForm.get('ExtraInfo')) {
         this.OfferForm.removeControl('ExtraInfo');
-        this.OfferForm.removeControl('DiscountPercentageHandler');        
+        this.OfferForm.removeControl('DiscountPercentageHandler');
       }
-      controls.forEach((el: any) => {
+      this.controls.forEach((el: any) => {
         if (el.validator) {
           this.OfferForm.addControl(el.name, this.fb.control('', [Validators.required, el.validator]));
         }
@@ -151,7 +196,9 @@ export class CouponsComponent {
     }
 
     if (event == 'discount') {
-      controls.forEach((el: any) => {
+      this.controls.forEach((el: any) => {
+        console.log('edeleted element is ',el);
+        
         this.OfferForm.removeControl(el.name);
       })
       let ExtraInfo = this.fb.group({
@@ -181,9 +228,6 @@ export class CouponsComponent {
     }
 
   }
-  // x(form: any, i: number) {
-  //   return form?.controls(i);
-  // }
 
   getEmailArray() {
     return (<FormArray>this.OfferForm.get('UserEmails'))?.controls
@@ -206,33 +250,45 @@ export class CouponsComponent {
     return (<FormArray>this.OfferForm.get('UserEmails')?.get(String(index)));
   }
 
-
-
-  getAllOffers(){
-    this.fetchDateService.HTTPGET(this.BackendUrls.URLs.getOffers).subscribe((data) => {
-      this.allOffers = data;
+  notData: boolean = false;
+  getAllOffers() {
+    this.fetchDateService.HTTPPOST(this.BackendUrls.URLs.getOffers,this.TemplatePagination).subscribe((data:any) => {
+      if(!data.length){
+        this.notData = true;
+        this.totalCount = 0;
+        this.allOffers = []
+        return;
+      }
+      this.allOffers = data[0]?.document;
+      this.totalCount=data[0]?.count;
+      
     });
   }
 
+  getOfferImage() {
+    return this.OfferForm.get('Image')?.value;
+  }
+
   async ngOnInit() {
+    // this.getAllOffers();
+    this.pageChange(this.currentPage);
+  }
+
+  pageChange(pageNo: any,searchWord:String='') {
+    this.currentPage=pageNo;
+    this.TemplatePagination.search = searchWord;
     this.getAllOffers();
   }
-  currentPage: number = 1
-  pageChange(e: any) {
-    this.currentPage = e;
-    // this.fetchData();
-  }
+
 
   AddCoupon() {
-    this.OfferForm.reset();
+    this.newEntry = true;
+    // this.OfferForm.reset();
+    this.clearForm();
     this.show = true;
     this.EditRequest = false;
+    this.pageChange(this.currentPage);
   }
-
-  // CancelCoupon() {
-  //   this.CouponRequest = false;
-  // }
-
 
 
   CategoriesHandler(event: any) {
@@ -257,7 +313,7 @@ export class CouponsComponent {
     this.OfferForm.get('discountType')?.patchValue(event);
     if (this?.OfferForm?.get('discountType')?.value == 'percentage') {
       this.OfferForm.get('discountAmount')?.setValidators([this.PercentageValidator])
-      this.OfferForm.addControl('maximumDiscount',this.fb.control('',[Validators.required]));
+      this.OfferForm.addControl('maximumDiscount', this.fb.control('', [Validators.required]));
     }
 
     else {
@@ -267,17 +323,19 @@ export class CouponsComponent {
 
   }
 
-
+  dataUpdate: boolean = false;
   async CouponSubmit() {
-    if(!this.OfferForm.get('Image')?.value){
+    this.dataUpdate = true;
+    if (!this.OfferForm.get('Image')?.value) {
       this.toastService.errorToast('Image is still uploading please try again');
       return;
     }
+
     this.OfferForm.get('startDate')?.setValue(new Date(this.OfferForm.get('startDate')?.value));
 
     let endDate: any = new Date((this.OfferForm.get('endDate')?.value));
     endDate.setDate(endDate.getDate() + 1);
-endDate.setMinutes(endDate.getMinutes() - 1);
+    endDate.setMinutes(endDate.getMinutes() - 1);
     this.OfferForm.get('endDate')?.setValue(endDate);
 
 
@@ -290,40 +348,56 @@ endDate.setMinutes(endDate.getMinutes() - 1);
     else {
       url = this.BackendUrls.URLs.createOffer;
     }
+
     this.fetchDateService.HTTPPOST(url, body).subscribe((data) => {
       if (this.EditRequest) {
         this.allOffers[this.EditIndex] = data;
         this.EditRequest = false;
       }
       else {
-        this.allOffers.unshift(data);
+        this.allOffers?.unshift(data);
       }
-      // this.ParenClosed=true;  
-      // this.OfferForm.reset();
+    
     });
+
+    this.show = false;
+    this.clearForm();
+    // this.OfferForm.reset();
+    this.dataUpdate = false;
+    this.pageChange(this.currentPage);
     return;
 
   }
 
 
-  async DeleteOffer(element: any, index: any) {
+  deleteId: any;
+  async DeleteOffer(element: any) {
+    this.deleteId = element._id;
 
-    const body = { id: element._id };
-    this.fetchDateService.HTTPPOST(this.BackendUrls.URLs.deleteOffer, body).subscribe((data) => {
-      this.allOffers=data;
-    });
+    let template = {
+      title: 'Proceed with Deletion?',
+      subtitle: 'The Offer will be permanently deleted, and recovery will not be possible. Are you sure you want to proceed?',
+      type: 'confirmation',
+      confirmationText: 'Yes, Remove it',
+      cancelText: 'No, Keep it',
+    };
 
+    this.dialogService.confirmationDialogBox(template);
   }
 
 
-  CustomTypeHandler(value:any){
+  CustomTypeHandler(value: any) {
     this.OfferForm.addControl('UserEmails', this.fb.array([]));
-  value.forEach((el:any)=>{
-    (<FormArray>this.OfferForm.get('UserEmails')).push(this.fb.group({
-      email: ['', Validators.required]
-    }));
-  })
-   
+    console.log('value come up is ',value);
+    console.log(this.OfferForm.get('UserEmails')?.value," abcd is ")
+    let difference=this.OfferForm.get('UserEmails')?.value.length;
+
+    value.forEach((el: any) => {
+      (<FormArray>this.OfferForm.get('UserEmails')).push(this.fb.group({
+        email: ['', Validators.required]
+      }));
+    })
+
   }
 
   async EditOffer(data: any, index: any) {
@@ -332,11 +406,11 @@ endDate.setMinutes(endDate.getMinutes() - 1);
     this.EditRequest = data._id;
     data.startDate = data.startDate.split('T')[0];
     data.endDate = data.endDate.split('T')[0];
-    this.OfferTypeHandler(data.OfferType);
+    this.OfferTypeHandler(data.OfferType,data.couponType);
     this.DiscountTypeHandler(data.discountType);
-  if(data.UserEmails) { 
-   this.CustomTypeHandler( data.UserEmails);
-  }
+    if (data.UserEmails) {
+      this.CustomTypeHandler(data.UserEmails);
+    }
 
     this.OfferForm.patchValue(data);
     this.show = true;
@@ -348,7 +422,7 @@ endDate.setMinutes(endDate.getMinutes() - 1);
     const body = this.deleteList;
     this.fetchDateService.HTTPPOST(this.BackendUrls.URLs.deleteOffer, body).subscribe((response) => {
       this.selectAll = false;
-      this.allOffers=response;
+      this.allOffers = response;
       this.deleteList = [];
     });
 
@@ -362,30 +436,55 @@ endDate.setMinutes(endDate.getMinutes() - 1);
   }
 
 
-  ActiveStatus(event:any,data:any){
-    const body={data,status:event.target.checked};
-      this.fetchDateService.HTTPPOST(this.BackendUrls.URLs.updateOfferStatus,body).subscribe((data)=>{
-      })
+  ActiveStatus(event: any, data:any,index:any,) {
+    const body = { data, status: event.target.checked };
 
-  }
+    
+    this.fetchDateService.HTTPPOST(this.BackendUrls.URLs.updateOfferStatus, body).subscribe({next:(data) => {
+    },error:(error)=>{
+      if(error){
 
-  updateFields(event:any){
-      if(!event){
-        this.getAllOffers();
-        return;
+        this.allOffers[index].status.active=false;
+        // this.data[index].   
       }
-      const body={searchWord:event};
-      this.fetchDateService.HTTPPOST(this.BackendUrls.URLs.searchOffer,body).subscribe((data)=>{
-        this.allOffers=data;
-      })
+      
+    }})
+
   }
 
+  updateFields(event: any) {
+    if (!event) {
+    this.pageChange(1);
+      return;
+    }
 
-  bannerImageUpload(event:any){
+    this.pageChange(1,event);
+  }
+
+  uploading: boolean = false;
+
+  bannerImageUpload(event: any) {
+    this.uploading = true;
     let file: any = (<HTMLInputElement>event.target)?.files![0];
     this.imageuploadService.fileupload([{ file: file }]).then((url: any) => {
       this.OfferForm.get('Image')?.setValue(url[0]);
+
+      this.uploading = false;
     })
+  }
+
+
+  ShowUpload() {
+    this.OfferForm.get('Image')?.setValue('');
+  }
+
+
+  tableGenerator(len: number){
+    let temp = []
+    for(let i=0;i<len;i++){
+      temp.push(0);
+    }
+    return temp;
   }
 
 }

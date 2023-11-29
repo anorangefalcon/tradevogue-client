@@ -12,24 +12,18 @@
   }
 }
 
-.faq_section {
-  padding: 100px;
-}
-
-.containerwidth {
-  width: 100%;
-}
-
 .accordion_wrapper {
-  background-color: #ffffff;
-  padding: 5px;
-  margin-bottom: 20px;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  border: 1px solid #e0e0e0;
+  background-color: rgb(var(--whiteClr));
+  border-radius: 5px;
+  border: 1px solid rgb(var(--blackClr), 0.1);
   transition: all 0.3s ease;
+  
 }
 
+.faq_section{
+  max-width: 850px;
+  padding-block: 50px;
+}
 .accordion_wrapper[aria-expanded="false"] {
   max-height: 0;
   opacity: 0;
@@ -69,16 +63,17 @@
 }
 
 .content {
-  font-size: 16px;
+  font-size: 20px;
   text-align: justify;
   line-height: 30px;
+  color: rgb(var(--textClr));
 }
 
 .panel {
   padding: 15px;
   display: none;
-  background-color: white;
-  border-top: 1px solid #ccc;
+  background-color: rgb(var(--whiteClr));
+  border-top: 1px solid rgb(var(--blackClr), 0.2);
 }
 
 .panel p {
@@ -92,21 +87,21 @@
 .panel2 {
   display: none;
   background-color: white;
-  border-top: 1px solid #ccc;
+  border-top: 1px solid rgb(var(--blackClr), 0.1);
   transition: all 0.3s ease;
 }
 
 .expanded {
   display: block;
-  padding-top: 13px;
-  padding-bottom: 13px;
+  padding-block: 13px;
   transition: all 0.3s ease;
+  background-color: rgb(var(--whiteClr));
 }
 
 .accordion:not(.expanded)::after,
 .custom {
   content: "+";
-  color: black;
+  color: rgb(var(--textClr), 0.8);
   font-weight: 500;
   float: right;
   margin-left: 5px;
@@ -117,8 +112,9 @@
 .custom-title {
   display: flex;
   justify-content: space-between;
+  color: rgb(var(--textClr), 0.8);
   width: 100%;
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 500;
   padding: 0px;
   transition: all 0.3s ease;
@@ -127,7 +123,7 @@
 .expanded.accordion::after,
 .custom {
   content: "-";
-  color: black;
+  color: rgb(var(--blackClr));
   font-weight: 200;
   transition: all 0.3s ease;
   float: right;

@@ -1,6 +1,6 @@
-import { NgModule } from '@angular/core';
+import { NgModule,isDevMode } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
+import { environment } from '../../environments/environment';
 @NgModule({
   imports: [
     CommonModule
@@ -9,178 +9,203 @@ import { CommonModule } from '@angular/common';
 
 export class UtilsModule {
 
+  BackendUrl:String=environment.BackendURL;
+  pincodeUrl:String=environment.Pincode;
   URLs: any = {
-    signupUrl: 'https://tradevogue-backend.onrender.com/user/signup',
-    loginUrl: 'https://tradevogue-backend.onrender.com/user/login',
-    forgetPasswordUrl: 'https://tradevogue-backend.onrender.com/user/forget',
-    updatePasswordUrl: 'https://tradevogue-backend.onrender.com/user/update',
-    getDetails: 'https://tradevogue-backend.onrender.com/user/getDetails',
-    updateDetails: 'https://tradevogue-backend.onrender.com/user/updateDetails',
-    authorizeUrl: 'https://tradevogue-backend.onrender.com/checkUser',
-    changePassword: 'https://tradevogue-backend.onrender.com/user/changePassword',
-    // signupUrl:'http://localhost:5000/user/signup',
-    getAddress: 'https://tradevogue-backend.onrender.com/user/getAddress',
-    addAddress: 'https://tradevogue-backend.onrender.com/user/addAddress',
-    subscribeMail: 'https://tradevogue-backend.onrender.com/sendMail',
-    updateAddress: 'https://tradevogue-backend.onrender.com/user/updateAdress',
-    deleteAddress: 'https://tradevogue-backend.onrender.com/user/deleteAddress',
-    setDefaultAddress: 'https://tradevogue-backend.onrender.com/user/setDefault',
-    getCoupons: 'https://tradevogue-backend.onrender.com/offer/getCoupons',
-    // getAddress:'https://tradevogue-backend.onrender.com/user/getAddress',
-    // addAddress:'https://tradevogue-backend.onrender.com/user/addAddress',
-    // subscribeMail : 'https://tradevogue-backend.onrender.com/sendMail',
-    // updateAddress:'https://tradevogue-backend.onrender.com/user/updateAdress',
-    // deleteAddress:'https://tradevogue-backend.onrender.com/user/deleteAddress',
-    // setDefaultAddress:'https://tradevogue-backend.onrender.com/user/setDefault',
+    signupUrl: `${this.BackendUrl}/user/signup`,
+    loginUrl: `${this.BackendUrl}/user/login`,
+    subscribeMail: `${this.BackendUrl}/user/subscribe`,
+    forgetPasswordUrl: `${this.BackendUrl}/user/forget`,
+    updatePasswordUrl: `${this.BackendUrl}/user/update`,
+    getDetails: `${this.BackendUrl}/user/getDetails`,
+    updateDetails: `${this.BackendUrl}/user/updateDetails`,
+    authorizeUrl: `${this.BackendUrl}/checkUser`,
+    changePassword: `${this.BackendUrl}/user/changePassword`,
+    // signupUrl:`http://localhost:5000/user/signup`,
+    getAddress: `${this.BackendUrl}/user/getAddress`,
+    addAddress: `${this.BackendUrl}/user/addAddress`,
+    updateAddress: `${this.BackendUrl}/user/updateAdress`,
+    deleteAddress: `${this.BackendUrl}/user/deleteAddress`,
+    setDefaultAddress: `${this.BackendUrl}/user/setDefault`,
+    getCoupons: `${this.BackendUrl}/offer/getCoupons`,
+    // getAddress:`${this.BackendUrl}/user/getAddress`,
+    // addAddress:`${this.BackendUrl}/user/addAddress`,
+    // subscribeMail : `${this.BackendUrl}/sendMail`,
+    // updateAddress:`${this.BackendUrl}/user/updateAdress`,
+    // deleteAddress:`${this.BackendUrl}/user/deleteAddress`,
+    // setDefaultAddress:`${this.BackendUrl}/user/setDefault`,
    
 
     // Dashboard
-    fetchOverallData: 'https://tradevogue-backend.onrender.com/admin/getOverallInfo',
-    fetchSalesStats: 'https://tradevogue-backend.onrender.com/admin/fetchSalesData',
-    fetchCategoryStats: 'https://tradevogue-backend.onrender.com/admin/fetchCategoryData',
-    fetchReviewStats: 'https://tradevogue-backend.onrender.com/admin/fetchReviewData',
-    fetchPopularProducts: 'https://tradevogue-backend.onrender.com/admin/fetchPopularProducts',
+    fetchOverallData: `${this.BackendUrl}/admin/getOverallInfo`,
+    fetchSalesStats: `${this.BackendUrl}/admin/fetchSalesData`,
+    fetchCategoryStats: `${this.BackendUrl}/admin/fetchCategoryData`,
+    fetchReviewStats: `${this.BackendUrl}/admin/fetchReviewData`,
+    fetchPopularProducts: `${this.BackendUrl}/admin/fetchPopularProducts`,
 
-    addproduct: 'https://tradevogue-backend.onrender.com/admin/addProduct',
-    fetchProductInventory: 'https://tradevogue-backend.onrender.com/admin/fetchProducts',
-    fetchProductDetails: 'https://tradevogue-backend.onrender.com/admin/fetchProductDetails',
-    updateproduct: 'https://tradevogue-backend.onrender.com/admin/updateProduct',
-    highlightProduct: 'https://tradevogue-backend.onrender.com/admin/updatehighlightProduct',
-    deleteproducts: 'https://tradevogue-backend.onrender.com/admin/deleteProducts',
-    fetchFeatures: 'https://tradevogue-backend.onrender.com/admin/fetchProductFeatures',
-    updateFeatures: 'https://tradevogue-backend.onrender.com/admin/updateProductFeature',
-    updateAccount: 'https://tradevogue-backend.onrender.com/admin/updateDetails',
-    getAccount: 'https://tradevogue-backend.onrender.com/admin/getadminDetails',
-    getSellerOrders: 'https://tradevogue-backend.onrender.com/orders/sellerOrders',
-    getSellerOrderDetails: 'https://tradevogue-backend.onrender.com/orders/sellerOrderDetail',
-    getOrderOverallData: 'https://tradevogue-backend.onrender.com/orders/getOrderOverallData',
+    addproduct: `${this.BackendUrl}/admin/addProduct`,
+    fetchProductInventory: `${this.BackendUrl}/admin/fetchProducts`,
+    fetchProductDetails: `${this.BackendUrl}/admin/fetchProductDetails`,
+    updateproduct: `${this.BackendUrl}/admin/updateProduct`,
+    highlightProduct: `${this.BackendUrl}/admin/updatehighlightProduct`,
+    deleteproducts: `${this.BackendUrl}/admin/deleteProducts`,
+    fetchFeatures: `${this.BackendUrl}/admin/fetchProductFeatures`,
+    updateFeatures: `${this.BackendUrl}/admin/updateProductFeature`,
+    updateAccount: `${this.BackendUrl}/admin/updateDetails`,
+    getAccount: `${this.BackendUrl}/admin/getadminDetails`,
+    getSellerOrders: `${this.BackendUrl}/orders/sellerOrders`,
+    getSellerOrderDetails: `${this.BackendUrl}/orders/sellerOrderDetail`,
+    getOrderOverallData: `${this.BackendUrl}/orders/getOrderOverallData`,
+    getLatestOrderId: `${this.BackendUrl}/orders/getLatestOrderId`,
 
     // stripe
-    stripePayment: 'https://tradevogue-backend.onrender.com/user/create-payment-intent',
+    stripePayment: `${this.BackendUrl}/user/create-payment-intent`,
 
     // products
-    fetchProducts: 'https://tradevogue-backend.onrender.com/products/fetch',
-    fetchProductUrl: 'https://tradevogue-backend.onrender.com/products/fetchProduct',
-    uniqueProductFields: 'https://tradevogue-backend.onrender.com/products/uniqueFields',
-    getOriginalProductPrice: 'https://tradevogue-backend.onrender.com/products/getOriginalPrice',
-    // getProductPrice:'https://tradevogue-backend.onrender.com/admin/getProductPrice',
+    fetchProducts: `${this.BackendUrl}/products/fetch`,
+    fetchProductUrl: `${this.BackendUrl}/products/fetchProduct`,
+    uniqueProductFields: `${this.BackendUrl}/products/uniqueFields`,
+    getOriginalProductPrice: `${this.BackendUrl}/products/getOriginalPrice`,
+    // getProductPrice:`${this.BackendUrl}/admin/getProductPrice`,
 
     // product reviews
-    addOrUpdateReview: 'https://tradevogue-backend.onrender.com/reviews/addOrUpdate',
-    deleteReview: 'https://tradevogue-backend.onrender.com/reviews/delete',
+    addOrUpdateReview: `${this.BackendUrl}/reviews/addOrUpdate`,
+    deleteReview: `${this.BackendUrl}/reviews/delete`,
 
     // CART
-    fetchCart: 'https://tradevogue-backend.onrender.com/cart/fetch',
-    addItemsToCart: 'https://tradevogue-backend.onrender.com/cart/add',
-    removeItemFromCart: 'https://tradevogue-backend.onrender.com/cart/remove',
-    updateItemFromCart: 'https://tradevogue-backend.onrender.com/cart/update',
-    clearCart: 'https://tradevogue-backend.onrender.com/cart/clear',
+    fetchCart: `${this.BackendUrl}/cart/fetch`,
+    addItemsToCart: `${this.BackendUrl}/cart/add`,
+    removeItemFromCart: `${this.BackendUrl}/cart/remove`,
+    updateItemFromCart: `${this.BackendUrl}/cart/update`,
+    clearCart: `${this.BackendUrl}/cart/clear`,
+    removeItems: `${this.BackendUrl}/cart/removeItems`,
 
     // OFFER
-    createOffer: 'https://tradevogue-backend.onrender.com/offer/create',
-    getOffers: 'https://tradevogue-backend.onrender.com/offer/get',
-    deleteOffer: 'https://tradevogue-backend.onrender.com/offer/delete',
-    updateOffer: 'https://tradevogue-backend.onrender.com/offer/update',
-    updateOfferStatus:'https://tradevogue-backend.onrender.com/offer/statusUpdate',
-    searchOffer:'https://tradevogue-backend.onrender.com/offer/search',
-    // createOffer:'https://tradevogue-backend.onrender.com/offer/create',
-    // getOffers:'https://tradevogue-backend.onrender.com/offer/get',
-    // deleteOffer:'https://tradevogue-backend.onrender.com/offer/delete',
-    // updateOffer:'https://tradevogue-backend.onrender.com/offer/update',
-    // getCoupons:'https://tradevogue-backend.onrender.com/offer/getCoupons',
+    createOffer: `${this.BackendUrl}/offer/create`,
+    getOffers: `${this.BackendUrl}/offer/get`,
+    deleteOffer: `${this.BackendUrl}/offer/delete`,
+    updateOffer: `${this.BackendUrl}/offer/update`,
+    updateOfferStatus:`${this.BackendUrl}/offer/statusUpdate`,
+    searchOffer:`${this.BackendUrl}/offer/search`,
+    // createOffer:`${this.BackendUrl}/offer/create`,
+    // getOffers:`${this.BackendUrl}/offer/get`,
+    // deleteOffer:`${this.BackendUrl}/offer/delete`,
+    // updateOffer:`${this.BackendUrl}/offer/update`,
+    // getCoupons:`${this.BackendUrl}/offer/getCoupons`,
 
     // FAQs User Routes
-    getFaqData: 'https://tradevogue-backend.onrender.com/getpaginatedData/faq',
+    getFaqData: `${this.BackendUrl}/getpaginatedData/faq`,
 
     // FAQS Admin Routes
-    updateFaqData: 'https://tradevogue-backend.onrender.com/faqs/update',
-    deleteFaqData: 'https://tradevogue-backend.onrender.com/faqs/delete',
-    addFaqData: 'https://tradevogue-backend.onrender.com/faqs/add',
+    updateFaqData: `${this.BackendUrl}/faqs/update`,
+    deleteFaqData: `${this.BackendUrl}/faqs/delete`,
+    addFaqData: `${this.BackendUrl}/faqs/add`,
 
     // pagination common
-    getPaginatedData: 'https://tradevogue-backend.onrender.com/getPaginatedData',
+    getPaginatedData: `${this.BackendUrl}/getPaginatedData`,
     
     //wishlists
-    showWishlist: 'https://tradevogue-backend.onrender.com/wishlist/showWishlist',
-    addNewWishlist: 'https://tradevogue-backend.onrender.com/wishlist/addWishlist',
-    addToWishlist: 'https://tradevogue-backend.onrender.com/wishlist/addToWishlist',
-    showWishlistCount: 'https://tradevogue-backend.onrender.com/wishlist/showWishlistCount',
-    showProducts: 'https://tradevogue-backend.onrender.com/wishlist/showWishlistProducts',
-    deleteFromWishlist: 'https://tradevogue-backend.onrender.com/wishlist/deleteFromWishlist',
-    removeWishlist : 'https://tradevogue-backend.onrender.com/wishlist/deleteWishlist',
+    showWishlist: `${this.BackendUrl}/wishlist/showWishlist`,
+    addNewWishlist: `${this.BackendUrl}/wishlist/addWishlist`,
+    addToWishlist: `${this.BackendUrl}/wishlist/addToWishlist`,
+    showWishlistCount: `${this.BackendUrl}/wishlist/showWishlistCount`,
+    showProducts: `${this.BackendUrl}/wishlist/showWishlistProducts`,
+    deleteFromWishlist: `${this.BackendUrl}/wishlist/deleteFromWishlist`,
+    removeWishlist : `${this.BackendUrl}/wishlist/deleteWishlist`,
 
     // ORDERS
-    verifyOrderSummary: 'https://tradevogue-backend.onrender.com/orders/verifyOrderSummary',
-    createOrder: 'https://tradevogue-backend.onrender.com/orders/create',
-    getParticularUserOrders: 'https://tradevogue-backend.onrender.com/orders/getparticularUserOrders',
-    cancelOrder: 'https://tradevogue-backend.onrender.com/orders/cancelOrder',
+    verifyOrderSummary: `${this.BackendUrl}/orders/verifyOrder`,
+    createOrder: `${this.BackendUrl}/orders/create`,
+    getParticularUserOrders: `${this.BackendUrl}/orders/getparticularUserOrders`,
+    cancelOrder: `${this.BackendUrl}/orders/cancelOrder`,
+    verifyOrderWithoutCoupon:`${this.BackendUrl}/orders/verifyOrderWithoutCoupon`,
 
     // support, ticket 
-    getTicketStatus: 'https://tradevogue-backend.onrender.com/ticket/get',
-    webPushTokenDetail: 'https://tradevogue-backend.onrender.com/ticket/tokenDetails',
-    saveTicket: 'https://tradevogue-backend.onrender.com/ticket/send',
-    updateTitle: 'https://tradevogue-backend.onrender.com/ticket/updateTitle',
-    addTicketTitle: 'https://tradevogue-backend.onrender.com/ticket/addTitle',
-    deleteTitle: 'https://tradevogue-backend.onrender.com/ticket/deleteTitle',
-    getAllTicket: 'https://tradevogue-backend.onrender.com/ticket/getall',
-    updateTicket: 'https://tradevogue-backend.onrender.com/ticket/updateTicket',
-    deleteTicket: 'https://tradevogue-backend.onrender.com/ticket/deleteTicket',
-    ticketMail: 'https://tradevogue-backend.onrender.com/ticketStatus',
+    getTicketStatus: `${this.BackendUrl}/ticket/get`,
+    webPushTokenDetail: `${this.BackendUrl}/ticket/tokenDetails`,
+    saveTicket: `${this.BackendUrl}/ticket/send`,
+    updateTitle: `${this.BackendUrl}/ticket/updateTitle`,
+    addTicketTitle: `${this.BackendUrl}/ticket/addTitle`,
+    deleteTitle: `${this.BackendUrl}/ticket/deleteTitle`,
+    getAllTicket: `${this.BackendUrl}/ticket/getall`,
+    updateTicket: `${this.BackendUrl}/ticket/updateTicket`,
+    deleteTicket: `${this.BackendUrl}/ticket/deleteTicket`,
+    ticketMail: `${this.BackendUrl}/ticketStatus`,
 
 
     // notifications
-    getFcmToken: 'https://tradevogue-backend.onrender.com/notification/getfcmToken',
-    getNotification: 'https://tradevogue-backend.onrender.com/notification/get',
-    setNotifications: 'https://tradevogue-backend.onrender.com/notification/set',
-    updateNotification: 'https://tradevogue-backend.onrender.com/notification/update',
-    toggleNotification: 'https://tradevogue-backend.onrender.com/notification/toggle',
-    comingNotification: 'https://tradevogue-backend.onrender.com/notification/coming',
+    getFcmToken: `${this.BackendUrl}/notification/getfcmToken`,
+    getNotification: `${this.BackendUrl}/notification/get`,
+    setNotifications: `${this.BackendUrl}/notification/set`,
+    updateNotification: `${this.BackendUrl}/notification/update`,
+    toggleNotification: `${this.BackendUrl}/notification/toggle`,
+    comingNotification: `${this.BackendUrl}/notification/coming`,
+
+    // breadCrumbs
+    getBreadCrumbs: `${this.BackendUrl}/breadcrumbs/get`,
+    setBreadCrumbs: `${this.BackendUrl}/breadcrumbs/set`,
 
     // ------ custom-UI ------
 
     // Home-Layout
-    getHomeLayout: 'https://tradevogue-backend.onrender.com/homeLayout/get',
-    getAllHomeLayouts: 'https://tradevogue-backend.onrender.com/homeLayout/getAll',
-    createOrUpdateHomeLayout: 'https://tradevogue-backend.onrender.com/homeLayout/updateOrCreate',
-    deleteHomeLayout: 'https://tradevogue-backend.onrender.com/homeLayout/delete',
+    getHomeLayout: `${this.BackendUrl}/homeLayout/get`,
+    getAllHomeLayouts: `${this.BackendUrl}/homeLayout/getAll`,
+    createOrUpdateHomeLayout: `${this.BackendUrl}/homeLayout/updateOrCreate`,
+    deleteHomeLayout: `${this.BackendUrl}/homeLayout/delete`,
     
     // Socials
-    setSocials: 'https://tradevogue-backend.onrender.com/socials/set',
-    getSocials: 'https://tradevogue-backend.onrender.com/socials/get',
+    setSocials: `${this.BackendUrl}/socials/set`,
+    getSocials: `${this.BackendUrl}/socials/get`,
 
     //banner
-    setBanners : 'https://tradevogue-backend.onrender.com/banners/setBanners',
-    getBanners : 'https://tradevogue-backend.onrender.com/banners/getBanners',
-    deleteBanner : 'https://tradevogue-backend.onrender.com/banners/deleteBanner',
-    updateBanner : 'https://tradevogue-backend.onrender.com/banners/updateBanner',
-    toggleBanner : 'https://tradevogue-backend.onrender.com/banners/toggleBanner',
+    setBanners : `${this.BackendUrl}/banners/setBanners`,
+    getBanners : `${this.BackendUrl}/banners/getBanners`,
+    deleteBanner : `${this.BackendUrl}/banners/deleteBanner`,
+    updateBanner : `${this.BackendUrl}/banners/updateBanner`,
+    toggleBanner : `${this.BackendUrl}/banners/toggleBanner`,
 
     // deals
-    setDeals:'https://tradevogue-backend.onrender.com/deals/set',
-    getDealsDetails:'https://tradevogue-backend.onrender.com/deals/getDetails',
+    setDeals:`${this.BackendUrl}/deals/set`,
+    getDealsDetails:`${this.BackendUrl}/deals/getDetails`,
 
     // about
-    setAboutDetails:'https://tradevogue-backend.onrender.com/about/setDetails',
-    getAboutDetails:'https://tradevogue-backend.onrender.com/about/getDetails',
+    setAboutDetails:`${this.BackendUrl}/about/setDetails`,
+    getAboutDetails:`${this.BackendUrl}/about/getDetails`,
+    getOverAllDetails: `${this.BackendUrl}/about/getOverAllDetails`,
+
     // sale 
-    setSales: 'https://tradevogue-backend.onrender.com/sales/setSales',
-    getSales: 'https://tradevogue-backend.onrender.com/sales/getSales',
-    toggleSales: 'https://tradevogue-backend.onrender.com/sales/toggle',
-    updateSales: 'https://tradevogue-backend.onrender.com/sales/update',
-    deleteSales: 'https://tradevogue-backend.onrender.com/sales/delete',
+    setSales: `${this.BackendUrl}/sales/setSales`,
+    getSales: `${this.BackendUrl}/sales/getSales`,
+    toggleSales: `${this.BackendUrl}/sales/toggle`,
+    updateSales: `${this.BackendUrl}/sales/update`,
+    deleteSales: `${this.BackendUrl}/sales/delete`,
 
     // payment keys 
-    addPaymentKeys: 'https://tradevogue-backend.onrender.com/paymentKeys/add',
-    updatePaymentKeys: 'https://tradevogue-backend.onrender.com/paymentKeys/update',
-    deletePaymentKeys: 'https://tradevogue-backend.onrender.com/paymentKeys/delete',
-    getPaymentKeys: 'https://tradevogue-backend.onrender.com/paymentKeys/get',
+    addPaymentKeys: `${this.BackendUrl}/paymentKeys/add`,
+    updatePaymentKeys: `${this.BackendUrl}/paymentKeys/update`,
+    deletePaymentKeys: `${this.BackendUrl}/paymentKeys/delete`,
+    getPaymentKeys: `${this.BackendUrl}/paymentKeys/get`,
 
     // razorpay
-    razorpayPayment: 'https://tradevogue-backend.onrender.com/razorpay/createUpiPayment',
+    razorpayPayment: `${this.BackendUrl}/razorpay/createUpiPayment`,
+
+    // redis 
+    getClientSecret: `${this.BackendUrl}/paymentKeys/get-redis-data`,
 
     // update the order status 
-    updateOrderStatus: 'https://tradevogue-backend.onrender.com/orders/updateOrderStatus',
-    getLatestProductForBuyer: 'https://tradevogue-backend.onrender.com/orders/latestOrder'
+    updateOrderStatus: `${this.BackendUrl}/orders/updateOrderStatus`,
+    // getLatestProductForBuyer: `${this.BackendUrl}/orders/latestOrder`,
+
+    // T&C
+    getTandC:`${this.BackendUrl}/tc/get`,
+    setTandC: `${this.BackendUrl}/tc/set`,
+
+    // pincode
+    getPincode: `${this.pincodeUrl}/api/purchaser/getDetailsByPostalCode`,
+
+    // webhook
+    webhook: `${this.BackendUrl}/payment/webhook`,
+    
   }
 }
 

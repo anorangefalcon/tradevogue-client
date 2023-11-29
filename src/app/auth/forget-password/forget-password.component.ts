@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms';
-import { passwordStrengthValidator } from '../validators';
 import { Router } from '@angular/router';
 import { UtilsModule } from 'src/app/utils/utils.module';
 import { FetchDataService } from 'src/app/shared/services/fetch-data.service';
 import { ToastService } from 'src/app/shared/services/toast.service';
+import { passwordStrengthValidator, matchPasswordValidator } from '../validators';
 
 @Component({
   selector: 'app-forget-password',
@@ -22,8 +22,8 @@ export class ForgetPasswordComponent {
 
   constructor(private fb: FormBuilder, private router: Router, private backendUrls: UtilsModule, private fetchDataService: FetchDataService, private toastservice: ToastService) {
     this.resetPasswordForm = fb.group({
-      password: fb.control('', [Validators.required, passwordStrengthValidator]),
-      confirmPassword: fb.control('', [Validators.required, passwordStrengthValidator])
+      password: fb.control('', [Validators.required, passwordStrengthValidator, Validators.minLength(8)]),
+      confirmPassword: fb.control('', [Validators.required, (control: any) => matchPasswordValidator(control, this.resetPasswordForm)])
     },
       {
         validators: this.passwordMatch

@@ -30,7 +30,7 @@ export class AddproductComponent {
   orderQuantity!: number[];
   common_colors: string[] = ['#FFFFFF', '#000000', '#0000FF', '#808080', '#800080', '#00FF00', '#FFC0CB', '#ff0000'];
   new_colors: string[] = [];
-  uploading: boolean = false;
+  loading: boolean = false;
 
   productsForm: FormGroup;
   current_form: string = '';
@@ -198,6 +198,7 @@ export class AddproductComponent {
     this.activeRoute.params.subscribe({
       next: (data) => {
         if (data['sku']) {
+          this.loading = true;
           let params: HttpParams = new HttpParams().set("sku",data['sku']);
           this.dataService.HTTPGET(this.backendUrl.URLs.fetchProductUrl,params).subscribe({
             next: (data: any) => {
@@ -227,6 +228,7 @@ export class AddproductComponent {
               this.reponseData = data;
               this.productsForm.patchValue(this.reponseData);
               this.isUpdateRequest = true;
+              this.loading = false;
             }
           })
         }
@@ -450,7 +452,7 @@ export class AddproductComponent {
     } else {
       const imageFormArray = this.productsForm.get('assets')?.value;
 
-      this.uploading = true; 
+      this.loading = true; 
 
       // Iterate through Image Array
       await Promise.all(imageFormArray.map(async (imageArray: any, index: number) => {
@@ -478,7 +480,7 @@ export class AddproductComponent {
         this.data_template.title = 'Product Uploaded';
         this.toastservice.successToast(this.data_template);
         this.router.navigate(['/dashboard/products']);
-        this.uploading = false;
+        this.loading = false;
       });
     }
   }

@@ -5,7 +5,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            height: 100vh;
+            height: 100dvh;
             background-image: url(../../assets/deal-of-week-component/dealOfWeek-homeBg.png);
             background-size: cover;
             background-repeat: no-repeat;

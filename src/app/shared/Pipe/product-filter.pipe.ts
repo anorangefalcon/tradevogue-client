@@ -10,7 +10,7 @@ export class ProductFilterPipe implements PipeTransform {
     if(arg == '') return value;
     
     return value.filter((option: any)=>{
-      return (option.toString()).includes(arg) || (option.toString()).toLowerCase().includes(arg) || (option.toString()).toUpperCase().includes(arg);
+      return (option.toString()).toLowerCase().includes(arg.toLowerCase());
     });
   }
 

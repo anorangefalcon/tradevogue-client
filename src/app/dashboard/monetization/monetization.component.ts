@@ -2,10 +2,10 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UtilsModule } from 'src/app/utils/utils.module';
 import { FetchDataService } from 'src/app/shared/services/fetch-data.service';
-import { CookieService } from 'ngx-cookie-service';
 import { HttpClient } from '@angular/common/http';
 import { PopupService } from 'src/app/shared/services/popup.service';
 import { LoginCheckService } from 'src/app/shared/services/login-check.service';
+import { DialogBoxService } from 'src/app/shared/services/dialog-box.service';
 
 @Component({
   selector: 'app-monetization',
@@ -19,14 +19,55 @@ export class MonetizationComponent {
   razorpayPaymentKeys: any[] = []
   selectedItem: any;
   editItem: boolean = false;
+  direction: string = 'right';
+  show: boolean = false;
+  currentTab: string = 'tab1'; // Set default tab
+  title: string = "Monetization";
+  showTab(tab: string) {
+    this.currentTab = tab;
+  }
 
-
-  constructor(private formBuilder: FormBuilder, private loginCheckService: LoginCheckService, private util: UtilsModule, private fetch: FetchDataService, private cookie: CookieService, private http: HttpClient, private popup: PopupService) { }
+  ChangeHanlder(event: any) {
+    this.show = event;
+  }
+  constructor(
+    private formBuilder: FormBuilder,
+    private loginCheckService: LoginCheckService,
+    private util: UtilsModule,
+    private fetch: FetchDataService,
+    private http: HttpClient,
+    private dialogService: DialogBoxService,
+    private popup: PopupService) { }
 
   ngOnInit(): void {
     this.createForm();
     this.createRazorpayForm();
     this.fetchData();
+
+    this.dialogService.responseEmitter.subscribe({
+      next: (res: any) => {
+
+        if (this.selectedItem && res && this.delete_type == 'stripe') {
+          const id = this.selectedItem._id;
+          const itemIndex = this.paymentKeys.findIndex((key: any) => key._id === id);
+          console.log(itemIndex, "item index are")
+          if (itemIndex !== -1) {
+            this.paymentKeys.splice(itemIndex, 1);
+          }
+
+          const body = {
+            id
+          }
+
+          this.fetch.HTTPPOST(this.util.URLs.deletePaymentKeys, body)
+            .subscribe((response: any) => {
+              this.fetchData();
+            })
+
+        }
+
+      }
+    })
   }
 
   fetchData() {
@@ -44,7 +85,24 @@ export class MonetizationComponent {
     });
   }
   toggleRazorpayPayment(key: any) {
+    this.selectedItem = key;
+    console.log(this.selectedItem, "selected item are")
+    if (this.selectedItem) {
+      const id = this.selectedItem._id;
+      const enable = !this.selectedItem.enable;
+      const rzpIdKey = this.selectedItem.rzpIdKey;
+      const rzpSecretKey = this.selectedItem.rzpSecretKey;
+      const body = {
+        id, enable , rzpIdKey , rzpSecretKey
+      }
 
+      this.fetch.HTTPPOST(this.util.URLs.updatePaymentKeys, body).subscribe((response: any) => {
+        this.fetchData();
+      }
+        , (error: any) => {
+
+        });
+    }
   }
 
   viewRazorpay(key: any) {
@@ -78,6 +136,7 @@ export class MonetizationComponent {
   }
 
   edit(key: any) {
+    this.show = true;
     this.selectedItem = key;
     if (key) {
       this.selectedItem = key;
@@ -95,19 +154,19 @@ export class MonetizationComponent {
     if (this.selectedItem) {
       const id = this.selectedItem._id;
       const enable = !this.selectedItem.enable;
+      const publicKey = this.selectedItem.publicKey;
+      const privateKey = this.selectedItem.privateKey;
       const body = {
-        id, enable
+        id, enable , publicKey , privateKey
       }
 
       this.fetch.HTTPPOST(this.util.URLs.updatePaymentKeys, body).subscribe((response: any) => {
-      
+        this.fetchData();
       }
         , (error: any) => {
-         
+
         });
     }
-
-    this.fetchData()
 
   }
 
@@ -136,27 +195,22 @@ export class MonetizationComponent {
     }
   }
 
+  delete_type: string = 'stripe';
+
   delete(key: any) {
     this.selectedItem = key;
-    if (this.selectedItem) {
-      const id = this.selectedItem._id;
-      const itemIndex = this.paymentKeys.findIndex((key: any) => key._id === id);
-      if (itemIndex !== -1) {
-        this.paymentKeys.splice(itemIndex, 1);
-      }
+    this.delete_type = 'stripe';
 
-      const body = {
-        id
-      }
+    let template: any = {
+      title: 'Proceed with Deletion?',
+      subtitle: 'The key will be permanently deleted, and recovery will not be possible. Are you sure you want to proceed?',
+      type: 'confirmation',
+      confirmationText: 'Yes, Delete it',
+      cancelText: 'No, Keep it',
+    };
 
-      this.fetch.HTTPPOST(this.util.URLs.deletePaymentKeys, body)
-        .subscribe((response: any) => {
-        })
-
-    }
+    this.dialogService.confirmationDialogBox(template);
   }
-
-
 
   onSubmit() {
     if (this.stripeKeysForm.valid) {
@@ -171,10 +225,13 @@ export class MonetizationComponent {
         }
 
         this.fetch.HTTPPOST(this.util.URLs.addPaymentKeys, body).subscribe((response: any) => {
+          this.fetchData();
+          this.stripeKeysForm.reset();
         });
       });
-    } else if (this.razorpayKeysForm.valid) {
+    } else {
       const razorKeys = this.razorpayKeysForm.value;
+      console.log(razorKeys, "razor keys are")
       this.loginCheckService.getUser('token').subscribe((data: any) => {
         const tokenSegments = data.split('.');
         const adminId = tokenSegments[1];
@@ -185,6 +242,9 @@ export class MonetizationComponent {
           "adminId": adminId,
         };
         this.fetch.HTTPPOST(this.util.URLs.addPaymentKeys, razorpayBody).subscribe((response: any) => {
+          // console.log(response, "response are")
+          this.fetchData();
+          this.razorpayKeysForm.reset();
         });
       })
     }

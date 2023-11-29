@@ -39,7 +39,9 @@
         opacity: 1;
     }
 } */
-
+.search {
+    height: 100%;
+}
 .search-bar{
     width: max(200px, 100%);
     margin-inline-end: auto;
@@ -48,15 +50,16 @@
 
 
 .search-bar.form__input{
-    padding-inline: 15px 50px;
+    padding-inline: 15px 48px;
 }
 
 
 .search button{
     padding: 0;
     background: transparent;
-    width: 50px;
+    width: 40px;
     & span{
+        color: rgb(var(--blackClr));
         opacity: 0.5;
     }
 }

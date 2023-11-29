@@ -8,7 +8,8 @@
                 <span class="back_icon material-symbols-outlined">arrow_back_ios_new</span>
             </button>
 
-            <button *ngIf="editPage" class="previous d-flex flex-center pointer transition" [routerLink]="['/dashboard/products']"
+            <button *ngIf="editPage" class="previous d-flex flex-center pointer transition"
+                [routerLink]="['/dashboard/products']"
                 [ngStyle]="{display: current_form == 'product_images'? 'none' : 'flex' }">
                 <span class="back_icon material-symbols-outlined">arrow_back_ios_new</span>
             </button>
@@ -29,13 +30,15 @@
                 Add Product Features
             </button> -->
 
-            <button class="btn btn-xs btn-rounded fw-500 btn-primary d-flex flex-center gap-5" (click)="checkFormStatus()"
+            <button class="btn btn-xs btn-rounded fw-500 btn-primary d-flex flex-center gap-5"
+                (click)="checkFormStatus()"
                 [ngStyle]="{display: current_form == 'product_images'? 'none' : 'flex', 'background-color': productsForm.get('basicinfo')?.invalid? 'rgb(var(--primaryClr), 0.8)' : 'rgb(var(--primaryClr))'}">
                 Continue
                 <span class="next_icon material-symbols-outlined">arrow_forward_ios</span>
             </button>
 
-            <button class="btn btn-xs btn-rounded fw-500 btn-secondary d-flex flex-center gap-5" (click)="addProductImageForm()"
+            <button class="btn btn-xs btn-rounded fw-500 btn-secondary d-flex flex-center gap-5"
+                (click)="addProductImageForm()"
                 [ngStyle]="{display: current_form != 'product_images'? 'none' : 'flex' }">
                 <span class="form_icon material-symbols-outlined">add</span>
                 Add Color Variant
@@ -111,8 +114,8 @@
                                 <label for="colors" class="input__label">Colors<span class="important">*</span></label>
                                 <div class="color__picker grid gap-10">
                                     <ng-container *ngFor="let c of common_colors; let x=index">
-                                        <input type="radio" [name]="'color'" [id]="'color_'+ i + c" style="display: none;"
-                                            [value]="c" formControlName="color" />
+                                        <input type="radio" [name]="'color'" [id]="'color_'+ i + c"
+                                            style="display: none;" [value]="c" formControlName="color" />
                                         <label class="pointer d-flex flex-center" [for]="'color_'+ i + c"
                                             [style]="'background-color:'+c"></label>
                                     </ng-container>
@@ -125,16 +128,13 @@
                                         </label>
                                     </span>
                                     <!-- <ng-container *ngIf="new_colors.length != 0"> -->
-                                        <ng-container  *ngFor="let color of new_colors; let x=index">
-                                            <input type="radio" [name]="'color'" [id]="'color_'+ i + color" style="display: none;"
-                                                [value]="color" formControlName="color" />
-                                            <label class="pointer d-flex flex-center" [for]="'color_'+ i + color"
-                                                [style]="'background-color:'+ color"></label>
-                                        </ng-container>
+                                    <ng-container *ngFor="let color of new_colors; let x=index">
+                                        <input type="radio" [name]="'color'" [id]="'color_'+ i + color"
+                                            style="display: none;" [value]="color" formControlName="color" />
+                                        <label class="pointer d-flex flex-center" [for]="'color_'+ i + color"
+                                            [style]="'background-color:'+ color"></label>
+                                    </ng-container>
                                     <!-- </ng-container> -->
-
-
-
                                     <span class="error">
                                         <small
                                             *ngIf="form.get('colors')?.hasError('required') && form.get('colors')?.touched">*Field
@@ -166,7 +166,7 @@
 
                                                 <td>
                                                     <div class="form__group">
-                                                        
+
                                                         <app-custom-select [_id]=" '' + i + j"
                                                             [options]="sizes ? sizes: []" [type]="''"
                                                             [selectedOption]="(_form.get('size')?.value ? _form.get('size')?.value : 'Select Size')"
@@ -214,7 +214,7 @@
             </ng-container>
 
             <ng-container *ngSwitchDefault>
-                <div formGroupName="basicinfo" class="card card__pd-20 row d-flex gap-20">
+                <div formGroupName="basicinfo" class="basic-Info card card__pd-20 row d-flex gap-20">
 
                     <div class="col col-1">
                         <div class="form__group">
@@ -405,7 +405,7 @@
 </section>
 
 
-<div *ngIf="uploading" class="tv-loading uploading d-flex flex-center inset-inline-start-0 mh100 mw100">
+<div *ngIf="loading" class="tv-loading uploading d-flex flex-center inset-inline-start-0 mh100 mw100">
     <img src="../../../assets/logo-mobile.svg" alt="tradeVogue-loading">
     <div class="circle-tv-loader"></div>
 </div>

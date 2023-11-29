@@ -11,16 +11,18 @@ import * as xlsx from 'xlsx';
 })
 export class OrdersComponent {
   order_status:string = 'Completed';
-  payment_status: string = 'Confirmed';
-  paymentStatus: any[] = ['Confirmed', 'Pending', 'Failed', 'Canceled'];
+  payment_status: string = 'Success';
+  paymentStatus: any[] = ['Success', 'Pending', 'Cancelled', 'Failed'];
   orderData: any[] = [];
   pageSize: number = 8;
   currentPage: number = 1;
+  orderStatus: number = 2;
   selectedColor: any = 0;
-  totalCount: any;
+  totalCount: any = 0
   updateIndex: any = false; //Purpose of invoice Avalibility
   updateIndexStatus: any; //For puspose of Input status
   filename: string = 'Orders.xlsx';
+  noData: boolean =  false;
 
   orderStats: any = {
     confirmed: 0,
@@ -45,7 +47,7 @@ export class OrdersComponent {
     private fetchData: FetchDataService, 
     private backendUrl: UtilsModule){}
 
-  async ngOnInit(){
+  ngOnInit(){
     this.fetchStats();
     this.fetchOrders();
 
@@ -76,6 +78,7 @@ export class OrdersComponent {
   fetchStats(){
     this.fetchData.HTTPGET(this.backendUrl.URLs.getOrderOverallData).subscribe({
       next: (stats: any)=>{
+
         this.orderStats = stats;
 
         stats.forEach((data: any)=>{
@@ -90,24 +93,36 @@ export class OrdersComponent {
   fetchOrders(){
     this.fetchData.HTTPPOST(this.backendUrl.URLs.getSellerOrders, this.template).subscribe({
       next: (data: any)=>{
-        if(!data.length){
-          this.orderData = [0]
+
+        console.log(data);
+
+        if(!data.orders.length){
+          this.orderData = [];
+          this.totalCount = data.total.length;
+          this.noData = true;
           return;
         }
+
         this.orderData = [];
-        data.forEach((order: any)=>{
+
+        data.orders.forEach((order: any)=>{
           let orderInfo = {
-            orderID: order.data.orderID,
-            customer: order.customer,
+            orderID: order.data.orderID || null,
+            customer: order.customer || '',
             orderTime: (new Date(order.data.orderDate)).toDateString(),
-            amount: order.data.orderAmount,
-            quantity: order.orderQuantity,
-            payment_status:  order.data.payment_status,
-            invoice_status: order.data.invoice_status,
+            amount: order.data.orderAmount || 0,
+            quantity: order.orderQuantity || 0,
+            payment_status:  order.data.payment_status || '',
+            invoice_status: order.data.invoice_status || '',
             _id: order._id
           };
           this.orderData.push(orderInfo);
         });
+
+        this.totalCount = data.total[0].count;
+      },
+      error: (res: any) => {
+        this.noData = true;
       }
     });
   }
@@ -115,7 +130,7 @@ export class OrdersComponent {
   dialogTemplate: any = {
     title: 'Want to make Invoice Available?',
     type: 'confirmation',
-    confirmationText: 'Yes, Avial it',
+    confirmationText: 'Yes, Avail it',
     cancelText: 'No, Cancel it',
   }
 
@@ -136,14 +151,27 @@ export class OrdersComponent {
     this.fetchOrders();
   }
 
+  getCurrentDate(){
+    return (new Date()).toISOString().split('T')[0];
+  }
+
   updateFields(e: any, type: string){
     this.template.filter[type] = e;
     this.fetchOrders();
   }
 
   updateDateFields(e: Event, field: string){
-    
     this.template.filter[field] = (<HTMLInputElement>e.target).value;
+    this.fetchOrders();
+  }
+
+  resetField(){
+    this.template.filter = {
+      search: '',
+      payment_status: '',
+      dateto: '',
+      datefrom: ''
+    }
     this.fetchOrders();
   }
 
