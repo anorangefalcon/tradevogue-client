@@ -13,7 +13,7 @@ export class DashboardComponent {
 
   isCollapse: boolean = false;
   adminName: String = '';
-  darkTheme: boolean = false;
+  darkTheme: Boolean = false;
 
   constructor(private userService: LoginCheckService,
     private fetchDataService: FetchDataService) {
@@ -24,9 +24,8 @@ export class DashboardComponent {
   }
 
   toggleTheme(){
-    this.darkTheme = !this.darkTheme
-    this.fetchDataService.theme.next(this.darkTheme)
-    $('#tv-body').toggleClass("dark")
+    this.darkTheme = !this.darkTheme;
+    this.fetchDataService.toggleTheme(this.darkTheme);
   }
 
   navitems = [

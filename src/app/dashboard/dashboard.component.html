@@ -48,12 +48,12 @@
         <span class="branding d-flex align-item-center">
             <a [routerLink]="['/']">
                 <ng-container *ngIf="!darkTheme; else lightTheme">
-                    <img class="brand-logo" src="../../assets/logo-light.svg" [class.active]="isCollapse" alt="Logo">
-                    <img class="mobile-logo" src="../../assets/logo-mobile-light.svg" alt="Logo" alt="">
-                </ng-container>
-                <ng-template #lightTheme>
                     <img class="brand-logo" src="../../assets/logo.svg" [class.active]="isCollapse" alt="Logo">
                     <img class="mobile-logo" src="../../assets/logo-mobile.svg" alt="Logo" alt="">
+                </ng-container>
+                <ng-template #lightTheme>
+                    <img class="brand-logo" src="../../assets/logo-light.svg" [class.active]="isCollapse" alt="Logo">
+                    <img class="mobile-logo" src="../../assets/logo-mobile-light.svg" alt="Logo" alt="">
                 </ng-template>
             </a>
         </span>

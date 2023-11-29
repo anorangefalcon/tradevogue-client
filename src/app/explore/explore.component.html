@@ -30,6 +30,22 @@
                 <h4>FILTERS</h4>
                 <button class="clear-btn btn" (click)="clearAll()">Reset</button>
             </div>
+            <!-- <div class="types">
+                <div class="d-flex flex-column gap-10">
+                    <p>Gender</p>
+                    <div class="d-flex flex-column gap-10">
+                        <div class="d-flex gap-10" *ngFor="let gender of genders">
+                            <input type="checkbox" [name]="gender" [value]="gender"
+                                (change)="onChecked($event, 'gender')" id={{gender}} class="checkboxes"
+                                [checked]="isValueSelected(gender, filterApplied['gender'])">
+                            <label [for]="gender" class="capital">{{ gender}}</label>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div> -->
+
             <div *ngFor="let filter of uniqueData | keyvalue " class="types">
                 <div class="d-flex flex-column gap-10">
                     <p>{{filter.key | titlecase}}</p>

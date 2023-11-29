@@ -3,6 +3,7 @@ import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FetchDataService } from 'src/app/shared/services/fetch-data.service';
 import { ToastService } from 'src/app/shared/services/toast.service';
 import { UtilsModule } from 'src/app/utils/utils.module';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'app-customise-tc',
@@ -13,6 +14,7 @@ export class CustomiseTcComponent {
 
   TandC!: FormArray
   yourFormGroup!: FormGroup;
+  cachedFormGroup!: FormGroup;
 
   constructor(
     private fb: FormBuilder,
@@ -28,6 +30,10 @@ export class CustomiseTcComponent {
     this.getData();
   }
 
+  discardChanges(){
+    this.yourFormGroup = this.cachedFormGroup;
+  }
+  
   getParticularContentType(i: number) {
     return this.yourFormGroup.get('TandC')?.get(String(i))?.get('ContentTYPE')?.value;
   }
@@ -42,6 +48,7 @@ export class CustomiseTcComponent {
 
   removeFormControl(index: number) {
     (<FormArray>this.yourFormGroup.get('TandC'))?.removeAt(index);
+    this.toastService.warningToast
   }
 
   // contentInfo form Array
@@ -88,7 +95,7 @@ export class CustomiseTcComponent {
       FormArray.push(form);
     }
     // console.log('value pushed called------>');
-    
+
   }
 
 
@@ -140,7 +147,8 @@ export class CustomiseTcComponent {
   onsubmit() {
     this.fetchDataService.HTTPPOST(this.backendUrl.URLs.setTandC, this.yourFormGroup.value).subscribe((res: any) => {
       this.toastService.successToast({title: res.message})
-
+        this.cachedFormGroup=_.cloneDeep(this.yourFormGroup);
+        this.yourFormGroup.disable();
     })
   }
 
@@ -197,12 +205,12 @@ export class CustomiseTcComponent {
 
   getData() {
     this.fetchDataService.HTTPGET(this.backendUrl.URLs.getTandC).subscribe((response: any) => {
-      for (let i = 0; i <=response.data.length-1; i++) {
+      for (let i = 0; i <= response.data.length - 1; i++) {
         this.addFormControl();
         for (let j = 0; j < response.data[i].contentInfo.length; j++) {
           this.addContentFormControl(i);
 
-          for (let k = 0; k < response.data[i].contentInfo[j].content_description.length-1; k++) { 
+          for (let k = 0; k < response.data[i].contentInfo[j].content_description.length - 1; k++) {
             this.addContentDescFormControl(i, j);
           }
         }
@@ -210,6 +218,9 @@ export class CustomiseTcComponent {
       }
 
       this?.yourFormGroup?.get('TandC')?.patchValue(response?.data);
+      this.cachedFormGroup=_.cloneDeep(this.yourFormGroup);
+      this.yourFormGroup.disable();
     })
   }
+  
 }

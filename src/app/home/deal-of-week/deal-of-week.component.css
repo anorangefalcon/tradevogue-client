@@ -6,6 +6,7 @@
 
     & .container {
         min-height: 450px;
+        flex-wrap: wrap;
     }
 
     & .sub-heading {

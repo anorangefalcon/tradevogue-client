@@ -31,7 +31,7 @@ export class ProductCardCarouselComponent {
   customOptions: OwlOptions = {
     loop: false,
     rewind: true,
-    margin: 30,
+    margin: 15,
     mouseDrag: true,
     touchDrag: true,
     pullDrag: true,
@@ -47,17 +47,19 @@ export class ProductCardCarouselComponent {
       0: {
         items: 1
       },
-      400: {
+      340: {
         items: 2
       },
-      740: {
+      500: {
         items: 3
       },
-      940: {
-        items: 5
+      740: {
+        items: 4,
+        margin: 20,
       },
-      1450: {
-        items: 4
+      940: {
+        items: 5,
+        margin: 20,
       }
     }
   }

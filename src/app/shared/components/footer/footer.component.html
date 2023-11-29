@@ -4,8 +4,8 @@
 
             <div class="first-col d-flex flex-column gap-20">
 
-                <img src="../../../../assets/logo.svg" alt="logo" class="logo" *ngIf="!theme">
-                <img src="../../../../assets/logo-light.svg" alt="logo" class="logo" *ngIf="theme">
+                <img src="../../../../assets/logo.svg" alt="logo" class="logo" *ngIf="!theme" [routerLink]="['/']">
+                <img src="../../../../assets/logo-light.svg" alt="logo" class="logo" *ngIf="theme" [routerLink]="['/']">
 
 
                 <p class="para-text letter-spacing">Dress Boldly, Be Unapologetically You with Our Fashion.</p>

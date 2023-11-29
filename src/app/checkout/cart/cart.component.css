@@ -365,14 +365,8 @@
         font-size: 14px !important;
     }
 
-    /* .labels {
-        display: none;
-    } */
-
     .cart-item {
         gap: 20px;
-        padding-inline: 20px;
-        padding-block: 20px;
     }
 
     .item-details {
@@ -433,15 +427,6 @@
         & .material-symbols-outlined {
             font-size: 18px;
             color: rgb(var(--textClr));
-        }
-    }
-
-    .remove-btn {
-        right: 5px;
-        top: 5px;
-
-        & span {
-            font-size: 18px;
         }
     }
 
@@ -552,6 +537,8 @@
 
     .product-image {
         width: 25%;
+    height: fit-content;
+
     }
 
     .sizes,

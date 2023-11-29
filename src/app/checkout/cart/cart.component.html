@@ -3,10 +3,15 @@
     <div class="cart-container d-flex flex-wrap default-animation">
         <div class="cart-items d-flex" *ngFor="let item of cartArr; let i = index">
             <div class="cart-item col gap-25 d-flex" [ngClass]="isUpdating(i) ? 'disabled-item' : ''">
-                <div class="product-image d-flex gap-30">
+                <div class="product-image d-flex gap-30 relative">
                     <a routerLink="/product/{{item.sku}}" class="product-img" (click)="closeSideCart()">
                         <img [src]=item?.image alt="Product Image" class="skeleton">
                     </a>
+                    <button class="remove-btn d-flex align-item-center" (click)="appendUpdateArr(i); remove_item(userToken ? item._id : i)">
+                        <span class="material-symbols-outlined">
+                            close
+                        </span>
+                    </button>
                 </div>
 
                 <div class="ProductINFO d-flex gap-15 flex-row align-item-center">
@@ -68,11 +73,6 @@
 
                     </div>
                 </div>
-                <button class="remove-btn d-flex align-item-center" (click)="appendUpdateArr(i); remove_item(userToken ? item._id : i)">
-                    <span class="material-symbols-outlined">
-                        close
-                    </span>
-                </button>
             </div>
         </div>
 

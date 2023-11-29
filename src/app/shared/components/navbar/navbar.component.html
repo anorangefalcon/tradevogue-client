@@ -12,11 +12,17 @@
 
             <a class="logo" [routerLink]="['/']" (click)="hamburgerOpen = false">
                 <picture>
-                    <source media="(min-width: 480px)" srcset="../../assets/logo.svg" *ngIf="darkTheme">
-                    <source media="(min-width: 480px)" srcset="../../assets/logo-light.svg" *ngIf="!darkTheme">
-                    
-                    <img src="../../../../assets/logo-mobile.svg" alt="Trade Vogue Logo" *ngIf="!darkTheme">
-                    <img src="../../../../assets/logo-mobile-light.svg" alt="Trade Vogue Logo" *ngIf="darkTheme">
+
+                    <ng-container *ngIf="!darkTheme; else lightMode">
+                        <source media="(min-width: 480px)" srcset="../../assets/logo.svg" >
+                        <img src="../../../../assets/logo-mobile.svg" alt="Trade Vogue Logo">
+                    </ng-container>
+
+                    <ng-template #lightMode>
+                        <source media="(min-width: 480px)" srcset="../../assets/logo-light.svg">
+                        <img src="../../../../assets/logo-mobile-light.svg" alt="Trade Vogue Logo" >
+                    </ng-template>
+
                 </picture>
             </a>
 

@@ -1203,12 +1203,16 @@ div.spinner::before{
         }
     }
 
+    .section-header{
+        padding-block-end: 20px;
+    }
+
     .section-heading {
-        font-size: 30px !important;
+        font-size: 24px !important;
     }
 
     .section-sub-heading {
-        font-size: 14px !important;
+        font-size: 12px !important;
         font-weight: 300 !important;
     }
 }
@@ -1247,13 +1251,13 @@ div.spinner::before{
 }
 
 .tv-loading {
-    height: 70vh;
+    height: 100vh;
     width: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
     position: relative;
-    transform: translateY(-50px);
+    transform: translateY(-130px);
 
     & img {
         height: 100px;
@@ -1262,7 +1266,6 @@ div.spinner::before{
         z-index: 1;
         transform: translateY(12px);
         animation: tv-loading 1s ease-in-out infinite;
-
     }
 
     & .circle-tv-loader {

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { SocialsService } from './shared/services/custom-UI/socials.service';
+import { FetchDataService } from './shared/services/fetch-data.service';
 
 @Component({
   selector: 'app-root',
@@ -9,14 +9,9 @@ import { SocialsService } from './shared/services/custom-UI/socials.service';
 export class AppComponent {
   'title': 'tradevogue';
 
-  constructor(private brandService: SocialsService) { }
+  constructor(private fetchDataService: FetchDataService) { }
 
-  ngOnInit(): void {
-
-    // this.brandService.getSocials().subscribe((data: any)=>{
-    //   console.log(data, 'heree');
-    // })
-      
+  ngOnInit(): void {      
   }
 
 }

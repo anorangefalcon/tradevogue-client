@@ -6,7 +6,7 @@
 }
 
 .py-start-100 {
-  padding-block-start: 100px;
+  padding-block-start: 90px;
 }
 /* 
 section {
@@ -142,13 +142,12 @@ section {
     padding-block: 80px;
   }
 
-  .py-100 {
-    /* Padding Block 100*/
-    padding-block: 80px;
+  .py-start-100 {
+    padding-block-start: 80px;
   }
 
-  .pb-100 {
-    padding-block-end: 80px;
+  .home__block:nth-child(2n){
+    padding-block: 80px;
   }
 }
 
@@ -163,6 +162,14 @@ section {
 }
 
 @media screen and (max-width: 768px) {
+
+  .home__block:nth-child(2n){
+    padding-block: 70px;
+  }
+  
+  .py-start-100 {
+    padding-block-start: 70px;
+  }
 
   .facility {
     font-size: 12px !important;
@@ -186,15 +193,6 @@ section {
     padding-block: 20px;
   }
 
-  .py-100 {
-    /* Padding Block 100*/
-    padding-block: 20px;
-  }
-
-  .pb-100 {
-    padding-block-end: 20px;
-  }
-
   .mgap-15 {
     gap: 15px !important;
   }
@@ -211,6 +209,14 @@ section {
 @media screen and (max-width: 480px) {
   .sm-gap-10{
     gap: 10px;
+  }
+
+  .home__block:nth-child(2n){
+    padding-block: 50px;
+  }
+  
+  .py-start-100 {
+    padding-block-start: 50px;
   }
 
   .newsletter {

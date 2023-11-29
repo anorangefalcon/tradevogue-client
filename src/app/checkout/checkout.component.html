@@ -54,7 +54,7 @@
                 <p>₹{{cart.amounts.total | number : '1.0-2'}}</p>
             </div>
             <button *ngIf="(!CouponApplied && !SecureNavBar)"
-                class="btn-secondary d-flex flex-center gap-5 btn btn-md "
+                class="btn-secondary btn-rounded d-flex flex-center gap-5 btn btn-md "
                 (click)="CouponOpener()">
 
                 Apply Coupons
@@ -71,12 +71,12 @@
                 <span (click)="RemoveAppliedCoupon()" class="pointer">Remove</span>
             </div>
             <!-- (click)="CreateOrder()" -->
-            <button class="btn-primary btn btn-md" (click)="verifyOrderSummary()" *ngIf="!SecureNavBar" ><a>Proceed to Checkout</a></button>
+            <button class="btn-primary btn btn-rounded btn-md" (click)="verifyOrderSummary()" *ngIf="!SecureNavBar" ><a>Proceed to Checkout</a></button>
 
-            <button class="btn-primary btn btn-md" 
+            <button class="btn-primary btn btn-md btn-rounded" 
             (click)="nextClicked()" *ngIf="!StripePaymentOpener && SecureNavBar" [disabled]="NextDisabled">
                 Continue</button>
-            <button class="btn-primary btn btn-md" *ngIf="SecureNavBar && StripePaymentOpener" (click)="ProceedToPayment()">Proceed to Payment</button>
+            <button class="btn-primary btn btn-md btn-rounded" *ngIf="SecureNavBar && StripePaymentOpener" (click)="ProceedToPayment()">Proceed to Payment</button>
               
         </div>
     </div>

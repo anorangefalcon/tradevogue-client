@@ -40,7 +40,7 @@
             & span {
                 color: rgb(var(--textClr));
                 font-size: 26px !important;
-                background-color: white!important; ;
+                background-color: rgb(var(--whiteClr))!important; ;
             } 
         }
 

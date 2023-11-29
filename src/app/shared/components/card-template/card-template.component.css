@@ -34,6 +34,8 @@
     overflow: hidden;
     height: 100%;
     width: 100%;
+    display: flex;
+    align-items: stretch;
 
     & img {
         object-fit: cover;

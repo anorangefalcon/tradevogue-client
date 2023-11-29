@@ -15,7 +15,7 @@ import { UtilsModule } from 'src/app/utils/utils.module';
 export class FooterComponent {
 
   socialsData! : any;
-  theme: boolean = false;
+  theme: Boolean = false;
 
   constructor(private routerService: RouterLinksService, private router: Router, private socialsService: SocialsService, private fetchDataService : FetchDataService, private backendUrls : UtilsModule) {
     this.fetchDataService.themeColor$.subscribe((color)=>{
