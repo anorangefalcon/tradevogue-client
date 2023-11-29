@@ -57,7 +57,7 @@
 
 .invoice-template {
     width: min(100%, 620px);
-    height: 100vh;
+    height: 100dvh;
     padding: 30px;
     background-color: rgb(var(--whiteClr));
     border: 1px solid rgba(var(--blackClr), 0.1);

@@ -91,7 +91,6 @@ export class ProductPageComponent implements OnInit {
     }
     else {
       this.fetchService.HTTPGET(this.backendUrl.URLs.fetchProductUrl, params).subscribe((data: any) => {
-        console.log('data come up is ',data);
         
         this.wishlistService.WishListedProducts.subscribe((response: any) => {
           if (response.includes(data._id)) {
@@ -105,11 +104,9 @@ export class ProductPageComponent implements OnInit {
 
   updateDataFields(data: any) {
     this.data = data;
-    console.log('data come up i s',data);
     
     this.data.avgRating = data.avgRating ? data.avgRating : 0;
     this.activeIndex = 0;
-    console.log('selected color is ',data.assets[0]);
     
     this.selectedColor = data.assets[0].color;
     this.selectedSize = data.assets[this.assetIndex].stockQuantity[0].size;    
@@ -184,7 +181,6 @@ export class ProductPageComponent implements OnInit {
   }
 
   changeColor(index: any) {
-    console.log('index comig is ',index);
     
     this.assetIndex = index;
     this.sizeIndex = 0;
@@ -197,7 +193,6 @@ export class ProductPageComponent implements OnInit {
   }
 
   normalizeSizeColorQuantity() {
-    console.log('last come up is ',this.data," assetIndx is ",this.data?.assets[this.assetIndex]?.color);
     
     this.selectedColor = this.data?.assets[this.assetIndex].color;
     this.selectedSize = this.data?.assets[this.assetIndex].stockQuantity[this.sizeIndex].size;
@@ -305,20 +300,23 @@ export class ProductPageComponent implements OnInit {
     // navText: ['<span class="material-symbols-outlined">chevron_left</span>', '<span class="material-symbols-outlined">chevron_right</span>'],
     navText: ['', ''],
     navSpeed: 600,
-    // responsive: {
-    //   0: {
-    //     items: 1
-    //   },
-    //   400: {
-    //     items: 1
-    //   },
-    //   740: {
-    //     items: 1
-    //   },
-    //   940: {
-    //     items: 1
-    //   }
-    // },
+    responsive: {
+      0: {
+        items: 1
+      },
+      400: {
+        items: 3
+      },
+      740: {
+        items: 4
+      },
+      940: {
+        items: 4
+      },
+      1060: {
+        items: 5
+      }
+    },
   }
   carouselOption: OwlOptions = this.customOptions;
   atDefault: boolean = true;

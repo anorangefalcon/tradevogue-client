@@ -227,7 +227,7 @@ p {
 
 .scrollable-content {
   overflow: auto;
-  max-height: 100vh;
+  max-height: 100dvh;
   padding-right: 5px;
   padding-block: 5px;
 }
@@ -682,7 +682,7 @@ p {
 }
 
 .notification-scroll {
-    max-height: 100vh; /* Adjust as needed */
+    max-height: 100dvh; /* Adjust as needed */
     overflow-y: auto;
     padding: 5px;
 }

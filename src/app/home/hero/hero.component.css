@@ -1,10 +1,10 @@
 .hero-section {
     width: 100%;
-    /* height: calc(100vh);  */
+    /* height: calc(100dvh);  */
 
     & .hero-content{
         padding-inline: 0px;
-        padding-block-start: 80px;
+        padding-block-start: 75px;
         
     }
     
@@ -59,8 +59,7 @@
         }  
     }
     & .banner-background {
-        height: calc(100vh - 80px);
-        width: 100vw;
+        height: calc(100dvh - 80px);
     }
 
 }
@@ -69,7 +68,7 @@
 }
 
 div.banner.skeleton{
-    height: 100vh;
+    height: 100dvh;
     width: 100%;
 }
 

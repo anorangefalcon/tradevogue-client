@@ -208,7 +208,7 @@ tr:first-child td.items.displayInfo .popup{
 
     .popup {
         position: fixed;
-        height: 100vh;
+        height: 100dvh;
         width: 100vw;
         inset-inline-start: 0;
         inset-block-start: 0;

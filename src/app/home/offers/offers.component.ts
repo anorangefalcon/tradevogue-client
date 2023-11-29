@@ -17,9 +17,6 @@ export class OffersComponent {
   constructor(public salesService: SalesService){
     this.salesService.getSales().subscribe((data: any) => {
 
-      console.log(data, "offer data");
-      
-
       data.forEach((element: any) => {
         element['hover'] = false;
       });

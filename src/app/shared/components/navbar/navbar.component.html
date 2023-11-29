@@ -65,10 +65,12 @@
                     <span (click)="isSearching = false" class="back material-symbols-outlined pointer">
                         keyboard_backspace
                     </span>
-                    <app-search-bar (click)="hamburgerOpen = false" class="search-bar"
-                        [searchPlaceholder]="'Search Products...'" [onButtonClick]="true"
-                        (searchQuery$)="searchExplore($event)">
-                    </app-search-bar>
+                    <div class="search-bar">
+                        <app-search-bar (click)="hamburgerOpen = false" 
+                            [searchPlaceholder]="'Search Products...'" [onButtonClick]="true"
+                            (searchQuery$)="searchExplore($event)">
+                        </app-search-bar>
+                    </div>
                 </div>
                 <span (click)="isSearching = !isSearching; hamburgerOpen = false"
                     class="search-icon-mobile material-symbols-outlined">
@@ -136,7 +138,7 @@
                         <span class="material-symbols-outlined" *ngIf="!darkTheme">
                             dark_mode
                         </span>
-                        <span class="material-symbols-outlined" *ngIf="darkTheme"> 
+                        <span class="material-symbols-outlined" *ngIf="darkTheme">
                             light_mode
                         </span>
                     </a>

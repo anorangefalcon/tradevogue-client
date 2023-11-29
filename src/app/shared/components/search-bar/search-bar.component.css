@@ -39,7 +39,9 @@
         opacity: 1;
     }
 } */
-
+.search {
+    height: 100%;
+}
 .search-bar{
     width: max(200px, 100%);
     margin-inline-end: auto;
@@ -57,6 +59,7 @@
     background: transparent;
     width: 40px;
     & span{
+        color: rgb(var(--blackClr));
         opacity: 0.5;
     }
 }

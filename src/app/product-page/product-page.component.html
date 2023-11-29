@@ -96,7 +96,7 @@
                             </div>
                         </div>
 
-                        <div *ngIf="!outOfStock" class="d-flex gap-15 align-item-center">
+                        <div *ngIf="!outOfStock" class="d-flex gap-15 align-item-center flex-wrap">
                             <div class="customSelect">
                                 <app-custom-select [selectedOption]="selectedQ !== 0 ? selectedQ : 'Select Quantity'"
                                     (final_option)="updateSelectedField($event)" [options]="getOrderQuantity()">

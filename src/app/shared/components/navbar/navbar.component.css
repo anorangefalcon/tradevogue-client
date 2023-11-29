@@ -309,8 +309,17 @@ header.active {
 
         & .nav-items.active {
             visibility: visible;
-            height: 100vh;
+            height: 100dvh;
             opacity: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+
+            & li {
+                height: fit-content;
+            }
         }
 
 
@@ -415,7 +424,7 @@ header.active {
         height: 100%;
         align-items: center;
         justify-content: space-between;
-        background-color: white;
+        background-color: rgb(var(--whiteClr));
         z-index: 99;
         padding: 10px;
 
@@ -436,11 +445,15 @@ header.active {
             /* border: 0; */
             outline: none;
             width: 100%;
-            height: 100%;
+            height: 100% !important;
             border-radius: 0px 5px 5px 0px;
 
             border: 1px solid rgba(211, 211, 211, 0.24);
             border-left: 0px;
+
+            & form {
+                height: 100%;
+            }
 
             &:placeholder-shown {
                 font-weight: 300 !important;
@@ -477,7 +490,7 @@ header.active {
                     height: 14px;
                     width: 14px;
                     background-color: rgb(var(--primaryClr), 1);
-                    color: rgb(var(--textClr));
+                    color: rgb(var(--whiteClr));
                     inset-inline-end: -4px;
                     inset-block-start: -4px;
                     border-radius: 100%;
