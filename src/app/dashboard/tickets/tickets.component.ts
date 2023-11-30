@@ -125,7 +125,7 @@ export class TicketsComponent {
 
   updateItem() {
     // Prepare the data to send
-    this.loadData()
+    // this.loadData()
     const body = {
       _id: this.ticketTypeId,
       status: this.selectedItem.status,
@@ -138,6 +138,9 @@ export class TicketsComponent {
 
     const request1 = this.fetchDataService.HTTPPOST(url1, body);
     const request2 = this.fetchDataService.HTTPPOST(url2, body).subscribe((res=> {
+      this.toast.successToast({'title': 'Mail Sent To : '+ this.selectedItem.userEmail})
+      this.loadData();
+      this.popupService.closePopup();
     }));
 
     // Use forkJoin to send the requests in parallel
@@ -158,7 +161,7 @@ export class TicketsComponent {
           console.error('Error updating item:', error);
         }
       );
-    this.loadData()
+    // this.loadData()
   }
 
   sendNotification() {
@@ -178,7 +181,7 @@ export class TicketsComponent {
       this.http.post(apiUrl, data).subscribe(
         (response) => {
           // Reset the form and close the popup
-          this.notificationForm.reset();
+          // this.notificationForm.reset();
           this.selectedTicket = {};
         },
         (error) => {

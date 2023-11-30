@@ -108,9 +108,6 @@ export class BillingComponent implements OnInit {
       console.error('Error loading Stripe scripts:', error);
     }
   }
-  // ngOnDestroy(){
-  //   this.checkOutService.StripePaymentOpen.unsubscribe();
-  // }
   
   async loadStripe(): Promise<void> {
     try {
@@ -136,9 +133,11 @@ export class BillingComponent implements OnInit {
       console.error('Error loading Stripe scripts:', error);
     }
   }
+
   ngOnDestroy() {
     this.renderer.removeChild(document.body, this.stripeScript);
   }
+
   async initializeStripe(): Promise<void> {
     try {
       if (this.stripePay.publicKey) {
@@ -185,7 +184,16 @@ export class BillingComponent implements OnInit {
     });
   }
   async initialize(stripe: any): Promise<void> {
-    const items = JSON.parse(localStorage.getItem('paymentIntent') || '[]');
+    const item = JSON.parse(localStorage.getItem('paymentIntent') || '[]');
+
+    const items =
+    {
+
+      orderId: this.checkOutService.orderID,
+      items: item
+
+    } 
+
     const response = await fetch("http://localhost:1000/create-payment-intent", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -275,21 +283,26 @@ export class BillingComponent implements OnInit {
     } catch (error) {
     }
   }
+
   selectPaymentMethod(method: string) {
     this.selectedPaymentMethod = method;
   }
+
   @ViewChild('mydiv') my_div: ElementRef | undefined;
   search_text: any = '';
   visible_data: any[] = [];
   not_visible_data: any[] = ['Plain', 'Relaxed', 'Solid', 'Washed'];
+
   remove_data(el: any) {
     this.not_visible_data.push(el);
     this.visible_data = this.visible_data.filter((e) => { return el != e })
   }
+
   add_data(el: any) {
     this.visible_data.push(el);
     this.not_visible_data = this.not_visible_data.filter((e) => { return el != e })
   }
+  
   clicked() {
     this.my_div?.nativeElement.classList.toggle('display_none');
   }

@@ -204,7 +204,7 @@ export class UtilsModule {
     getPincode: `${this.pincodeUrl}/api/purchaser/getDetailsByPostalCode`,
 
     // webhook
-    webhook: `${this.BackendUrl}/payment/webhook`,
+    webhook: `${this.BackendUrl}/webhook`,
     
   }
 }
