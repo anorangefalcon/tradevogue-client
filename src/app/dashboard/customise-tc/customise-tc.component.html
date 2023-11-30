@@ -4,21 +4,21 @@
             <h3>Customise Terms & Conditions</h3>
         </div>
         <div class="d-flex gap-10">
-            <button class="btn btn-rounded btn-xs btn-primary" [ngStyle]="{'display': !yourFormGroup.disabled? 'none': 'block'}"
-        (click)="yourFormGroup.enable()">Edit</button>
+            <button class="btn btn-rounded btn-xs btn-primary" [ngStyle]="{'display': !tcForm.disabled? 'none': 'block'}"
+        (click)="tcForm.enable()">Edit</button>
 
-        <button class="btn btn-xs btn-secondary btn-rounded fw-500 d-flex flex-center gap-5" [ngStyle]="{'display': yourFormGroup.disabled? 'none': ''}" (click)="addFormControl()">
+        <button class="btn btn-xs btn-secondary btn-rounded fw-500 d-flex flex-center gap-5" [ngStyle]="{'display': tcForm.disabled? 'none': ''}" (click)="addFormControl(); goToBottom()">
             <span class="material-symbols-outlined fs-20">add</span>
             Add Section
         </button>
         
-        <button class="btn btn-rounded btn-xs btn-secondary" [ngStyle]="{'display': yourFormGroup.disabled? 'none': ''}"
-        (click)="yourFormGroup.disable(); discardChanges();">Cancel</button>
-        <button class="btn btn-xs fw-500 btn-rounded btn-primary" [ngStyle]="{'display': yourFormGroup.disabled? 'none': ''}" [disabled]="yourFormGroup.invalid" (click)="onsubmit()">Update</button>
+        <button class="btn btn-rounded btn-xs btn-secondary" [ngStyle]="{'display': tcForm.disabled? 'none': ''}"
+        (click)="tcForm.disable(); discardChanges();">Cancel</button>
+        <button class="btn btn-xs fw-500 btn-rounded btn-primary" [ngStyle]="{'display': tcForm.disabled? 'none': ''}" [disabled]="tcForm.invalid" (click)="onsubmit()">Update</button>
         </div>
     </div>
-    <form [formGroup]="yourFormGroup" [ngClass]="yourFormGroup.disabled ? 'form-disabled' : '' " class="default-animation-slow">
-        <div formArrayName="TandC" class="mh100 mw100 d-flex flex-column gap-20">
+    <form [formGroup]="tcForm" [ngClass]="tcForm.disabled ? 'form-disabled' : '' " class="default-animation-slow">
+        <div formArrayName="tcFormArray" class="mh100 mw100 d-flex flex-column gap-20">
             <ng-container *ngFor="let data of getFormArrayControls();let i=index">
                 <div [formGroupName]="i" class=" card card__pd-20 mh100 mw100 d-flex flex-column gap-20 relative">
                     <h4>Section {{i+1}}</h4>
@@ -41,13 +41,12 @@
                                     <p class="fw-500">Content</p>
                                     <div class="d-flex gap-10">
                                         <app-custom-select [type]="''" [_id]="''+i+j"
-                                            [options]="getParticularContentType(i)" [disableStatus]="yourFormGroup.disabled"
-                                            [selectedOption]="((getTandCContent(i,j) ? (getTandCContent(i,j)) : 'Select Type'))"
+                                            [options]="getParticularContentType(i)" [disableStatus]="tcForm.disabled"
+                                            [selectedOption]="((gettcFormArrayContent(i,j) ? (gettcFormArrayContent(i,j)) : 'Select Type'))"
                                             (final_option)="ContentTypeHandler($event, i ,j)"></app-custom-select>
-
                                         <button
                                             class="btn btn-xs btn-secondary btn-rounded fw-500 d-flex flex-center gap-5"
-                                            (click)="removeContentFormArrayControls(i,j)" style="width: fit-content;">
+                                            (click)="removeContentFormArrayControls(i,j)" >
                                             <span class="material-symbols-outlined fs-20">delete</span>
                                         </button>
                                     </div>
@@ -59,15 +58,15 @@
                                             <div [formGroupName]="k" style="height: fit-content;">
 
                                                 <textarea class=" mw100" formControlName="content"
-                                                    *ngIf="getTandCContent(i,j)=='paragraph'" rows="4">
+                                                    *ngIf="gettcFormArrayContent(i,j)=='paragraph'" rows="4">
                                                 </textarea>
 
                                                 <div class="relative">
                                                     <input type="text" formControlName="content"
-                                                        *ngIf="getTandCContent(i,j)=='list'" class="mw100 form__input">
+                                                        *ngIf="gettcFormArrayContent(i,j)=='list'" class="mw100 form__input">
                                                     <button
                                                         class="btn btn-xs fw-500 d-flex flex-center absolute remove-point-btn"
-                                                        *ngIf="getTandCContent(i,j) == 'list'"
+                                                        *ngIf="gettcFormArrayContent(i,j) == 'list'"
                                                         (click)="removeContentDescFormControl(i,j,k)">
 
                                                         <span class="material-symbols-outlined">
@@ -80,7 +79,7 @@
                                         </div>
                                         <div class="d-flex justify-content-end">
                                             <button class="btn d-flex flex-center add-point-btn"
-                                                *ngIf="getTandCContent(i,j) == 'list'"
+                                                *ngIf="gettcFormArrayContent(i,j) == 'list'"
                                                 (click)="addContentDescFormControl(i, j)">
                                                 add another point
                                             </button>
@@ -102,7 +101,7 @@
             </ng-container>
         </div>
     </form>
-    <div class="d-flex justify-content-center" [ngClass]="yourFormGroup.disabled ? 'form-disabled' : '' ">
+    <div class="d-flex justify-content-center" [ngClass]="tcForm.disabled ? 'form-disabled' : '' ">
         <button class="btn btn-xs btn-primary btn-rounded fw-500 d-flex flex-center gap-5" (click)="addFormControl()">
             <span class="material-symbols-outlined fs-20">add</span>
             Add Section

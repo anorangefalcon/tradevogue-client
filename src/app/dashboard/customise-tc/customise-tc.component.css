@@ -17,7 +17,7 @@ textarea,
 input[type="text"] {
   margin-block-end: 15px;
   border-radius: 4px;
-  outline: 0.5px solid rgba(var(--blackClr), 0.2);
+  border: 0.5px solid rgba(var(--blackClr), 0.2) !important;
   background-color: transparent;
   padding: 7px;
   resize: none;

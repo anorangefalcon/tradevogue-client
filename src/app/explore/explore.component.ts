@@ -6,6 +6,7 @@ import { Location } from '@angular/common';
 import { WishlistService } from '../shared/services/wishlist.service';
 import { UtilsModule } from '../utils/utils.module';
 
+
 @Component({
   selector: 'app-explore',
   templateUrl: './explore.component.html',
@@ -23,6 +24,7 @@ export class ExploreComponent {
   uniqueData: { [field: string]: any[] } = {};
   filters: any[] = [];
   filterApplied: { [field: string]: any } = {};
+  sizesMore : boolean = false;
 
   filtersOpen: boolean = false;
   sortingOpen : boolean = false;
@@ -34,10 +36,10 @@ export class ExploreComponent {
     titles: ["Fresh Arrivals", "Highest Rated", "Price: High to Low", "Price: Low to High"],
     value: ['createdAt:-1', 'avgRating:-1', 'price:-1', 'price:1']
   }
-  // genders : string[] = ['male', 'Female'];
   minPrice: any;
   maxPrice: any;
   loading: boolean = false;
+  theme: Boolean = false;
 
   constructor(private fetchData: FetchDataService, private BackendEndUrl: UtilsModule,
     private wishlistService: WishlistService, private route: ActivatedRoute,
@@ -45,6 +47,9 @@ export class ExploreComponent {
 
   ngOnInit() {
 
+    this.fetchData.themeColor$.subscribe((color)=>{
+      this.theme = color;
+    })
     this.route.queryParams.subscribe((data: any) => {
 
       this.minPrice = data?.minPrice
@@ -71,16 +76,9 @@ export class ExploreComponent {
       this.uniqueData = res.data;
     })
   }
-  onclick(value: any){
-    console.log(value);
-    
-  }
+
   onAdd(event: any, field: string) {
 
-    console.log('event ',event,field);
-    
-    
-    
     if (this.minPrice && !this.maxPrice) {
       this.filterApplied['minPrice'] = this.minPrice
     }
@@ -193,7 +191,6 @@ export class ExploreComponent {
   }
 
   onRemove(event: any, field: any) {
-    // console.log('event coming up is ',event.target.value," field is ",field);
 
     if (Array.isArray(this.filterApplied[field])) {
 
@@ -243,10 +240,6 @@ export class ExploreComponent {
     let target = event.target.innerHTML;
     event.target.innerHTML = (target === 'Show Less') ? 'Show More' : 'Show Less';
     this.uniqueData[key][-1] = !this.uniqueData[key][-1];
-  }
-
-  setPriceLimit() {
-
   }
 
   changePage(event: any) {

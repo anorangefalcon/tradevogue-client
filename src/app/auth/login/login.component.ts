@@ -5,6 +5,7 @@ import { FetchDataService } from 'src/app/shared/services/fetch-data.service';
 import { LoginCheckService } from 'src/app/shared/services/login-check.service';
 import { DialogBoxService } from 'src/app/shared/services/dialog-box.service';
 
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -19,6 +20,8 @@ export class LoginComponent {
   isactive: boolean = false;
   script: any;
   loading: boolean = false;
+  theme: Boolean = false;
+
 
   constructor(
     fb: FormBuilder,
@@ -53,6 +56,10 @@ export class LoginComponent {
     this.script.async = true;
 
     this.renderer.appendChild(document.body, this.script);
+
+    this.fetchDataService.themeColor$.subscribe((color)=>{
+      this.theme = color;
+    })
   }
 
 

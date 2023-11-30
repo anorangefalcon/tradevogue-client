@@ -1,5 +1,6 @@
 <div *ngIf="loading" class="tv-loading">
-    <img src="../../assets/logo-mobile.svg" alt="tradeVogue-loading">
+    <img src="../../assets/logo-mobile.svg" alt="tradeVogue-loading" *ngIf="!theme">
+    <a routerLink="/"><img src="../../assets/logo-mobile-light.svg" alt="logo" *ngIf="theme"></a>
     <div class="circle-tv-loader"></div>
 </div>
 

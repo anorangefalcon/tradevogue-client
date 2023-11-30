@@ -254,7 +254,7 @@ input::-webkit-inner-spin-button {
 }
 
 .price button {
-    background-color: rgb(var(--gray));
+    background-color: rgb(var(--whiteClr));
     padding: 5px;
     border: 0.5px solid rgb(var(--blackClr));
     height: 30px;
@@ -265,6 +265,7 @@ input::-webkit-inner-spin-button {
 
     & span {
         font-size: 20px;
+        color: rgb(var(--blackClr));
     }
 }
 .ranges p {

@@ -59,6 +59,7 @@
             letter-spacing: 0.4px;
             line-height: 0.9;
             margin-block-end: 35px;
+            color: rgb(var(--blackClr))
         }
 
 

@@ -207,8 +207,7 @@ export class CheckoutComponent implements OnInit {
 
       if (!navigate) {
         
-        this.fetchService.HTTPPOST(this.BackendUrl.URLs.verifyOrderWithoutCoupon, result).subscribe((response) => {
-          console.log('response come up is ',response);
+        this.fetchService.HTTPPOST(this.BackendUrl.URLs.verifyOrderWithoutCoupon, result).subscribe((response) => {          
           this.cart.amounts = response;
         });
       }

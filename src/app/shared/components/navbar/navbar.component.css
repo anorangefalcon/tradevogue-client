@@ -148,11 +148,11 @@ header.active {
             display: block;
             height: 0;
             width: 0;
-            border-block-end: 10px solid rgba(255, 255, 255, 0.6);
+            border-block-end: 10px solid rgba(var(--gray));
 
-            border-inline-start: 10px solid rgba(128, 128, 128, 0.02);
+            border-inline-start: 10px solid transparent;
 
-            border-inline-end: 10px solid rgb(128, 128, 128, 0.02);
+            border-inline-end: 10px solid transparent;
 
             inset-block-start: -10px;
             inset-inline-end: 4px;
@@ -263,6 +263,9 @@ header.active {
 .name {
     font-size: 16px;
     font-weight: 600;
+    & span {
+        color: rgb(var(--primaryClr));
+    }
 }
 .border {
     padding-block-end: 5px;
