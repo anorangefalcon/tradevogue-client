@@ -326,6 +326,13 @@ input[type="radio"] {
     .sort-custom{
         display: none;
     }
+
+    .no-item-img{
+        & img{
+            transform: translateY(0px) ;
+        }
+    }
+    
     .filters , .sort-mobile{
         position: fixed;
         padding-inline: 25px;

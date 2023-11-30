@@ -50,6 +50,7 @@ export class ExploreComponent {
     this.fetchData.themeColor$.subscribe((color)=>{
       this.theme = color;
     })
+
     this.route.queryParams.subscribe((data: any) => {
 
       console.log(data, "lol");
@@ -72,8 +73,6 @@ export class ExploreComponent {
     }
 
     this.fetchData.HTTPPOST(this.BackendEndUrl.URLs.uniqueProductFields, body).subscribe((res: any) => {
-      console.log(res);
-
       this.uniqueData = res.data;
     })
   }
@@ -123,7 +122,6 @@ export class ExploreComponent {
   }
 
   onChecked(event: any, field: string, extraParameter: any = '') {
-    console.log(event, "event");
     let value;
     if (event) {
       value = field === 'price' ? Number(event?.target?.value) : event.target.value;
@@ -226,10 +224,9 @@ export class ExploreComponent {
 
     let actualParams = (Object.keys(this.filterApplied).length > 0) ? this.filterApplied : JSON.parse(JSON.stringify(this.filterApplied));
     this.fetchData.getProducts(actualParams, this.limit, this.pageNumber).subscribe((data: any) => {
-      this.products = data.items
+      this.products = data.items;
       this.loading = false;
       this.totalProducts = data.total;
-      // this.totalProducts=data.items;
     });
   }
 

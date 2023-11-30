@@ -13,7 +13,7 @@ import { first, take } from 'rxjs';
 })
 export class AddproductfeaturesComponent {
 
-  isfetch:boolean = false;
+  isfetch: boolean = false;
 
   // Toast template
   template = {
@@ -40,10 +40,10 @@ export class AddproductfeaturesComponent {
 
   // Type Name should be same as that of backend (avoiding conflicts)
   card_template: any = [
-    { name: 'Category', type: 'categories', filter: 'category', file_name: 'Categories_Sample' },
-    { name: 'Brand', type: 'brands', filter: 'brand', file_name: 'Brands_Sample' },
-    { name: 'Order Quantity', type: 'orderQuantity', filter: 'orderQuantity', file_name: 'orderQuantity_Sample' },
-    { name: 'Product Tags', type: 'tags', filter: 'tags', file_name: 'Tags_Sample' }
+    { name: 'Category', type: 'categories', filter: 'category', file_name: 'Categories_Sample', loading: false },
+    { name: 'Brand', type: 'brands', filter: 'brand', file_name: 'Brands_Sample', loading: false },
+    { name: 'Order Quantity', type: 'orderQuantity', filter: 'orderQuantity', file_name: 'orderQuantity_Sample', loading: false },
+    { name: 'Product Tags', type: 'tags', filter: 'tags', file_name: 'Tags_Sample', loading: false }
   ];
 
   dataField: string[] = ['categories', 'brands', 'orderQuantity', 'tags'];
@@ -61,7 +61,7 @@ export class AddproductfeaturesComponent {
       if (res == true) {
         this.field_data[this.deleteObject.field].splice(this.deleteObject.index, 1);
         this.template.title = 'Item Deleted Successfully';
-        this.crudData(this.deleteObject.field);
+        this.crudData(this.deleteObject.field, null);
       }
     })
     this.isfetch = true;
@@ -86,7 +86,7 @@ export class AddproductfeaturesComponent {
           if (!res) this.field_data[field].push(item);
         });
         this.template.title = 'Items Added Successfully'
-        this.crudData(field);
+        this.crudData(field, null);
       }
     });
   }
@@ -104,23 +104,29 @@ export class AddproductfeaturesComponent {
     this.DialogBoxService.confirmationDialogBox(template);
   }
 
-  addItem(item: any, field: string) {
+  addItem(item: any, field: string, index: number) {
     if (!this.field_data[field].includes(this.filter[item])) {
+      item = item.trim();
+      let pattern = /\b(?:[^!@#$%^&*(),.?":{}|<>]+|\s)+\b/g;
 
-      console.log(/[!@#$%^&*(),.?":{}|<>]/.test(item));
-    if (/[!@#$%^&*(),.?":{}|<>]/.test(item)) {
-      this.toastService.errorToast({title: 'Special Character not Allowed'});
-      return;
-    }
+      if((item.match(pattern)).length > 1){
+        this.toastService.errorToast({ title: 'Special Character not Allowed' });
+        return;
+      }
 
       this.field_data[field].push(this.filter[item]);
       this.filter[item] = '';
       this.template.title = 'Item Added Successfully'
-      this.crudData(field);
+      this.crudData(field, index);
     }
   }
 
-  crudData(field: any) {
+  crudData(field: any, index: any) {
+
+    if(index != null){
+      this.card_template[index].loading = true;
+    }
+
     let data: any = {
       'field': field,
       'data': this.field_data[field]
@@ -128,13 +134,16 @@ export class AddproductfeaturesComponent {
     this.dataService.HTTPPOST(this.backendurls.URLs.updateFeatures, data).subscribe({
       next: (res: any) => {
         this.toastService.successToast(this.template);
+        if(index != null){
+          this.card_template[index].loading = false;
+        }
       }
     });
   }
 
-  tableGenerator(len: number){
+  tableGenerator(len: number) {
     let temp = []
-    for(let i=0;i<len;i++){
+    for (let i = 0; i < len; i++) {
       temp.push(0);
     }
     return temp;

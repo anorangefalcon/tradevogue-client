@@ -37,7 +37,7 @@ html:focus-within {
 
 /* Set core body defaults */
 body {
-    min-height: 100dvh;
+    min-height: 100vh;
     text-rendering: optimizeSpeed;
     line-height: 1.5;
     font-size: 14px;
@@ -758,6 +758,7 @@ tr:last-child td{
 & .heading {
     font-size: 48px;
     font-weight: 400;
+    /* letter-spacing: 1.2px; */
     margin-bottom: 50px;
     font-weight: 500;
 
@@ -1130,7 +1131,7 @@ tr:last-child td{
     }
 
     & input[type="checkbox"]:checked+label {
-        background-color: rgb(var(--primaryClr));
+        background-color: rgb(var(--success));
     }
 }
 
@@ -1254,7 +1255,7 @@ div.spinner::before{
 }
 
 .tv-loading {
-    height: 100vh;
+    height: 100dvh;
     width: 100%;
     display: flex;
     align-items: center;

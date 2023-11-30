@@ -201,7 +201,7 @@
             </div>
 
 
-            <div *ngIf="!loading && products.length;  else noData" class="explore-cards">
+            <div *ngIf="!loading" class="explore-cards">
                 <ng-container *ngFor="let product of products">
                     <div class="card-temp">
                         <app-card-template class="d-flex justify-content-center"
@@ -209,11 +209,11 @@
                     </div>
                 </ng-container>
             </div>
-            <ng-template #noData>
-                <div class="no-item-img mh100 mw100 d-flex flex-center">
-                    <img src="../../assets/noItemFound.svg" alt="No Item Found" height="140px">
-                </div>
-            </ng-template>
+
+            <div class="no-item-img mh100 mw100 d-flex flex-center" *ngIf="!loading && !products.length">
+                <img src="../../assets/noItemFound.svg" alt="No Item Found" height="140px">
+            </div>
+
         </div>
 
 
