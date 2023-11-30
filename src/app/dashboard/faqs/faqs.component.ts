@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
 import { PaginationService } from 'src/app/shared/services/pagination.service';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UtilsModule } from 'src/app/utils/utils.module';
 import { FetchDataService } from 'src/app/shared/services/fetch-data.service';
 import { PopupService } from 'src/app/shared/services/popup.service';
 import { ToastService } from 'src/app/shared/services/toast.service';
+import { AbstractControl } from '@angular/forms';
 
 interface FaqItem {
   _id: string;
@@ -23,6 +24,7 @@ export class FaqsComponent {
   faq:any[] = [];
   selectedOption: string = '';
   faqForm!: FormGroup;
+  editForm!: FormGroup;
   selectedCategory: { title: string; childrens: any[] } = { title: '', childrens: [] };
   showPopup: boolean = false;
   editItem: boolean = false;
@@ -37,13 +39,20 @@ export class FaqsComponent {
   popUpDirection:any='popup';
   showingPopUp: boolean = false;
 
-  constructor(private toast: ToastService, public pagination: PaginationService, private formBuilder: FormBuilder, private bgURL: UtilsModule, private fetchDataService: FetchDataService, private popupService: PopupService) {
+  constructor(private toast: ToastService, public pagination: PaginationService, private fb: FormBuilder, private bgURL: UtilsModule, private fetchDataService: FetchDataService, private popupService: PopupService) {
     this.loadData();
   }
 
   ngOnInit(): void {
+    this.initializeForm();
+  }
 
-    this.faqForm = this.formBuilder.group({
+  initializeForm() {
+    this.faqForm = this.fb.group({
+      categories: this.fb.array([this.createCategory()]),
+    });
+
+    this.editForm = this.fb.group({
       selectedOption: ['', Validators.required],
       query: [
         '',
@@ -62,6 +71,34 @@ export class FaqsComponent {
         ],
       ]
     });
+
+  }
+
+  createCategory(): FormGroup {
+    return this.fb.group({
+      selectedOption: ['', Validators.required],
+      query: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(500)]],
+      content: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(500)]],
+    });
+  }
+
+  get categoryForms() {
+    if (this.faqForm && this.faqForm.get('categories') instanceof FormArray) {
+      return (this.faqForm.get('categories') as FormArray).controls;
+    }
+    return [];
+  }
+
+  addFaqCategory() {
+    if (this.faqForm && this.faqForm.get('categories')) {
+      (this.faqForm.get('categories') as FormArray).push(this.createCategory());
+    }
+  }
+
+  removeCategory(index: number) {
+    if (this.faqForm && this.faqForm.get('categories')) {
+      (this.faqForm.get('categories') as FormArray).removeAt(index);
+    }
   }
 
   loadData() {
@@ -89,34 +126,85 @@ export class FaqsComponent {
   }
   
 
-  async addCategory() {
-    if (this.faqForm.valid) {
-      const selectedCategoryId = this.faqForm.get('selectedOption')?.value;
-      const query = this.faqForm.get('query')?.value;
-      const content = this.faqForm.get('content')?.value;
+  // async addCategory() {
+  //   console.log(this.faqForm.value);
+  //   if (this.faqForm.valid) {
+  //     const selectedCategoryId = this.faqForm.get('selectedOption')?.value;
+  //     const query = this.faqForm.get('query')?.value;
+  //     const content = this.faqForm.get('content')?.value;
 
+  //     const dataToSend = {
+  //       title: selectedCategoryId,
+  //       children: [
+  //         {
+  //           title: query,
+  //           content: content,
+  //           expanded: false,
+  //         },
+  //       ],
+  //     };
+
+  //    this.fetchDataService.HTTPPOST(this.bgURL.URLs.addFaqData, dataToSend).subscribe((data) => {
+  //       if (data) {
+  //         this.toast.successToast({ title: "FAQ added successfully" });
+  //       } else {
+  //         this.toast.errorToast({ title: "FAQ not added" });
+  //       }
+  //       this.showingPopUp = false;
+  //       this.loadData();
+  //     });
+  //     this.faqForm.reset();
+  //   }
+  // }
+
+  async addCategory() {
+
+    const categoriesControl = this.faqForm.get('categories');
+
+    
+  
+    if (categoriesControl && categoriesControl.value && this.faqForm.valid) {
+      const categoriesToSend: any = [];
+  
+      categoriesControl.value.forEach((category: any) => {
+        const selectedCategoryId = category.selectedOption;
+        const query = category.query;
+        const content = category.content;
+  
+        const categoryObj = {
+          title: selectedCategoryId,
+          children: [
+            {
+              title: query,
+              content: content,
+              expanded: false,
+            },
+          ],
+        };
+        categoriesToSend.push(categoryObj);
+      });
+  
       const dataToSend = {
-        title: selectedCategoryId,
-        children: [
-          {
-            title: query,
-            content: content,
-            expanded: false,
-          },
-        ],
+        categories: categoriesToSend,
       };
 
-     this.fetchDataService.HTTPPOST(this.bgURL.URLs.addFaqData, dataToSend).subscribe((data) => {
+      console.log(dataToSend);
+  
+      this.fetchDataService.HTTPPOST(this.bgURL.URLs.addFaqData, dataToSend).subscribe((data) => {
         if (data) {
-          this.toast.successToast({ title: "FAQ added successfully" });
+          this.toast.successToast({ title: "FAQs added successfully" });
+          this.showingPopUp = false;
+          this.loadData();
         } else {
-          this.toast.errorToast({ title: "FAQ not added" });
+          this.toast.errorToast({ title: "FAQs not added" });
         }
-        this.loadData();
       });
+  
       this.faqForm.reset();
     }
   }
+  
+  
 
   showItemDetails(item: any) {
     this.selectedItem = item;
@@ -125,21 +213,29 @@ export class FaqsComponent {
     // this.showPopup = true;
   }
 
-  showEdit(item: any) {
-    this.selectedItem = item;
-    this.editItem = true;
-    this.faqForm.patchValue({
+showEdit(item: any) {
+  this.selectedItem = item;
+  this.editItem = true;
+  console.log(this.selectedItem);
+  // Assuming faqForm is your FormGroup
+  if (this.editForm) {
+    // Patch values into the form controls
+    this.editForm.patchValue({
       query: this.selectedItem.title,
       content: this.selectedItem.content,
     });
   }
+}
+
 
   async updateDetails() {
     if (this.selectedItem) {
       const updatedItem = { ...this.selectedItem };
+
+      console.log(updatedItem);
      
-      updatedItem.query = this.faqForm.get('query')?.value;
-      updatedItem.content = this.faqForm.get('content')?.value;
+      updatedItem.query = this.editForm.get('query')?.value;
+      updatedItem.content = this.editForm.get('content')?.value;
 
       const itemIndex = this.selectedCategory.childrens.findIndex((child: any) => child._id === updatedItem._id);
 
@@ -156,6 +252,7 @@ export class FaqsComponent {
 
       try {
         const data: any = this.fetchDataService.HTTPPOST(this.bgURL.URLs.updateFaqData, updatedFaqItem).subscribe((res)=> {
+          this.loadData();
         });
         if (data) {
           this.toast.successToast({ title: "FAQ updated successfully" });
@@ -191,10 +288,11 @@ export class FaqsComponent {
       }
 
       try {
-        const data = await this.fetchDataService.HTTPPOST(this.bgURL.URLs.deleteFaqData, { _id: itemId }).toPromise();
+        const data = this.fetchDataService.HTTPPOST(this.bgURL.URLs.deleteFaqData, { _id: itemId }).subscribe((res)=> {
+          this.loadData();
+        });
         if (data) {
           this.toast.successToast({ title: 'FAQ deleted successfully' });
-          this.loadData();
         } else {
           this.toast.errorToast({ title: 'FAQ not deleted' });
         }
@@ -210,7 +308,6 @@ export class FaqsComponent {
 
   handlePageChange(pageNumber: number) {
     this.currentPage = pageNumber;
-    this.loadData();
   }
 
   tableGenerator(len: number){

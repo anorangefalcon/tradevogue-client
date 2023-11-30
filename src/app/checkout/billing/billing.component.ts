@@ -199,7 +199,6 @@ export class BillingComponent implements OnInit {
 
       orderId: this.checkOutService.orderID,
       items: item
-
     } 
 
     const response = await fetch("http://localhost:1000/create-payment-intent", {

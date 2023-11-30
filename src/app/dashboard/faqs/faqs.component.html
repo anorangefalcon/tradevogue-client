@@ -3,53 +3,68 @@
   <!-- select Category -->
   <div class="card card__pd-20 d-flex align-item-center justify-content-md-between default-animation">
     <h3>FAQs</h3>
-    <app-custom-select [selectedOption]="faq[0]" (final_option)="retrieveContent($event)"
-      [options]="faq"></app-custom-select>
-    <button (click)="openDrawer()" class="btn-primary btn btn-sm fw-500 btn-rounded d-flex align-item-center gap-5">
+
+    <app-custom-select [selectedOption]="faq[0]" (final_option)="retrieveContent($event)" [options]="faq">
+    </app-custom-select>
+
+    <button (click)="openDrawer()" class="btn-secondary btn btn-sm fw-500 btn-rounded d-flex align-item-center gap-5">
       <i class="material-symbols-outlined operational-buttons-icons">add</i>Add New Category
     </button>
   </div>
 
-<!-- drawer -->
-<app-drawer [direction]="direction" [show]="show" (showChange)="ChangeHandler($event)" [title]="'Create Faqs'"> 
+  <app-drawer [direction]="direction" [show]="show" (showChange)="ChangeHandler($event)" [title]="'Create Faqs'">
     <form [formGroup]="faqForm">
-      <div>
-        <select formControlName="selectedOption">
-          <option value="" disabled>Select a Category</option>
-          <option *ngFor="let item of faqData" [value]="item.title">{{item.title}}</option>
-        </select>
-      </div>
-
-      <div class="form-group">
-        <label class="form__label" for="query">Query</label>
-        <input class="form__input" type="text" id="query" formControlName="query" required />
-        <div *ngIf="faqForm.get('query')?.invalid && faqForm.get('query')?.touched" class="error-message">
+      <div formArrayName="categories">
+        <div *ngFor="let category of categoryForms; let i = index" [formGroupName]="i" class="d-flex flex-column gap-10">
+          <!-- Select dropdown -->
+          <select style="    margin-top: 33px;" formControlName="selectedOption" class="flex-grow-1">
+            <option value="" disabled>Select a Category</option>
+            <option *ngFor="let item of faqData" [value]="item.title">{{ item.title }}</option>
+          </select>
+      
+          <!-- Query input -->
+          <div class="form-group flex-grow-1">
+            <label class="form__label" for="query">Query*</label>
+            <input class="form__input" type="text" id="query" formControlName="query" required />
+            <div *ngIf="category.get('query')?.invalid && category.get('query')?.touched" class="error-message">
+              Please enter a valid query*
+            </div>
+          </div>
+      
+          <!-- Answer input -->
+          <div class="form-group flex-grow-1">
+            <label class="form__label" for="content">Answer*</label>
+            <input class="form__input" type="text" id="content" formControlName="content" required />
+            <div *ngIf="category.get('content')?.invalid && category.get('content')?.touched" class="error-message">
+              Please enter a valid answer*
+            </div>
+          </div>
+      
+          <!-- Remove button -->
+          <button class="btn-secondary btn-sm btn-rounded ml-2" (click)="removeCategory(i)">-</button>
         </div>
       </div>
-
-      <div class="form-group">
-        <label class="form__label" for="content">Answer</label>
-        <input class="form__input" type="text" id="content" formControlName="content" required />
-        <div *ngIf="faqForm.get('content')?.invalid && faqForm.get('content')?.touched" class="error-message">
-        </div>
+      
+      <div class="d-flex gap-10">
+        <button class="btn-primary btn-sm btn-rounded" style="margin-top: 10px;" (click)="addCategory()"
+          [disabled]="faqForm.invalid">Add Category</button>
+        <button class="btn-secondary btn-sm btn-rounded" style="margin-top: 10px;" (click)="addFaqCategory()">+</button>
       </div>
-
-      <button class="btn-primary btn-sm btn-rounded" style="margin-top: 10px;" (click)="addCategory()" [disabled]="faqForm.invalid">Add Category</button>
     </form>
-</app-drawer>
+  </app-drawer>
 
-<!-- pop-up -->
-<app-drawer [direction]="popUpDirection" [show]="showingPopUp" (showChange)="PopUpChangeHanlder($event)"
-[title]="'Layout Settings'">
-<div *ngIf="selectedItem" class="details-container">
-  <p class="detail-item"><strong>Serial Number:</strong> {{ (currentPage - 1) * pageSize +
-    selectedCategory.childrens.indexOf(selectedItem) + 1 }}</p>
-  <p class="detail-item"><strong>Query:</strong> {{ selectedItem.title }}</p>
-  <p class="detail-item"><strong>Answer:</strong> {{ selectedItem.content }}</p>
-</div>
-</app-drawer>
+  <!-- pop-up -->
+  <app-drawer [direction]="popUpDirection" [show]="showingPopUp" (showChange)="PopUpChangeHanlder($event)"
+    [title]="'Layout Settings'">
+    <div *ngIf="selectedItem" class="details-container">
+      <p class="detail-item"><strong>Serial Number:</strong> {{ (currentPage - 1) * pageSize +
+        selectedCategory.childrens.indexOf(selectedItem) + 1 }}</p>
+      <p class="detail-item"><strong>Query:</strong> {{ selectedItem.title }}</p>
+      <p class="detail-item"><strong>Answer:</strong> {{ selectedItem.content }}</p>
+    </div>
+  </app-drawer>
 
- <!-- table -->
+  <!-- table -->
   <div *ngIf="selectedCategory" class="table-list card default-animation-slow">
     <table summary="faqs" class="selected-category-table">
       <thead>
@@ -61,8 +76,8 @@
         </tr>
       </thead>
       <tbody class="items" *ngIf="!selectedCategory.childrens.length; else faqData">
-        <tr *ngFor="let i of tableGenerator(4)">
-          <td *ngFor="let i of tableGenerator(4)" class="items">
+        <tr *ngFor="let i of tableGenerator(6)">
+          <td *ngFor="let i of tableGenerator(6)" class="items">
             <div class="skeleton" style="border-radius: 5px; color: transparent"> d</div>
           </td>
         </tr>
@@ -81,7 +96,8 @@
             <div class="d-flex align-item-center gap-5 transition">
 
               <span class="tooltip">
-                <i (click)="showItemDetails(child)" class="fs-18 action__btn-icon material-symbols-outlined">visibility</i>
+                <i (click)="showItemDetails(child)"
+                  class="fs-18 action__btn-icon material-symbols-outlined">visibility</i>
                 <span class="tooltiptext">View</span>
               </span>
 
@@ -89,11 +105,11 @@
                 <i (click)="showEdit(child)" class="fs-18 action__btn-icon material-symbols-outlined">edit</i>
                 <span class="tooltiptext">Edit</span>
               </span>
-              
+
               <span class="tooltip">
                 <i (click)="deleteFaq(child)" class="fs-18 action__btn-icon material-symbols-outlined">delete</i>
                 <span class="tooltiptext">Delete</span>
-              </span>              
+              </span>
 
             </div>
           </td>
@@ -101,65 +117,67 @@
       </tbody>
     </table>
   </div>
-
-<!-- pagination -->
-<app-pagination #pagination [collectionSize]="selectedCategory.childrens.length" [pageSize]="3"
+  <!-- pagination -->
+  <app-pagination #pagination [collectionSize]="selectedCategory.childrens.length" [pageSize]="3"
     [currentPage]="currentPage" (activePage)="handlePageChange($event)" [firstLastButtons]="true"
     [nextPreviousButtons]="true" [small]="true">
-</app-pagination>
+  </app-pagination>
 
- <!-- edit cancel update  -->
+  <!-- edit cancel update  -->
   <div *ngIf="editItem" class="slider">
     <div *ngIf="selectedItem" class="details-container">
       <div class="form__card basic__info form__card d-flex flex-column gap-20">
 
-        <div class="d-flex justify-content-md-between align-item-center ">
+        <div class="card card__pd-20 d-flex align-item-center justify-content-md-between default-animation">
           <h3>Info</h3>
-
+      
           <div class="operation_button d-flex gap-10">
-            <button class="btn-primary" [ngStyle]="{'display': !faqForm.disabled? 'none': 'block'}"
+            <button class="btn-primary btn-rounded btn-sm" [ngStyle]="{'display': !faqForm.disabled? 'none': 'block'}"
               (click)="faqForm.enable()">Edit</button>
-            <button class="btn-secondary" [ngStyle]="{'display': faqForm.disabled? 'none': 'block'}"
+            <button class="btn-secondary btn-sm btn-rounded" [ngStyle]="{'display': faqForm.disabled? 'none': 'block'}"
               (click)="faqForm.disable()">Cancel</button>
-            <button class="btn-primary" [ngStyle]="{'display': faqForm.disabled? 'none': 'block'}"
+            <button class="btn-primary btn-sm btn-rounded" [ngStyle]="{'display': faqForm.disabled? 'none': 'block'}"
               (click)="updateDetails()">Update</button>
           </div>
         </div>
 
         <!-- edit form -->
-        <form [formGroup]="faqForm" class="d-flex flex-wrap gap-20">
-          <div class="form__group">
-            <label class="form__title" for="query">Query</label>
-            <input type="text" class="form__input" id="query" formControlName="query" required minlength="2"
-              maxlength="500" />
-            <div *ngIf="faqForm.get('query')?.invalid && (faqForm.get('query')?.dirty || faqForm.get('query')?.touched)"
-              class="error-message">
-              <div *ngIf="faqForm.get('query')?.hasError('required')">query is required.
+        <div class="card card__pd-20 d-flex align-item-center justify-content-md-between default-animation">
+          <form [formGroup]="editForm" class="d-grid flex-wrap gap-20 column-reverse" style="width: 100%;"
+          >
+            <div class="form__group">
+              <label class="form__title" for="query">Query</label>
+              <input type="text" class="form__input" id="query" formControlName="query" required minlength="2"
+                maxlength="500" />
+              <div *ngIf="editForm.get('query')?.invalid && (editForm.get('query')?.dirty || editForm.get('query')?.touched)"
+                class="error-message">
+                <div *ngIf="editForm.get('query')?.hasError('required')">query is required.
+                </div>
+                <div *ngIf="editForm.get('query')?.hasError('minlength')">query should have at
+                  least 10 characters.</div>
+                <div *ngIf="editForm.get('query')?.hasError('maxlength')">query should have at
+                  most 500 characters.</div>
               </div>
-              <div *ngIf="faqForm.get('query')?.hasError('minlength')">query should have at
-                least 10 characters.</div>
-              <div *ngIf="faqForm.get('query')?.hasError('maxlength')">query should have at
-                most 500 characters.</div>
             </div>
-          </div>
-
-          <div class="form__group">
-            <label class="form__title" for="content">Content</label>
-            <input type="text" class="form__input" id="content" formControlName="content" required minlength="2"
-              maxlength="50" />
-            <div
-              *ngIf="faqForm.get('content')?.invalid && (faqForm.get('content')?.dirty || faqForm.get('content')?.touched)"
-              class="error-message">
-              <div *ngIf="faqForm.get('content')?.hasError('required')">content is required.
+  
+            <div class="form__group">
+              <label class="form__title" for="content">Content</label>
+              <input type="text" class="form__input" id="content" formControlName="content" required minlength="2"
+                maxlength="50" />
+              <div
+                *ngIf="editForm.get('content')?.invalid && (editForm.get('content')?.dirty || editForm.get('content')?.touched)"
+                class="error-message">
+                <div *ngIf="editForm.get('content')?.hasError('required')">content is required.
+                </div>
+                <div *ngIf="editForm.get('content')?.hasError('minlength')">content should have at
+                  least 2 characters.</div>
+                <div *ngIf="editForm.get('content')?.hasError('maxlength')">content should have at
+                  most 50 characters.</div>
               </div>
-              <div *ngIf="faqForm.get('content')?.hasError('minlength')">content should have at
-                least 2 characters.</div>
-              <div *ngIf="faqForm.get('content')?.hasError('maxlength')">content should have at
-                most 50 characters.</div>
             </div>
-          </div>
-
-        </form>
+  
+          </form>
+        </div>
 
       </div>
 
