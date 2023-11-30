@@ -270,7 +270,7 @@ export class BillingComponent implements OnInit {
       }
       this.stripePay.setLoading(false);
       this.cartService.clearCart();
-      this.router.navigate(['/usersetting/orders']);
+      // this.router.navigate(['/usersetting/orders']);
       
     } catch (error) {
     }
@@ -357,6 +357,7 @@ export class BillingComponent implements OnInit {
   // ADDRESS TS FILE---------------------
   userAddresses: any[] = [];
   receiveData: any;
+  OrderSuccess:Boolean=true;
   ShowComponent: boolean = false;
   SecureNavBar: Boolean = false;
   AddressLength: number = 0;

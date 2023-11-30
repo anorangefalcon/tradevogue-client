@@ -3,13 +3,13 @@
 
     <div class="default-animation">
     <h2>Offers</h2>
-    <div class="d-flex justify-content-md-between card card__pd-20">
+    <div class="d-flex justify-content-md-between header_coupon card card__pd-20">
         <div class="d-flex align-item-center">
             <app-search-bar [searchPlaceholder]="'Search by Name'"
                 (searchQuery$)="updateFields($event)"></app-search-bar>
         </div>
 
-        <div class="d-flex gap-10 align-item-center">
+        <div class="d-flex gap-10 align-item-center header_btns">
             <button (click)="AddCoupon()" class="btn btn-xs btn-rounded btn-primary">Add Offer</button>
 
             <button (click)="Delete_Offer()" class="btn btn-xs btn-rounded btn-secondary"

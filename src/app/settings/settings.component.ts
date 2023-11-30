@@ -184,6 +184,7 @@ export class SettingsComponent {
       this.pageChange(1);
     }
 
+    this.TranslateData=true;
   }
 
 

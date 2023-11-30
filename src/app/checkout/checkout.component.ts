@@ -49,8 +49,8 @@ export class CheckoutComponent implements OnInit {
       this.cartCount = data.details?.length;
       this.cart = data;
       this.loading = false;
+      this.verifyOrderSummary(false);
     });
-    this.verifyOrderSummary(false);
     this.loadRazorpayScript();
   }
 
@@ -194,9 +194,7 @@ export class CheckoutComponent implements OnInit {
   }
 
    verifyOrderSummary(navigate: boolean = true) {
-    console.log('verify order sumaarycaled ',this.cart);
-    
-      let res=this.cart;
+     let res=this.cart;
       if(res?.details?.length==0) return;
       let result = JSON.parse(JSON.stringify(res));
     
@@ -207,7 +205,8 @@ export class CheckoutComponent implements OnInit {
 
       if (!navigate) {
         
-        this.fetchService.HTTPPOST(this.BackendUrl.URLs.verifyOrderWithoutCoupon, result).subscribe((response) => {          
+        this.fetchService.HTTPPOST(this.BackendUrl.URLs.verifyOrderWithoutCoupon, result).subscribe((response) => {
+          console.log('response come up is ',response);
           this.cart.amounts = response;
         });
       }
@@ -218,6 +217,7 @@ export class CheckoutComponent implements OnInit {
           }
           else {
             this.fetchService.HTTPPOST(this.BackendUrl.URLs.verifyOrderSummary, result).subscribe((response) => {              
+              console.log('response come up is ',response);
               this.cart.amounts = response;
 
               this.router.navigate(['/cart/billing']);

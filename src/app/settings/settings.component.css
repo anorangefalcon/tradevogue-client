@@ -580,8 +580,6 @@ label span {
 
 
     .expand {
-        /* position: absolute !important; */
-
         & .content{
         width: 100%;
         transform: translateX(0%) !important;
@@ -602,7 +600,7 @@ label span {
 
 
 @media (max-width:550px){
-    .profile{
+    .profile,.changePassword{
             & form{
                 flex-direction: column;
                 & .form__group{
@@ -623,9 +621,6 @@ label span {
     }
 }
 
-/* .address_header{
-    flex-direction: column;
-} */
 
 .text_address{
     display: none;
