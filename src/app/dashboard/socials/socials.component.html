@@ -7,7 +7,7 @@
       <button class="btn btn-rounded btn-xs btn-primary" [ngStyle]="{'display': !socialsForm.disabled? 'none': 'block'}"
         (click)="socialsForm.enable()">Edit</button>
       <button class="btn btn-rounded btn-xs btn-secondary" [ngStyle]="{'display': socialsForm.disabled? 'none': 'block'}"
-        (click)="socialsForm.disable()">Cancel</button>
+        (click)="socialsForm.disable(); discardChanges()">Cancel</button>
       <button class="btn btn-rounded btn-xs btn-primary" [ngStyle]="{'display': socialsForm.disabled? 'none': 'block'}"
         (click)="onSubmit()">Update</button>
     </div>

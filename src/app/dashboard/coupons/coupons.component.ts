@@ -31,6 +31,8 @@ export class CouponsComponent {
 
 
   clearFormArray = (formArray: any) => {
+    console.log('clear forem called');
+    
     while (formArray?.length !== 0) {
       formArray?.removeAt(0)
     }

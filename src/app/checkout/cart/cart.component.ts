@@ -21,32 +21,39 @@ export class CartComponent implements OnInit {
   userToken: any = '';
   direction: any = 'right';
   loading: Boolean = false;
-  allSubscriptions: Subscription[] = [];
 
   ngOnInit() {
-    this.allSubscriptions.push(
-      this.userService.getUser('token').subscribe((token: any) => {
-        this.userToken = token;
-        this.loading = true;
 
-        this.allSubscriptions.push(
-          this.cartService.cartLoading.subscribe((data: any) => {
-            this.loading = data;
-          }));
+    this.userService.getUser('token').subscribe((token: any) => {
+      this.userToken = token;
+      this.loading = true;
 
-        this.allSubscriptions.push(
-          this.cartService.fetchCart("details").subscribe((data) => {
-            this.cartArr = data;
-            this.cartArr = this.cartArr?.map((item: any) => {
-              item.image = (item.assets).find((asset: any) => {
-                return (asset.color) === item.color;
-              }).photo[0];
+      this.cartService.cartLoading.subscribe((data: any) => {
+        this.loading = data;
+      })
+      this.cartService.fetchCart("details").subscribe((data) => {
+        this.cartArr = data;
+        this.cartArr = this.cartArr?.map((item: any) => {
+          item.image = (item.assets).find((asset: any) => {
+            return (asset.color) === item.color;
+          }).photo[0];
 
-              this.updatingArr = [];
-              return item;
-            });
-          }));
-      }));
+          let availableQuantity = item.assets.find((asset: any) => {
+            return asset.color === item.color;
+          }).stockQuantity.find((sizeQ: any) => {
+            return sizeQ.size === item.size;
+          }).quantity;
+
+          if(availableQuantity <= 0) item.quantity = 0;
+          if((availableQuantity != item.quantity) && !(item.info.orderQuantity.includes(item.quantity))){
+            item.quantity = availableQuantity;
+          }
+
+          this.updatingArr = [];
+          return item;
+        });
+      });
+    })
   }
 
   remove_item(identifier: any) {
@@ -154,7 +161,6 @@ export class CartComponent implements OnInit {
     if (!this.userToken) {
       this.router.navigate(['/auth/login']);
     }
-
   }
 
   closeSideCart() {

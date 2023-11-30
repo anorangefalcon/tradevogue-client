@@ -254,12 +254,11 @@ export class SettingsComponent {
     })
   }
 
-  moveToCart(sku: any) {
-    this.cartService.addToCart({ sku });
+  moveToCart(product: any) {
+    console.log(product,' hehe');
+    
+    this.cartService.addToCart(product);
   }
-
-//  WISHLIST DONE
-
 
 
 //  ADDRESS

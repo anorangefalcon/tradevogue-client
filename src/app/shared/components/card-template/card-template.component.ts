@@ -67,62 +67,7 @@ export class CardTemplateComponent {
   }
 
   addToCart() {
-    let assetIndex = this.product.matchedIndex ? this.product.matchedIndex : 0;
-    let sizeIndex = 0;
-
-    if (this.product.assets[assetIndex].stockQuantity[0].quantity <= 0) {
-      const ifMatchesSize = (this.product.assets[assetIndex].stockQuantity).some((stockQ: any)=>{
-        if(stockQ.quantity > 0) return true;
-        sizeIndex++;
-        return false;
-      });
-
-      if(!ifMatchesSize) sizeIndex = 0;
-    }
-
-    let limit = this.product.assets[assetIndex].stockQuantity[sizeIndex].quantity;
-    let arr = this.product.info.orderQuantity;
-    let filteredArray = arr.filter((item: any) => item <= limit);
-
-    if (!(filteredArray.includes(limit)) && (arr[arr.length - 1] > limit)) {
-      filteredArray.push(limit);
-    }
-    this.product.info.orderQuantity = filteredArray;
-
-    const cartItem = {
-      sku: this.product.sku,
-      color: this.product.assets[assetIndex].color,
-      size: this.product.assets[assetIndex].stockQuantity[sizeIndex].size,
-      quantity: this.product.info.orderQuantity[0]
-    }
-
-    this.cartService.addToCart(cartItem);
-  }
-
-  customOptions: OwlOptions = {
-    loop: true,
-    mouseDrag: true,
-    touchDrag: true,
-    pullDrag: true,
-    dots: false,
-    nav: true,
-    autoplay: true,
-    navText: ['<span class="material-symbols-outlined">chevron_left</span>', '<span class="material-symbols-outlined">chevron_right</span>'],
-    navSpeed: 600,
-    responsive: {
-      0: {
-        items: 1
-      },
-      400: {
-        items: 1
-      },
-      740: {
-        items: 1
-      },
-      940: {
-        items: 1
-      }
-    },
+    this.cartService.addToCart(this.product);
   }
 
   openPopup(){

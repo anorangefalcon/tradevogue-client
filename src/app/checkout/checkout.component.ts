@@ -291,6 +291,8 @@ export class CheckoutComponent implements OnInit {
     if (razorpayButton) {
       razorpayButton.click();
     }
+    let body12:any={newPaymentStatus:'success',transactionId:'1244',MOP:'cash',orderID:this.checkOutService.orderID};
+    this.fetchService.HTTPPOST(this.BackendUrl.URLs.updateOrderStatus,body12).subscribe();
 
   }
 
