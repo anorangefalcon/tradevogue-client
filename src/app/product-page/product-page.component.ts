@@ -43,6 +43,7 @@ export class ProductPageComponent implements OnInit {
   userReview: any;
   params: HttpParams = new HttpParams().set("sku", this.sku);
   query: any = this.fetchService.HTTPGET(this.backendUrl.URLs.fetchProductUrl, this.params);
+  theme : Boolean = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -64,6 +65,10 @@ export class ProductPageComponent implements OnInit {
   breadcrumbs: { label: string; url: string }[] = [];
 
   ngOnInit(): void {
+
+    this.fetchService.themeColor$.subscribe((color)=>{
+      this.theme = color;
+    })
 
     if (this.productSku) {
       this.sku = this.productSku;

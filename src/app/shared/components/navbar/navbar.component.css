@@ -148,7 +148,7 @@ header.active {
             display: block;
             height: 0;
             width: 0;
-            border-block-end: 10px solid rgba(var(--gray));
+            border-block-end: 10px solid rgba(var(--whiteClr));
 
             border-inline-start: 10px solid transparent;
 

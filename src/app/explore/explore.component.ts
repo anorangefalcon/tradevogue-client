@@ -52,6 +52,8 @@ export class ExploreComponent {
     })
     this.route.queryParams.subscribe((data: any) => {
 
+      console.log(data, "lol");
+      
       this.minPrice = data?.minPrice
       this.maxPrice = data?.maxPrice
       this.loading = true;
@@ -62,7 +64,6 @@ export class ExploreComponent {
         this.products = data.items;
         this.totalProducts = data.total;
         this.loading = false;
-
       });
     });
 
@@ -111,7 +112,7 @@ export class ExploreComponent {
     this.setParams()
   }
 
-  isValueSelected(value: any, FilterObjectKey: any[]): any {
+  isValueSelected(value: any, FilterObjectKey: any[]): any {    
     if (!FilterObjectKey) return false;
     if (typeof (FilterObjectKey) == 'string') {
       return value == FilterObjectKey;

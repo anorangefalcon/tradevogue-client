@@ -15,7 +15,6 @@ export const authGuard: CanActivateFn = async (route, state) => {
   const loginCheckService = inject(LoginCheckService);
   const toastService=inject(ToastService);
   const BackendUrl = inject(UtilsModule);
-return true;
   let navigateCheck = true;
   let check=cookie.get('userToken');
   let data;

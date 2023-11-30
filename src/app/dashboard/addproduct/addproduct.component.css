@@ -112,7 +112,7 @@ app-custom-select {
                 display: flex;
                 position: absolute;
                 border-radius: 50%;
-                filter: brightness(90%);
+                filter: brightness(80%);
                 transition: 0.1s ease-in-out;
             }
     
@@ -226,6 +226,7 @@ app-custom-select {
             border: 1px solid rgba(var(--blackClr), 0.1);
             border-radius: 4px;
             background-color: rgb(var(--whiteClr));
+            color: rgb(var(--blackClr));
 
             &:is(:hover) {
                 border: 1px solid rgba(var(--blackClr), 0);

@@ -32,19 +32,19 @@ export class CouponsComponent {
 
   clearFormArray = (formArray: any) => {
     while (formArray?.length !== 0) {
-      formArray.removeAt(0)
+      formArray?.removeAt(0)
     }
   }
 
   clearForm(){
-    this.clearFormArray(this.OfferForm.get('UserEmails'));
+    if(this.OfferForm?.get('UserEmails')?.value){
+      this.clearFormArray(this.OfferForm?.get('UserEmails'));
+    }
     this.OfferForm.reset();
   }
 
   ChangeHanlder(event: any) {
     this.show = event;
-    // this.clearFormArray(this.OfferForm.get('UserEmails'));
-    // this.OfferForm.reset();
     this.clearForm();
   }
 
@@ -57,7 +57,6 @@ export class CouponsComponent {
   EditRequest: any;
   allOffers: any=[];
   Categories: any;
-  // Filters = ['categories', 'brands'];
   CouponRequest: boolean = false;
   selectAll: boolean = false;
   deleteList: any = [];
@@ -94,8 +93,6 @@ export class CouponsComponent {
 
     this.dialogService.responseEmitter.subscribe({
       next: (res: any) => {
-        console.log
-
         if (res) {
           this.fetchDateService.HTTPPOST(this.BackendUrls.URLs.deleteOffer, { id: this.deleteId }).subscribe((data) => {
             this.allOffers = data;
@@ -282,12 +279,13 @@ export class CouponsComponent {
 
 
   AddCoupon() {
-    this.newEntry = true;
-    // this.OfferForm.reset();
-    this.clearForm();
+    console.log('add coupon called------>');
+    // this.newEntry = true;
+    // this.clearForm();
+    
     this.show = true;
-    this.EditRequest = false;
-    this.pageChange(this.currentPage);
+    // this.EditRequest = false;
+    // this.pageChange(this.currentPage);
   }
 
 
@@ -388,10 +386,6 @@ export class CouponsComponent {
 
   CustomTypeHandler(value: any) {
     this.OfferForm.addControl('UserEmails', this.fb.array([]));
-    console.log('value come up is ',value);
-    console.log(this.OfferForm.get('UserEmails')?.value," abcd is ")
-    let difference=this.OfferForm.get('UserEmails')?.value.length;
-
     value.forEach((el: any) => {
       (<FormArray>this.OfferForm.get('UserEmails')).push(this.fb.group({
         email: ['', Validators.required]
@@ -401,7 +395,6 @@ export class CouponsComponent {
   }
 
   async EditOffer(data: any, index: any) {
-
     this.EditIndex = index;
     this.EditRequest = data._id;
     data.startDate = data.startDate.split('T')[0];

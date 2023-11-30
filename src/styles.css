@@ -667,6 +667,10 @@ tr:last-child td{
     inset-inline-end: initial !important;
 }
 
+.display-none {
+    display: none;
+}
+
 /* tr:first-child:not(:has( + tr)) td{
 
     & .tooltip .tooltiptext{

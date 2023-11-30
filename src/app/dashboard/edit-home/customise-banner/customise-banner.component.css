@@ -153,6 +153,9 @@ input[type="color" i]::-webkit-color-swatch {
 ::placeholder{
     color: rgb(var(--textClr), 0.3);
 }
+.add-btn span {
+    display: none;
+}
 .display-none {
     display: none;
 }
@@ -162,3 +165,20 @@ input[type="color" i]::-webkit-color-swatch {
     to {transform: rotate(360deg);}
   }
 
+@media screen and (max-width: 450px){
+    h3 {
+        font-size: 16px !important;
+    }
+    .add-btn {
+        & p {
+            display: none;
+        }
+        & span {
+            display: flex !important;
+            font-size: 20px;
+        }
+    }
+    .btn-xs {
+        padding: 6px 8px;
+    }
+}
