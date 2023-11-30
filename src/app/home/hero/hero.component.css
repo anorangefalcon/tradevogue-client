@@ -84,6 +84,7 @@
 
 .left{
     justify-content: flex-start;
+
     & .hero-text-container{
         align-items: flex-start;
 
@@ -95,6 +96,7 @@
 
 .right{
     justify-content: flex-end;
+    
     & .hero-text-container{
         align-items: flex-end;
 

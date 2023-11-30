@@ -5,7 +5,7 @@
             <div class="toogle-section d-flex gap-10 align-item-center">
                 <a (click)="isCollapse = !isCollapse" class="pointer d-flex align-item-center mh100"><span
                         class="material-symbols-outlined">menu</span></a>
-                <img class="brand-logo" src="../../assets/logo-mobile.svg" [class.active]="isCollapse" alt="Logo">
+                        <a [routerLink]="['/']"><img class="brand-logo" src="../../assets/logo-mobile.svg" [class.active]="isCollapse" alt="Logo"></a>
             </div>
             <ul class="mh100 header_items d-flex align-item-center justify-content-end gap-20">
 
