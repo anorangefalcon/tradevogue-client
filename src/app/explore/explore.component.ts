@@ -6,6 +6,7 @@ import { Location } from '@angular/common';
 import { WishlistService } from '../shared/services/wishlist.service';
 import { UtilsModule } from '../utils/utils.module';
 
+
 @Component({
   selector: 'app-explore',
   templateUrl: './explore.component.html',
@@ -23,6 +24,7 @@ export class ExploreComponent {
   uniqueData: { [field: string]: any[] } = {};
   filters: any[] = [];
   filterApplied: { [field: string]: any } = {};
+  sizesMore : boolean = false;
 
   filtersOpen: boolean = false;
   sortingOpen : boolean = false;
@@ -34,10 +36,10 @@ export class ExploreComponent {
     titles: ["Fresh Arrivals", "Highest Rated", "Price: High to Low", "Price: Low to High"],
     value: ['createdAt:-1', 'avgRating:-1', 'price:-1', 'price:1']
   }
-  // genders : string[] = ['male', 'Female'];
   minPrice: any;
   maxPrice: any;
   loading: boolean = false;
+  theme: Boolean = false;
 
   constructor(private fetchData: FetchDataService, private BackendEndUrl: UtilsModule,
     private wishlistService: WishlistService, private route: ActivatedRoute,
@@ -45,8 +47,14 @@ export class ExploreComponent {
 
   ngOnInit() {
 
+    this.fetchData.themeColor$.subscribe((color)=>{
+      this.theme = color;
+    })
+
     this.route.queryParams.subscribe((data: any) => {
 
+      console.log(data, "lol");
+      
       this.minPrice = data?.minPrice
       this.maxPrice = data?.maxPrice
       this.loading = true;
@@ -57,7 +65,6 @@ export class ExploreComponent {
         this.products = data.items;
         this.totalProducts = data.total;
         this.loading = false;
-
       });
     });
 
@@ -66,21 +73,12 @@ export class ExploreComponent {
     }
 
     this.fetchData.HTTPPOST(this.BackendEndUrl.URLs.uniqueProductFields, body).subscribe((res: any) => {
-      console.log(res);
-
       this.uniqueData = res.data;
     })
   }
-  onclick(value: any){
-    console.log(value);
-    
-  }
+
   onAdd(event: any, field: string) {
 
-    console.log('event ',event,field);
-    
-    
-    
     if (this.minPrice && !this.maxPrice) {
       this.filterApplied['minPrice'] = this.minPrice
     }
@@ -113,7 +111,7 @@ export class ExploreComponent {
     this.setParams()
   }
 
-  isValueSelected(value: any, FilterObjectKey: any[]): any {
+  isValueSelected(value: any, FilterObjectKey: any[]): any {    
     if (!FilterObjectKey) return false;
     if (typeof (FilterObjectKey) == 'string') {
       return value == FilterObjectKey;
@@ -124,7 +122,6 @@ export class ExploreComponent {
   }
 
   onChecked(event: any, field: string, extraParameter: any = '') {
-    console.log(event, "event");
     let value;
     if (event) {
       value = field === 'price' ? Number(event?.target?.value) : event.target.value;
@@ -193,7 +190,6 @@ export class ExploreComponent {
   }
 
   onRemove(event: any, field: any) {
-    // console.log('event coming up is ',event.target.value," field is ",field);
 
     if (Array.isArray(this.filterApplied[field])) {
 
@@ -228,10 +224,9 @@ export class ExploreComponent {
 
     let actualParams = (Object.keys(this.filterApplied).length > 0) ? this.filterApplied : JSON.parse(JSON.stringify(this.filterApplied));
     this.fetchData.getProducts(actualParams, this.limit, this.pageNumber).subscribe((data: any) => {
-      this.products = data.items
+      this.products = data.items;
       this.loading = false;
       this.totalProducts = data.total;
-      // this.totalProducts=data.items;
     });
   }
 
@@ -243,10 +238,6 @@ export class ExploreComponent {
     let target = event.target.innerHTML;
     event.target.innerHTML = (target === 'Show Less') ? 'Show More' : 'Show Less';
     this.uniqueData[key][-1] = !this.uniqueData[key][-1];
-  }
-
-  setPriceLimit() {
-
   }
 
   changePage(event: any) {

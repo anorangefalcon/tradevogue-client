@@ -48,7 +48,7 @@
         z-index: 1;
 
         & span {
-            color: rgb(var(--whiteClr));
+            color: white;
             font-size: 32px;
             font-variation-settings:
                 'FILL' 1,

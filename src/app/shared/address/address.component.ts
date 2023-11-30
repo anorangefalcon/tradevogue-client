@@ -30,7 +30,7 @@ export class AddressComponent {
   states: any;
   town_city: any;
   country: any;
-  area: any;
+  area: any = [];
 
   // pincode
   pincodeFilled: boolean = false;
@@ -67,7 +67,7 @@ export class AddressComponent {
             this.states = '';
             this.town_city = '';
             // this.city = '';
-            this.area = '';
+            this.area = [];
             return [];
           }
         })
@@ -89,7 +89,7 @@ export class AddressComponent {
           this.country = '';
           this.states = '';
           this.town_city = '';
-          this.area = '';
+          this.area = [];
         }
       });
   }

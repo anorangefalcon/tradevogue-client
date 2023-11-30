@@ -3,9 +3,11 @@
     <header class="header fixed inset-inline-0 inset-block-start-0 transition" [class.active]="isCollapse">
         <div class="mh100 header_container d-flex align-item-center justify-content-md-between">
             <div class="toogle-section d-flex gap-10 align-item-center">
-                <a (click)="isCollapse = !isCollapse" class="pointer d-flex align-item-center mh100"><span
-                        class="material-symbols-outlined">menu</span></a>
-                <img class="brand-logo" src="../../assets/logo-mobile.svg" [class.active]="isCollapse" alt="Logo">
+                <a (click)="isCollapse = !isCollapse" class="pointer d-flex align-item-center mh100">
+                    <span class="material-symbols-outlined">menu</span>
+                </a>
+                <a [routerLink]="['/']"><img class="brand-logo" width="50px" src="../../assets/logo-mobile.svg" *ngIf="!darkTheme" [class.active]="isCollapse" alt="Logo"></a>
+                <a [routerLink]="['/']"><img class="brand-logo" width="50px" src="../../assets/logo-mobile-light.svg" *ngIf="darkTheme" [class.active]="isCollapse" alt="Logo"></a>
             </div>
             <ul class="mh100 header_items d-flex align-item-center justify-content-end gap-20">
 
@@ -24,10 +26,12 @@
 
                 <li class="header_links">
                     <span class="mh100 notification d-flex align-item-center relative" (click)="toggleTheme()">
-                        <span class="pointer transition icons material-symbols-outlined" *ngIf="!darkTheme"> dark_mode</span>
-                        <span class="pointer transition icons material-symbols-outlined" *ngIf="darkTheme">light_mode</span>
+                        <span class="pointer transition icons material-symbols-outlined" *ngIf="!darkTheme">
+                            dark_mode</span>
+                        <span class="pointer transition icons material-symbols-outlined"
+                            *ngIf="darkTheme">light_mode</span>
                     </span>
-                </li> 
+                </li>
                 <li class="header_links profile d-flex align-item-center gap-10 pointer"
                     [routerLink]="'/dashboard/account'">
                     <span class="photo-section relative d-flex justify-content-center align-item-center">
@@ -62,18 +66,20 @@
             <ul class="navlist d-flex flex-column mh100 relative">
                 <li class="transition" *ngFor="let item of navitems">
 
-                    <a [routerLink]="item.route ? item.route: null" 
-                        (click)="item.name.toLowerCase() == 'logout' ? logout() : null; checkRoute()" 
+                    <a [routerLink]="item.route ? item.route: null"
+                        (click)="item.name.toLowerCase() == 'logout' ? logout() : null; checkRoute()"
                         [class.dropdown]="item.sublist" [routerLinkActive]="'active'"
                         class="nav-links relative align-item-center d-flex gap-15 pointer">
                         <i class="icons material-symbols-outlined">{{item.icons}}</i>
                         <span class="nav-text">{{item.name}}</span>
                     </a>
 
-                    <ul class="sub-navlist" *ngIf="item.sublist"  routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+                    <ul class="sub-navlist" *ngIf="item.sublist" routerLinkActive="active"
+                        [routerLinkActiveOptions]="{exact: true}">
 
-                        <li class="sub-links"  *ngFor="let subitem of item.sublist">
-                            <a class="mw100" [routerLink]="subitem.route" routerLinkActive="active"  [routerLinkActiveOptions]="{exact: true}">{{subitem.name}}</a>
+                        <li class="sub-links" *ngFor="let subitem of item.sublist">
+                            <a class="mw100" [routerLink]="subitem.route" routerLinkActive="active"
+                                [routerLinkActiveOptions]="{exact: true}">{{subitem.name}}</a>
                         </li>
 
                     </ul>

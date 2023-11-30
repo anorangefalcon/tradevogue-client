@@ -3,7 +3,7 @@ import { CanActivateFn, Router } from '@angular/router';
 import { FetchDataService } from './shared/services/fetch-data.service';
 import { UtilsModule } from './utils/utils.module';
 import { LoginCheckService } from './shared/services/login-check.service';
-import { last, lastValueFrom } from 'rxjs';
+import { lastValueFrom } from 'rxjs';
 import { CookieService } from 'ngx-cookie-service';
 import { ToastService } from './shared/services/toast.service';
 
@@ -15,7 +15,6 @@ export const authGuard: CanActivateFn = async (route, state) => {
   const loginCheckService = inject(LoginCheckService);
   const toastService=inject(ToastService);
   const BackendUrl = inject(UtilsModule);
-
   let navigateCheck = true;
   let check=cookie.get('userToken');
   let data;

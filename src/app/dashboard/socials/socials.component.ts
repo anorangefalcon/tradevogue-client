@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { SocialsService } from 'src/app/shared/services/custom-UI/socials.service';
 import { ToastService } from 'src/app/shared/services/toast.service';
-
+import * as _ from 'lodash';
 @Component({
   selector: 'app-socials',
   templateUrl: './socials.component.html',
@@ -10,6 +10,7 @@ import { ToastService } from 'src/app/shared/services/toast.service';
 })
 export class SocialsComponent {
   socialsForm!: FormGroup;
+  cachedFormGroup!: FormGroup;
   show: boolean = false;
   constructor(private fb: FormBuilder, private toastService: ToastService, 
     private socialsService: SocialsService) { }
@@ -17,13 +18,13 @@ export class SocialsComponent {
   ngOnInit() {
     this.socialsForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
-      address: '',
+      address: [''],
       mobile: ['', Validators.pattern(/^\+[1-9]\d{1,14}$/)],
-      facebook: '',
+      facebook: [''],
       whatsapp: ['', Validators.pattern(/^\+[1-9]\d{1,14}$/)],
-      instagramLink: '',
-      accountID: '',
-      accessToken: '',
+      instagramLink: [''],
+      accountID: [''],
+      accessToken: [''],
       desktopLogo: ['', Validators.required],
       mobileLogo: ['', Validators.required]
     });
@@ -43,10 +44,17 @@ export class SocialsComponent {
         mobileLogo: data.logos.mobile
       });
 
+      this.cachedFormGroup=_.cloneDeep(this.socialsForm);
     });
     
+
     this.socialsForm.disable();
   }
+
+  discardChanges(){
+    this.socialsForm = this.cachedFormGroup;
+  }
+  
 
   onSubmit() {
     this.socialsService.setSocials(this.socialsForm?.value).subscribe((data: any) => {

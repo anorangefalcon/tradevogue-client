@@ -15,6 +15,7 @@ import { DialogBoxService } from '../shared/services/dialog-box.service';
 import { ToastService } from '../shared/services/toast.service';
 import { CookieService } from 'ngx-cookie-service';
 import { LoginCheckService } from '../shared/services/login-check.service';
+import { InvoiceTemplateComponent } from 'src/app/shared/components/invoice-template/invoice-template.component';
 
 
 @Component({
@@ -81,7 +82,8 @@ export class SettingsComponent {
      private stripePay: CheckoutService,
      private toastService : ToastService,
      private dialogBox : DialogBoxService,
-     private userService: LoginCheckService
+     private userService: LoginCheckService,
+     private invoiceService: InvoiceTemplateComponent
     ) {
     // this.route.queryParams.subscribe(params => {
     //   const redirectStatus = params['redirect_status'];
@@ -184,6 +186,7 @@ export class SettingsComponent {
       this.pageChange(1);
     }
 
+    this.TranslateData=true;
   }
 
 
@@ -251,12 +254,11 @@ export class SettingsComponent {
     })
   }
 
-  moveToCart(sku: any) {
-    this.cartService.addToCart({ sku });
+  moveToCart(product: any) {
+    console.log(product,' hehe');
+    
+    this.cartService.addToCart(product);
   }
-
-//  WISHLIST DONE
-
 
 
 //  ADDRESS
@@ -382,6 +384,25 @@ export class SettingsComponent {
   pageChange(pageNo:any){
     this.currentPage=pageNo;
       this.getOrders(pageNo)
+  }
+
+  invoiceData: any;
+
+  viewInvoice(index: number){
+    console.log(this.AllOrders[index]);
+
+    let data = JSON.parse(JSON.stringify(this.AllOrders[index]));
+    let totalQty = 0;
+
+    data.products.forEach((product: any)=>{
+        totalQty += product.quantity;
+    });
+
+    data.orderDate = new Date(data.orderDate).toDateString()
+    data['totalQty'] = totalQty;
+    this.invoiceData = data;
+
+    this.invoiceService.open();
   }
 
 }

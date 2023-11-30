@@ -60,9 +60,9 @@
             <input type="text" class="form__input" [placeholder]="'Add '+ item.name" [id]="item.type"
                 [(ngModel)]='filter[item.filter]' />
 
-            <div class="button absolute inset-inline-end-0 inset-block-start-0">
-                <button class="btn fw-500 btn-primary d-flex flex-center" type="submit"
-                    (click)="addItem(item.filter, item.type)">
+            <div class="button absolute inset-inline-end-0 inset-block-start-0" >
+                <button class="btn fw-500 btn-primary d-flex flex-center" [class.spinner]="item.loading" type="submit"
+                    (click)="addItem(item.filter, item.type, i)">
                     <span class="pointer fs-20 material-symbols-outlined">add</span>
                 </button>
             </div>

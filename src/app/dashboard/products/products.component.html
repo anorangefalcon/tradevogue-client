@@ -1,10 +1,46 @@
 <section id="product-section">
     <div class="product-table d-flex flex-column gap-25">
-        <div class="d-flex justify-content-md-between">
+        <div class="d-flex justify-content-md-between relative">
             <h3>Products Inventory</h3>
+            <div class="more-icon pointer">
+                <span class="material-symbols-outlined ">
+                    more_vert
+                </span>
+                <div class="more-icon-content display-none d-flex flex-column gap-10">
+                    <div>
+                        <input style="display: none;" type="file" id="sizes" maxlength="1" minlength="1"
+                            (input)="uploadFile($event)"
+                            accept="image/CSV, application/vnd.ms-excel ,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" />
+                        <label class="uploadbtn d-flex flex-center pointer gap-5" for="sizes">
+                            Import Excel
+                        </label>
+                    </div>
+                    <a class="downloadBtn d-flex flex-center pointer gap-5"
+                        href="../../../assets/ExcelSampleFile/sampleFullData.xlsx" download>
+                        Download Sample
+                    </a>
+                </div>
+            </div>
         </div>
+        <div class="phone-icons operational-buttons">
+            <div class="add-div">
+                <button routerLink="/dashboard/addproduct"
+                    class="btn btn-md btn-rounded d-flex align-item-center gap-5 addproduct-btn">
+                    <i class="material-symbols-outlined operational-buttons-icons">add</i>
+                    Add Product
+                </button>
+            </div>
+            <div>
+                <button class="btn btn-md btn-rounded d-flex align-item-center gap-5 del-btn" [disabled]="!deleteList.length"
+                    [ngStyle]="{'cursor': deleteList.length? 'pointer': 'no-drop'}"
+                    (click)="deleteItem(deleteList, 'bulk')">
+                    <i class="material-symbols-outlined operational-buttons-icons">delete</i>
+                    Delete
+                </button>
+            </div>
 
-        <div class="card card__pd-20 d-flex gap-20 align-item-center justify-content-md-between">
+        </div>
+        <div class="card card__pd-20 d-flex gap-20 align-item-center justify-content-md-between features">
             <div class="file-section d-flex align-item-center gap-20">
                 <input style="display: none;" type="file" id="sizes" maxlength="1" minlength="1"
                     (input)="uploadFile($event)"
@@ -47,7 +83,7 @@
                 <app-custom-select class="options" [options]="stockStatus" [selectedOption]="'Filter by Stock Status'"
                     (final_option)="updateFields($event, 'stockStatus')"></app-custom-select> -->
 
-                <span class="d-flex gap-15 align-item-center">
+                <span class="d-flex gap-15 align-item-center other-customs">
                     <!-- Product Category -->
                     <app-custom-select class="options" [options]="categoryOption"
                         [selectedOption]="template.filter.categories ? template.filter.categories: 'Filter by Category'"
@@ -161,12 +197,13 @@
                                                                             <span class="inventory good"
                                                                                 *ngIf="(stock.quantity) >= (item.orderQuantity | lessThanOrEqual: stock.quantity)[(item.orderQuantity | lessThanOrEqual: stock.quantity).length -1]  && (item.orderQuantity | lessThanOrEqual: stock.quantity).length > 1; else low_inventry">
                                                                                 In Stock
-                                                                                &#40;{{stock.quantity}}&#41; 
+                                                                                &#40;{{stock.quantity}}&#41;
                                                                             </span>
-                
+
                                                                             <ng-template #low_inventry>
-                
-                                                                                <span *ngIf="filterData(item.orderQuantity, stock.quantity) else empty_inventry"
+
+                                                                                <span
+                                                                                    *ngIf="filterData(item.orderQuantity, stock.quantity) else empty_inventry"
                                                                                     class="inventory okay">
                                                                                     Low Inventory &#40;{{
                                                                                     stock.quantity }}&#41;
@@ -177,7 +214,7 @@
                                                                                         stock.quantity }}&#41;
                                                                                     </span>
                                                                                 </ng-template>
-                
+
                                                                             </ng-template>
                                                                         </td>
                                                                     </tr>

@@ -1,4 +1,4 @@
-<div class="container billingPage d-flex flex-column gap-20">
+<div class="container billingPage d-flex flex-column gap-20" >
 
     <div class="d-flex checkOutSteps">
         <div class="d-flex gap-20 align-item-center">
@@ -9,7 +9,6 @@
         </div>
     </div>
 
-    <!-- ADDRESS STARTS -->
     <div class="address d-flex flex-column gap-20" *ngIf="!StripeOpener">
         <div class="d-flex flex-column gap-10">
             <div class="d-flex justify-content-md-between align-item-center overall__div">
@@ -72,7 +71,7 @@
 
     <!-- PAYMENT STARTS -->
     <div *ngIf="StripeOpener">
-        <div class="payment-form" *ngIf="selectedPaymentMethod === 'stripe'">
+        <div class="payment-form"  *ngIf="selectedPaymentMethod === 'stripe'">
             <form id="payment-form">
                 <div class="payment-elements">
                     <!-- Stripe.js elements -->
@@ -111,4 +110,7 @@
             </div>
         </div>
     </div>
+
+
+
 </div>

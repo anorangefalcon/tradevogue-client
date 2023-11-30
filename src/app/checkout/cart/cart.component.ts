@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { CartService } from 'src/app/shared/services/cart.service';
 import { LoginCheckService } from 'src/app/shared/services/login-check.service';
 
@@ -12,22 +13,22 @@ import { LoginCheckService } from 'src/app/shared/services/login-check.service';
 export class CartComponent implements OnInit {
 
   constructor(
-    private cartService: CartService, 
+    private cartService: CartService,
     private router: Router,
-    private userService: LoginCheckService) {}
+    private userService: LoginCheckService) { }
 
   cartArr: any[] = [];
   userToken: any = '';
   direction: any = 'right';
   loading: Boolean = false;
-  
+
   ngOnInit() {
-    
+
     this.userService.getUser('token').subscribe((token: any) => {
       this.userToken = token;
       this.loading = true;
 
-      this.cartService.cartLoading.subscribe((data: any)=>{
+      this.cartService.cartLoading.subscribe((data: any) => {
         this.loading = data;
       })
       this.cartService.fetchCart("details").subscribe((data) => {
@@ -36,6 +37,17 @@ export class CartComponent implements OnInit {
           item.image = (item.assets).find((asset: any) => {
             return (asset.color) === item.color;
           }).photo[0];
+
+          let availableQuantity = item.assets.find((asset: any) => {
+            return asset.color === item.color;
+          }).stockQuantity.find((sizeQ: any) => {
+            return sizeQ.size === item.size;
+          }).quantity;
+
+          if(availableQuantity <= 0) item.quantity = 0;
+          if((availableQuantity != item.quantity) && !(item.info.orderQuantity.includes(item.quantity))){
+            item.quantity = availableQuantity;
+          }
 
           this.updatingArr = [];
           return item;
@@ -61,13 +73,13 @@ export class CartComponent implements OnInit {
     }).quantity;
 
     if (quantityIndex === -1) {
-      for (let i = (this.cartArr[productIndex].info.orderQuantity.length - 1); i >= 0; i--) {        
+      for (let i = (this.cartArr[productIndex].info.orderQuantity.length - 1); i >= 0; i--) {
         if (this.cartArr[productIndex].info.orderQuantity[i] < stockLimit) {
           quantityIndex = i + 1;
           break;
         }
       }
-      if(this.cartArr[productIndex].info.orderQuantity[0] > stockLimit){
+      if (this.cartArr[productIndex].info.orderQuantity[0] > stockLimit) {
         quantityIndex = 0;
       }
     }
@@ -80,7 +92,7 @@ export class CartComponent implements OnInit {
         return true;
       }
     }
-    
+
     if (what == 'previous') {
       if (this.cartArr[productIndex].info.orderQuantity[quantityIndex] === stockLimit && stockLimit <= this.cartArr[productIndex].info.orderQuantity[0] && quantityIndex === -1) {
         return true;
@@ -106,13 +118,13 @@ export class CartComponent implements OnInit {
     }).quantity;
 
     if (quantityIndex === -1) {
-      for (let i = (this.cartArr[productIndex].info.orderQuantity.length - 1); i >= 0; i--) {        
+      for (let i = (this.cartArr[productIndex].info.orderQuantity.length - 1); i >= 0; i--) {
         if (this.cartArr[productIndex].info.orderQuantity[i] < stockLimit) {
           quantityIndex = i + 1;
           break;
         }
       }
-      if(this.cartArr[productIndex].info.orderQuantity[0] > stockLimit){
+      if (this.cartArr[productIndex].info.orderQuantity[0] > stockLimit) {
         quantityIndex = 0;
       }
     }
@@ -149,21 +161,20 @@ export class CartComponent implements OnInit {
     if (!this.userToken) {
       this.router.navigate(['/auth/login']);
     }
-    this.cartService.fetchCart().subscribe(() => { });
   }
 
-  closeSideCart(){
+  closeSideCart() {
     this.cartService.sideCart.next(false);
   }
 
   updatingArr: Number[] = [];
 
-  appendUpdateArr(index: any){
+  appendUpdateArr(index: any) {
     this.updatingArr.push(index);
   }
 
-  isUpdating(index: any){
-    if(this.updatingArr.includes(index)){
+  isUpdating(index: any) {
+    if (this.updatingArr.includes(index)) {
       return true;
     }
     return false;

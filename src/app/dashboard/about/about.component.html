@@ -1,6 +1,6 @@
 <div class="container  d-flex flex-column gap-20">
   <div class="d-flex justify-content-md-between card__pd-20 card default-animation">
-    <h2 class="d-flex align-item-center">Customize About Page</h2>
+    <h2 class="d-flex align-item-center header__h2">Customize About Page</h2>
     <div class="d-flex gap-10">
 
       <button class="btn  btn-primary btn-xs btn-rounded" (click)="EditClicked()" *ngIf="!Edit">Edit</button>
@@ -17,12 +17,12 @@
     <div class="d-flex flex-column card__pd-20 card gap-20">
   <div class="d-flex flex-column gap-20" formGroupName="BasicInfo">
 
-        <h3 class="common__h2">Basic Info</h3>
+        <h3 class="common__h3">Basic Info</h3>
 
       <div formGroupName="content" class="d-flex flex-column gap-20">
 
         <!-- store images and content -->
-      <div class="d-flex gap-20">
+      <div class="d-flex gap-20 basic__content__first">
 
       <div class="d-flex gap-20 ImageDiv flex-wrap">
         <ng-container *ngFor="let link of getStoreImages(); let i=index">
@@ -59,6 +59,7 @@
 
       <div class="basicInfo__content">
         <div class="d-flex flex-wrap gap-20">
+          <div class="d-flex mw100 gap-20 brand_name_year">
           <div class="formControl d-flex flex-column gap-5">
             <label class="form__label">Name<span class="red">*</span></label>
             <input type="text" id="title" formControlName="name" placeholder="Enter Name" class="form__input">
@@ -73,6 +74,7 @@
               Please enter a valid value year.
             </span>
           </div>
+        </div>
 
 
           <div class="mw100 d-flex flex-column gap-5">
@@ -142,8 +144,8 @@
     <!--   TEAM MEMBER STARTS -->
     <div class="d-flex flex-column card__pd-20 card gap-20" formArrayName="TeamMembers"> 
       <div class="d-flex justify-content-md-between">
-        <h3 class="common__h2">Team Members</h3>
-        <button class="d-flex align-item-center btn btn-secondary" (click)="AddTeamMember()" [disabled]="!Edit">
+        <h3 class="common__h3">Team Members</h3>
+        <button class="d-flex align-item-center btn btn-secondary add_team_member" (click)="AddTeamMember()" [disabled]="!Edit">
           <span class="material-symbols-outlined">
             add
             </span>
@@ -154,12 +156,12 @@
         <ng-container *ngFor="let form of getTeamMembers();let i=index">
 
 
-          <div [formGroupName]="i" class="particular_team_member d-flex flex-column gap-5">
+          <div [formGroupName]="i" class="particular_team_member d-flex flex-column gap-10">
             <!-- team member image -->
             <div class="d-flex  team_member_img align-item-center justify-content-center">
 
               <!--  LABEL AND SPAN -->
-              <div class="d-flex flex-column align-item-center gap-5"  *ngIf="!ImageShower(i,'TeamMembers')">
+              <div class="d-flex flex-column align-item-center gap-10"  *ngIf="!ImageShower(i,'TeamMembers')">
               <label [for]="'teammember'+i"  class="d-flex align-item-center upload__label flex-column justify-content-center" >
                   <span class="upload_icon material-symbols-outlined">
                     cloud_upload
@@ -187,7 +189,7 @@
             <!-- name -->
             <div class="relative">
               <input type="text" id="title" formControlName="name" placeholder="Enter Name" class="form__input">
-              <button class="delete__icon" [disabled]="!Edit" (click)="RemoveMember(i)">
+              <button class="delete__icon" [disabled]="!Edit" (click)="RemoveMember(i)" *ngIf="Edit">
                 <span class="material-symbols-outlined " >
                   delete
                   </span>

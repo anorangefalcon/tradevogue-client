@@ -6,6 +6,7 @@ import { FetchDataService } from '../shared/services/fetch-data.service';
 import { ToastService } from '../shared/services/toast.service';
 import { CheckoutService } from './checkout.service';
 import { LoginCheckService } from '../shared/services/login-check.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-checkout',
@@ -14,7 +15,7 @@ import { LoginCheckService } from '../shared/services/login-check.service';
 })
 export class CheckoutComponent implements OnInit {
 
-  LoginUser:boolean=false;
+  LoginUser: boolean = false;
   loadRazorpayScript() {
     const script = this.renderer.createElement('script');
     script.src = 'https://checkout.razorpay.com/v1/checkout.js';
@@ -28,30 +29,50 @@ export class CheckoutComponent implements OnInit {
   cart: any = {};
   StripePaymentOpener: boolean = false;
   loading: boolean = false;
+  isFormFilled = false;
+  paymentButton = false;
+  PaymentSuccess:boolean=false;
   @ViewChild('CouponCode') CouponCode: any;
 
-  constructor(private cartService: CartService, private loginCheckService: LoginCheckService, private checkOutService: CheckoutService, private router: Router, private renderer: Renderer2, private toastService: ToastService, private BackendUrl: UtilsModule, private fetchService: FetchDataService, private route: Router, private el: ElementRef, private stripePay: CheckoutService) {
-    this.checkOutService.secureNavbar$.subscribe((data) => {
-      this.SecureNavBar = data;
-    })
-    this.checkOutService.loadStripe.subscribe((data: any) => {
-      this.StripePaymentOpener = data;
-    })
+  allSubscriptions: Subscription[] = [];
 
-    this.loginCheckService.getUser().subscribe((checkToken)=>{
-      this.LoginUser=checkToken;
-    })
+  constructor(private cartService: CartService, private loginCheckService: LoginCheckService, private checkOutService: CheckoutService, private router: Router, private renderer: Renderer2, private toastService: ToastService, private BackendUrl: UtilsModule, private fetchService: FetchDataService, private route: Router, private el: ElementRef, private stripePay: CheckoutService) {
+    this.allSubscriptions.push(
+      this.checkOutService.secureNavbar$.subscribe((data) => {
+      this.SecureNavBar = data;
+    }));
+
+    this.allSubscriptions.push(
+    this.checkOutService.loadStripe.subscribe((data: any) => {
+      // this.PaymentDisabled=false;
+      this.StripePaymentOpener = data;
+
+    }));
+
+    this.allSubscriptions.push(
+    this.loginCheckService.getUser().subscribe((checkToken) => {
+      this.LoginUser = checkToken;
+    }));
   }
 
   async ngOnInit() {
     this.loading = true;
-    this.cartService.fetchCart().subscribe((data) => {
+    let cartSub = this.cartService.fetchCart().subscribe((data) => {
       this.cartCount = data.details?.length;
       this.cart = data;
+      this.verifyOrderSummary(false);
       this.loading = false;
-    });
-    this.verifyOrderSummary(false);
+    })
+    this.allSubscriptions.push(cartSub);
     this.loadRazorpayScript();
+
+    this.checkOutService.PaymentSuccess.asObservable().subscribe((data)=>{
+      this.PaymentSuccess=data;
+    })
+  }
+
+  ngOnDestroy() {
+   this.allSubscriptions.forEach((item: Subscription)=> item.unsubscribe());
   }
 
   DateParser(el: any) {
@@ -86,18 +107,6 @@ export class CheckoutComponent implements OnInit {
 
   }
 
-
-  // cartArr: any[] = [];
-  GetProducts() {
-    return new Promise((res, rej) => {
-      this.cartService.fetchCart("details").subscribe((data) => {
-        res(data);
-      });
-
-    })
-
-  }
-
   // COUPONS CODE STARTS-------------------
   CouponValid: string = 'hidden';
   AllCoupons: any;
@@ -105,11 +114,13 @@ export class CheckoutComponent implements OnInit {
   CouponApplied: any = '';
   direction: string = 'right';
   show: boolean = false;
+
   CouponOpener() {
+    this.allSubscriptions.push(
     this.fetchService.HTTPGET(this.BackendUrl.URLs.getCoupons).subscribe((data: any) => {
       this.AllCoupons = data;
       this.show = true;
-    });
+    }));
   }
 
   InputChange() {
@@ -168,13 +179,13 @@ export class CheckoutComponent implements OnInit {
     }
 
     if (!this.CheckMinimumPurchase(this.CouponApplied)) {
-      this.toastService.errorToast({ title:  `minimum purchase amount is ${coupon.minimumPurchaseAmount}` });
-      this.CouponValid='invalid';
-      this.CouponApplied=null;
-      this.show=false;
+      this.toastService.errorToast({ title: `minimum purchase amount is ${coupon.minimumPurchaseAmount}` });
+      this.CouponValid = 'invalid';
+      this.CouponApplied = null;
+      this.show = false;
       return;
     }
-    
+
     if (this.CouponValid == 'valid') {
       this.toastService.successToast({
         title: 'Coupon applied successfully'
@@ -193,38 +204,35 @@ export class CheckoutComponent implements OnInit {
     this.show = false;
   }
 
-   verifyOrderSummary(navigate: boolean = true) {
-    console.log('verify order sumaarycaled ',this.cart);
-    
-      let res=this.cart;
-      if(res?.details?.length==0) return;
-      let result = JSON.parse(JSON.stringify(res));
-    
-      if (result.length == 0) return;
-      if (this.CouponApplied) {
-        result.CouponApplied = this.CouponApplied;
-      }
+  verifyOrderSummary(navigate: boolean = true) {
+    let res = this.cart;
+    if (res?.details?.length == 0) return;
+    let result = JSON.parse(JSON.stringify(res));
 
-      if (!navigate) {
-        
-        this.fetchService.HTTPPOST(this.BackendUrl.URLs.verifyOrderWithoutCoupon, result).subscribe((response) => {
-          console.log('response come up is ',response);
-          this.cart.amounts = response;
-        });
-      }
+    if (result.length == 0) return;
+    if (this.CouponApplied) {
+      result.CouponApplied = this.CouponApplied;
+    }
 
+    if (!navigate) {
+      this.allSubscriptions.push(
+      this.fetchService.HTTPPOST(this.BackendUrl.URLs.verifyOrderWithoutCoupon, result).subscribe((response) => {
+        this.cart.amounts = response;
+      }));
+    }
+
+    else {
+      if (!this.LoginUser) {
+        this.router.navigate(['/auth/login']);
+      }
       else {
-          if (!this.LoginUser) {
-            this.router.navigate(['/auth/login']);
-          }
-          else {
-            this.fetchService.HTTPPOST(this.BackendUrl.URLs.verifyOrderSummary, result).subscribe((response) => {              
-              this.cart.amounts = response;
-
-              this.router.navigate(['/cart/billing']);
-            });
-          }
+        this.allSubscriptions.push(
+        this.fetchService.HTTPPOST(this.BackendUrl.URLs.verifyOrderSummary, result).subscribe((response) => {
+          this.cart.amounts = response;
+          this.router.navigate(['/cart/billing']);
+        }));
       }
+    }
   }
 
   ChangeHandler(event: any) {
@@ -253,17 +261,18 @@ export class CheckoutComponent implements OnInit {
   createOrder() {
     let body: any = {};
     body.address = this.AddressSelected;
-      if (this.CouponApplied) {
-        body.coupon = this.CouponApplied;
-        body.discount = this.cart.amounts.savings;
-      }
-      body.products = this.cart.details;
+    if (this.CouponApplied) {
+      body.coupon = this.CouponApplied;
+      body.discount = this.cart.amounts.savings;
+    }
+    body.products = this.cart.details;
 
-      this.fetchService.HTTPPOST(this.BackendUrl.URLs.createOrder, body).subscribe((data: any) => {
-        this.checkOutService.loadStripe.next(true);
-        this.checkOutService.orderID = data.orderId;
-      });
-      this.NextDisabled = false;
+    this.allSubscriptions.push(
+    this.fetchService.HTTPPOST(this.BackendUrl.URLs.createOrder, body).subscribe((data: any) => {
+      this.checkOutService.loadStripe.next(true);
+      this.checkOutService.orderID = data.orderId;
+    })); 
+    this.NextDisabled = false;
   }
 
   // COUPONS CODE FINSIH-------------------
@@ -282,6 +291,18 @@ export class CheckoutComponent implements OnInit {
     if (razorpayButton) {
       razorpayButton.click();
     }
+    let body12:any={newPaymentStatus:'success',transactionId:'1244',MOP:'cash',orderID:this.checkOutService.orderID};
+    this.fetchService.HTTPPOST(this.BackendUrl.URLs.updateOrderStatus,body12).subscribe();
 
   }
+
+
+  isPaymentFormFilled(): boolean {
+    const paymentForm = document.getElementById('payment-form') as HTMLFormElement;
+
+    const isFilled = paymentForm && paymentForm.checkValidity();
+
+    return isFilled;
+  }
+
 }

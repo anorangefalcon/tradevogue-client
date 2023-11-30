@@ -43,6 +43,7 @@ export class ProductPageComponent implements OnInit {
   userReview: any;
   params: HttpParams = new HttpParams().set("sku", this.sku);
   query: any = this.fetchService.HTTPGET(this.backendUrl.URLs.fetchProductUrl, this.params);
+  theme : Boolean = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -64,6 +65,10 @@ export class ProductPageComponent implements OnInit {
   breadcrumbs: { label: string; url: string }[] = [];
 
   ngOnInit(): void {
+
+    this.fetchService.themeColor$.subscribe((color)=>{
+      this.theme = color;
+    })
 
     if (this.productSku) {
       this.sku = this.productSku;
@@ -163,7 +168,7 @@ export class ProductPageComponent implements OnInit {
 
   addToCart() {
     const cartItem = {
-      sku: this.data.sku,
+      data: this.data,
       size: this.selectedSize,
       color: this.selectedColor,
       quantity: this.selectedQ
@@ -176,12 +181,11 @@ export class ProductPageComponent implements OnInit {
       });
     }
     else {
-      this.cartService.addToCart(cartItem);
+      this.cartService.addToCart(cartItem, false);
     }
   }
 
   changeColor(index: any) {
-    
     this.assetIndex = index;
     this.sizeIndex = 0;
     this.normalizeSizeColorQuantity();
@@ -304,18 +308,18 @@ export class ProductPageComponent implements OnInit {
       0: {
         items: 1
       },
-      400: {
-        items: 3
-      },
-      740: {
-        items: 4
-      },
-      940: {
-        items: 4
-      },
-      1060: {
-        items: 5
-      }
+      // 400: {
+      //   items: 3
+      // },
+      // 740: {
+      //   items: 4
+      // },
+      // 940: {
+      //   items: 4
+      // },
+      // 1060: {
+      //   items: 5
+      // }
     },
   }
   carouselOption: OwlOptions = this.customOptions;

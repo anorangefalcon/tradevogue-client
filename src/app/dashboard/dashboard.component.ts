@@ -2,6 +2,7 @@ import { Component, ViewEncapsulation } from '@angular/core';
 import { LoginCheckService } from '../shared/services/login-check.service';
 import { FetchDataService } from '../shared/services/fetch-data.service';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 
 @Component({
@@ -15,13 +16,15 @@ export class DashboardComponent {
   isCollapse: boolean = false;
   adminName: String = '';
   darkTheme: Boolean = false;
+  allSubscriptions: Subscription[] = [];
 
   constructor(private userService: LoginCheckService,
     private router: Router,
     private fetchDataService: FetchDataService) {
+      this.allSubscriptions.push(
     this.fetchDataService.themeColor$.subscribe((color) => {
       this.darkTheme = color;
-    })
+    }));
 
   }
 
@@ -66,9 +69,10 @@ export class DashboardComponent {
 
   ngOnInit() {
 
+    this.allSubscriptions.push(
     this.userService.getUser('name').subscribe((data: any) => {
       this.adminName = data;
-    });
+    }));
 
     // window.addEventListener("resize", () => {
     //   let check = window.matchMedia("(min-width: 768px)");
@@ -90,4 +94,8 @@ export class DashboardComponent {
   logout() {
     this.userService.logoutUser();
   }
+
+  ngOnDestroy() {
+    this.allSubscriptions.forEach((item: Subscription)=> item.unsubscribe());
+   } 
 }

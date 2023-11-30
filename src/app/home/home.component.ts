@@ -23,6 +23,7 @@ export class HomeComponent {
   subscribeForm: FormGroup;
   socialsData! : any;
   loading: Boolean = false;
+  theme: Boolean = false;
 
   constructor(private fb: FormBuilder,
      private backendUrls: UtilsModule, 
@@ -45,6 +46,9 @@ export class HomeComponent {
     this.socialsService.getSocials().subscribe((res:any)=>{
       this.socialsData = res;
     });
+    this.fetchDataService.themeColor$.subscribe((color)=>{
+      this.theme = color;
+    })
     
   }
 

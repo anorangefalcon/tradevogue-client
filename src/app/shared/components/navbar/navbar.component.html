@@ -71,7 +71,15 @@
                     search
                 </span>
                 <li>
-                    <a class="icons" href="javscript:void(0);">
+                    <a class="icons" routerLink="/usersetting/wishlist">
+                        <span class="wishlist_count material-symbols-outlined" *ngIf="purchaser != ''">
+                            favorite
+                            <span *ngIf="wishlistCount > 0" class="count" id="wishList">{{wishlistCount}}</span>
+                        </span>
+                    </a>
+                </li>
+                <li>
+                    <a class="icons pointer">
                         <span class="material-symbols-outlined">
                             notifications
                             <span *ngIf="notifications.length > 0" class="count" id="notifications">{{notifications.length - 1}}</span>
@@ -106,14 +114,6 @@
 
                 </li>
                 <li>
-                    <a class="icons" href="javscript:void(0);" routerLink="/usersetting/wishlist">
-                        <span class="wishlist_count material-symbols-outlined" *ngIf="purchaser != ''">
-                            favorite
-                            <span *ngIf="wishlistCount > 0" class="count" id="wishList">{{wishlistCount}}</span>
-                        </span>
-                    </a>
-                </li>
-                <li>
                     <a class="icons" [routerLink]="['/cart']">
                         <span class="material-symbols-outlined">
                             shopping_cart
@@ -122,7 +122,7 @@
                     </a>
                 </li>
                 <li>
-                    <a class="icons" href="javscript:void(0);">
+                    <a class="icons pointer">
                         <span class="material-symbols-outlined">person</span>
                     </a>
                     <ul class="sub-items d-flex flex-column gap-15">
@@ -149,7 +149,7 @@
                         <ul *ngIf="isUserLogin" class="sub-links on-login d-flex flex-column gap-5">
 
                             <li *ngIf="purchaser!=''" class="name border">
-                                Welcome <span style="color: teal;"> {{purchaser}}</span>
+                                Welcome <span> {{purchaser}}</span>
                             </li>
                             <li [routerLink]="['dashboard']" *ngIf="UserRole">Dashboard</li>
                             <li [routerLink]="['usersetting/orders']">Orders</li>

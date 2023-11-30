@@ -31,7 +31,7 @@
         </div>
         <div class="d-flex flex-column gap-10">
             <div *ngFor="let title of sorting.titles;let i=index">
-                <!-- <input type="radio" value="title" name="sort"> -->
+
                 <label (click)="onAdd(sorting.titles[i], 'sort'); sortingOpen = !sortingOpen" class="pointer">
                     {{title}}
                 </label>
@@ -46,22 +46,6 @@
                 <h4>FILTERS</h4>
                 <button class="clear-btn btn" (click)="clearAll()">Reset</button>
             </div>
-            <!-- <div class="types">
-                <div class="d-flex flex-column gap-10">
-                    <p>Gender</p>
-                    <div class="d-flex flex-column gap-10">
-                        <div class="d-flex gap-10" *ngFor="let gender of genders">
-                            <input type="checkbox" [name]="gender" [value]="gender"
-                                (change)="onChecked($event, 'gender')" id={{gender}} class="checkboxes"
-                                [checked]="isValueSelected(gender, filterApplied['gender'])">
-                            <label [for]="gender" class="capital">{{ gender}}</label>
-                        </div>
-                    </div>
-
-                </div>
-
-            </div> -->
-
             <div *ngFor="let filter of uniqueData | keyvalue " class="types">
                 <div class="d-flex flex-column gap-10">
                     <p>{{filter.key | titlecase}}</p>
@@ -85,6 +69,34 @@
                     <a class="show-btn" *ngIf="filter.value.length>3" (click)="toggleShowItems(filter.key,$event)">Show
                         More</a>
                 </div>
+            </div>
+            <div class="types">
+                <div class="d-flex flex-column gap-10">
+                    <p>Size</p>
+                    <div class="d-flex flex-column gap-10">
+                        <div class="d-flex gap-10" *ngFor="let size of sizes | slice:0:3">
+                            <input type="checkbox" [name]="size" [value]="size" (change)="onChecked($event, 'size')"
+                                id={{size}} class="checkboxes"
+                                [checked]="isValueSelected(size, filterApplied['size'])">
+                            <label [for]="size" class="capital">{{size}}</label>
+                        </div>
+                        <div *ngIf="sizesMore == true" class="d-flex flex-column gap-10">
+                            <div class="d-flex gap-10" *ngFor="let size of sizes | slice:3">
+                                <input type="checkbox" [name]="size" [value]="size" (change)="onChecked($event, 'size')"
+                                    id={{size}} class="checkboxes"
+                                    [checked]="isValueSelected(size, filterApplied['size'])">
+                                <label [for]="size" class="capital">{{size}}</label>
+                            </div>
+                        </div>
+                        <a class="show-btn" *ngIf="sizes.length>3 && sizesMore==false"
+                            (click)="sizesMore = ! sizesMore">Show
+                            More</a>
+                        <a class="show-btn" *ngIf="sizesMore" (click)="sizesMore = ! sizesMore">Show
+                            Less</a>
+                    </div>
+
+                </div>
+
             </div>
 
             <div class="types">
@@ -132,8 +144,6 @@
         <div class="non-filters">
             <div class="d-flex justify-content-end sort">
                 <div class="d-flex gap-20">
-                    <app-custom-select [_id]="'sizes'" [options]="sizes" [selectedOption]="'Select Sizes'"
-                        [type]="'multiSelect'" (SelectedList)="onAdd($event, 'size')"></app-custom-select>
                     <app-custom-select [_id]="'sort'" [options]="sorting.titles" [selectedOption]="'Sort By'"
                         (final_option)="onAdd($event, 'sort')" class="sort-custom"></app-custom-select>
                 </div>
@@ -148,7 +158,7 @@
                         <span class="d-flex gap-10">
 
                             <div class="d-flex gap-10"
-                                *ngIf="filter.key !== 'sort' && filter.key !== 'size' && filter.key !== 'minPrice' && filter.key!='color' && filter.key !== 'maxPrice' && filter.key !== 'search'">
+                                *ngIf="filter.key !== 'sort' &&  filter.key !== 'minPrice' && filter.key!='color' && filter.key !== 'maxPrice' && filter.key !== 'search'">
                                 <div *ngIf="isString(filter.value)">
                                     <div class="d-flex tags align-item-center justify-content-center ">
                                         <p>{{filter.value}}</p>
@@ -185,12 +195,13 @@
             </div>
 
             <div *ngIf="loading" class="tv-loading">
-                <img src="../../assets/logo-mobile.svg" alt="tradeVogue-loading">
+                <img src="../../assets/logo-mobile.svg" alt="tradeVogue-loading" *ngIf="!theme">
+                <img src="../../assets/logo-mobile-light.svg" alt="tradeVogue-loading" *ngIf="theme">
                 <div class="circle-tv-loader"></div>
             </div>
 
 
-            <div *ngIf="!loading && products.length;  else noData" class="explore-cards">
+            <div *ngIf="!loading" class="explore-cards">
                 <ng-container *ngFor="let product of products">
                     <div class="card-temp">
                         <app-card-template class="d-flex justify-content-center"
@@ -198,11 +209,11 @@
                     </div>
                 </ng-container>
             </div>
-            <ng-template #noData>
-                <div class="no-item-img mh100 mw100 d-flex flex-center">
-                    <img src="../../assets/noItemFound.svg" alt="No Item Found" height="140px">
-                </div>
-            </ng-template>
+
+            <div class="no-item-img mh100 mw100 d-flex flex-center" *ngIf="!loading && !products.length">
+                <img src="../../assets/noItemFound.svg" alt="No Item Found" height="140px">
+            </div>
+
         </div>
 
 

@@ -17,7 +17,7 @@ textarea,
 input[type="text"] {
   margin-block-end: 15px;
   border-radius: 4px;
-  outline: 0.5px solid rgba(var(--blackClr), 0.2);
+  border: 0.5px solid rgba(var(--blackClr), 0.2) !important;
   background-color: transparent;
   padding: 7px;
   resize: none;
@@ -66,7 +66,32 @@ input:hover {
     display: none;
   }
 }
-
+@media screen and (max-width: 735px){
+  .add-sec-btn {
+    display: none;
+  }
+  h3 {
+    font-size: 16px !important;
+  }
+  .btn-xs {
+    padding: 6px 8px;
+  }
+  .add-sec-responsive {
+    display: flex;
+  }
+  .on-responsive {
+    display: flex;
+  }
+  .show-icon {
+    display: flex;
+    font-size: 20px;
+  }
+  .with-icon {
+    & p {
+      display: none;
+    }
+  }
+}
 @media screen and (max-width: 420px) {
   .card {
     background-color: transparent;

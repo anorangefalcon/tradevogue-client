@@ -39,7 +39,6 @@ export class FooterComponent {
 
   }
 
-  @ViewChild('cancellation') cancellation!: ElementRef;
 
   categories : [] = [];
   show(el: any) {

@@ -1,6 +1,7 @@
 <section class="container">
     <div *ngIf="loading" class="tv-loading">
-        <img src="../../assets/logo-mobile.svg" alt="tradeVogue-loading">
+        <img src="../../assets/logo-mobile.svg" alt="tradeVogue-loading" *ngIf="!theme">
+        <img src="../../assets/logo-mobile-light.svg" alt="tradeVogue-loading" *ngIf="theme">
         <div class="circle-tv-loader"></div>
     </div>
     <div *ngIf="!loading">

@@ -5,6 +5,7 @@ import { ImageUploadService } from 'src/app/shared/services/image-upload.service
 import { ToastService } from 'src/app/shared/services/toast.service';
 import { UtilsModule } from 'src/app/utils/utils.module';
 import * as _ from 'lodash';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-about',
@@ -16,6 +17,8 @@ export class AboutComponent {
   AboutPageForm!: FormGroup
   AboutPageValues: any
   AboutForm:FormGroup
+  allSubscriptions: Subscription[] = [];
+
   constructor(
     private fb: FormBuilder, 
     private imageuploadService: ImageUploadService, 
@@ -58,6 +61,7 @@ export class AboutComponent {
 
   FetchDetails(){
     this.AboutPageForm=_.cloneDeep(this.AboutForm);
+    this.allSubscriptions.push(
     this.fetchDataService.HTTPGET((this.backendURLs.URLs.getAboutDetails)).subscribe((data: any) => {
       data.TeamMembers.forEach((el:any)=>{
         this.AddTeamMember();
@@ -65,7 +69,7 @@ export class AboutComponent {
       this.AboutPageForm.patchValue(data);
       this.AboutPageValues = JSON.parse(JSON.stringify(data));
       this.FormDisableEnable();
-    })
+    }));
   }
 
 
@@ -118,10 +122,11 @@ export class AboutComponent {
   }
 
   Save() {
+    this.allSubscriptions.push(
     this.fetchDataService.HTTPPOST(this.backendURLs.URLs.setAboutDetails, this.AboutPageForm.value).subscribe((response) => {
       this.EditClicked();
       this.FetchDetails();
-    })
+    }));
 
   }
 
@@ -203,10 +208,9 @@ export class AboutComponent {
     }
   }
 
-
-
-
-
+  ngOnDestroy() {
+   this.allSubscriptions.forEach((item: Subscription)=> item.unsubscribe());
+  }
 
 }
 

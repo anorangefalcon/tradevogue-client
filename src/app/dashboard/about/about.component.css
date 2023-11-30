@@ -1,66 +1,3 @@
-/* 
-.width-100{
-    width: 100%;
-}
-
-
-.remove-btn {
-    position: absolute;
-    right: 10px;
-    top: 10px;
-    background-color: rgb(var(--whiteClr), 0.6);
-    border-radius: 50%;
-    padding: 2px;
-    font-size: 18px;
-}
-
-.red {
-    color: rgb(var(--danger))
-}
-
-
-
-.formControl__textArea{
-    width: 100%;
-    & textarea{
-        border: 1px solid rgba(0,0,0,0.2);
-        background-color: rgb(var(--whiteClr));
-        resize: none;
-        position: relative;
-        padding-block: 10px;
-    padding-inline: 10px;
-    border-radius: 5px;
-    }
-}
-
-
-.all__members{
-    gap: 30px;
-    width: 100%;
-}
-
-
-.add__icon,.close__icon{
-  color:  rgba(0,0,0,0.6);
-  cursor: pointer;
-  background: transparent;
-  padding: 0;
-}
-
-.close__icon{
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    padding: 2px;
-    position: absolute;
-    top: -13px;
-    right: -13px;
-    background: white;
-}
- */
-
-
-
 
 
 /*  NEW CSSS */
@@ -71,8 +8,8 @@
 
 
 
-.common__h2{
-    color:  rgba(0,0,0,0.6);
+.common__h3{
+    color:  rgba(var(--blackClr).6);
 }
 
 .ImageDiv{
@@ -105,6 +42,9 @@
     right: 0;
     background: #ffffffc2;
     border-radius: 50%;
+    /* color: rgb(var(--blackClr));
+     */
+     color: black;
     top: 5px;
     right: 5px;
     cursor: pointer;
@@ -152,7 +92,7 @@
 
 .particular_team_member{
 height: 280px;
-width: 217px;
+width:calc((100% - 40px)/5);
 }
 
 .team_member_img{
@@ -166,19 +106,25 @@ width: 217px;
     height: 100%;
     width: 100%;
     position: relative;
+
+    & img {
+        object-fit: cover;
+        object-position: top;
+    }
 }
 
 
 .formControl__textArea{
     width: 100%;
     & textarea{
-        border: 1px solid rgba(0,0,0,0.2);
-        background-color: rgb(var(--whiteClr));
+        border: 1px solid rgba(var(--blackClr),0.2);
+        background-color: transparent;
         resize: none;
         position: relative;
         padding-block: 10px;
     padding-inline: 10px;
     border-radius: 5px;
+    color: rgba(var(--blackClr));
     }
 }
 
@@ -201,4 +147,90 @@ width: 217px;
 
 .delete__icon:hover{
     color: rgba(var(--danger));
+}
+
+
+@media (max-width:1100px){
+    .particular_team_member{
+        width: calc((100% - 30px)/4);
+    }
+}
+
+@media (max-width:920px){
+    .particular_team_member{
+        width: calc((100% - 20px)/3);
+    }
+}
+
+
+@media (max-width:700px){
+    .particular_team_member{
+        width: calc((100% - 10px)/2);
+    }
+}
+@media (max-width:720px){
+.basic__content__first{
+    flex-direction: column;
+    & .ImageDiv{
+        width: 100%;
+    }
+
+    & .basicInfo__content{
+        width: 100%;
+    }
+
+    .add_team_member{
+        & span{
+            font-size: 20px;
+        }
+    }
+}
+
+.features{
+    flex-direction: column;
+    & .feature1 , .feature2{
+        width: 100%;
+    }
+}
+}
+
+
+@media (max-width:480px){
+    .card{
+        background: transparent;
+        border: none;
+    }
+    .card__pd-20{
+        padding: 0;
+    }
+
+    .common__h3{
+        font-size: 15px !important;
+    }
+    .header__h2{
+        font-size: 17px !important;
+    }
+
+    .particular_team_member{
+        width: 100%;
+        height: 320px;
+    }
+
+
+
+}
+
+@media (max-width:330px) {
+    .brand_name_year{
+        flex-direction: column;
+        & .formControl{
+            width: 100%;
+        }
+    }
+    .ImageDiv{
+        flex-direction: column;
+        & .input-form{
+            width: 100%;
+        }
+    }
 }

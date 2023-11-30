@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 import { ApiService } from '../services/api.service';
-import { Subject } from 'rxjs';
+import { Subject, Subscription } from 'rxjs';
 import { SellerFetchDataService } from 'src/app/shared/services/seller-fetch-data.service';
 import { DatePipe } from '@angular/common';
 import { LoginCheckService } from 'src/app/shared/services/login-check.service';
@@ -39,6 +39,8 @@ export class AccountComponent implements OnInit {
   password2: string = "password";
   password3: string = "password";
 
+  allSubscriptions: Subscription[] = [];
+
   constructor(
     private postalCodeService: ApiService,
     private formBuilder: FormBuilder,
@@ -53,10 +55,10 @@ export class AccountComponent implements OnInit {
 
 
   ngOnInit() {
-
+    this.allSubscriptions.push(
     this.userService.getUser('token').subscribe((token: any) => {
       this.userToken = token;
-    });
+    }));
 
     // Use the patchValue method to update the profileForm with adminData
     this.profileForm = this.formBuilder.group({
@@ -109,8 +111,8 @@ export class AccountComponent implements OnInit {
       area: ['', [Validators.required]],
     });
 
-
-    var adminData = this.sellerFetchDataService.getSellerInfo().subscribe((data: any) => {
+    this.allSubscriptions.push(
+    this.sellerFetchDataService.getSellerInfo().subscribe((data: any) => {
       // console.log("data", data)
       const formattedDob = this.datePipe.transform(data[0].info.dob, 'yyyy-MM-dd');
       this.profileForm.patchValue({
@@ -127,7 +129,7 @@ export class AccountComponent implements OnInit {
         mobile: data[0].mobile,
         area: data[0].info.address[0].area
       });
-    });
+    }));
 
     this.AccountForm = this.formBuilder.group({
       // Create a FormGroup for AccountForm
@@ -144,7 +146,7 @@ export class AccountComponent implements OnInit {
     })
 
 
-
+    this.allSubscriptions.push(
     this.postalCodeInput
       .pipe(
         debounceTime(500),
@@ -183,7 +185,7 @@ export class AccountComponent implements OnInit {
           this.county = '';
           this.city = '';
         }
-      });
+      }));
 
 
     this.AccountForm.disable();
@@ -250,8 +252,9 @@ export class AccountComponent implements OnInit {
       "CITY": form['county']
     }
 
-    await this.sellerFetchDataService.sendPinInfo(pinData).subscribe((data: any) => {
-    });
+    this.allSubscriptions.push(
+    this.sellerFetchDataService.sendPinInfo(pinData).subscribe((data: any) => {
+    }));
   }
 
 
@@ -283,11 +286,14 @@ export class AccountComponent implements OnInit {
       oldPassword: this.passwordForm.get('currentPassword')?.value,
       newPassword: this.passwordForm.get('newPassword')?.value
     }
-    this.fetchDataService.HTTPPOST(this.backendURLs.URLs.changePassword, body).subscribe((data: any) => {
-      console.log(data);
-      
+    this.allSubscriptions.push(
+    this.fetchDataService.HTTPPOST(this.backendURLs.URLs.changePassword, body).subscribe((data: any) => {      
       this.toastService.successToast({ title: data.message })
       this.passwordForm.reset()
-    });
+    }));
   }
+
+  ngOnDestroy() {
+    this.allSubscriptions.forEach((item: Subscription)=> item.unsubscribe());
+   }
 }

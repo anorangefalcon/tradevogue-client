@@ -1,5 +1,6 @@
 import { Component, ElementRef, Input, ViewChild, ViewEncapsulation } from '@angular/core';
 import { Injectable } from '@angular/core';
+import { FetchDataService } from '../../services/fetch-data.service';
 
 @Injectable({
   providedIn: 'root'
@@ -15,9 +16,15 @@ export class InvoiceTemplateComponent {
 
   @Input() orderInfo: any;
   @ViewChild('invoicePage') content!: ElementRef;
+
+  constructor(private fetchData: FetchDataService){}
   
   ngOnInit(){
     console.log(this.orderInfo);
+
+    if(typeof(this.orderInfo) == 'string'){
+        
+    }
   }
 
   printInvoice(){

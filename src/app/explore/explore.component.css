@@ -254,10 +254,11 @@ input::-webkit-inner-spin-button {
 }
 
 .price button {
-    background-color: rgb(var(--gray));
+    background-color: rgb(var(--whiteClr));
     padding: 5px;
     border: 0.5px solid rgb(var(--blackClr));
     height: 30px;
+    border-radius:3px;
 
     &:hover{
         border: 0.5px solid rgb(var(--blackClr), 0.5);
@@ -265,6 +266,7 @@ input::-webkit-inner-spin-button {
 
     & span {
         font-size: 20px;
+        color: rgb(var(--blackClr));
     }
 }
 .ranges p {
@@ -324,6 +326,13 @@ input[type="radio"] {
     .sort-custom{
         display: none;
     }
+
+    .no-item-img{
+        & img{
+            transform: translateY(0px) ;
+        }
+    }
+    
     .filters , .sort-mobile{
         position: fixed;
         padding-inline: 25px;

@@ -26,7 +26,7 @@ export class HelpPageComponent {
     this.contactForm = this.formBuilder.group({
       name: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
-      selectedTicket: ['', Validators.required],
+      selectedTicket: ['Select Ticket', Validators.required],
       message: ['', Validators.required]
     });
   }

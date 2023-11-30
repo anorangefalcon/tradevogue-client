@@ -156,7 +156,7 @@ p{
   }
 
   .overlay{
-    padding: 10px;
+    padding: 20px;
 
     & h3{
       font-size: 16px !important;
@@ -182,9 +182,14 @@ p{
   }
   
   .item1, .item2, .item3, .item4 {
+    border-radius: 10px !important;
     background-size: contain;
     background-position: right;   
     background-repeat: no-repeat; 
+  }
+
+  .overlay{
+    justify-content: center !important;
   }
 }
 

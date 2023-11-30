@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FetchDataService } from '../shared/services/fetch-data.service';
 import { UtilsModule } from '../utils/utils.module';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-about',
@@ -9,15 +10,20 @@ import { UtilsModule } from '../utils/utils.module';
 })
 export class AboutComponent {
   Data:any;
+  dataSubscription!: Subscription;
 
-  constructor(private fetchDataService:FetchDataService,private backendUrls:UtilsModule){
+  constructor(fetchDataService:FetchDataService,private backendUrls:UtilsModule){
 
-    fetchDataService.HTTPGET((this.backendUrls.URLs.getAboutDetails)).subscribe((data)=>{
+    this.dataSubscription = fetchDataService.HTTPGET((this.backendUrls.URLs.getAboutDetails)).subscribe((data)=>{
       this.Data=data;
     });
-    this.fetchDataService.HTTPGET((this.backendUrls.URLs.getOverAllDetails)).subscribe((data: any)=>{
-      console.log('res', data)
-    });
+    // this.fetchDataService.HTTPGET((this.backendUrls.URLs.getOverAllDetails)).subscribe((data: any)=>{
+    //   console.log('res', data)
+    // });
+  }
+
+  ngOnDestroy() {
+    this.dataSubscription.unsubscribe();
   }
 
 }

@@ -3,6 +3,7 @@ import { WishlistService } from '../shared/services/wishlist.service';
 import { UtilsModule } from '../utils/utils.module';
 import { FetchDataService } from '../shared/services/fetch-data.service';
 import { ToastService } from '../shared/services/toast.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-wishlist',
@@ -23,7 +24,7 @@ export class WishlistComponent {
   showTextField: boolean = false;
   showAddLabel: boolean = true;
   productName: string = "";
-
+  allSubscriptions: Subscription[] = [];
 
   constructor(private wishlistService: WishlistService,
     private toastService: ToastService,
@@ -32,13 +33,14 @@ export class WishlistComponent {
   }
 
   ngOnInit() {
+    this.allSubscriptions.push(
     this.wishlistService.wishlistPopupData.subscribe((data) => {
       console.log(data, "wishlist data init");
 
       if (!data) return;
       this.list = data.wishlists;
       this.show = true;
-    })
+    }));
   }
 
   addToWishlist(wishlistName: string, type: String = '') {
@@ -48,6 +50,7 @@ export class WishlistComponent {
       productId: this.wishlistService.productId,
       type : type
     }
+    this.allSubscriptions.push(
     this.fetchDataService.HTTPPOST(this.utils.URLs.addToWishlist, body).subscribe(
       {
         next: (res: any) => {
@@ -63,7 +66,7 @@ export class WishlistComponent {
           this.show = false;
         }
       }
-    )
+    ));
   }
 
   handler(event: any) {
@@ -71,6 +74,10 @@ export class WishlistComponent {
     this.show = event
     // this.wishlistService.showWishlistPopup.
   }
+
+  ngOnDestroy() {
+    this.allSubscriptions.forEach((item: Subscription)=> item.unsubscribe());
+   }
 }
 
 

@@ -151,7 +151,7 @@
         }
 
         & .navlist {
-            overflow-y: scroll;
+            overflow-y: auto;
 
             &::-webkit-scrollbar {
                 width: 3px;
@@ -401,6 +401,14 @@
 
             }
         }
+
+        .toogle-section{
+            gap: 3px;
+
+            .brand-logo {
+                transform: translateY(0px) !important; 
+            }
+        }
     }
 
 
@@ -490,12 +498,18 @@ main {
     }
 
     .table-list {
-        /* overflow-x: auto; */
+        overflow-x: auto;
 
         &::-webkit-scrollbar {
+            width: 3px;
             height: 3px;
             border-radius: 5px;
             background-color: rgb(var(--secondary), 0.4);
+        }
+
+        &::-webkit-scrollbar-thumb {
+            border-radius: 5px;
+            background-color: rgb(var(--primaryClr), 0.8);
         }
 
         & .table__item-image {

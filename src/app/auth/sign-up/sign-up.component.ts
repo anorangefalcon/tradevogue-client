@@ -3,8 +3,8 @@ import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { passwordStrengthValidator } from '../validators'; // Adjust the path to the correct location
 import { UtilsModule } from 'src/app/utils/utils.module';
 import { FetchDataService } from 'src/app/shared/services/fetch-data.service';
-import { Router } from '@angular/router';
 import { LoginCheckService } from 'src/app/shared/services/login-check.service';
+import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-sign-up',
   templateUrl: './sign-up.component.html',
@@ -18,7 +18,9 @@ export class SignUpComponent {
   showPassword: boolean = false;
   loading: boolean = false;
 
-  constructor(fb: FormBuilder, router: Router, private loginService: LoginCheckService, private renderer: Renderer2, private backendURLs: UtilsModule, private fetchDataService: FetchDataService) {
+  dataSubscription!: Subscription;
+
+  constructor(fb: FormBuilder, private loginService: LoginCheckService, private renderer: Renderer2, private backendURLs: UtilsModule, private fetchDataService: FetchDataService) {
     // Google login
     window.addEventListener('auth', async (event: any) => {
       const token = { credential: event.detail.credential }
@@ -46,7 +48,7 @@ export class SignUpComponent {
   }
 
   CreateUser(body: any) {
-    this.fetchDataService.HTTPPOST(this.backendURLs.URLs.signupUrl, body).subscribe({
+    this.dataSubscription = this.fetchDataService.HTTPPOST(this.backendURLs.URLs.signupUrl, body).subscribe({
       next: (data: any) => {
         this.loginService.loginUser({ 'userToken': data.token, 'name': data.firstName });
         this.loading = false;
@@ -69,6 +71,7 @@ export class SignUpComponent {
   }
 
   ngOnDestroy() {
-    this.renderer.removeChild(document.body, this.script);
+      this.renderer.removeChild(document.body, this.script);
+      this.dataSubscription.unsubscribe();
   }
 }

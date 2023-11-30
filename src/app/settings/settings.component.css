@@ -14,7 +14,7 @@ form {
             padding-inline-end: 5px;
             border-radius: 8px;
             border: 1px solid rgb(var(--blackClr), 0.08);
-            background-color: rgba(var(--blackClr),0.05);
+            background-color: rgba(var(--blackClr), 0.05);
             font-size: 14px;
             outline: none;
             color: rgb(var(--textClr));
@@ -94,11 +94,13 @@ label span {
 .nav-links.nav-link-active::before {
     height: 80%;
 }
+
 .nav-link-active {
-   & a {
+    & a {
         color: rgb(var(--primaryClr));
 
     }
+
     /* & .nav-icons {
         color: rgb(var(--primaryClr));
         font-variation-settings:
@@ -204,9 +206,10 @@ label span {
 }
 
 
-.wishlist__div{
+.wishlist__div {
     margin-block-end: 15px;
 }
+
 .accordian:not(:last-child) {
     border-block-end: 0.3px solid rgb(var(--blackClr), 0.5);
 }
@@ -293,26 +296,13 @@ label span {
     font-size: 15px !important;
     font-weight: 500;
 }
-.stockAvailable {
-    border: 1px solid rgb(var(--primaryClr));
-    padding-block: 5px;
-    padding-inline: 10px;
-    border-radius: 4px;
-    width: fit-content;
 
-    & p {
-        text-transform: uppercase;
-        color: rgb(var(--primaryClr));
-    }
+.out-of-stock {
+    color: rgb(var(--danger));
 }
-.stockAvailable.out-of-stock{
-    border-color: rgb(var(--danger));
-    background-color: rgb(var(--danger), 0.08);
-    opacity: 0.7;
-    & p{
-        color: rgb(var(--danger));
-        font-size: 16px !important;
-    }
+
+.in-stock {
+    color: rgb(var(--primaryClr))
 }
 
 /* WISHLIST CSS ENDS */
@@ -417,7 +407,7 @@ label span {
 
     & p {
         font-weight: 500;
-    } 
+    }
 }
 
 .order {
@@ -519,7 +509,7 @@ label span {
 
     .content {
         transform: translateX(100%);
-        border:none;
+        border: none;
     }
 
     .container {
@@ -530,6 +520,7 @@ label span {
         border: none;
         min-width: 100%;
         padding-block: 20px;
+
         & ul {
             width: 100%;
 
@@ -548,7 +539,7 @@ label span {
 
                 & span {
                     display: flex;
-                   
+
                 }
             }
         }
@@ -556,41 +547,39 @@ label span {
 
     .nav-link-active {
         & a {
-             color: rgba(var(--textClr)) !important;
-         }
+            color: rgba(var(--textClr)) !important;
+        }
 
     }
 
-    .nav-links:hover{
-        & a{
+    .nav-links:hover {
+        & a {
             color: rgb(var(--primaryClr)) !important;
         }
     }
 
-    .nav-links::before{
+    .nav-links::before {
         display: none;
     }
 
-        .left__icon{
-            display: initial;
-        }
+    .left__icon {
+        display: initial;
+    }
 
 
 
 
 
     .expand {
-        /* position: absolute !important; */
-
-        & .content{
-        width: 100%;
-        transform: translateX(0%) !important;
-        transition: transform 0.4s cubic-bezier(0, 0.59, 0.25, 1), -webkit-transform 0.4s cubic-bezier(0, 0.59, 0.25, 1);
-        transition: 0.3s ease-in-out;
-        padding: 0;
+        & .content {
+            width: 100%;
+            transform: translateX(0%) !important;
+            transition: transform 0.4s cubic-bezier(0, 0.59, 0.25, 1), -webkit-transform 0.4s cubic-bezier(0, 0.59, 0.25, 1);
+            transition: 0.3s ease-in-out;
+            padding: 0;
         }
 
-        & .navbar{
+        & .navbar {
             display: none;
         }
 
@@ -598,41 +587,56 @@ label span {
 
 
 
-} 
+}
 
 
-@media (max-width:550px){
-    .profile{
-            & form{
-                flex-direction: column;
-                & .form__group{
-                    width: 100%;
-                }
+@media (max-width:550px) {
+
+    .profile,
+    .changePassword {
+        & form {
+            flex-direction: column;
+
+            & .form__group {
+                width: 100%;
             }
+        }
     }
 
 }
 
-@media (max-width:400px){
-.profile,
-.changePassword,
-.address {
-    & h2 {
-        font-size: 18px !important;
-        font-weight: 600;
+@media screen and (max-width: 510px) {
+    .prod-name {
+        text-overflow: ellipsis;
+        width: 15ch;
+        overflow: hidden;
+        text-wrap: nowrap;
     }
 }
-
-/* .address_header{
-    flex-direction: column;
-} */
-
-.text_address{
-    display: none;
+@media screen and (max-width: 440px) {
+    .product {
+        flex-direction: column;
+        gap: 10px;
+    }
 }
+@media (max-width:400px) {
 
-.address__icon{
-    font-size: 20px;
-}
+    .profile,
+    .changePassword,
+    .address {
+        & h2 {
+            font-size: 18px !important;
+            font-weight: 600;
+        }
+    }
+
+
+    .text_address {
+        display: none;
+    }
+
+    .address__icon {
+        font-size: 20px;
+    }
 
 }

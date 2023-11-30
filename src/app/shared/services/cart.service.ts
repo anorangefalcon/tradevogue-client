@@ -29,16 +29,58 @@ export class CartService {
     });
   }
 
-  addToCart(data: any) {
+  addToCart(cartItem: any, insertDefaults: Boolean = true) {
     this.cartLoading.next(true);
     this.sideCart.next(true);
+    let cartObj;
     
-    const cartObj = { 
-      "sku": data.sku,
-      "size": data.size,
-      "color": data.color,
-      "quantity": data.quantity 
-    };
+
+    if (insertDefaults) {
+      let assetIndex = cartItem.matchedIndex ? cartItem.matchedIndex : 0;
+      let sizeIndex = 0; 
+
+      if (cartItem.assets[assetIndex].stockQuantity[0].quantity <= 0) {
+        const ifMatchesSize = (cartItem.assets[assetIndex].stockQuantity).some((stockQ: any) => {
+          if (stockQ.quantity > 0) return true;
+          sizeIndex++;
+          return false;
+        });
+
+        if (!ifMatchesSize) sizeIndex = 0;
+      }
+
+      const outOfStock = (cartItem.assets[assetIndex].stockQuantity[sizeIndex].quantity <= 0) ? true : false;
+      if (outOfStock) {
+        this.toastService.errorToast({
+          title: "This Product is out of stock"
+        });
+        return;
+      }
+
+      let limit = cartItem.assets[assetIndex].stockQuantity[sizeIndex].quantity;
+      let arr = cartItem.info.orderQuantity;
+      let filteredArray = arr.filter((item: any) => item <= limit);
+
+      if (!(filteredArray.includes(limit)) && (arr[arr.length - 1] > limit)) {
+        filteredArray.push(limit);
+      }
+      cartItem.info.orderQuantity = filteredArray;
+
+      cartObj = {
+        sku: cartItem.sku,
+        color: cartItem.assets[assetIndex].color,
+        size: cartItem.assets[assetIndex].stockQuantity[sizeIndex].size,
+        quantity: cartItem.info.orderQuantity[0]
+      }
+    }
+    else{
+      cartObj = {
+        sku: cartItem.data.sku,
+        size: cartItem.size,
+        color: cartItem.color,
+        "quantity": cartItem.quantity
+      };
+    }
 
     if (this.user) {
       this.addToCartWithToken(cartObj);
@@ -78,7 +120,7 @@ export class CartService {
   }
 
   private handleSuccessfulAddToCart() {
-    this.fetchDetails();    
+    this.fetchDetails();
     this.toastService.successToast();
   }
 
@@ -130,7 +172,7 @@ export class CartService {
   fetchDetails() {
     const localCart = localStorage.getItem('myCart');
     let cartDetails = localCart ? JSON.parse(localCart) : null;
-    
+
     if (localCart && this.user) {
       this.http.post(this.backendUrls.URLs.addItemsToCart, cartDetails).subscribe((message: any) => {
         this.clearCart('localOnly');
@@ -146,8 +188,8 @@ export class CartService {
         cartDetails = [];
       }
       this.http.post(this.backendUrls.URLs.fetchCart, cartDetails).subscribe((data: any) => {
-        this.cartSubject?.next(data); 
-        this.cartLoading.next(false);   
+        this.cartSubject?.next(data);
+        this.cartLoading.next(false);
       });
     }
   }
@@ -201,12 +243,12 @@ export class CartService {
   clearCart(which: string = '') {
     if (!which) {
       if (this.user) {
-        this.http.get(this.backendUrls.URLs.clearCart).subscribe(() => {});
+        this.http.get(this.backendUrls.URLs.clearCart).subscribe(() => { });
       }
     }
     localStorage.removeItem("myCart");
     console.log('hello vivekkkkkkkkk');
-    
+
     this.fetchDetails();
   }
 
