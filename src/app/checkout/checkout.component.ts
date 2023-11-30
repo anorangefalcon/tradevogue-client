@@ -6,6 +6,7 @@ import { FetchDataService } from '../shared/services/fetch-data.service';
 import { ToastService } from '../shared/services/toast.service';
 import { CheckoutService } from './checkout.service';
 import { LoginCheckService } from '../shared/services/login-check.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-checkout',
@@ -28,6 +29,8 @@ export class CheckoutComponent implements OnInit {
   cart: any = {};
   StripePaymentOpener: boolean = false;
   loading: boolean = false;
+  isFormFilled = false;
+  paymentButton = false;
   @ViewChild('CouponCode') CouponCode: any;
 
   constructor(private cartService: CartService, private loginCheckService: LoginCheckService, private checkOutService: CheckoutService, private router: Router, private renderer: Renderer2, private toastService: ToastService, private BackendUrl: UtilsModule, private fetchService: FetchDataService, private route: Router, private el: ElementRef, private stripePay: CheckoutService) {
@@ -283,4 +286,14 @@ export class CheckoutComponent implements OnInit {
     }
 
   }
+
+
+  isPaymentFormFilled(): boolean {
+    const paymentForm = document.getElementById('payment-form') as HTMLFormElement;
+
+    const isFilled = paymentForm && paymentForm.checkValidity();
+
+    return isFilled;
+  }
+
 }

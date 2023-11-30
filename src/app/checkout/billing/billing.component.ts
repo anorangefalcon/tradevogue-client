@@ -155,6 +155,7 @@ export class BillingComponent implements OnInit {
       console.error('Error occurred:', error);
     }
   }
+
   async proceedToPayment(): Promise<void> {
     try {
       const response = await fetch(this.backendURLs.URLs.getPaymentKeys);
