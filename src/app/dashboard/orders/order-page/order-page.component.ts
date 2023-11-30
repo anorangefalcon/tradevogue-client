@@ -37,17 +37,13 @@ export class OrderPageComponent {
         this.orderInfo = data;
 
         let totalQty = 0;
-        let totalAmount = 0;
 
         data.products.forEach((product: any)=>{
             totalQty += product.quantity;
-            // totalAmount += product.amount;
         });
 
         this.orderInfo.orderDate = new Date(this.orderInfo.orderDate).toDateString()
-
         this.orderInfo['totalQty'] = totalQty;
-        // this.orderInfo['totalAmount'] = totalAmount;
       }
     })
   }

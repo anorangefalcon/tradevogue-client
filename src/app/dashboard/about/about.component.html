@@ -189,7 +189,7 @@
             <!-- name -->
             <div class="relative">
               <input type="text" id="title" formControlName="name" placeholder="Enter Name" class="form__input">
-              <button class="delete__icon" [disabled]="!Edit" (click)="RemoveMember(i)">
+              <button class="delete__icon" [disabled]="!Edit" (click)="RemoveMember(i)" *ngIf="Edit">
                 <span class="material-symbols-outlined " >
                   delete
                   </span>

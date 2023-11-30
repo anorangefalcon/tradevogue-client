@@ -2,21 +2,21 @@
 
 
     <div class="default-animation">
-    <h2>Offers</h2>
-    <div class="d-flex justify-content-md-between header_coupon card card__pd-20">
-        <div class="d-flex align-item-center">
-            <app-search-bar [searchPlaceholder]="'Search by Name'"
-                (searchQuery$)="updateFields($event)"></app-search-bar>
-        </div>
+        <h2>Offers</h2>
+        <div class="d-flex justify-content-md-between header_coupon card card__pd-20">
+            <div class="d-flex align-item-center">
+                <app-search-bar [searchPlaceholder]="'Search by Name'"
+                    (searchQuery$)="updateFields($event)"></app-search-bar>
+            </div>
 
-        <div class="d-flex gap-10 align-item-center header_btns">
-            <button (click)="AddCoupon()" class="btn btn-xs btn-rounded btn-primary">Add Offer</button>
+            <div class="d-flex gap-10 align-item-center header_btns">
+                <button (click)="AddCoupon()" class="btn btn-xs btn-rounded btn-primary">Add Offer</button>
 
-            <button (click)="Delete_Offer()" class="btn btn-xs btn-rounded btn-secondary"
-                [disabled]="!deleteList.length">Delete</button>
+                <button (click)="Delete_Offer()" class="btn btn-xs btn-rounded btn-secondary"
+                    [disabled]="!deleteList.length">Delete</button>
+            </div>
         </div>
     </div>
-</div>
     <div class="table-list card default-animation-slow ">
         <table>
             <tr>
@@ -40,25 +40,25 @@
                 <ng-container *ngFor="let data of allOffers; let i=index">
                     <tr *ngIf="i < TemplatePagination.limit">
                         <td class="items item-check">
-                            <input [(ngModel)]="data.checked" type="checkbox" (change)="checkboxChanged(i); updateCheckList();"
-                                id="itemId_{{i}}">
+                            <input [(ngModel)]="data.checked" type="checkbox"
+                                (change)="checkboxChanged(i); updateCheckList();" id="itemId_{{i}}">
                             <label class="d-flex flex-center" for='itemId_{{i}}'>
                                 <span class="d-flex flex-center material-symbols-outlined">done</span>
                             </label>
                         </td>
-        
+
                         <ng-container>
                             <td class="items">
                                 <p *ngIf="!data.couponcode">{{data.Title}}</p>
                                 <p *ngIf="data.couponcode">{{data.couponcode}}</p>
                             </td>
-        
+
                             <td class="items text-capitalize">{{data.OfferType}}</td>
                             <td class="items text-capitalize">{{data.discountType}}</td>
                             <td class="items">{{data.discountAmount}}</td>
                             <td class="items">{{(data.startDate.split('T')[0])}}</td>
                             <td class="items">{{data.endDate.split('T')[0]}}</td>
-        
+
                             <td class="items slide-button tooggle__btn">
                                 <input type="checkbox" [(ngModel)]="data.status.active" [id]="'statusCheck'+i"
                                     (change)="ActiveStatus($event,data,i)">
@@ -70,7 +70,8 @@
                             <td class="items action-btns">
                                 <span class="d-flex align-item-center ">
                                     <a class="tooltip edit__btn" (click)="EditOffer(data,i)">
-                                        <span class="pointer fs-18 action__btn-icon material-symbols-outlined">edit</span>
+                                        <span
+                                            class="pointer fs-18 action__btn-icon material-symbols-outlined">edit</span>
                                         <span class="tooltiptext">Edit</span>
                                     </a>
                                     <a class="tooltip delete__btn">
@@ -83,7 +84,7 @@
                                 </span>
                             </td>
                         </ng-container>
-        
+
                     </tr>
                 </ng-container>
             </tbody>
@@ -113,8 +114,7 @@
     </div>
 
 </div>
-<app-drawer [direction]="direction" [show]="show" (showChange)="ChangeHanlder($event)"
-      [title]="title">
+<app-drawer [direction]="direction" [show]="show" (showChange)="ChangeHanlder($event)" [title]="title">
 
     <div class="d-flex flex-column justify-content-md-between gap-25">
         <p>Add your coupon and necessary information from here
@@ -129,7 +129,7 @@
                 <div class="d-flex flex-column align-item-center product__img__div">
 
                     <!--  LABEL AND SPAN -->
-                    <div class="d-flex flex-column label__product__div flex-center gap-5" [class.spinner] = "uploading"
+                    <div class="d-flex flex-column label__product__div flex-center gap-5" [class.spinner]="uploading"
                         *ngIf="!OfferForm.get('Image')?.value">
                         <label for="offerImage"
                             class="d-flex align-item-center upload__label flex-column justify-content-center">
@@ -143,7 +143,8 @@
 
                     <!-- IMAGE VISIBLE DIV -->
                     <div *ngIf="OfferForm.get('Image')?.value" class="relative mh100 mh100">
-                        <span class="remove-img absolute fs-18 pointer material-symbols-outlined" (click)="ShowUpload()">
+                        <span class="remove-img absolute fs-18 pointer material-symbols-outlined"
+                            (click)="ShowUpload()">
                             close
                         </span>
                         <img [src]="getOfferImage()" class="mh100" alt="Profile Image" />
@@ -313,27 +314,31 @@
 
             </div>
 
-            <div formArrayName="UserEmails" *ngIf="OfferForm.get('couponType')?.value=='custom'" class="d-flex flex-column gap-10">
+            <div formArrayName="UserEmails" *ngIf="OfferForm.get('couponType')?.value=='custom'"
+                class="d-flex flex-column gap-10">
                 <ng-container *ngFor="let form of getEmailArray();let i=index" class="form__group d-flex">
                     <div class="form__group d-flex" *ngIf="OfferForm.get('couponType')?.value=='custom'">
                         <label class="form__label"> User Email <span>*</span></label>
 
                         <div class="validation__div" [formGroupName]="i">
-                          
-                                <div class="relative">
-                                    <input type="email" id="email" class="form__input" [formControlName]="'email'"
-                                        placeholder="Enter Your Email">
-                                    <button (click)="AddEmailFormControl()" *ngIf="i==0" class="btn d-flex add__btn btn-rounded absolute">
-                                        <span class="material-symbols-outlined">add</span>
-                                    </button>
-                                    <button (click)="RemoveEmailFormControl(i)" *ngIf="i!=0" class="btn add__btn btn-rounded absolute d-flex flex-center">
-                                        <span class="material-symbols-outlined">
-                                            delete
-                                        </span>
-                                    </button>
-                                
+
+                            <div class="relative">
+                                <input type="email" id="email" class="form__input email__input" [formControlName]="'email'"
+                                    placeholder="Enter Your Email">
+                                <span *ngIf="getEmailFormControl(i).invalid && getEmailFormControl(i).touched">Please enter valid email</span>
+                                <button (click)="AddEmailFormControl()" *ngIf="i==0"
+                                    class="btn d-flex add__btn btn-rounded absolute">
+                                    <span class="material-symbols-outlined">add</span>
+                                </button>
+                                <button (click)="RemoveEmailFormControl(i)" *ngIf="i!=0"
+                                    class="btn add__btn btn-rounded absolute d-flex flex-center">
+                                    <span class="material-symbols-outlined">
+                                        delete
+                                    </span>
+                                </button>
+
                                 <!-- [disabled]="deleteList.length>0" -->
-                               
+
 
 
                             </div>
@@ -348,8 +353,8 @@
 
         <div class="d-flex align-item-center justify-content-end btns footer__addOffer">
             <!-- [disabled]="OfferForm.invalid" -->
-            <button class="btn-primary btn-inline btn btn-sm btn-rounded" (click)="CouponSubmit()" [class.spinner] = "dataUpdate"
-                [ngClass]="{disabled:OfferForm.invalid}" [disabled]="OfferForm.invalid"
+            <button class="btn-primary btn-inline btn btn-sm btn-rounded" (click)="CouponSubmit()"
+                [class.spinner]="dataUpdate" [ngClass]="{disabled:OfferForm.invalid}" [disabled]="OfferForm.invalid"
                 [ngClass]="{'disabled':OfferForm.invalid}">
                 <span *ngIf="!EditRequest else add">Save</span>
                 <ng-template #add>
@@ -362,5 +367,5 @@
 
 </app-drawer>
 
-<app-pagination #pagination [collectionSize]="totalCount" [pageSize]="TemplatePagination.limit" [currentPage]="currentPage"
-    (activePage)="pageChange($event)"></app-pagination>
+<app-pagination #pagination [collectionSize]="totalCount" [pageSize]="TemplatePagination.limit"
+    [currentPage]="currentPage" (activePage)="pageChange($event)"></app-pagination>

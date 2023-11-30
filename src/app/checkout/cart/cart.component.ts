@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { CartService } from 'src/app/shared/services/cart.service';
 import { LoginCheckService } from 'src/app/shared/services/login-check.service';
 
@@ -12,36 +13,40 @@ import { LoginCheckService } from 'src/app/shared/services/login-check.service';
 export class CartComponent implements OnInit {
 
   constructor(
-    private cartService: CartService, 
+    private cartService: CartService,
     private router: Router,
-    private userService: LoginCheckService) {}
+    private userService: LoginCheckService) { }
 
   cartArr: any[] = [];
   userToken: any = '';
   direction: any = 'right';
   loading: Boolean = false;
-  
+  allSubscriptions: Subscription[] = [];
+
   ngOnInit() {
-    
-    this.userService.getUser('token').subscribe((token: any) => {
-      this.userToken = token;
-      this.loading = true;
+    this.allSubscriptions.push(
+      this.userService.getUser('token').subscribe((token: any) => {
+        this.userToken = token;
+        this.loading = true;
 
-      this.cartService.cartLoading.subscribe((data: any)=>{
-        this.loading = data;
-      })
-      this.cartService.fetchCart("details").subscribe((data) => {
-        this.cartArr = data;
-        this.cartArr = this.cartArr?.map((item: any) => {
-          item.image = (item.assets).find((asset: any) => {
-            return (asset.color) === item.color;
-          }).photo[0];
+        this.allSubscriptions.push(
+          this.cartService.cartLoading.subscribe((data: any) => {
+            this.loading = data;
+          }));
 
-          this.updatingArr = [];
-          return item;
-        });
-      });
-    })
+        this.allSubscriptions.push(
+          this.cartService.fetchCart("details").subscribe((data) => {
+            this.cartArr = data;
+            this.cartArr = this.cartArr?.map((item: any) => {
+              item.image = (item.assets).find((asset: any) => {
+                return (asset.color) === item.color;
+              }).photo[0];
+
+              this.updatingArr = [];
+              return item;
+            });
+          }));
+      }));
   }
 
   remove_item(identifier: any) {
@@ -61,13 +66,13 @@ export class CartComponent implements OnInit {
     }).quantity;
 
     if (quantityIndex === -1) {
-      for (let i = (this.cartArr[productIndex].info.orderQuantity.length - 1); i >= 0; i--) {        
+      for (let i = (this.cartArr[productIndex].info.orderQuantity.length - 1); i >= 0; i--) {
         if (this.cartArr[productIndex].info.orderQuantity[i] < stockLimit) {
           quantityIndex = i + 1;
           break;
         }
       }
-      if(this.cartArr[productIndex].info.orderQuantity[0] > stockLimit){
+      if (this.cartArr[productIndex].info.orderQuantity[0] > stockLimit) {
         quantityIndex = 0;
       }
     }
@@ -80,7 +85,7 @@ export class CartComponent implements OnInit {
         return true;
       }
     }
-    
+
     if (what == 'previous') {
       if (this.cartArr[productIndex].info.orderQuantity[quantityIndex] === stockLimit && stockLimit <= this.cartArr[productIndex].info.orderQuantity[0] && quantityIndex === -1) {
         return true;
@@ -106,13 +111,13 @@ export class CartComponent implements OnInit {
     }).quantity;
 
     if (quantityIndex === -1) {
-      for (let i = (this.cartArr[productIndex].info.orderQuantity.length - 1); i >= 0; i--) {        
+      for (let i = (this.cartArr[productIndex].info.orderQuantity.length - 1); i >= 0; i--) {
         if (this.cartArr[productIndex].info.orderQuantity[i] < stockLimit) {
           quantityIndex = i + 1;
           break;
         }
       }
-      if(this.cartArr[productIndex].info.orderQuantity[0] > stockLimit){
+      if (this.cartArr[productIndex].info.orderQuantity[0] > stockLimit) {
         quantityIndex = 0;
       }
     }
@@ -149,21 +154,21 @@ export class CartComponent implements OnInit {
     if (!this.userToken) {
       this.router.navigate(['/auth/login']);
     }
-    this.cartService.fetchCart().subscribe(() => { });
+
   }
 
-  closeSideCart(){
+  closeSideCart() {
     this.cartService.sideCart.next(false);
   }
 
   updatingArr: Number[] = [];
 
-  appendUpdateArr(index: any){
+  appendUpdateArr(index: any) {
     this.updatingArr.push(index);
   }
 
-  isUpdating(index: any){
-    if(this.updatingArr.includes(index)){
+  isUpdating(index: any) {
+    if (this.updatingArr.includes(index)) {
       return true;
     }
     return false;

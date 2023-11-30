@@ -4,6 +4,7 @@ import { UtilsModule } from 'src/app/utils/utils.module';
 import { FetchDataService } from 'src/app/shared/services/fetch-data.service';
 import { LoginCheckService } from 'src/app/shared/services/login-check.service';
 import { DialogBoxService } from 'src/app/shared/services/dialog-box.service';
+import { Subscription } from 'rxjs';
 
 
 @Component({
@@ -22,6 +23,7 @@ export class LoginComponent {
   loading: boolean = false;
   theme: Boolean = false;
 
+  allSubscriptions: Subscription[] = [];
 
   constructor(
     fb: FormBuilder,
@@ -57,20 +59,23 @@ export class LoginComponent {
 
     this.renderer.appendChild(document.body, this.script);
 
+    this.allSubscriptions.push(
     this.fetchDataService.themeColor$.subscribe((color)=>{
       this.theme = color;
-    })
+    }));
   }
 
 
   LoginUser(body: any) {
     console.log('here was falcon');
 
+    this.allSubscriptions.push(
     this.fetchDataService.HTTPPOST(this.backendUrls.URLs.loginUrl, body).subscribe(
       (data: any) => {
         this.loginService.loginUser({ 'userToken': data.token, 'name': data.firstName });
       }
-    )
+    ));
+
     this.loading = false;
   }
 
@@ -88,12 +93,14 @@ export class LoginComponent {
     const body = {
       email: this.forgetPasswordForm.get('passwordEmail')?.value
     }
+
+    this.allSubscriptions.push(
     this.fetchDataService.HTTPPOST(this.backendUrls.URLs.forgetPasswordUrl, body).subscribe(
       (data: any) => {
         this.isactive = true;
         this.dialogService.infoDialogBox();
       }
-    )
+    ));
   }
 
   togglePasswordVisibility() {
@@ -102,7 +109,7 @@ export class LoginComponent {
   }
 
   ngOnDestroy() {
-    console.log("login destroy");
     this.renderer.removeChild(document.body, this.script);
+    this.allSubscriptions.forEach((item: Subscription)=> item.unsubscribe());
   }
 }

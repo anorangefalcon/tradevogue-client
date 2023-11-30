@@ -367,10 +367,24 @@
                                     </div>
                                 </div>
 
-                                <div class="d-flex gap-20 order__firstDiv__btn">
-                                    <button class="btn-rounded btn" (click)="toggleAccordian(i)">View Order</button>
-                                    <button class="btn-rounded btn">View Invoice</button>
+
+                                <div>
+                                <div class="d-flex">
+                                <div>
+                                    <p>Date Placed</p>
+                                    <span>{{getDate(order.orderDate)}}</span>
                                 </div>
+                                <div>
+                                    <p>Total Amount</p>
+                                    <span>{{order.orderValueAfterDiscount}}</span>
+                                </div>
+                            </div>
+                            </div>
+
+                            <div class="d-flex gap-20 order__firstDiv__btn">
+                                <button class="btn-rounded btn" (click)="toggleAccordian(i)">View Order</button>
+                                <button class="btn-rounded btn" (click)="viewInvoice(i)">View Invoice</button>
+                            </div>
 
                             </div>
                             <ng-container *ngFor="let product of order.products">
@@ -535,3 +549,5 @@
 
 <app-address [ShowComponent]="ShowComponent" [receiveData]="receiveData"
     (AddressHandler)="AddressHandler($event)"></app-address>
+
+<app-invoice-template [orderInfo]="invoiceData"></app-invoice-template>

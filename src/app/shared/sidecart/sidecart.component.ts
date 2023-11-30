@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { CartService } from '../services/cart.service';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-sidecart',
@@ -11,26 +12,33 @@ export class SidecartComponent {
   direction: string = 'right';
   show: boolean = false;
   totalAmt: Number = 0;
+  allSubscriptions: Subscription[] = [];
 
   constructor(private cartService: CartService, private router: Router) {
-    this.cartService.sideCart.asObservable().subscribe((data: any) => {
-      this.show = data;
-    });
+    this.allSubscriptions.push(
+      this.cartService.sideCart.asObservable().subscribe((data: any) => {
+        this.show = data;
+      }));
 
-    this.cartService.fetchCart('amount').subscribe((amount: any)=>{
-      if(amount?.total === 0){
-        this.show = false
-      }
-      this.totalAmt = amount?.total;
-    });
+    this.allSubscriptions.push(
+      this.cartService.fetchCart('amount').subscribe((amount: any) => {
+        if (amount?.total === 0) {
+          this.show = false
+        }
+        this.totalAmt = amount?.total;
+      }));
   }
 
   ChangeHanlder(event: any) {
     this.show = event;
   }
 
-  proceedToCart(){
+  proceedToCart() {
     this.show = false;
     this.router.navigate(['/cart']);
+  }
+
+  ngOnDestroy() {
+    this.allSubscriptions.forEach((item: Subscription) => item.unsubscribe());
   }
 }

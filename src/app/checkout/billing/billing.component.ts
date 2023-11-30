@@ -7,6 +7,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { CheckoutService } from '../checkout.service';
 import { LoginCheckService } from 'src/app/shared/services/login-check.service';
+import { Subscription } from 'rxjs';
 declare let Stripe: any;
 interface PaymentOptions {
   key: string;
@@ -50,6 +51,8 @@ export class BillingComponent implements OnInit {
   StripeOpener: Boolean = false;
   stripeScript!: any;
   clientSecret!: any;
+  allSubscriptions: Subscription[] = [];
+
   loadRazorpayScript() {
     const script = this.renderer.createElement('script');
     script.src = 'https://checkout.razorpay.com/v1/checkout.js';
@@ -65,16 +68,18 @@ export class BillingComponent implements OnInit {
     private stripePay: CheckoutService,
     private http: HttpClient,
     private renderer: Renderer2,
-    private router: Router,
   ) {
     this.items = JSON.parse(localStorage.getItem('paymentIntent') || '[]');
     this.stripePay.setLoading = this.stripePay.setLoading.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.stripePay.showMessage = this.stripePay.showMessage.bind(this);
     this.initialize = this.initialize.bind(this);
-    this.cartService.fetchCart().subscribe((data) => {
-      this.cartitems = data;
-    });
+
+    this.allSubscriptions.push(
+      this.cartService.fetchCart().subscribe((data) => {
+        this.cartitems = data;
+      }));
+
     const checkSubTotal = () => {
       if (this.cartitems.amounts.subTotal !== 0) {
         this.total = this.totalAmount;
@@ -96,19 +101,24 @@ export class BillingComponent implements OnInit {
   }
   ngOnInit(): void {
     this.loadRazorpayScript();
-    this.checkOutService.loadStripe.subscribe((isLoaded: any) => {
-      this.StripeOpener = isLoaded;
-      if (isLoaded) {
-        this.loadStripe();
-      }
-    })
+    this.allSubscriptions.push(
+      this.checkOutService.loadStripe.subscribe((isLoaded: any) => {        
+        this.StripeOpener = isLoaded;
+        if (isLoaded) {
+          this.loadStripe();
+        }
+      }));
+
     try {
       this.getAddresses();
     } catch (error) {
       console.error('Error loading Stripe scripts:', error);
     }
   }
-  
+  // ngOnDestroy(){
+  //   this.checkOutService.StripePaymentOpen.unsubscribe();
+  // }
+
   async loadStripe(): Promise<void> {
     try {
       const response = await fetch(this.backendURLs.URLs.getPaymentKeys);
@@ -118,7 +128,7 @@ export class BillingComponent implements OnInit {
         this.stripeScript = this.renderer.createElement('script');
         this.stripeScript.src = 'https://js.stripe.com/v3/';
         this.stripeScript.async = true;
-        
+
         this.stripeScript.onload = async () => {
           this.stripe = Stripe(publicKey);
           await this.initializeStripe();
@@ -133,11 +143,7 @@ export class BillingComponent implements OnInit {
       console.error('Error loading Stripe scripts:', error);
     }
   }
-
-  ngOnDestroy() {
-    this.renderer.removeChild(document.body, this.stripeScript);
-  }
-
+  
   async initializeStripe(): Promise<void> {
     try {
       if (this.stripePay.publicKey) {
@@ -150,7 +156,7 @@ export class BillingComponent implements OnInit {
         } else {
           console.error("Payment form not found");
         }
-      } 
+      }
     } catch (error) {
       console.error('Error occurred:', error);
     }
@@ -178,11 +184,12 @@ export class BillingComponent implements OnInit {
     } catch (error) {
       console.error('Error loading Stripe scripts:', error);
     }
-    this.route.queryParams.subscribe(params => {
-      const redirectStatus = params['redirect_status'];
-      if (redirectStatus === 'succeeded') {
-      }
-    });
+    this.allSubscriptions.push(
+      this.route.queryParams.subscribe(params => {
+        const redirectStatus = params['redirect_status'];
+        if (redirectStatus === 'succeeded') {
+        }
+      }));
   }
   async initialize(stripe: any): Promise<void> {
     const item = JSON.parse(localStorage.getItem('paymentIntent') || '[]');
@@ -200,7 +207,7 @@ export class BillingComponent implements OnInit {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ items }),
     });
-    const { clientSecret }  = await response.json();
+    const { clientSecret } = await response.json();
     this.clientSecret = clientSecret;
     const appearance = {
       theme: 'flat',
@@ -280,7 +287,7 @@ export class BillingComponent implements OnInit {
       this.stripePay.setLoading(false);
       this.cartService.clearCart();
       // this.router.navigate(['/usersetting/orders']);
-      
+
     } catch (error) {
     }
   }
@@ -307,85 +314,86 @@ export class BillingComponent implements OnInit {
   clicked() {
     this.my_div?.nativeElement.classList.toggle('display_none');
   }
-    //razorpay
-    async submitForm(item: any): Promise<void> {
-      try {
-        let paymentBody = {};
-  
-        let body = {};
+  //razorpay
+  async submitForm(item: any): Promise<void> {
+    try {
+      let paymentBody = {};
+
+      let body = {};
+      this.allSubscriptions.push(
         this.userService.getUser('token').subscribe((token: any) => {
           body = {
             amount: item.price.toString(),
             items: item,
             token: token
           };
-        })
-  
-        const res = await this.http.post<any>('http://localhost:1000/razorpay/createUpiPayment', body).toPromise();
-        if (res) {
-          const options: PaymentOptions = {
-            key: res.key_id,
-            amount: res.amount,
-            currency: 'INR',
-            name: 'Trade Vogue',
+        }));
+
+      const res = await this.http.post<any>('http://localhost:1000/razorpay/createUpiPayment', body).toPromise();
+      if (res) {
+        const options: PaymentOptions = {
+          key: res.key_id,
+          amount: res.amount,
+          currency: 'INR',
+          name: 'Trade Vogue',
+          description: res.description,
+          image: '../../assets/logo-mobile.svg',
+          order_id: res.order_id,
+          handler: (response: any) => {
+            paymentBody = {
+              newPaymentStatus: 'success',
+              transactionId: response.razorpay_payment_id,
+              MOP: 'razorpay',
+              orderID: this.checkOutService.orderID,
+            };
+
+            this.allSubscriptions.push(
+              this.fetchDataService.HTTPPOST(this.backendURLs.URLs.updateOrderStatus, paymentBody).subscribe(() => { }));
+            alert('Payment Succeeded');
+          },
+          prefill: {
+            contact: res.contact,
+            name: res.name,
+            email: res.email,
+          },
+          notes: {
             description: res.description,
-            image: '../../assets/logo-mobile.svg',
-            order_id: res.order_id,
-            handler: (response: any) => {
-                paymentBody = {
-                  newPaymentStatus: 'success',
-                  transactionId: response.razorpay_payment_id,
-                  MOP: 'razorpay',
-                  orderID: this.checkOutService.orderID,
-                };
-                this.fetchDataService.HTTPPOST(this.backendURLs.URLs.updateOrderStatus, paymentBody).subscribe((data: any) => {
-                  console.log(data, "data is ")
-                });
-              console.log(paymentBody, 'payment body is');
-              alert('Payment Succeeded');
-            },
-            prefill: {
-              contact: res.contact,
-              name: res.name,
-              email: res.email,
-            },
-            notes: {
-              description: res.description,
-            },
-            theme: {
-              color: '#2300a3',
-            },
-          };
-          const razorpayObject = new (window as any).Razorpay(options);
-          razorpayObject.on('payment.failed', (response: any) => {
-            alert('Payment Failed');
-          });
-          razorpayObject.open();
-        } else {
-          alert(res.msg);
-        }
-      } catch (error) {
-        console.error('Error creating order:', error);
+          },
+          theme: {
+            color: '#2300a3',
+          },
+        };
+        const razorpayObject = new (window as any).Razorpay(options);
+        razorpayObject.on('payment.failed', (response: any) => {
+          alert('Payment Failed');
+        });
+        razorpayObject.open();
+      } else {
+        alert(res.msg);
       }
+    } catch (error) {
+      console.error('Error creating order:', error);
     }
+  }
   // ADDRESS TS FILE---------------------
   userAddresses: any[] = [];
   receiveData: any;
-  OrderSuccess:Boolean=true;
+  OrderSuccess: Boolean = true;
   ShowComponent: boolean = false;
   SecureNavBar: Boolean = false;
   AddressLength: number = 0;
   getAddresses() {
-    this.fetchDataService.HTTPGET(this.backendURLs.URLs.getAddress)
-      .subscribe((data: any) => {
-        if (data) {
-          data = data.addresses;
-          this.AddressLength = data.length;
-          if (data.length != 0) {
-            this.userAddresses = data;
+    this.allSubscriptions.push(
+      this.fetchDataService.HTTPGET(this.backendURLs.URLs.getAddress)
+        .subscribe((data: any) => {
+          if (data) {
+            data = data.addresses;
+            this.AddressLength = data.length;
+            if (data.length != 0) {
+              this.userAddresses = data;
+            }
           }
-        }
-      })
+        }));
   }
   EditAddress(address: any, index: any) {
     const data = this.userAddresses[index];
@@ -409,11 +417,14 @@ export class BillingComponent implements OnInit {
   }
   RemoveAddress(address: any, index: any) {
     const body = { address_id: address._id }
-    this.fetchDataService.HTTPPOST(this.backendURLs.URLs.deleteAddress, body).subscribe((data) => {
-      this.userAddresses.splice(index, 1);
-      this.AddressLength = this.userAddresses.length;
-    })
+    this.allSubscriptions.push(
+      this.fetchDataService.HTTPPOST(this.backendURLs.URLs.deleteAddress, body).subscribe((data) => {
+        this.userAddresses.splice(index, 1);
+        this.AddressLength = this.userAddresses.length;
+      }));
   }
+
+
   AddAddress() {
     this.ShowComponent = true;
   }
@@ -427,4 +438,15 @@ export class BillingComponent implements OnInit {
     this.checkOutService.addressSelected = (address);
     this.addressDelivered = address;
   }
+
+  ngOnDestroy() {
+
+    if(this.stripeScript){
+      this.renderer.removeChild(document.body, this.stripeScript);
+    }
+
+    this.allSubscriptions.forEach((item: Subscription) => {
+      item.unsubscribe()});
+  }
+  
 }

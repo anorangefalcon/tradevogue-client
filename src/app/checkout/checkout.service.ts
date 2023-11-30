@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { UtilsModule } from '../utils/utils.module';
 import { FetchDataService } from '../shared/services/fetch-data.service';
 import { NavigationEnd, Router } from '@angular/router';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Subscription } from 'rxjs';
 import { CartService } from '../shared/services/cart.service';
 declare let Stripe: any;
 
@@ -13,7 +13,8 @@ export class CheckoutService {
   publicKey: any;
   stripe: any;
   orderID: any = ''
-  private secureNavbar = new BehaviorSubject(false);
+  secureNavbar = new BehaviorSubject(false);
+  PaymentSuccess=new BehaviorSubject(false);
   secureNavbar$ = this.secureNavbar.asObservable();
   StripePaymentOpen = new BehaviorSubject<boolean>(false);
   // StripePaymentOpen$ = this.StripePaymentOpen.asObservable();
@@ -21,25 +22,25 @@ export class CheckoutService {
   public orderId: string | null = null;
 
   loadStripe = new BehaviorSubject<Boolean>(false);
+  allSubscriptions: Subscription[] = [];
 
   constructor(
     private backendUri: UtilsModule,
     private fetchData: FetchDataService,
-    private cartService: CartService,
     private router: Router
-  ) {
-
+  ) 
+  {
+    this.allSubscriptions.push(
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
         if (this.router.url === '/cart/billing') {
-
           this.secureNavbar.next(true);
         }
         else {
           this.secureNavbar.next(false);
         }
       }
-    })
+    }));
   }
 
   private stripeScript!: HTMLScriptElement | undefined;
@@ -127,6 +128,7 @@ export class CheckoutService {
       case "succeeded":
         await this.updateOrderStatus(paymentIntent);
         // await this.sendInvoiceData(paymentIntent);
+        this.PaymentSuccess.next(true);
         break;
       // case "processing":
       //   break;
@@ -144,9 +146,11 @@ export class CheckoutService {
       // MOP: paymentIntent.payment_method_types[0],
       orderID: this.orderID
     };
-    this.fetchData.HTTPPOST(this.backendUri.URLs.updateOrderStatus, body).subscribe();
-    // const paymentIntentString = JSON.stringify(paymentIntent);
-    // this.fetchData.HTTPPOST(this.backendUri.URLs.webhook, body).subscribe();
+    this.allSubscriptions.push(
+    this.fetchData.HTTPPOST(this.backendUri.URLs.updateOrderStatus, body).subscribe());
+    
+    // this.allSubscriptions.push(
+    // this.fetchData.HTTPPOST(this.backendUri.URLs.webhook, paymentIntent).subscribe());
   }
 
   // private async sendInvoiceData(paymentIntent: any) {

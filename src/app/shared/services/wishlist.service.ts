@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { FetchDataService } from './fetch-data.service';
 import { UtilsModule } from 'src/app/utils/utils.module';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Subscription } from 'rxjs';
 import { Router } from '@angular/router';
 import { ToastService } from './toast.service';
 import { HttpClient } from '@angular/common/http';
@@ -20,7 +20,7 @@ export class WishlistService {
 
   WishlistCount = new BehaviorSubject<any>('');
   WishlistCount$ = this.WishlistCount.asObservable();
-
+  allSubscriptions: Subscription[] = [];
 
   deleteProduct = new BehaviorSubject<any>('');
   delete$ = this.deleteProduct.asObservable();
@@ -36,23 +36,22 @@ export class WishlistService {
     private http: HttpClient,
     private userService: LoginCheckService,
     private toastService: ToastService,
-  ) 
-  {
-    this.userService.getUser().subscribe((isLoggedIn: any) => {
-      this.userIsLoggedIn = isLoggedIn;
-      this.getWishlistCount();
-    })
+  ) {
+    this.allSubscriptions.push(
+      this.userService.getUser().subscribe((isLoggedIn: any) => {
+        this.userIsLoggedIn = isLoggedIn;
+        this.getWishlistCount();
+      }));
   }
 
   ShowWishlist(productId: string) {
 
     if (this.userIsLoggedIn) {
       this.productId = productId;
-      this.fetchDataService.HTTPGET(this.backendUrls.URLs.showWishlist).subscribe((data: any) => {
-        console.log(data, "data");
-        
-        this.showWishlistPopup.next(data);
-      });
+      this.allSubscriptions.push(
+        this.fetchDataService.HTTPGET(this.backendUrls.URLs.showWishlist).subscribe((data: any) => {
+          this.showWishlistPopup.next(data);
+        }));
     }
     else {
       this.router.navigate(['/auth/login']);
@@ -60,16 +59,16 @@ export class WishlistService {
   }
 
   getWishlistCount() {
-      if (this.userIsLoggedIn) {
+    if (this.userIsLoggedIn) {
+      this.allSubscriptions.push(
         this.fetchDataService.HTTPGET(this.backendUrls.URLs.showWishlist).subscribe((data: any) => {
-    
           let newData = data.wishlists.map((el: any) => {
             return el.products;
-          }).flat();
+          }).flat()
           this.WishListedProducts.next(newData);
           this.WishlistCount.next(data.count);
-        });
-      }
+        }));
+    }
   }
 
   // AddtoWishlist(wishlistName: string) {
@@ -108,4 +107,8 @@ export class WishlistService {
     return this.http.post(this.backendUrls.URLs.showProducts, body);
   }
 
+
+  ngOnDestroy() {
+    this.allSubscriptions.forEach((item: Subscription) => item.unsubscribe());
+  }
 }

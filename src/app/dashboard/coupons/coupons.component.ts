@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, Form, FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { DialogBoxService } from 'src/app/shared/services/dialog-box.service';
 import { FetchDataService } from 'src/app/shared/services/fetch-data.service';
 import { ImageUploadService } from 'src/app/shared/services/image-upload.service';
@@ -81,7 +81,6 @@ export class CouponsComponent {
         discountAmount: fb.control('', [Validators.required]),
         startDate: fb.control('', [Validators.required]),
         endDate: fb.control('', [Validators.required,]),
-        // maximumDiscount: fb.control('', [Validators.required]),
       },
       { validator: this.DateValidator }
     )
@@ -146,9 +145,6 @@ export class CouponsComponent {
     return null;
   }
 
-  ParenClosedHandler(event: any) {
-    this.ParenClosed = event;
-  }
 
 
   DateValidator(form: FormGroup) {
@@ -188,14 +184,10 @@ export class CouponsComponent {
         }
       })
 
-
-
     }
 
     if (event == 'discount') {
       this.controls.forEach((el: any) => {
-        console.log('edeleted element is ',el);
-        
         this.OfferForm.removeControl(el.name);
       })
       let ExtraInfo = this.fb.group({
@@ -215,7 +207,7 @@ export class CouponsComponent {
       this.OfferForm.addControl('UserEmails', this.fb.array([]));
 
       (<FormArray>this.OfferForm.get('UserEmails')).push(this.fb.group({
-        email: ['', Validators.required]
+        email: ['', Validators.required,Validators.email]
       }));
       this.OfferForm.removeControl('couponUsersLimit');
     }
@@ -231,11 +223,22 @@ export class CouponsComponent {
   }
 
 
-  AddEmailFormControl() {
-    this.OfferForm.addControl('UserEmails', this.fb.array([]));
+  AddEmailFormControl(data:any=false) {
+    if(!data){
     (<FormArray>this.OfferForm.get('UserEmails')).push(this.fb.group({
-      email: ['', Validators.required]
+      email: ['', [Validators.required,Validators.email]]
     }));
+  }
+
+    if (data.UserEmails) {
+      this.OfferForm.addControl('UserEmails', this.fb.array([]));
+      data.UserEmails.forEach((el: any) => {
+        (<FormArray>this.OfferForm.get('UserEmails')).push(this.fb.group({
+          email: this.fb.control(['', Validators.required,Validators.email])
+        }));
+      })
+    }
+
   }
 
 
@@ -279,10 +282,8 @@ export class CouponsComponent {
 
 
   AddCoupon() {
-    console.log('add coupon called------>');
-    // this.newEntry = true;
-    // this.clearForm();
-    
+    this.newEntry = true;
+    this.clearForm();
     this.show = true;
     // this.EditRequest = false;
     // this.pageChange(this.currentPage);
@@ -384,16 +385,6 @@ export class CouponsComponent {
   }
 
 
-  CustomTypeHandler(value: any) {
-    this.OfferForm.addControl('UserEmails', this.fb.array([]));
-    value.forEach((el: any) => {
-      (<FormArray>this.OfferForm.get('UserEmails')).push(this.fb.group({
-        email: ['', Validators.required]
-      }));
-    })
-
-  }
-
   async EditOffer(data: any, index: any) {
     this.EditIndex = index;
     this.EditRequest = data._id;
@@ -401,10 +392,7 @@ export class CouponsComponent {
     data.endDate = data.endDate.split('T')[0];
     this.OfferTypeHandler(data.OfferType,data.couponType);
     this.DiscountTypeHandler(data.discountType);
-    if (data.UserEmails) {
-      this.CustomTypeHandler(data.UserEmails);
-    }
-
+    this.AddEmailFormControl(data);
     this.OfferForm.patchValue(data);
     this.show = true;
     this.CouponRequest = true

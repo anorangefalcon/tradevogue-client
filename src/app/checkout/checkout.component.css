@@ -437,3 +437,14 @@
     font-weight: normal;
     border: 1px solid rgb(var(--textClr), 0.3);
 } */
+
+.success_order_btn{
+    background-color: rgb(var(--success)); 
+    color: white;
+
+    border: none;
+    & span{
+        font-size: 52px;
+    }
+    border-radius: 50%;  
+}

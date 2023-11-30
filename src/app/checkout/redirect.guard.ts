@@ -1,26 +1,27 @@
 import { inject } from '@angular/core';
-import { CanActivateFn, Router } from '@angular/router';
+import { CanActivateFn } from '@angular/router';
 import { DialogBoxService } from '../shared/services/dialog-box.service';
 import { CheckoutService } from './checkout.service';
+import { Subscription } from 'rxjs';
 
 export const redirectGuard: CanActivateFn = async(route, state) => {
   const dialogBox = inject(DialogBoxService);
   const checkOutService=inject(CheckoutService);
-  const router=inject(Router);
   let emittedBoolean: any = false;
   let DialogBoxTemplate = {
-    title: 'Do you want to cancel the payment?',
+    title: 'Are you want to cancel the Transaction?',
     subtitle: '',
     type: 'confirmation',
     confirmationText: 'Yes',
     cancelText: 'No',
   };
-  
+
+  let dataSubscription = new Subscription;
   dialogBox.confirmationDialogBox(DialogBoxTemplate);
   
   function waitForDialogResponse() {
     return new Promise(resolve => {
-      dialogBox.responseEmitter.subscribe((data: any) => {
+      dataSubscription = dialogBox.responseEmitter.subscribe((data: any) => {
         resolve(data);
       });
     });
@@ -28,8 +29,10 @@ export const redirectGuard: CanActivateFn = async(route, state) => {
   emittedBoolean = await waitForDialogResponse();
   if(emittedBoolean){
     checkOutService.addressSelected=(null);
+    checkOutService.secureNavbar.next(false);
   }
   dialogBox.responseEmitter.next(false);
   
+  dataSubscription.unsubscribe();
   return emittedBoolean;
 };
