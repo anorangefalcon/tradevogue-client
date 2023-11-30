@@ -32,12 +32,12 @@ export class HeroComponent {
   }
 
   customOptions: OwlOptions = {
-    loop: false,
+    loop: true,
     mouseDrag: true,
     touchDrag: true,
     pullDrag: true,
     dots: true,
-    autoplay: false,
+    autoplay: true,
     navSpeed: 400,
     navText: ['', ''],
     responsive: {

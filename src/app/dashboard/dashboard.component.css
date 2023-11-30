@@ -151,7 +151,7 @@
         }
 
         & .navlist {
-            overflow-y: scroll;
+            overflow-y: auto;
 
             &::-webkit-scrollbar {
                 width: 3px;
@@ -399,6 +399,14 @@
 
                 padding: 16px;
 
+            }
+        }
+
+        .toogle-section{
+            gap: 3px;
+
+            .brand-logo {
+                transform: translateY(0px) !important; 
             }
         }
     }
