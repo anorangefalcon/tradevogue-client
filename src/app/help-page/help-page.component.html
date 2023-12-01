@@ -48,7 +48,7 @@
                         </div>
 
                         <label>Message</label>
-                        <textarea rows="5" placeholder="Write your message here..."
+                        <textarea class="message-transparent form__input"  placeholder="Write your message here..."
                             formControlName="message"></textarea>
                         <div *ngIf="contactForm.get('message')?.hasError('required') && contactForm.get('message')?.touched"
                             class="error">

@@ -7,6 +7,7 @@ import { forkJoin } from 'rxjs';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ToastService } from 'src/app/shared/services/toast.service';
 import { LoginCheckService } from 'src/app/shared/services/login-check.service';
+import { DialogBoxService } from 'src/app/shared/services/dialog-box.service';
 
 @Component({
   selector: 'app-tickets',
@@ -29,10 +30,16 @@ export class TicketsComponent {
   notificationForm: any;
   messageInput: string = '';
   token: any;
+  currentPage: number = 1;
 
-  constructor(private utils: UtilsModule, private http: HttpClient,
-    private popupService: PopupService, private fetchDataService: FetchDataService, 
-    private formBuilder: FormBuilder, private toast: ToastService, private userService: LoginCheckService) {
+  constructor(private utils: UtilsModule,
+     private http: HttpClient,
+    private popupService: PopupService,
+     private fetchDataService: FetchDataService, 
+    private formBuilder: FormBuilder, 
+    private toast: ToastService, 
+    private userService: LoginCheckService,
+    private dialogService: DialogBoxService) {
     this.loadData();
 
 
@@ -47,7 +54,35 @@ export class TicketsComponent {
     this.userService.getUser('fcm').subscribe((token: any)=>{
       this.token = token;
     })
+    this.pageChange(this.currentPage);
   }
+
+  updateFields(event: any) {
+    if (!event) {
+    this.pageChange(1);
+      return;
+    }
+    this.pageChange(1,event);
+  }
+
+  pageChange(pageNo: any, searchWord: string = '') {
+    this.TemplatePagination.currentPage = pageNo;
+    this.TemplatePagination.search = searchWord;
+    console.log(this.TemplatePagination);
+
+    this.fetchDataService.HTTPGET(this.utils.URLs.getAllTicket, this.TemplatePagination)
+      .subscribe((data) => {
+        this.processTicketData(data);
+        console.log(data);
+      });
+  }
+
+  TemplatePagination:any= {
+    search: '',
+    currentPage: this.currentPage,
+    limit: 10
+  }
+
 
   updateFormFields(field: string) {
     this.selectedItem.status = field;
@@ -59,6 +94,7 @@ export class TicketsComponent {
       this.processTicketData(data);
     })
   }
+
 
   private processTicketData(data: any): void {
     this.ticketData = data.map((item: any) => ({
@@ -74,9 +110,6 @@ export class TicketsComponent {
       dateCreated: new Date(item.dateCreated),
       userToken: this.findUserToken(item.userEmail),
     }));
-
-
-
     this.uniqueStatusValues = this.extractUniqueStatusValues(this.ticketData);
     this.ticketTypeId = data[0]._id;
   }
@@ -138,11 +171,11 @@ export class TicketsComponent {
 
     const request1 = this.fetchDataService.HTTPPOST(url1, body);
     const request2 = this.fetchDataService.HTTPPOST(url2, body).subscribe((res=> {
-      this.toast.successToast({'title': 'Mail Sent To : '+ this.selectedItem.userEmail})
+      // this.toast.successToast({'title': 'Mail Sent To : '+ this.selectedItem.userEmail})
+      this.dialogService.infoDialogBox({title: 'Status Changed to : '+body.status, subtitle: 'Mail Sent to : '+ this.selectedItem.userEmail});
       this.loadData();
       this.popupService.closePopup();
     }));
-
     // Use forkJoin to send the requests in parallel
     forkJoin([request1, request2])
       .subscribe(
@@ -175,19 +208,26 @@ export class TicketsComponent {
       };
       this.userService.setFcmToken(this.token);
       const fcmToken = this.token;
-
-      const apiUrl = 'http://localhost:1000/send-notification';
-
-      this.http.post(apiUrl, data).subscribe(
-        (response) => {
-          // Reset the form and close the popup
-          // this.notificationForm.reset();
+      this.fetchDataService.HTTPPOST(this.utils.URLs.sendNotification, data).subscribe((res)=> {
+        if(res) {
+          this.toast.successToast({'title': 'Notification sent'});
           this.selectedTicket = {};
-        },
-        (error) => {
-          console.error('Error sending notification:', error);
         }
-      );
+      })
+
+
+      // const apiUrl = 'http://localhost:1000/send-notification';
+
+      // this.http.post(apiUrl, data).subscribe(
+      //   (response) => {
+      //     // Reset the form and close the popup
+      //     // this.notificationForm.reset();
+      //     this.selectedTicket = {};
+      //   },
+      //   (error) => {
+      //     console.error('Error sending notification:', error);
+      //   }
+      // );
     }
   }
 
@@ -236,8 +276,6 @@ export class TicketsComponent {
             .push(this.updatedItem);
         }
       })
-     
-
     this.loadData()
   }
 

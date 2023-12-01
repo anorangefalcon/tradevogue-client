@@ -1,11 +1,11 @@
 <div *ngIf="showPopup" class="popup-overlay relative">
-    <div class="popup-content popup-details" [ngClass]="{'fade-in': showPopup}">
+    <div class=" relative popup-content popup-details" [ngClass]="{'fade-in': showPopup}">
         <ng-content></ng-content>
     
 
-    <div (click)="closePopup()" class="absolute right-5 top-5">
+    <div  (click)="closePopup()" class="absolute setPop">
         <button type="button"
-            class="inline-flex justify-center px-2 py-2 text-base font-medium text-red-500 bg-white border border-transparent rounded-full hover:bg-red-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500">
+            class="button-design inline-flex justify-center px-2 py-2 text-base font-medium text-red-500 bg-white border border-transparent rounded-full hover:bg-red-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-500">
             <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 512 512" height="1em"
                 width="1em" xmlns="http://www.w3.org/2000/svg">
                 <path

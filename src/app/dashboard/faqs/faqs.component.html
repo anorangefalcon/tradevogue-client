@@ -17,11 +17,11 @@
       <div formArrayName="categories">
         <div *ngFor="let category of categoryForms; let i = index" [formGroupName]="i" class="d-flex flex-column gap-10">
           <!-- Select dropdown -->
-          <select style="    margin-top: 33px;" formControlName="selectedOption" class="flex-grow-1">
+          <!-- <select style="    margin-top: 33px;" formControlName="selectedOption" class="flex-grow-1">
             <option value="" disabled>Select a Category</option>
             <option *ngFor="let item of faqData" [value]="item.title">{{ item.title }}</option>
-          </select>
-      
+          </select> -->
+          <app-custom-select [_id]="'faq' + i" [type]="'select'" [options]="faq" [selectedOption]="selectedOption ? selectedOption: 'Select a Category'" (final_option)="saveCategory(i, $event)" ></app-custom-select>
           <!-- Query input -->
           <div class="form-group flex-grow-1">
             <label class="form__label" for="query">Query*</label>
@@ -46,14 +46,14 @@
       </div>
       
       <div class="d-flex gap-10">
-        <button class="btn-primary btn-sm btn-rounded" style="margin-top: 10px;" (click)="addCategory()"
-          [disabled]="faqForm.invalid">Add Category</button>
+        <button [disabled]="faqForm.invalid" class="btn-primary btn-sm btn-rounded" style="margin-top: 10px;" (click)="addCategory()">Add Category</button>
         <button class="btn-secondary btn-sm btn-rounded" style="margin-top: 10px;" (click)="addFaqCategory()">+</button>
       </div>
     </form>
   </app-drawer>
 
   <!-- pop-up -->
+  <div class="faq_popup">
   <app-drawer [direction]="popUpDirection" [show]="showingPopUp" (showChange)="PopUpChangeHanlder($event)"
     [title]="'Layout Settings'">
     <div *ngIf="selectedItem" class="details-container">
@@ -64,6 +64,7 @@
     </div>
   </app-drawer>
 
+</div>
   <!-- table -->
   <div *ngIf="selectedCategory" class="table-list card default-animation-slow">
     <table summary="faqs" class="selected-category-table">
@@ -129,7 +130,7 @@
       <div class="form__card basic__info form__card d-flex flex-column gap-20">
 
         <div class="card card__pd-20 d-flex align-item-center justify-content-md-between default-animation">
-          <h3>Info</h3>
+          <h3>Update Faqs</h3>
       
           <div class="operation_button d-flex gap-10">
             <button class="btn-primary btn-rounded btn-sm" [ngStyle]="{'display': !faqForm.disabled? 'none': 'block'}"
@@ -170,9 +171,9 @@
                 <div *ngIf="editForm.get('content')?.hasError('required')">content is required.
                 </div>
                 <div *ngIf="editForm.get('content')?.hasError('minlength')">content should have at
-                  least 2 characters.</div>
+                  least 20 characters.</div>
                 <div *ngIf="editForm.get('content')?.hasError('maxlength')">content should have at
-                  most 50 characters.</div>
+                  most 100 characters.</div>
               </div>
             </div>
   

@@ -18,7 +18,7 @@ export class CouponsComponent {
   direction: string = 'right';
   ParenClosed: boolean = false;
   show: boolean = false;
-  todayDate: any = Date.now();
+  todaypageChangeDate: any = Date.now();
 
   totalCount:number = 0;
   currentPage: number = 1;

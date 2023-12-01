@@ -26,16 +26,16 @@ export class NotificationsComponent {
   constructor(private fb: FormBuilder, private notificationService: NotificationService, private uploadService: ImageUploadService, private fetch: FetchDataService, private util : UtilsModule, private http: HttpClient,
     private toast: ToastService) {
 
-    this.notificationService.getRegistrationIDs().subscribe((res)=> {
+    // this.notificationService.getRegistrationIDs().subscribe((res)=> {
+    //   this.registrationIds = res;
+    // })
+    this.fetch.HTTPGET(this.util.URLs.getFcmToken).subscribe((res)=> {  
       this.registrationIds = res;
     })
 
+    this.loadNotifications()
+
     this.getFcmTokens();
-
-
-    this.notificationService.getNotifications().subscribe((res)=> {
-      this.tableData = res;
-    })
 
 
     this.notificationForm = this.fb.group({
@@ -45,10 +45,16 @@ export class NotificationsComponent {
           title: ['', Validators.required],
           body: [''],
           url: ['', Validators.required],
-          // registration_ids: this.fb.array([])  
+          registration_ids: this.fb.array([]) 
         })
       ])
     });
+  }
+
+  loadNotifications() {
+    this.notificationService.getNotifications().subscribe((res)=> {
+      this.tableData = res;
+    })
   }
 
   getFcmTokens() {
@@ -59,6 +65,7 @@ export class NotificationsComponent {
 
   deleteItem(key: any){
     this.selectedItem = key;
+    console.log(this.selectedItem)
     if(this.selectedItem) {
       const id = this.selectedItem._id;
 
@@ -66,9 +73,12 @@ export class NotificationsComponent {
         _id: id
       }
 
-      this.fetch.HTTPPOST(this.util.URLs.deleteSales, body).subscribe((data=> {
-        this.getFcmTokens()
-      }))
+      this.fetch.HTTPPOST(this.util.URLs.deleteNotification, body).subscribe((data)=> {
+        if(data){
+          this.loadNotifications();
+          this.toast.successToast({'title': 'Notification deleted'});
+        }
+      })
       
     }
   }
@@ -97,6 +107,8 @@ export class NotificationsComponent {
 
   
     const notificationArray = this.notificationForm.get('notification') as FormArray;
+    const specificNotificationGroup = notificationArray.at(index) as FormGroup;
+    const registrationIdsControl = specificNotificationGroup.get('registration_ids') as FormArray;
     notificationArray.clear();
   
     // Create an empty form group
@@ -129,7 +141,7 @@ export class NotificationsComponent {
           title: ['', Validators.required],
           body: [''],
           url: ['', Validators.required],
-          registration_ids: this.fb.array([])  // Assuming you want to keep an array here
+          registration_ids: this.fb.array([]) 
         })
       ])
     });
@@ -154,28 +166,20 @@ export class NotificationsComponent {
         registration_ids: this.fcmTokens
       };
 
-
-
-      const apiUrl = 'http://localhost:1000/send-notification';
-
-
-      // this.fetch.HTTPPOST(apiUrl, data).subscribe((response)=> {
+      this.fetch.HTTPPOST(this.util.URLs.sendNotification, data).subscribe((res)=> {
+        console.log('response come up is ');
         
-      //   if(response) {
-      //     this.toast.successToast({'title': 'Notification sent'});
-      //   }
-
-      //   this.notificationForm.reset();
-      // })
-
-      this.http.post(apiUrl, data).subscribe(
-        (response:  any) => {
-          this.notificationForm.reset();
-        },
-        (error: any) => {
-          console.error('Error sending notification:', error);
+        if (res !== undefined) {
+          console.log(res, "res is here");
+          if (res) {
+            this.toast.successToast({'title': 'Notification sent'});
+          } else {
+            this.toast.errorToast({'title': 'Notification not sent'});
+          }
+        } else {
+          console.error("Undefined response received");
         }
-      );
+      })      
     }
   
 

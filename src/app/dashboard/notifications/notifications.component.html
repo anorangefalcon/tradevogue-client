@@ -56,10 +56,6 @@
                                     <label class="form__title" for="subTitle">SubTitle</label>
                                     <input class="form__input" type="text" id="body" formControlName="body" />
                                 </div>
-                                <!-- <div class="internal-div">
-                                    <label class="form__title" for="icon">Icon</label>
-                                    <input class="form__input" type="text" id="icon" formControlName="icon" />
-                                </div> -->
                                 <div class="internal-div">
                                     <label class="form__title" for="link">Link</label>
                                     <input class="form__input" type="text" id="url" formControlName="url" />
@@ -69,18 +65,13 @@
                     </div>
                 </div>
 
-                <div class="d-flex flex-column mw100 gap-10">
-                    <ng-container formGroupName="registration_ids">
+                <div class="d-flex flex-column mw100 gap-10" *ngIf="registrationIds">
+                    <ng-container>
                         <div>
                             Total Subscribed User: {{ registrationIds.length }}
                         </div>
-                        <!-- <select formControlName="yourFormControlName"> 
-                        <option *ngFor="let registrationId of registrationIds; let i = index" [value]="registrationId">
-                          {{ registrationId }}
-                        </option>
-                      </select> -->
                     </ng-container>
-                </div>
+                </div>                
 
             </ng-container>
         </ng-container>

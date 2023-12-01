@@ -271,3 +271,10 @@ justify-content: center;
   background: #ffcccc; /* Light red */
   /* (Existing styles) */
 }
+
+
+.faq_popup{
+  & .popup_show {
+    width: 500px;
+  }
+}

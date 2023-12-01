@@ -21,7 +21,8 @@ interface FaqItem {
 })
 export class FaqsComponent {
   faqData: any[] = [];
-  faq:any[] = [];
+  faq: any[] = [];
+  objectvalues = Object.values;
   selectedOption: string = '';
   faqForm!: FormGroup;
   editForm!: FormGroup;
@@ -36,7 +37,7 @@ export class FaqsComponent {
   show: boolean = false;
   direction: string = 'right';
   currentPage: number = 1;
-  popUpDirection:any='popup';
+  popUpDirection: any = 'popup';
   showingPopUp: boolean = false;
 
   constructor(private toast: ToastService, public pagination: PaginationService, private fb: FormBuilder, private bgURL: UtilsModule, private fetchDataService: FetchDataService, private popupService: PopupService) {
@@ -66,8 +67,8 @@ export class FaqsComponent {
         '',
         [
           Validators.required,
-          Validators.minLength(2),
-          Validators.maxLength(50),
+          Validators.minLength(20),
+          Validators.maxLength(100),
         ],
       ]
     });
@@ -104,7 +105,7 @@ export class FaqsComponent {
   loadData() {
     this.pagination.paginateBackend(`${this.bgURL.URLs.getPaginatedData}/faq`, this.currentPage, this.pageSize).subscribe((data) => {
       this.faqData = data;
-      this.faq = this.faqData.map((name)=> {
+      this.faq = this.faqData.map((name) => {
         return name.title
       });
 
@@ -113,18 +114,18 @@ export class FaqsComponent {
   }
 
   retrieveContent(selectedOption: any) {
-    this.selectedOption = selectedOption;
+    this.selectedOption = this.faqData.find((category: any) => category.title === selectedOption).title;
     this.selectedCategory = this.faqData.find((category: any) => category.title === this.selectedOption);
   }
 
   updateFormFields(event: any) {
-  
+
   }
 
-  PopUpChangeHanlder(event: any){
+  PopUpChangeHanlder(event: any) {
     this.showingPopUp = event;
   }
-  
+
 
   // async addCategory() {
   //   console.log(this.faqForm.value);
@@ -157,20 +158,23 @@ export class FaqsComponent {
   //   }
   // }
 
+  saveCategory(index: number, event: any) {
+    this.faqForm.get('categories')?.get(`${index}`)?.get('selectedOption')?.patchValue(event);
+  }
+
   async addCategory() {
 
     const categoriesControl = this.faqForm.get('categories');
+    console.log(this.faqForm);
 
-    
-  
     if (categoriesControl && categoriesControl.value && this.faqForm.valid) {
       const categoriesToSend: any = [];
-  
+
       categoriesControl.value.forEach((category: any) => {
         const selectedCategoryId = category.selectedOption;
         const query = category.query;
         const content = category.content;
-  
+
         const categoryObj = {
           title: selectedCategoryId,
           children: [
@@ -183,57 +187,51 @@ export class FaqsComponent {
         };
         categoriesToSend.push(categoryObj);
       });
-  
+
       const dataToSend = {
         categories: categoriesToSend,
       };
 
       console.log(dataToSend);
-  
+
       this.fetchDataService.HTTPPOST(this.bgURL.URLs.addFaqData, dataToSend).subscribe((data) => {
         if (data) {
           this.toast.successToast({ title: "FAQs added successfully" });
-          this.showingPopUp = false;
+          console.log('updated come is ',this.showingPopUp);
+          
+          this.show = false;
           this.loadData();
         } else {
           this.toast.errorToast({ title: "FAQs not added" });
         }
       });
-  
       this.faqForm.reset();
     }
   }
-  
-  
 
   showItemDetails(item: any) {
     this.selectedItem = item;
-    // this.popupService.openPopup();
     this.showingPopUp = true;
-    // this.showPopup = true;
   }
 
-showEdit(item: any) {
-  this.selectedItem = item;
-  this.editItem = true;
-  console.log(this.selectedItem);
-  // Assuming faqForm is your FormGroup
-  if (this.editForm) {
-    // Patch values into the form controls
-    this.editForm.patchValue({
-      query: this.selectedItem.title,
-      content: this.selectedItem.content,
-    });
+  showEdit(item: any) {
+    this.selectedItem = item;
+    this.editItem = true;
+    console.log(this.selectedItem);
+    if (this.editForm) {
+      this.editForm.patchValue({
+        query: this.selectedItem.title,
+        content: this.selectedItem.content,
+      });
+    }
   }
-}
-
 
   async updateDetails() {
     if (this.selectedItem) {
       const updatedItem = { ...this.selectedItem };
 
       console.log(updatedItem);
-     
+
       updatedItem.query = this.editForm.get('query')?.value;
       updatedItem.content = this.editForm.get('content')?.value;
 
@@ -251,7 +249,7 @@ showEdit(item: any) {
       };
 
       try {
-        const data: any = this.fetchDataService.HTTPPOST(this.bgURL.URLs.updateFaqData, updatedFaqItem).subscribe((res)=> {
+        const data: any = this.fetchDataService.HTTPPOST(this.bgURL.URLs.updateFaqData, updatedFaqItem).subscribe((res) => {
           this.loadData();
         });
         if (data) {
@@ -265,7 +263,7 @@ showEdit(item: any) {
   }
 
   openDrawer() {
-      this.show = true;
+    this.show = true;
   }
 
   ChangeHandler(event: any) {
@@ -275,7 +273,6 @@ showEdit(item: any) {
   closeDrawer() {
     this.isDrawerOpen = false;
   }
-
 
   async deleteFaq(item: FaqItem) {
     this.selectedItem = item;
@@ -288,7 +285,7 @@ showEdit(item: any) {
       }
 
       try {
-        const data = this.fetchDataService.HTTPPOST(this.bgURL.URLs.deleteFaqData, { _id: itemId }).subscribe((res)=> {
+        const data = this.fetchDataService.HTTPPOST(this.bgURL.URLs.deleteFaqData, { _id: itemId }).subscribe((res) => {
           this.loadData();
         });
         if (data) {
@@ -310,14 +307,13 @@ showEdit(item: any) {
     this.currentPage = pageNumber;
   }
 
-  tableGenerator(len: number){
+  tableGenerator(len: number) {
     let temp = []
-    for(let i=0;i<len;i++){
+    for (let i = 0; i < len; i++) {
       temp.push(0);
     }
     return temp;
   }
-
 }
 
 

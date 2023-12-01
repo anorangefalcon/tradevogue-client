@@ -19,6 +19,11 @@
     }
 }
 
+.message-transparent {
+    background-color: transparent !important;
+    height: 100px;
+}
+
 .btn-primary {
     text-align: center !important;
     margin: 0 auto !important;

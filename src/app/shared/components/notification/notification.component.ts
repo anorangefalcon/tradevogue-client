@@ -38,7 +38,6 @@ export class NotificationComponent implements OnInit {
   }
 
   async subscribeToNotifications() {
-    // Add your subscribe logic here if needed
     this.notification.initialize();
   }
 

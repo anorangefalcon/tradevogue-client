@@ -130,3 +130,30 @@ form {
     flex: 1;
   }
 }
+
+.table-container {
+  width: 100vw;
+  max-width: fit-content;
+  overflow-x: auto;
+  border: 1px solid #000; 
+}
+
+.custom-table {
+  width: 100%;
+  max-width: 100%; 
+  border-collapse: collapse;
+}
+
+.custom-table th {
+  background-color: #b5c9c9;
+  padding-inline: 18px;
+}
+
+.custom-table td {
+  text-align: center;
+  width: 129dvh;
+}
+
+.form__textarea {
+  background: transparent !important;
+}

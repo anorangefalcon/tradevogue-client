@@ -128,6 +128,10 @@ export class UtilsModule {
     addTicketTitle: `${this.BackendUrl}/ticket/addTitle`,
     deleteTitle: `${this.BackendUrl}/ticket/deleteTitle`,
     getAllTicket: `${this.BackendUrl}/ticket/getall`,
+    
+    // getAllTicket: `${this.BackendUrl}/ticket/combinedticketSearch`,
+    
+    
     updateTicket: `${this.BackendUrl}/ticket/updateTicket`,
     deleteTicket: `${this.BackendUrl}/ticket/deleteTicket`,
     ticketMail: `${this.BackendUrl}/ticketStatus`,
@@ -140,6 +144,8 @@ export class UtilsModule {
     updateNotification: `${this.BackendUrl}/notification/update`,
     toggleNotification: `${this.BackendUrl}/notification/toggle`,
     comingNotification: `${this.BackendUrl}/notification/coming`,
+    sendNotification: `${this.BackendUrl}/notification/send`,
+    deleteNotification: `${this.BackendUrl}/notification/delete`,
 
     // breadCrumbs
     getBreadCrumbs: `${this.BackendUrl}/breadcrumbs/get`,

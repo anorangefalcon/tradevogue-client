@@ -4,6 +4,7 @@ import { UtilsModule } from 'src/app/utils/utils.module';
 import { PopupService } from 'src/app/shared/services/popup.service';
 import { FetchDataService } from 'src/app/shared/services/fetch-data.service';
 import { ToastService } from 'src/app/shared/services/toast.service';
+import { DialogBoxService } from 'src/app/shared/services/dialog-box.service';
 
 @Component({
   selector: 'app-support',
@@ -17,7 +18,13 @@ export class SupportComponent {
   ticketTypeId: string = '';
   isDrawerOpen: boolean = false;
 
-  constructor(private utils: UtilsModule, private http: HttpClient, private popupService: PopupService, private fetchDataService: FetchDataService, private toast: ToastService) {
+  constructor(
+    private utils: UtilsModule,
+    private http: HttpClient,
+    private popupService: PopupService, 
+    private fetchDataService: FetchDataService,
+    private toast: ToastService,
+    private dialogService: DialogBoxService) {
     this.loadData();
   }
 
@@ -54,6 +61,7 @@ export class SupportComponent {
     this.fetchDataService.HTTPPOST(this.utils.URLs.updateTitle, body)
       .subscribe((response: any) => {
         if (response) {
+          this.dialogService.infoDialogBox();
           this.toast.successToast({ title: "Ticket Updated Successfully" });
           const updatedIndex = this.titleData.findIndex(title => title === this.selectedItem);
           if (updatedIndex !== -1) {
