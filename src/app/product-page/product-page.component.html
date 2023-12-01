@@ -33,8 +33,6 @@
                     </button>
                 </div>
                 <div class="product-desc">
-                    <!-- {{data|json}} -->
-
                     <h2 class="prod-name">{{ data?.name }}</h2>
                     <p class="subTitle mw-100">{{ data.subTitle }}</p>
                     <div class="prod-info d-flex flex-column gap-20">
@@ -223,7 +221,11 @@
             <ng-container *ngIf="!productSku">
 
                 <div #reviews class="review-cards d-flex flex-column">
-                    <h3 class="rate">Customer Reviews</h3>
+                    <div class="d-flex justify-content-md-between">
+                        <h3 class="rate">Customer Reviews</h3>
+                        <button (click)="viewAllReviews = true; this.showReview = !this.showReview; scroll(reviews)" *ngIf="data.reviews.length > 2" class="btn">
+                            View All</button>
+                    </div>
 
                     <div *ngIf="userReview" class="review-card d-flex flex-column gap-10"
                         [ngClass]="showReview ? 'hide' : ''">
@@ -264,7 +266,75 @@
                             </p>
                         </div>
                     </div>
+
                     <ng-container *ngIf="data.reviews.length">
+                        <div class="review-card d-flex flex-column gap-10"
+                            *ngFor="let review of limitReviews(data.reviews)">
+                            <div>
+                                <p class="rev">
+                                    {{ review.comment }}
+                                </p>
+                            </div>
+                            <div class="person-info d-flex justify-content-md-between">
+                                <div *ngIf="review.rating !== 0" class="rating d-flex align-item-center">
+                                    <span *ngFor="let i of createArrayToIterate(review.rating)"
+                                        class="material-symbols-outlined filled">star</span>
+                                    <span *ngIf="(review.rating % 1) !== 0"
+                                        class="material-symbols-outlined">star_half</span>
+                                    <span *ngFor="let i of createArrayToIterate(5 - review.rating)"
+                                        class="material-symbols-outlined">star</span>
+                                </div>
+                                <p class="fw-600 opacity-70">{{ review?.userId?.name?.firstname +' '+
+                                    review?.userId?.name?.lastname
+                                    }} · {{
+                                    review.date | date: 'dd/MM/yyyy' }}</p>
+                            </div>
+                        </div>
+                    </ng-container>
+
+                    <app-drawer [direction]="'right'" [show]="viewAllReviews"
+                        (showChange)="ChangeHanlder($event)" [title]="'Reviews'">
+
+                        <div *ngIf="userReview" class="review-card d-flex flex-column gap-10"
+                        [ngClass]="showReview ? 'hide' : ''">
+                        <div>
+                            <p class="rev">
+                                {{ userReview.comment }}
+                            </p>
+                        </div>
+                        <div class="person-info d-flex justify-content-md-between">
+                            <div *ngIf="userReview.rating !== 0" class="rating d-flex align-item-center">
+                                <span *ngFor="let i of createArrayToIterate(userReview.rating)"
+                                    class="material-symbols-outlined filled">star</span>
+                                <span *ngIf="(userReview.rating % 1) !== 0"
+                                    class="material-symbols-outlined">star_half</span>
+                                <span *ngFor="let i of createArrayToIterate(5 - userReview.rating)"
+                                    class="material-symbols-outlined">star</span>
+                                <div *ngIf="!productSku" class="your-review-edit-button opacity-70 d-flex justify-content-center 
+                            align-item-center gap-5 pointer" (click)="viewAllReviews = false; showReview = !showReview; scroll(addReview)"
+                                    [ngClass]="showReview ? 'active' : ''">
+                                    <i class="material-symbols-outlined">
+                                        edit
+                                    </i>
+                                    edit
+                                </div>
+
+                                <div class="your-review-delete-button opacity-70 d-flex justify-content-center 
+                            align-item-center gap-5 pointer" (click)="deleteReview()"
+                                    [ngClass]="showReview ? 'active' : ''">
+                                    <i class="material-symbols-outlined">
+                                        delete
+                                    </i>
+                                </div>
+                            </div>
+                            <p class="fw-600 opacity-70">
+                                {{ userReview?.userId?.name.firstname +' '+ userReview?.userId?.name.lastname }}
+                                · {{
+                                userReview.date | date: 'dd/MM/yyyy' }}
+                            </p>
+                        </div>
+                    </div>
+
                         <div class="review-card d-flex flex-column gap-10" *ngFor="let review of data.reviews">
                             <div>
                                 <p class="rev">
@@ -280,13 +350,13 @@
                                     <span *ngFor="let i of createArrayToIterate(5 - review.rating)"
                                         class="material-symbols-outlined">star</span>
                                 </div>
-                                <p class="fw-600 opacity-70">{{ review?.userId?.name.firstname +' '+
-                                    review?.userId?.name.lastname
+                                <p class="fw-600 opacity-70">{{ review?.userId?.name?.firstname +' '+
+                                    review?.userId?.name?.lastname
                                     }} · {{
                                     review.date | date: 'dd/MM/yyyy' }}</p>
                             </div>
                         </div>
-                    </ng-container>
+                    </app-drawer>
 
                 </div>
 
@@ -314,14 +384,17 @@
                                 star
                             </span>
                         </div>
-                        <textarea formControlName="review" rows="5" placeholder="Write your review here..."></textarea>
+                        <textarea class="form__textarea form__input mw100" formControlName="review" rows="5"
+                            placeholder="Write your review here..."></textarea>
                         <div class="d-flex gap-10">
-                            <button class="btn-primary btn btn-sm btn-rounded" [ngClass]="ratingForm.invalid ? 'disabled': ''"
-                                [disabled]="ratingForm.invalid" (click)="addOrUpdateReview(); scroll(reviews)">
+                            <button class="btn-primary btn btn-sm btn-rounded"
+                                [ngClass]="ratingForm.invalid ? 'disabled': ''" [disabled]="ratingForm.invalid"
+                                (click)="addOrUpdateReview(); scroll(reviews)">
                                 {{ userReview ? 'Update' : 'Submit' }}
                             </button>
 
-                            <button class="btn-secondary review-btn pointer d-flex align-item-center gap-10 btn btn-sm btn-rounded"
+                            <button
+                                class="btn-secondary review-btn pointer d-flex align-item-center gap-10 btn btn-sm btn-rounded"
                                 *ngIf="this.showReview==true"
                                 (click)="this.showReview = !this.showReview; scroll(reviews)">
                                 Cancel
@@ -334,7 +407,7 @@
 
         <div *ngIf="!productSku" style="padding-block-end: 50px;">
             <app-product-card-carousel [titles]=carouselTitles
-                [whatToFetch]="fetchSimilarProducts"></app-product-card-carousel>
+                [whatToFetch]="fetchSimilarProducts" [excludeSKU]="data.sku"></app-product-card-carousel>
         </div>
     </div>
 </section>

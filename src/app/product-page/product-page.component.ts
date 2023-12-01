@@ -39,11 +39,13 @@ export class ProductPageComponent implements OnInit {
   outOfStock: boolean = false;
   loading: boolean = false;
 
+  viewAllReviews: boolean = false;
+
   ratingForm!: FormGroup;
   userReview: any;
   params: HttpParams = new HttpParams().set("sku", this.sku);
   query: any = this.fetchService.HTTPGET(this.backendUrl.URLs.fetchProductUrl, this.params);
-  theme : Boolean = false;
+  theme: Boolean = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -66,7 +68,7 @@ export class ProductPageComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.fetchService.themeColor$.subscribe((color)=>{
+    this.fetchService.themeColor$.subscribe((color) => {
       this.theme = color;
     })
 
@@ -96,7 +98,8 @@ export class ProductPageComponent implements OnInit {
     }
     else {
       this.fetchService.HTTPGET(this.backendUrl.URLs.fetchProductUrl, params).subscribe((data: any) => {
-        
+        this.ratingForm.reset();
+
         this.wishlistService.WishListedProducts.subscribe((response: any) => {
           if (response.includes(data._id)) {
             data.wishlisted = true;
@@ -109,19 +112,19 @@ export class ProductPageComponent implements OnInit {
 
   updateDataFields(data: any) {
     this.data = data;
-    
+
     this.data.avgRating = data.avgRating ? data.avgRating : 0;
     this.activeIndex = 0;
-    
+
     this.selectedColor = data.assets[0].color;
-    this.selectedSize = data.assets[this.assetIndex].stockQuantity[0].size;    
+    this.selectedSize = data.assets[this.assetIndex].stockQuantity[0].size;
     this.outOfStock = (this.data.assets[this.assetIndex].stockQuantity[this.sizeIndex].quantity <= 0) ? true : false;
 
-    if(this.outOfStock){
+    if (this.outOfStock) {
       let assetI = 0;
       this.data.assets.some((asset: any) => {
         let stockI = 0;
-        let otherSizeAvailable = asset.stockQuantity.some((stockQ: any)=>{
+        let otherSizeAvailable = asset.stockQuantity.some((stockQ: any) => {
           if (stockQ.quantity > 0) {
             this.updateSizeIndex(stockI);
             return true;
@@ -129,7 +132,7 @@ export class ProductPageComponent implements OnInit {
           stockI++;
           return false;
         });
-        
+
         if (otherSizeAvailable) {
           return true;
         }
@@ -142,6 +145,10 @@ export class ProductPageComponent implements OnInit {
 
     }
 
+    this.userReview = null;
+    this.ratingForm.reset();
+    this.userRating = -1;
+    this.showReview = false;
     // if this user has already reviewed:
     if (data.userReview) {
       this.userReview = data.userReview;
@@ -156,14 +163,14 @@ export class ProductPageComponent implements OnInit {
       'tags': this.data.info.tags
     };
 
-    this.route.queryParams.subscribe(queryParam =>{
-      if(queryParam['color']){
+    this.route.queryParams.subscribe(queryParam => {
+      if (queryParam['color']) {
         this.assetIndex = queryParam['color'];
         this.changeColor(this.assetIndex);
-      }        
+      }
     });
 
-    this.loading = false;    
+    this.loading = false;
   }
 
   addToCart() {
@@ -197,7 +204,7 @@ export class ProductPageComponent implements OnInit {
   }
 
   normalizeSizeColorQuantity() {
-    
+
     this.selectedColor = this.data?.assets[this.assetIndex].color;
     this.selectedSize = this.data?.assets[this.assetIndex].stockQuantity[this.sizeIndex].size;
     this.outOfStock = (this.data?.assets[this.assetIndex].stockQuantity[this.sizeIndex].quantity <= 0) ? true : false;
@@ -255,6 +262,7 @@ export class ProductPageComponent implements OnInit {
       this.toastService.successToast({
         title: 'Review successfully ' + (this.userReview ? 'updated' : 'posted')
       });
+      this.ratingForm.reset();
     });
   }
 
@@ -330,6 +338,14 @@ export class ProductPageComponent implements OnInit {
     this.customOptions.startPosition = image;
     this.carouselOption = JSON.parse(JSON.stringify(this.customOptions));
     this.atDefault = !this.atDefault;
+  }
+
+  limitReviews(reviews: any[]){
+    return reviews.slice(0, 2);
+  }
+
+  ChangeHanlder(event: any) {
+    this.viewAllReviews = event;
   }
 
   // @HostListener('document:keyup', ['$event'])

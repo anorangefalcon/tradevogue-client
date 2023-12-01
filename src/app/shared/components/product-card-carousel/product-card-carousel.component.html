@@ -2,7 +2,7 @@
     <h3 class="section-heading">{{titles.title}}</h3>
     <p class="section-sub-heading">{{titles.subTitle}}</p>
 </div>
-<owl-carousel-o [options]="customOptions" class="custom-carousel" [ngClass]="{crousel: true}">
+<owl-carousel-o [options]="customOptions" class="custom-carousel" [ngClass]="{crousel: true}" [class.navInactive]="productArr.length < 5">
     <ng-template carouselSlide *ngFor="let product of productArr">
         <app-card-template [product]="product"></app-card-template>
     </ng-template>

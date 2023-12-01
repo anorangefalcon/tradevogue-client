@@ -4,7 +4,6 @@ import { UploadExcelService } from '../services/upload-excel.service';
 import { UtilsModule } from 'src/app/utils/utils.module';
 import { ToastService } from 'src/app/shared/services/toast.service';
 import { DialogBoxService } from 'src/app/shared/services/dialog-box.service';
-import { first, take } from 'rxjs';
 
 @Component({
   selector: 'app-addproductfeatures',
