@@ -17,8 +17,10 @@ form {
             background-color: rgba(var(--blackClr), 0.05);
             font-size: 14px;
             outline: none;
-            color: rgb(var(--textClr));
+            color: rgb(var(--textClr));  
         }
+
+
 
         & .key {
             transform: rotate(90deg);
@@ -53,6 +55,8 @@ form {
     }
 
 }
+
+
 
 label span {
     color: rgb(var(--danger));
@@ -639,4 +643,10 @@ label span {
         font-size: 20px;
     }
 
+}
+
+
+input::placeholder{
+    /* color: rgba(var(--blackClr)); */
+    color: white;
 }

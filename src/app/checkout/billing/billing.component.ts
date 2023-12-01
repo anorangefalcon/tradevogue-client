@@ -426,6 +426,7 @@ export class BillingComponent implements OnInit {
 
   AddAddress() {
     this.ShowComponent = true;
+    this.receiveData = '';
   }
   addressDelivered!: any[];
   addressChecked: Boolean = false;

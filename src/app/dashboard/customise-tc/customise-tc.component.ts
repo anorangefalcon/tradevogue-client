@@ -44,7 +44,7 @@ export class CustomiseTcComponent {
 
   removeFormControl(index: number) {
     (<FormArray>this.tcForm.get('tcFormArray'))?.removeAt(index);
-    this.toastService.warningToast({title: "Section removed!"})
+    this.toastService.warningToast({ title: "Section removed!" })
   }
 
   // contentInfo form Array
@@ -116,8 +116,72 @@ export class CustomiseTcComponent {
   }
 
   ContentTypeHandler(event: any, i: number, j: number) {
-
     let FormArray = (<FormArray>this.tcForm.get('tcFormArray')?.get(String(i))?.get('contentInfo'));
+    console.log('formArray is ', FormArray.value);
+
+    // SPECIAL CASE ==> LIST TO PARAGRAPH
+    if (FormArray.value[j].content_type == 'list' && event == 'paragraph') {
+      let content = '';
+
+      FormArray.value[j].content_description.forEach((el: any,i:number) => {
+        // if(i!=FormArray.value[j].content_description.length-1){
+          console.log('el is ',el);
+          // if(el)
+          // if(el[el.length-1]!='.'){
+          //   content += el.content+'. ';
+          // }
+            content+=el.content;
+        // }
+      })
+
+      console.log('content is ',content);
+      
+
+      let x: any = (<FormArray>this.tcForm.get('tcFormArray')?.get(String(i))?.get('contentInfo'))?.get(String(j))?.get('content_description');
+    
+      if(x.value.length>1){
+
+      x.value.forEach((el:any,i:number)=>{
+        x.removeAt(i);
+      })
+
+      // console.log('x come up  is ',x);
+      // if(!x.get(String(0))){
+      //   x.push(this.fb.group(this.fb.control([content])));
+      // }
+      x.get(String(0)).get('content').setValue(content);
+      }}
+// SPECIAL CASE ==> LIST TO PARAGRAPH
+
+
+
+    // SPECIAL CASE ==>  PARAGRAPH TO LIST
+    if (FormArray.value[j].content_type == 'paragraph' && event == 'list') {
+      let content:any = '';
+      content=FormArray.value[j].content_description[0].content;
+      content=content.split('.');
+      console.log( FormArray.get(String(j))?.get('content_description'),"abcd ----->");
+      // content=finalContent;
+      (<FormArray>FormArray.get(String(j))?.get('content_description')).removeAt(0);
+      content.forEach((el:any,i:number)=>{
+        el+='.';
+        if(i!=content.length-1)
+          (<FormArray>FormArray.get(String(j))?.get('content_description')).push(this.fb.group({content:el}))
+        else if(content.length==1){
+          (<FormArray>FormArray.get(String(j))?.get('content_description')).push(this.fb.group({content:el}))
+        }
+      })
+      
+      // let x: any = (<FormArray>this.tcForm.get('tcFormArray')?.get(String(i))?.get('contentInfo'))?.get(String(j))?.get('content_description');
+      // x.value.forEach((el:any,i:number)=>{
+      //   x.removeAt(i);
+      // })
+
+      // x.get(String(0)).get('content').setValue(content);
+    }
+// SPECIAL CASE ==> PARAGRAPH TO LIST
+
+
     let count: any = 0;
     (<FormArray>this.tcForm.get('tcFormArray')?.get(String(i))?.get('contentInfo'))?.get(String(j))?.get('content_type')?.setValue(event);
     FormArray.value.forEach((element: any) => {
@@ -137,8 +201,6 @@ export class CustomiseTcComponent {
 
 
   onsubmit() {
-    console.log(this.tcForm.value, "lol");
-    
     this.fetchDataService.HTTPPOST(this.backendUrl.URLs.setTandC, this.tcForm.value).subscribe((res: any) => {
       this.toastService.successToast({ title: res.message })
       this.cachedFormGroup = _.cloneDeep(this.tcForm);
@@ -195,15 +257,15 @@ export class CustomiseTcComponent {
     });
 
     (<FormArray>this.tcForm.get('tcFormArray'))?.push(form);
-    
+
   }
-  goToBottom(){
-    window.scrollTo(0,document.body.scrollHeight);
+  goToBottom() {
+    window.scrollTo(0, document.body.scrollHeight);
   }
   getData() {
     this.fetchDataService.HTTPGET(this.backendUrl.URLs.getTandC).subscribe((response: any) => {
       console.log(response, "tc res");
-      
+
       for (let i = 0; i < response.data.length; i++) {
         this.addFormControl();
         for (let j = 0; j < response.data[i].contentInfo.length; j++) {

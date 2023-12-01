@@ -53,7 +53,7 @@
 
                         <ng-container *ngFor="let content of getContentFormArrayControls(i);let j=index">
                             <div [formGroupName]="j" class="d-flex gap-10 flex-column mw100 content-area">
-                                <div class="mw100 d-flex gap-5 justify-content-md-between align-item-center">
+                                <div class="mw100 d-flex gap-5 justify-content-md-between align-item-center contentInfo_container">
                                     <p class="fw-500">Content</p>
                                     <div class="d-flex gap-10">
                                         <app-custom-select [type]="''" [_id]="''+i+j"

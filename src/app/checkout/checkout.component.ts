@@ -156,6 +156,7 @@ export class CheckoutComponent implements OnInit {
   async ApplyCoupon(coupon: any = '', event: any = '') {
     if (event) {
       let value = this.CouponCode.nativeElement.value;
+      value=value.trim();
       for (let coupon of this.AllCoupons) {
         if (coupon.couponcode == value) {
           if (!this.CheckMinimumPurchase(coupon)) {

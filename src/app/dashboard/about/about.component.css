@@ -143,6 +143,7 @@ width:calc((100% - 40px)/5);
     cursor: pointer;
     background: transparent;
     border: none;
+    color: rgba(var(--blackClr));
 }
 
 .delete__icon:hover{

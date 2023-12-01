@@ -6,12 +6,14 @@
           <div class="banner-text">
             <span class="subtitle" [style.color]="item.colors.subTitleColor">{{ item.subTitle }}</span>
             <h2 class="offer-title" [style.color]="item.colors.titleColor">{{ item.title }}</h2>
-            <a [href]="item.buttonLink" class="btn-style3" [style.backgroundColor]="item.colors.buttonColor"
+
+            
+            <button (click)="getLink(item.buttonLink)"  class="btn-style3" [style.backgroundColor]="item.colors.buttonColor"
               [style.color]="item.hover ? 'white' : ''"
               [style.backgroundColor]=" item.hover ? 'transparent' : item.colors.buttonColor"
               [style.color]="item.hover ? item.colors.buttonColor : ''"
               [style.border]="item.hover ? '2px solid' + item.colors.buttonColor : '2px solid' + item.colors.buttonColor"
-              (mouseover)="item.hover = true" (mouseout)="item.hover = false">{{ item.buttonText }}</a>
+              (mouseover)="item.hover = true" (mouseout)="item.hover = false">{{ item.buttonText }}</button>
           </div>
         </div>
         <div class="right-content">

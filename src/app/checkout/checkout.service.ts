@@ -16,9 +16,6 @@ export class CheckoutService {
   secureNavbar = new BehaviorSubject(false);
   PaymentSuccess=new BehaviorSubject(false);
   secureNavbar$ = this.secureNavbar.asObservable();
-  StripePaymentOpen = new BehaviorSubject<boolean>(false);
-  // StripePaymentOpen$ = this.StripePaymentOpen.asObservable();
-
   public orderId: string | null = null;
 
   loadStripe = new BehaviorSubject<Boolean>(false);

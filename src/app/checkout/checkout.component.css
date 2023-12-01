@@ -36,16 +36,79 @@
     transition: all 0.5s ease-in-out;
 }
 
-.padding_top{
+.padding_top {
     padding-block-start: 107px;
 }
 
-.coupon_applied__div{
-    padding: 10px;
-    border: 1px dashed rgb(var(--textClr), 0.7);
+@keyframes mymove {
+    from {
+        width: 0;
+        opacity: 1;
+        background: rgb(252,255,11);
+        background: linear-gradient(90deg, rgba(252,255,11,1) 5%, rgba(0,255,233,0.5032606792717087) 100%);
+    }
+
+    50% {
+        width: 100%;
+
+    }
+
+    75%{
+
+    }
+    to {
+        opacity: 0;
+        /* background-color: rgb(var(--primaryClr), 0.2); */
+        background: rgb(233,10,10);
+        background: linear-gradient(90deg, rgba(233,10,10,1) 5%, rgba(0,255,233,0.5032606792717087) 100%);
+    }
+}
+
+@keyframes borderAnimation {
+from{
+    border-radius:10px;
+}
+
+to{
+    border-radius: 4px;
+}
+}
+
+.coupon_applied__div {
     font-size: 16px;
     font-weight: 500;
     opacity: 0.8;
+
+
+    /* animation: borderAnimation 0.7s ease-in-out; */
+    /* animation: mymove 0.7s ease-in-out; */
+    & .couponApplied {
+        border: 1px dotted rgb(var(--blackClr));
+        padding: 6px 12px;
+        animation: borderAnimation 0.7s ease-in-out;
+        overflow: hidden;
+
+        &::before {
+            content: '';
+            height: 100%;
+            width: 0px;
+            border: none;
+            top: 0;
+            left: 0;
+            opacity: 0.5;
+            display: inline-block;
+            position: absolute;
+            animation: mymove 0.7s ease-in-out;
+            z-index: -1;
+        }
+    }
+
+    & .remove__btn {
+        font-size: 12px;
+        color: rgb(var(--danger));
+        background-color: transparent;
+        border: none;
+    }
 }
 
 
@@ -99,7 +162,7 @@
     width: 33.3%;
 }
 
-.item-name{
+.item-name {
     width: 26ch;
     text-overflow: ellipsis;
     overflow: hidden;
@@ -349,24 +412,10 @@
 
 
 .coupons {
-    padding-block: 40px;
-    & input {
-        width: calc(100% - 114px);
-        outline: none;
-        padding-inline: 30px;
-        border-radius: none;
-        border-radius: 0px;
-        border: 1px solid rgba(0, 0, 0, 0.3);
-        font-size: 14px;
-    }
 
-    /* & :is(:focus) {
-        border-color: rgb(var(--textClr), 0.4);
+    & .coupon__header {
+        gap: 8px;
     }
-
-    & ::placeholder {
-        color: rgb(var(--textClr), 0.3);
-    } */
 
     & .all-coupons {
         & .coupon::last-child {
@@ -387,21 +436,17 @@
             opacity: 0.8;
         }
 
+        & .terms_and_conditons {
+            font-size: 13px !important;
+        }
+
         & ul li {
             list-style: disc;
             margin-inline-start: 18px;
-            font-size: 12px;
+            font-size: 11px;
             opacity: 0.7;
         }
 
-        /* & list {
-            transform: translateY(30px);
-        } */
-
-        /* & small {
-            color: rgb(var(--danger));
-            color: red;
-        } */
     }
 
     & .coupon:not(:last-child) {
@@ -412,39 +457,47 @@
 
 
 
-
-
-/* .open_Coupon {
-    opacity: 1;
-    visibility: initial;
-
-    & .coupons {
-        transform: translateX(0vw);
-        background-color: white;
-        transition: transform 0.4s cubic-bezier(0, 0.59, 0.25, 1), -webkit-transform 0.4s cubic-bezier(0, 0.59, 0.25, 1);
-    }
-} */
-
-/* .apply__btn {
-    border-radius: 0px;
-} */
-
-/* .coupon__btns {
-    border-radius: 0px;
-    padding: 15px;
-    width: 140px;
-    background: transparent;
-    font-weight: normal;
-    border: 1px solid rgb(var(--textClr), 0.3);
-} */
-
-.success_order_btn{
-    background-color: rgb(var(--success)); 
+.success_order_btn {
+    background-color: rgb(var(--success));
     color: white;
 
     border: none;
-    & span{
+
+    & span {
         font-size: 52px;
     }
-    border-radius: 50%;  
+
+    border-radius: 50%;
+}
+
+.tick__apply__btn {
+    display: none;
+}
+
+
+
+/* media query */
+@media (max-width:350px) {
+    .coupon__header {
+        flex-direction: column;
+
+        & input {
+            /* height: 50px; */
+        }
+
+        & .apply__btn {
+            display: none;
+        }
+
+        & .tick__apply__btn {
+            display: initial;
+            right: 10px;
+            top: 10px;
+            font-size: 20px;
+            background-color: rgba(var(--primaryClr));
+            border-radius: 50%;
+            color: rgb(var(--whiteClr));
+        }
+    }
+
 }

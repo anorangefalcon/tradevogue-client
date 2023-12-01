@@ -53,9 +53,11 @@ export class LoginCheckService {
     }
 
     if (redirect) {
-      if(this.previousUrl=='/cart' || this.previousUrl.includes('/explore')){
+      if(this.previousUrl=='/cart' || this.previousUrl.includes('/explore') ){
        this.router.navigate([this.previousUrl]);
+       return;
       }  
+
 
       this.FetchDataService.HTTPGET(this.BackendUrl.URLs.authorizeUrl).subscribe((data)=>{
         if(data=='admin'){

@@ -117,6 +117,7 @@ form {
 .remove-img {
     background: #ffffffc2;
     border-radius: 50%;
+    color: black;
     inset-block-start: 5px;
     inset-inline-end: 5px;
 }
@@ -166,7 +167,7 @@ form {
 }
 
 
-@media (max-width:480px) {
+@media (max-width:490px) {
     .card{
         background: transparent;
         border: none;
@@ -176,4 +177,37 @@ form {
         padding-block: 10px;
         padding-inline: 0;
     }
+
+    .form__group{
+        flex-direction: column;
+        width: 100%;
+
+        & .form__label{
+            width: 100%;
+        }
+
+        & .product__img__div{
+            width: 100%;
+        }
+
+        & input, & .custom__select, & textarea ,& .validation__div{
+            width: 100% !important;
+        }
+    }
+
+
+    .drawer__div{
+       & .drawer__content{
+            padding-inline: 5px;
+        }
+
+        & .drawer__header{
+            padding-inline: 5px;
+        }
+
+    }
+
 }
+
+
+

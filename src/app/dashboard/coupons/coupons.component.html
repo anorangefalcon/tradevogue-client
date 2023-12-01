@@ -1,4 +1,4 @@
-<div class=" d-flex flex-column gap-20">
+<div class=" d-flex flex-column main__div gap-20">
 
 
     <div class="default-animation">
@@ -114,6 +114,8 @@
     </div>
 
 </div>
+
+<div class="drawer__div">
 <app-drawer [direction]="direction" [show]="show" (showChange)="ChangeHanlder($event)" [title]="title">
 
     <div class="d-flex flex-column justify-content-md-between gap-25">
@@ -142,12 +144,12 @@
 
 
                     <!-- IMAGE VISIBLE DIV -->
-                    <div *ngIf="OfferForm.get('Image')?.value" class="relative mh100 mh100">
+                    <div *ngIf="OfferForm.get('Image')?.value" class="relative mw100 mh100">
                         <span class="remove-img absolute fs-18 pointer material-symbols-outlined"
                             (click)="ShowUpload()">
                             close
                         </span>
-                        <img [src]="getOfferImage()" class="mh100" alt="Profile Image" />
+                        <img [src]="getOfferImage()" class="mh100 mw100" alt="Profile Image" />
                     </div>
 
                     <!-- INPUT WHICH DISPLAY NONE -->
@@ -366,6 +368,7 @@
     </div>
 
 </app-drawer>
+</div>
 
 <app-pagination #pagination [collectionSize]="totalCount" [pageSize]="TemplatePagination.limit"
     [currentPage]="currentPage" (activePage)="pageChange($event)"></app-pagination>

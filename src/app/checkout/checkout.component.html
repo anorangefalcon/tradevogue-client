@@ -59,10 +59,12 @@
             </button>
 
             <div *ngIf="CouponApplied && (!SecureNavBar)" class="d-flex justify-content-md-between coupon_applied__div">
+                <div class="relative couponApplied">
                 <span>
                     {{CouponApplied.couponcode}}
                 </span>
-                <span (click)="RemoveAppliedCoupon()" class="pointer">Remove</span>
+            </div>
+                <button (click)="RemoveAppliedCoupon()" class="pointer remove__btn" >Remove</button>
             </div>
             <button class="btn-primary btn btn-rounded btn-md" (click)="verifyOrderSummary()"
                 *ngIf="!SecureNavBar"><a>Proceed to Checkout</a></button>
@@ -90,13 +92,18 @@
 
 <app-drawer [direction]="direction" [show]="show" (showChange)="ChangeHandler($event)" [title]="'Available Coupons'">
     <div class="coupons d-flex flex-column gap-15">
-        <div class="d-flex justify-content-md-between">
-            <input type="text" placeholder="Enter coupon code" #CouponCode
+        <div class="d-flex coupon__header relative">
+            <input type="text" class="form__input" placeholder="Enter coupon code" #CouponCode
                 oninput="this.value = this.value.toUpperCase()" (input)="InputChange()">
 
-            <button class="btn-primary btn btn-md btn-rounded" (click)="ApplyCoupon(null,$event)"
+            <button class="btn-primary btn btn-xs btn-rounded apply__btn" (click)="ApplyCoupon(null,$event)"
                 [disabled]="CouponValid=='invalid'">APPLY</button>
 
+            <!-- <button class="tick__apply__btn" > -->
+                <span class="material-symbols-outlined tick__apply__btn absolute" (click)="ApplyCoupon(null,$event)">
+                    check
+                    </span>
+                <!-- </button> -->
 
         </div>
         <span *ngIf="CouponValid=='invalid'">Coupon is not valid</span>
@@ -108,7 +115,7 @@
                 </div>
 
 
-                <div class="description">
+                <div class="description d-flex flex-column gap-5">
 
                     <p>User Code {{coupon.couponcode}} &
                         <ng-container *ngIf="coupon.discountType=='flat'">
@@ -124,7 +131,7 @@
 
                     </p>
 
-                    <p>Terms and Conditions:</p>
+                    <p class="terms_and_conditons">Terms and Conditions:</p>
                     <ul>
                         <li>Minimum Order value of {{coupon.minimumPurchaseAmount}}</li>
                         <li>Coupon Can be valid only once per user</li>
@@ -136,7 +143,7 @@
 
 
 
-                <button (click)="ApplyCoupon(coupon)" class="btn-inline btn-md btn-secondary btn">Apply Coupon</button>
+                <button (click)="ApplyCoupon(coupon)" class="btn-inline btn-md btn-secondary btn-rounded btn">Apply Coupon</button>
             </div>
 
         </div>

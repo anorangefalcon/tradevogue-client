@@ -26,6 +26,8 @@ import { InvoiceTemplateComponent } from 'src/app/shared/components/invoice-temp
 export class SettingsComponent {
   // showData: string = "profile";
   showData: string ="addresses";
+  checkAccordingClick:Boolean=true;
+  AccordianIndex:number=0;
   totalCount:number=0;
   currentPage:number=1;
   AllOrders: any=[];
@@ -46,7 +48,7 @@ export class SettingsComponent {
   receiveData: any;
   list: any = []
   wishlistedProducts: any;
-  openedAccordionIndex: number | null = null;
+  openedAccordionIndex: number | null=null;
   stripe: any;
 
   productStatus: any = 'cancelled';
@@ -111,6 +113,8 @@ export class SettingsComponent {
     })
 
     this.route.paramMap.subscribe((params: any) => {
+      console.log('called again ');
+      
       this.changeComponent(params.get('page'));
     });
 
@@ -162,7 +166,7 @@ export class SettingsComponent {
       }
       this.ProfileForm.patchValue(data);
     })
-    this.toggleAccordian(0);
+
     this.showWishlistedProducts('my wishlist');
     
   }
@@ -175,6 +179,13 @@ export class SettingsComponent {
 
   changeComponent(el: string) {
     this.showData = el;
+    if(this.checkAccordingClick){
+      this.AccordianIndex=0;
+      this.toggleAccordian(this.AccordianIndex);
+    }
+    else{
+      this.toggleAccordian(this.AccordianIndex,true);
+    }
     this.location.replaceState('usersetting/'+el);
     if(el=='addresses'){
       this.getAddresses();
@@ -220,7 +231,12 @@ export class SettingsComponent {
     })
   }
 
-  toggleAccordian(index: any) {
+  toggleAccordian(index: any,check:boolean=false) {
+    this.AccordianIndex=index;
+    if(check){
+      this.openedAccordionIndex=index;
+      return;
+    }
     if (this.openedAccordionIndex === index) {
       this.openedAccordionIndex = null; 
     } else {
@@ -346,7 +362,6 @@ export class SettingsComponent {
 
   // orders code 
    getOrders(pageNo:any){
-    this.toggleAccordian(0);
      this.fetchDataService.HTTPPOST(this.backendURLs.URLs.getParticularUserOrders,this.TemplatePagination).subscribe((data:any)=>{
       if(!data.length){
         // this.notData = true;

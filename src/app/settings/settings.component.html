@@ -3,7 +3,7 @@
         <nav class="navbar d-flex flex-column align-item-center gap-25">
             <ul class="nav-items d-flex flex-column align-item-center mh100 mw100">
                 <li class="nav-links d-flex align-item-center mw100 relative transition" (click)="TranslateData=true;"
-                    [ngClass]="{'nav-link-active': this.showData === 'profile'}" (click)="changeComponent('profile')">
+                    [ngClass]="{'nav-link-active': this.showData === 'profile'}" (click)="checkAccordingClick=false; changeComponent('profile'); ">
                     <a class="d-flex align-item-center pointer gap-10">
                         <span class="material-symbols-outlined nav-icons">
                             person
@@ -15,7 +15,7 @@
                     </span>
                 </li>
                 <li class="nav-links d-flex align-item-center mw100 relative transition" (click)="TranslateData=true;"
-                    [ngClass]="{'nav-link-active': this.showData === 'orders'}" (click)="changeComponent('orders')">
+                    [ngClass]="{'nav-link-active': this.showData === 'orders'}" (click)="checkAccordingClick=false;changeComponent('orders');">
                     <a class="d-flex align-item-center pointer gap-10">
                         <span class="material-symbols-outlined nav-icons">
                             package_2
@@ -27,7 +27,7 @@
                     </span>
                 </li>
                 <li class="nav-links d-flex align-item-center mw100 relative transition" (click)="TranslateData=true;"
-                    [ngClass]="{'nav-link-active': this.showData === 'wishlist'}" (click)="changeComponent('wishlist')">
+                    [ngClass]="{'nav-link-active': this.showData === 'wishlist'}" (click)="checkAccordingClick=false;changeComponent('wishlist');">
                     <a class="d-flex align-item-center pointer gap-10">
                         <span class="material-symbols-outlined nav-icons">
                             favorite
@@ -42,7 +42,7 @@
 
                 <li class="nav-links d-flex align-item-center mw100 relative transition" (click)="TranslateData=true;"
                     [ngClass]="{'nav-link-active': this.showData === 'addresses'}"
-                    (click)="changeComponent('addresses')">
+                    (click)="checkAccordingClick=false;changeComponent('addresses'); ">
                     <a class="d-flex align-item-center pointer pointer gap-10">
                         <span class="material-symbols-outlined nav-icons">
                             home
@@ -56,7 +56,7 @@
 
                 <li class="nav-links d-flex align-item-center mw100 relative transition" (click)="TranslateData=true;"
                     [ngClass]="{'nav-link-active': this.showData === 'changePassword'}"
-                    (click)="changeComponent('changePassword')">
+                    (click)="checkAccordingClick=false;changeComponent('changePassword'); ">
                     <a class="d-flex align-item-center pointer gap-10">
                         <span class="material-symbols-outlined nav-icons" style="rotate: 90deg;">
                             key
@@ -75,8 +75,8 @@
 
                 <div class="d-flex  align-item-center pointer  justify-content-md-between default-animation">
 
-                    <div class="d-flex align-item-center gap-5">
-                        <span class="material-symbols-outlined left__icon" (click)="TranslateBack()"
+                    <div class="d-flex align-item-center gap-5" (click)="TranslateBack()">
+                        <span class="material-symbols-outlined left__icon" 
                             *ngIf="TranslateData">
                             chevron_left
                         </span>
@@ -165,8 +165,8 @@
                 <div
                     class="d-flex address_header align-item-center justify-content-md-between pointer default-animation">
 
-                    <div class="d-flex align-item-center gap-5">
-                        <span class="material-symbols-outlined left__icon" (click)="TranslateBack()"
+                    <div class="d-flex align-item-center gap-5" (click)="TranslateBack()">
+                        <span class="material-symbols-outlined left__icon" 
                             *ngIf="TranslateData">
                             chevron_left
                         </span>
@@ -224,8 +224,8 @@
             </div>
 
             <div class="changePassword" *ngIf="showData=='changePassword'">
-                <div class="d-flex align-item-center pointer h2_div default-animation">
-                    <span class="material-symbols-outlined left__icon" (click)="TranslateBack()" *ngIf="TranslateData">
+                <div class="d-flex align-item-center pointer h2_div default-animation" (click)="TranslateBack()">
+                    <span class="material-symbols-outlined left__icon"  *ngIf="TranslateData">
                         chevron_left
                     </span>
                     <h2>
@@ -334,7 +334,7 @@
 
                 <div class="default-animation ">
                     <div class="d-flex align-item-center pointer h2_div" (click)="TranslateBack()">
-                        <span class="material-symbols-outlined left__icon" (click)="TranslateBack()"
+                        <span class="material-symbols-outlined left__icon" 
                             *ngIf="TranslateData">
                             chevron_left
                         </span>
@@ -457,7 +457,7 @@
 
                 <div class="d-flex align-item-center pointer wishlist__div h2_div default-animation"
                     (click)="TranslateBack()">
-                    <span class="material-symbols-outlined left__icon" (click)="TranslateBack()" *ngIf="TranslateData">
+                    <span class="material-symbols-outlined left__icon"  *ngIf="TranslateData">
                         chevron_left
                     </span>
                     <h2>

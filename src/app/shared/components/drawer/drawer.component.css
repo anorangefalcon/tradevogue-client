@@ -112,3 +112,16 @@
     height: fit-content;
 }
 
+
+
+
+/* media query */
+@media (max-width:490px) {
+     .drawer__header{
+        padding-inline: 15px;
+    }
+
+    .drawer__content{
+        padding-inline: 15px;
+    }
+}
