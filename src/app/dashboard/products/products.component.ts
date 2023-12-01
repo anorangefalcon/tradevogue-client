@@ -57,21 +57,21 @@ export class ProductsComponent implements OnInit {
 
     this.dialogBoxService.responseEmitter.subscribe(async (res: boolean) => {
       if (res == true) {
-         this.fetchdata.HTTPPOST(this.backendUrl.URLs.deleteproducts, this.deleteDataField).subscribe(()=>{
-           this.fetchData();
-           this.dialogBoxService.responseEmitter.next(false);
-         });
+        this.fetchdata.HTTPPOST(this.backendUrl.URLs.deleteproducts, this.deleteDataField).subscribe(() => {
+          this.fetchData();
+          this.dialogBoxService.responseEmitter.next(false);
+        });
       }
     });
   }
-  
+
   async fetchData() {
     try {
-      
+
       this.fetchdata.HTTPPOST(this.backendUrl.URLs.fetchProductInventory, this.template).subscribe({
         next: (res: any) => {
 
-          if(!res.data.length) {
+          if (!res.data.length) {
             this.dataFetchStatus = false;
             this.totalCount = 0;
             return;
@@ -104,7 +104,7 @@ export class ProductsComponent implements OnInit {
               checked: false
             }
             this.productList.push(item);
-          });          
+          });
         }
       });
     } catch (err) {
@@ -114,7 +114,7 @@ export class ProductsComponent implements OnInit {
 
   highlightProduct(e: Event, id: string, index: number) {
     const status = (<HTMLInputElement>e.target).checked;
-    
+
     // Purpose of Settime is to resolve the issue of delay as checkbox take time and function is called before
     setTimeout(() => {
 
@@ -124,8 +124,8 @@ export class ProductsComponent implements OnInit {
         return;
       }
 
-      const body = { '_id': id, 'status': status, 'field': 'highlight'};
-      this.fetchdata.HTTPPOST(this.backendUrl.URLs.highlightProduct, body).subscribe({
+      const body = { '_id': id, 'status': status, 'field': 'highlight' };
+      this.fetchdata.HTTPPOST(this.backendUrl.URLs.productStatus, body).subscribe({
         next: (data: any) => {
           this.highlight = data.highlightCount;
           this.productList[index].status.highlight = status;
@@ -134,11 +134,18 @@ export class ProductsComponent implements OnInit {
     }, 0.1);
   }
 
-  activateProduct(e: Event, id: string, index: number){
+  activateProduct(e: Event, id: string, index: number) {
 
+    const status = (<HTMLInputElement>e.target).checked;
+    const body = { '_id': id, 'status': status, 'field': 'active' };
+
+    this.fetchdata.HTTPPOST(this.backendUrl.URLs.productStatus, body).subscribe({
+      next: (data: any) => {
+        this.productList[index].status.active = status;
+        status ? this.toastService.successToast({ title: 'Product is Available' }):this.toastService.notificationToast({ title: 'Product is not Unavailable'}); 
+      }
+    })
   }
-
-
 
   // Check for tables
   toggleSelectAll() {
@@ -162,7 +169,7 @@ export class ProductsComponent implements OnInit {
       if (product.checked) this.deleteList.push(product._id);
     });
   }
-  
+
 
   // Delete Entry
   deleteItem(entry: any, type: string = 'single') {
@@ -177,7 +184,7 @@ export class ProductsComponent implements OnInit {
 
     this.dialogBoxService.confirmationDialogBox(template);
     this.deleteDataField.type = type,
-    this.deleteDataField.data = entry;
+      this.deleteDataField.data = entry;
   }
 
   // Filter Handling function
@@ -208,7 +215,7 @@ export class ProductsComponent implements OnInit {
     this.fetchData();
   }
 
-  clearFields(){
+  clearFields() {
     this.tempSortData = '';
     this.template.filter.categories = '';
     delete this.template.filter['rating'];
@@ -257,7 +264,7 @@ export class ProductsComponent implements OnInit {
     // 30% of Array is
     const index = Math.round(len * 0.3);
 
-    if( limit <= array[index] && limit > 0){
+    if (limit <= array[index] && limit > 0) {
       return true;
     }
     return false;
@@ -272,7 +279,7 @@ export class ProductsComponent implements OnInit {
 
   // Handles Excel File Uplaoded
   uploadFile(event: Event) {
-    
+
     let excelData = this.excelService.handleFileInput(event);
     (<HTMLInputElement>event.target).value = '';
     excelData.then((excel: any) => {
@@ -291,8 +298,8 @@ export class ProductsComponent implements OnInit {
 
         this.toastService.errorToast(errorObj);
       }
-      if(excel.data.length){
-        
+      if (excel.data.length) {
+
         const formData = {
           type: 'bulk',
           data: excel.data
@@ -304,13 +311,13 @@ export class ProductsComponent implements OnInit {
           }
         })
       }
-      
+
     })
   }
 
-  tableGenerator(len: number){
+  tableGenerator(len: number) {
     let temp = []
-    for(let i=0;i<len;i++){
+    for (let i = 0; i < len; i++) {
       temp.push(0);
     }
     return temp;

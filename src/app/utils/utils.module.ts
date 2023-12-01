@@ -47,7 +47,7 @@ export class UtilsModule {
     fetchProductInventory: `${this.BackendUrl}/admin/fetchProducts`,
     fetchProductDetails: `${this.BackendUrl}/admin/fetchProductDetails`,
     updateproduct: `${this.BackendUrl}/admin/updateProduct`,
-    highlightProduct: `${this.BackendUrl}/admin/updatehighlightProduct`,
+    productStatus: `${this.BackendUrl}/admin/updateProductStatus`,
     deleteproducts: `${this.BackendUrl}/admin/deleteProducts`,
     fetchFeatures: `${this.BackendUrl}/admin/fetchProductFeatures`,
     updateFeatures: `${this.BackendUrl}/admin/updateProductFeature`,

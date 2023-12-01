@@ -31,8 +31,8 @@
                 </button>
             </div>
             <div>
-                <button class="btn btn-md btn-rounded d-flex align-item-center gap-5 del-btn" [disabled]="!deleteList.length"
-                    [ngStyle]="{'cursor': deleteList.length? 'pointer': 'no-drop'}"
+                <button class="btn btn-md btn-rounded d-flex align-item-center gap-5 del-btn"
+                    [disabled]="!deleteList.length" [ngStyle]="{'cursor': deleteList.length? 'pointer': 'no-drop'}"
                     (click)="deleteItem(deleteList, 'bulk')">
                     <i class="material-symbols-outlined operational-buttons-icons">delete</i>
                     Delete
@@ -240,12 +240,13 @@
                                     &#40;{{item.rating}}&#41;
                                 </div>
                             </td>
-                            
+
                             <td class="items">{{item.last_updated}}</td>
 
                             <td class="items">
                                 <div class="slide-button d-flex align-item-center">
-                                    <input type="checkbox" [(ngModel)]="item.status.active" [id]="i + 'Available'" />
+                                    <input type="checkbox" (click)="activateProduct($event, item._id, i)"
+                                        [(ngModel)]="item.status.active" [id]="i + 'Available'" />
                                     <label [for]="i + 'Available'"></label>
                                 </div>
                             </td>
