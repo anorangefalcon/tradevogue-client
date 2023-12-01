@@ -42,12 +42,18 @@ export class OrdersComponent {
     }
   }
 
+  pageTheme: boolean = false;
+
   constructor(
     private dialogService: DialogBoxService, 
     private fetchData: FetchDataService, 
     private backendUrl: UtilsModule){}
 
   ngOnInit(){
+    this.fetchData.themeColor$.subscribe((theme: any)=>{
+      this.pageTheme = theme;
+    });
+
     this.fetchStats();
     this.fetchOrders();
 
@@ -160,18 +166,15 @@ export class OrdersComponent {
     this.fetchOrders();
   }
 
-  updateDateFields(e: Event, field: string){
-    this.template.filter[field] = (<HTMLInputElement>e.target).value;
-    this.fetchOrders();
-  }
-
   resetField(){
+
     this.template.filter = {
-      search: '',
+      search: this.template.filter.search,
       payment_status: '',
       dateto: '',
       datefrom: ''
     }
+
     this.fetchOrders();
   }
 

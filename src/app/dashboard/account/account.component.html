@@ -154,11 +154,11 @@
 
             <div class="operation_button d-flex gap-10">
                 <div class="operation_button d-flex gap-10">
-                    <button class="btn-primary" [ngStyle]="{'display': !AccountForm.disabled? 'none': 'block'}"
+                    <button class="btn btn-xs fw-500 btn-rounded btn-primary" [ngStyle]="{'display': !AccountForm.disabled? 'none': 'block'}"
                         (click)="AccountForm.enable()">Edit</button>
-                    <button class="btn-secondary" [ngStyle]="{'display': AccountForm.disabled? 'none': 'block'}"
+                    <button class="btn btn-xs fw-500 btn-rounded btn-secondary" [ngStyle]="{'display': AccountForm.disabled? 'none': 'block'}"
                         (click)="AccountForm.disable()">Cancel</button>
-                    <button class="btn-primary" [ngStyle]="{'display': AccountForm.disabled? 'none': 'block'}"
+                    <button class="btn btn-xs fw-500 btn-rounded btn-primary" [ngStyle]="{'display': AccountForm.disabled? 'none': 'block'}"
                         (click)="updateDetails(AccountForm.value)">Update</button>
                 </div>
             </div>
@@ -215,7 +215,7 @@
         <div class="d-flex justify-content-md-between align-item-center ">
             <h3>Change Password</h3>
             <div class="operation_button">
-                <button class="btn-primary" (click)="onResetPassword()">Reset</button>
+                <button class="btn btn-xs fw-500 btn-rounded btn-primary" (click)="onResetPassword()">Reset</button>
             </div>
         </div>
 

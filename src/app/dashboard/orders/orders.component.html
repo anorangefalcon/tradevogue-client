@@ -1,13 +1,10 @@
 <section id="order-section" class="d-flex flex-column gap-20">
     <div class="d-flex align-item-center justify-content-md-between">
         <h3>Order List</h3>
-        <span class="d-flex align-item-center gap-10">
-            <app-search-bar style="height: 40px;" [searchPlaceholder]="'Search Orders...'" (searchQuery$)="updateFields($event, 'search')"></app-search-bar>
         <button class=" btn btn-rounded btn-secondary btn-sm fw-500 d-flex flex-center gap-5" (click)="downloadExcel()">
             <span class="material-symbols-outlined fs-20 fw-300">download</span>
             Download Orders
         </button>
-        </span>
     </div>
 
     <div class="order-info-cards grid gap-20">
@@ -42,21 +39,25 @@
     </div>
 
 
-    <div class="filters card card__pd-20 d-flex gap-20 align-item-center justify-content-md-between">
-    
-            <app-custom-select [options]="paymentStatus" [selectedOption]="'Filter by Payment Status'"
-                (final_option)="updateFields($event, 'payment_status')"></app-custom-select>
-            <span class="d-flex relative justify-content-md-between flex-column gap-5">
+    <div class="filters grid card card__pd-20 d-flex gap-20 align-item-center justify-content-md-between">
+
+        <app-search-bar style="height: 40px;" [searchPlaceholder]="'Search Orders...'"
+            (searchQuery$)="updateFields($event, 'search')"></app-search-bar>
+        <app-custom-select [type]="'select'" [options]="paymentStatus" [selectedOption]="template.filter.payment_status ? template.filter.payment_status : 'Filter by Payment Status'"
+            (final_option)="updateFields($event, 'payment_status')"></app-custom-select>
+        <span class="date d-flex gap-10">
+            <span class="relative">
                 <label class="form__title" for="fromdate">From: </label>
-                <input class="form__input fromdate" (input)="updateDateFields($event, 'datefrom')"   type="date"
+                <input class="form__input fromdate" [(ngModel)]="template.filter.datefrom" type="date"
                     id="fromdate">
             </span>
-            <span class="d-flex relative justify-content-md-between flex-column gap-5">
+            <span class="relative">
                 <label class="form__title" for="todate">To: </label>
-                <input class="form__input todate" (input)="updateDateFields($event, 'dateto')" [max]="getCurrentDate()"
+                <input class="form__input todate" [(ngModel)]="template.filter.todate" [max]="getCurrentDate()"
                     type="date" id="todate">
             </span>
             <button class="btn-primary btn-rounded btn-xs" (click)="resetField()">Clear</button>
+        </span>
     </div>
 
     <div class="order-list d-flex flex-column gap-20">
@@ -79,7 +80,7 @@
 
                 <tbody *ngIf="orderData.length; else fetchData" class="default-animation">
                     <ng-container *ngFor="let item of orderData; let i = index">
-                        <tr *ngIf="i< pageSize">
+                        <tr *ngIf="i< pageSize" class="default-animation">
                             <td class="items" style="text-transform: uppercase;">{{item.orderID}}</td>
                             <td class="items text-capitalize">{{item.customer}}</td>
                             <td class="items">{{item.orderTime}}</td>
@@ -121,7 +122,7 @@
                 <ng-template #fetchData>
 
                     <tbody *ngIf="!noData; else noDataFound">
-                        <tr *ngFor="let i of tableGenerator(pageSize)">
+                        <tr *ngFor="let i of tableGenerator(pageSize)" class="default-animation">
                             <td *ngFor="let i of tableGenerator(7)" class="items">
                                 <div class="skeleton" style="border-radius: 5px; color: transparent"> d</div>
                             </td>
@@ -129,10 +130,11 @@
                     </tbody>
 
                     <ng-template #noDataFound>
-                        <tr>
+                        <tr class="default-animation">
                             <td colspan="7">
                                 <div class="noDataFound d-flex flex-column flex-center card__pd-20">
-                                    <img src="../../../assets/noDataFound.svg" alt="">
+                                    <img *ngIf="!pageTheme" src="../../../assets/noDataFound.svg" alt="noDataFound">
+                                    <img *ngIf="pageTheme" src="../../../assets/noDataFound-light.svg" alt="noDataFound">
                                 </div>
                             </td>
                         </tr>

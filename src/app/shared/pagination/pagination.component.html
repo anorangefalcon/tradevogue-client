@@ -2,8 +2,8 @@
   <ul class="pagination d-flex flex-center gap-5" [ngClass]="small ? 'pagination-sm' : ''">
 
     <!-- first button -->
-    <li class="page-item" [ngClass]="currentPage === 1 ? 'disabled' : ''" *ngIf="firstLastButtons">
-      <button class="page-link" (click)="selectPageNumber(1)">«</button>
+    <li class="page-item first-btn" [ngClass]="currentPage === 1 ? 'disabled' : ''" *ngIf="firstLastButtons">
+      <button class="page-link" (click)="selectPageNumber(1)">««</button>
     </li>
 
     <!-- previous button -->
@@ -57,7 +57,7 @@
     </li>
 
     <!-- last button -->
-    <li class="page-item" [ngClass]="currentPage === totalPages.length ? 'disabled' : ''" *ngIf="firstLastButtons">
+    <li class="page-item last-btn" [ngClass]="currentPage === totalPages.length ? 'disabled' : ''" *ngIf="firstLastButtons">
       <button class="page-link" (click)="selectPageNumber(totalPages.length)">»»</button>
     </li>
   </ul>

@@ -116,6 +116,7 @@
                         <th class="items">In Stock</th>
                         <th class="items">Rating</th>
                         <th class="items">Last Modified</th>
+                        <th class="items">Active</th>
                         <th class="items">Action</th>
                     </tr>
                 </thead>
@@ -239,8 +240,15 @@
                                     &#40;{{item.rating}}&#41;
                                 </div>
                             </td>
-
+                            
                             <td class="items">{{item.last_updated}}</td>
+
+                            <td class="items">
+                                <div class="slide-button d-flex align-item-center">
+                                    <input type="checkbox" [(ngModel)]="item.status.active" [id]="i + 'Available'" />
+                                    <label [for]="i + 'Available'"></label>
+                                </div>
+                            </td>
 
                             <td class="items action-btns">
                                 <span class="d-flex align-item-center gap-5 transition">
@@ -248,7 +256,7 @@
                                     <span class="tooltip">
                                         <input class="highlight" type="checkbox" style="display: none;"
                                             [id]="'highlight'+i" (click)="highlightProduct($event, item._id, i)"
-                                            [(ngModel)]="item.highlight">
+                                            [(ngModel)]="item.status.highlight">
                                         <label class="pointer checkbox__label" [for]="'highlight'+i"></label>
                                         <span class="tooltiptext">Highlight Product</span>
                                     </span>
@@ -278,7 +286,7 @@
                 <ng-template #productData>
                     <tbody class="items" *ngIf="dataFetchStatus; else noData">
                         <tr *ngFor="let i of tableGenerator(template.limit)">
-                            <td *ngFor="let i of tableGenerator(10)" class="items">
+                            <td *ngFor="let i of tableGenerator(11)" class="items">
                                 <div class="skeleton" style="border-radius: 5px; color: transparent"> d</div>
                             </td>
                         </tr>

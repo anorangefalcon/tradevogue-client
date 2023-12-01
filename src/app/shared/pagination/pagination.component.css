@@ -36,7 +36,8 @@
   background-color: rgba(var(--primaryClr));
   color: rgb(var(--whiteClr));
   border-color: rgba(var(--primaryClr));
-  box-shadow: 0 0 8px rgba(0, 0, 0, 0.2); /* Slightly stronger shadow */
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
+  /* Slightly stronger shadow */
 }
 
 .page-item.disabled .page-link {
@@ -63,6 +64,21 @@
 }
 
 
-.dots{
+.dots {
+  display: flex;
   color: rgba(var(--blackClr), 0.5);
+}
+
+.last-btn,
+.first-btn {
+  display: none;
+}
+
+
+@media screen and (max-width: 480px) {
+
+  .pagination-container {
+    margin-top: 0px ;
+  }
+
 }

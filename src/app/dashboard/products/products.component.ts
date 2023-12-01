@@ -70,9 +70,11 @@ export class ProductsComponent implements OnInit {
       
       this.fetchdata.HTTPPOST(this.backendUrl.URLs.fetchProductInventory, this.template).subscribe({
         next: (res: any) => {
+
           if(!res.data.length) {
             this.dataFetchStatus = false;
             this.totalCount = 0;
+            return;
           };
 
 
@@ -96,6 +98,7 @@ export class ProductsComponent implements OnInit {
               unit_sold: product.unitSold,
               orderQuantity: product.productInfo.info.orderQuantity,
               product_inventory: product.inventory,
+              status: product.productInfo.status,
               rating: Math.round(product.avgRating * 10) / 10,
               last_updated: product.productInfo.updatedAt.split('T')[0],
               checked: false
@@ -114,21 +117,28 @@ export class ProductsComponent implements OnInit {
     
     // Purpose of Settime is to resolve the issue of delay as checkbox take time and function is called before
     setTimeout(() => {
+
       if (this.highlight >= 10 && status) {
-        this.productList[index].highlight = false;
+        this.productList[index].status.highlight = false;
         this.toastService.notificationToast({ title: 'Maximum 10 Highlight Allowed' });
         return;
       }
 
-      const body = { '_id': id, 'status': status };
+      const body = { '_id': id, 'status': status, 'field': 'highlight'};
       this.fetchdata.HTTPPOST(this.backendUrl.URLs.highlightProduct, body).subscribe({
         next: (data: any) => {
           this.highlight = data.highlightCount;
-          this.productList[index].highlight = status;
+          this.productList[index].status.highlight = status;
         }
       })
     }, 0.1);
   }
+
+  activateProduct(e: Event, id: string, index: number){
+
+  }
+
+
 
   // Check for tables
   toggleSelectAll() {
@@ -152,9 +162,11 @@ export class ProductsComponent implements OnInit {
       if (product.checked) this.deleteList.push(product._id);
     });
   }
+  
 
   // Delete Entry
-  deleteItem(entry: any, name: string = '', type: string = 'single') {
+  deleteItem(entry: any, type: string = 'single') {
+
     let template: any = {
       title: 'Proceed with Deletion?',
       subtitle: `The item will be permanently deleted, and recovery will not be possible. Are you sure you want to proceed?`,
@@ -162,9 +174,10 @@ export class ProductsComponent implements OnInit {
       confirmationText: 'Yes, Delete it',
       cancelText: 'No, Keep it',
     };
+
     this.dialogBoxService.confirmationDialogBox(template);
     this.deleteDataField.type = type,
-      this.deleteDataField.data = entry;
+    this.deleteDataField.data = entry;
   }
 
   // Filter Handling function

@@ -10,7 +10,7 @@
 }
 
 .filters {
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
 }
 
 .form__title {
@@ -91,4 +91,14 @@
         font-weight: 600 !important;
     }
 
+}
+
+@media screen and (max-width: 510px) {
+    .filters {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    }
+
+    .date{
+        flex-direction: column;
+    }
 }
