@@ -52,6 +52,7 @@ export class BillingComponent implements OnInit {
   stripeScript!: any;
   clientSecret!: any;
   allSubscriptions: Subscription[] = [];
+  theme: Boolean = false;
 
   loadRazorpayScript() {
     const script = this.renderer.createElement('script');
@@ -79,6 +80,10 @@ export class BillingComponent implements OnInit {
       this.cartService.fetchCart().subscribe((data) => {
         this.cartitems = data;
       }));
+
+      this.fetchDataService.themeColor$.subscribe((color) => {
+        this.theme = color;
+      });
   }
 
   ngOnInit(): void {
@@ -133,8 +138,7 @@ export class BillingComponent implements OnInit {
       }
     })
 
-    const items =
-    {
+    const items = {
       orderId: this.checkOutService.orderID,
       subTtotal: this.cartitems.amounts.subTotal,
       items: item
@@ -142,7 +146,7 @@ export class BillingComponent implements OnInit {
 
     const response = this.fetchDataService.HTTPPOST(this.backendURLs.URLs.createPaymentIntent, items).subscribe((data: any) => {
       this.clientSecret = data.clientSecret;
-      const appearance = {
+      let appearance = {
         theme: 'flat',
         variables: {
           fontLineHeight: '1.5',
@@ -186,6 +190,55 @@ export class BillingComponent implements OnInit {
           }
         }
       };
+      
+      const appearanceForDarkTheme = {
+        theme: 'flat',
+        variables: {
+          fontLineHeight: '1.5',
+          borderRadius: '10px',
+          colorBackground: '#121a21',
+          accessibleColorOnColorPrimary: '#e6e6e6'
+        },
+        rules: {
+          '.Block': {
+            backgroundColor: 'var(--colorBackground)',
+            boxShadow: 'none',
+            padding: '12px',
+          },
+          '.Input': {
+            padding: '12px',
+            backgroundColor: 'transparent',
+            color: 'white',
+            border: '1px solid rgba(255, 255, 255, 0.2)',
+            outline: '1px solid rgba(255, 255, 255, 0.2)',
+          },
+          '.Input:disabled, .Input--invalid:disabled': {
+            color: 'lightgray'
+          },
+          '.Input:hover': {
+            borderColor: 'rgb(4, 118, 118)'
+          },
+          '.Tab': {
+            padding: '10px 12px 8px 12px',
+            border: 'none',
+          },
+          '.Tab:hover': {
+            border: 'none',
+            boxShadow: '0px 1px 1px rgba(0, 0, 0, 0.03), 0px 3px 7px rgba(18, 42, 66, 0.04)'
+          },
+          '.Tab--selected, .Tab--selected:focus, .Tab--selected:hover': {
+            border: 'none',
+            backgroundColor: '#fff',
+            boxShadow: '0 0 0 1.5px var(--colorPrimaryText), 0px 1px 1px rgba(0, 0, 0, 0.03), 0px 3px 7px rgba(18, 42, 66, 0.04)'
+          },
+          '.Label': {
+            fontWeight: '500',
+          }
+        }
+      };
+
+      if(this.theme) appearance = appearanceForDarkTheme;
+
       this.elements = stripe.elements({ clientSecret: this.clientSecret, appearance });
       const linkAuthenticationElement = this.elements.create("linkAuthentication");
       linkAuthenticationElement.mount("#link-authentication-element");

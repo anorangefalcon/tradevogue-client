@@ -23,50 +23,56 @@ export class SelectLayoutComponent {
   States: any = {};
   edited: Boolean = false;
   Direction: any[] = [];
-  popUpDirection:any='popup';
+  popUpDirection: any = 'popup';
   showingPopUp: boolean = false;
-  
+  newName: String = '';
   loadingData: Boolean = false;
   layouts: any = [];
   currentLayout: any = {};
+  theme: Boolean = false;
 
-  constructor(private fetchDataService: FetchDataService, private backendUrls: UtilsModule, 
-    private toastService: ToastService, private router: Router){}
+  constructor(private fetchDataService: FetchDataService, private backendUrls: UtilsModule,
+    private toastService: ToastService, private router: Router) { }
 
-  ngOnInit(){
-   this.fetchLayouts();
+  ngOnInit() {
+    this.fetchDataService.themeColor$.subscribe((color) => {
+      this.theme = color;
+    });
+    this.fetchLayouts();
   }
 
-  fetchLayouts(created: boolean = false){
+  fetchLayouts(created: boolean = false) {
     this.loadingData = true;
     this.fetchDataService.HTTPGET(this.backendUrls.URLs.getAllHomeLayouts)
-    .subscribe((data: any)=>{
-      this.layouts = data;
-      
-      let findQuery = ()=>{
-        if(created){
-          return ( (item: any)=> item.name === this.currentLayout.name ) ;
-        }
-        return ( (item: any)=> item.active === true );
-      }
+      .subscribe((data: any) => {
+        this.layouts = data;
 
-      this.currentLayout = JSON.parse(JSON.stringify(this.layouts.find(findQuery())));
-      this.loadingData = false;
-    });
+        const findQuery = () => {
+          if (created) {
+            return ((item: any) => item.name === this.currentLayout.name);
+          }
+          
+          return ((item: any) => item.active === true);
+        }
+
+        this.currentLayout = JSON.parse(JSON.stringify(this.layouts.find(findQuery())));
+        this.newName = this.currentLayout?.name;
+        this.loadingData = false;
+      });
   }
 
-  switchStatus(event: any, name: String){
+  switchStatus(event: any, name: String) {
     const index = this.getIndexFromName(name);
     const newStatus = (<HTMLInputElement>event.target).checked;
-    
+
     this.currentLayout.layout[index].active = newStatus;
     this.edited = true;
   }
 
-  moveUp(name: String){
+  moveUp(name: String) {
     const index = this.getIndexFromName(name);
 
-    if(index > 1){
+    if (index > 1) {
       const tempCurrentVal = this.currentLayout.layout[index];
       this.currentLayout.layout[index] = this.currentLayout.layout[index - 1];
       this.currentLayout.layout[index - 1] = tempCurrentVal;
@@ -76,10 +82,10 @@ export class SelectLayoutComponent {
     this.edited = true;
   }
 
-  moveDown(name: String){
+  moveDown(name: String) {
     const index = this.getIndexFromName(name);
 
-    if(index >= 1){
+    if (index >= 1) {
       const tempCurrentVal = this.currentLayout.layout[index];
       this.currentLayout.layout[index] = this.currentLayout.layout[index + 1];
       this.currentLayout.layout[index + 1] = tempCurrentVal;
@@ -89,50 +95,76 @@ export class SelectLayoutComponent {
     this.edited = true;
   }
 
-  createNewLayout(){
-    let newLayout = {
-      name: 'layout ' + (this.layouts.length + 1),
-      layout: <any>[]
-    }
+  createNewLayout() {
 
-    this.elements.forEach((item)=>{
+    const getLayoutName = (layoutInt: number): any => {
+      const layoutName = 'layout ' + (this.layouts.length + layoutInt);
+      
+      const matched = this.layouts.some((item: any) =>{
+        if(item.name == layoutName){
+          return true;
+        }
+        return false;
+        });
+
+        if(matched) return getLayoutName(layoutInt + 1);
+
+        return layoutName;
+    } 
+
+    let newLayout = {
+      name: getLayoutName(1),
+      layout: <any>[]
+    }    
+
+    this.elements.forEach((item) => {
       newLayout.layout.push(
         { 'name': item }
       );
     })
-    
+
     this.fetchDataService.HTTPPOST(this.backendUrls.URLs.createOrUpdateHomeLayout, newLayout)
-    .subscribe(()=>{
-      this.currentLayout.name = newLayout.name;
-      this.fetchLayouts(true);
-      this.edited = false;
-    });
+      .subscribe(() => {
+        this.currentLayout.name = newLayout.name;
+        this.fetchLayouts(true);
+        this.edited = false;
+      });
   }
 
-  updateLayout(){
+  updateLayout(nameUpdated: Boolean = false) {
+
+    if (nameUpdated && this.newName != '') this.currentLayout.name = this.newName;
+
     this.fetchDataService.HTTPPOST(this.backendUrls.URLs.createOrUpdateHomeLayout, this.currentLayout)
-    .subscribe(()=>{
-      this.edited = false;
-      this.fetchLayouts(true);
-      this.toastService.successToast({
-        title: 'Successfully updated ' + this.currentLayout.name
-      });
+    .subscribe({
+      next: () => {
+        this.edited = false;
+        this.fetchLayouts(true);
+        this.toastService.successToast({
+          title: 'Successfully updated ' + this.currentLayout.name
+        });
+      }, 
+      error: () => {
+        this.fetchLayouts();
+      }
+      
     });
+    this.newName = '';
   }
 
-  deleteLayout(){
-    this.fetchDataService.HTTPPOST(this.backendUrls.URLs.deleteHomeLayout, {id: this.currentLayout._id})
-    .subscribe(()=>{
-      this.edited = false;
-      this.showingPopUp = false;
-      this.toastService.successToast({
-        title: 'Successfully deleted ' + this.currentLayout.name
+  deleteLayout() {
+    this.fetchDataService.HTTPPOST(this.backendUrls.URLs.deleteHomeLayout, { id: this.currentLayout._id })
+      .subscribe(() => {
+        this.edited = false;
+        this.showingPopUp = false;
+        this.toastService.successToast({
+          title: 'Successfully deleted ' + this.currentLayout.name
+        });
+        this.fetchLayouts();
       });
-      this.fetchLayouts();
-    });
   }
 
-  activateLayout(){
+  activateLayout() {
     this.currentLayout.active = true;
     this.updateLayout();
     this.toastService.successToast({
@@ -141,16 +173,17 @@ export class SelectLayoutComponent {
   }
 
   // helpers:
-  getIndexFromName(name: String){
+  getIndexFromName(name: String) {
     return this.currentLayout.layout.findIndex((item: any) => item.name === name);
   }
 
-  selectLayout(event: any){
+  selectLayout(event: any) {
     this.edited = false;
     this.currentLayout = this.layouts.find((item: any) => item.name === event);
+    this.newName = this.currentLayout.name;
   }
 
-  getLayoutsNames(){
+  getLayoutsNames() {
     return this.layouts.map((item: any) => item = item.name);
   }
 
@@ -173,15 +206,15 @@ export class SelectLayoutComponent {
     }
   }
 
-  PopUpChangeHanlder(event: any){
+  PopUpChangeHanlder(event: any) {
     this.showingPopUp = event;
   }
 
-  navigate(name: any){
-    this.router.navigate(['/dashboard/customise-home/'+ name]);
+  navigate(name: any) {
+    this.router.navigate(['/dashboard/customise-home/' + name]);
   }
 
-  navigateToHighlightProducts(){
+  navigateToHighlightProducts() {
     this.toastService.notificationToast({
       title: 'Star Products to Show in Carousel'
     })
@@ -194,8 +227,8 @@ export class SelectLayoutComponent {
     targetPosition += (where == 'down') ? 300 : -300;
 
     window.scrollTo({
-        top: targetPosition,
-        behavior: "smooth"
+      top: targetPosition,
+      behavior: "smooth"
     });
   }
 }

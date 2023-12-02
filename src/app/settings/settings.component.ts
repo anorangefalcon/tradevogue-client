@@ -289,8 +289,6 @@ export class SettingsComponent {
   }
 
   moveToCart(product: any) {
-    console.log(product, ' hehe');
-
     this.cartService.addToCart(product);
   }
 

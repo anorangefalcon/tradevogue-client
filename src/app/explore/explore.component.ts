@@ -41,9 +41,8 @@ export class ExploreComponent {
   loading: boolean = false;
   theme: Boolean = false;
 
-  constructor(private fetchData: FetchDataService, private BackendEndUrl: UtilsModule,
-    private wishlistService: WishlistService, private route: ActivatedRoute,
-    private location: Location) { }
+  constructor(private fetchData: FetchDataService, private BackendEndUrl: UtilsModule, 
+    private route: ActivatedRoute, private location: Location) { }
 
   ngOnInit() {
 
@@ -51,10 +50,7 @@ export class ExploreComponent {
       this.theme = color;
     })
 
-    this.route.queryParams.subscribe((data: any) => {
-
-      console.log(data, "lol");
-      
+    this.route.queryParams.subscribe((data: any) => {      
       this.minPrice = data?.minPrice
       this.maxPrice = data?.maxPrice
       this.loading = true;
@@ -62,6 +58,8 @@ export class ExploreComponent {
       let actualParams = (Object.keys(this.filterApplied).length > 0) ? this.filterApplied : JSON.parse(JSON.stringify(data));
 
       this.fetchData.getProducts(actualParams, this.limit, 1).subscribe((data: any) => {
+        console.log(data, 'here');
+        
         this.products = data.items;
         this.totalProducts = data.total;
         this.loading = false;

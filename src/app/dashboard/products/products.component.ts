@@ -130,6 +130,9 @@ export class ProductsComponent implements OnInit {
         next: (data: any) => {
           this.highlight = data.highlightCount;
           this.productList[index].status.highlight = status;
+        },
+        error: ()=>{
+          this.productList[index].status.highlight = false;
         }
       })
     }, 0.1);
@@ -144,6 +147,9 @@ export class ProductsComponent implements OnInit {
       next: (data: any) => {
         this.productList[index].status.active = status;
         status ? this.toastService.successToast({ title: 'Product is Available' }):this.toastService.notificationToast({ title: 'Product is now Unavailable'}); 
+      },
+      error: ()=>{
+        this.productList[index].status.active = false;
       }
     })
   }

@@ -170,7 +170,7 @@
     bottom: 0;
     right: 35px;
     z-index: 5;
-    background: white;
+    background: rgb(var(--whiteClr));
     padding-block-end: 14px;
     padding-block-start: 20px;
     padding-inline: 16px;
@@ -221,6 +221,11 @@
     }
 }
 
+.adjustPopup{
+    & .content-drawer{
+        max-width: 380px;
+    }
+}
 @media screen and (max-width: 420px) {
     .card-header {
       background-color: transparent;

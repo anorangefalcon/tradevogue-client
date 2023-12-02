@@ -1,5 +1,6 @@
 <div *ngIf="loadingData" class="tv-loading">
-  <img src="../../assets/logo-mobile.svg" alt="tradeVogue-loading">
+  <img src="../../assets/logo-mobile.svg" alt="tradeVogue-loading" *ngIf="!theme">
+  <img src="../../assets/logo-mobile-light.svg" alt="tradeVogue-loading" *ngIf="theme">
   <div class="circle-tv-loader"></div>
 </div>
 
@@ -28,19 +29,22 @@
 
       </div>
 
-      <app-drawer [direction]="popUpDirection" [show]="showingPopUp" (showChange)="PopUpChangeHanlder($event)"
-        [title]="'Layout Settings'">
-        <div class="d-flex flex-column align-item-center justify-content-center gap-20">
-          <input id="editName" class="form__input" type="text" [placeholder]="'Edit Layout Name'"
-            [value]="currentLayout.name">
+      <div class="adjustPopup">
+        <app-drawer [direction]="popUpDirection" [show]="showingPopUp" (showChange)="PopUpChangeHanlder($event)"
+          [title]="'Layout Settings'">
+          <div class="d-flex flex-column align-item-center justify-content-center gap-20">
+            <input id="editName" class="form__input" type="text" [placeholder]="'Edit Layout Name'"
+               [(ngModel)]="newName">
 
-          <div class="d-flex align-item-center justify-content-center gap-10">
-            <button class="btn btn-xs btn-rounded fw-500 btn-primary" (click)="updateLayout()">Save</button>
-            <button class="btn btn-xs btn-rounded fw-500 btn-secondary" (click)="deleteLayout()">Delete</button>
+            <div class="d-flex align-item-center justify-content-center gap-10">
+              <button class="btn btn-xs btn-rounded fw-500 btn-primary" (click)="updateLayout(true); showingPopUp = false">Save</button>
+              <button class="btn btn-xs btn-rounded fw-500 btn-secondary" (click)="deleteLayout(); showingPopUp = false">Delete</button>
+            </div>
+
           </div>
+        </app-drawer>
+      </div>
 
-        </div>
-      </app-drawer>
 
     </div>
 
