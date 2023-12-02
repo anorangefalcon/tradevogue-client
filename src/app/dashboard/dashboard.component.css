@@ -87,6 +87,28 @@
             }
         }
 
+        & .header_links:hover > .notficationList{
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        & .notficationList{
+            inset-block-start: 100%;
+            inset-inline-end: 0;
+            width: 360px;
+            height: 400px;
+            overflow: scroll;
+            background-color: rgb(var(--whiteClr));
+            opacity: 0;
+            pointer-events: none;
+
+            ul{
+                display: flex;
+                flex-direction: column;
+                gap: 5px;
+            }
+        }
+
 
         & .account__icon {
 

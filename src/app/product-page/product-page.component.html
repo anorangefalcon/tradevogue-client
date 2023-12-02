@@ -134,8 +134,10 @@
                                                         <td class="items">{{stock.size}}</td>
                                                         <td class="items">{{stock.unitSold}}</td>
                                                         <td class="items">
+                
+
                                                             <span class="inventory good"
-                                                                *ngIf="(stock.quantity) >=  (data.info.orderQuantity | lessThanOrEqual: stock.quantity)[(data.info.orderQuantity | lessThanOrEqual: stock.quantity).length -1]; else low_inventry">
+                                                                *ngIf="(stock.quantity) >= (data.info.orderQuantity | lessThanOrEqual: stock.quantity)[(data.info.orderQuantity | lessThanOrEqual: stock.quantity).length -1]  && (data.info.orderQuantity | lessThanOrEqual: stock.quantity).length > 1; else low_inventry">
                                                                 In Stock
                                                                 &#40;{{stock.quantity}}&#41;
                                                             </span>
@@ -143,12 +145,11 @@
                                                             <ng-template #low_inventry>
 
                                                                 <span
-                                                                    *ngIf="( (stock.quantity) < (data.info.orderQuantity | lessThanOrEqual: stock.quantity)[(data.info.orderQuantity | lessThanOrEqual: stock.quantity).length -1]) && (stock.quantity) >= (data.info.orderQuantity | lessThanOrEqual: stock.quantity)[0]; else empty_inventry"
+                                                                    *ngIf="filterData(data.info.orderQuantity, stock.quantity) else empty_inventry"
                                                                     class="inventory okay">
                                                                     Low Inventory &#40;{{
                                                                     stock.quantity }}&#41;
                                                                 </span>
-
                                                                 <ng-template #empty_inventry>
                                                                     <span class="inventory bad">
                                                                         Out of Stock &#40;{{

@@ -231,12 +231,17 @@ label span {
 
 .accordian__body {
     /* padding-block-end: 10px; */
-    display: none;
+    /* display: none; */
+    opacity: 0;
+    height: 0px;
+    pointer-events: none;
     transition: all 0.3s ease-in-out;
 }
 
 .accordian__body.active {
-    display: flex;
+    opacity: 1;
+    height: fit-content;
+    pointer-events: all;
     justify-content: space-between;
 }
 

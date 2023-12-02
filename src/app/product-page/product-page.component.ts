@@ -135,6 +135,7 @@ export class ProductPageComponent implements OnInit {
         }
 
         assetI++;
+        console.log("as",assetI)
         this.changeColor(assetI);
         return false;
       });
@@ -338,4 +339,18 @@ export class ProductPageComponent implements OnInit {
   //     this.showCarousel = false;
   //   }
   // }
+
+
+    // Purpose to detemine the quantiy of product->color->size based upon orderQuantity
+    filterData(array: any, limit: any) {
+
+      const len = array.length;
+      // 30% of Array is
+      const index = Math.round(len * 0.3);
+  
+      if (limit <= array[index] && limit > 0) {
+        return true;
+      }
+      return false;
+    }
 }

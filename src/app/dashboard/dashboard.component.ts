@@ -3,6 +3,7 @@ import { LoginCheckService } from '../shared/services/login-check.service';
 import { FetchDataService } from '../shared/services/fetch-data.service';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { UtilsModule } from '../utils/utils.module';
 
 
 @Component({
@@ -20,6 +21,7 @@ export class DashboardComponent {
 
   constructor(private userService: LoginCheckService,
     private router: Router,
+    private backendURL: UtilsModule,
     private fetchDataService: FetchDataService) {
       this.allSubscriptions.push(
     this.fetchDataService.themeColor$.subscribe((color) => {
@@ -85,6 +87,38 @@ export class DashboardComponent {
     //   this.isCollapse = false;
     // });
     // this.checkRoute();
+    this.fetchNotfications();
+  }
+
+  notficationList: any = [];
+  notficationStatus: boolean = true;
+
+
+  fetchNotfications(){
+    this.fetchDataService.HTTPGET(this.backendURL.URLs.fetchSellerNotfications).subscribe({
+      next: (res: any)=>{
+
+        this.notficationList = [];
+
+        if(!res.length){
+          this.notficationStatus = false;
+          return;
+        }
+
+        res.forEach((product: any)=>{
+          let cardTemplate = {
+            image: product.assets[0].photo[0],
+            name: product.name,
+            category: product.info.category,
+            price: product.price,
+            sku: product.sku
+          };
+
+          this.notficationList.push(cardTemplate);
+        });
+        console.log(this.notficationList);
+      }
+    })
   }
 
   checkRoute(){

@@ -1,5 +1,5 @@
 <nav class="pagination-container d-flex flex-center mw100">
-  <ul class="pagination d-flex flex-center gap-5" [ngClass]="small ? 'pagination-sm' : ''">
+  <ul class="pagination d-flex flex-center " [ngClass]="small ? 'pagination-sm' : ''">
 
     <!-- first button -->
     <li class="page-item first-btn" [ngClass]="currentPage === 1 ? 'disabled' : ''" *ngIf="firstLastButtons">
@@ -8,7 +8,9 @@
 
     <!-- previous button -->
     <li [ngClass]="currentPage === 1 ? 'page-item disabled' : 'page-item'" *ngIf="nextPreviousButtons">
-      <button class="page-link" (click)="previous()">«</button>
+      <button class="page-link" (click)="previous()">
+        <span class="fs-18 material-symbols-outlined">chevron_left</span>
+      </button>
     </li>
 
     <!-- page numbers with -->
@@ -53,7 +55,9 @@
     
     <!-- next button -->
     <li class="page-item" [ngClass]="currentPage === totalPages.length ? 'disabled' : ''" *ngIf="nextPreviousButtons">
-      <button class="page-link" (click)="next()">»</button>
+      <button class="page-link" (click)="next()">
+        <span class="fs-18 material-symbols-outlined">chevron_right</span>
+      </button>
     </li>
 
     <!-- last button -->

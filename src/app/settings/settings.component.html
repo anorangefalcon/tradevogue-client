@@ -470,8 +470,8 @@
                 <div class="d-flex flex-column default-animation-slow">
                     <div class="accordian mw-100" *ngFor="let item of productsArray; let i = index">
                         <div class="accordian__head pointer d-flex justify-content-md-between"
-                            (click)="showWishlistedProducts(item.wishlistName); toggleAccordian(i);">
-                            <p class="wishlist-name">{{item.wishlistName | titlecase}}</p>
+                            (click)="toggleAccordian(i); showWishlistedProducts(item.wishlistName);">
+                            <p class="wishlist-name text-capitalize">{{item.wishlistName}}</p>
                             <div class="d-flex gap-5 align-items-center">
                                 <p *ngIf="item.products.length === 0" class="no-item-label">No items</p>
                                 <span class="material-symbols-outlined d-flex flex-center" (click)="removeWishlist(i)"

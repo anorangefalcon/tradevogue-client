@@ -6,6 +6,7 @@
 /* Pagination styles */
 .pagination {
   padding: 0;
+  gap: 3px;
 }
 
 /* Styles for pagination items */
@@ -18,14 +19,14 @@
   color: rgb(var(--textClr));
   border-radius: 4px;
   border: none;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.3s ease-in-out;
   display: flex;
   align-items: center;
   justify-content: center;
   width: 30px;
   height: 30px;
   margin: 5px;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 2px 1px rgba(var(--blackClr), 0.2);
   font-weight: 400;
   cursor: pointer;
   /* border-width: 1px; */
@@ -34,7 +35,9 @@
 
 .page-item.active .page-link {
   background-color: rgba(var(--primaryClr));
+
   color: rgb(var(--whiteClr));
+
   border-color: rgba(var(--primaryClr));
   box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
   /* Slightly stronger shadow */

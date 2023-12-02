@@ -28,6 +28,7 @@ export class ProductsComponent implements OnInit {
     limit: this.pageSize,
     page: this.currentPage,
     filter: {
+      active: true,
       search: '',
       categories: '',
     }
@@ -142,7 +143,7 @@ export class ProductsComponent implements OnInit {
     this.fetchdata.HTTPPOST(this.backendUrl.URLs.productStatus, body).subscribe({
       next: (data: any) => {
         this.productList[index].status.active = status;
-        status ? this.toastService.successToast({ title: 'Product is Available' }):this.toastService.notificationToast({ title: 'Product is not Unavailable'}); 
+        status ? this.toastService.successToast({ title: 'Product is Available' }):this.toastService.notificationToast({ title: 'Product is now Unavailable'}); 
       }
     })
   }
@@ -194,7 +195,7 @@ export class ProductsComponent implements OnInit {
 
     if (field) {
       this.template.filter[field] = e;
-
+      
     } else {
       this.tempSortData = e;
       let data = e.split(':');

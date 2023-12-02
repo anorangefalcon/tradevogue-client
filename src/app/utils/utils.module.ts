@@ -36,7 +36,11 @@ export class UtilsModule {
     // setDefaultAddress:`${this.BackendUrl}/user/setDefault`,
    
 
-    // Dashboard
+  // Dashboard
+  
+    fetchSellerNotfications: `${this.BackendUrl}/admin/fetchSellerNotfications`,
+
+    // Statistics
     fetchOverallData: `${this.BackendUrl}/admin/getOverallInfo`,
     fetchSalesStats: `${this.BackendUrl}/admin/fetchSalesData`,
     fetchCategoryStats: `${this.BackendUrl}/admin/fetchCategoryData`,

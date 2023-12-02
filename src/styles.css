@@ -1136,7 +1136,7 @@ tr:last-child td{
     }
 
     & input[type="checkbox"]:checked+label {
-        background-color: rgb(var(--success));
+        background-color: rgb(var(--primaryClr));
     }
 }
 

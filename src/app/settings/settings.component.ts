@@ -227,18 +227,25 @@ export class SettingsComponent {
   }
 
   showWishlistedProducts(wishlist: string) {
-    this.wishlistService.showWishlistedProducts(wishlist).subscribe((data) => {
-      this.wishlistedProducts = data;
-    })
+    console.log("Hello");
+    this.wishlistedProducts = [];
+    setTimeout(()=>{
+      this.wishlistService.showWishlistedProducts(wishlist).subscribe((data) => {
+        this.wishlistedProducts = data;
+      });
+    }, 1);
   }
 
-  toggleAccordian(index: any,check:boolean=false) {
+  toggleAccordian(index: any, check:boolean=false) {
+
     this.AccordianIndex=index;
+
     if(check){
       this.openedAccordionIndex=index;
       return;
     }
     if (this.openedAccordionIndex === index) {
+      this.wishlistedProducts = [];
       this.openedAccordionIndex = null; 
     } else {
       this.openedAccordionIndex = index; 

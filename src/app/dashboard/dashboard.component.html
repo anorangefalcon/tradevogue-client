@@ -6,8 +6,10 @@
                 <a (click)="isCollapse = !isCollapse" class="pointer d-flex align-item-center mh100">
                     <span class="material-symbols-outlined">menu</span>
                 </a>
-                <a [routerLink]="['/']"><img class="brand-logo" width="50px" src="../../assets/logo-mobile.svg" *ngIf="!darkTheme" [class.active]="isCollapse" alt="Logo"></a>
-                <a [routerLink]="['/']"><img class="brand-logo" width="50px" src="../../assets/logo-mobile-light.svg" *ngIf="darkTheme" [class.active]="isCollapse" alt="Logo"></a>
+                <a [routerLink]="['/']"><img class="brand-logo" width="50px" src="../../assets/logo-mobile.svg"
+                        *ngIf="!darkTheme" [class.active]="isCollapse" alt="Logo"></a>
+                <a [routerLink]="['/']"><img class="brand-logo" width="50px" src="../../assets/logo-mobile-light.svg"
+                        *ngIf="darkTheme" [class.active]="isCollapse" alt="Logo"></a>
             </div>
             <ul class="mh100 header_items d-flex align-item-center justify-content-end gap-20">
 
@@ -16,13 +18,21 @@
                         <span class="pointer transition  icons material-symbols-outlined">Message</span>
                         <span class="count d-flex flex-center text-center absolute">{{0}}</span>
                     </span>
-                </li>
-                <li class="header_links">
+                </li> -->
+                <li class="header_links relative">
                     <span class="mh100 notification d-flex align-item-center relative">
                         <span class="pointer transition icons material-symbols-outlined">notifications</span>
-                        <span class="count d-flex flex-center text-center absolute">{{0}}</span>
+                        <span class="count d-flex flex-center text-center absolute">{{notficationList.length}}</span>
                     </span>
-                </li> -->
+                    <ul class="notficationList absolute">
+                        <li *ngFor="let item of notficationList; let i=index">
+                            <img [src]="item.image" alt="" width="40px" height="20px">
+                            <p>{{item.name}}</p>
+                            <p>{{item.category}}</p>
+                            <p>{{'Out of Stock'}}</p>
+                        </li>
+                    </ul>
+                </li>
 
                 <li class="header_links">
                     <span class="mh100 notification d-flex align-item-center relative" (click)="toggleTheme()">
@@ -67,8 +77,8 @@
                 <li class="transition" *ngFor="let item of navitems">
 
                     <a [routerLink]="item.route ? item.route: null"
-                        (click)="item.name.toLowerCase() == 'logout' ? logout() : null; checkRoute()"
-                        [class.dropdown]="item.sublist" [routerLinkActive]="'active'"
+                        (click)="item.name.toLowerCase() == 'logout' ? logout() : null;" [class.dropdown]="item.sublist"
+                        [routerLinkActive]="'active'"
                         class="nav-links relative align-item-center d-flex gap-15 pointer">
                         <i class="icons material-symbols-outlined">{{item.icons}}</i>
                         <span class="nav-text">{{item.name}}</span>
