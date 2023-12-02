@@ -23,16 +23,17 @@
           <td class="items ellipsis">{{ item }}</td>
           <td class="items action-btns">
 
-
-            <span class="tooltip">
-              <i class="fs-18 action__btn-icon pointer material-symbols-outlined"
-                (click)="showItemDetails(item)">edit</i>
-              <span class="tooltiptext">Edit</span>
-            </span>
-            <span class="tooltip">
-              <i class="fs-18 action__btn-icon pointer material-symbols-outlined"
-                (click)="deleteTicketTitle(item)">delete</i>
-              <span class="tooltiptext">Delete</span>
+            <span class="d-flex align-item-center gap-5 transition">
+              <span class="tooltip">
+                <i class="fs-18 action__btn-icon pointer material-symbols-outlined"
+                  (click)="showItemDetails(item)">edit</i>
+                <span class="tooltiptext">Edit</span>
+              </span>
+              <span class="tooltip">
+                <i class="fs-18 action__btn-icon pointer material-symbols-outlined"
+                  (click)="deleteTicketTitle(item)">delete</i>
+                <span class="tooltiptext">Delete</span>
+              </span>
             </span>
           </td>
         </tr>
@@ -54,18 +55,22 @@
       <div>
       </div>
       <input type="text" [(ngModel)]="updatedItem" style="padding: 8px; border: 1px solid #ccc; border-radius: 4px;">
-      <button (click)="pushItem()" class="btn-primary">Add</button>
+      <button (click)="pushItem()" class="btn-primary btn-sm btn-rounded">Add</button>
     </div>
   </div>
 
-  <app-pop-up *ngIf="selectedItem">
-    <div class="details-container">
-      <h2>Edit Ticket</h2>
-      <div>
+  <div class="edit__ticket">
+    <app-drawer [direction]="popUpDirection" [show]="showingPopUp" (showChange)="PopUpChangeHanlder($event)"
+      [title]="'Edit Ticket'">
+      <div class="details-container">
+        <h2>Edit Ticket</h2>
+        <div>
+        </div>
+        <input class="form__input" type="text" [(ngModel)]="updatedItem"
+          style="padding: 8px; border: 1px solid #ccc; border-radius: 4px;">
+        <button (click)="updateItem()" class="btn-primary btn-sm btn-rounded pointer">Update</button>
       </div>
-      <input type="text" [(ngModel)]="updatedItem" style="padding: 8px; border: 1px solid #ccc; border-radius: 4px;">
-      <button (click)="updateItem()" class="btn-primary">Update</button>
-    </div>
-  </app-pop-up>
+    </app-drawer>
+  </div>
 
 </section>

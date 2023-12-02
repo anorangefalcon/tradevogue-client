@@ -1,6 +1,7 @@
 <section class="d-flex flex-column gap-20 ">
-
-  <app-pop-up>
+  <div class="view__details">
+    <app-drawer [direction]="popUpDirection" [show]="showingPopUp" (showChange)="PopUpChangeHanlder($event)"
+    [title]="'Edit Ticket'">
     <div *ngIf="selectedItem" class="details-container">
       <div>
         <strong>User Email:</strong> {{ selectedItem?.adminId?.email }}
@@ -15,8 +16,8 @@
         <strong>Enable:</strong> {{ selectedItem?.enable }}
       </div>
     </div>
-  </app-pop-up>
-
+    </app-drawer>
+    </div>
 
   <app-drawer [direction]="direction" [show]="show" (showChange)="ChangeHanlder($event)" [title]="title">
     <div *ngIf="editItem" class="slider">

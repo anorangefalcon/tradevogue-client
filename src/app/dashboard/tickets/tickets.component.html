@@ -1,12 +1,12 @@
 <section class="d-flex flex-column gap-20">
-  <div class="card card__pd-20 d-flex justify-content-md-between align-item-center">
+  <div class="card card__pd-20 d-flex justify-content-md-between align-item-center default-animation">
     <h2>Ticket Table</h2>
     <span class="d-flex align-item-center gap-10">
       <app-search-bar style="height: 40px;" [searchPlaceholder]="'Search userName...'" (searchQuery$)="updateFields($event)" ></app-search-bar>
   </span>
   </div>
 
-  <div class="table-list card">
+  <div class="table-list card default-animation-slow">
     <table class="selected-category">
       <thead>
         <tr>

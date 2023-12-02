@@ -192,12 +192,11 @@ export class CartService {
       if (!cartDetails) {
         cartDetails = [];
       }
-      this.allSubscriptions.push(
       this.http.post(this.backendUrls.URLs.fetchCart, cartDetails).subscribe((data: any) => {
         console.log('dddd', data);
         this.cartSubject?.next(data);
         this.cartLoading.next(false);
-      }));
+      });
     }
   }
 

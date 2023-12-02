@@ -66,3 +66,9 @@
   .slider {
     margin-top: 20px;
   }
+
+  .view__details {
+    & .content-drawer{
+      width: 1000px;
+    }
+  }

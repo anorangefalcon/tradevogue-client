@@ -76,6 +76,7 @@ export class BillingComponent implements OnInit {
     this.stripePay.showMessage = this.stripePay.showMessage.bind(this);
     this.initialize = this.initialize.bind(this);
 
+
     this.allSubscriptions.push(
       this.cartService.fetchCart().subscribe((data) => {
         this.cartitems = data;
@@ -327,6 +328,7 @@ export class BillingComponent implements OnInit {
   }
 
   selectPaymentMethod(method: string) {
+    console.log(method)
     this.selectedPaymentMethod = method;
   }
 
@@ -349,67 +351,82 @@ export class BillingComponent implements OnInit {
     this.my_div?.nativeElement.classList.toggle('display_none');
   }
   //razorpay
-  async submitForm(item: any): Promise<void> {
+  async submitForm(): Promise<void> {
     try {
-      let paymentBody = {};
 
-      let body = {};
-      this.allSubscriptions.push(
-        this.userService.getUser('token').subscribe((token: any) => {
+      this.cartService.fetchCart().subscribe(async (res) => {
+        let result = JSON.parse(JSON.stringify(res));
+        // body.products=result.details;
+        let body = {};
+        this.fetchDataService.HTTPGET(this.backendURLs.URLs.getLatestOrderId).subscribe((data: any) => {
           body = {
-            amount: item.price.toString(),
-            items: item,
-            token: token
+            orderID: data.orderID
           };
-        }));
-
-      const res = await this.http.post<any>('http://localhost:1000/razorpay/createUpiPayment', body).toPromise();
-      if (res) {
-        const options: PaymentOptions = {
-          key: res.key_id,
-          amount: res.amount,
-          currency: 'INR',
-          name: 'Trade Vogue',
-          description: res.description,
-          image: '../../assets/logo-mobile.svg',
-          order_id: res.order_id,
-          handler: (response: any) => {
-            paymentBody = {
-              newPaymentStatus: 'success',
-              transactionId: response.razorpay_payment_id,
-              MOP: 'razorpay',
-              orderID: this.checkOutService.orderID,
-            };
-
-            this.allSubscriptions.push(
-              this.fetchDataService.HTTPPOST(this.backendURLs.URLs.updateOrderStatus, paymentBody).subscribe(() => { }));
-            alert('Payment Succeeded');
-          },
-          prefill: {
-            contact: res.contact,
-            name: res.name,
-            email: res.email,
-          },
-          notes: {
-            description: res.description,
-          },
-          theme: {
-            color: '#2300a3',
-          },
-        };
-        const razorpayObject = new (window as any).Razorpay(options);
-        razorpayObject.on('payment.failed', (response: any) => {
-          alert('Payment Failed');
+          console.log(body, 'body is');
+          this.fetchDataService.HTTPPOST(this.backendURLs.URLs.updateOrderStatus, body).subscribe();
         });
-        razorpayObject.open();
-      } else {
-        alert(res.msg);
-      }
+
+      })
+      this.cartService.fetchCart().subscribe(async (ress) => {
+        let body = {};
+        body = {
+          amount: 123,
+          order_id: this.checkOutService.orderID,
+          items: ress.details,
+          token: "token"
+        };
+
+        const res = await this.http.post<any>('http://localhost:1000/razorpay/createUpiPayment', body).toPromise();
+        if (res.success) {
+          const options: PaymentOptions = {
+            key: res.key_id,
+            amount: res.amount,
+            currency: 'INR',
+            name: 'Trade Vogue',
+            description: res.description,
+            image: '../../assets/logo-mobile.svg',
+            order_id: res.order_id,
+            handler: (response: any) => {
+              console.log(JSON.stringify(response))
+              let paymentBody = {};
+              this.userService.getUser('token').subscribe((token: any) => {
+                paymentBody = {
+                  orderId: this.checkOutService.orderID
+                };
+              });
+
+              this.fetchDataService.HTTPPOST(this.backendURLs.URLs.updateOrderStatus, paymentBody).subscribe((data: any) => {
+                console.log(data, "data is ")
+              });
+
+              alert('Payment Succeeded');
+            },
+            prefill: {
+              contact: res.contact,
+              name: res.name,
+              email: res.email,
+            },
+            notes: {
+              description: res.description,
+            },
+            theme: {
+              color: '#047676',
+            },
+          };
+          const razorpayObject = new (window as any).Razorpay(options);
+          razorpayObject.on('payment.failed', (response: any) => {
+            alert('Payment Failed');
+          });
+          razorpayObject.open();
+        } else {
+          alert(res.msg);
+        }
+      });
     } catch (error) {
       console.error('Error creating order:', error);
     }
   }
-  
+
   // ADDRESS TS FILE---------------------
   userAddresses: any[] = [];
   receiveData: any;
@@ -485,5 +502,4 @@ export class BillingComponent implements OnInit {
       item.unsubscribe()
     });
   }
-
 }

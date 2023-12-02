@@ -23,6 +23,8 @@ export class MonetizationComponent {
   show: boolean = false;
   currentTab: string = 'tab1'; // Set default tab
   title: string = "Monetization";
+  popUpDirection: string = 'popup';
+  showingPopUp: boolean = false;
   showTab(tab: string) {
     this.currentTab = tab;
   }
@@ -132,7 +134,12 @@ export class MonetizationComponent {
 
   view(key: any) {
     this.selectedItem = key;
-    this.popup.openPopup();
+    this.showingPopUp = true;
+    // this.popup.openPopup();
+  }
+
+  PopUpChangeHanlder(event: any) {
+    this.showingPopUp = event;
   }
 
   edit(key: any) {

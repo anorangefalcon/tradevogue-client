@@ -17,6 +17,8 @@ export class SupportComponent {
   updatedItem: string = '';
   ticketTypeId: string = '';
   isDrawerOpen: boolean = false;
+  popUpDirection: string = 'popup';
+  showingPopUp: boolean = false;
 
   constructor(
     private utils: UtilsModule,
@@ -47,8 +49,13 @@ export class SupportComponent {
   showItemDetails(item: any) {
     this.selectedItem = item;
     this.updatedItem = item;
-    this.popupService.openPopup();
+    this.showingPopUp = true;
   }
+
+  PopUpChangeHanlder(event: any) {
+    this.showingPopUp = event;
+  }
+
 
   updateItem() {
     this.loadData()
@@ -61,7 +68,7 @@ export class SupportComponent {
     this.fetchDataService.HTTPPOST(this.utils.URLs.updateTitle, body)
       .subscribe((response: any) => {
         if (response) {
-          this.dialogService.infoDialogBox();
+          this.showingPopUp = false;
           this.toast.successToast({ title: "Ticket Updated Successfully" });
           const updatedIndex = this.titleData.findIndex(title => title === this.selectedItem);
           if (updatedIndex !== -1) {

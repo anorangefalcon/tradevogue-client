@@ -9,7 +9,6 @@
     height: 34%;
     background-color: #fff;
     transition: bottom 0.3s ease-in-out;
-    overflow: auto;
     border-radius: 5px 5px 0 0;
   }
   
@@ -72,3 +71,8 @@
     /* (Existing styles) */
   }
   
+  .edit__ticket {
+    & .content-drawer{
+      width: 400px;
+    }
+  }

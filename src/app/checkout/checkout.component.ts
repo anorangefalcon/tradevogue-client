@@ -61,7 +61,6 @@ export class CheckoutComponent implements OnInit {
       this.checkOutService.loadStripe.subscribe((data: any) => {
         // this.PaymentDisabled=false;
         this.StripePaymentOpener = data;
-
       }));
 
     this.allSubscriptions.push(

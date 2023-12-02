@@ -103,18 +103,15 @@
                 Other Payment Method
             </button>
         </div>
-
-        <div *ngIf="selectedPaymentMethod === 'razorpay'">
-            <div *ngFor="let item of items">
-                <div [ngClass]="{'selected-box': selectedPaymentMethod === 'razorpay'}">
-                    Payment Method Selected Proceed To Payment
-                    <form class="hidden btn-primary" (submit)="submitForm(item)">
-                        <input type="hidden" name="amount" [value]="item.price">
-                        <button class="hidden" id='razorSubmit' type="submit">Pay</button>
-                    </form>
-                </div>
+       <div *ngIf="selectedPaymentMethod === 'razorpay'">
+            <div [ngClass]="{'selected-box': selectedPaymentMethod === 'razorpay'}">
+                Payment Method Selected Proceed To Payment
+                <form class="hidden" (submit)="submitForm()">
+                    <input type="hidden" name="amount" [value]="123">
+                    <button class="hidden" id='razorSubmit' type="submit">Pay</button>
+                </form>
             </div>
-        </div>
+       </div>
     </div>
 
 
