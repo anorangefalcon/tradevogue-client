@@ -170,19 +170,29 @@
                         <div class="d-flex flex-column">
 
                             <div class="accordian mw-100">
-                                <h3 class="accordian__head relative pointer" [ngClass]="accordianOpen ? 'active' : ''"
+                                <div class="accordian__head relative pointer d-flex justify-content-md-between" [ngClass]="accordianOpen ? 'active' : ''"
                                     (click)="accordianOpen = !accordianOpen">
-                                    Description
-                                </h3>
+                                    <h3>Description</h3>
+                                    <div class="d-flex flex-center span-div">
+                                        <span class="material-symbols-outlined">
+                                            expand_more
+                                        </span>
+                                    </div>
+                                </div>
                                 <div class="accordian__body">
                                     {{ data.description }}
                                 </div>
                             </div>
                             <div class="accordian">
-                                <h3 class="accordian__head relative pointer" [ngClass]="accordianOpen2 ? 'active' : ''"
+                                <div class="accordian__head relative pointer d-flex justify-content-md-between" [ngClass]="accordianOpen2 ? 'active' : ''"
                                     (click)="accordianOpen2 = !accordianOpen2">
-                                    Information
-                                </h3>
+                                    <h3>Information</h3>
+                                    <div class="d-flex flex-center span-div">
+                                        <span class="material-symbols-outlined">
+                                            expand_more
+                                        </span>
+                                    </div>
+                            </div>
                                 <div class="accordian__body d-flex flex-column gap-5">
                                     <div class="info-content d-flex gap-10">
                                         <h5>Product Code :</h5>
@@ -316,12 +326,14 @@
                         </div>
                         <textarea formControlName="review" rows="5" placeholder="Write your review here..."></textarea>
                         <div class="d-flex gap-10">
-                            <button class="btn-primary btn btn-sm btn-rounded" [ngClass]="ratingForm.invalid ? 'disabled': ''"
-                                [disabled]="ratingForm.invalid" (click)="addOrUpdateReview(); scroll(reviews)">
+                            <button class="btn-primary btn btn-sm btn-rounded"
+                                [ngClass]="ratingForm.invalid ? 'disabled': ''" [disabled]="ratingForm.invalid"
+                                (click)="addOrUpdateReview(); scroll(reviews)">
                                 {{ userReview ? 'Update' : 'Submit' }}
                             </button>
 
-                            <button class="btn-secondary review-btn pointer d-flex align-item-center gap-10 btn btn-sm btn-rounded"
+                            <button
+                                class="btn-secondary review-btn pointer d-flex align-item-center gap-10 btn btn-sm btn-rounded"
                                 *ngIf="this.showReview==true"
                                 (click)="this.showReview = !this.showReview; scroll(reviews)">
                                 Cancel

@@ -31,28 +31,43 @@ export class CheckoutComponent implements OnInit {
   loading: boolean = false;
   isFormFilled = false;
   paymentButton = false;
-  PaymentSuccess:boolean=false;
+  PaymentSuccess: boolean = false;
+  theme: Boolean = false;
   @ViewChild('CouponCode') CouponCode: any;
 
   allSubscriptions: Subscription[] = [];
 
-  constructor(private cartService: CartService, private loginCheckService: LoginCheckService, private checkOutService: CheckoutService, private router: Router, private renderer: Renderer2, private toastService: ToastService, private BackendUrl: UtilsModule, private fetchService: FetchDataService, private route: Router, private el: ElementRef, private stripePay: CheckoutService) {
+  constructor(private cartService: CartService,
+    private loginCheckService: LoginCheckService,
+    private checkOutService: CheckoutService,
+    private router: Router,
+    private renderer: Renderer2,
+    private toastService: ToastService,
+    private BackendUrl: UtilsModule,
+    private fetchService: FetchDataService,
+    private route: Router,
+    private el: ElementRef,
+    private stripePay: CheckoutService)
+     {
+      this.fetchService.themeColor$.subscribe((color)=>{
+        this.theme = color;
+      })
     this.allSubscriptions.push(
       this.checkOutService.secureNavbar$.subscribe((data) => {
-      this.SecureNavBar = data;
-    }));
+        this.SecureNavBar = data;
+      }));
 
     this.allSubscriptions.push(
-    this.checkOutService.loadStripe.subscribe((data: any) => {
-      // this.PaymentDisabled=false;
-      this.StripePaymentOpener = data;
+      this.checkOutService.loadStripe.subscribe((data: any) => {
+        // this.PaymentDisabled=false;
+        this.StripePaymentOpener = data;
 
-    }));
+      }));
 
     this.allSubscriptions.push(
-    this.loginCheckService.getUser().subscribe((checkToken) => {
-      this.LoginUser = checkToken;
-    }));
+      this.loginCheckService.getUser().subscribe((checkToken) => {
+        this.LoginUser = checkToken;
+      }));
   }
 
   async ngOnInit() {
@@ -66,13 +81,13 @@ export class CheckoutComponent implements OnInit {
     this.allSubscriptions.push(cartSub);
     this.loadRazorpayScript();
 
-    this.checkOutService.PaymentSuccess.asObservable().subscribe((data)=>{
-      this.PaymentSuccess=data;
+    this.checkOutService.PaymentSuccess.asObservable().subscribe((data) => {
+      this.PaymentSuccess = data;
     })
   }
 
   ngOnDestroy() {
-   this.allSubscriptions.forEach((item: Subscription)=> item.unsubscribe());
+    this.allSubscriptions.forEach((item: Subscription) => item.unsubscribe());
   }
 
   DateParser(el: any) {
@@ -117,10 +132,10 @@ export class CheckoutComponent implements OnInit {
 
   CouponOpener() {
     this.allSubscriptions.push(
-    this.fetchService.HTTPGET(this.BackendUrl.URLs.getCoupons).subscribe((data: any) => {
-      this.AllCoupons = data;
-      this.show = true;
-    }));
+      this.fetchService.HTTPGET(this.BackendUrl.URLs.getCoupons).subscribe((data: any) => {
+        this.AllCoupons = data;
+        this.show = true;
+      }));
   }
 
   InputChange() {
@@ -217,9 +232,9 @@ export class CheckoutComponent implements OnInit {
 
     if (!navigate) {
       this.allSubscriptions.push(
-      this.fetchService.HTTPPOST(this.BackendUrl.URLs.verifyOrderWithoutCoupon, result).subscribe((response) => {
-        this.cart.amounts = response;
-      }));
+        this.fetchService.HTTPPOST(this.BackendUrl.URLs.verifyOrderWithoutCoupon, result).subscribe((response) => {
+          this.cart.amounts = response;
+        }));
     }
 
     else {
@@ -228,10 +243,10 @@ export class CheckoutComponent implements OnInit {
       }
       else {
         this.allSubscriptions.push(
-        this.fetchService.HTTPPOST(this.BackendUrl.URLs.verifyOrderSummary, result).subscribe((response) => {
-          this.cart.amounts = response;
-          this.router.navigate(['/cart/billing']);
-        }));
+          this.fetchService.HTTPPOST(this.BackendUrl.URLs.verifyOrderSummary, result).subscribe((response) => {
+            this.cart.amounts = response;
+            this.router.navigate(['/cart/billing']);
+          }));
       }
     }
   }
@@ -269,10 +284,10 @@ export class CheckoutComponent implements OnInit {
     body.products = this.cart.details;
 
     this.allSubscriptions.push(
-    this.fetchService.HTTPPOST(this.BackendUrl.URLs.createOrder, body).subscribe((data: any) => {
-      this.checkOutService.loadStripe.next(true);
-      this.checkOutService.orderID = data.orderId;
-    })); 
+      this.fetchService.HTTPPOST(this.BackendUrl.URLs.createOrder, body).subscribe((data: any) => {
+        this.checkOutService.loadStripe.next(true);
+        this.checkOutService.orderID = data.orderId;
+      }));
     this.NextDisabled = false;
   }
 
@@ -292,8 +307,8 @@ export class CheckoutComponent implements OnInit {
     if (razorpayButton) {
       razorpayButton.click();
     }
-    let body12:any={newPaymentStatus:'success',transactionId:'1244',MOP:'cash',orderID:this.checkOutService.orderID};
-    this.fetchService.HTTPPOST(this.BackendUrl.URLs.updateOrderStatus,body12).subscribe();
+    let body12: any = { newPaymentStatus: 'success', transactionId: '1244', MOP: 'cash', orderID: this.checkOutService.orderID };
+    this.fetchService.HTTPPOST(this.BackendUrl.URLs.updateOrderStatus, body12).subscribe();
 
   }
 

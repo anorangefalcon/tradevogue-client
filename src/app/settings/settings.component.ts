@@ -197,6 +197,7 @@ export class SettingsComponent {
       this.pageChange(1);
     }
 
+    // this.toggleAccordian(0);
     this.TranslateData=true;
   }
 

@@ -1,3 +1,6 @@
+
+
+
 .rating {
     & span {
         border: 1px solid transparent;
@@ -20,7 +23,6 @@
 
 .card-item-content {
     padding-inline: 10px;
-    /* height: 15%; */
 }
 
 .price {
@@ -120,8 +122,6 @@
 }
 
 .card-container {
-    /* width: min(680px, 100%); */
-    width: 600px;
     background-color: rgb(var(--whiteClr));
 }
 
@@ -140,10 +140,7 @@
     margin-left: 10px;
     padding-block: 20px;
     padding-inline: 10px 20px;
-    display: flex;
-    flex-direction: column;
     width: 50%;
-    row-gap: 14px;
 }
 
 .colors {
@@ -182,8 +179,8 @@
         position: absolute;
         font-size: 18px;
         font-weight: 300;
-        left: 1px;
-        top: -3px;
+        left: -1px;
+        top: -5px;
     }
 }
 
@@ -252,8 +249,8 @@
 .subTitle {
     width: 100%;
     color: rgb(var(--textClr));
-    margin-block-end: 2px;
     border-block-end: 1px solid rgb(var(--textClr), 0.2);
+    padding-block-end: 10px;
 }
 
 h2 {
@@ -267,7 +264,6 @@ h2 {
 
 .card-item-header {
     max-height: 280px;
-    /* width: 215px; */
 }
 
 .image-carousel {
@@ -279,7 +275,9 @@ h2 {
     display: none;
 }
 
-
+.accordian__head {
+    font-size: 14px !important;
+}
 .fade-in {
     animation: fadeIn 0.3s ease-in-out both;
 }

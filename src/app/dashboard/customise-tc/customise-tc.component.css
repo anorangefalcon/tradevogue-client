@@ -10,7 +10,6 @@
   & span {
     font-size: 16px;
   }
-
 }
 
 textarea,
@@ -80,6 +79,9 @@ input:hover {
     display: flex;
   }
   .on-responsive {
+    display: flex;
+  }
+  .add-res {
     display: flex;
   }
   .show-icon {

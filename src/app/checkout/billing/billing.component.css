@@ -80,7 +80,7 @@
   color: rgb(var(--blackClr));
   border-radius: 10px !important;
   font-weight: 400;
-  border: none;
+  border: 0.5px solid rgb(var(--DefaultBorder));
   font-size: 9px !important;
   padding: 0px 6px !important;
 }
@@ -134,8 +134,9 @@ input[type="radio"] {
   display: none;
 }
 
-input[type='radio']:checked+label::before {
-  background-color: rgba(var(--primaryClr));
+input[type='radio']:checked+label::after {
+  background-color: black;
+
   border: none;
 }
 
@@ -146,14 +147,14 @@ input[type='radio']:checked+label {
 input[type='radio']+label::before {
   content: "";
   position: absolute;
-  height: 15px;
+  height: 16px;
   transition: all 0.5s;
-  width: 15px;
+  width: 17px;
   background-color: #fff;
   border: 1px solid black;
   border-radius: 50%;
   left: -23px;
-  top: 6px;
+  top: 3px;
 }
 
 input[type='radio']+label::after {
@@ -162,10 +163,10 @@ input[type='radio']+label::after {
   width: 7px;
   position: absolute;
   border: none;
-  background-color: rgb(var(--whiteClr));
+  background-color: white;
   border-radius: 50%;
-  left: -19.7px;
-  top: 10px;
+  left: -18px;
+  top: 7.3px;
 }
 
 

@@ -1,5 +1,9 @@
 .empty {
     min-height: calc(100dvh - 150px);
+
+    & img {
+        transform: translateX(8%);
+    }
 }
 
 .checkout-container {

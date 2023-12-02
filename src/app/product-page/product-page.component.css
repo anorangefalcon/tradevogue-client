@@ -129,9 +129,20 @@
     & .accordian__head {
         padding-block: 10px;
         font-size: 16px !important;
+
+        & span {
+            transition: 0.3s ease-in-out;
+            font-size: 18px;
+            opacity: 0.7;
+        }
     }
 
-    & .accordian__head::after {
+    & .accordian__head.active .span-div span {
+        transform: rotate(180deg);
+    }
+    
+
+    /* & .accordian__head::after {
         content: "";
         border-left: 6px solid transparent;
         border-right: 6px solid transparent;
@@ -139,7 +150,7 @@
         position: absolute;
         right: 15px;
         top: 15px;
-    }
+    } */
 
     & .accordian__body {
         padding-block-end: 10px;
@@ -369,8 +380,6 @@
         width: 100%;
         position: absolute;
         padding-inline-end: 25px;
-        /* inset-block-start: 50%; */
-        /* transform: translateY(-50%); */
         inset-block-end: 25px;
         margin-top: 0 !important
     }

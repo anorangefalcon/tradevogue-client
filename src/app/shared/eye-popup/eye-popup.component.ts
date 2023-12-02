@@ -22,7 +22,7 @@ export class EyePopupComponent {
   @Input() productSku: any = '';
   fetchSimilarProducts: any = {};
   direction: any = 'popup';
-  width: any = 'fit-content';
+  width: any = '700px';
   outOfStock: boolean = false;
   show: boolean = false;
   fetchData = new BehaviorSubject<string>('');
@@ -140,6 +140,8 @@ export class EyePopupComponent {
     }
     return Array(newTotal).fill(0);
   }
+
+  
 
   handler(event: any) {
     this.show = event

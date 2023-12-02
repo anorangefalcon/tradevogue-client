@@ -81,10 +81,12 @@
 </div>
 
 
-<div *ngIf="cartCount === 0" class="empty d-flex flex-column justify-content-center align-item-center gap-15">
-    <h1 class="text-center">Your cart is empty</h1>
+<div *ngIf="cartCount === 0" class="empty d-flex flex-column flex-center gap-15">
+    <!-- <h1 class="text-center">Your cart is empty</h1> -->
+    <img src="../../assets/empty-cart-light.svg" alt="empty cart" width="230" *ngIf="!theme">
+    <img src="../../assets/empty-cart-dark.svg" alt="empty cart" width="230" *ngIf="theme">
     <div class="text-center">
-        <button [routerLink]="['/explore']" class="btn btn-md fw-500 btn-rounded btn-primary">Continue Shopping</button>
+        <button [routerLink]="['/explore']" class="btn btn-xs fw-500 btn-rounded btn-secondary">Continue Shopping...</button>
     </div>
 </div>
 

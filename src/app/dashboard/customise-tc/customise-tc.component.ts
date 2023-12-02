@@ -116,7 +116,32 @@ export class CustomiseTcComponent {
   }
 
   ContentTypeHandler(event: any, i: number, j: number) {
+
     let FormArray = (<FormArray>this.tcForm.get('tcFormArray')?.get(String(i))?.get('contentInfo'));
+
+    // CONDITION CHECKING
+
+    let count: any = 0;
+    (<FormArray>this.tcForm.get('tcFormArray')?.get(String(i))?.get('contentInfo'))?.get(String(j))?.get('content_type')?.setValue(event);
+    FormArray.value.forEach((element: any) => {
+      if (element.content_type == 'list') count++;
+    });
+
+    if (count > 2) {
+      this.toastService.errorToast({ title: 'You cannot add more than 3 lists in one section' });
+      let arr = this.tcForm.get('tcFormArray')?.get(String(i))?.value;
+      arr.ContentTYPE = ['paragraph'];
+      this.tcForm.get('tcFormArray')?.get(String(i))?.setValue(arr);
+      (<FormArray>this.tcForm.get('tcFormArray')?.get(String(i))?.get('contentInfo'))?.get(String(j))?.get('content_type')?.setValue('paragraph');
+      return;
+    }
+
+    // CONDITION CHEWCKING
+
+
+
+
+   
     console.log('formArray is ', FormArray.value);
 
     // SPECIAL CASE ==> LIST TO PARAGRAPH
@@ -182,20 +207,6 @@ export class CustomiseTcComponent {
 // SPECIAL CASE ==> PARAGRAPH TO LIST
 
 
-    let count: any = 0;
-    (<FormArray>this.tcForm.get('tcFormArray')?.get(String(i))?.get('contentInfo'))?.get(String(j))?.get('content_type')?.setValue(event);
-    FormArray.value.forEach((element: any) => {
-      if (element.content_type == 'list') count++;
-    });
-
-    if (count > 2) {
-      this.toastService.errorToast({ title: 'You cannot add more than 3 lists in one section' });
-      let arr = this.tcForm.get('tcFormArray')?.get(String(i))?.value;
-      arr.ContentTYPE = ['paragraph'];
-      this.tcForm.get('tcFormArray')?.get(String(i))?.setValue(arr);
-      (<FormArray>this.tcForm.get('tcFormArray')?.get(String(i))?.get('contentInfo'))?.get(String(j))?.get('content_type')?.setValue('paragraph');
-
-    }
 
   }
 
