@@ -1,6 +1,7 @@
 <div class=" d-flex flex-column main__div gap-20">
 
 
+
     <div class="default-animation">
         <h2>Offers</h2>
         <div class="d-flex justify-content-md-between header_coupon card card__pd-20">
@@ -17,7 +18,7 @@
             </div>
         </div>
     </div>
-    <div class="table-list card default-animation-slow ">
+    <div class="table-list card default-animation-slow " *ngIf="allOffers.length>0">
         <table>
             <tr>
                 <th class="items item-check ">
@@ -370,5 +371,8 @@
 </app-drawer>
 </div>
 
+
+<div *ngIf="allOffers.length>0">
 <app-pagination #pagination [collectionSize]="totalCount" [pageSize]="TemplatePagination.limit"
     [currentPage]="currentPage" (activePage)="pageChange($event)"></app-pagination>
+</div>

@@ -198,7 +198,7 @@ form {
 
     .drawer__div{
        & .drawer__content{
-            padding-inline: 5px;
+            padding-inline: 10px;
         }
 
         & .drawer__header{

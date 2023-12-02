@@ -144,9 +144,14 @@ export class CheckoutComponent implements OnInit {
 
 
   RemoveAppliedCoupon() {
-    this.cart.amounts.savings -= this.CalculateDiscount(this.CouponApplied);
-    this.CouponApplied = false;
-    this.cart.amounts.total = this.cart.amounts.subTotal;
+    // this.cart.amounts.discountApplied -= this.CalculateDiscount(this.CouponApplied);
+    // this.CouponApplied = false;
+    // this.cart.amounts.total += this.cart.amounts.discount;
+    this.cart.amounts.discount=null;
+    this.CouponApplied=false;
+
+    // console.log('discount is ',this.cart.amounts.discount);
+    
   }
 
 
@@ -215,8 +220,8 @@ export class CheckoutComponent implements OnInit {
     }
 
     this.CouponCode.nativeElement.value = '';
-    this.cart.amounts.savings += this.CalculateDiscount(this.CouponApplied);
-    this.cart.amounts.total -= this.cart.amounts.savings;
+    this.cart.amounts.discount = this.CalculateDiscount(this.CouponApplied);
+    // this.cart.amounts.total -= this.cart.amounts.discount;
     this.show = false;
   }
 
@@ -227,13 +232,13 @@ export class CheckoutComponent implements OnInit {
 
     if (result.length == 0) return;
     if (this.CouponApplied) {
-      result.CouponApplied = this.CouponApplied;
+      result.coupon = this.CouponApplied;
     }
 
     if (!navigate) {
       this.allSubscriptions.push(
-        this.fetchService.HTTPPOST(this.BackendUrl.URLs.verifyOrderWithoutCoupon, result).subscribe((response) => {
-          this.cart.amounts = response;
+        this.fetchService.HTTPPOST(this.BackendUrl.URLs.verifyOrderWithoutCoupon, result).subscribe((response) => {  
+          this.cart.amounts =JSON.parse(JSON.stringify(response));
         }));
     }
 
@@ -244,7 +249,9 @@ export class CheckoutComponent implements OnInit {
       else {
         this.allSubscriptions.push(
           this.fetchService.HTTPPOST(this.BackendUrl.URLs.verifyOrderSummary, result).subscribe((response) => {
-            this.cart.amounts = response;
+            console.log('response come up si ',response);
+            //  if(respons) 
+            this.cart.amounts =JSON.parse(JSON.stringify(response));
             this.router.navigate(['/cart/billing']);
           }));
       }
@@ -307,8 +314,8 @@ export class CheckoutComponent implements OnInit {
     if (razorpayButton) {
       razorpayButton.click();
     }
-    let body12: any = { newPaymentStatus: 'success', transactionId: '1244', MOP: 'cash', orderID: this.checkOutService.orderID };
-    this.fetchService.HTTPPOST(this.BackendUrl.URLs.updateOrderStatus, body12).subscribe();
+    // let body12: any = { newPaymentStatus: 'success', transactionId: '1244', MOP: 'cash', orderID: this.checkOutService.orderID };
+    // this.fetchService.HTTPPOST(this.BackendUrl.URLs.updateOrderStatus, body12).subscribe();
 
   }
 

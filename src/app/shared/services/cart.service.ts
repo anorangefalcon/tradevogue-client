@@ -167,7 +167,6 @@ export class CartService {
       }
 
       const myCart = JSON.stringify(this.cartStorage);
-      localStorage.setItem("myCart", myCart);
 
       this.fetchDetails();
     }
@@ -195,6 +194,7 @@ export class CartService {
       }
       this.allSubscriptions.push(
       this.http.post(this.backendUrls.URLs.fetchCart, cartDetails).subscribe((data: any) => {
+        console.log('dddd', data);
         this.cartSubject?.next(data);
         this.cartLoading.next(false);
       }));

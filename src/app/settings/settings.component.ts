@@ -25,15 +25,17 @@ import { InvoiceTemplateComponent } from 'src/app/shared/components/invoice-temp
 })
 export class SettingsComponent {
   // showData: string = "profile";
-  showData: string ="addresses";
-  checkAccordingClick:Boolean=true;
-  AccordianIndex:number=0;
-  totalCount:number=0;
-  currentPage:number=1;
-  AllOrders: any=[];
-  ProfileDisabled:boolean=true;
-  emailDisabled:boolean=true;
-  AddressLength:number=0;
+  showData: string = "addresses";
+  checkAccordingClick: Boolean = true;
+  loading: Boolean = false;
+  theme: Boolean = false;
+  AccordianIndex: number = 0;
+  totalCount: number = 0;
+  currentPage: number = 1;
+  AllOrders: any = [];
+  ProfileDisabled: boolean = true;
+  emailDisabled: boolean = true;
+  AddressLength: number = 0;
   changePasswordForm: FormGroup;
   ShowComponent: boolean = false;
   ProfileForm: FormGroup;
@@ -48,15 +50,15 @@ export class SettingsComponent {
   receiveData: any;
   list: any = []
   wishlistedProducts: any;
-  openedAccordionIndex: number | null=null;
+  openedAccordionIndex: number | null = null;
   stripe: any;
 
   productStatus: any = 'cancelled';
 
-  body:any;
+  body: any;
 
 
-  TemplatePagination:any= {
+  TemplatePagination: any = {
     currentPage: this.currentPage,
     limit: 8
   }
@@ -75,18 +77,18 @@ export class SettingsComponent {
 
   // private toastService: ToastService
   constructor(private backendURLs: UtilsModule,
-     private wishlistService: WishlistService, 
-     private fetchDataService: FetchDataService, 
-     fb: FormBuilder,
-     private cartService: CartService, 
-     private route: ActivatedRoute, 
-     private location: Location,
-     private stripePay: CheckoutService,
-     private toastService : ToastService,
-     private dialogBox : DialogBoxService,
-     private userService: LoginCheckService,
-     private invoiceService: InvoiceTemplateComponent
-    ) {
+    private wishlistService: WishlistService,
+    private fetchDataService: FetchDataService,
+    fb: FormBuilder,
+    private cartService: CartService,
+    private route: ActivatedRoute,
+    private location: Location,
+    private stripePay: CheckoutService,
+    private toastService: ToastService,
+    private dialogBox: DialogBoxService,
+    private userService: LoginCheckService,
+    private invoiceService: InvoiceTemplateComponent
+  ) {
     // this.route.queryParams.subscribe(params => {
     //   const redirectStatus = params['redirect_status'];
     //   if (redirectStatus === 'succeeded') {
@@ -98,7 +100,7 @@ export class SettingsComponent {
 
     this.ProfileForm = fb.group(
       {
-        firstname: fb.control('',[Validators.required]),
+        firstname: fb.control('', [Validators.required]),
         lastname: fb.control(''),
         email: fb.control('', [Validators.email, Validators.required]),
         mobile: fb.control('', [MobileNoValidator]),
@@ -114,43 +116,48 @@ export class SettingsComponent {
 
     this.route.paramMap.subscribe((params: any) => {
       console.log('called again ');
-      
+
       this.changeComponent(params.get('page'));
     });
 
     this.dialogBox.responseEmitter.subscribe(async (res: boolean) => {
       if (res == true) {
-        this.fetchDataService.HTTPPOST(this.backendURLs.URLs.cancelOrder, this.body).subscribe((data)=>{
-          this.pageChange(1); 
+        this.fetchDataService.HTTPPOST(this.backendURLs.URLs.cancelOrder, this.body).subscribe((data) => {
+          this.pageChange(1);
         })
       }
     });
 
+    this.fetchDataService.themeColor$.subscribe((color) => {
+      this.theme = color;
+    })
 
-  this.DisableForm(true);
-  this.ProfileForm.get('email')?.disable();
+
+
+    this.DisableForm(true);
+    this.ProfileForm.get('email')?.disable();
 
   };
 
 
 
-  DisableForm(check:boolean){
-  
-    if(check){
-    this.ProfileForm.get('firstname')?.disable();
-    this.ProfileForm.get('lastname')?.disable();
-    this.ProfileForm.get('gender')?.disable();
-    this.ProfileForm.get('dob')?.disable();
-    this.ProfileForm.get('mobile')?.disable();
-    this.ProfileDisabled=true;
+  DisableForm(check: boolean) {
+
+    if (check) {
+      this.ProfileForm.get('firstname')?.disable();
+      this.ProfileForm.get('lastname')?.disable();
+      this.ProfileForm.get('gender')?.disable();
+      this.ProfileForm.get('dob')?.disable();
+      this.ProfileForm.get('mobile')?.disable();
+      this.ProfileDisabled = true;
     }
-    else{
+    else {
       this.ProfileForm.get('firstname')?.enable();
       this.ProfileForm.get('lastname')?.enable();
       this.ProfileForm.get('gender')?.enable();
       this.ProfileForm.get('dob')?.enable();
       this.ProfileForm.get('mobile')?.enable();
-      this.ProfileDisabled=false;
+      this.ProfileDisabled = false;
     }
 
     return check;
@@ -168,41 +175,46 @@ export class SettingsComponent {
     })
 
     this.showWishlistedProducts('my wishlist');
-    
+
   }
 
   TranslateBack() {
-    setTimeout(()=>{
+    setTimeout(() => {
       this.TranslateData = false;
-    },300);
+    }, 300);
   }
 
   changeComponent(el: string) {
     this.showData = el;
-    if(this.checkAccordingClick){
-      this.AccordianIndex=0;
+    if (this.checkAccordingClick) {
+      this.AccordianIndex = 0;
       this.toggleAccordian(this.AccordianIndex);
     }
-    else{
-      this.toggleAccordian(this.AccordianIndex,true);
+    else {
+      this.toggleAccordian(this.AccordianIndex, true);
     }
-    this.location.replaceState('usersetting/'+el);
-    if(el=='addresses'){
+    this.location.replaceState('usersetting/' + el);
+
+    if (el == 'addresses') {
+      this.loading = true;
       this.getAddresses();
     }
     if (el == 'wishlist') {
+      this.loading = true;
       this.showWishlists();
     }
-    if(el=='orders'){
+    if (el == 'orders') {
+      this.loading = true;
+
       this.pageChange(1);
     }
 
     // this.toggleAccordian(0);
-    this.TranslateData=true;
+    this.TranslateData = true;
   }
 
 
-  async saveDetails() {    
+  async saveDetails() {
     let body = {
       name: { firstname: this.ProfileForm.get('firstname')?.value, lastname: this.ProfileForm.get('lastname')?.value },
       mobile: this.ProfileForm.get('mobile')?.value,
@@ -223,6 +235,7 @@ export class SettingsComponent {
     this.showWishlistedProducts('My Wishlist')
     this.fetchDataService.HTTPGET(this.backendURLs.URLs.showWishlist).subscribe((data: any) => {
       this.productsArray = data.wishlists;
+      this.loading = false;
     })
   }
 
@@ -236,26 +249,23 @@ export class SettingsComponent {
     }, 1);
   }
 
-  toggleAccordian(index: any, check:boolean=false) {
-
-    this.AccordianIndex=index;
-
-    if(check){
-      this.openedAccordionIndex=index;
+  toggleAccordian(index: any, check: boolean = false) {
+    this.AccordianIndex = index;
+    if (check) {
+      this.openedAccordionIndex = index;
       return;
     }
     if (this.openedAccordionIndex === index) {
-      this.wishlistedProducts = [];
-      this.openedAccordionIndex = null; 
+      this.openedAccordionIndex = null;
     } else {
-      this.openedAccordionIndex = index; 
+      this.openedAccordionIndex = index;
     }
   }
 
   removeWishlist(index: number) {
     this.wishlistService.removeWishlist({ index }).subscribe((data: any) => {
       const toast = {
-        title : data.message
+        title: data.message
       }
       this.toastService.warningToast(toast);
       this.showWishlists()
@@ -264,7 +274,7 @@ export class SettingsComponent {
   }
 
   removeFromWishlist(productId: any, wishlistName: string) {
-    this.wishlistService.removeFromWishlist(productId, wishlistName).subscribe((res: any)=>{
+    this.wishlistService.removeFromWishlist(productId, wishlistName).subscribe((res: any) => {
 
       if (res.response.modifiedCount) {
         // this.deleteProduct.next(true);
@@ -279,29 +289,31 @@ export class SettingsComponent {
   }
 
   moveToCart(product: any) {
-    console.log(product,' hehe');
-    
+    console.log(product, ' hehe');
+
     this.cartService.addToCart(product);
   }
 
 
-//  ADDRESS
+  //  ADDRESS
   getAddresses() {
     this.showData = 'addresses';
     this.fetchDataService.HTTPGET(this.backendURLs.URLs.getAddress)
       .subscribe((data: any) => {
         if (data) {
           data = data.addresses;
-          this.AddressLength=data.length;
+          this.AddressLength = data.length;
           if (data.length != 0) {
             this.userAddresses = data;
+           
           }
         }
+        this.loading = false;
       })
   }
 
 
- 
+
   AddAddress() {
     this.receiveData = '';
     this.ShowComponent = true;
@@ -316,12 +328,12 @@ export class SettingsComponent {
     //edit request updated
     else if (event.index === 0 || event.index) {
       this.userAddresses[event.index] = event.data;
-      this.AddressLength=this.userAddresses.length;
+      this.AddressLength = this.userAddresses.length;
     }
     // // new address added
     else {
       this.userAddresses = event;
-      this.AddressLength=this.userAddresses.length;
+      this.AddressLength = this.userAddresses.length;
     }
 
   }
@@ -330,7 +342,7 @@ export class SettingsComponent {
     const body = { address_id: address._id }
     this.fetchDataService.HTTPPOST(this.backendURLs.URLs.deleteAddress, body).subscribe((data) => {
       this.userAddresses.splice(index, 1);
-      this.AddressLength=this.userAddresses.length;
+      this.AddressLength = this.userAddresses.length;
     })
   }
 
@@ -340,7 +352,7 @@ export class SettingsComponent {
     this.ShowComponent = true;
   }
 
-  
+
   // change password work
   onPasswordChange() {
     const body = {
@@ -349,37 +361,39 @@ export class SettingsComponent {
     }
     this.fetchDataService.HTTPPOST(this.backendURLs.URLs.changePassword, body).subscribe((data: any) => {
       console.log(data);
-      
+
       this.toastService.successToast({ title: data.message })
       this.changePasswordForm.reset()
     });
   }
 
 
-  async MakeDefault(address: any,index:any) {
+  async MakeDefault(address: any, index: any) {
     try {
-      const body = { address: address ,index};
-      this.fetchDataService.HTTPPOST(this.backendURLs.URLs.setDefaultAddress, body).subscribe((data)=>{
+      const body = { address: address, index };
+      this.fetchDataService.HTTPPOST(this.backendURLs.URLs.setDefaultAddress, body).subscribe((data) => {
         this.userAddresses = data;
       });
-      
+
     } catch (error) {
 
     }
   }
 
   // orders code 
-   getOrders(pageNo:any){
-     this.fetchDataService.HTTPPOST(this.backendURLs.URLs.getParticularUserOrders,this.TemplatePagination).subscribe((data:any)=>{
-      if(!data.length){
+  getOrders(pageNo: any) {
+    this.fetchDataService.HTTPPOST(this.backendURLs.URLs.getParticularUserOrders, this.TemplatePagination).subscribe((data: any) => {
+      if (!data.length) {
         // this.notData = true;
         this.totalCount = 0;
         this.AllOrders = []
-        return;
       }
-      this.AllOrders = data[0]?.document;
-      this.totalCount=data[0]?.count;  
-    });      
+      else {
+        this.AllOrders = data[0]?.document;
+        this.totalCount = data[0]?.count;
+      }
+      this.loading = false;
+    });
   }
 
   getDate(orderDate: any) {
@@ -391,9 +405,9 @@ export class SettingsComponent {
   }
 
 
-  CancelProduct(id:any,sku:any){
-    this.body = { id , sku}
-    let   template: any = {
+  CancelProduct(id: any, sku: any) {
+    this.body = { id, sku }
+    let template: any = {
       title: 'Cancel Order',
       subtitle: 'Are you sure you want to remove product from the order?',
       type: 'confirmation',
@@ -404,21 +418,21 @@ export class SettingsComponent {
 
   }
 
-  pageChange(pageNo:any){
-    this.currentPage=pageNo;
-      this.getOrders(pageNo)
+  pageChange(pageNo: any) {
+    this.currentPage = pageNo;
+    this.getOrders(pageNo)
   }
 
   invoiceData: any;
 
-  viewInvoice(index: number){
+  viewInvoice(index: number) {
     console.log(this.AllOrders[index]);
 
     let data = JSON.parse(JSON.stringify(this.AllOrders[index]));
     let totalQty = 0;
 
-    data.products.forEach((product: any)=>{
-        totalQty += product.quantity;
+    data.products.forEach((product: any) => {
+      totalQty += product.quantity;
     });
 
     data.orderDate = new Date(data.orderDate).toDateString()

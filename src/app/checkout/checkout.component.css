@@ -6,6 +6,12 @@
     }
 }
 
+.old-price {
+    font-size: 10px !important;
+    text-decoration: line-through;
+    color: rgba(var(--danger));
+}
+
 .checkout-container {
 
     padding-block-end: 50px;
@@ -48,8 +54,8 @@
     from {
         width: 0;
         opacity: 1;
-        background: rgb(252,255,11);
-        background: linear-gradient(90deg, rgba(252,255,11,1) 5%, rgba(0,255,233,0.5032606792717087) 100%);
+        background: rgb(252, 255, 11);
+        background: linear-gradient(90deg, rgba(252, 255, 11, 1) 5%, rgba(0, 255, 233, 0.5032606792717087) 100%);
     }
 
     50% {
@@ -57,25 +63,24 @@
 
     }
 
-    75%{
+    75% {}
 
-    }
     to {
         opacity: 0;
         /* background-color: rgb(var(--primaryClr), 0.2); */
-        background: rgb(233,10,10);
-        background: linear-gradient(90deg, rgba(233,10,10,1) 5%, rgba(0,255,233,0.5032606792717087) 100%);
+        background: rgb(233, 10, 10);
+        background: linear-gradient(90deg, rgba(233, 10, 10, 1) 5%, rgba(0, 255, 233, 0.5032606792717087) 100%);
     }
 }
 
 @keyframes borderAnimation {
-from{
-    border-radius:10px;
-}
+    from {
+        border-radius: 10px;
+    }
 
-to{
-    border-radius: 4px;
-}
+    to {
+        border-radius: 4px;
+    }
 }
 
 .coupon_applied__div {
@@ -233,7 +238,7 @@ to{
     & .item {
 
         & .itemname p {
-            font-size: 14px !important;
+            font-size: 14px;
             font-weight: 500;
         }
 

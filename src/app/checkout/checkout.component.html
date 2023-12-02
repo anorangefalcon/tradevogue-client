@@ -23,8 +23,13 @@
             <div class="border-end items-container d-flex flex-column gap-10">
                 <div class="item" *ngFor="let item of cart.details">
                     <div class="itemname d-flex justify-content-md-between">
+
                         <p class="item-name">{{item.name}}</p>
-                        <p class="item-price">₹{{item.price | number : '1.0-2'}}</p>
+                        <div class="item-price d-flex gap-5 align-item-center">
+                            <p>₹{{item.price | number : '1.0-2'}}  </p>
+                            
+                          <p class="old-price" *ngIf="item?.oldPrice">  {{item?.oldPrice}}</p>
+                        </div>
                     </div>
                     <div class="itemtype d-flex justify-content-md-between">
                         <p>{{item.info?.category}}</p>
@@ -33,20 +38,47 @@
                 </div>
             </div>
 
-
             <div class="border-end subtotal d-flex justify-content-md-between">
                 <p>Subtotal</p>
                 <p>₹{{cart.amounts.subTotal | number : '1.0-2'}}</p>
             </div>
+
+
 
             <div class="border-end savings d-flex justify-content-md-between">
                 <p>Savings</p>
                 <p class="savings-amt">₹{{cart.amounts.savings | number : '1.0-2'}}</p>
             </div>
 
+
+
+
+            <div *ngIf="CouponApplied">
+                <div class="relative couponApplied" class="d-flex justify-content-md-between coupon_applied__div">
+                <span>
+                    {{CouponApplied.couponcode}}
+                </span>
+                <button (click)="RemoveAppliedCoupon()" class="pointer remove__btn" >Remove</button>
+                
+            </div>
+            <div *ngIf="cart.amounts?.discount" class="border-end savings d-flex justify-content-md-between">
+                <p>Discounts</p>
+                <p class="savings-amt">₹{{cart.amounts.discount | number : '1.0-2'}}</p>
+            </div>
+
+            </div>
+
+     
+    
+
+
+
             <div class="total d-flex justify-content-md-between">
                 <p>Total</p>
-                <p>₹{{cart.amounts.total | number : '1.0-2'}}</p>
+                <p *ngIf="!cart.amounts?.discount">₹{{cart.amounts.total| number : '1.0-2'}}</p>
+                <p *ngIf="cart.amounts?.discount">
+                    ₹{{cart.amounts.total -cart.amounts?.discount| number : '1.0-2'}}
+                </p>
             </div>
             <button *ngIf="(!CouponApplied && !SecureNavBar)"
                 class="btn-secondary btn-rounded d-flex flex-center gap-5 btn btn-md " (click)="CouponOpener()">
@@ -58,14 +90,6 @@
 
             </button>
 
-            <div *ngIf="CouponApplied && (!SecureNavBar)" class="d-flex justify-content-md-between coupon_applied__div">
-                <div class="relative couponApplied">
-                <span>
-                    {{CouponApplied.couponcode}}
-                </span>
-            </div>
-                <button (click)="RemoveAppliedCoupon()" class="pointer remove__btn" >Remove</button>
-            </div>
             <button class="btn-primary btn btn-rounded btn-md" (click)="verifyOrderSummary()"
                 *ngIf="!SecureNavBar"><a>Proceed to Checkout</a></button>
 

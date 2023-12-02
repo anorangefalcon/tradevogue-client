@@ -147,7 +147,7 @@ export class CheckoutService {
 
   private async sendInvoiceData(paymentIntent: any) {
     this.fetchData.HTTPPOST(this.backendUri.URLs.sendInvoice, paymentIntent).subscribe((res)=>{
-      this.dialogBox.infoDialogBox({title: 'Payment Success'})
+      // this.dialogBox.infoDialogBox({title: 'Payment Success'})
     });
   }
 
