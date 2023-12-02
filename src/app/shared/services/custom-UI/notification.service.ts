@@ -9,9 +9,9 @@ export class NotificationService {
 
   constructor(private backendUrls : UtilsModule, private http: HttpClient) { }
 
-  setNotifications(data : any) {
-    return this.http.post(this.backendUrls.URLs.setNotifications, data);
-  }
+  // setNotifications(data : any) {
+  //   return this.http.post(this.backendUrls.URLs.setNotifications, data);
+  // }
 
   getRegistrationIDs() {
     return this.http.get(this.backendUrls.URLs.getFcmToken);

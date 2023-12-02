@@ -4,6 +4,7 @@ import { FetchDataService } from '../shared/services/fetch-data.service';
 import { NavigationEnd, Router } from '@angular/router';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { CartService } from '../shared/services/cart.service';
+import { DialogBoxService } from '../shared/services/dialog-box.service';
 declare let Stripe: any;
 
 @Injectable({
@@ -24,7 +25,8 @@ export class CheckoutService {
   constructor(
     private backendUri: UtilsModule,
     private fetchData: FetchDataService,
-    private router: Router
+    private router: Router,
+    private dialogBox: DialogBoxService,
   ) 
   {
     this.allSubscriptions.push(
@@ -124,13 +126,9 @@ export class CheckoutService {
     switch (paymentIntent.status) {
       case "succeeded":
         await this.updateOrderStatus(paymentIntent);
-        // await this.sendInvoiceData(paymentIntent);
+        await this.sendInvoiceData(paymentIntent);
         this.PaymentSuccess.next(true);
         break;
-      // case "processing":
-      //   break;
-      // case "requires_payment_method":
-      //   break;
     }
   }
 
@@ -145,29 +143,14 @@ export class CheckoutService {
     };
     this.allSubscriptions.push(
     this.fetchData.HTTPPOST(this.backendUri.URLs.updateOrderStatus, body).subscribe());
-    
-    // this.allSubscriptions.push(
-    // this.fetchData.HTTPPOST(this.backendUri.URLs.webhook, paymentIntent).subscribe());
   }
 
-  // private async sendInvoiceData(paymentIntent: any) {
-  //   await fetch('http://localhost:1000/invoiceSend', {
-  //     method: 'POST',
-  //     headers: { 'Content-Type': 'application/json' },
-  //     body: JSON.stringify(paymentIntent)
-  //   })
-  //     .then(response => {
-  //       if (response.ok) return response.json();
-  //       throw new Error('Network response was not ok.');
-  //     })
-  // }
+  private async sendInvoiceData(paymentIntent: any) {
+    this.fetchData.HTTPPOST(this.backendUri.URLs.sendInvoice, paymentIntent).subscribe((res)=>{
+      this.dialogBox.infoDialogBox({title: 'Payment Success'})
+    });
+  }
 
   //  ADDRESS
   addressSelected: any = null;
-
-  // CreateOrderClicked=new BehaviorSubject(false);
-  // createOrderClicked$=this.CreateOrderClicked.asObservable();
-
-
-
 }

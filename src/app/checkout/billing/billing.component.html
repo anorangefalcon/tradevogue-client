@@ -1,5 +1,11 @@
 <div class="container billingPage d-flex flex-column gap-20" >
 
+    <!-- <div *ngIf="loading" class="tv-loading">
+        <img src="../../assets/logo-mobile.svg" alt="tradeVogue-loading" *ngIf="!theme">
+        <img src="../../assets/logo-mobile-light.svg" alt="tradeVogue-loading" *ngIf="theme">
+        <div class="circle-tv-loader"></div>
+    </div> -->
+
     <div class="d-flex checkOutSteps">
         <div class="d-flex gap-20 align-item-center">
             <p class="common" [ngClass]="{'selected_step':!StripeOpener}">Address</p>

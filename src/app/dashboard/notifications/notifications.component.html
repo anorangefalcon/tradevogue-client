@@ -1,5 +1,5 @@
 <div class="d-flex flex-column gap-20">
-    <div class="form__card__head d-flex justify-content-md-between align-item-center">
+    <div class="form__card__head default-animation d-flex justify-content-md-between align-item-center">
         <h3>Notifications</h3>
         <div class="d-flex gap-10">
             <button class="btn btn-xs btn-rounded fw-500 btn-secondary d-flex align-item-center gap-10"
@@ -12,7 +12,7 @@
                 [ngStyle]="{'display': notificationForm.disabled? 'none': 'flex'}" (click)="onUpdate()">Update</button>
         </div>
     </div>
-    <form class="form__card d-flex gap-15 flex-column" [formGroup]="notificationForm">
+    <form class="form__card d-flex gap-15 flex-column default-animation" [formGroup]="notificationForm">
         <ng-container formArrayName="notification">
             <ng-container *ngFor="let notification of getNotification(); let i = index">
                 <div formGroupName="{{i}}" class=" d-flex gap-15 card card__pd-25 mw100 relative">
@@ -35,7 +35,7 @@
                             <small class="banner-label">Upload
                                 Icon</small>
                             <img [src]="getImagePreview(i)" [style.display]="getImagePreview(i) ? 'flex' : 'none'"
-                                class="banner-iage">
+                                class="banner-image">
                             <span class="material-symbols-outlined remove-btn pointer"
                                 [style.display]="getImagePreview(i) ? 'flex' : 'none'" (click)="removeImage(i)">
                                 close
@@ -44,7 +44,7 @@
 
                         </div>
                     </div>
-                    <div class="data-upload-div d-flex gap-15">
+                    <div class="data-upload-div d-flex gap-15 default-animation-slow">
 
                         <div class="d-flex flex-column mw100 gap-10">
                             <ng-container>
@@ -77,7 +77,7 @@
         </ng-container>
     </form>
     <div class="table-list card">
-        <table class="selected-category-table">
+        <table class="selected-category-table default-animation-slow">
             <thead>
                 <tr>
                     <th class="items">Serial Number</th>

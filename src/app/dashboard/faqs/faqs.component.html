@@ -55,7 +55,7 @@
   <!-- pop-up -->
   <div class="faq_popup">
   <app-drawer [direction]="popUpDirection" [show]="showingPopUp" (showChange)="PopUpChangeHanlder($event)"
-    [title]="'Layout Settings'">
+    [title]="'Faq Data'">
     <div *ngIf="selectedItem" class="details-container">
       <p class="detail-item"><strong>Serial Number:</strong> {{ (currentPage - 1) * pageSize +
         selectedCategory.childrens.indexOf(selectedItem) + 1 }}</p>

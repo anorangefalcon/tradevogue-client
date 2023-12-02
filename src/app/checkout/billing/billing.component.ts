@@ -58,6 +58,7 @@ export class BillingComponent implements OnInit {
     script.src = 'https://checkout.razorpay.com/v1/checkout.js';
     this.renderer.appendChild(document.body, script);
   }
+
   constructor(
     private cartService: CartService,
     private checkOutService: CheckoutService,
@@ -69,7 +70,6 @@ export class BillingComponent implements OnInit {
     private http: HttpClient,
     private renderer: Renderer2,
   ) {
-    this.items = JSON.parse(localStorage.getItem('paymentIntent') || '[]');
     this.stripePay.setLoading = this.stripePay.setLoading.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.stripePay.showMessage = this.stripePay.showMessage.bind(this);
@@ -79,30 +79,12 @@ export class BillingComponent implements OnInit {
       this.cartService.fetchCart().subscribe((data) => {
         this.cartitems = data;
       }));
-
-    const checkSubTotal = () => {
-      if (this.cartitems.amounts.subTotal !== 0) {
-        this.total = this.totalAmount;
-        this.quantity = this.cartitems.details.map((item: { Quantity: any; }) => item.Quantity);
-        this.item = [
-          {
-            "id": this.cartitems.details.map((item: { sku: any; }) => item.sku),
-            "name": this.cartitems.details.map((item: { name: any; }) => item.name),
-            "price": this.cartitems.amounts.total,
-            // "quantity": this.cartitems.details.map((item: { quantity: any; }) => item.quantity),
-          }
-        ];
-        localStorage.setItem('paymentIntent', JSON.stringify(this.item));
-      } else {
-        setTimeout(checkSubTotal, 1000);
-      }
-    };
-    checkSubTotal();
   }
+
   ngOnInit(): void {
     this.loadRazorpayScript();
     this.allSubscriptions.push(
-      this.checkOutService.loadStripe.subscribe((isLoaded: any) => {        
+      this.checkOutService.loadStripe.subscribe((isLoaded: any) => {
         this.StripeOpener = isLoaded;
         if (isLoaded) {
           this.loadStripe();
@@ -115,9 +97,6 @@ export class BillingComponent implements OnInit {
       console.error('Error loading Stripe scripts:', error);
     }
   }
-  // ngOnDestroy(){
-  //   this.checkOutService.StripePaymentOpen.unsubscribe();
-  // }
 
   async loadStripe(): Promise<void> {
     try {
@@ -135,7 +114,6 @@ export class BillingComponent implements OnInit {
           await this.proceedToPayment();
         };
         this.renderer.appendChild(document.body, this.stripeScript);
-        // document.body.appendChild(script);
       } else {
         console.error('Public key not found');
       }
@@ -143,7 +121,84 @@ export class BillingComponent implements OnInit {
       console.error('Error loading Stripe scripts:', error);
     }
   }
-  
+
+  // stripe elements loaded
+  async initialize(stripe: any): Promise<void> {
+    const item = this.cartitems.details.map((item: { sku: any; name: any; price: any; quantity: any }) => {
+      return {
+        id: item.sku,
+        name: item.name,
+        price: item.price,
+        quantity: item.quantity
+      }
+    })
+
+    const items =
+    {
+      orderId: this.checkOutService.orderID,
+      subTtotal: this.cartitems.amounts.subTotal,
+      items: item
+    }
+
+    const response = this.fetchDataService.HTTPPOST(this.backendURLs.URLs.createPaymentIntent, items).subscribe((data: any) => {
+      this.clientSecret = data.clientSecret;
+      const appearance = {
+        theme: 'flat',
+        variables: {
+          fontLineHeight: '1.5',
+          borderRadius: '10px',
+          colorBackground: '#F6F8FA',
+          accessibleColorOnColorPrimary: '#262626'
+        },
+        rules: {
+          '.Block': {
+            backgroundColor: 'var(--colorBackground)',
+            boxShadow: 'none',
+            padding: '12px',
+          },
+          '.Input': {
+            padding: '12px',
+            backgroundColor: 'transparent',
+            border: '1px solid rgba(0, 0, 0, 0.2)',
+            outline: '1px solid rgba(0, 0, 0, 0.2)',
+          },
+          '.Input:disabled, .Input--invalid:disabled': {
+            color: 'lightgray'
+          },
+          '.Input:hover': {
+            borderColor: 'rgb(4, 118, 118)'
+          },
+          '.Tab': {
+            padding: '10px 12px 8px 12px',
+            border: 'none',
+          },
+          '.Tab:hover': {
+            border: 'none',
+            boxShadow: '0px 1px 1px rgba(0, 0, 0, 0.03), 0px 3px 7px rgba(18, 42, 66, 0.04)'
+          },
+          '.Tab--selected, .Tab--selected:focus, .Tab--selected:hover': {
+            border: 'none',
+            backgroundColor: '#fff',
+            boxShadow: '0 0 0 1.5px var(--colorPrimaryText), 0px 1px 1px rgba(0, 0, 0, 0.03), 0px 3px 7px rgba(18, 42, 66, 0.04)'
+          },
+          '.Label': {
+            fontWeight: '500',
+          }
+        }
+      };
+      this.elements = stripe.elements({ clientSecret: this.clientSecret, appearance });
+      const linkAuthenticationElement = this.elements.create("linkAuthentication");
+      linkAuthenticationElement.mount("#link-authentication-element");
+      linkAuthenticationElement.on('change', (event: any) => {
+        this.emailAddress = event.value.email;
+      });
+      const paymentElementOptions = { layout: "tabs" };
+      const paymentElement = this.elements.create("payment", paymentElementOptions);
+      paymentElement.mount("#payment-element");
+    })
+  }
+
+  // stripe button functionality
   async initializeStripe(): Promise<void> {
     try {
       if (this.stripePay.publicKey) {
@@ -162,6 +217,7 @@ export class BillingComponent implements OnInit {
     }
   }
 
+  // handle stripe click
   async proceedToPayment(): Promise<void> {
     try {
       const response = await fetch(this.backendURLs.URLs.getPaymentKeys);
@@ -191,78 +247,7 @@ export class BillingComponent implements OnInit {
         }
       }));
   }
-  async initialize(stripe: any): Promise<void> {
-    const item = JSON.parse(localStorage.getItem('paymentIntent') || '[]');
 
-    const items =
-    {
-
-      orderId: this.checkOutService.orderID,
-      items: item
-    } 
-
-    const response = await fetch("http://localhost:1000/create-payment-intent", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ items }),
-    });
-    const { clientSecret } = await response.json();
-    this.clientSecret = clientSecret;
-    const appearance = {
-      theme: 'flat',
-      variables: {
-        fontLineHeight: '1.5',
-        borderRadius: '10px',
-        colorBackground: '#F6F8FA',
-        accessibleColorOnColorPrimary: '#262626'
-      },
-      rules: {
-        '.Block': {
-          backgroundColor: 'var(--colorBackground)',
-          boxShadow: 'none',
-          padding: '12px',
-        },
-        '.Input': {
-          padding: '12px',
-          backgroundColor: 'transparent',
-          border: '1px solid rgba(0, 0, 0, 0.2)',
-          outline: '1px solid rgba(0, 0, 0, 0.2)',
-        },
-        '.Input:disabled, .Input--invalid:disabled': {
-          color: 'lightgray'
-        },
-        '.Input:hover': {
-          borderColor: 'rgb(4, 118, 118)'
-        },
-        '.Tab': {
-          padding: '10px 12px 8px 12px',
-          border: 'none',
-        },
-        '.Tab:hover': {
-          border: 'none',
-          boxShadow: '0px 1px 1px rgba(0, 0, 0, 0.03), 0px 3px 7px rgba(18, 42, 66, 0.04)'
-        },
-        '.Tab--selected, .Tab--selected:focus, .Tab--selected:hover': {
-          border: 'none',
-          backgroundColor: '#fff',
-          boxShadow: '0 0 0 1.5px var(--colorPrimaryText), 0px 1px 1px rgba(0, 0, 0, 0.03), 0px 3px 7px rgba(18, 42, 66, 0.04)'
-        },
-        '.Label': {
-          fontWeight: '500',
-        }
-      }
-    };
-    this.elements = stripe.elements({ clientSecret, appearance });
-    const linkAuthenticationElement = this.elements.create("linkAuthentication");
-    linkAuthenticationElement.mount("#link-authentication-element");
-    linkAuthenticationElement.on('change', (event: any) => {
-      this.emailAddress = event.value.email;
-    });
-    const paymentElementOptions = { layout: "tabs" };
-    const paymentElement = this.elements.create("payment", paymentElementOptions);
-    paymentElement.mount("#payment-element");
-  }
-  // this.stripePay.checkOrderStatus()
   async handleSubmit(e: Event): Promise<void> {
     try {
       e.preventDefault();
@@ -271,7 +256,6 @@ export class BillingComponent implements OnInit {
       const { paymentIntent, error } = await this.stripe.confirmPayment({
         elements: this.elements,
         confirmParams: {
-          // return_url: "http://localhost:4200/usersetting/orders",
           receipt_email: this.emailAddress,
         },
         redirect: 'if_required'
@@ -285,8 +269,6 @@ export class BillingComponent implements OnInit {
       }
       this.stripePay.setLoading(false);
       this.cartService.clearCart();
-      // this.router.navigate(['/usersetting/orders']);
-
     } catch (error) {
     }
   }
@@ -309,7 +291,7 @@ export class BillingComponent implements OnInit {
     this.visible_data.push(el);
     this.not_visible_data = this.not_visible_data.filter((e) => { return el != e })
   }
-  
+
   clicked() {
     this.my_div?.nativeElement.classList.toggle('display_none');
   }
@@ -374,6 +356,7 @@ export class BillingComponent implements OnInit {
       console.error('Error creating order:', error);
     }
   }
+  
   // ADDRESS TS FILE---------------------
   userAddresses: any[] = [];
   receiveData: any;
@@ -441,12 +424,13 @@ export class BillingComponent implements OnInit {
 
   ngOnDestroy() {
 
-    if(this.stripeScript){
+    if (this.stripeScript) {
       this.renderer.removeChild(document.body, this.stripeScript);
     }
 
     this.allSubscriptions.forEach((item: Subscription) => {
-      item.unsubscribe()});
+      item.unsubscribe()
+    });
   }
-  
+
 }

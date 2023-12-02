@@ -104,11 +104,12 @@ export class NotificationsComponent {
     this.selectedItem = item;
     this.itemId = item._id;
     this.editingIndex = index;
+    console.log(this.selectedItem, this.editingIndex);
 
   
     const notificationArray = this.notificationForm.get('notification') as FormArray;
-    const specificNotificationGroup = notificationArray.at(index) as FormGroup;
-    const registrationIdsControl = specificNotificationGroup.get('registration_ids') as FormArray;
+    // const specificNotificationGroup = notificationArray.at(index) as FormGroup;
+    // const registrationIdsControl = specificNotificationGroup.get('registration_ids') as FormArray;
     notificationArray.clear();
   
     // Create an empty form group
@@ -194,13 +195,16 @@ export class NotificationsComponent {
         }
 
         this.fetch.HTTPPOST(this.util.URLs.updateNotification , body).subscribe((res)=> {
-          this.getFcmTokens()
+          this.getFcmTokens();
+          this.loadNotifications();
         })
         
       } else {
-        this.notificationService.setNotifications(this.notificationForm.value).subscribe((data) => {
-          this.getFcmTokens()
-        });
+        this.fetch.HTTPPOST(this.util.URLs.setNotifications, this.notificationForm.value).subscribe((res)=> {
+          this.getFcmTokens();
+          this.notificationForm.reset();
+          this.loadNotifications();
+        })
       }
     } else {
     }

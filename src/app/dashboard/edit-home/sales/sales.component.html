@@ -19,8 +19,8 @@
                 <button class="btn btn-xs fw-500 btn-rounded btn-primary"
                     [style.display]="!salesForm.disabled ? 'none' : 'block'" (click)="salesForm.enable()">Edit</button>
                 <button class="btn btn-xs fw-500 btn-rounded btn-secondary"
-                    [style.display]="salesForm.disabled ? 'none' : 'block'"
-                    (click)="salesForm.disable()" (click)="onCancel()">Cancel</button>
+                    [style.display]="salesForm.disabled ? 'none' : 'block'" (click)="salesForm.disable()"
+                    (click)="onCancel()">Cancel</button>
                 <button class="btn btn-xs fw-500 btn-rounded btn-primary"
                     [style.display]="salesForm.disabled ? 'none' : 'block'" (click)="onUpdate()">Update</button>
             </div>
@@ -51,7 +51,7 @@
                             <small class="banner-label">Upload
                                 Sale Product Image</small>
                             <img [src]="getImagePreview(i)" [style.display]="getImagePreview(i) ? 'flex' : 'none'"
-                                class="banner-iage">
+                                class="banner-image">
                             <span class="material-symbols-outlined remove-btn pointer"
                                 [style.display]="getImagePreview(i) ? 'flex' : 'none'" (click)="removeImage(i)">
                                 close
@@ -119,15 +119,11 @@
                                 <label class="form__title " [for]="'buttonText'+i">Background Color</label>
                                 <ng-container formGroupName="colors">
                                     <span class="tooltip">
-                                        <input class="absolute color-picker-position" type="color"
-                                            [id]="'subTitleText'+i" formControlName="cardColor" />
-                                        <span class="tooltiptext">
-                                            Button Color
-                                        </span>
+                                        <input type="color" [id]="'buttonText'+i" class="d-flex flex-center"
+                                            style="width: 20px; height: 20px;" formControlName="cardColor" />
                                     </span>
                                 </ng-container>
-                                <input type="color" [id]="'buttonText'+i" class="d-flex flex-center" style="width: 20px; height: 20px;"
-                                    formControlName="cardColor" />
+
                             </div>
                         </div>
                         <!-- <div class="d-flex flex-column mw100 gap-10"> -->

@@ -215,6 +215,12 @@ export class UtilsModule {
 
     // webhook
     webhook: `${this.BackendUrl}/webhook`,
+
+    // payment intent
+    createPaymentIntent: `${this.BackendUrl}/create-payment-intent`,
+
+    // invoice send 
+    sendInvoice: `${this.BackendUrl}/invoiceSend`, 
     
   }
 }

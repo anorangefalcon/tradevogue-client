@@ -171,7 +171,6 @@ export class TicketsComponent {
 
     const request1 = this.fetchDataService.HTTPPOST(url1, body);
     const request2 = this.fetchDataService.HTTPPOST(url2, body).subscribe((res=> {
-      // this.toast.successToast({'title': 'Mail Sent To : '+ this.selectedItem.userEmail})
       this.dialogService.infoDialogBox({title: 'Status Changed to : '+body.status, subtitle: 'Mail Sent to : '+ this.selectedItem.userEmail});
       this.loadData();
       this.popupService.closePopup();
@@ -199,7 +198,6 @@ export class TicketsComponent {
 
   sendNotification() {
     if (this.notificationForm.valid) {
-      // Create the data object with the desired structure
       const data = {
         title: this.notificationForm.value.title,
         body: this.notificationForm.value.body,
@@ -214,20 +212,6 @@ export class TicketsComponent {
           this.selectedTicket = {};
         }
       })
-
-
-      // const apiUrl = 'http://localhost:1000/send-notification';
-
-      // this.http.post(apiUrl, data).subscribe(
-      //   (response) => {
-      //     // Reset the form and close the popup
-      //     // this.notificationForm.reset();
-      //     this.selectedTicket = {};
-      //   },
-      //   (error) => {
-      //     console.error('Error sending notification:', error);
-      //   }
-      // );
     }
   }
 
