@@ -59,7 +59,7 @@ export class UploadExcelService {
       let rowIndex = 0;
       data[sheetKey].forEach((item: any) => {
         rowIndex++;
-        
+
         this.productModel = {
           name: '',
           subTitle: '',
@@ -118,7 +118,7 @@ export class UploadExcelService {
             colorKeys.forEach((colorKey: any) => {
               let variantNumber = colorKey.split('_')[1] ? ('_' + colorKey.split('_')[1]) : '';
 
-              variant.color = item[colorKey];              
+              variant.color = item[colorKey];
               variant.photo = item['photo' + variantNumber] ? (item['photo' + variantNumber]).split(',').map((i: any) => i.trim()) : [];
 
               variant.stockQuantity = [];
@@ -131,7 +131,6 @@ export class UploadExcelService {
                 });
               })
 
-              
               this.productModel.assets.push(JSON.parse(JSON.stringify(variant)));
             })
           }
@@ -140,13 +139,13 @@ export class UploadExcelService {
           }
         })
 
-        if(!(this.errorHandler(this.productModel))){
+        if (!(this.errorHandler(this.productModel))) {
           this.errors.push({
             row: rowIndex,
             sheet: sheetKey
           });
         }
-        else{
+        else {
           this.products.push(this.productModel);
         }
       });
@@ -161,20 +160,20 @@ export class UploadExcelService {
 
   errorHandler(product: any): any {
     for (const key of Object.keys(product)) {
-      if((key === 'photo') && !(product[key].length >= 2 && product[key].length <= 6)){
+      if ((key === 'photo') && !(product[key].length >= 2 && product[key].length <= 6)) {
         return false;
       }
 
       if (!product[key]) {
         return false;
-      } 
+      }
       else if (Array.isArray(product[key])) {
         for (const pro of product[key]) {
-          if(!this.errorHandler(pro)) return false;
+          if (!this.errorHandler(pro)) return false;
         }
       }
       else if (typeof product[key] === 'object') {
-        if(!(this.errorHandler(product[key]))) return false;
+        if (!(this.errorHandler(product[key]))) return false;
       }
     }
     return true;
@@ -256,6 +255,81 @@ export class UploadExcelService {
       };
     }
     return true;
+  }
+
+  exportProductsInExcel(exportArr: any) {
+    let finalArr: any[] = [];
+    exportArr.forEach((item: any) => {
+      let tempObj: any = {};
+
+      tempObj.name = item.name;
+      tempObj.subTitle = item.subTitle;
+      tempObj.description = item.description
+      tempObj.costPrice = item.costPrice;
+      tempObj.price = item.price;
+
+      // nested
+      tempObj.code = item.info.code;
+      tempObj.category = item.info.category;
+      tempObj.brand = item.info.brand;
+      tempObj.gender = item.info.gender;
+      tempObj.weight = item.info.weight;
+      tempObj.composition = item.info.composition;
+
+      // arays
+      // tempObj.tags = item.info.tags;
+      tempObj.tags = item.info.tags.reduce((tags: String, tag: String) => {
+        tags += tag + ', ';
+        return tags;
+      }, '');
+      if (tempObj.tags) tempObj.tags = tempObj.tags.slice(0, -2);
+
+      tempObj.orderQuantity = item.info.orderQuantity.reduce((orderQuantities: String, orderQuantity: String) => {
+        orderQuantities += orderQuantity + ', ';
+        return orderQuantities;
+      }, '');
+      if (tempObj.orderQuantity) tempObj.orderQuantity = (tempObj.orderQuantity).slice(0, -2);
+
+
+      // asset variants
+      let variantIndex = 0;
+      let keys = ['color', 'photo', 'size:quantity'];
+      item.assets.forEach((variant: any) => {
+
+        keys.forEach((key: any) => {
+          let exKey = key;
+          if (variantIndex > 0) exKey = key + '_' + variantIndex;
+
+          if (key.includes('size:quantity')) {
+            tempObj[exKey] = variant.stockQuantity.reduce((accumulator: any, stock: any) => {
+              accumulator += stock.size + ':' + stock.quantity + ', ';
+              return accumulator;
+            }, '');
+            if (tempObj[exKey]) tempObj[exKey] = tempObj[exKey].slice(0, -2);
+          }
+          else {
+            if(Array.isArray(variant[key])){
+              tempObj[exKey] = variant[key].reduce((variants: String, variant: String) => {
+                variants += variant + ', ';
+                return variants;
+              }, '');
+              if (tempObj[exKey]) tempObj[exKey] = (tempObj[exKey]).slice(0, -2);
+            }
+            else tempObj[exKey] = variant[key];
+          }
+        });
+        variantIndex++;
+      })
+
+      finalArr.push(tempObj);
+    })
+
+    let finalJSON = XLSX.utils.json_to_sheet(finalArr);
+
+    var workBook = XLSX.utils.book_new()
+    XLSX.utils.book_append_sheet(workBook, finalJSON, 'Products')
+
+    XLSX.writeFile(workBook, 'Exported-Products.xlsx');
   }
 
 }

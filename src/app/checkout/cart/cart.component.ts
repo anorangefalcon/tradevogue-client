@@ -21,16 +21,21 @@ export class CartComponent implements OnInit {
   userToken: any = '';
   direction: any = 'right';
   loading: Boolean = false;
+  allSubscriptions: Subscription[] = [];
 
   ngOnInit() {
 
+    this.allSubscriptions.push(
     this.userService.getUser('token').subscribe((token: any) => {
       this.userToken = token;
       this.loading = true;
 
+      this.allSubscriptions.push(
       this.cartService.cartLoading.subscribe((data: any) => {
         this.loading = data;
-      })
+      }));
+
+      this.allSubscriptions.push(
       this.cartService.fetchCart("details").subscribe((data) => {
         this.cartArr = data;
         this.cartArr = this.cartArr?.map((item: any) => {
@@ -52,8 +57,8 @@ export class CartComponent implements OnInit {
           this.updatingArr = [];
           return item;
         });
-      });
-    })
+      }));
+    }));
   }
 
   remove_item(identifier: any) {
@@ -178,5 +183,9 @@ export class CartComponent implements OnInit {
       return true;
     }
     return false;
+  }
+
+  ngOnDestroy() {
+    this.allSubscriptions.forEach((item: Subscription)=> item.unsubscribe());
   }
 }

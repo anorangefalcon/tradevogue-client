@@ -7,6 +7,12 @@
         inset-block-start: -85px !important;
     }
 
+    &:is(.navInactive){
+        & .owl-carousel .owl-nav{
+            display: none !important;
+        }
+    }
+
     .owl-carousel .owl-nav .owl-prev,
     .owl-carousel .owl-nav .owl-next {
         padding: 0 !important;
@@ -20,11 +26,19 @@
 
         background-color: transparent;
     }
+    .owl-carousel.owl-drag .owl-item{
+        max-width: 220px !important;
+    }
+
+
 }
+
 
 .section-header{
     padding-block-end: 30px;
 }
+
+
 
 @media screen and (max-width: 440px) {
     .crousel {

@@ -241,6 +241,10 @@ input[type="number"] {
     color: rgb(var(--textClr), 0.5);
 }
 
+.paginator{
+    margin-block-end: 40px;
+}
+
 .no-item-img{
     & img{
         transform: translateY(-90px);

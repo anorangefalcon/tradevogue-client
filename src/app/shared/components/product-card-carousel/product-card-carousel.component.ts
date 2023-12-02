@@ -16,7 +16,8 @@ export class ProductCardCarouselComponent {
   @Input() titles: any = {
     title: 'Popular Products',
     subTitle: 'Explore our most demanded products.'
-  };    
+  };
+  @Input() excludeSKU: String = '';
   
   productArr: productData[] = [];
   
@@ -25,6 +26,12 @@ export class ProductCardCarouselComponent {
   ngOnInit(){
     this.fetchDataService.getProducts(this.whatToFetch, 10).subscribe((data:any)=>{
       this.productArr = data.items;
+
+      if(this.excludeSKU){
+        console.log(this.excludeSKU);
+        
+        this.productArr = this.productArr.filter((item: any) => item.sku !== this.excludeSKU);
+      }
     })
   }
 
@@ -38,7 +45,7 @@ export class ProductCardCarouselComponent {
     dots: false,
     autoplay: true,
     navSpeed: 300,
-    nav: true,
+    nav: this.productArr.length > 5 ? true : false,
     navText: [
       '<span class="material-symbols-outlined custom-nav-btn">navigate_before</span>',
       '<span class="material-symbols-outlined custom-nav-btn">navigate_next</span>'

@@ -221,5 +221,7 @@
 
 </div>
 
-<app-pagination [collectionSize]="totalProducts" [currentPage]="pageNumber" [pageSize]="limit"
+<div class="paginator container">
+    <app-pagination [collectionSize]="totalProducts" [currentPage]="pageNumber" [pageSize]="limit"
     (activePage)="changePage($event)"></app-pagination>
+</div>

@@ -125,6 +125,7 @@ select {
     --goldClr: 254, 151, 4;
 
 }
+
 body {
     font-family: 'Poppins', sans-serif;
     font-size: 13px;
@@ -132,11 +133,11 @@ body {
     background-color: rgb(var(--blackClr), 0.02);
 }
 
-body.dark{
+body.dark {
     --whiteClr: 0, 0, 0;
     --blackClr: 255, 255, 255;
-    --textClr: 222,222,222;
-    --input-text-bg : 152, 150, 150;
+    --textClr: 222, 222, 222;
+    --input-text-bg: 152, 150, 150;
     --primaryClr: 2, 208, 208;
     /* color: #02d0d0; */
     --secondary : 42, 41, 41;
@@ -209,6 +210,7 @@ h6 {
 p {
     font-size: 14px !important;
 }
+
 .container {
     width: 100%;
     max-width: 1170px;
@@ -471,9 +473,11 @@ ul {
 .gap-30 {
     gap: 30px;
 }
+
 .gap-35 {
     gap: 35px;
 }
+
 .gap-40 {
     gap: 40px;
 }
@@ -601,14 +605,14 @@ ul {
     border-color: transparent transparent rgb(var(--blackClr)) transparent;
 }
 
-.tooltip:last-child .tooltiptext{
+.tooltip:last-child .tooltiptext {
     inset-block-start: 120%;
     inset-inline-end: 0%;
 
     &::before {
         inset-block-end: 100%;
         inset-inline-end: 5px;
-    } 
+    }
 }
 
 .tooltip:not(:first-child, :last-child) .tooltiptext {
@@ -632,18 +636,18 @@ ul {
     }
 }
 
-tr:last-child td{
+tr:last-child td {
 
-    & .tooltip .tooltiptext{
+    & .tooltip .tooltiptext {
         inset-block-end: 120%;
         inset-block-start: initial;
     }
 
-    & .tooltip .tooltiptext::before{
+    & .tooltip .tooltiptext::before {
         display: none;
     }
 
-    & .tooltip .tooltiptext::after{
+    & .tooltip .tooltiptext::after {
         content: "";
         position: absolute;
         margin-left: -5px;
@@ -656,19 +660,20 @@ tr:last-child td{
         inset-block-start: 100%;
         inset-inline-start: 50%;
     }
-    
+
     .tooltip:first-child .tooltiptext::after {
         inset-block-start: 100%;
         inset-inline-start: 9px;
     }
-    
+
     .tooltip:last-child .tooltiptext::after {
         inset-block-start: 100%;
         inset-inline-end: 9px;
     }
 }
 
-.tooltip:first-child:not(:has(+tr)) .tooltiptext::before, .tooltip:first-child:not(:has(+tr)) .tooltiptext::after{
+.tooltip:first-child:not(:has(+tr)) .tooltiptext::before,
+.tooltip:first-child:not(:has(+tr)) .tooltiptext::after {
     inset-inline-end: initial !important;
 }
 
@@ -800,7 +805,7 @@ tr:last-child td{
 .title {
     font-size: 16px !important;
     font-weight: 400;
-   line-height: 1.2;
+    line-height: 1.2;
 }
 
 /* Sub Section Heading, Subheading, Styling */
@@ -842,6 +847,7 @@ tr:last-child td{
 .btn {
     cursor: pointer;
     border: none;
+    color: rgb(var(--blackClr));
     background-color: transparent;
     transition: 0.3s ease-in-out;
 }
@@ -972,7 +978,7 @@ tr:last-child td{
     }
 }
 
-& .form__input {
+.form__input {
     width: 100%;
     height: 40px;
     padding-inline: 15px;
@@ -983,7 +989,7 @@ tr:last-child td{
     font-weight: 400;
     border: none;
     color: rgb(var(--textClr));
-    
+
 
     &:is(:focus, :hover, .active) {
         border-color: rgb(var(--primaryClr));
@@ -1010,19 +1016,19 @@ tr:last-child td{
     }
 }
 
-& span.error {
+span.error {
     position: absolute;
     inset-block-start: calc(100% + 2px);
     inset-inline-start: 2px;
 }
 
-& .form__textarea {
+.form__textarea {
     height: 130px;
     resize: none;
     padding-block: 8px;
 }
 
-& .form__radio {
+.form__radio {
 
     & input[type="radio"] {
         display: none;
@@ -1141,7 +1147,7 @@ tr:last-child td{
 }
 
 /* Button loading  */
-.spinner{
+.spinner {
     width: 100%;
     height: 100%;
     display: flex;
@@ -1163,7 +1169,7 @@ tr:last-child td{
     animation: spinner .8s linear infinite;
 }
 
-div.spinner::before{
+div.spinner::before {
     inset-inline-end: 12px;
     inset-block-end: 12px;
 }
@@ -1212,7 +1218,7 @@ div.spinner::before{
         }
     }
 
-    .section-header{
+    .section-header {
         padding-block-end: 20px;
     }
 
@@ -1243,6 +1249,7 @@ div.spinner::before{
 .default-animation {
     animation: show-animation 0.5s ease-in-out;
 }
+
 .default-animation-slow {
     animation: show-animation 1s ease-in-out;
 }
@@ -1320,19 +1327,22 @@ div.spinner::before{
     font-size: 16px;
     color: rgb(var(--textClr));
 }
-.customise-back-btn{
+
+.customise-back-btn {
     padding: 5px;
-    
+
     &:hover {
         color: rgb(var(--primaryClr))
     }
 }
+
 .color-picker-position {
     inset-block-start: 50%;
     inset-inline-end: 15px;
     transform: translateY(-50%);
 }
-.color-input{
+
+.color-input {
     padding-inline-end: 40px;
 }
 

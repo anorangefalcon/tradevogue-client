@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, map } from 'rxjs';
+import { BehaviorSubject, Observable, Subscription, map } from 'rxjs';
 import { ToastService } from './toast.service';
 import { HttpClient } from '@angular/common/http';
 import { UtilsModule } from './../../utils/utils.module';
@@ -20,24 +20,25 @@ export class CartService {
   private cart$ = this.cartSubject.asObservable();
 
   cartLoading = new BehaviorSubject<Boolean>(false);
+  allSubscriptions: Subscription[] = [];
 
   constructor(private toastService: ToastService, private http: HttpClient, private backendUrls: UtilsModule, private loginCheckService: LoginCheckService) {
-    this.loginCheckService.getUser().subscribe((loggedIn: any) => {
-      this.user = loggedIn;
-      this.cartLoading.next(true);
-      this.fetchDetails();
-    });
+    this.allSubscriptions.push(
+      this.loginCheckService.getUser().subscribe((loggedIn: any) => {
+        this.user = loggedIn;
+        this.cartLoading.next(true);
+        this.fetchDetails();
+      }));
   }
 
   addToCart(cartItem: any, insertDefaults: Boolean = true) {
     this.cartLoading.next(true);
     this.sideCart.next(true);
     let cartObj;
-    
 
     if (insertDefaults) {
       let assetIndex = cartItem.matchedIndex ? cartItem.matchedIndex : 0;
-      let sizeIndex = 0; 
+      let sizeIndex = 0;
 
       if (cartItem.assets[assetIndex].stockQuantity[0].quantity <= 0) {
         const ifMatchesSize = (cartItem.assets[assetIndex].stockQuantity).some((stockQ: any) => {
@@ -54,6 +55,8 @@ export class CartService {
         this.toastService.errorToast({
           title: "This Product is out of stock"
         });
+        this.sideCart.next(false);
+        this.cartLoading.next(false);
         return;
       }
 
@@ -73,7 +76,7 @@ export class CartService {
         quantity: cartItem.info.orderQuantity[0]
       }
     }
-    else{
+    else {
       cartObj = {
         sku: cartItem.data.sku,
         size: cartItem.size,
@@ -91,6 +94,7 @@ export class CartService {
   }
 
   private addToCartWithToken(cartObj: any) {
+    this.allSubscriptions.push(
     this.http.post(this.backendUrls.URLs.addItemsToCart, [cartObj]).subscribe(
       (details: any) => {
         if (!details.added) {
@@ -101,7 +105,7 @@ export class CartService {
           this.handleSuccessfulAddToCart();
         }
       }
-    );
+    ));
   }
 
   private addToCartWithoutToken(cartObj: any) {
@@ -139,11 +143,12 @@ export class CartService {
   updateCart(data: any) {
 
     if (this.user) {
+      this.allSubscriptions.push(
       this.http.post(this.backendUrls.URLs.updateItemFromCart, data).subscribe((data: any) => {
         if (data.updated) {
           this.fetchDetails();
         }
-      });
+      }));
     }
     else {
       const localStorageData = localStorage.getItem("myCart");
@@ -174,6 +179,7 @@ export class CartService {
     let cartDetails = localCart ? JSON.parse(localCart) : null;
 
     if (localCart && this.user) {
+      this.allSubscriptions.push(
       this.http.post(this.backendUrls.URLs.addItemsToCart, cartDetails).subscribe((message: any) => {
         this.clearCart('localOnly');
 
@@ -181,24 +187,26 @@ export class CartService {
           this.cartSubject?.next(data);
           this.cartLoading.next(false);
         });
-      });
+      }));
     }
     else {
       if (!cartDetails) {
         cartDetails = [];
       }
+      this.allSubscriptions.push(
       this.http.post(this.backendUrls.URLs.fetchCart, cartDetails).subscribe((data: any) => {
         this.cartSubject?.next(data);
         this.cartLoading.next(false);
-      });
+      }));
     }
   }
 
   removeItem(identifier: any) {
     if (this.user) {
+      this.allSubscriptions.push(
       this.http.post(this.backendUrls.URLs.removeItemFromCart, { itemId: identifier }).subscribe((message: any) => {
         this.fetchDetails();
-      });
+      }));
     }
     else {
       const localStorageData = localStorage.getItem("myCart");
@@ -243,13 +251,17 @@ export class CartService {
   clearCart(which: string = '') {
     if (!which) {
       if (this.user) {
-        this.http.get(this.backendUrls.URLs.clearCart).subscribe(() => { });
+        this.allSubscriptions.push(
+        this.http.get(this.backendUrls.URLs.clearCart).subscribe(() => { })
+        );
       }
     }
     localStorage.removeItem("myCart");
-    console.log('hello vivekkkkkkkkk');
-
     this.fetchDetails();
+  }
+
+  ngOnDestroy() {
+    this.allSubscriptions.forEach((item: Subscription)=> item.unsubscribe());
   }
 
 }

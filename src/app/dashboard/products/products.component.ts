@@ -287,7 +287,7 @@ export class ProductsComponent implements OnInit {
 
       console.log(excel);
 
-      if (!excel.errors.length) {
+      if (excel.errors.length) {
         let errorObj: any = {
           title: 'Some Rows were Rejected',
           body: []
@@ -316,7 +316,14 @@ export class ProductsComponent implements OnInit {
     })
   }
 
-  tableGenerator(len: number) {
+  exportProductsExcel(){
+    let exportArr = this.productArray.data.filter((item: any) => 
+    this.deleteList.includes(item._id)).map((item: any)=> item.productInfo);
+
+    this.excelService.exportProductsInExcel(exportArr);
+  }
+
+  tableGenerator(len: number){
     let temp = []
     for (let i = 0; i < len; i++) {
       temp.push(0);
