@@ -102,26 +102,29 @@
     }
 }
 .dummy-item{
-    width: 100%;
+    margin-block-start: 10px;
     height: 100px;
+    gap: 32px;
 
-    .image{
+    & .image{
+        margin-inline-start: 3px;
         height: 93px;
-        width: 80px;
+        width: 73px;
+        border-radius: 5px;
     }
 
-    .d-heading{
+    & .d-heading{
         width: 280px;
         height: 16px;
         padding-block-start: 5px;
     }
 
-    .d-text{
-        width: 200px;
+    & .d-text{
+        max-width: 200px;
         height: 12px;
     }
-    .d-text-2{
-        width: 160px;
+    & .d-text-2{
+        max-width: 160px;
         height: 16px;
     }
 }

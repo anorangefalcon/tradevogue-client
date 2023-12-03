@@ -15,6 +15,10 @@
             <div class="text {{display}}">
                 {{content?.title}}
             </div>
+
+            <div (click)="closeToast()" class="close-toast pointer" >
+                <i class="material-symbols-outlined" class="{{display}}">keyboard_arrow_up</i>
+            </div>
         </div>
 
         <div *ngIf="(content?.body)?.length > 0" class="toast-body">

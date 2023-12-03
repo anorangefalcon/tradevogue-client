@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ToastService } from '../shared/services/toast.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-toast',
@@ -48,6 +49,10 @@ export class ToastComponent {
 
   hoverOut() {
     this.showToast();
+  }
+
+  closeToast(){
+    this.display = '';
   }
 
 }

@@ -24,7 +24,7 @@
     left: 50%;
     transform: translateX(-50%);
 
-    max-width: 350px;
+    max-width: 420px;
     overflow: hidden;
 
     opacity: 0;
@@ -53,7 +53,7 @@
 .toast-header {
     position: relative;
     min-height: 50px;
-    gap: 7px;
+    gap: 10px;
     padding-block: 10px 12px;
     padding-inline: 10px 15px;
 }
@@ -84,7 +84,15 @@
     background-color: rgb(var(--info));
 }
 
-
+.close-toast{
+    & i{
+        font-weight: 300;
+        opacity: 0.8;
+        &:hover{
+            opacity: 1;
+        }
+    }
+}
 .toast-body{
     border-block-start: 1px solid rgb(var(--textClr), 0.1);
     padding: 10px;
@@ -112,3 +120,15 @@
         top: 90px;
     }
 } */
+
+@media screen and (max-width: 420px) {
+    .toast{
+        width: 100%;
+    }
+    .toast.active{
+        top: 0;
+    }
+    .toast-header{
+        gap: 12px;
+    }
+}
