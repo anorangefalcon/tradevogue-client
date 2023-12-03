@@ -180,6 +180,8 @@ export class SettingsComponent {
     // this.showWishlistedProducts('my wishlist');
     this.wishlistService.showWishlistedProducts().subscribe((data) => {
       this.wishlistedProducts = data
+      console.log(this.wishlistedProducts);
+      
     })
     this.wishlistService.getWishlistCount();
 
@@ -454,31 +456,19 @@ export class SettingsComponent {
 
     if (el == 'addresses') {
       this.loading = true;
+      this.getAddresses();
+    }
+    if (el == 'wishlist') {
+      this.loading = true;
+      this.showWishlists();
+    }
+    if (el == 'orders') {
+      this.loading = true;
 
-      if (el == 'addresses') {
-        this.getAddresses();
-      }
-      // if (el == 'wishlist') {
-      //   this.loading = true;
-      //   this.showWishlists();
-      // }
-      // if (el == 'orders') {
-      //   this.loading = true;
-
-      //   this.pageChange(1);
-      // }
-
-      // this.toggleAccordian(0);
-      this.TranslateData = true;
+      this.pageChange(1);
     }
 
-
-
-
-
-
-
-
-
+    // this.toggleAccordian(0);
+    this.TranslateData = true;
   }
 }
