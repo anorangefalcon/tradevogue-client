@@ -8,6 +8,7 @@ import { HttpClient } from '@angular/common/http';
 import { CheckoutService } from '../checkout.service';
 import { LoginCheckService } from 'src/app/shared/services/login-check.service';
 import { Subscription } from 'rxjs';
+import { ToastService } from 'src/app/shared/services/toast.service';
 declare let Stripe: any;
 interface PaymentOptions {
   key: string;
@@ -70,6 +71,8 @@ export class BillingComponent implements OnInit {
     private stripePay: CheckoutService,
     private http: HttpClient,
     private renderer: Renderer2,
+    private toastService: ToastService,
+    private router: Router
   ) {
     this.stripePay.setLoading = this.stripePay.setLoading.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -130,6 +133,7 @@ export class BillingComponent implements OnInit {
 
   // stripe elements loaded
   async initialize(stripe: any): Promise<void> {
+    console.log(this.cartitems, "cart items are ")
     const item = this.cartitems.details.map((item: { sku: any; name: any; price: any; quantity: any }) => {
       return {
         id: item.sku,
@@ -141,7 +145,8 @@ export class BillingComponent implements OnInit {
 
     const items = {
       orderId: this.checkOutService.orderID,
-      subTtotal: this.cartitems.amounts.subTotal,
+      subTtotal: this.cartitems.amounts.total,
+      saving: this.cartitems.amounts.saving,
       items: item
     }
 
@@ -350,79 +355,80 @@ export class BillingComponent implements OnInit {
   clicked() {
     this.my_div?.nativeElement.classList.toggle('display_none');
   }
+
   //razorpay
   async submitForm(): Promise<void> {
     try {
-
       this.cartService.fetchCart().subscribe(async (res) => {
         let result = JSON.parse(JSON.stringify(res));
-        // body.products=result.details;
         let body = {};
-        this.fetchDataService.HTTPGET(this.backendURLs.URLs.getLatestOrderId).subscribe((data: any) => {
           body = {
-            orderID: data.orderID
+            orderID: this.checkOutService.orderID
           };
           console.log(body, 'body is');
           this.fetchDataService.HTTPPOST(this.backendURLs.URLs.updateOrderStatus, body).subscribe();
-        });
 
       })
       this.cartService.fetchCart().subscribe(async (ress) => {
         let body = {};
         body = {
-          amount: 123,
+          amount: this.cartitems.amounts.total * 100,
           order_id: this.checkOutService.orderID,
           items: ress.details,
           token: "token"
         };
 
-        const res = await this.http.post<any>('http://localhost:1000/razorpay/createUpiPayment', body).toPromise();
-        if (res.success) {
-          const options: PaymentOptions = {
-            key: res.key_id,
-            amount: res.amount,
-            currency: 'INR',
-            name: 'Trade Vogue',
-            description: res.description,
-            image: '../../assets/logo-mobile.svg',
-            order_id: res.order_id,
-            handler: (response: any) => {
-              console.log(JSON.stringify(response))
-              let paymentBody = {};
-              this.userService.getUser('token').subscribe((token: any) => {
-                paymentBody = {
-                  orderId: this.checkOutService.orderID
-                };
-              });
-
-              this.fetchDataService.HTTPPOST(this.backendURLs.URLs.updateOrderStatus, paymentBody).subscribe((data: any) => {
-                console.log(data, "data is ")
-              });
-
-              alert('Payment Succeeded');
-            },
-            prefill: {
-              contact: res.contact,
-              name: res.name,
-              email: res.email,
-            },
-            notes: {
+      this.fetchDataService.HTTPPOST(this.backendURLs.URLs.createRazorpayOrder, body).subscribe((res: any) => {
+          if(res) {
+            const options: PaymentOptions = {
+              key: res.key_id,
+              amount: res.amount,
+              currency: 'INR',
+              name: 'Trade Vogue',
               description: res.description,
-            },
-            theme: {
-              color: '#047676',
-            },
-          };
-          const razorpayObject = new (window as any).Razorpay(options);
-          razorpayObject.on('payment.failed', (response: any) => {
-            alert('Payment Failed');
-          });
-          razorpayObject.open();
-        } else {
-          alert(res.msg);
-        }
-      });
-    } catch (error) {
+              image: '../../assets/logo-mobile.svg',
+              order_id: res.order_id,
+              handler: (response: any) => {
+                console.log(JSON.stringify(response))
+                let paymentBody = {};
+                this.userService.getUser('token').subscribe((token: any) => {
+                  paymentBody = {
+                    orderId: this.checkOutService.orderID
+                  };
+                });
+  
+                this.fetchDataService.HTTPPOST(this.backendURLs.URLs.updateOrderStatus, paymentBody).subscribe((data: any) => {
+                  if(data){
+                    this.toastService.successToast({ title: 'Order Placed' });
+                    console.log(data, "success");
+                  }
+                });
+                // payment success
+  
+              },
+              prefill: {
+                contact: res.contact,
+                name: res.name,
+                email: res.email,
+              },
+              notes: {
+                description: res.description,
+              },
+              theme: {
+                color: '#047676',
+              },
+            };
+            const razorpayObject = new (window as any).Razorpay(options);
+            razorpayObject.on('payment.failed', (response: any) => {
+              alert('Payment Failed');
+            });
+            razorpayObject.open();
+          } else {
+            alert(res);
+          }
+        });
+    }) 
+  } catch (error) {
       console.error('Error creating order:', error);
     }
   }

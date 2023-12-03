@@ -5,6 +5,7 @@ import { NavigationEnd, Router } from '@angular/router';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { CartService } from '../shared/services/cart.service';
 import { DialogBoxService } from '../shared/services/dialog-box.service';
+import { ToastService } from '../shared/services/toast.service';
 declare let Stripe: any;
 
 @Injectable({
@@ -27,6 +28,7 @@ export class CheckoutService {
     private fetchData: FetchDataService,
     private router: Router,
     private dialogBox: DialogBoxService,
+    private toastService: ToastService,
   ) 
   {
     this.allSubscriptions.push(
@@ -125,20 +127,17 @@ export class CheckoutService {
   private async handlePaymentIntentStatus(paymentIntent: any) {
     switch (paymentIntent.status) {
       case "succeeded":
-        await this.updateOrderStatus(paymentIntent);
+        await this.updateOrderStatus();
         await this.sendInvoiceData(paymentIntent);
         this.PaymentSuccess.next(true);
         break;
     }
   }
 
-  private async updateOrderStatus(paymentIntent: any) {
+  private async updateOrderStatus() {
 
     let body: any = {};
     body = {
-      // newPaymentStatus: 'success',
-      // transactionId: paymentIntent.id,
-      // MOP: paymentIntent.payment_method_types[0],
       orderID: this.orderID
     };
     this.allSubscriptions.push(
@@ -147,8 +146,8 @@ export class CheckoutService {
 
   private async sendInvoiceData(paymentIntent: any) {
     this.fetchData.HTTPPOST(this.backendUri.URLs.sendInvoice, paymentIntent).subscribe((res)=>{
-      // this.dialogBox.infoDialogBox({title: 'Payment Success'})
       if(res){
+        this.toastService.successToast({title:"Order Details sent to your mail"});
         console.log(res, "mail sent");
       }
     });

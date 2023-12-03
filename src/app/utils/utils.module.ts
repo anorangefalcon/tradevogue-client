@@ -197,7 +197,7 @@ export class UtilsModule {
     getPaymentKeys: `${this.BackendUrl}/paymentKeys/get`,
 
     // razorpay
-    razorpayPayment: `${this.BackendUrl}/razorpay/createUpiPayment`,
+    createRazorpayOrder: `${this.BackendUrl}/razorpay/createUpiPayment`,
 
     // redis 
     getClientSecret: `${this.BackendUrl}/paymentKeys/get-redis-data`,
