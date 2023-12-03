@@ -208,6 +208,8 @@ export class MonetizationComponent {
     this.selectedItem = key;
     this.delete_type = 'stripe';
 
+    console.log(this.selectedItem, "selected item are");
+
     let template: any = {
       title: 'Proceed with Deletion?',
       subtitle: 'The key will be permanently deleted, and recovery will not be possible. Are you sure you want to proceed?',

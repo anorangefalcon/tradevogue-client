@@ -1,4 +1,4 @@
-<div id="chat-bot" #chatBot>
+<div (click)="loadLatestOrder()" id="chat-bot" #chatBot>
   <div class="messenger br10">
     <mat-tab-group [(selectedIndex)]="selectedTabIndex">
       <mat-tab label="Home">
@@ -48,13 +48,9 @@
               How can I help you.
             </div>
           </div>
-          <h6 class="name">Your Latest Orders</h6>
+          <h6 class="name" *ngIf="productPresent">Your Latest Orders</h6>
 
           <div class="msg msg-left">
-            <ng-container *ngIf="loadingProducts">
-              <div class="loader"></div>
-            </ng-container>
-
             <ng-container *ngIf="!loadingProducts">
               <div *ngFor="let product of products" class="product-item pointer" (click)="showProductDetails(product)"
                 [title]="'Click to get details'">
@@ -75,13 +71,13 @@
             </ng-container>
           </div>
 
-          <div class="msg msg-left">
+          <div *ngIf="productPresent"  class="msg msg-left">
             <div class="name">
               Need More Detail
             </div>
             <div class="button-container">
-              <button *ngIf="!Clicked" class="btn" (click)="onYesClick()">Yes</button>
-              <button *ngIf="!Clicked" class="btn" (click)="onNoClick()">No</button>
+              <button *ngIf="!Clicked && productPresent" class="btn" (click)="onYesClick()">Yes</button>
+              <button *ngIf="!Clicked && productPresent" class="btn" (click)="onNoClick()">No</button>
             </div>
           </div>
 
@@ -123,20 +119,6 @@
                   <br>
                   <button class="btn" (click)="onNoThanks()">Resolved</button>
                   <br>
-                  <button class="btn" (click)="orderNotListed()">Order Not Listed</button>
-                </div>
-              </div>
-
-              <div *ngIf="previousOrders.length > 0" class="pointer">
-                <h3>Previous Orders:</h3>
-                <div class="dotted-box">
-                  <div *ngFor="let order of previousOrders" class="order-item">
-                    <p class="order-date">Order Date: {{ order.orderDate | date }}</p>
-                    <div *ngFor="let product of order.products" class="product-item" (click)="showProductDetail(order, product)">
-                      <img [src]="product.image" alt="Product Image" width="50" height="50">
-                      <span>{{ product.name }}</span>
-                    </div>
-                  </div>
                 </div>
               </div>
               
@@ -205,6 +187,42 @@
         </div>
 
       </mat-tab>
+
+      <mat-tab label="Live Chat">
+        <div class="accordion">
+          <div class="help-container">
+            <h2>Chatting</h2>
+            <p>Need Live assistance?</p>
+            <div class="scrollable-content">
+
+
+              <div class="chat-container">
+
+                <div *ngFor="let message of messages" class="chat-message"
+                [ngClass]="{'user-message': message.sender === 'user', 'bot-message': message.sender === 'bot'}">
+                <p [innerHTML]="message.content"></p>
+              </div>
+              
+                <div class="type-area">
+                  <input type="text" [(ngModel)]="textMessage" (keyup.enter)="sendLiveMessage()" class="typing"
+                    placeholder="Type Here...">
+                  <span class="send" (click)="sendLiveMessage()">
+                    <i class="bi bi-arrow-return-left"></i>
+                  </span>
+                </div>
+              </div>
+              
+
+
+
+            </div>
+          </div>
+
+
+        </div>
+
+      </mat-tab>
+
     </mat-tab-group>
   </div>
   <div class="icon-support" (click)="toggleChat()" style="font-size: 15px; text-align: center;">
@@ -218,88 +236,3 @@
 
   </div>
 </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!-- <div id="chat-bot" #chatBot fixed >
-  <div class="messenger br10">
-    <div class="timestamp">04:45 AM</div>
-    <div class="chatroom">
-      <div class="msg msg-left">
-        <div class="bubble">
-          <h6 class="name">Vivek Dhiman's Bot</h6>
-          Hello, I am a smart chat bot, <br />
-          How can I help you.
-        </div>
-      </div>
-      <div class="msg msg-right">
-        <div class="bubble">
-          Oh! Look at you. You are awesome
-        </div>
-      </div>
-      <div class="msg msg-right">
-        <div class="bubble">
-          Can you please tell me who created you?
-        </div>
-      </div>
-      <div class="msg msg-left">
-        <div class="bubble">
-          Yes, Of course! Vivek Dhiman created me. <br />
-          He's behind my awesomeness. He did a great job. didn't he?
-        </div>
-      </div>
-      <div class="msg msg-right">
-        <div class="bubble">
-          Yeah! He did an amazing job.<br />
-          How can I contact him?
-        </div>
-      </div>
-      <div class="msg msg-left">
-        <div class="bubble">
-          Here's my boss' Fiverr Username. <br />
-          <a href="www.fiverr.com/vivekdhiman" target="_blank">fiverr.com/vivekdhiman</a>
-        </div>
-      </div>
-      <div class="msg msg-right">
-        <div class="bubble">
-          Thanks alot. See you next time. Good bye
-        </div>
-      </div>
-
-      <div class="msg msg-left">
-        <div class="bubble">
-          Good bye. Take care
-        </div>
-      </div>
-
-    </div>
-    <div class="type-area">
-      <input type="text" class="typing" placeholder="Type Here...">
-      <span class="send">
-        <i class="bi bi-arrow-return-left"></i>
-      </span>
-    </div>
-  </div>
-  <div class="icon-support" (click)="toggleChat()" style="font-size: 15px; text-align: center;" >
-    <div class="user" style="font-size: 15px; font-size: 15px;">
-      <i class="bi bi-person-circle me-2 "></i>
-      Vivek Dhiman
-    </div>
-    <i class="bi bi-chat fa-1x chat-icon" style="right: 18px; position: absolute;"></i>
-    <i class="bi bi-x-lg fa-1x cross-icon" style="right: 18px; position: absolute;"></i>
-
-  </div>
-</div> -->

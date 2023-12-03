@@ -19,6 +19,7 @@ import { NoPageComponent } from '../no-page/no-page.component';
 import { NotificationsComponent } from './notifications/notifications.component';
 import { AboutComponent } from './about/about.component';
 import { CustomiseTcComponent } from './customise-tc/customise-tc.component';
+import { ChatComponent } from './chat/chat.component';
 
 const routes: Routes = [ 
   {
@@ -48,6 +49,7 @@ const routes: Routes = [
         path: 'customise-home', loadChildren: () => import('./edit-home/edit-home.module').then(m => m.EditHomeModule)
       },
       { path: 'notification' , component: NotificationsComponent },
+      { path: 'chat', component: ChatComponent},
       { path: 'customise-about', component: AboutComponent },
       {path:'customise-tc',component: CustomiseTcComponent},
       

@@ -1,0 +1,36 @@
+<div class="container">
+    <!-- Sidebar for user selection -->
+    <div class="user-sidebar">
+      <h2>Online Users</h2>
+      <div class="user-list">
+        <!-- Replace this ngFor loop with your user data -->
+        <div *ngFor="let user of userData" (click)="selectUser(user)">
+          <p>{{ user.name.firstname }}</p>
+        </div>
+      </div>
+    </div>
+  
+    <!-- Chat box -->
+    <div class="chat-box">
+      <ng-container *ngIf="selectedUser">
+        <h2>Chat Box: {{ selectedUser.name.firstname }}</h2>
+        <!-- Display the _id of the selected user -->
+        <p>User ID: {{ selectedUser._id }}</p>
+        <!-- Add your chat messages here -->
+        <div class="messages" *ngFor="let item of messageList">
+          <!-- Replace this ngFor loop with your chat messages -->
+          <div>
+            <p>{{ item }}</p>
+            <!-- <p>{{messages}}</p> -->
+          </div>
+          {{userMessage}}
+        </div>
+        <textarea [(ngModel)]="textMessage" placeholder="Type your message..."></textarea>
+        <button (click)="sendMessage()">Send</button>
+      </ng-container>
+      <div *ngIf="!selectedUser">
+        <p>Select a user to start chatting</p>
+      </div>
+    </div>
+  </div>
+  

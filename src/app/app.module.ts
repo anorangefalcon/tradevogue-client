@@ -32,6 +32,8 @@ import { MessagingService } from './shared/services/messaging-service';
 import { OffersCarouselComponent } from './offers-carousel/offers-carousel.component';
 import { CarouselModule } from 'ngx-owl-carousel-o';
 import { AboutComponent } from './about/about.component';
+import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
+const config: SocketIoConfig = { url: 'http://localhost:1000', options: {} };
 
 @NgModule({
   declarations: [
@@ -67,7 +69,8 @@ import { AboutComponent } from './about/about.component';
     FaqPageModule,
     CheckoutModule,
     HttpClientModule,
-    UtilsModule
+    UtilsModule,
+    SocketIoModule.forRoot(config),
   ],
   exports: [
   ],

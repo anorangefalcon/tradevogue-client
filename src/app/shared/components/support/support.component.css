@@ -656,3 +656,14 @@ p {
   border: 1px solid #ccc;
   border-radius: 5px;
 }
+
+.chat-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.right {
+  display: flex !important;
+    align-items: flex-end !important;
+}

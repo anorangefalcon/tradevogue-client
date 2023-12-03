@@ -2,6 +2,13 @@ import { Component, ElementRef } from '@angular/core';
 import { UtilsModule } from 'src/app/utils/utils.module';
 import { FetchDataService } from 'src/app/shared/services/fetch-data.service';
 import { LoginCheckService } from '../../services/login-check.service';
+import { CookieService } from 'ngx-cookie-service';
+
+import io from 'socket.io-client';
+
+const socket = io('http://localhost:3000/chat', {
+  transports: ['websocket']
+});
 
 @Component({
   selector: 'app-support',
@@ -11,7 +18,6 @@ import { LoginCheckService } from '../../services/login-check.service';
 
 export class SupportComponent {
   latestOrder: any;
-  showOrder: boolean = false;
   selectedTabIndex = 0;
   products: any[] = [];
   showTextView: boolean = false;
@@ -19,6 +25,7 @@ export class SupportComponent {
   newMessage: string = '';
   orderDetails: any;
   selectedOrder: any;
+  productPresent: boolean = false;
   public loadingProducts: boolean = true;
   showNewSection: boolean = false;
   Clicked: boolean = false;
@@ -26,30 +33,78 @@ export class SupportComponent {
   buttonsHidden: boolean = false;
   previousOrders: any[] = [];
   username: any= '';
-
+  message: string = '';
+  id: string = '';
+  textMessage: string = '';
+  name: any;
+  email: any;
+  userData: any = [];
+  senderId: any;
+  selectedUser: any; 
+  replyAdminMessage: any;
+  usermessage: any;
 
   constructor(private util: UtilsModule, private fetchData: FetchDataService,
-    private userService: LoginCheckService, private elementRef: ElementRef) {
+    private userService: LoginCheckService,
+     private elementRef: ElementRef,
+     private cookieService: CookieService) {
 
   }
 
   ngOnInit() {
-    this.loadLatestOrder();
+    socket.on('connect', () => {
+      console.log('Connected to server');
+    });
+
+    socket.on('connect_error', (error) => {
+      console.error('Connection error:', error); 
+    });
+
+    socket.on('userMessage', (res) => {
+      console.log(res);
+      this.usermessage = res.message;
+      socket.emit('newChat', res);
+    })
+
+
+
+    // socket.on('userMessages', (res) => {
+    //   console.log(res);
+    //   this.usermessage = res.message;
+    // });
+
+    // socket.on('newMessage', (data) => {
+    //   console.log('Received admin message:', data);
+    //   // Handle the admin message data as needed
+    //   if(data.sender == this.selectedUser._id) {
+    //   this.replyAdminMessage = data.message;
+    //   };
+
+    // });
+
+    // socket.on('replymessage', (data) => { 
+    //   console.log('Received admin message:', data);
+    //     this.replyAdminMessage = data.message;
+    //   // Handle the admin message data as needed
+    // });
+
   }
 
+  
+  
+
   loadLatestOrder() {
-    if (this.showOrder) {
-      this.fetchData.HTTPGET(this.util.URLs.getParticularUserOrders).subscribe(
+      this.fetchData.HTTPGET(this.util.URLs.getIndividualOrders).subscribe(
         (data: any) => {
-          if (Array.isArray(data) && data.length !== 0) {
-            this.products = data[0].products;
-            this.orderDetails = data[0];
-            
-          } 
-          this.loadingProducts = false;
-        }
+            console.log(data, "data is");
+            if (Array.isArray(data) && data.length !== 0) {
+              this.products = data[0].products;
+              this.orderDetails = data[0];
+              this.productPresent = true;
+            } 
+            this.loadingProducts = false;
+          }
       );
-    }
     
 
     this.userService.getUser('name').subscribe((name: any) => {
@@ -62,6 +117,7 @@ export class SupportComponent {
     });
   
   }
+  
 
   responses: any = {
     "hello": "Hello, how can I help you?",
@@ -82,8 +138,6 @@ export class SupportComponent {
 
     const response = this.checkKeywords(this.newMessage.toLowerCase());
     this.messages.push({ content: response, sender: 'bot' });
-
-    this.newMessage = '';
   }
 
   noMatch: boolean = false;
@@ -119,6 +173,8 @@ export class SupportComponent {
   }
 
 
+
+
   showProductDetails(product: any) {
     this.selectedProduct = product;
   }
@@ -146,6 +202,40 @@ export class SupportComponent {
     }
   }
 
+  sendLiveMessage() {
+
+    const token = this.cookieService.get('userToken');
+    if (token) {
+      const tokenParts = token.split('.');
+      if (tokenParts.length === 3) {
+        const encodedPayload = tokenParts[1];
+        const decodedPayload = atob(encodedPayload);
+        const payload = JSON.parse(decodedPayload);
+        console.log(payload, "payload is");
+        
+        console.log(this.usermessage, "user message is ");
+
+    this.messages.push({ content: this.textMessage, sender: 'user' });
+
+    socket.emit('newMessage', this.textMessage);
+// make it authenticate -> admin
+    socket.on('replymessage', (data) => { 
+      console.log('Received admin message:', data);
+
+      if(data.sender == payload.id) {
+        this.replyAdminMessage = data.message;
+        this.messages.push({ content: this.replyAdminMessage, sender: 'admin' });
+      }
+    });
+
+        // Use the payload data as needed
+      } else {
+        console.error('Invalid token format');
+      }
+    } else {
+      console.error('Token not found');
+    }
+}
 
 
   toggleChat() {
@@ -173,7 +263,6 @@ export class SupportComponent {
 
   onYesClick() {
     this.scrollToChatBot();
-    this.loadLatestOrder();
     this.showNewSection = true;
     this.Clicked = true;
   }
@@ -189,20 +278,6 @@ export class SupportComponent {
   markResolved() {
 
   }
-
-  orderNotListed() {
-    // Assuming loadPreviousOrders is a function that fetches the user's previous orders
-    this.previousOrders = this.loadPreviousOrders();
-  }
-
-  // Function to fetch previous orders
-  loadPreviousOrders() {
-    this.fetchData.HTTPGET(this.util.URLs.getParticularUserOrders).subscribe((data: any) => {
-      this.previousOrders = data;
-    });
-    return this.previousOrders;
-  }
-
 
 
 }

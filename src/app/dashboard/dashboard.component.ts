@@ -18,6 +18,7 @@ export class DashboardComponent {
   adminName: String = '';
   darkTheme: Boolean = false;
   allSubscriptions: Subscription[] = [];
+  chatLength: number = 0;
 
   constructor(private userService: LoginCheckService,
     private router: Router,
@@ -27,7 +28,6 @@ export class DashboardComponent {
     this.fetchDataService.themeColor$.subscribe((color) => {
       this.darkTheme = color;
     }));
-
   }
 
   toggleTheme(){
@@ -75,6 +75,10 @@ export class DashboardComponent {
     this.userService.getUser('name').subscribe((data: any) => {
       this.adminName = data;
     }));
+
+    this.fetchDataService.HTTPGET(this.backendURL.URLs.getChatDetails).subscribe((res: any)=> {
+      this.chatLength = res.length;
+    });
 
     // window.addEventListener("resize", () => {
     //   let check = window.matchMedia("(min-width: 768px)");

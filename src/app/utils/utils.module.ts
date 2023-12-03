@@ -122,6 +122,7 @@ export class UtilsModule {
     verifyOrderSummary: `${this.BackendUrl}/orders/verifyOrder`,
     createOrder: `${this.BackendUrl}/orders/create`,
     getParticularUserOrders: `${this.BackendUrl}/orders/getparticularUserOrders`,
+    getIndividualOrders: `${this.BackendUrl}/orders/getIndividualOrders`,
     cancelOrder: `${this.BackendUrl}/orders/cancelOrder`,
     verifyOrderWithoutCoupon:`${this.BackendUrl}/orders/verifyOrderWithoutCoupon`,
 
@@ -223,6 +224,8 @@ export class UtilsModule {
     // invoice send 
     sendInvoice: `${this.BackendUrl}/invoiceSend`, 
     
+    // chat
+    getChatDetails: `${this.BackendUrl}/chat/allOnlineUsers`,
   }
 }
 

@@ -31,7 +31,9 @@ import { GalleryComponent } from '../home/gallery/gallery.component';
 import { NotificationsComponent } from './notifications/notifications.component';
 import { AboutComponent } from './about/about.component';
 import { CustomiseTcComponent } from './customise-tc/customise-tc.component';
-
+import { ChatComponent } from './chat/chat.component';
+import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
+const config: SocketIoConfig = { url: 'http://localhost:1000', options: {} };
 
 @NgModule({
   declarations: [
@@ -55,6 +57,7 @@ import { CustomiseTcComponent } from './customise-tc/customise-tc.component';
     NotificationsComponent,
     AboutComponent,
     CustomiseTcComponent,
+    ChatComponent,
 
   ],
 
@@ -67,7 +70,8 @@ import { CustomiseTcComponent } from './customise-tc/customise-tc.component';
     ReactiveFormsModule,
     ProductPageModule,
     GalleryComponent,
-    RouterModule
+    RouterModule,
+    SocketIoModule.forRoot(config),
   ],
   providers: [
     UploadExcelService,
