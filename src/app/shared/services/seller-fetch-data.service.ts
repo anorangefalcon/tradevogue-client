@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { UtilsModule } from 'src/app/utils/utils.module';
 import { HttpParams } from '@angular/common/http';
 import { LoginCheckService } from './login-check.service';
+import { ToastService } from './toast.service';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +15,10 @@ export class SellerFetchDataService {
   orderurl = '../../../assets/tempDB/orders.json'
   userToken: any = '';
 
-  constructor(private http: HttpClient, private backendUrl: UtilsModule, private userService: LoginCheckService) { }
+  constructor(private http: HttpClient,
+     private backendUrl: UtilsModule,
+      private userService: LoginCheckService,
+      private toastservice: ToastService) { }
 
   ngOnInit(){
     this.userService.getUser('token').subscribe((token: any)=>{
@@ -38,7 +42,9 @@ export class SellerFetchDataService {
   }
   
   sendSellerInfo(data: any){
-    this.http.post(this.backendUrl.URLs.updateAccount, {'data': data}).subscribe();
+    this.http.post(this.backendUrl.URLs.updateAccount, {'data': data}).subscribe((data: any) => {
+        this.toastservice.successToast({ title: "Account Updated Successfully" });
+        });
   }
 
   sendPinInfo(data: any): Observable<any> {
@@ -48,7 +54,6 @@ export class SellerFetchDataService {
       })
     };
     return this.http.post('http://localhost:4000/api/purchaser/sendPinInfo', data);
-    
   }
 
   getProductInfo(){

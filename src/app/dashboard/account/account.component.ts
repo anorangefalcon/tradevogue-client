@@ -38,6 +38,7 @@ export class AccountComponent implements OnInit {
   password: string = "password";
   password2: string = "password";
   password3: string = "password";
+  edit: boolean = true;
 
   allSubscriptions: Subscription[] = [];
 
@@ -111,28 +112,9 @@ export class AccountComponent implements OnInit {
       area: ['', [Validators.required]],
     });
 
-    this.allSubscriptions.push(
-    this.sellerFetchDataService.getSellerInfo().subscribe((data: any) => {
-      // console.log("data", data)
-      const formattedDob = this.datePipe.transform(data[0].info.dob, 'yyyy-MM-dd');
-      this.profileForm.patchValue({
-        firstName: data[0].name.firstname,
-        lastName: data[0].name.lastname,
-        email: data[0].email,
-        dob: formattedDob,
-        address: data[0].info.address[0].apartment,
-        postalCode: data[0].info.address[0].pincode,
-        country: data[0].info.address[0].country,
-        state: data[0].info.address[0].state,
-        city: data[0].info.address[0].city,
-        gender: data[0].info.gender,
-        mobile: data[0].mobile,
-        area: data[0].info.address[0].area
-      });
-    }));
+    this.getSellerDetails();
 
     this.AccountForm = this.formBuilder.group({
-      // Create a FormGroup for AccountForm
       BankName: ['', Validators.required],
       AccountHolder: ['', Validators.required],
       AccountNo: ['', [Validators.required, Validators.maxLength(17), Validators.minLength(5)]],
@@ -192,6 +174,27 @@ export class AccountComponent implements OnInit {
     this.profileForm.disable();
   }
 
+  getSellerDetails() {
+    this.allSubscriptions.push(
+      this.sellerFetchDataService.getSellerInfo().subscribe((data: any) => {
+        const formattedDob = this.datePipe.transform(data[0].info.dob, 'yyyy-MM-dd');
+        this.profileForm.patchValue({
+          firstName: data[0].name.firstname,
+          lastName: data[0].name.lastname,
+          email: data[0].email,
+          dob: formattedDob,
+          address: data[0].info.address[0].apartment,
+          postalCode: data[0].info.address[0].pincode,
+          country: data[0].info.address[0].country,
+          state: data[0].info.address[0].state,
+          city: data[0].info.address[0].city,
+          gender: data[0].info.gender,
+          mobile: data[0].mobile,
+          area: data[0].info.address[0].area
+        });
+      }));
+  }
+
   onPostalCodeInputChange() {
     const postalCodeValue = this.profileForm?.get('postalCode')?.value;
     this.postalCodeInput.next(postalCodeValue);
@@ -213,8 +216,6 @@ export class AccountComponent implements OnInit {
   }
 
   async updateDetails(form: { [key: string]: string }) {
-
-
     const body = {
       "email": form['email'],
       "name": {
@@ -242,7 +243,7 @@ export class AccountComponent implements OnInit {
     }
 
     // let data: any = await this.fetchDataService.httpPost(this.backendUrls.URLs.loginUrl, body);
-    await this.sellerFetchDataService.sendSellerInfo(body);
+    await this.sellerFetchDataService.sendSellerInfo(body)
 
     const pinData = {
       "POSTAL_CODE": form['postalCode'],
@@ -255,27 +256,8 @@ export class AccountComponent implements OnInit {
     this.allSubscriptions.push(
     this.sellerFetchDataService.sendPinInfo(pinData).subscribe((data: any) => {
     }));
+    this.profileForm.disable();
   }
-
-
-
-
-
-  // async saveDetails() {
-
-  //   this.DetailsSubmitted = true;
-  //   if (this.ProfileForm.invalid) return;
-
-  //   let body = {
-  //     name: { firstname: this.ProfileForm.get('firstname')?.value, lastname: this.ProfileForm.get('lastname')?.value },
-  //     email: this.ProfileForm.get('email')?.value,
-  //     mobile: this.ProfileForm.get('mobile')?.value,
-  //     "info.gender": this.ProfileForm.get('gender')?.value,
-  //     "info.dob": new Date(this.ProfileForm.get('dob')?.value)
-  //   }
-  //   let response = await this.fetchDataService.httpPost(this.backendURLs.URLs.updateDetails, body);
-  //   this.isReadOnly = !this.isReadOnly;
-  // }
 
   uploadImage(e: Event) {
     const file = (e.target as HTMLInputElement).files![0];
