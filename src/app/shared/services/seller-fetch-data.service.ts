@@ -49,6 +49,7 @@ export class SellerFetchDataService {
 
   sendPinInfo(data: any): Observable<any> {
     const httpOptions = {
+      // pincode: data.pincode,
       headers: new HttpHeaders({
         'Content-Type': 'application/json'
       })
