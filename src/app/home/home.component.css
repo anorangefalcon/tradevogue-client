@@ -73,14 +73,14 @@ section {
     font-weight: 600;
     letter-spacing: 0.7px;
     text-align: center;
-    color: rgb(var(--whiteClr));
+    color: white
   }
 
   & input {
     width: 42%;
     font-size: 14px;
     padding: 12px 15px;
-    background-color: rgb(var(--whiteClr),0.8);
+    background-color: white;
     border: none;
     border-radius: 5px;
     outline: none;
@@ -107,7 +107,7 @@ section {
 
     & i {
       font-size: 18px;
-      color: rgb(var(--whiteClr));
+      color: white;
       transition: 0.3s ease-in-out;
     }
 

@@ -100,13 +100,13 @@ export class WishlistService {
     return this.http.post(this.backendUrls.URLs.removeWishlist, index);
   }
 
-  showWishlistedProducts(wishlist: string) {
-    const body = {
-      wishlistName: wishlist
-    }
-    return this.http.post(this.backendUrls.URLs.showProducts, body);
+  showWishlistedProducts() {
+    return this.http.get(this.backendUrls.URLs.showProducts);
   }
 
+  editWishlist (index: any){
+    return this.http.post(this.backendUrls.URLs.editWishlist, index);
+  }
 
   ngOnDestroy() {
     this.allSubscriptions.forEach((item: Subscription) => item.unsubscribe());

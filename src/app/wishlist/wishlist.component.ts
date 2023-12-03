@@ -24,6 +24,8 @@ export class WishlistComponent {
   showTextField: boolean = false;
   showAddLabel: boolean = true;
   productName: string = "";
+  updateRequest: string = '';
+
   allSubscriptions: Subscription[] = [];
 
   constructor(private wishlistService: WishlistService,
@@ -40,7 +42,8 @@ export class WishlistComponent {
       if (!data) return;
       this.list = data.wishlists;
       this.show = true;
-    }));
+    })
+    );
   }
 
   addToWishlist(wishlistName: string, type: String = '') {
@@ -48,7 +51,8 @@ export class WishlistComponent {
     const body = {
       wishlistName: wishlistName,
       productId: this.wishlistService.productId,
-      type : type
+      type : type,
+      id : this.updateRequest
     }
     this.allSubscriptions.push(
     this.fetchDataService.HTTPPOST(this.utils.URLs.addToWishlist, body).subscribe(
@@ -64,15 +68,33 @@ export class WishlistComponent {
           this.newWishlist = "";
           this.showTextField = false;
           this.show = false;
+          this.updateRequest = "";
         }
       }
     ));
   }
 
+  removeWishlist(index: any){
+    this.wishlistService.removeWishlist({ index }).subscribe((data: any) => {
+      const toast = {
+        title : data.message
+      }
+      this.toastService.warningToast(toast);
+      this.list.splice(index, 1);
+      this.wishlistService.getWishlistCount()
+    })
+  }
+
+  editWishlistName(index: any) {
+    this.wishlistService.editWishlist({index}).subscribe((data: any) => {
+
+    })
+  }
+
   handler(event: any) {
     this.showTextField = false;
+    this.updateRequest = '';
     this.show = event
-    // this.wishlistService.showWishlistPopup.
   }
 
   ngOnDestroy() {

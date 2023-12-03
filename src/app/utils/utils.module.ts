@@ -116,6 +116,7 @@ export class UtilsModule {
     showProducts: `${this.BackendUrl}/wishlist/showWishlistProducts`,
     deleteFromWishlist: `${this.BackendUrl}/wishlist/deleteFromWishlist`,
     removeWishlist : `${this.BackendUrl}/wishlist/deleteWishlist`,
+    editWishlist : `${this.BackendUrl}/wishlist/editWishlist`,
 
     // ORDERS
     verifyOrderSummary: `${this.BackendUrl}/orders/verifyOrder`,

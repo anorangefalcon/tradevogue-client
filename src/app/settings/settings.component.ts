@@ -52,6 +52,7 @@ export class SettingsComponent {
   wishlistedProducts: any;
   openedAccordionIndex: number | null = null;
   stripe: any;
+  wishlistCount: number = 0;
 
   productStatus: any = 'cancelled';
 
@@ -116,6 +117,7 @@ export class SettingsComponent {
 
     this.route.paramMap.subscribe((params: any) => {
       console.log('called again ');
+      // console.log('called again ');
 
       this.changeComponent(params.get('page'));
     });
@@ -138,6 +140,7 @@ export class SettingsComponent {
     this.ProfileForm.get('email')?.disable();
 
   };
+
 
 
 
@@ -174,7 +177,11 @@ export class SettingsComponent {
       this.ProfileForm.patchValue(data);
     })
 
-    this.showWishlistedProducts('my wishlist');
+    // this.showWishlistedProducts('my wishlist');
+    this.wishlistService.showWishlistedProducts().subscribe((data) => {
+      this.wishlistedProducts = data
+    })
+    this.wishlistService.getWishlistCount();
 
   }
 
@@ -184,35 +191,21 @@ export class SettingsComponent {
     }, 300);
   }
 
-  changeComponent(el: string) {
-    this.showData = el;
-    if (this.checkAccordingClick) {
-      this.AccordianIndex = 0;
-      this.toggleAccordian(this.AccordianIndex);
-    }
-    else {
-      this.toggleAccordian(this.AccordianIndex, true);
-    }
-    this.location.replaceState('usersetting/' + el);
 
-    if (el == 'addresses') {
-      this.loading = true;
-      this.getAddresses();
-    }
-    if (el == 'wishlist') {
-      this.loading = true;
-      this.showWishlists();
-    }
-    if (el == 'orders') {
-      this.loading = true;
+  toggleAccordian(index: any, check: boolean = false) {
 
-      this.pageChange(1);
-    }
+    this.AccordianIndex = index;
 
-    // this.toggleAccordian(0);
-    this.TranslateData = true;
+    if (check) {
+      this.openedAccordionIndex = index;
+      return;
+    }
+    if (this.openedAccordionIndex === index) {
+      this.openedAccordionIndex = null;
+    } else {
+      this.openedAccordionIndex = index;
+    }
   }
-
 
   async saveDetails() {
     let body = {
@@ -229,38 +222,29 @@ export class SettingsComponent {
 
   }
 
+
   // wishlist work 
   showWishlists() {
     this.toggleAccordian(0);
-    this.showWishlistedProducts('My Wishlist')
     this.fetchDataService.HTTPGET(this.backendURLs.URLs.showWishlist).subscribe((data: any) => {
       this.productsArray = data.wishlists;
       this.loading = false;
+      this.wishlistCount = data.count
     })
   }
 
   showWishlistedProducts(wishlist: string) {
-    console.log("Hello");
+    // console.log("Hello");
     this.wishlistedProducts = [];
-    setTimeout(()=>{
-      this.wishlistService.showWishlistedProducts(wishlist).subscribe((data) => {
-        this.wishlistedProducts = data;
-      });
-    }, 1);
+    // setTimeout(() => {
+    //   this.wishlistService.showWishlistedProducts().subscribe((data) => {
+    //     this.wishlistedProducts = data;
+    //     console.log(this.wishlistedProducts);
+
+    //   });
+    // }, 1);
   }
 
-  toggleAccordian(index: any, check: boolean = false) {
-    this.AccordianIndex = index;
-    if (check) {
-      this.openedAccordionIndex = index;
-      return;
-    }
-    if (this.openedAccordionIndex === index) {
-      this.openedAccordionIndex = null;
-    } else {
-      this.openedAccordionIndex = index;
-    }
-  }
 
   removeWishlist(index: number) {
     this.wishlistService.removeWishlist({ index }).subscribe((data: any) => {
@@ -274,25 +258,46 @@ export class SettingsComponent {
   }
 
   removeFromWishlist(productId: any, wishlistName: string) {
+    console.log(productId, wishlistName, "func");
+
     this.wishlistService.removeFromWishlist(productId, wishlistName).subscribe((res: any) => {
 
       if (res.response.modifiedCount) {
         // this.deleteProduct.next(true);
       }
     })
-    this.wishlistedProducts.forEach((product: any) => {
-      if (product.productDetails._id == productId) {
-        this.wishlistedProducts.splice(this.wishlistedProducts.indexOf(product), 1)
-        this.wishlistService.WishlistCount.next(this.wishlistService.WishlistCount.value - 1);
+    console.log(this.wishlistedProducts, "all");
+
+    // this.wishlistedProducts.forEach((product: any) => {
+    //   console.log(product, "product");
+
+    //   if (product.productinfo._id == productId) {
+    //     this.wishlistedProducts.splice(this.wishlistedProducts.indexOf(product), 1)
+    //     this.wishlistService.WishlistCount.next(this.wishlistService.WishlistCount.value - 1);
+    //   }
+    // })
+    this.wishlistedProducts.forEach((wishlist: any) => {
+      console.log(wishlist, "each wishlist");
+
+      if (wishlist._id == wishlistName) {
+        // wishlist.productinfo.splice(wishlist.productinfo.indexOf())
+        wishlist.productinfo.forEach((product: any) => {
+          console.log(product, "each product");
+
+          if (product._id == productId) {
+            wishlist.productinfo.splice(wishlist.productinfo.indexOf(product), 1)
+            this.wishlistService.WishlistCount.next(this.wishlistService.WishlistCount.value - 1);
+          }
+        })
       }
     })
   }
 
   moveToCart(product: any) {
+    // console.log(product, ' hehe');
+
     this.cartService.addToCart(product);
   }
-
-
   //  ADDRESS
   getAddresses() {
     this.showData = 'addresses';
@@ -303,7 +308,7 @@ export class SettingsComponent {
           this.AddressLength = data.length;
           if (data.length != 0) {
             this.userAddresses = data;
-           
+
           }
         }
         this.loading = false;
@@ -359,13 +364,12 @@ export class SettingsComponent {
     }
     this.fetchDataService.HTTPPOST(this.backendURLs.URLs.changePassword, body).subscribe((data: any) => {
       console.log(data);
+      // console.log(data);
 
       this.toastService.successToast({ title: data.message })
       this.changePasswordForm.reset()
     });
   }
-
-
   async MakeDefault(address: any, index: any) {
     try {
       const body = { address: address, index };
@@ -386,11 +390,8 @@ export class SettingsComponent {
         this.totalCount = 0;
         this.AllOrders = []
       }
-      else {
-        this.AllOrders = data[0]?.document;
-        this.totalCount = data[0]?.count;
-      }
-      this.loading = false;
+      this.AllOrders = data[0]?.document;
+      this.totalCount = data[0]?.count;
     });
   }
 
@@ -440,4 +441,44 @@ export class SettingsComponent {
     this.invoiceService.open();
   }
 
+  changeComponent(el: string) {
+    this.showData = el;
+    if (this.checkAccordingClick) {
+      this.AccordianIndex = 0;
+      this.toggleAccordian(this.AccordianIndex);
+    }
+    else {
+      this.toggleAccordian(this.AccordianIndex, true);
+    }
+    this.location.replaceState('usersetting/' + el);
+
+    if (el == 'addresses') {
+      this.loading = true;
+
+      if (el == 'addresses') {
+        this.getAddresses();
+      }
+      // if (el == 'wishlist') {
+      //   this.loading = true;
+      //   this.showWishlists();
+      // }
+      // if (el == 'orders') {
+      //   this.loading = true;
+
+      //   this.pageChange(1);
+      // }
+
+      // this.toggleAccordian(0);
+      this.TranslateData = true;
+    }
+
+
+
+
+
+
+
+
+
+  }
 }

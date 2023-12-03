@@ -276,7 +276,7 @@ label span {
 }
 
 .prod-name {
-    font-size: 15px !important;
+    font-size: 14px !important;
     font-weight: 600;
 }
 
@@ -307,13 +307,14 @@ label span {
     font-weight: 500;
 }
 
-.out-of-stock {
+.out-of-stock, .removeWishlist-btn:hover {
     color: rgb(var(--danger));
 }
 
 .in-stock {
     color: rgb(var(--primaryClr))
 }
+
 
 /* WISHLIST CSS ENDS */
 
