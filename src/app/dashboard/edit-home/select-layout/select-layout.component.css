@@ -17,10 +17,15 @@
     & div {
         /* height: fit-content; */
         height: 100%;
+        width: 100%;
 
         & .hero-section {
-            height: 500px !important;
+            height: 60dvh !important;
             object-position: top;
+
+            & .banner-background{
+                width: 100% !important;
+            }
         }
     }
 
@@ -63,6 +68,15 @@
     }
 }
 
+.action-button{
+    font-size: 20px;
+    font-weight: 400;
+    border-radius: 5px;
+    color: rgb(var(--blackClr), 0.8);
+    border: 0.3px solid rgb(var(--blackClr), 0.3);
+    padding: 1px 1px;
+}
+
 .app-div {
     pointer-events: none;
 }
@@ -75,7 +89,6 @@
 
     & .app-div {
         width: 100%;
-
         /* collections */
         & .collections {
             padding-block: 20px;
@@ -95,7 +108,7 @@
 
             & .container {
                 min-height: 0;
-                height: 300px;
+                /* height: 300px; */
             }
 
             & .deal-week-img {

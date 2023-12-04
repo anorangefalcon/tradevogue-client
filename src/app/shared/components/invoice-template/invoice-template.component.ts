@@ -20,11 +20,7 @@ export class InvoiceTemplateComponent {
   constructor(private fetchData: FetchDataService){}
   
   ngOnInit(){
-    console.log(this.orderInfo);
 
-    if(typeof(this.orderInfo) == 'string'){
-        
-    }
   }
 
   printInvoice(){
@@ -41,3 +37,21 @@ export class InvoiceTemplateComponent {
     // this.content.nativeElement.classList.remove('pop_open');
   }
 }
+
+    // let params: HttpParams = new HttpParams().set("orderID", orderId);
+    // console.log("dasda", orderId);
+    // this.fetchData.HTTPGET(this.backendUrl.URLs.getSellerOrderDetails, params).subscribe({
+    //   next: (res: any) => {
+    //     console.log(res);
+
+    // this.orderInfo = order;
+    //     let totalQty = 0;
+
+    //     res.products.forEach((product: any)=>{
+    //         totalQty += product.quantity;
+    //     });
+
+    //     this.orderInfo.orderDate = new Date(this.orderInfo.orderDate).toDateString()
+    //     this.orderInfo['totalQty'] = totalQty;
+    //   }
+    // });

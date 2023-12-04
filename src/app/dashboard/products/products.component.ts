@@ -143,6 +143,15 @@ export class ProductsComponent implements OnInit {
     const status = (<HTMLInputElement>e.target).checked;
     const body = { '_id': id, 'status': status, 'field': 'active' };
 
+    this.template['productID'] = id;
+
+    this.fetchdata.HTTPPOST(this.backendUrl.URLs.fetchProductInventory, this.template).subscribe({
+      next: (res: any) => {
+        console.log("sdasd", res);
+        delete this.template.productID;
+      }});
+
+
     this.fetchdata.HTTPPOST(this.backendUrl.URLs.productStatus, body).subscribe({
       next: (data: any) => {
         this.productList[index].status.active = status;
@@ -290,8 +299,6 @@ export class ProductsComponent implements OnInit {
     let excelData = this.excelService.handleFileInput(event);
     (<HTMLInputElement>event.target).value = '';
     excelData.then((excel: any) => {
-
-      console.log(excel);
 
       if (excel.errors.length) {
         let errorObj: any = {

@@ -121,9 +121,24 @@
                     <input type="color" id="titleColor" formControlName="subTitleColor" class="form__input">
                 </div> -->
 
-            <div class="form__group relative d-flex flex-column colors__div" formGroupName="colors">
+            <!-- <div class="form__group relative d-flex flex-column colors__div" formGroupName="colors">
                 <label class="form__label">Background Color<span>*</span></label>
                 <input type="color" id="backgroundColor" formControlName="backgroundColor" style="width: 20px; height: 20px;">
+            </div> -->
+
+            <div class="form__group relative d-flex flex-column">
+                <label class="form__label">Background Color<span>*</span></label>
+                <span class="relative">
+                    <input type="text " id="buttonLink" [value]="DealForm.get('colors')?.get('backgroundColor')?.value" 
+                        class="form__input color-input" readonly>
+                    <ng-container formGroupName="colors">
+                        <span class="tooltip">
+                            <input type="color" id="titleColor" formControlName="backgroundColor" class="absolute color-picker-position">                            
+                            <span class="tooltiptext"> Background Color </span>
+                        </span>
+                    </ng-container>
+
+                </span>
             </div>
 
             <!-- <div class="form__group relative d-flex flex-column colors__div" formGroupName="colors">

@@ -96,10 +96,10 @@ export class StatisticsComponent implements OnInit {
       if (saleData._id.year = year) {
 
         if (this.selectedType == "monthly") {
-          this.salesData[saleData._id.date - 1] = saleData.totalSales;
+          this.salesData[saleData._id.date - 1] = saleData.totalsales;
           this.profitData[saleData._id.date - 1] = saleData.totalProfit;
         } else {
-          this.salesData[saleData._id.month - 1] = saleData.totalSales;
+          this.salesData[saleData._id.month - 1] = saleData.totalsales;
           this.profitData[saleData._id.month - 1] = saleData.totalProfit;
         }
 

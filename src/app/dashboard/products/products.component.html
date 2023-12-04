@@ -19,6 +19,10 @@
                         href="../../../assets/ExcelSampleFile/sampleFullData.xlsx" download>
                         Download Sample
                     </a>
+
+                    <a class="downloadBtn d-flex flex-center pointer gap-5" (click)="exportProductsExcel()">
+                        Export Excel
+                    </a>
                 </div>
             </div>
         </div>
@@ -41,7 +45,7 @@
 
         </div>
         <div class="card card__pd-20 d-flex gap-20 align-item-center justify-content-md-between features">
-            <div class="file-section d-flex align-item-center gap-20">
+            <div class="operational-buttons file-section d-flex align-item-center gap-20">
 
                 <a class="downloadBtn d-flex flex-center pointer gap-5"
                     href="../../../assets/ExcelSampleFile/sampleFullData.xlsx" download>
@@ -57,10 +61,10 @@
                     Import
                 </label>
 
-                <a class="downloadBtn d-flex flex-center pointer gap-5" 
-                (click)="exportProductsExcel()" >
+                <button class="downloadBtn btn btn-md btn-rounded d-flex flex-center pointer gap-5" 
+                (click)="exportProductsExcel()" [disabled]="!deleteList.length" [ngStyle]="{'cursor': deleteList.length? 'pointer': 'no-drop'}">
                 <span class="material-symbols-outlined operation-icon">file_save</span>
-                    Export</a>
+                    Export</button>
             </div>
 
             <div class="operational-buttons d-flex  flex-wrap gap-20">

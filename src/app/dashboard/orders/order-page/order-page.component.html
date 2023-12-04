@@ -80,9 +80,9 @@
                         <td class="items"></td>
                         <td class="items"></td>
                         <td class="items"></td>
-                        <td class="items fw-500">Total</td>
+                        <td class="items fw-500">Sub-Total</td>
                         <td class="items fw-500">{{orderInfo.totalQty}}</td>
-                        <td class="items fw-500">&#8377; {{orderInfo.orderAmount}}</td>
+                        <td class="items fw-500">&#8377; {{orderInfo.OrderSummary.subTotal}}</td>
                     </tr>
                     <tr class="total">
                         <td class="items"></td>
@@ -92,7 +92,7 @@
                         <td class="items"></td>
                         <td class="items fw-500">Discount</td>
                         <td class="items">-</td>
-                        <td class="items fw-500">&#8377; {{orderInfo.discount}}</td>
+                        <td class="items fw-500">&#8377; {{orderInfo.OrderSummary.couponDiscount}}</td>
                     </tr>
                     <tr class="total">
                         <td class="items"></td>
@@ -102,7 +102,7 @@
                         <td class="items"></td>
                         <td class="items fw-500">Total</td>
                         <td class="items fw-500">{{orderInfo.totalQty}}</td>
-                        <td class="items fw-500">&#8377; {{orderInfo.orderValueAfterDiscount}}</td>
+                        <td class="items fw-500">&#8377; {{orderInfo.OrderSummary.total || orderInfo.OrderSummary.Total}}</td>
                     </tr>
                 </tbody>
             </table>

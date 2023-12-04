@@ -187,7 +187,6 @@ export class SettingsComponent {
     // this.showWishlistedProducts('my wishlist');
     this.wishlistService.showWishlistedProducts().subscribe((data) => {
       this.wishlistedProducts = data
-      console.log(this.wishlistedProducts);
       
     })
     this.wishlistService.getWishlistCount();
@@ -267,41 +266,40 @@ removeWishlist(index: number) {
   })
 }
 
-removeFromWishlist(productId: any, wishlistName: string) {
-  console.log(productId, wishlistName, "func");
+  removeFromWishlist(productId: any, wishlistName: string) {
 
   this.wishlistService.removeFromWishlist(productId, wishlistName).subscribe((res: any) => {
 
-    if (res.response.modifiedCount) {
-      // this.deleteProduct.next(true);
-    }
-  })
-  console.log(this.wishlistedProducts, "all");
+      if (res.response.modifiedCount) {
+        // this.deleteProduct.next(true);
+      }
+      this.wishlistedProducts = res.data;
+      console.log(res, "asdasd");
+    }); 
 
   // this.wishlistedProducts.forEach((product: any) => {
   //   console.log(product, "product");
 
-  //   if (product.productinfo._id == productId) {
-  //     this.wishlistedProducts.splice(this.wishlistedProducts.indexOf(product), 1)
-  //     this.wishlistService.WishlistCount.next(this.wishlistService.WishlistCount.value - 1);
-  //   }
-  // })
-  this.wishlistedProducts.forEach((wishlist: any) => {
-    console.log(wishlist, "each wishlist");
+    //   if (product.productinfo._id == productId) {
+    //     this.wishlistedProducts.splice(this.wishlistedProducts.indexOf(product), 1)
+    //     this.wishlistService.WishlistCount.next(this.wishlistService.WishlistCount.value - 1);
+    //   }
+    // })
+    // this.wishlistedProducts.forEach((wishlist: any) => {
+    //   console.log(wishlist, "each wishlist");
 
-    if (wishlist._id == wishlistName) {
-      // wishlist.productinfo.splice(wishlist.productinfo.indexOf())
-      wishlist.productinfo.forEach((product: any) => {
-        console.log(product, "each product");
+    //   if (wishlist._id == wishlistName) {
+    //     wishlist.productinfo.forEach((product: any) => {
+    //       console.log(product, "each product");
 
-        if (product._id == productId) {
-          wishlist.productinfo.splice(wishlist.productinfo.indexOf(product), 1)
-          this.wishlistService.WishlistCount.next(this.wishlistService.WishlistCount.value - 1);
-        }
-      })
-    }
-  })
-}
+    //       if (product._id == productId) {
+    //         wishlist.productinfo.splice(wishlist.productinfo.indexOf(product), 1)
+    //         this.wishlistService.WishlistCount.next(this.wishlistService.WishlistCount.value - 1);
+    //       }
+    //     })
+    //   }
+    // })
+  }
 
 moveToCart(product: any) {
   // console.log(product, ' hehe');
@@ -456,7 +454,7 @@ moveToCart(product: any) {
     this.getCancelledOrders()
   }
 
-  invoiceData: any;
+  invoiceData: any = '';
 
   viewInvoice(index: number) {
     console.log(this.AllOrders[index]);
@@ -472,7 +470,7 @@ moveToCart(product: any) {
     data['totalQty'] = totalQty;
     this.invoiceData = data;
 
-    this.invoiceService.open();
+    // this.invoiceService.open();
   }
 
   cancelOrder(orderId:String){

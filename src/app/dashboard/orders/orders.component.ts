@@ -116,7 +116,7 @@ export class OrdersComponent {
             orderID: order.data.orderID || null,
             customer: order.customer || '',
             orderTime: (new Date(order.data.orderDate)).toDateString(),
-            amount: order.data.orderAmount || 0,
+            amount: order.data.OrderSummary.Total || order.data.OrderSummary.total || 0,
             quantity: order.orderQuantity || 0,
             payment_status:  order.data.payment_status || '',
             invoice_status: order.data.invoice_status || '',

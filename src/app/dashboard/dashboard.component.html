@@ -79,16 +79,16 @@
                     <a [routerLink]="item.route ? item.route: null"
                         (click)="item.name.toLowerCase() == 'logout' ? logout() : null;" [class.dropdown]="item.sublist"
                         [routerLinkActive]="'active'"
-                        class="nav-links relative align-item-center d-flex gap-15 pointer">
+                        class="nav-links relative align-item-center d-flex gap-15 pointer transition">
                         <i class="icons material-symbols-outlined">{{item.icons}}</i>
                         <span class="nav-text">{{item.name}}</span>
                     </a>
 
-                    <ul class="sub-navlist" *ngIf="item.sublist" routerLinkActive="active"
+                    <ul class="sub-navlist transition" *ngIf="item.sublist" routerLinkActive="active"
                         [routerLinkActiveOptions]="{exact: true}">
 
-                        <li class="sub-links" *ngFor="let subitem of item.sublist">
-                            <a class="mw100" [routerLink]="subitem.route" routerLinkActive="active"
+                        <li class="sub-links transition" *ngFor="let subitem of item.sublist">
+                                <a class="mw100" [routerLink]="subitem.route" routerLinkActive="active"
                                 [routerLinkActiveOptions]="{exact: true}">{{subitem.name}}</a>
                         </li>
 

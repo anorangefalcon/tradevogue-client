@@ -87,7 +87,7 @@
             }
         }
 
-        & .header_links:hover > .notficationList{
+        & .header_links:hover >  .notficationList{
             opacity: 1;
             pointer-events: all;
         }
@@ -200,8 +200,6 @@
                 transition: all 0.2s ease-in-out;
             }
 
-
-
             & .icons {
                 font-size: 20px;
             }
@@ -247,7 +245,7 @@
 
     }
 
-    & .navlist>li:last-child {
+    & .navlist > li:last-child {
         margin-top: auto;
 
         & a {
@@ -265,21 +263,14 @@
 
     & .sidebar.active .navbar .navlist > li:last-child {
 
-        .nav-text{
+        & .nav-text{
             display: none;
         }
 
-        /* & a {
-            background-color: rgba(var(--primaryClr), 1);
-            justify-content: center;
-            color: rgb(var(--whiteClr));
-            margin-bottom: 10px;
-            border-radius: 5px;
-
-            &:hover {
-                background-color: rgba(var(--primaryClr), 0.8);
-            }
-        } */
+        & a{
+            background-color: rgba(var(--whiteClr), 1) !important;
+            color: rgb(var(--blackClr));
+        }
     }
 
     & .main {
@@ -322,6 +313,13 @@
                 }
             }
 
+            .nav-text{
+                /* width: 0; */
+                opacity: 0;
+                overflow: hidden;
+                text-wrap: nowrap;
+            }
+
             & .link-text {
                 opacity: 0;
                 visibility: hidden;
@@ -355,6 +353,11 @@
                 }
             }
 
+            & .nav-text{
+                opacity: 1;
+                overflow: visible;
+            }
+
             & .link-text {
                 opacity: 1;
                 visibility: visible;
@@ -367,6 +370,18 @@
 
             & a.dropdown::after {
                 opacity: 1;
+            }
+
+            .navbar .navlist > li:last-child {
+
+                & .nav-text{
+                    display: flex;
+                }
+        
+                & a{
+                    background-color: rgba(var(--primaryClr), 1) !important;
+                    color: rgb(var(--whiteClr));
+                }
             }
 
         }

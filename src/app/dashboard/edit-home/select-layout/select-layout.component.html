@@ -70,7 +70,7 @@
         <H4>Hero Section</H4>
 
         <div class="d-flex align-item-center justify-content-center gap-15">
-          <span class="material-symbols-outlined pointer" (click)="navigate(item.name)">
+          <span class="fs-20 fw-400 material-symbols-outlined pointer" (click)="navigate(item.name)">
             edit
           </span>
         </div>
@@ -98,13 +98,13 @@
             <label [for]="'collectionSwitch'"></label>
           </div>
 
-          <div>
-            <span *ngIf="getIndexFromName(item.name) > 1" class="material-symbols-outlined pointer"
+          <div class="gap-5 d-flex align-item-center">
+            <span *ngIf="getIndexFromName(item.name) > 1" class="action-button material-symbols-outlined pointer"
               (click)="moveUp(item.name)">
               expand_less
             </span>
             <span *ngIf="getIndexFromName(item.name) < (currentLayout.layout.length - 1)"
-              class="material-symbols-outlined pointer" (click)="moveDown(item.name)">
+              class="action-button material-symbols-outlined pointer" (click)="moveDown(item.name)">
               expand_more
             </span>
           </div>
@@ -134,17 +134,17 @@
             <label [for]="'dealSwitch'"></label>
           </div>
 
-          <span class="material-symbols-outlined pointer" (click)="navigate(item.name)">
+          <span class="fs-20 fw-400 material-symbols-outlined pointer" (click)="navigate(item.name)">
             edit
           </span>
 
-          <div>
-            <span *ngIf="getIndexFromName(item.name) > 1" class="material-symbols-outlined pointer"
+          <div class="gap-5 d-flex align-item-center">
+            <span *ngIf="getIndexFromName(item.name) > 1" class="action-button material-symbols-outlined pointer"
               (click)="moveUp(item.name)">
               expand_less
             </span>
             <span *ngIf="getIndexFromName(item.name) < (currentLayout.layout.length - 1)"
-              class="material-symbols-outlined pointer" (click)="moveDown(item.name)">
+              class="action-button material-symbols-outlined pointer" (click)="moveDown(item.name)">
               expand_more
             </span>
           </div>
@@ -172,13 +172,13 @@
             <label [for]="'latestProductsSwitch'"></label>
           </div>
 
-          <div>
-            <span *ngIf="getIndexFromName(item.name) > 1" class="material-symbols-outlined pointer"
+          <div class="gap-5 d-flex align-item-center">
+            <span *ngIf="getIndexFromName(item.name) > 1" class="action-button material-symbols-outlined pointer"
               (click)="moveUp(item.name)">
               expand_less
             </span>
             <span *ngIf="getIndexFromName(item.name) < (currentLayout.layout.length - 1)"
-              class="material-symbols-outlined pointer" (click)="moveDown(item.name)">
+              class="action-button material-symbols-outlined pointer" (click)="moveDown(item.name)">
               expand_more
             </span>
           </div>
@@ -208,17 +208,17 @@
             <label [for]="'offersSwitch'"></label>
           </div>
 
-          <span class="material-symbols-outlined pointer" (click)="navigate(item.name)">
+          <span class="fs-20 fw-400 material-symbols-outlined pointer" (click)="navigate(item.name)">
             edit
           </span>
 
-          <div>
-            <span *ngIf="getIndexFromName(item.name) > 1" class="material-symbols-outlined pointer"
+          <div class="gap-5 d-flex align-item-center">
+            <span *ngIf="getIndexFromName(item.name) > 1" class="action-button material-symbols-outlined pointer"
               (click)="moveUp(item.name)">
               expand_less
             </span>
             <span *ngIf="getIndexFromName(item.name) < (currentLayout.layout.length - 1)"
-              class="material-symbols-outlined pointer" (click)="moveDown(item.name)">
+              class="action-button material-symbols-outlined pointer" (click)="moveDown(item.name)">
               expand_more
             </span>
           </div>
@@ -250,17 +250,17 @@
             <label [for]="'productCarouselSwitch'"></label>
           </div>
 
-          <span class="material-symbols-outlined pointer" (click)="navigateToHighlightProducts()">
+          <span class="fs-20 fw-400 material-symbols-outlined pointer" (click)="navigateToHighlightProducts()">
             edit
           </span>
 
-          <div>
-            <span *ngIf="getIndexFromName(item.name) > 1" class="material-symbols-outlined pointer"
+          <div class="gap-5 d-flex align-item-center">
+            <span *ngIf="getIndexFromName(item.name) > 1" class="action-button material-symbols-outlined pointer"
               (click)="moveUp(item.name)">
               expand_less
             </span>
             <span *ngIf="getIndexFromName(item.name) < (currentLayout.layout.length - 1)"
-              class="material-symbols-outlined pointer" (click)="moveDown(item.name)">
+              class="action-button material-symbols-outlined pointer" (click)="moveDown(item.name)">
               expand_more
             </span>
           </div>
