@@ -35,6 +35,12 @@
           </div>
           {{userMessage}}
         </div>
+
+        <div>
+          <input type="file" (change)="onFileSelected($event)" />
+          <button (click)="uploadFile()">Upload</button>
+        </div>
+
         <textarea class="form__input" [(ngModel)]="textMessage" placeholder="Type your message..."></textarea>
         <button class="pointer btn-primary btn-sm btn-rounded" (click)="sendMessage()">Send</button>
       </ng-container>

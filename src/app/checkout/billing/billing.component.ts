@@ -43,6 +43,7 @@ export class BillingComponent implements OnInit {
   item: any = {};
   loading:boolean=true;
   cartitems: any = {};
+  PaymentDetails!:any
   total: any = {};
   quantity: any = {};
   totalAmount!: number;
@@ -85,11 +86,16 @@ export class BillingComponent implements OnInit {
     this.allSubscriptions.push(
       this.cartService.fetchCart().subscribe((data) => {
         this.cartitems = data;
-      }));
+      })),
+      this.checkOutService.FinalPaymentAmount.asObservable().subscribe((data) => {
+        if(data){
+          this.PaymentDetails = data;
+        }
+      }),
 
       this.fetchDataService.themeColor$.subscribe((color) => {
         this.theme = color;
-      });
+      })
   }
 
   ngOnInit(): void {
@@ -277,7 +283,7 @@ export class BillingComponent implements OnInit {
       console.error('Error occurred:', error);
     }
   }
-
+  paymentSuccess = false;
   // handle stripe click
   async proceedToPayment(): Promise<void> {
     try {
@@ -301,12 +307,12 @@ export class BillingComponent implements OnInit {
     } catch (error) {
       console.error('Error loading Stripe scripts:', error);
     }
-    this.allSubscriptions.push(
-      this.route.queryParams.subscribe(params => {
-        const redirectStatus = params['redirect_status'];
-        if (redirectStatus === 'succeeded') {
-        }
-      }));
+    this.route.queryParams.subscribe(params => {
+      const redirectStatus = params['redirect_status'];
+      if (redirectStatus === 'succeeded') {
+        this.paymentSuccess = true; 
+      }
+    });
   }
 
   async handleSubmit(e: Event): Promise<void> {
@@ -359,81 +365,76 @@ export class BillingComponent implements OnInit {
   }
 
   //razorpay
-  async submitForm(): Promise<void> {
+  submitForm(): void {
     try {
-      this.cartService.fetchCart().subscribe(async (res) => {
-        let result = JSON.parse(JSON.stringify(res));
-        let body = {};
-          body = {
-            orderID: this.checkOutService.orderID
-          };
-          console.log(body, 'body is');
-          this.fetchDataService.HTTPPOST(this.backendURLs.URLs.updateOrderStatus, body).subscribe();
-
-      })
-      this.cartService.fetchCart().subscribe(async (ress) => {
-        let body = {};
-        body = {
-          amount: this.cartitems.amounts.total * 100,
+      this.cartService.fetchCart().subscribe((ress) => {
+        if (this.PaymentDetails?.discount) {
+          this.PaymentDetails.total -= this.PaymentDetails?.discount;
+        }
+  
+        const body = {
+          amount: this.PaymentDetails?.total * 100,
           order_id: this.checkOutService.orderID,
           items: ress.details,
           token: "token"
         };
-
-      this.fetchDataService.HTTPPOST(this.backendURLs.URLs.createRazorpayOrder, body).subscribe((res: any) => {
-          if(res) {
+  
+        console.log('Body code ups is:', body);
+  
+        this.fetchDataService.HTTPPOST(this.backendURLs.URLs.createRazorpayOrder, body).subscribe((createOrderResponse: any) => {
+          if (createOrderResponse) {
             const options: PaymentOptions = {
-              key: res.key_id,
-              amount: res.amount,
+              key: createOrderResponse.key_id,
+              amount: createOrderResponse.amount,
               currency: 'INR',
               name: 'Trade Vogue',
-              description: res.description,
+              description: createOrderResponse.description,
               image: '../../assets/logo-mobile.svg',
-              order_id: res.order_id,
+              order_id: createOrderResponse.order_id,
               handler: (response: any) => {
                 console.log(JSON.stringify(response))
-                let paymentBody = {};
-                this.userService.getUser('token').subscribe((token: any) => {
-                  paymentBody = {
-                    orderId: this.checkOutService.orderID
-                  };
-                });
+                const paymentBody = {
+                  orderId: this.checkOutService.orderID
+                };
   
-                this.fetchDataService.HTTPPOST(this.backendURLs.URLs.updateOrderStatus, paymentBody).subscribe((data: any) => {
-                  if(data){
+                this.fetchDataService.HTTPPOST(this.backendURLs.URLs.updateOrderStatus, paymentBody).subscribe((updateOrderStatusResponse: any) => {
+                  if (updateOrderStatusResponse) {
                     this.toastService.successToast({ title: 'Order Placed' });
-                    console.log(data, "success");
+                    console.log(updateOrderStatusResponse, "success");
+                    this.cartService.clearCart();
+                    this.checkOutService.PaymentSuccess.next(true);
                   }
                 });
-                // payment success
-  
               },
               prefill: {
-                contact: res.contact,
-                name: res.name,
-                email: res.email,
+                contact: createOrderResponse.contact,
+                name: createOrderResponse.name,
+                email: createOrderResponse.email,
               },
               notes: {
-                description: res.description,
+                description: createOrderResponse.description,
               },
               theme: {
                 color: '#047676',
               },
             };
+  
             const razorpayObject = new (window as any).Razorpay(options);
             razorpayObject.on('payment.failed', (response: any) => {
               alert('Payment Failed');
             });
             razorpayObject.open();
           } else {
-            alert(res);
+            alert(createOrderResponse);
           }
         });
-    }) 
-  } catch (error) {
+      });
+    } catch (error) {
       console.error('Error creating order:', error);
     }
   }
+  
+  
 
   // ADDRESS TS FILE---------------------
   userAddresses: any[] = [];

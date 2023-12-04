@@ -7,9 +7,7 @@
 }
 
 
-.payment__btn{
-    display: none;
-}
+
 .old-price {
     font-size: 10px !important;
     text-decoration: line-through;

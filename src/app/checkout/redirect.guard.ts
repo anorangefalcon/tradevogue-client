@@ -22,15 +22,22 @@ export const redirectGuard: CanActivateFn = async(route, state) => {
   function waitForDialogResponse() {
     return new Promise(resolve => {
       dataSubscription = dialogBox.responseEmitter.subscribe((data: any) => {
-        resolve(data);
+        if(data) {
+          console.log("data cleared of address", data);
+          resolve(data);
+        }
       });
     });
   }
   emittedBoolean = await waitForDialogResponse();
   if(emittedBoolean){
-    checkOutService.addressSelected=(null);
+    console.log("emitted boolean", emittedBoolean);
+    checkOutService.addressSelected = null;
     checkOutService.secureNavbar.next(false);
+    checkOutService.loadStripe.next(false);
+    checkOutService.unloadStripeScript();
   }
+  checkOutService.addressSelected = null || emittedBoolean;
   dialogBox.responseEmitter.next(false);
   
   dataSubscription.unsubscribe();

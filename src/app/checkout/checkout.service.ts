@@ -17,6 +17,10 @@ export class CheckoutService {
   orderID: any = ''
   secureNavbar = new BehaviorSubject(false);
   PaymentSuccess=new BehaviorSubject(false);
+
+  FinalPaymentAmount=new BehaviorSubject<any>(false);
+
+
   secureNavbar$ = this.secureNavbar.asObservable();
   public orderId: string | null = null;
 

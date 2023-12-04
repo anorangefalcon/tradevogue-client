@@ -37,6 +37,7 @@ export class CheckoutComponent implements OnInit {
   @ViewChild('CouponCode') CouponCode: any;
 
   allSubscriptions: Subscription[] = [];
+  addressSelected: any = null;
 
   constructor(private cartService: CartService,
     private loginCheckService: LoginCheckService,
@@ -235,7 +236,8 @@ export class CheckoutComponent implements OnInit {
 
     if (!navigate) {
       this.allSubscriptions.push(
-        this.fetchService.HTTPPOST(this.BackendUrl.URLs.verifyOrderWithoutCoupon,  body).subscribe((response) => {  
+        this.fetchService.HTTPPOST(this.BackendUrl.URLs.verifyOrderWithoutCoupon,  body).subscribe((response) => { 
+       
           this.cart.amounts =JSON.parse(JSON.stringify(response));
         }));
     }
@@ -251,6 +253,7 @@ export class CheckoutComponent implements OnInit {
           this.fetchService.HTTPPOST(this.BackendUrl.URLs.verifyOrderSummary, body).subscribe({
             next:(response) => {
             this.cart.amounts =JSON.parse(JSON.stringify(response));
+              this.checkOutService.FinalPaymentAmount.next(response);
             this.router.navigate(['/cart/billing']);
             this.CheckOutDisabled=false;
           },
@@ -292,9 +295,9 @@ export class CheckoutComponent implements OnInit {
   OrderId: string = '';
   createOrder() {
     let body: any = {};
-    body.address = this.AddressSelected;
+  this.AddressSelected;
     if (this.CouponApplied) {
-      body.coupon = this.CouponApplied._id;
+      body.couponId = this.CouponApplied._id;
     }
     body.products = this.cart.details;
 

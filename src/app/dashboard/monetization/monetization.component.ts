@@ -6,7 +6,7 @@ import { HttpClient } from '@angular/common/http';
 import { PopupService } from 'src/app/shared/services/popup.service';
 import { LoginCheckService } from 'src/app/shared/services/login-check.service';
 import { DialogBoxService } from 'src/app/shared/services/dialog-box.service';
-
+import { ToastService } from 'src/app/shared/services/toast.service';
 @Component({
   selector: 'app-monetization',
   templateUrl: './monetization.component.html',
@@ -39,6 +39,7 @@ export class MonetizationComponent {
     private fetch: FetchDataService,
     private http: HttpClient,
     private dialogService: DialogBoxService,
+    private toastService: ToastService,
     private popup: PopupService) { }
 
   ngOnInit(): void {
@@ -49,7 +50,7 @@ export class MonetizationComponent {
     this.dialogService.responseEmitter.subscribe({
       next: (res: any) => {
 
-        if (this.selectedItem && res && this.delete_type == 'stripe') {
+        if (this.selectedItem && res && this.delete_type == ('stripe' || 'razorpay')) {
           const id = this.selectedItem._id;
           const itemIndex = this.paymentKeys.findIndex((key: any) => key._id === id);
           console.log(itemIndex, "item index are")
@@ -60,14 +61,14 @@ export class MonetizationComponent {
           const body = {
             id
           }
-
           this.fetch.HTTPPOST(this.util.URLs.deletePaymentKeys, body)
             .subscribe((response: any) => {
-              this.fetchData();
+              if(response) {
+                this.toastService.successToast({ title: 'Payment Key Deleted Successfully' });
+                this.fetchData();
+              }
             })
-
         }
-
       }
     })
   }
@@ -202,11 +203,11 @@ export class MonetizationComponent {
     }
   }
 
-  delete_type: string = 'stripe';
+  delete_type: string = 'stripe' || 'razorpay';
 
   delete(key: any) {
     this.selectedItem = key;
-    this.delete_type = 'stripe';
+    this.delete_type = 'stripe' || 'razorpay';
 
     console.log(this.selectedItem, "selected item are");
 

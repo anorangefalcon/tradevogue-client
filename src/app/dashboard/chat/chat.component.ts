@@ -29,6 +29,7 @@ export class ChatComponent implements OnInit {
   loading: boolean = true;
   theme: Boolean = false;
   messageList: any = [];
+  private selectedFile: File | undefined;
   constructor(private fetchDataService: FetchDataService,
     private utilsModule: UtilsModule) {
       this.getUsers();
@@ -96,6 +97,31 @@ export class ChatComponent implements OnInit {
     //   this.userMessage = res;
     // })
 
+  }
+
+  upload(files: any) {
+    socket.emit("upload", files[0], (status: any) => {
+      console.log(status);
+    });
+  }
+
+  onFileSelected(event: any) {
+    const fileList: FileList = event.target.files;
+    if (fileList.length > 0) {
+      this.selectedFile = fileList[0];
+    }
+  }
+
+  uploadFile() {
+    if (!this.selectedFile) {
+      console.log('No file selected');
+      return;
+    }
+
+    socket.emit('upload', this.selectedFile, (status: any) => {
+      console.log(status);
+      // Handle the status response from the server
+    });
   }
 
   sendMessage() {

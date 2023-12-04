@@ -1,4 +1,4 @@
-<div class="container billingPage d-flex flex-column gap-20" >
+<div class="container billingPage d-flex flex-column gap-20">
 
     <!-- <div *ngIf="loading" class="tv-loading">
         <img src="../../assets/logo-mobile.svg" alt="tradeVogue-loading" *ngIf="!theme">
@@ -44,7 +44,8 @@
                                     <div class="d-flex gap-10">
                                         <p class="name pointer-none">{{address.firstname | titlecase}}
                                             {{address.lastname | titlecase}}</p>
-                                        <button class="default__btn btn" *ngIf="address?.selected">delivering here</button>
+                                        <button class="default__btn btn" *ngIf="address?.selected">delivering
+                                            here</button>
                                     </div>
                                 </div>
                                 <p>{{address.apartment}} {{address.area}} {{address.landmark}}, {{address.town_city}}
@@ -79,7 +80,7 @@
         <!-- new address  -->
         <div [ngClass]="{'show':ShowComponent==true}">
             <app-address [ShowComponent]="ShowComponent" [receiveData]="receiveData"
-                (AddressHandler)="AddressHandler($event)" ></app-address>
+                (AddressHandler)="AddressHandler($event)"></app-address>
         </div>
     </div>
 
@@ -87,7 +88,7 @@
 
     <!-- PAYMENT STARTS -->
     <div *ngIf="StripeOpener">
-        <div class="payment-form"  *ngIf="selectedPaymentMethod === 'stripe'">
+        <div class="payment-form" *ngIf="selectedPaymentMethod === 'stripe'">
             <form id="payment-form">
                 <div class="payment-elements">
                     <!-- Stripe.js elements -->
@@ -113,15 +114,15 @@
                 Other Payment Method
             </button>
         </div>
-       <div *ngIf="selectedPaymentMethod === 'razorpay'">
+        <div *ngIf="selectedPaymentMethod === 'razorpay'">
             <div [ngClass]="{'selected-box': selectedPaymentMethod === 'razorpay'}">
                 Payment Method Selected Proceed To Payment
                 <form class="hidden" (submit)="submitForm()">
-                    <input type="hidden" name="amount" [value]="123">
+                    <input type="hidden" name="amount">
                     <button class="hidden" id='razorSubmit' type="submit">Pay</button>
                 </form>
             </div>
-       </div>
+        </div>
     </div>
 
 

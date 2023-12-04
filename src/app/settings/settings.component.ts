@@ -383,7 +383,7 @@ export class SettingsComponent {
       }
       else {
         this.AllOrders = data[0]?.document;
-        this.totalCount = data[0]?.count;
+        this.totalCount = data?.length;
       }
       this.loading = false;
     });
