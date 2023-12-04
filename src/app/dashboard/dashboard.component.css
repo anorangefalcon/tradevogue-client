@@ -93,20 +93,39 @@
         }
 
         & .notficationList{
+            border-radius: 4px;
+            padding: 15px;
             inset-block-start: 100%;
             inset-inline-end: 0;
-            width: 360px;
-            height: 400px;
+            width: 290px;
+            height: 300px;
             overflow: scroll;
             background-color: rgb(var(--whiteClr));
             opacity: 0;
             pointer-events: none;
+            box-shadow: 0px 0px 5px rgb(var(--blackClr), 0.08);
 
-            ul{
-                display: flex;
-                flex-direction: column;
-                gap: 5px;
-            }
+            & li {
+                    padding-block-end: 10px;
+                    & img {
+                        height: 40px;
+                        border-radius: 50%;
+                        object-fit: cover;
+                        object-position: top;
+                    }
+                    & div > .name {
+                        font-weight: 500;
+                    }
+                    & div > .out-of-stock{
+                        font-size: 10px !important;
+                        color: rgb(var(--danger));
+                    }
+                }
+                & li:not(:last-child) {
+                    border-block-end: 0.5px solid rgb(var(--textClr), 0.3);
+                }
+            
+           
         }
 
 

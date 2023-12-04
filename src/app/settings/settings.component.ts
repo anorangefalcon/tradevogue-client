@@ -254,17 +254,16 @@ showWishlistedProducts(wishlist: string) {
   // }, 1);
 }
 
-
-removeWishlist(index: number) {
-  this.wishlistService.removeWishlist({ index }).subscribe((data: any) => {
-    const toast = {
-      title: data.message
-    }
-    this.toastService.warningToast(toast);
-    this.showWishlists()
-    this.wishlistService.getWishlistCount()
-  })
-}
+  removeWishlist(index: number) {
+    this.wishlistService.removeWishlist({ index }).subscribe((data: any) => {
+      const toast = {
+        title: data.message
+      }
+      this.toastService.warningToast(toast);
+      this.showWishlists()
+      this.wishlistService.getWishlistCount()
+    })
+  }
 
   removeFromWishlist(productId: any, wishlistName: string) {
 
@@ -322,8 +321,6 @@ moveToCart(product: any) {
       })
   }
 
-
-
   AddAddress() {
     this.receiveData = '';
     this.ShowComponent = true;
@@ -377,6 +374,7 @@ moveToCart(product: any) {
       this.changePasswordForm.reset()
     });
   }
+  
   async MakeDefault(address: any, index: any) {
     try {
       const body = { address: address, index };

@@ -20,16 +20,21 @@
                     </a>
                 </li>
                 <li class="header_links relative">
+                        <span class="count d-flex flex-center text-center absolute">{{0}}</span>
+                   
+                </li>
+                <li class="header_links relative pointer">
                     <span class="mh100 notification d-flex align-item-center relative">
                         <span class="pointer transition icons material-symbols-outlined">notifications</span>
                         <span class="count d-flex flex-center text-center absolute">{{notficationList.length}}</span>
                     </span>
-                    <ul class="notficationList absolute">
-                        <li *ngFor="let item of notficationList; let i=index">
-                            <img [src]="item.image" alt="" width="40px" height="20px">
-                            <p>{{item.name}}</p>
-                            <p>{{item.category}}</p>
-                            <p>{{'Out of Stock'}}</p>
+                    <ul class="notficationList absolute d-flex flex-column gap-10">
+                        <li *ngFor="let item of notficationList; let i=index" class="d-flex gap-10 ">
+                            <img [src]="item.image" alt="" width="40px" height="20px" class="skeleton">
+                            <div class="d-flex flex-column ">
+                                <p class="name">{{item.name}}</p>
+                                <p class="out-of-stock">{{'Out of Stock'}}</p>
+                            </div>
                         </li>
                     </ul>
                 </li>
