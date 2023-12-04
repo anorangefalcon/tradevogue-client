@@ -7,8 +7,8 @@
                     class="d-flex justify-content-md-between align-item-center mw100 transition labels">
                     <input type="radio" name="wishlist" id="{{i}}" value="{{item}}"
                         (click)="addToWishlist(item.wishlistName)">
-                    <label for="{{i}}" class="pointer">
-                        <p class="fs-14 fw-500 relative">{{item.wishlistName | titlecase}}</p>
+                    <label for="{{i}}" class=" pointer">
+                        <p class="fs-14 fw-500 relative no-pointer">{{item.wishlistName | titlecase}}</p>
                     </label>
                     <div class="d-flex gap-5" *ngIf="i!=0">
                         <span class="material-symbols-outlined edit-btn pointer"

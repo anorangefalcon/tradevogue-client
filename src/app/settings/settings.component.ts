@@ -32,12 +32,12 @@ export class SettingsComponent {
   theme: Boolean = false;
   AccordianIndex: number = 0;
   totalCount: number = 0;
-  cancelledOrdersCount:number=0;
+  cancelledOrdersCount: number = 0;
   currentPage: number = 1;
-  cancelledCurrentPage:number=1;
+  cancelledCurrentPage: number = 1;
   AllOrders: any = [];
-  CancelledOrders:any=[];
-  DefaultShowOrders='active';
+  CancelledOrders: any = [];
+  DefaultShowOrders = 'active';
   ProfileDisabled: boolean = true;
   emailDisabled: boolean = true;
   AddressLength: number = 0;
@@ -69,10 +69,10 @@ export class SettingsComponent {
     limit: 1
   }
 
-  cancelledTempatePagination:any={
+  cancelledTempatePagination: any = {
     currentPage: this.cancelledCurrentPage,
     limit: 1,
-    active:false
+    active: false
   }
 
   template: any = {
@@ -149,6 +149,26 @@ export class SettingsComponent {
 
   };
 
+  ngOnInit() {
+    this.fetchDataService.HTTPGET(this.backendURLs.URLs.getDetails).subscribe((data: any) => {
+      data.firstname = data.name.firstname;
+      data.lastname = data.name.lastname;
+      data.gender = data.info.gender;
+      if (data.info.dob) {
+        data.dob = data.info.dob.split('T')[0];
+      }
+      this.ProfileForm.patchValue(data);
+    })
+
+    // this.showWishlistedProducts('my wishlist');
+    this.wishlistService.showWishlistedProducts().subscribe((data) => {
+      this.wishlistedProducts = data
+
+    })
+    this.wishlistService.getWishlistCount();
+
+  }
+
 
 
 
@@ -174,25 +194,7 @@ export class SettingsComponent {
     return check;
   }
 
-  ngOnInit() {
-    this.fetchDataService.HTTPGET(this.backendURLs.URLs.getDetails).subscribe((data: any) => {
-      data.firstname = data.name.firstname;
-      data.lastname = data.name.lastname;
-      data.gender = data.info.gender;
-      if (data.info.dob) {
-        data.dob = data.info.dob.split('T')[0];
-      }
-      this.ProfileForm.patchValue(data);
-    })
-
-    // this.showWishlistedProducts('my wishlist');
-    this.wishlistService.showWishlistedProducts().subscribe((data) => {
-      this.wishlistedProducts = data
-      
-    })
-    this.wishlistService.getWishlistCount();
-
-  }
+  
 
   TranslateBack() {
     setTimeout(() => {
@@ -231,29 +233,16 @@ export class SettingsComponent {
 
   }
 
-
   // wishlist work 
-// wishlist work 
-showWishlists() {
-  this.toggleAccordian(0);
-  this.fetchDataService.HTTPGET(this.backendURLs.URLs.showWishlist).subscribe((data: any) => {
-    this.productsArray = data.wishlists;
-    this.loading = false;
-    this.wishlistCount = data.count
-  })
-}
-
-showWishlistedProducts(wishlist: string) {
-  // console.log("Hello");
-  this.wishlistedProducts = [];
-  // setTimeout(() => {
-  //   this.wishlistService.showWishlistedProducts().subscribe((data) => {
-  //     this.wishlistedProducts = data;
-  //     console.log(this.wishlistedProducts);
-
-  //   });
-  // }, 1);
-}
+  
+  showWishlists() {
+    this.toggleAccordian(0);
+    this.fetchDataService.HTTPGET(this.backendURLs.URLs.showWishlist).subscribe((data: any) => {
+      this.productsArray = data.wishlists;
+      this.loading = false;
+      this.wishlistCount = data.count
+    })
+  }
 
   removeWishlist(index: number) {
     this.wishlistService.removeWishlist({ index }).subscribe((data: any) => {
@@ -261,51 +250,33 @@ showWishlistedProducts(wishlist: string) {
         title: data.message
       }
       this.toastService.warningToast(toast);
-      this.showWishlists()
+      this.wishlistService.showWishlistedProducts().subscribe((data) => {
+        this.wishlistedProducts = data
+      })
       this.wishlistService.getWishlistCount()
     })
   }
 
   removeFromWishlist(productId: any, wishlistName: string) {
 
-  this.wishlistService.removeFromWishlist(productId, wishlistName).subscribe((res: any) => {
+    this.wishlistService.removeFromWishlist(productId, wishlistName).subscribe((res: any) => {
+
+      console.log(res, "remove response");
 
       if (res.response.modifiedCount) {
-        // this.deleteProduct.next(true);
+        this.wishlistedProducts = res.data;
+        this.wishlistService.getWishlistCount()
+        this.toastService.warningToast({ title: 'Product removed!'})
+
       }
-      this.wishlistedProducts = res.data;
-      console.log(res, "asdasd");
-    }); 
+    });
 
-  // this.wishlistedProducts.forEach((product: any) => {
-  //   console.log(product, "product");
-
-    //   if (product.productinfo._id == productId) {
-    //     this.wishlistedProducts.splice(this.wishlistedProducts.indexOf(product), 1)
-    //     this.wishlistService.WishlistCount.next(this.wishlistService.WishlistCount.value - 1);
-    //   }
-    // })
-    // this.wishlistedProducts.forEach((wishlist: any) => {
-    //   console.log(wishlist, "each wishlist");
-
-    //   if (wishlist._id == wishlistName) {
-    //     wishlist.productinfo.forEach((product: any) => {
-    //       console.log(product, "each product");
-
-    //       if (product._id == productId) {
-    //         wishlist.productinfo.splice(wishlist.productinfo.indexOf(product), 1)
-    //         this.wishlistService.WishlistCount.next(this.wishlistService.WishlistCount.value - 1);
-    //       }
-    //     })
-    //   }
-    // })
   }
 
-moveToCart(product: any) {
-  // console.log(product, ' hehe');
+  moveToCart(product: any) {
+    this.cartService.addToCart(product);
+  }
 
-  this.cartService.addToCart(product);
-}
   //  ADDRESS
   getAddresses() {
     this.showData = 'addresses';
@@ -389,7 +360,7 @@ moveToCart(product: any) {
       this.changePasswordForm.reset()
     });
   }
-  
+
   async MakeDefault(address: any, index: any) {
     try {
       const body = { address: address, index };
@@ -405,31 +376,31 @@ moveToCart(product: any) {
   // orders code 
   getOrders() {
     this.fetchDataService.HTTPPOST(this.backendURLs.URLs.getParticularUserOrders, this.TemplatePagination).subscribe((data: any) => {
-     
+
       if (!data.length) {
         this.totalCount = 0;
         this.AllOrders = []
       }
-      else{
+      else {
         this.AllOrders = data[0]?.document;
         this.totalCount = data[0]?.count;
       }
-      this.loading=false;
+      this.loading = false;
     });
   }
 
-  getCancelledOrders(){
+  getCancelledOrders() {
     // this.TranslateData = true;
     this.fetchDataService.HTTPPOST(this.backendURLs.URLs.getParticularUserOrders, this.cancelledTempatePagination).subscribe((data: any) => {
       if (!data.length) {
         this.cancelledOrdersCount = 0;
         this.CancelledOrders = []
       }
-      else{
+      else {
         this.CancelledOrders = data[0]?.document;
         this.cancelledOrdersCount = data[0]?.count;
       }
-      this.loading=false;
+      this.loading = false;
     });
 
 
@@ -462,7 +433,7 @@ moveToCart(product: any) {
     this.getOrders();
   }
 
-  pageChangeCancelledOrders(pageNo:number){
+  pageChangeCancelledOrders(pageNo: number) {
     this.cancelledCurrentPage = pageNo;
     this.getCancelledOrders()
   }
@@ -486,10 +457,10 @@ moveToCart(product: any) {
     // this.invoiceService.open();
   }
 
-  cancelOrder(orderId:String){
-    console.log("order id is ",orderId)
-    let body={orderId};
-    this.fetchDataService.HTTPPOST(this.backendURLs.URLs.cancelOrder,body).subscribe(()=>{
+  cancelOrder(orderId: String) {
+    console.log("order id is ", orderId)
+    let body = { orderId };
+    this.fetchDataService.HTTPPOST(this.backendURLs.URLs.cancelOrder, body).subscribe(() => {
       this.pageChange(this.currentPage);
     })
   }
@@ -507,24 +478,24 @@ moveToCart(product: any) {
 
     if (el == 'addresses') {
       this.loading = true;
-        this.getAddresses();
-      }
-
-      if (el == 'wishlist') {
-        this.loading = true;
-        this.showWishlists();
-      }
-      if (el == 'orders') {
-        this.loading = true;
-        this.DefaultShowOrders='active';
-        this.pageChange(1);
-      }
-
-      // this.toggleAccordian(0);
-      this.TranslateData = true;
+      this.getAddresses();
     }
+
+    if (el == 'wishlist') {
+      // this.loading = true;
+      // this.showWishlists();
+    }
+    if (el == 'orders') {
+      this.loading = true;
+      this.DefaultShowOrders = 'active';
+      this.pageChange(1);
+    }
+
+    // this.toggleAccordian(0);
+    this.TranslateData = true;
   }
-  
+}
+
 
 
 

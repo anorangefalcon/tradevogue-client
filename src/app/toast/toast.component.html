@@ -1,22 +1,24 @@
 <div (mouseenter)="hoverIn()" (mouseleave)="hoverOut()" class="container">
     <div class="toast" [ngClass]="display ? 'active' : ''">
 
-        <div class="toast-header d-flex align-item-center">
+        <div class="toast-header d-flex align-item-center justify-content-md-between">
 
             <div *ngIf="display" class="loader {{display}}-bg"></div>
 
-            <div class="logo d-flex flex-center">
-                <i *ngIf="display === 'success'" class="success material-symbols-outlined">done</i>
-                <i *ngIf="display === 'error'" class="error material-symbols-outlined">error</i>
-                <i *ngIf="display === 'warning'" class="warning material-symbols-outlined">warning</i>
-                <i *ngIf="display === 'notification'" class="notification material-symbols-outlined">info</i>
+            <div class="d-flex gap-5">
+                <div class="logo d-flex flex-center">
+                    <i *ngIf="display === 'success'" class="success material-symbols-outlined">done</i>
+                    <i *ngIf="display === 'error'" class="error material-symbols-outlined">error</i>
+                    <i *ngIf="display === 'warning'" class="warning material-symbols-outlined">warning</i>
+                    <i *ngIf="display === 'notification'" class="notification material-symbols-outlined">info</i>
+                </div>
+
+                <div class="text {{display}}">
+                    {{content?.title}}
+                </div>
             </div>
 
-            <div class="text {{display}}">
-                {{content?.title}}
-            </div>
-
-            <div (click)="closeToast()" class="close-toast pointer" >
+            <div (click)="closeToast()" class="close-toast pointer">
                 <i class="material-symbols-outlined" class="{{display}}">keyboard_arrow_up</i>
             </div>
         </div>

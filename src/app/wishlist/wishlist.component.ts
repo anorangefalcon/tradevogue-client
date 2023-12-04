@@ -37,8 +37,6 @@ export class WishlistComponent {
   ngOnInit() {
     this.allSubscriptions.push(
     this.wishlistService.wishlistPopupData.subscribe((data) => {
-      console.log(data, "wishlist data init");
-
       if (!data) return;
       this.list = data.wishlists;
       this.show = true;
@@ -81,7 +79,7 @@ export class WishlistComponent {
       }
       this.toastService.warningToast(toast);
       this.list.splice(index, 1);
-      this.wishlistService.getWishlistCount()
+      this.wishlistService.getWishlistCount();
     })
   }
 

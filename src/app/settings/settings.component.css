@@ -210,7 +210,6 @@ label span {
     }
 }
 
-
 .wishlist__div {
     margin-block-end: 15px;
 }
@@ -231,8 +230,6 @@ label span {
 }
 
 .accordian__body {
-    /* padding-block-end: 10px; */
-    /* display: none; */
     opacity: 0;
     height: 0px;
     pointer-events: none;
@@ -307,13 +304,15 @@ label span {
     font-weight: 500;
 }
 
-.out-of-stock, .removeWishlist-btn:hover {
+.out-of-stock,
+.removeWishlist-btn:hover {
     color: rgb(var(--danger));
 }
 
 .in-stock {
     color: rgb(var(--primaryClr))
 }
+
 
 
 /* WISHLIST CSS ENDS */
