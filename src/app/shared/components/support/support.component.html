@@ -38,7 +38,79 @@
         </div>
       </mat-tab>
 
-      <mat-tab label="Support" id="chat-bot" #chatBot>
+      <mat-tab label="Live Chat">
+        <div class="accordion">
+          <div class="help-container">
+            <h3>Support</h3>
+            <p>Need Live assistance?</p>
+            <div class="scrollable-content">
+
+
+              <div class="chat-container">
+
+                <div *ngFor="let message of messages" class="chat-message"
+                [ngClass]="{'user-message': message.sender === 'user', 'bot-message': message.sender === 'bot'}">
+                <p [innerHTML]="message.content"></p>
+              </div>
+              
+                <div class="type-area">
+                  <input type="text" [(ngModel)]="textMessage" (keyup.enter)="sendLiveMessage()" class="typing"
+                    placeholder="Type Here...">
+                  <span class="send" (click)="sendLiveMessage()">
+                    <i class="bi bi-arrow-return-left"></i>
+                  </span>
+                </div>
+              </div>
+              
+
+
+
+            </div>
+          </div>
+
+
+        </div>
+
+      </mat-tab>
+
+      <mat-tab label="Help">
+        <div class="accordion">
+          <div class="help-container">
+            <h2>Help Center</h2>
+            <p>Need assistance? Here's how to use the chatbot:</p>
+            <div class="scrollable-content">
+              <section class="section">
+                <h3>Getting Started</h3>
+                <p>Welcome to our chatbot! Start by typing a message or question to begin the conversation.</p>
+              </section>
+
+              <section class="section">
+                <h3>Navigation</h3>
+                <p>To navigate back to the home page, simply click the "Home" button below.</p>
+                <button class="heading-button" (click)="navigateTo('home')">Home</button>
+              </section>
+              <!-- Include more sections for chatting, commands, features, etc. -->
+
+              <section class="section">
+                <h3>Contact Us</h3>
+                <p>If you have further questions, feel free to reach out to our support team at support@example.com.</p>
+              </section>
+
+              <section class="section">
+                <h3>Feedback</h3>
+                <p>We value your feedback! Let us know how we can improve by sending an email to feedback@example.com.
+                </p>
+              </section>
+
+            </div>
+          </div>
+
+
+        </div>
+
+      </mat-tab>
+
+      <mat-tab label="Order Details" id="chat-bot" #chatBot>
         <div class="timestamp">04:45 AM</div>
         <div class="chatroom">
           <div class="msg msg-left">
@@ -150,77 +222,6 @@
           </div>
 
         </div>
-      </mat-tab>
-      <mat-tab label="Help">
-        <div class="accordion">
-          <div class="help-container">
-            <h2>Help Center</h2>
-            <p>Need assistance? Here's how to use the chatbot:</p>
-            <div class="scrollable-content">
-              <section class="section">
-                <h3>Getting Started</h3>
-                <p>Welcome to our chatbot! Start by typing a message or question to begin the conversation.</p>
-              </section>
-
-              <section class="section">
-                <h3>Navigation</h3>
-                <p>To navigate back to the home page, simply click the "Home" button below.</p>
-                <button class="heading-button" (click)="navigateTo('home')">Home</button>
-              </section>
-              <!-- Include more sections for chatting, commands, features, etc. -->
-
-              <section class="section">
-                <h3>Contact Us</h3>
-                <p>If you have further questions, feel free to reach out to our support team at support@example.com.</p>
-              </section>
-
-              <section class="section">
-                <h3>Feedback</h3>
-                <p>We value your feedback! Let us know how we can improve by sending an email to feedback@example.com.
-                </p>
-              </section>
-
-            </div>
-          </div>
-
-
-        </div>
-
-      </mat-tab>
-
-      <mat-tab label="Live Chat">
-        <div class="accordion">
-          <div class="help-container">
-            <h2>Chatting</h2>
-            <p>Need Live assistance?</p>
-            <div class="scrollable-content">
-
-
-              <div class="chat-container">
-
-                <div *ngFor="let message of messages" class="chat-message"
-                [ngClass]="{'user-message': message.sender === 'user', 'bot-message': message.sender === 'bot'}">
-                <p [innerHTML]="message.content"></p>
-              </div>
-              
-                <div class="type-area">
-                  <input type="text" [(ngModel)]="textMessage" (keyup.enter)="sendLiveMessage()" class="typing"
-                    placeholder="Type Here...">
-                  <span class="send" (click)="sendLiveMessage()">
-                    <i class="bi bi-arrow-return-left"></i>
-                  </span>
-                </div>
-              </div>
-              
-
-
-
-            </div>
-          </div>
-
-
-        </div>
-
       </mat-tab>
 
     </mat-tab-group>

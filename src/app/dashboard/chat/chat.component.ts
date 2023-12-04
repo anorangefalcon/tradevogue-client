@@ -26,6 +26,8 @@ export class ChatComponent implements OnInit {
   messages: any;
   userMessage: any;
   oldChats: any;
+  loading: boolean = true;
+  theme: Boolean = false;
   messageList: any = [];
   constructor(private fetchDataService: FetchDataService,
     private utilsModule: UtilsModule) {
@@ -35,12 +37,16 @@ export class ChatComponent implements OnInit {
    getUsers() {
       this.fetchDataService.HTTPGET(this.utilsModule.URLs.getChatDetails).subscribe((res: any) => {
           this.userData = res;
+          if(this.userData.length > 0) {
+            this.loading = false;
+          }
         console.log(res);
       });
    }
 
    selectUser(user: any): void {
     this.selectedUser = user;
+    this.loading = false;
     const senderId = this.selectedUser._id;
     socket.emit('existChat', senderId);
   }

@@ -1,32 +1,42 @@
-<div class="container">
+<section class="d-flex flex-column gap-20 default-animation">
+  <div class="card card__pd-20 d-flex justify-content-md-between align-item-center">
+    <h3>Chat Support</h3>
+  </div>
+</section>
+
+<div *ngIf="loading" class="tv-loading">
+  <img src="../../assets/logo-mobile.svg" alt="tradeVogue-loading" *ngIf="!theme">
+  <img src="../../assets/logo-mobile-light.svg" alt="tradeVogue-loading" *ngIf="theme">
+  <div class="circle-tv-loader"></div>
+</div>
+
+<div class="container" *ngIf="!loading">
     <!-- Sidebar for user selection -->
-    <div class="user-sidebar">
+    <div class="default-animation-slow card card_left card__pd-20 d-flex justify-content-md-between align-item-center">
       <h2>Online Users</h2>
       <div class="user-list">
         <!-- Replace this ngFor loop with your user data -->
-        <div *ngFor="let user of userData" (click)="selectUser(user)">
-          <p>{{ user.name.firstname }}</p>
+        <div class="user-container">
+          <div *ngFor="let user of userData" (click)="selectUser(user)" class="user-item">
+            <p>{{ user.name.firstname }}</p>
+          </div>
         </div>
       </div>
     </div>
   
     <!-- Chat box -->
-    <div class="chat-box">
+    <div class="default-animation-slow card_right card card__pd-20 d-flex align-item-center only_user">
       <ng-container *ngIf="selectedUser">
         <h2>Chat Box: {{ selectedUser.name.firstname }}</h2>
-        <!-- Display the _id of the selected user -->
         <p>User ID: {{ selectedUser._id }}</p>
-        <!-- Add your chat messages here -->
         <div class="messages" *ngFor="let item of messageList">
-          <!-- Replace this ngFor loop with your chat messages -->
           <div>
             <p>{{ item }}</p>
-            <!-- <p>{{messages}}</p> -->
           </div>
           {{userMessage}}
         </div>
-        <textarea [(ngModel)]="textMessage" placeholder="Type your message..."></textarea>
-        <button (click)="sendMessage()">Send</button>
+        <textarea class="form__input" [(ngModel)]="textMessage" placeholder="Type your message..."></textarea>
+        <button class="pointer btn-primary btn-sm btn-rounded" (click)="sendMessage()">Send</button>
       </ng-container>
       <div *ngIf="!selectedUser">
         <p>Select a user to start chatting</p>
