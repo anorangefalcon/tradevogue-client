@@ -107,6 +107,22 @@
   padding-inline-start: 30px;
 }
 
+.no-address {
+  height: fit-content;
+}
+
+.loading_screen {
+  height: 400px;
+
+  & .spinner {
+    background: transparent;
+  }
+
+  & .spinner::before {
+    inset: initial;
+  }
+}
+
 .single-address:not(:last-child) {
   padding-block-end: 20px;
   border-block-end: 0.5px solid rgb(var(--textClr), 0.2);

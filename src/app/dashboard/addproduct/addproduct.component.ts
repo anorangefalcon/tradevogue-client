@@ -7,6 +7,7 @@ import { FetchDataService } from 'src/app/shared/services/fetch-data.service';
 import { UtilsModule } from 'src/app/utils/utils.module';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpParams } from '@angular/common/http';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-addproduct',
@@ -20,7 +21,7 @@ export class AddproductComponent {
   reponseData!: any;
   isUpdateRequest: boolean = false;
   editPage: boolean = false;
-
+  allSubscriptions: Subscription[] = [];
   // Array for Various Selects
   categories!: string[];
   brands!: string[];
@@ -195,11 +196,13 @@ export class AddproductComponent {
       })
     });
 
+    this.allSubscriptions.push(
     this.activeRoute.params.subscribe({
       next: (data) => {
         if (data['sku']) {
           this.loading = true;
           let params: HttpParams = new HttpParams().set("sku",data['sku']);
+          this.allSubscriptions.push(
           this.dataService.HTTPGET(this.backendUrl.URLs.fetchProductUrl,params).subscribe({
             next: (data: any) => {
               data.basicinfo = {};
@@ -230,13 +233,14 @@ export class AddproductComponent {
               this.isUpdateRequest = true;
               this.loading = false;
             }
-          })
+          }));
         }
       }
-    })
+    }));
   }
 
   async ngOnInit() {
+    this.allSubscriptions.push(
     this.dataService.HTTPPOST(this.backendUrl.URLs.fetchFeatures, this.dataField).subscribe({
       next: (res: any) => {
         this.categories = res.categories;
@@ -244,7 +248,11 @@ export class AddproductComponent {
         this.tags = res.tags;
         this.orderQuantity = res.orderQuantity;
       }
-    });
+    }));
+  }
+
+  ngOnDestroy() {
+    this.allSubscriptions.forEach((item: Subscription)=> item.unsubscribe());
   }
 
   productImagesFormArray() {
@@ -418,9 +426,10 @@ export class AddproductComponent {
       this.productsForm.get('assets')?.get(String(formId))?.get('photo')?.patchValue(productImages);
       return;
     }
+
+    this.allSubscriptions.push(
     this.upload.delete(productImages[imageIndex]).subscribe((res) => {
-     
-    })
+    }));
   }
 
   // update Form Control For Custom Select buttons
@@ -475,13 +484,14 @@ export class AddproductComponent {
       }
 
       let url = !this.isUpdateRequest ? this.backendUrl.URLs.addproduct : this.backendUrl.URLs.updateproduct;
+      this.allSubscriptions.push(
       this.dataService.HTTPPOST(url, formData).subscribe((res: any) => {
         //Success Message
         this.data_template.title = 'Product Uploaded';
         this.toastservice.successToast(this.data_template);
         this.router.navigate(['/dashboard/products']);
         this.loading = false;
-      });
+      }));
     }
   }
 }

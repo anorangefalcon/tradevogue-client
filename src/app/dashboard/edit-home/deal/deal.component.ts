@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Subscription } from 'rxjs';
 import { FetchDataService } from 'src/app/shared/services/fetch-data.service';
 import { ImageUploadService } from 'src/app/shared/services/image-upload.service';
 import { ToastService } from 'src/app/shared/services/toast.service';
@@ -12,6 +13,7 @@ import { UtilsModule } from 'src/app/utils/utils.module';
 })
 export class DealComponent {
   DealForm!:FormGroup;
+  allSubscriptions: Subscription[] = [];
   Edit:boolean=false;
   alignments:any[]=['Left','Right'];
   CopyDealForm:any
@@ -36,15 +38,21 @@ export class DealComponent {
       this.FormDisableEnable();
   }
 
+  ngOnDestroy() {
+    this.allSubscriptions.forEach((item: Subscription)=> item.unsubscribe());
+  }
+
   AlignmentHandler(event:any){
     this.DealForm.get('contentAlign')?.setValue(event);
   }
 
   getDetails(){
+    this.allSubscriptions.push(
     this.fetchService.HTTPGET(this.backendURLs.URLs.getDealsDetails).subscribe((data:any)=>{
       this.CopyDealForm=JSON.parse(JSON.stringify(data));
           this.DealForm.patchValue(data);
       })
+    )
   }
 
  
@@ -54,10 +62,12 @@ export class DealComponent {
       this.toastService.errorToast({title:'Wait while image is still uploading'});
       return;
     }
+    
+    this.allSubscriptions.push(
     this.fetchService.HTTPPOST(this.backendURLs.URLs.setDeals,this.DealForm.value).subscribe((data)=>{
     this.toastService.successToast({title:'Sucessfully Uploaded Deal Details'});
     this.getDetails();
-    })
+    }));
     this.EditClicked();
   }
 

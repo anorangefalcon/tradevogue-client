@@ -22,7 +22,7 @@
             <h2 class="border-end text-center">Order Summary</h2>
             <div class="border-end items-container d-flex flex-column gap-10">
                 <div class="item" *ngFor="let item of cart.details">
-                    <div class="itemname d-flex justify-content-md-between">
+                    <div class="itemname gap-10 d-flex justify-content-md-between">
 
                         <p class="item-name">{{item.name}}</p>
                         <div class="item-price d-flex gap-5 align-item-center">
@@ -90,11 +90,13 @@
 
             </button>
 
-            <button class="btn-primary btn btn-rounded btn-md" (click)="verifyOrderSummary()"
-                *ngIf="!SecureNavBar" [disabled]="CheckOutDisabled"><a>Proceed to Checkout</a></button>
+            <button class="checkout-btn btn-primary btn btn-rounded btn-md" (click)="verifyOrderSummary()"
+                *ngIf="!SecureNavBar" [disabled]="CheckOutDisabled" [ngClass]="{'spinner':CheckOutDisabled}">
+                <a>Proceed to Checkout</a>
+            </button>
 
-            <button class="btn-primary btn btn-md btn-rounded" (click)="nextClicked()"
-                *ngIf="!StripePaymentOpener && SecureNavBar" [disabled]="NextDisabled">
+            <button class="btn-primary continue__btn btn btn-md btn-rounded" (click)="nextClicked()"
+                *ngIf="!StripePaymentOpener && SecureNavBar" [disabled]="NextDisabled" [ngClass]="{'spinner':NextDisabled}">
                 Continue</button>
             <button class="btn-primary btn btn-md btn-rounded" *ngIf="SecureNavBar && StripePaymentOpener"
                 (click)="ProceedToPayment()">Proceed to Payment</button>
@@ -116,6 +118,7 @@
 
 
 
+<div [ngClass]="{'all_coupon_div':AllCoupons?.length==0}">
 <app-drawer [direction]="direction" [show]="show" (showChange)="ChangeHandler($event)" [title]="'Available Coupons'">
     <div class="coupons d-flex flex-column gap-15">
         <div class="d-flex coupon__header relative" *ngIf="AllCoupons?.length>0">
@@ -136,7 +139,6 @@
         <div class="all-coupons">
 
             <div class="coupon d-flex flex-column gap-10" *ngFor="let coupon of AllCoupons">
-                apple is 
                 <div class="coupon-name">
                     <h2>{{coupon.couponcode}}</h2>
                 </div>
@@ -171,15 +173,22 @@
 
 
                 <button (click)="ApplyCoupon(coupon)" class="btn-inline btn-md btn-secondary btn-rounded btn">Apply Coupon</button>
-            </div>
+            </div> 
+
+        
 
         </div>
 
+        <div class="no_coupon_div d-flex align-item-center gap-10  flex-column  justify-content-center">
+            <img src="../../assets/no-address-light.svg"/>
+            <p>No Available Coupons</p>
+        </div>
 
     </div>
 </app-drawer>
-
 </div>
+</div>
+
 
 <div *ngIf="PaymentSuccess" class="empty d-flex flex-column justify-content-center align-item-center gap-15">
     <button class="success_order_btn d-flex align-item-center justify-content-center ">

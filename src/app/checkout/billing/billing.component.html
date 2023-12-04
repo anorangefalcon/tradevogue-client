@@ -15,8 +15,8 @@
         </div>
     </div>
 
-    <div class="address d-flex flex-column gap-20" *ngIf="!StripeOpener">
-        <div class="d-flex flex-column gap-10">
+    <div class="address d-flex flex-column gap-20" *ngIf="!StripeOpener" [ngClass]="{'loading_screen':loading}">
+        <div class="d-flex flex-column gap-10" >
             <div class="d-flex justify-content-md-between align-item-center overall__div">
                 <h2>SELECT DELIVERY ADDRESS
                 </h2>
@@ -30,7 +30,8 @@
         </div>
 
         <!-- show address -->
-        <div class="d-flex flex-column gap-20 " [ngClass]="{'main-address':AddressLength} ">
+        <!-- [ngClass]="{'main-address':AddressLength} " -->
+        <div class="d-flex flex-column gap-20 " >
             <ng-container *ngFor="let address of userAddresses; let i=index" class="d-flex address__firstdiv ">
                 <div class="single-address">
                     <input type="radio" id="radio{{i}}" name="address" value="address" class="d-flex"
@@ -64,6 +65,15 @@
                     </label>
                 </div>
             </ng-container>
+        </div>
+
+        <div [ngClass]="{'spinner':loading}">
+
+        </div>
+
+        <div   class="d-flex flex-center flex-column gap-10" *ngIf="userAddresses?.length == 0 && !loading">
+            <img src="../../assets/no-address-light.svg" alt="no address found" width="100">
+            <p>No address found!</p>
         </div>
 
         <!-- new address  -->

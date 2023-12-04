@@ -4,7 +4,7 @@ import { UploadExcelService } from '../services/upload-excel.service';
 import { UtilsModule } from 'src/app/utils/utils.module';
 import { ToastService } from 'src/app/shared/services/toast.service';
 import { DialogBoxService } from 'src/app/shared/services/dialog-box.service';
-import { first, take } from 'rxjs';
+import { Subscription, first, take } from 'rxjs';
 
 @Component({
   selector: 'app-addproductfeatures',
@@ -14,7 +14,7 @@ import { first, take } from 'rxjs';
 export class AddproductfeaturesComponent {
 
   isfetch: boolean = false;
-
+  allSubscriptions: Subscription[] = [];
   // Toast template
   template = {
     title: ''
@@ -57,6 +57,7 @@ export class AddproductfeaturesComponent {
 
   ngOnInit() {
 
+    this.allSubscriptions.push(
     this.DialogBoxService.responseEmitter.subscribe((res) => {
       if (res == true) {
         this.field_data[this.deleteObject.field].splice(this.deleteObject.index, 1);
@@ -64,15 +65,22 @@ export class AddproductfeaturesComponent {
         this.crudData(this.deleteObject.field, null);
       }
     })
+    )
     this.isfetch = true;
+
+    this.allSubscriptions.push(
     this.dataService.HTTPPOST(this.backendurls.URLs.fetchFeatures, this.dataField).subscribe({
       next: (res: any) => {
         this.field_data = res;
         this.isfetch = false;
       }
-    });
+    }));
   }
 
+  ngOnDestroy() {
+    this.allSubscriptions.forEach((item: Subscription)=> item.unsubscribe());
+  }
+  
   uploadFile(event: Event, field: string) {
     const dataObserver = this.uploadExcel.handleFileInput(event, field);
 
@@ -131,6 +139,7 @@ export class AddproductfeaturesComponent {
       'field': field,
       'data': this.field_data[field]
     };
+    this.allSubscriptions.push(
     this.dataService.HTTPPOST(this.backendurls.URLs.updateFeatures, data).subscribe({
       next: (res: any) => {
         this.toastService.successToast(this.template);
@@ -138,7 +147,7 @@ export class AddproductfeaturesComponent {
           this.card_template[index].loading = false;
         }
       }
-    });
+    }));
   }
 
   tableGenerator(len: number) {

@@ -1,6 +1,7 @@
 import { Component, ElementRef } from '@angular/core';
 import { TemplateRef, ViewChild, ViewEncapsulation } from '@angular/core';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { FetchDataService } from 'src/app/shared/services/fetch-data.service';
 import { ToastService } from 'src/app/shared/services/toast.service';
 import { UtilsModule } from 'src/app/utils/utils.module';
@@ -30,19 +31,27 @@ export class SelectLayoutComponent {
   layouts: any = [];
   currentLayout: any = {};
   theme: Boolean = false;
+  allSubscriptions: Subscription[] = [];
+
 
   constructor(private fetchDataService: FetchDataService, private backendUrls: UtilsModule,
     private toastService: ToastService, private router: Router) { }
 
   ngOnInit() {
+    this.allSubscriptions.push(
     this.fetchDataService.themeColor$.subscribe((color) => {
       this.theme = color;
-    });
+    }));
     this.fetchLayouts();
+  }
+
+  ngOnDestroy() {
+    this.allSubscriptions.forEach((item: Subscription)=> item.unsubscribe());
   }
 
   fetchLayouts(created: boolean = false) {
     this.loadingData = true;
+    this.allSubscriptions.push(
     this.fetchDataService.HTTPGET(this.backendUrls.URLs.getAllHomeLayouts)
       .subscribe((data: any) => {
         this.layouts = data;
@@ -58,7 +67,7 @@ export class SelectLayoutComponent {
         this.currentLayout = JSON.parse(JSON.stringify(this.layouts.find(findQuery())));
         this.newName = this.currentLayout?.name;
         this.loadingData = false;
-      });
+      }));
   }
 
   switchStatus(event: any, name: String) {
@@ -123,18 +132,20 @@ export class SelectLayoutComponent {
       );
     })
 
+    this.allSubscriptions.push(  
     this.fetchDataService.HTTPPOST(this.backendUrls.URLs.createOrUpdateHomeLayout, newLayout)
       .subscribe(() => {
         this.currentLayout.name = newLayout.name;
         this.fetchLayouts(true);
         this.edited = false;
-      });
+      }));
   }
 
   updateLayout(nameUpdated: Boolean = false) {
 
     if (nameUpdated && this.newName != '') this.currentLayout.name = this.newName;
 
+    this.allSubscriptions.push(
     this.fetchDataService.HTTPPOST(this.backendUrls.URLs.createOrUpdateHomeLayout, this.currentLayout)
     .subscribe({
       next: () => {
@@ -148,11 +159,12 @@ export class SelectLayoutComponent {
         this.fetchLayouts();
       }
       
-    });
+    }));
     this.newName = '';
   }
 
   deleteLayout() {
+    this.allSubscriptions.push(
     this.fetchDataService.HTTPPOST(this.backendUrls.URLs.deleteHomeLayout, { id: this.currentLayout._id })
       .subscribe(() => {
         this.edited = false;
@@ -161,7 +173,7 @@ export class SelectLayoutComponent {
           title: 'Successfully deleted ' + this.currentLayout.name
         });
         this.fetchLayouts();
-      });
+      }));
   }
 
   activateLayout() {

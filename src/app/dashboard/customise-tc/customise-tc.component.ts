@@ -4,6 +4,7 @@ import { FetchDataService } from 'src/app/shared/services/fetch-data.service';
 import { ToastService } from 'src/app/shared/services/toast.service';
 import { UtilsModule } from 'src/app/utils/utils.module';
 import * as _ from 'lodash';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-customise-tc',
@@ -15,7 +16,7 @@ export class CustomiseTcComponent {
   tcFormArray!: FormArray
   tcForm!: FormGroup;
   cachedFormGroup!: FormGroup;
-
+  allSubscriptions: Subscription[] = [];
   constructor(
     private fb: FormBuilder,
     private toastService: ToastService,
@@ -27,6 +28,11 @@ export class CustomiseTcComponent {
     });
     this.getData();
   }
+
+  ngOnDestroy() {
+    this.allSubscriptions.forEach((item: Subscription)=> item.unsubscribe());
+  }
+
 
   discardChanges() {
     this.tcForm = this.cachedFormGroup;
@@ -212,11 +218,12 @@ export class CustomiseTcComponent {
 
 
   onsubmit() {
+    this.allSubscriptions.push(
     this.fetchDataService.HTTPPOST(this.backendUrl.URLs.setTandC, this.tcForm.value).subscribe((res: any) => {
       this.toastService.successToast({ title: res.message })
       this.cachedFormGroup = _.cloneDeep(this.tcForm);
       this.tcForm.disable();
-    })
+    }))
   }
 
   // NEW CODE
@@ -274,6 +281,7 @@ export class CustomiseTcComponent {
     window.scrollTo(0, document.body.scrollHeight);
   }
   getData() {
+    this.allSubscriptions.push(
     this.fetchDataService.HTTPGET(this.backendUrl.URLs.getTandC).subscribe((response: any) => {
       console.log(response, "tc res");
 
@@ -292,7 +300,7 @@ export class CustomiseTcComponent {
       this?.tcForm?.get('tcFormArray')?.patchValue(response?.data);
       this.cachedFormGroup = _.cloneDeep(this.tcForm);
       this.tcForm.disable();
-    })
+    }))
   }
 
 }

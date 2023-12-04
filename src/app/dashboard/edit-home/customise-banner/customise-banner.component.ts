@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Subscription } from 'rxjs';
 import { BannerService } from 'src/app/shared/services/custom-UI/banner.service';
 import { DialogBoxService } from 'src/app/shared/services/dialog-box.service';
 import { ImageUploadService } from 'src/app/shared/services/image-upload.service';
@@ -13,6 +14,7 @@ import { ToastService } from 'src/app/shared/services/toast.service';
 export class CustomiseBannerComponent {
 
   bannerForm!: FormGroup;
+  allSubscriptions: Subscription[] = [];
   ParenClosed:boolean=false;
   alignment: string[] = ['Left', 'Right', 'Center'];
   previewImage: any;
@@ -52,6 +54,8 @@ export class CustomiseBannerComponent {
       })
     });
 
+
+    this.allSubscriptions.push(
     dialogService.responseEmitter.subscribe({
       next: (res: any) => {
         if (res) {
@@ -65,19 +69,24 @@ export class CustomiseBannerComponent {
           });
         }
       }
-    });
+    }));
 
   }
 
   ngOnInit() {
     console.log(this.checkbox, "before");
-    
+    this.allSubscriptions.push(
     this.bannerService.getBanners().subscribe((data: any) => {
       this.bannerData = data;
       
     }
-    )
+    ))
   }
+
+  ngOnDestroy() {
+    this.allSubscriptions.forEach((item: Subscription)=> item.unsubscribe());
+  }
+
 
   isChecked() {
     let val = this.checkbox;
@@ -107,6 +116,7 @@ export class CustomiseBannerComponent {
     this.saveData = true;
 
     if (!this.editValue) {
+      this.allSubscriptions.push(
       this.bannerService.setBanners(this.bannerForm.value).subscribe((data: any) => {
         const toast = {
           title: data.message
@@ -116,7 +126,7 @@ export class CustomiseBannerComponent {
         this.bannerForm.get('colors')?.reset();
         this.ngOnInit();
         this.saveData = false;
-      })
+      }))
     }
     else {
       const body = {
@@ -124,6 +134,7 @@ export class CustomiseBannerComponent {
         data: this.bannerForm.value
       }
 
+      this.allSubscriptions.push(
       this.bannerService.updateBanner(body).subscribe((res: any) => {
         const toast = {
           title: res.message
@@ -133,7 +144,7 @@ export class CustomiseBannerComponent {
         this.bannerForm.get('colors')?.reset();
         this.ngOnInit();
         this.saveData = false;
-      })
+      }))
     }
 
     this.showingPopUp=false;
@@ -179,9 +190,10 @@ export class CustomiseBannerComponent {
     const data = {
       id, active: val
     }
+    this.allSubscriptions.push(
     this.bannerService.toggleBanner(data).subscribe((res: any) => {
       this.ngOnInit()
-    })
+    }))
   }
 
   edit(index: any) {

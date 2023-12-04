@@ -6,6 +6,7 @@ import { FetchDataService } from 'src/app/shared/services/fetch-data.service';
 import { UtilsModule } from 'src/app/utils/utils.module';
 import { DialogBoxService } from 'src/app/shared/services/dialog-box.service';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-sales',
@@ -21,11 +22,12 @@ export class SalesComponent {
   itemId: any;
   editingIndex: any;
   showEditIcon: any = true;
-
+  allSubscriptions: Subscription[] = [];
   getSales() {
+    this.allSubscriptions.push(
     this.salesService.getSales().subscribe((res) => {
       this.tableData = res;
-    })
+    }))
   }
 
   constructor(
@@ -57,17 +59,22 @@ export class SalesComponent {
       ])
     });
 
+    this.allSubscriptions.push(
     this.dialogService.responseEmitter.subscribe({
       next: (res: any)=>{
         if(res){
+          this.allSubscriptions.push(
           this.fetch.HTTPPOST(this.util.URLs.deleteSales, {_id: this.deleteId}).subscribe((data => {
-          }));
+          })));
           this.getSales();
         }
       }
-    })
+    }))
   }
   
+  ngOnDestroy() {
+    this.allSubscriptions.forEach((item: Subscription)=> item.unsubscribe());
+  }
   deleteId: any;
 
   deleteItem(key: any) {
@@ -87,9 +94,10 @@ export class SalesComponent {
         id, enable
       }
 
+      this.allSubscriptions.push(
       this.fetch.HTTPPOST(this.util.URLs.toggleSales, body).subscribe((res) => {
       })
-
+      );
     }
   }
 
@@ -163,15 +171,17 @@ export class SalesComponent {
           data: this.salesForm.value
         }
 
+        this.allSubscriptions.push(
         this.fetch.HTTPPOST(this.util.URLs.updateSales, body).subscribe((res) => {
           console.log(res, 'res')
           this.getSales();
-        })
+        }))
 
       } else {
+        this.allSubscriptions.push(
         this.salesService.setSales(this.salesForm.value).subscribe((data) => {
           this.getSales();
-        });
+        }));
       }
     } else {
     }

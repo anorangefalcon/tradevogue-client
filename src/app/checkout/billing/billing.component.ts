@@ -9,6 +9,7 @@ import { CheckoutService } from '../checkout.service';
 import { LoginCheckService } from 'src/app/shared/services/login-check.service';
 import { Subscription } from 'rxjs';
 import { ToastService } from 'src/app/shared/services/toast.service';
+import { error } from 'jquery';
 declare let Stripe: any;
 interface PaymentOptions {
   key: string;
@@ -40,6 +41,7 @@ export class BillingComponent implements OnInit {
   checkoutHtml = '';
   checkoutCss = '';
   item: any = {};
+  loading:boolean=true;
   cartitems: any = {};
   total: any = {};
   quantity: any = {};
@@ -441,9 +443,12 @@ export class BillingComponent implements OnInit {
   SecureNavBar: Boolean = false;
   AddressLength: number = 0;
   getAddresses() {
+    this.loading=true;
     this.allSubscriptions.push(
       this.fetchDataService.HTTPGET(this.backendURLs.URLs.getAddress)
-        .subscribe((data: any) => {
+        .subscribe(
+        { 
+          next: (data: any) => {
           if (data) {
             data = data.addresses;
             this.AddressLength = data.length;
@@ -451,7 +456,12 @@ export class BillingComponent implements OnInit {
               this.userAddresses = data;
             }
           }
-        }));
+          this.loading=false;
+        },
+        error:(error)=>{
+          this.loading=false;
+        }
+  }))
   }
   EditAddress(address: any, index: any) {
     const data = this.userAddresses[index];

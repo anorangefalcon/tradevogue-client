@@ -156,6 +156,33 @@
     }
 }
 
+
+.checkout-btn.spinner,.continue__btn.spinner{
+    height: 47px;
+    & a{
+        display: none;
+    }
+}
+
+
+.all_coupon_div{
+    & .drawer__content{
+        height: 100%;
+        & .coupons{
+            height: 100%;
+
+            & .no_coupon_div{
+                height: 100%;
+                transform: translateY(-60px);
+                & img{
+                    height: 80px;
+                }
+            }
+        }
+    }
+}
+
+
 .itemstotal,
 .next2 {
     width: 50%;

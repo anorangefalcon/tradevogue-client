@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { AbstractControl, Form, FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Subscription } from 'rxjs';
 import { DialogBoxService } from 'src/app/shared/services/dialog-box.service';
 import { FetchDataService } from 'src/app/shared/services/fetch-data.service';
 import { ImageUploadService } from 'src/app/shared/services/image-upload.service';
@@ -16,6 +17,7 @@ export class CouponsComponent {
   OfferForm: FormGroup;
   title = 'Add Coupon/Discount';
   direction: string = 'right';
+  allSubscriptions: Subscription[] = [];
   ParenClosed: boolean = false;
   show: boolean = false;
   todaypageChangeDate: any = Date.now();
@@ -87,11 +89,13 @@ export class CouponsComponent {
       { validator: this.DateValidator }
     )
     const body = ['categories', 'brands']
+    this.allSubscriptions.push(
     this.fetchDateService.HTTPPOST(this.BackendUrls.URLs.fetchFeatures, body).subscribe((data: any) => {
       this.Brands = data.brands;      
       this.Categories = data.categories;
-    });
+    }));
 
+    this.allSubscriptions.push(
     this.dialogService.responseEmitter.subscribe({
       next: (res: any) => {
         if (res) {
@@ -101,7 +105,7 @@ export class CouponsComponent {
         }
 
       }
-    })
+    }))
   }
 
 
@@ -254,6 +258,7 @@ export class CouponsComponent {
 
   notData: boolean = false;
   getAllOffers() {
+    this.allSubscriptions.push(
     this.fetchDateService.HTTPPOST(this.BackendUrls.URLs.getOffers,this.TemplatePagination).subscribe((data:any) => {
       if(!data.length){
         this.notData = true;
@@ -264,7 +269,7 @@ export class CouponsComponent {
       this.allOffers = data[0]?.document;
       this.totalCount=data[0]?.count;
       
-    });
+    }));
   }
 
   getOfferImage() {
@@ -274,6 +279,10 @@ export class CouponsComponent {
   async ngOnInit() {
     // this.getAllOffers();
     this.pageChange(this.currentPage);
+  }
+
+  ngOnDestroy() {
+    this.allSubscriptions.forEach((item: Subscription)=> item.unsubscribe());
   }
 
   pageChange(pageNo: any,searchWord:String='') {
@@ -350,6 +359,7 @@ export class CouponsComponent {
       url = this.BackendUrls.URLs.createOffer;
     }
 
+    this.allSubscriptions.push(
     this.fetchDateService.HTTPPOST(url, body).subscribe((data) => {
       if (this.EditRequest) {
         this.allOffers[this.EditIndex] = data;
@@ -359,7 +369,7 @@ export class CouponsComponent {
         this.allOffers?.unshift(data);
       }
     
-    });
+    }));
 
     this.show = false;
     this.clearForm();
@@ -403,11 +413,12 @@ export class CouponsComponent {
 
   Delete_Offer() {
     const body = this.deleteList;
+    this.allSubscriptions.push(
     this.fetchDateService.HTTPPOST(this.BackendUrls.URLs.deleteOffer, body).subscribe((response) => {
       this.selectAll = false;
       this.allOffers = response;
       this.deleteList = [];
-    });
+    }));
 
   }
 
@@ -422,7 +433,7 @@ export class CouponsComponent {
   ActiveStatus(event: any, data:any,index:any,) {
     const body = { data, status: event.target.checked };
 
-    
+    this.allSubscriptions.push(
     this.fetchDateService.HTTPPOST(this.BackendUrls.URLs.updateOfferStatus, body).subscribe({next:(data) => {
     },error:(error)=>{
       if(error){
@@ -431,7 +442,7 @@ export class CouponsComponent {
         // this.data[index].   
       }
       
-    }})
+    }}));
 
   }
 

@@ -16,6 +16,7 @@ import { ToastService } from '../shared/services/toast.service';
 import { CookieService } from 'ngx-cookie-service';
 import { LoginCheckService } from '../shared/services/login-check.service';
 import { InvoiceTemplateComponent } from 'src/app/shared/components/invoice-template/invoice-template.component';
+import { error } from 'jquery';
 
 
 @Component({
@@ -83,7 +84,7 @@ export class SettingsComponent {
   };
 
   // addnewAddress:boolean=false;
-  userAddresses!: any;
+  userAddresses: any=[];
   TranslateData: boolean = false;
 
   // private toastService: ToastService
@@ -309,7 +310,10 @@ moveToCart(product: any) {
   getAddresses() {
     this.showData = 'addresses';
     this.fetchDataService.HTTPGET(this.backendURLs.URLs.getAddress)
-      .subscribe((data: any) => {
+      .subscribe(
+        
+       {
+        next: (data: any) => {
         if (data) {
           data = data.addresses;
           this.AddressLength = data.length;
@@ -317,8 +321,19 @@ moveToCart(product: any) {
             this.userAddresses = data;
           }
         }
-        this.loading = false;
-      })
+        console.log('data comne up is ',data);
+        
+        this.loading=false;
+      }
+    ,
+    error:(error)=>{
+      this.loading=false;
+    }
+
+  }
+
+
+      )
   }
 
   AddAddress() {

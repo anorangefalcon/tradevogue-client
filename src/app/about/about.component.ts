@@ -11,7 +11,7 @@ import { Subscription } from 'rxjs';
 export class AboutComponent {
   Data:any;
   dataSubscription!: Subscription;
-
+  
   constructor(fetchDataService:FetchDataService,private backendUrls:UtilsModule){
 
     this.dataSubscription = fetchDataService.HTTPGET((this.backendUrls.URLs.getAboutDetails)).subscribe((data)=>{

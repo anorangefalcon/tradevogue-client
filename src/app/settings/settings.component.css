@@ -690,6 +690,19 @@ label span {
         }
     }
 
+    .orders__header{
+        flex-direction: column;
+        gap: 20px;
+        & .h2_div,& .active_cancel_div{
+            width: 100%;
+        }
+
+        & .active_cancel_div{
+            padding-inline-start: 24px;
+            gap: 15px;
+        }
+    }
+
 }
 
 @media screen and (max-width: 510px) {
@@ -812,10 +825,10 @@ input::placeholder{
 .active__orders,.cancel__orders{
     font-size: 16px;
     transition: all ease-in-out;
+    padding-inline-end: 2px;
 }
 
 
 .border__bottom{
-    padding-block-end: 2px;
 border-bottom: 1px solid rgba(var(--primaryClr), 0.8);
 }

@@ -6,6 +6,7 @@ import { FetchDataService } from 'src/app/shared/services/fetch-data.service';
 import { PopupService } from 'src/app/shared/services/popup.service';
 import { ToastService } from 'src/app/shared/services/toast.service';
 import { AbstractControl } from '@angular/forms';
+import { Subscription } from 'rxjs';
 
 interface FaqItem {
   _id: string;
@@ -25,6 +26,7 @@ export class FaqsComponent {
   objectvalues = Object.values;
   selectedOption: string = '';
   faqForm!: FormGroup;
+  allSubscriptions: Subscription[] = [];
   editForm!: FormGroup;
   selectedCategory: { title: string; childrens: any[] } = { title: '', childrens: [] };
   showPopup: boolean = false;
