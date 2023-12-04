@@ -169,6 +169,7 @@ export class UtilsModule {
     // Socials
     setSocials: `${this.BackendUrl}/socials/set`,
     getSocials: `${this.BackendUrl}/socials/get`,
+    getInstagram: `${this.BackendUrl}/socials/getInstagram`,
 
     //banner
     setBanners : `${this.BackendUrl}/banners/setBanners`,

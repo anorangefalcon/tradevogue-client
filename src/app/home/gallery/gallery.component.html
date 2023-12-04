@@ -1,6 +1,6 @@
-<section class="gallery">
+<section *ngIf="images_loaded" class="gallery">
 
-    <div class="container" *ngIf="image_loaded; else dummygallery">
+    <div class="container">
         <div class="section-header">
             <h3>
                 <a href="https://www.instagram.com/{{username}}/" target="_blank">
@@ -42,7 +42,7 @@
         </div>
     </div>
 
-    <ng-template #dummygallery>
+    <!-- <ng-template #dummygallery>
         <div class="container">
             <div class="section-header">
                 <h3>
@@ -90,5 +90,5 @@
 
             </div>
         </div>
-    </ng-template>
+    </ng-template> -->
 </section>
