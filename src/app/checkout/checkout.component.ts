@@ -295,7 +295,6 @@ export class CheckoutComponent implements OnInit {
     body.address = this.AddressSelected;
     if (this.CouponApplied) {
       body.coupon = this.CouponApplied._id;
-      body.discount = this.cart.amounts.savings;
     }
     body.products = this.cart.details;
 

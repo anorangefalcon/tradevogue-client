@@ -135,7 +135,8 @@ export class CheckoutService {
   }
 
   private async updateOrderStatus() {
-
+    console.log('order id is--------> ',this.orderID);
+    
     let body: any = {};
     body = {
       orderID: this.orderID
