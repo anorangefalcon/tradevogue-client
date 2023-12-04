@@ -803,3 +803,19 @@ input::placeholder{
     }
 }
 
+
+
+.tv-loading{
+    height: 100%;
+}
+
+.active__orders,.cancel__orders{
+    font-size: 16px;
+    transition: all ease-in-out;
+}
+
+
+.border__bottom{
+    padding-block-end: 2px;
+border-bottom: 1px solid rgba(var(--primaryClr), 0.8);
+}

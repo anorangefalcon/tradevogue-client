@@ -28,6 +28,7 @@ export class CheckoutComponent implements OnInit {
   updateBoolean: boolean = false;
   cart: any = {};
   StripePaymentOpener: boolean = false;
+  CheckOutDisabled:boolean=false;
   loading: boolean = false;
   isFormFilled = false;
   paymentButton = false;
@@ -74,7 +75,9 @@ export class CheckoutComponent implements OnInit {
     let cartSub = this.cartService.fetchCart().subscribe((data) => {
       this.cartCount = data.details?.length;
       this.cart = data;
-      this.verifyOrderSummary(false);
+      if(this.cart?.details?.length>0){
+        this.verifyOrderSummary(false);
+      }
       this.loading = false;
     })
     this.allSubscriptions.push(cartSub);
@@ -122,7 +125,7 @@ export class CheckoutComponent implements OnInit {
   }
 
   // COUPONS CODE STARTS-------------------
-  CouponValid: string = 'hidden';
+  CouponValid: string = '';
   AllCoupons: any;
   SecureNavBar: Boolean = false;
   CouponApplied: any = '';
@@ -137,20 +140,18 @@ export class CheckoutComponent implements OnInit {
       }));
   }
 
-  InputChange() {
-    this.CouponValid = '';
+  InputChange(event:any) {
+   if(!this.CouponCode.nativeElement.value){
+    this.CouponValid='';
+    return;
+   }
+    this.CouponValid = 'valid';
   }
 
 
   RemoveAppliedCoupon() {
-    // this.cart.amounts.discountApplied -= this.CalculateDiscount(this.CouponApplied);
-    // this.CouponApplied = false;
-    // this.cart.amounts.total += this.cart.amounts.discount;
     this.cart.amounts.discount=null;
-    this.CouponApplied=false;
-
-    // console.log('discount is ',this.cart.amounts.discount);
-    
+    this.CouponApplied=false; 
   }
 
 
@@ -225,40 +226,49 @@ export class CheckoutComponent implements OnInit {
   }
 
   verifyOrderSummary(navigate: boolean = true) {
-    let res = this.cart;
-    if (res?.details?.length == 0) return;
-    let result = JSON.parse(JSON.stringify(res));
+    if (this.cart?.details?.length == 0) return;
+    let body:any={products: this.cart.details};
 
-    if (result.length == 0) return;
     if (this.CouponApplied) {
-      result.coupon = this.CouponApplied;
+      body.couponId = this.CouponApplied._id;
     }
 
     if (!navigate) {
       this.allSubscriptions.push(
-        this.fetchService.HTTPPOST(this.BackendUrl.URLs.verifyOrderWithoutCoupon, result).subscribe((response) => {  
+        this.fetchService.HTTPPOST(this.BackendUrl.URLs.verifyOrderWithoutCoupon,  body).subscribe((response) => {  
           this.cart.amounts =JSON.parse(JSON.stringify(response));
         }));
     }
 
     else {
+      this.CheckOutDisabled=true;
       if (!this.LoginUser) {
+        this.CheckOutDisabled=false;
         this.router.navigate(['/auth/login']);
       }
       else {
         this.allSubscriptions.push(
-          this.fetchService.HTTPPOST(this.BackendUrl.URLs.verifyOrderSummary, result).subscribe((response) => {
-            console.log('response come up si ',response);
-            //  if(respons) 
+          this.fetchService.HTTPPOST(this.BackendUrl.URLs.verifyOrderSummary, body).subscribe({
+            next:(response) => {
             this.cart.amounts =JSON.parse(JSON.stringify(response));
             this.router.navigate(['/cart/billing']);
-          }));
+            this.CheckOutDisabled=false;
+          },
+          error:(error)=>{
+            this.CheckOutDisabled=false;
+          }
+        }));
+          
+        
       }
     }
   }
 
+
   ChangeHandler(event: any) {
     this.show = event;
+
+    if(!this.CouponCode)return;
     this.CouponCode.nativeElement.value = '';
   }
 
@@ -284,16 +294,19 @@ export class CheckoutComponent implements OnInit {
     let body: any = {};
     body.address = this.AddressSelected;
     if (this.CouponApplied) {
-      body.coupon = this.CouponApplied;
+      body.coupon = this.CouponApplied._id;
       body.discount = this.cart.amounts.savings;
     }
     body.products = this.cart.details;
 
     this.allSubscriptions.push(
-      this.fetchService.HTTPPOST(this.BackendUrl.URLs.createOrder, body).subscribe((data: any) => {
+      this.fetchService.HTTPPOST(this.BackendUrl.URLs.createOrder, body).subscribe(
+        (data: any) => {
         this.checkOutService.loadStripe.next(true);
         this.checkOutService.orderID = data.orderId;
-      }));
+      }
+      )
+      );
     this.NextDisabled = false;
   }
 

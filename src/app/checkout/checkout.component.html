@@ -91,7 +91,7 @@
             </button>
 
             <button class="btn-primary btn btn-rounded btn-md" (click)="verifyOrderSummary()"
-                *ngIf="!SecureNavBar"><a>Proceed to Checkout</a></button>
+                *ngIf="!SecureNavBar" [disabled]="CheckOutDisabled"><a>Proceed to Checkout</a></button>
 
             <button class="btn-primary btn btn-md btn-rounded" (click)="nextClicked()"
                 *ngIf="!StripePaymentOpener && SecureNavBar" [disabled]="NextDisabled">
@@ -118,12 +118,12 @@
 
 <app-drawer [direction]="direction" [show]="show" (showChange)="ChangeHandler($event)" [title]="'Available Coupons'">
     <div class="coupons d-flex flex-column gap-15">
-        <div class="d-flex coupon__header relative">
+        <div class="d-flex coupon__header relative" *ngIf="AllCoupons?.length>0">
             <input type="text" class="form__input" placeholder="Enter coupon code" #CouponCode
-                oninput="this.value = this.value.toUpperCase()" (input)="InputChange()">
+                oninput="this.value = this.value.toUpperCase()" (input)="InputChange($event)">
 
             <button class="btn-primary btn btn-xs btn-rounded apply__btn" (click)="ApplyCoupon(null,$event)"
-                [disabled]="CouponValid=='invalid'">APPLY</button>
+                [disabled]="CouponValid=='invalid' || !CouponValid">APPLY</button>
 
             <!-- <button class="tick__apply__btn" > -->
                 <span class="material-symbols-outlined tick__apply__btn absolute" (click)="ApplyCoupon(null,$event)">
@@ -136,6 +136,7 @@
         <div class="all-coupons">
 
             <div class="coupon d-flex flex-column gap-10" *ngFor="let coupon of AllCoupons">
+                apple is 
                 <div class="coupon-name">
                     <h2>{{coupon.couponcode}}</h2>
                 </div>

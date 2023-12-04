@@ -78,178 +78,102 @@
 
         <div class="content">
 
-            <div>
-                <div *ngIf="loading" class="tv-loading">
-                    <img src="../../assets/logo-mobile.svg" alt="tradeVogue-loading" *ngIf="!theme">
-                    <img src="../../assets/logo-mobile-light.svg" alt="tradeVogue-loading" *ngIf="theme">
-                    <div class="circle-tv-loader"></div>
-                </div>
 
-                <div class="profile d-flex flex-column gap-20" *ngIf="showData=='profile'">
 
-                    <div class="d-flex  align-item-center pointer  justify-content-md-between default-animation">
+            <div class="profile d-flex flex-column gap-20" *ngIf="showData=='profile'">
 
-                        <div class="d-flex align-item-center gap-5" (click)="TranslateBack()">
-                            <span class="material-symbols-outlined left__icon" *ngIf="TranslateData">
-                                chevron_left
-                            </span>
-                            <h2>
-                                Profile Details
-                            </h2>
-                        </div>
+                <div class="d-flex  align-item-center justify-content-md-between default-animation">
 
-                        <div class="d-flex gap-15">
-                            <button class="btn-secondary  btn btn-sm btn-rounded"
-                                [ngStyle]="{'display': ProfileDisabled? 'none': 'block'}"
-                                (click)="DisableForm(true)">Cancel</button>
-                            <button class="btn-primary btn btn-sm btn-rounded"
-                                [ngStyle]="{'display': !ProfileDisabled? 'none': 'block'}"
-                                (click)="DisableForm(false)">Edit</button>
-                            <button class="btn-primary btn btn-sm btn-rounded"
-                                [ngStyle]="{'display': ProfileDisabled? 'none': 'block'}"
-                                (click)="saveDetails(); DisableForm(true)"
-                                [disabled]="ProfileForm.invalid">Save</button>
-                        </div>
-
+                    <div class="d-flex align-item-center  pointer gap-5" (click)="TranslateBack()">
+                        <span class="material-symbols-outlined left__icon" *ngIf="TranslateData">
+                            chevron_left
+                        </span>
+                        <h2>
+                            Profile Details
+                        </h2>
                     </div>
 
-
-                    <form [formGroup]="ProfileForm" class="d-flex gap-15 disableInput flex-wrap default-animation-slow">
-                        <div class="form__group relative d-flex flex-column">
-                            <label class="form__label">First Name<span>*</span></label>
-                            <span class="material-symbols-outlined form__icon absolute">person</span>
-                            <input type="text" id="firstname" formControlName="firstname"
-                                placeholder="Enter Your First Name">
-                        </div>
-
-                        <div class="form__group relative d-flex flex-column">
-                            <label class="form__label">Last Name<span>*</span></label>
-                            <span class="material-symbols-outlined form__icon absolute">person</span>
-                            <input type="text" id="lastname" formControlName="lastname"
-                                placeholder="Enter Your Last Name">
-                        </div>
-                        <div class="form__group relative d-flex flex-column">
-                            <label class="form__label">Email<span>*</span></label>
-                            <span class="material-symbols-outlined form__icon absolute">mail</span>
-                            <input type="text" id="email" formControlName="email" placeholder="Enter Your Email">
-                            <small
-                                *ngIf="ProfileForm.get('email')?.hasError('email') && ProfileForm.get('email')?.touched"
-                                class="invalid">
-                                *Please enter valid Email.
-                            </small>
-                        </div>
-
-
-                        <div class="form__group relative d-flex flex-column">
-                            <label class="form__label">Mobile No.<span>*</span></label>
-                            <span class="material-symbols-outlined form__icon absolute">call</span>
-                            <input type="text" id="mobile" formControlName="mobile" placeholder="Enter Your MobileNo">
-
-                            <small
-                                *ngIf="ProfileForm.get('mobile')?.hasError('notvalid') && ProfileForm.get('mobile')?.touched"
-                                class="invalid">*Mobile No is invalid.</small>
-
-                        </div>
-
-
-
-                        <div class="form__group relative d-flex flex-column">
-                            <label class="form__label">Date of Birth<span>*</span></label>
-                            <span class="material-symbols-outlined form__icon absolute">person</span>
-                            <input type="date" id="dob" formControlName="dob" placeholder="Enter Your Date of Birth">
-                        </div>
-
-                        <div class="form__group relative d-flex flex-column">
-                            <label class="form__label">Gender<span>*</span></label>
-                            <div class="form__group relative radio d-flex gap-20 align-item-center">
-                                <input type="radio" id="male" name="gender" value="male" formControlName="gender"
-                                    [attr.checked]="this?.ProfileForm?.get('gender')?.value=='male' ? true: null">
-                                <label for="male" class="d-flex flex-center relative gap-5 pointer">Male</label>
-
-                                <input type="radio" id="female" name="gender" formControlName="gender" value="female"
-                                    [attr.checked]="this?.ProfileForm?.get('gender')?.value=='female'  ? true : null">
-                                <label for="female" class="d-flex flex-center relative gap-5 pointer"> Female </label>
-                            </div>
-                        </div>
-
-                    </form>
-
+                    <div class="d-flex gap-15">
+                        <button class="btn-secondary  btn btn-sm btn-rounded"
+                            [ngStyle]="{'display': ProfileDisabled? 'none': 'block'}"
+                            (click)="DisableForm(true)">Cancel</button>
+                        <button class="btn-primary btn btn-sm btn-rounded"
+                            [ngStyle]="{'display': !ProfileDisabled? 'none': 'block'}"
+                            (click)="DisableForm(false)">Edit</button>
+                        <button class="btn-primary btn btn-sm btn-rounded"
+                            [ngStyle]="{'display': ProfileDisabled? 'none': 'block'}"
+                            (click)="saveDetails(); DisableForm(true)" [disabled]="ProfileForm.invalid">Save</button>
+                    </div>
 
                 </div>
 
-                <div *ngIf="showData=='addresses'" class="address">
-                    <div
-                        class="d-flex address_header align-item-center justify-content-md-between pointer default-animation">
 
-                        <div class="d-flex align-item-center gap-5" (click)="TranslateBack()">
-                            <span class="material-symbols-outlined left__icon" *ngIf="TranslateData">
-                                chevron_left
-                            </span>
-                            <h2>
-                                My Addresses
-                            </h2>
+                <form [formGroup]="ProfileForm" class="d-flex gap-15 disableInput flex-wrap default-animation-slow">
+                    <div class="form__group relative d-flex flex-column">
+                        <label class="form__label">First Name<span>*</span></label>
+                        <span class="material-symbols-outlined form__icon absolute">person</span>
+                        <input type="text" id="firstname" formControlName="firstname"
+                            placeholder="Enter Your First Name">
+                    </div>
+
+                    <div class="form__group relative d-flex flex-column">
+                        <label class="form__label">Last Name<span>*</span></label>
+                        <span class="material-symbols-outlined form__icon absolute">person</span>
+                        <input type="text" id="lastname" formControlName="lastname" placeholder="Enter Your Last Name">
+                    </div>
+                    <div class="form__group relative d-flex flex-column">
+                        <label class="form__label">Email<span>*</span></label>
+                        <span class="material-symbols-outlined form__icon absolute">mail</span>
+                        <input type="text" id="email" formControlName="email" placeholder="Enter Your Email">
+                        <small *ngIf="ProfileForm.get('email')?.hasError('email') && ProfileForm.get('email')?.touched"
+                            class="invalid">
+                            *Please enter valid Email.
+                        </small>
+                    </div>
+
+
+                    <div class="form__group relative d-flex flex-column">
+                        <label class="form__label">Mobile No.<span>*</span></label>
+                        <span class="material-symbols-outlined form__icon absolute">call</span>
+                        <input type="text" id="mobile" formControlName="mobile" placeholder="Enter Your MobileNo">
+
+                        <small
+                            *ngIf="ProfileForm.get('mobile')?.hasError('notvalid') && ProfileForm.get('mobile')?.touched"
+                            class="invalid">*Mobile No is invalid.</small>
+
+                    </div>
+
+
+
+                    <div class="form__group relative d-flex flex-column">
+                        <label class="form__label">Date of Birth<span>*</span></label>
+                        <span class="material-symbols-outlined form__icon absolute">person</span>
+                        <input type="date" id="dob" formControlName="dob" placeholder="Enter Your Date of Birth">
+                    </div>
+
+                    <div class="form__group relative d-flex flex-column">
+                        <label class="form__label">Gender<span>*</span></label>
+                        <div class="form__group relative radio d-flex gap-20 align-item-center">
+                            <input type="radio" id="male" name="gender" value="male" formControlName="gender"
+                                [attr.checked]="this?.ProfileForm?.get('gender')?.value=='male' ? true: null">
+                            <label for="male" class="d-flex flex-center relative gap-5 pointer">Male</label>
+
+                            <input type="radio" id="female" name="gender" formControlName="gender" value="female"
+                                [attr.checked]="this?.ProfileForm?.get('gender')?.value=='female'  ? true : null">
+                            <label for="female" class="d-flex flex-center relative gap-5 pointer"> Female </label>
                         </div>
-
-
-                        <div class="d-flex align-item-center addAddress__div" (click)="AddAddress()">
-                            <span class="material-symbols-outlined address__icon">
-                                add_circle
-                            </span>
-                            <p class="text_address">ADD NEW ADDRESS</p>
-                        </div>
-
                     </div>
-                    <div class="d-flex flex-column gap-10 default-animation-slow ">
-                    <div class="d-flex flex-column gap-20" [ngClass]="{'addressDiv':AddressLength>0}">
-                        <ng-container *ngFor="let address of userAddresses;let i=index">
-                            <div class="d-flex mw100 particularAddress justify-content-md-between">
-                                <div class="d-flex flex-column  gap-10 address__firstdiv">
-                                    <div class="d-flex gap-10 default__div">
-                                        <p class="name">{{address.firstname}} {{address.lastname}}</p>
-                                        <button class="default__btn" (click)="MakeDefault(address,i)" *ngIf="i!=0">set
-                                            default</button>
-                                    </div>
-                                    <div class="address_div">
-                                        <p>{{address.apartment}} {{address.area}} {{address.landmark}},
-                                            {{address.town_city}}</p>
-                                        <p>{{address.state}}- {{address.pincode}}</p>
-                                    </div>
-                                </div>
-                                <div class="d-flex">
-                                    <div class="d-flex flex-column gap-5">
-                                        <span class="material-symbols-outlined edit__btn"
-                                            (click)="EditAddress(address,i)">
-                                            edit
-                                        </span>
 
-                                        <span class="material-symbols-outlined remove__btn"
-                                            (click)="RemoveAddress(address,i)">
-                                            delete
-                                        </span>
-                                    </div>
+                </form>
 
-                                </div>
-                            </div>
-                        </ng-container>
-
-                    </div>
-                </div>
-                    <div class="no-address d-flex flex-center flex-column gap-10" style="height: 400px;" *ngIf="userAddresses.length == 0">
-                        <img src="../../assets/no-address-light.svg" alt="no address found" width="100">
-                        <p>No address found!</p>
-                    </div>
-                </div>
+            </div>
 
 
-                <div class="Orders  d-flex flex-column gap-20" *ngIf="showData=='orders'">
+            <div class="Orders  d-flex flex-column gap-20" *ngIf="showData=='orders'">
 
-                    <div *ngIf="AllOrders?.length==0"
-                        class="d-flex flex-column gap-15 no-orders align-item-center flex-center">
-                        <img src="../../assets/no-orders.svg" alt="no orders">
-                        <p>No orders yet</p>
-                    </div>
-                    <div class="default-animation " *ngIf="AllOrders?.length>0">
-                        <div class="d-flex align-item-center pointer h2_div" (click)="TranslateBack()">
+                <div class="default-animation ">
+                    <div class="d-flex align-item-center pointer justify-content-md-between mw100 ">
+                        <div class="h2_div pointer d-flex align-item-center" (click)="TranslateBack()">
                             <span class="material-symbols-outlined left__icon" *ngIf="TranslateData">
                                 chevron_left
                             </span>
@@ -257,10 +181,27 @@
                                 Orders History
                             </h2>
 
-
                         </div>
-                        <p class="orders__p">Check the status of recent orders, view invoice and manage returns.
-                        </p>
+                        <!-- <div class="d-flex justify-content-md-between mw100 align-item-center"> -->
+                        <div class="d-flex gap-10">
+                            <button class="btn active__orders" (click)="DefaultShowOrders='active';getOrders()"
+                                [ngClass]="{'border__bottom':DefaultShowOrders=='active'}">Active Orders</button>
+                            <button class="btn cancel__orders"
+                                (click)="DefaultShowOrders='cancelled';getCancelledOrders();"
+                                [ngClass]="{'border__bottom':DefaultShowOrders=='cancelled'}">Cancelled Orders</button>
+                            <!-- </div> -->
+                        </div>
+                    </div>
+                    <p class="orders__p">Check the status of recent orders, view invoice and manage returns.
+                    </p>
+                </div>
+
+                <div *ngIf="DefaultShowOrders=='active'">
+
+                    <div *ngIf="AllOrders?.length==0 && !loading"
+                        class="d-flex default-animation-slow flex-column gap-15 no-orders align-item-center flex-center">
+                        <img src="../../assets/no-orders.svg" alt="no orders">
+                        <p>No orders yet</p>
                     </div>
 
                     <div class="AllOrders d-flex flex-column gap-25 default-animation-slow">
@@ -278,12 +219,14 @@
                                         </div>
                                         <div class="order-deets">
                                             <p>Amount</p>
-                                            <span>₹ {{order.OrderSummary.total}}</span>
+                                            <span>₹ {{order.OrderSummary.Total}}</span>
                                         </div>
                                     </div>
                                     <div class="d-flex gap-20 order__firstDiv__btn">
                                         <button class="btn-rounded btn" (click)="toggleAccordian(i)">View Order</button>
                                         <button class="btn-rounded btn" (click)="viewInvoice(i)">View Invoice</button>
+                                        <button class="btn-rounded btn" (click)="cancelOrder(order._id)">Cancel
+                                            Order</button>
                                     </div>
                                     <div class="more-icon pointer display-none relative">
                                         <span class="material-symbols-outlined ">
@@ -359,318 +302,111 @@
                         <app-pagination #pagination [collectionSize]="totalCount" [pageSize]="TemplatePagination.limit"
                             [currentPage]="currentPage" (activePage)="pageChange($event)"></app-pagination>
                     </div>
-
-
-                </div>
-
-                <!-- <div *ngIf="showData=='wishlist'" class="wishlist">
-
-                <div class="d-flex align-item-center pointer wishlist__div h2_div default-animation"
-                    (click)="TranslateBack()">
-                    <span class="material-symbols-outlined left__icon"  *ngIf="TranslateData">
-                        chevron_left
-                    </span>
-                    <h2>
-                        Wishlists
-                    </h2>
                 </div>
 
 
-                <div class="d-flex flex-column default-animation-slow">
-                    <div class="accordian mw-100" *ngFor="let item of productsArray; let i = index">
-                        <div class="accordian__head pointer d-flex justify-content-md-between"
-                            (click)="showWishlistedProducts(item.wishlistName); toggleAccordian(i);">
-                            <p class="wishlist-name">{{item.wishlistName | titlecase}}</p>
-                            <div class="d-flex gap-5 align-items-center">
-                                <p *ngIf="item.products.length === 0" class="no-item-label">No items</p>
-                                <span class="material-symbols-outlined d-flex flex-center" (click)="removeWishlist(i)"
-                                    *ngIf="i!=0">
-                                    delete
-                                </span>
-                                <span class="material-symbols-outlined expand d-flex flex-center"
-                                    *ngIf="item.products.length !== 0">
-                                    expand_more
-                                </span>
-                            </div>
-                        </div>
-                        <div class="accordian__body d-flex flex-column gap-10"
-                            [class.active]="openedAccordionIndex === i">
-                            <ng-container *ngFor="let product of wishlistedProducts">
-                                <div class="product d-flex justify-content-md-between mw100 default-animation">
-                                    <div class="d-flex gap-20">
-                                        <div class="prod-img relative">
-                                            <a routerLink="/product/{{product.productDetails.sku}}">
-                                                <img class="skeleton" [src]="product.productDetails.assets[0].photo[0]"
-                                                    alt="Product Image">
-                                            </a>
-                                            <button
-                                                class="absolute remove-btn d-flex justify-content-center align-item-center"
-                                                (click)="removeFromWishlist(product.productDetails._id, item.wishlistName)">
-                                                <span class="material-symbols-outlined">
-                                                    close
-                                                </span>
-                                            </button>
+                <div *ngIf="DefaultShowOrders=='cancelled'">
+                    <div *ngIf="CancelledOrders?.length==0 && !loading"
+                        class="d-flex default-animation-slow flex-column gap-15 no-orders align-item-center flex-center">
+                        <img src="../../assets/no-orders.svg" alt="no orders">
+                        <p>No cancelled orders yet</p>
+                    </div>
+
+                    <div class="AllOrders d-flex flex-column gap-25 default-animation-slow">
+                        <ng-container *ngFor="let order of CancelledOrders ; let i=index">
+                            <div *ngIf="i < TemplatePagination.limit" class="particularOrder">
+                                <div class="order__firstDiv d-flex gap-25 justify-content-md-between">
+                                    <div class=" d-flex gap-25 align-item-center order__basic">
+                                        <div class="order-deets id-div">
+                                            <p>Order Number</p>
+                                            <span>{{order.orderID}}</span>
                                         </div>
-                                        <div class="d-flex flex-column gap-5">
-                                            <a routerLink="/product/{{product.productDetails.sku}}">
-                                                <p class="prod-name">
-                                                    {{product.productDetails.name}}
-                                                </p>
-                                            </a>
-                                            <p>{{product.productDetails.info.brand}}</p>
-                                            <p>Price: ₹{{ product.productDetails.price }}</p>
+                                        <div class="order-deets">
+                                            <p>Date</p>
+                                            <span>{{getDate(order.orderDate)}}</span>
+                                        </div>
+                                        <div class="order-deets">
+                                            <p>Amount</p>
+                                            <span>₹ {{order.OrderSummary.Total}}</span>
                                         </div>
                                     </div>
-                                    <div class="d-flex flex-column justify-content-end">
-                                        <div class="d-flex gap-10">
-                                            <span routerLink="/product/{{product.productDetails.sku}}">View
-                                                Product</span> |
-                                            <span *ngIf="product.productDetails.active == true" class="in-stock"
-                                                (click)="moveToCart(product.productDetails.sku) ; removeFromWishlist(product.productDetails._id, item.wishlistName)">Add
-                                                to Cart</span>
-                                            <span *ngIf="product.productDetails.active !==true" class="out-of-stock">Out
-                                                of Stock</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </ng-container>
-                        </div>
-                    </div>
-                </div>
-            </div> -->
-
-            </div>
-
-            <div class="changePassword" *ngIf="showData=='changePassword'">
-                <div class="d-flex align-item-center pointer h2_div default-animation" (click)="TranslateBack()">
-                    <span class="material-symbols-outlined left__icon" *ngIf="TranslateData">
-                        chevron_left
-                    </span>
-                    <h2>
-                        Change Password
-                    </h2>
-
-
-                </div>
-
-                <form [formGroup]="changePasswordForm" class="d-flex  flex-column flex-wrap default-animation-slow ">
-
-
-                    <div class="form__group relative d-flex flex-column">
-                        <label class="form__label">Current Password<span>*</span></label>
-                        <span class="material-symbols-outlined form__icon absolute key">key</span>
-                        <input [type]="password3" id="name" formControlName="currentPassword"
-                            placeholder="Enter Current Password">
-                        <a class="eye-btn flex justify-content-center align-items-center"
-                            (click)="showPassword3 = !showPassword3 ; password3 = showPassword3? 'text' : 'password';"><span
-                                class="material-symbols-outlined eye">{{showPassword3? 'visibility' :
-                                'visibility_off'}}</span>
-                        </a>
-                    </div>
-
-                    <div class="form__group relative d-flex flex-column">
-                        <label class="form__label">New Password<span>*</span></label>
-
-                        <span class="material-symbols-outlined form__icon absolute key">key</span>
-                        <input [type]="password2" id="email" formControlName="newPassword"
-                            placeholder="Enter New Password">
-                        <a class="eye-btn flex justify-content-center align-items-center"
-                            (click)="showPassword2 = !showPassword2 ; password2 = showPassword2 ? 'text' : 'password';">
-                            <span class="material-symbols-outlined eye">{{showPassword2? 'visibility' :
-                                'visibility_off'}}</span>
-                        </a>
-                        <div class="password-helper d-flex justify-content-md-between">
-
-
-                            <div class="d-flex flex-column helper-inside">
-                                <p [ngClass]="{'red-text': changePasswordForm.get('newPassword')?.hasError('minlength') && !changePasswordForm.get('newPassword')?.hasError('required'),
-                     'green-text': !changePasswordForm.get('newPassword')?.hasError('minlength') && !changePasswordForm.get('newPassword')?.hasError('required')}"
-                                    *ngIf="!changePasswordForm.get('newPassword')?.hasError('required')">
-                                    <small class="material-symbols-outlined">
-                                        check_circle
-                                    </small>Minimum 8 characters
-                                </p>
-
-                                <p [ngClass]="{'red-text': changePasswordForm.get('newPassword')?.hasError('uppercase') && !changePasswordForm.get('newPassword')?.hasError('required'),
-                     'green-text': !changePasswordForm.get('newPassword')?.hasError('uppercase') && !changePasswordForm.get('newPassword')?.hasError('required')}"
-                                    *ngIf="!changePasswordForm.get('newPassword')?.hasError('required')">
-                                    <small class="material-symbols-outlined">
-                                        check_circle
-                                    </small>One uppercase letter
-                                </p>
-
-                                <p [ngClass]="{'red-text': changePasswordForm.get('newPassword')?.hasError('lowercase') && !changePasswordForm.get('newPassword')?.hasError('required'),
-               'green-text': !changePasswordForm.get('newPassword')?.hasError('lowercase') && !changePasswordForm.get('newPassword')?.hasError('required')}"
-                                    *ngIf="!changePasswordForm?.get('newPassword')?.hasError('required')">
-                                    <small class="material-symbols-outlined">
-                                        check_circle
-                                    </small>One lowercase letter
-                                </p>
-                            </div>
-
-                            <div class="d-flex flex-column helper-inside">
-                                <p [ngClass]="{'red-text': changePasswordForm.get('newPassword')?.hasError('digit') && !changePasswordForm.get('newPassword')?.hasError('required'),
-               'green-text': !changePasswordForm.get('newPassword')?.hasError('digit') && !changePasswordForm.get('newPassword')?.hasError('required')}"
-                                    *ngIf="!changePasswordForm?.get('newPassword')?.hasError('required')">
-                                    <small class="material-symbols-outlined">
-                                        check_circle
-                                    </small>One numeric character
-                                </p>
-
-                                <p [ngClass]="{'red-text': changePasswordForm.get('newPassword')?.hasError('specialCharacter') && !changePasswordForm.get('newPassword')?.hasError('required'),
-               'green-text': !changePasswordForm.get('newPassword')?.hasError('specialCharacter') && !changePasswordForm.get('newPassword')?.hasError('required')}"
-                                    *ngIf="!changePasswordForm?.get('newPassword')?.hasError('required')">
-                                    <small class="material-symbols-outlined">
-                                        check_circle
-                                    </small>One special character
-                                </p>
-                            </div>
-                        </div>
-
-                    </div>
-
-
-                    <div class="form__group relative d-flex flex-column">
-                        <label class="form__label">Confirm New Password<span>*</span></label>
-                        <span class="material-symbols-outlined key form__icon absolute">key</span>
-                        <input [type]="password" id=" againNewPassword" formControlName="againNewPassword"
-                            placeholder="Retype new password">
-                        <a class="eye-btn flex justify-content-center align-items-center"
-                            (click)="showPassword = !showPassword ; password = showPassword ? 'text' : 'password';"><span
-                                class="material-symbols-outlined eye">{{showPassword? 'visibility' :
-                                'visibility_off'}}</span>
-                        </a>
-                    </div>
-
-                </form>
-
-
-                <button class="btn-primary btn-rounded btn-sm btn-inline" (click)="onPasswordChange()">Save</button>
-            </div>
-
-            <div class="Orders  d-flex flex-column gap-20" *ngIf="showData=='orders'">
-
-                <div *ngIf="AllOrders?.length==0"
-                    class="d-flex flex-column gap-15 no-orders align-item-center flex-center">
-                    <img src="../../assets/no-orders.svg" alt="no orders">
-                    <p>No orders yet</p>
-                </div>
-                <div class="default-animation " *ngIf="AllOrders?.length>0">
-                    <div class="d-flex align-item-center pointer h2_div" (click)="TranslateBack()">
-                        <span class="material-symbols-outlined left__icon" *ngIf="TranslateData">
-                            chevron_left
-                        </span>
-                        <h2 style="font-weight: 600;">
-                            Orders History
-                        </h2>
-
-
-                    </div>
-                    <p class="orders__p">Check the status of recent orders, view invoice and manage returns.
-                    </p>
-                </div>
-
-                <div class="AllOrders d-flex flex-column gap-25 default-animation-slow">
-                    <ng-container *ngFor="let order of AllOrders ; let i=index">
-                        <div *ngIf="i < TemplatePagination.limit" class="particularOrder">
-                            <div class="order__firstDiv d-flex gap-25 justify-content-md-between">
-                                <div class=" d-flex gap-25 align-item-center order__basic">
-                                    <div class="order-deets id-div">
-                                        <p>Order Number</p>
-                                        <span>{{order.orderID}}</span>
-                                    </div>
-                                    <div class="order-deets">
-                                        <p>Date</p>
-                                        <span>{{getDate(order.orderDate)}}</span>
-                                    </div>
-                                    <div class="order-deets">
-                                        <p>Amount</p>
-                                        <span>₹ {{order.orderValueAfterDiscount}}</span>
-                                    </div>
-                                </div>
-                                <div class="d-flex gap-20 order__firstDiv__btn">
-                                    <button class="btn-rounded btn" (click)="toggleAccordian(i)">View Order</button>
-                                    <button class="btn-rounded btn" (click)="viewInvoice(i)">View Invoice</button>
-                                </div>
-                                <div class="more-icon pointer display-none relative">
-                                    <span class="material-symbols-outlined ">
-                                        more_vert
-                                    </span>
-                                    <div class="more-icon-content display-none d-flex flex-column gap-10">
+                                    <div class="d-flex gap-20 order__firstDiv__btn">
                                         <button class="btn-rounded btn" (click)="toggleAccordian(i)">View Order</button>
-                                        <button class="btn-rounded btn">View Invoice</button>
+                                        <!-- <button class="btn-rounded btn" (click)="viewInvoice(i)">View Invoice</button> -->
                                     </div>
+                                    <div class="more-icon pointer display-none relative">
+                                        <span class="material-symbols-outlined ">
+                                            more_vert
+                                        </span>
+                                        <div class="more-icon-content display-none d-flex flex-column gap-10">
+                                            <button class="btn-rounded btn" (click)="toggleAccordian(i)">View
+                                                Order</button>
+                                            <button class="btn-rounded btn">View Invoice</button>
+                                        </div>
+                                    </div>
+
                                 </div>
+                                <ng-container *ngFor="let product of order.products">
+                                    <div class="order d-flex flex-column gap-20 default-animation"
+                                        [class.active]="openedAccordionIndex === i">
+                                        <div class=" d-flex justify-content-md-between">
+                                            <div class="d-flex gap-15">
+                                                <img src={{product.image}} class="imgDiv skeleton">
 
-                            </div>
-                            <ng-container *ngFor="let product of order.products">
-                                <div class="order d-flex flex-column gap-20 default-animation"
-                                    [class.active]="openedAccordionIndex === i">
-                                    <div class=" d-flex justify-content-md-between">
-                                        <div class="d-flex gap-15">
-                                            <!-- <div > -->
-                                            <img src={{product.image}} class="imgDiv skeleton">
-                                            <!-- </div> -->
-                                            <div class="d-flex flex-column productDetails gap-5">
-                                                <p class="prodName">{{product.name}}</p>
-                                                <div class="d-flex align-item-center gap-5">
-                                                    <p>Color :</p>
-                                                    <div [style.background-color]="product.color" class="color__div">
+                                                <div class="d-flex flex-column productDetails gap-5">
+                                                    <p class="prodName">{{product.name}}</p>
+                                                    <div class="d-flex align-item-center gap-5">
+                                                        <p>Color :</p>
+                                                        <div [style.background-color]="product.color"
+                                                            class="color__div">
+                                                        </div>
                                                     </div>
-                                                </div>
-                                                <p>Qty : {{product.quantity}}</p>
-                                                <p class="display-none resp">₹ {{product.price}}</p>
+                                                    <p>Qty : {{product.quantity}}</p>
+                                                    <p class="display-none resp">₹ {{product.price}}</p>
 
-                                                <!-- <p>Order Id - {{order._id}}</p> -->
+                                                </div>
+                                            </div>
+                                            <div class="d-flex justify-content-center align-item-center price-div">
+                                                <p class="price">₹ {{product.price}}</p>
                                             </div>
                                         </div>
-                                        <div class="d-flex justify-content-center align-item-center price-div">
-                                            <p class="price">₹ {{product.price}}</p>
+                                        <div class="deliverDiv d-flex justify-content-md-between">
+
+                                            <div class="d-flex gap-10 delivery align-item-center">
+                                                <span class="material-symbols-outlined pending-icon d-flex flex-center"
+                                                    *ngIf="product.shipmentStatus=='pending'">
+                                                    hourglass_empty
+                                                </span>
+                                                <span class="material-symbols-outlined deliver-icon"
+                                                    *ngIf="product.shipmentStatus=='delivered'">
+                                                    check
+                                                </span>
+                                                <p class="delivery-status">{{product.shipmentStatus | titlecase}}</p>
+                                            </div>
+                                            <div class="d-flex gap-10 btns">
+                                                <button class="btn" routerLink="/product/{{product.sku}}">
+                                                    View Product
+                                                </button>
+                                                <button class="btn" *ngIf="product.shipmentStatus=='delivered'">
+                                                    Exchange Product
+                                                </button>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class="deliverDiv d-flex justify-content-md-between">
-
-                                        <div class="d-flex gap-10 delivery align-item-center">
-                                            <span class="material-symbols-outlined pending-icon d-flex flex-center"
-                                                *ngIf="product.shipmentStatus=='pending'">
-                                                hourglass_empty
-                                            </span>
-                                            <span class="material-symbols-outlined deliver-icon"
-                                                *ngIf="product.shipmentStatus=='delivered'">
-                                                check
-                                            </span>
-                                            <p class="delivery-status">{{product.shipmentStatus | titlecase}}</p>
-                                        </div>
-                                        <div class="d-flex gap-10 btns">
-                                            <button class="btn" routerLink="/product/{{product.sku}}">
-                                                View Product
-                                            </button>
-                                            <p *ngIf="product.shipmentStatus!='cancelled'">|</p>
-                                            <!-- <button (click)="BuyAgain(product)">
-                                            Buy Again
-                                        </button> -->
-                                            <button class="btn" *ngIf="product.shipmentStatus=='pending'"
-                                                (click)="CancelProduct(order._id,product.sku)">
-                                                Cancel Product
-                                            </button>
-
-                                            <button class="btn" *ngIf="product.shipmentStatus=='delivered'">
-                                                Exchange Product
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </ng-container>
-                        </div>
-                    </ng-container>
+                                </ng-container>
+                            </div>
+                        </ng-container>
+                    </div>
+                    <div *ngIf="CancelledOrders?.length>0">
+                        <app-pagination #pagination [collectionSize]="cancelledOrdersCount"
+                            [pageSize]="cancelledTempatePagination.limit" [currentPage]="cancelledCurrentPage"
+                            (activePage)="pageChange($event)"></app-pagination>
+                    </div>
                 </div>
-                <div *ngIf="AllOrders?.length>0">
-                    <app-pagination #pagination [collectionSize]="totalCount" [pageSize]="TemplatePagination.limit"
-                        [currentPage]="currentPage" (activePage)="pageChange($event)"></app-pagination>
-                </div>
-
 
             </div>
+
+
 
             <div *ngIf="showData=='wishlist'" class="wishlist">
 
@@ -751,9 +487,186 @@
                     </div>
                 </div>
             </div>
+            <div *ngIf="showData=='addresses'" class="address">
+                <div
+                    class="d-flex address_header align-item-center justify-content-md-between pointer default-animation">
+
+                    <div class="d-flex align-item-center gap-5" (click)="TranslateBack()">
+                        <span class="material-symbols-outlined left__icon" *ngIf="TranslateData">
+                            chevron_left
+                        </span>
+                        <h2>
+                            My Addresses
+                        </h2>
+                    </div>
+
+
+                    <div class="d-flex align-item-center addAddress__div" (click)="AddAddress()">
+                        <span class="material-symbols-outlined address__icon">
+                            add_circle
+                        </span>
+                        <p class="text_address">ADD NEW ADDRESS</p>
+                    </div>
+
+                </div>
+                <div class="d-flex flex-column gap-10 default-animation-slow ">
+                <div class="d-flex flex-column gap-20" [ngClass]="{'addressDiv':AddressLength>0}">
+                    <ng-container *ngFor="let address of userAddresses;let i=index">
+                        <div class="d-flex mw100 particularAddress justify-content-md-between">
+                            <div class="d-flex flex-column  gap-10 address__firstdiv">
+                                <div class="d-flex gap-10 default__div">
+                                    <p class="name">{{address.firstname}} {{address.lastname}}</p>
+                                    <button class="default__btn" (click)="MakeDefault(address,i)" *ngIf="i!=0">set
+                                        default</button>
+                                </div>
+                                <div class="address_div">
+                                    <p>{{address.apartment}} {{address.area}} {{address.landmark}},
+                                        {{address.town_city}}</p>
+                                    <p>{{address.state}}- {{address.pincode}}</p>
+                                </div>
+                            </div>
+                            <div class="d-flex">
+                                <div class="d-flex flex-column gap-5">
+                                    <span class="material-symbols-outlined edit__btn"
+                                        (click)="EditAddress(address,i)">
+                                        edit
+                                    </span>
+
+                                    <span class="material-symbols-outlined remove__btn"
+                                        (click)="RemoveAddress(address,i)">
+                                        delete
+                                    </span>
+                                </div>
+
+                            </div>
+                        </div>
+                    </ng-container>
+
+                </div>
+            </div>
+                <div class="no-address d-flex flex-center flex-column gap-10" style="height: 400px;" *ngIf="userAddresses.length == 0">
+                    <img src="../../assets/no-address-light.svg" alt="no address found" width="100">
+                    <p>No address found!</p>
+                </div>
+            </div>
+                <div class="changePassword" *ngIf="showData=='changePassword'">
+                    <div class="d-flex align-item-center pointer h2_div default-animation" (click)="TranslateBack()">
+                        <span class="material-symbols-outlined left__icon" *ngIf="TranslateData">
+                            chevron_left
+                        </span>
+                        <h2>
+                            Change Password
+                        </h2>
+
+
+                    </div>
+
+                    <form [formGroup]="changePasswordForm"
+                        class="d-flex  flex-column flex-wrap default-animation-slow ">
+
+
+                        <div class="form__group relative d-flex flex-column">
+                            <label class="form__label">Current Password<span>*</span></label>
+                            <span class="material-symbols-outlined form__icon absolute key">key</span>
+                            <input [type]="password3" id="name" formControlName="currentPassword"
+                                placeholder="Enter Current Password">
+                            <a class="eye-btn flex justify-content-center align-items-center"
+                                (click)="showPassword3 = !showPassword3 ; password3 = showPassword3? 'text' : 'password';"><span
+                                    class="material-symbols-outlined eye">{{showPassword3? 'visibility' :
+                                    'visibility_off'}}</span>
+                            </a>
+                        </div>
+
+                        <div class="form__group relative d-flex flex-column">
+                            <label class="form__label">New Password<span>*</span></label>
+
+                            <span class="material-symbols-outlined form__icon absolute key">key</span>
+                            <input [type]="password2" id="email" formControlName="newPassword"
+                                placeholder="Enter New Password">
+                            <a class="eye-btn flex justify-content-center align-items-center"
+                                (click)="showPassword2 = !showPassword2 ; password2 = showPassword2 ? 'text' : 'password';">
+                                <span class="material-symbols-outlined eye">{{showPassword2? 'visibility' :
+                                    'visibility_off'}}</span>
+                            </a>
+                            <div class="password-helper d-flex justify-content-md-between">
+
+
+                                <div class="d-flex flex-column helper-inside">
+                                    <p [ngClass]="{'red-text': changePasswordForm.get('newPassword')?.hasError('minlength') && !changePasswordForm.get('newPassword')?.hasError('required'),
+                     'green-text': !changePasswordForm.get('newPassword')?.hasError('minlength') && !changePasswordForm.get('newPassword')?.hasError('required')}"
+                                        *ngIf="!changePasswordForm.get('newPassword')?.hasError('required')">
+                                        <small class="material-symbols-outlined">
+                                            check_circle
+                                        </small>Minimum 8 characters
+                                    </p>
+
+                                    <p [ngClass]="{'red-text': changePasswordForm.get('newPassword')?.hasError('uppercase') && !changePasswordForm.get('newPassword')?.hasError('required'),
+                     'green-text': !changePasswordForm.get('newPassword')?.hasError('uppercase') && !changePasswordForm.get('newPassword')?.hasError('required')}"
+                                        *ngIf="!changePasswordForm.get('newPassword')?.hasError('required')">
+                                        <small class="material-symbols-outlined">
+                                            check_circle
+                                        </small>One uppercase letter
+                                    </p>
+
+                                    <p [ngClass]="{'red-text': changePasswordForm.get('newPassword')?.hasError('lowercase') && !changePasswordForm.get('newPassword')?.hasError('required'),
+               'green-text': !changePasswordForm.get('newPassword')?.hasError('lowercase') && !changePasswordForm.get('newPassword')?.hasError('required')}"
+                                        *ngIf="!changePasswordForm?.get('newPassword')?.hasError('required')">
+                                        <small class="material-symbols-outlined">
+                                            check_circle
+                                        </small>One lowercase letter
+                                    </p>
+                                </div>
+
+                                <div class="d-flex flex-column helper-inside">
+                                    <p [ngClass]="{'red-text': changePasswordForm.get('newPassword')?.hasError('digit') && !changePasswordForm.get('newPassword')?.hasError('required'),
+               'green-text': !changePasswordForm.get('newPassword')?.hasError('digit') && !changePasswordForm.get('newPassword')?.hasError('required')}"
+                                        *ngIf="!changePasswordForm?.get('newPassword')?.hasError('required')">
+                                        <small class="material-symbols-outlined">
+                                            check_circle
+                                        </small>One numeric character
+                                    </p>
+
+                                    <p [ngClass]="{'red-text': changePasswordForm.get('newPassword')?.hasError('specialCharacter') && !changePasswordForm.get('newPassword')?.hasError('required'),
+               'green-text': !changePasswordForm.get('newPassword')?.hasError('specialCharacter') && !changePasswordForm.get('newPassword')?.hasError('required')}"
+                                        *ngIf="!changePasswordForm?.get('newPassword')?.hasError('required')">
+                                        <small class="material-symbols-outlined">
+                                            check_circle
+                                        </small>One special character
+                                    </p>
+                                </div>
+                            </div>
+
+                        </div>
+
+
+                        <div class="form__group relative d-flex flex-column">
+                            <label class="form__label">Confirm New Password<span>*</span></label>
+                            <span class="material-symbols-outlined key form__icon absolute">key</span>
+                            <input [type]="password" id=" againNewPassword" formControlName="againNewPassword"
+                                placeholder="Retype new password">
+                            <a class="eye-btn flex justify-content-center align-items-center"
+                                (click)="showPassword = !showPassword ; password = showPassword ? 'text' : 'password';"><span
+                                    class="material-symbols-outlined eye">{{showPassword? 'visibility' :
+                                    'visibility_off'}}</span>
+                            </a>
+                        </div>
+
+                    </form>
+
+
+                    <button class="btn-primary btn-rounded btn-sm btn-inline" (click)="onPasswordChange()">Save</button>
+                </div>
+
+                <div *ngIf="loading" class="tv-loading">
+                    <img src="../../assets/logo-mobile.svg" alt="tradeVogue-loading" *ngIf="!theme">
+                    <img src="../../assets/logo-mobile-light.svg" alt="tradeVogue-loading" *ngIf="theme">
+                    <div class="circle-tv-loader"></div>
+                </div>
+
+            </div>
 
         </div>
-    </div>
+
 
 </section>
 

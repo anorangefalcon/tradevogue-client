@@ -31,8 +31,12 @@ export class SettingsComponent {
   theme: Boolean = false;
   AccordianIndex: number = 0;
   totalCount: number = 0;
+  cancelledOrdersCount:number=0;
   currentPage: number = 1;
+  cancelledCurrentPage:number=1;
   AllOrders: any = [];
+  CancelledOrders:any=[];
+  DefaultShowOrders='active';
   ProfileDisabled: boolean = true;
   emailDisabled: boolean = true;
   AddressLength: number = 0;
@@ -61,7 +65,13 @@ export class SettingsComponent {
 
   TemplatePagination: any = {
     currentPage: this.currentPage,
-    limit: 8
+    limit: 1
+  }
+
+  cancelledTempatePagination:any={
+    currentPage: this.cancelledCurrentPage,
+    limit: 1,
+    active:false
   }
 
   template: any = {
@@ -116,16 +126,13 @@ export class SettingsComponent {
     })
 
     this.route.paramMap.subscribe((params: any) => {
-      console.log('called again ');
-      // console.log('called again ');
-
       this.changeComponent(params.get('page'));
     });
 
     this.dialogBox.responseEmitter.subscribe(async (res: boolean) => {
       if (res == true) {
-        this.fetchDataService.HTTPPOST(this.backendURLs.URLs.cancelOrder, this.body).subscribe((data) => {
-          this.pageChange(1);
+        this.fetchDataService.HTTPPOST(this.backendURLs.URLs.cancelOrderedProduct, this.body).subscribe((data) => {
+          this.pageChange(this.currentPage);
         })
       }
     });
@@ -226,80 +233,81 @@ export class SettingsComponent {
 
 
   // wishlist work 
-  showWishlists() {
-    this.toggleAccordian(0);
-    this.fetchDataService.HTTPGET(this.backendURLs.URLs.showWishlist).subscribe((data: any) => {
-      this.productsArray = data.wishlists;
-      this.loading = false;
-      this.wishlistCount = data.count
-    })
-  }
+// wishlist work 
+showWishlists() {
+  this.toggleAccordian(0);
+  this.fetchDataService.HTTPGET(this.backendURLs.URLs.showWishlist).subscribe((data: any) => {
+    this.productsArray = data.wishlists;
+    this.loading = false;
+    this.wishlistCount = data.count
+  })
+}
 
-  showWishlistedProducts(wishlist: string) {
-    // console.log("Hello");
-    this.wishlistedProducts = [];
-    // setTimeout(() => {
-    //   this.wishlistService.showWishlistedProducts().subscribe((data) => {
-    //     this.wishlistedProducts = data;
-    //     console.log(this.wishlistedProducts);
+showWishlistedProducts(wishlist: string) {
+  // console.log("Hello");
+  this.wishlistedProducts = [];
+  // setTimeout(() => {
+  //   this.wishlistService.showWishlistedProducts().subscribe((data) => {
+  //     this.wishlistedProducts = data;
+  //     console.log(this.wishlistedProducts);
 
-    //   });
-    // }, 1);
-  }
+  //   });
+  // }, 1);
+}
 
 
-  removeWishlist(index: number) {
-    this.wishlistService.removeWishlist({ index }).subscribe((data: any) => {
-      const toast = {
-        title: data.message
-      }
-      this.toastService.warningToast(toast);
-      this.showWishlists()
-      this.wishlistService.getWishlistCount()
-    })
-  }
+removeWishlist(index: number) {
+  this.wishlistService.removeWishlist({ index }).subscribe((data: any) => {
+    const toast = {
+      title: data.message
+    }
+    this.toastService.warningToast(toast);
+    this.showWishlists()
+    this.wishlistService.getWishlistCount()
+  })
+}
 
-  removeFromWishlist(productId: any, wishlistName: string) {
-    console.log(productId, wishlistName, "func");
+removeFromWishlist(productId: any, wishlistName: string) {
+  console.log(productId, wishlistName, "func");
 
-    this.wishlistService.removeFromWishlist(productId, wishlistName).subscribe((res: any) => {
+  this.wishlistService.removeFromWishlist(productId, wishlistName).subscribe((res: any) => {
 
-      if (res.response.modifiedCount) {
-        // this.deleteProduct.next(true);
-      }
-    })
-    console.log(this.wishlistedProducts, "all");
+    if (res.response.modifiedCount) {
+      // this.deleteProduct.next(true);
+    }
+  })
+  console.log(this.wishlistedProducts, "all");
 
-    // this.wishlistedProducts.forEach((product: any) => {
-    //   console.log(product, "product");
+  // this.wishlistedProducts.forEach((product: any) => {
+  //   console.log(product, "product");
 
-    //   if (product.productinfo._id == productId) {
-    //     this.wishlistedProducts.splice(this.wishlistedProducts.indexOf(product), 1)
-    //     this.wishlistService.WishlistCount.next(this.wishlistService.WishlistCount.value - 1);
-    //   }
-    // })
-    this.wishlistedProducts.forEach((wishlist: any) => {
-      console.log(wishlist, "each wishlist");
+  //   if (product.productinfo._id == productId) {
+  //     this.wishlistedProducts.splice(this.wishlistedProducts.indexOf(product), 1)
+  //     this.wishlistService.WishlistCount.next(this.wishlistService.WishlistCount.value - 1);
+  //   }
+  // })
+  this.wishlistedProducts.forEach((wishlist: any) => {
+    console.log(wishlist, "each wishlist");
 
-      if (wishlist._id == wishlistName) {
-        // wishlist.productinfo.splice(wishlist.productinfo.indexOf())
-        wishlist.productinfo.forEach((product: any) => {
-          console.log(product, "each product");
+    if (wishlist._id == wishlistName) {
+      // wishlist.productinfo.splice(wishlist.productinfo.indexOf())
+      wishlist.productinfo.forEach((product: any) => {
+        console.log(product, "each product");
 
-          if (product._id == productId) {
-            wishlist.productinfo.splice(wishlist.productinfo.indexOf(product), 1)
-            this.wishlistService.WishlistCount.next(this.wishlistService.WishlistCount.value - 1);
-          }
-        })
-      }
-    })
-  }
+        if (product._id == productId) {
+          wishlist.productinfo.splice(wishlist.productinfo.indexOf(product), 1)
+          this.wishlistService.WishlistCount.next(this.wishlistService.WishlistCount.value - 1);
+        }
+      })
+    }
+  })
+}
 
-  moveToCart(product: any) {
-    // console.log(product, ' hehe');
+moveToCart(product: any) {
+  // console.log(product, ' hehe');
 
-    this.cartService.addToCart(product);
-  }
+  this.cartService.addToCart(product);
+}
   //  ADDRESS
   getAddresses() {
     this.showData = 'addresses';
@@ -310,7 +318,6 @@ export class SettingsComponent {
           this.AddressLength = data.length;
           if (data.length != 0) {
             this.userAddresses = data;
-
           }
         }
         this.loading = false;
@@ -385,16 +392,36 @@ export class SettingsComponent {
   }
 
   // orders code 
-  getOrders(pageNo: any) {
+  getOrders() {
     this.fetchDataService.HTTPPOST(this.backendURLs.URLs.getParticularUserOrders, this.TemplatePagination).subscribe((data: any) => {
+     
       if (!data.length) {
-        // this.notData = true;
         this.totalCount = 0;
         this.AllOrders = []
       }
-      this.AllOrders = data[0]?.document;
-      this.totalCount = data[0]?.count;
+      else{
+        this.AllOrders = data[0]?.document;
+        this.totalCount = data[0]?.count;
+      }
+      this.loading=false;
     });
+  }
+
+  getCancelledOrders(){
+    // this.TranslateData = true;
+    this.fetchDataService.HTTPPOST(this.backendURLs.URLs.getParticularUserOrders, this.cancelledTempatePagination).subscribe((data: any) => {
+      if (!data.length) {
+        this.cancelledOrdersCount = 0;
+        this.CancelledOrders = []
+      }
+      else{
+        this.CancelledOrders = data[0]?.document;
+        this.cancelledOrdersCount = data[0]?.count;
+      }
+      this.loading=false;
+    });
+
+
   }
 
   getDate(orderDate: any) {
@@ -419,9 +446,14 @@ export class SettingsComponent {
 
   }
 
-  pageChange(pageNo: any) {
+  pageChange(pageNo: number) {
     this.currentPage = pageNo;
-    this.getOrders(pageNo)
+    this.getOrders();
+  }
+
+  pageChangeCancelledOrders(pageNo:number){
+    this.cancelledCurrentPage = pageNo;
+    this.getCancelledOrders()
   }
 
   invoiceData: any;
@@ -443,6 +475,14 @@ export class SettingsComponent {
     this.invoiceService.open();
   }
 
+  cancelOrder(orderId:String){
+    console.log("order id is ",orderId)
+    let body={orderId};
+    this.fetchDataService.HTTPPOST(this.backendURLs.URLs.cancelOrder,body).subscribe(()=>{
+      this.pageChange(this.currentPage);
+    })
+  }
+
   changeComponent(el: string) {
     this.showData = el;
     if (this.checkAccordingClick) {
@@ -456,19 +496,29 @@ export class SettingsComponent {
 
     if (el == 'addresses') {
       this.loading = true;
-      this.getAddresses();
-    }
-    if (el == 'wishlist') {
-      this.loading = true;
-      this.showWishlists();
-    }
-    if (el == 'orders') {
-      this.loading = true;
+        this.getAddresses();
+      }
 
-      this.pageChange(1);
-    }
+      if (el == 'wishlist') {
+        this.loading = true;
+        this.showWishlists();
+      }
+      if (el == 'orders') {
+        this.loading = true;
+        this.DefaultShowOrders='active';
+        this.pageChange(1);
+      }
 
-    // this.toggleAccordian(0);
-    this.TranslateData = true;
+      // this.toggleAccordian(0);
+      this.TranslateData = true;
+    }
   }
-}
+  
+
+
+
+
+
+
+
+
