@@ -324,6 +324,7 @@ export class ProductsComponent implements OnInit {
           type: 'bulk',
           data: excel.data
         };
+        
         this.fetchdata.HTTPPOST(this.backendUrl.URLs.addproduct, formData).subscribe({
           next: (res: any) => {
             this.toastService.successToast("Data Uploaded Successfuly");

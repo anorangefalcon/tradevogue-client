@@ -248,7 +248,7 @@ input[type="checkbox"]:checked+label::after {
     height: 10px;
     text-shadow: 0px 0px 2px #000000;
     width: 6px;
-    color: white;
+    color: rgb(var(--whiteClr));
     position: absolute;
     font-size: 18px;
     font-weight: 300;
