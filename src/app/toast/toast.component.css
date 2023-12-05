@@ -24,7 +24,7 @@
     left: 50%;
     transform: translateX(-50%);
 
-    min-width: 420px;
+    /* min-width: 420px; */
     overflow: hidden;
 
     opacity: 0;

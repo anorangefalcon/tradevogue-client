@@ -56,7 +56,7 @@ export class CouponsComponent {
   EditRequest: any;
   allOffers: any=[];
   Categories: any;
-  CouponRequest: boolean = false;
+  // CouponRequest: boolean = false;
   selectAll: boolean = false;
   deleteList: any = [];
 
@@ -102,6 +102,8 @@ export class CouponsComponent {
       }
     }))
   }
+
+
 
 
   CurrentDate() {
@@ -174,11 +176,7 @@ export class CouponsComponent {
         controls.push( 
           { name: 'couponUsersLimit' });
       }
-      // if (this.OfferForm.get('ExtraInfo')) {
         this.OfferForm?.removeControl('ExtraInfo');
-        // console.log('offerformis ',this.OfferForm);
-        // this.OfferForm.removeControl('DiscountPercentageHandler');
-      // }
     controls.forEach((el: any) => {
         if (el.validator) {
           this.OfferForm.addControl(el.name, this.fb.control('', [Validators.required, el.validator]));
@@ -191,11 +189,12 @@ export class CouponsComponent {
     }
 
     if (event == 'discount') {
-      console.log('discount called');
-      
       controls.forEach((el: any) => {
         this.OfferForm.removeControl(el.name);
       })
+
+      this.OfferForm?.removeControl('UserEmails');
+      this.OfferForm?.removeControl('couponUsersLimit');
       let ExtraInfo = this.fb.group({
         categories: [],
         brands: []
@@ -203,23 +202,16 @@ export class CouponsComponent {
       this.OfferForm.addControl('ExtraInfo', ExtraInfo);
     }
 
-    // console.log('offer form is ',this.OfferForm.value);
-    
 
   }
 
 
 
   CouponTypeHandler(event: any) {
-    // console.log('coupon handler called');
-    
     this?.OfferForm?.get('couponType')?.patchValue(event);
     if (event == 'custom') {
       this.OfferForm.addControl('UserEmails', this.fb.array([]));
-
-      (<FormArray>this.OfferForm.get('UserEmails')).push(this.fb.group({
-        email: ['', Validators.required,Validators.email]
-      }));
+      this.AddEmailFormControl()
       this.OfferForm.removeControl('couponUsersLimit');
     }
     else {
@@ -241,9 +233,9 @@ export class CouponsComponent {
     }));
   }
 
-    if (data.UserEmails) {
+    if (data) {
       this.OfferForm.addControl('UserEmails', this.fb.array([]));
-      data.UserEmails.forEach((el: any) => {
+      data.forEach((el: any) => {
         (<FormArray>this.OfferForm.get('UserEmails')).push(this.fb.group({
           email: this.fb.control(['', Validators.required,Validators.email])
         }));
@@ -253,7 +245,7 @@ export class CouponsComponent {
   }
 
 
-  RemoveEmailFormControl(i: any) {
+  RemoveEmailFormControl(i: number) {
     (<FormArray>this.OfferForm.get('UserEmails')).removeAt(i);
   }
 
@@ -282,7 +274,6 @@ export class CouponsComponent {
   }
 
   async ngOnInit() {
-    // this.getAllOffers();
     this.pageChange(this.currentPage);
   }
 
@@ -409,10 +400,12 @@ export class CouponsComponent {
     data.endDate = data.endDate.split('T')[0];
     this.OfferTypeHandler(data.OfferType,data.couponType);
     this.DiscountTypeHandler(data.discountType);
-    this.AddEmailFormControl(data);
+    if(data?.UserEmails?.length>0){
+      this.AddEmailFormControl(data.UserEmails);
+    }
     this.OfferForm.patchValue(data);
     this.show = true;
-    this.CouponRequest = true
+    // this.CouponRequest = true
   }
 
 
@@ -428,7 +421,7 @@ export class CouponsComponent {
   }
 
 
-  checkboxChanged(index: any) {
+  checkboxChanged(index: number) {
     if (this.isAllcheckboxChecked()) this.selectAll = true;
     else this.selectAll = false;
 

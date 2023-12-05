@@ -43,10 +43,10 @@
             </div>
             <div class="second-col d-flex">
                 <div class="footer-col d-flex flex-column gap-30">
-                    <h4 >TOP CATEGORIES</h4>
+                    <p class="title__heading" >TOP CATEGORIES</p >
                     <ul class="d-flex flex-column gap-20">
                         <ng-container *ngFor="let category of categories">
-                            <li>
+                            <li role="button">
                                 <a [routerLink]="['/explore']" [queryParams]="{category: category}">
                                     {{category | titlecase}}</a>
                             </li>
@@ -54,42 +54,42 @@
                     </ul>
                 </div>
                 <div class="footer-col d-flex flex-column gap-30">
-                    <h4 >MY ACCOUNT</h4>
+                    <p class="title__heading" >MY ACCOUNT</p >
                     <ul class="d-flex flex-column gap-20">
-                        <li>
-                            <a routerLink="/usersetting/profile" (click)=" show('profile')">Account</a>
+                        <li role="button">
+                            <a routerLink="/usersetting/profile" aria-label="Account"  (click)=" show('profile')">Account</a>
                         </li>
-                        <li>
+                        <li role="button">
                             <a href="#" routerLink="/cart">Cart</a>
                         </li>
-                        <li>
-                            <a routerLink="/usersetting/orders" (click)="show('orders')">Orders</a>
+                        <li role="button">
+                            <a routerLink="/usersetting/orders" aria-label="Orders" (click)="show('orders')">Orders</a>
                         </li>
-                        <li>
-                            <a routerLink="/usersetting/wishlist">Wishlist</a>
+                        <li role="button">
+                            <a routerLink="/usersetting/wishlist" aria-label="Wishlist">Wishlist</a>
                         </li>
                     </ul>
                 </div>
                 <div class="footer-col d-flex flex-column gap-30">
-                    <h4 >CUSTOMER SERVICE</h4>
+                    <p class="title__heading" >CUSTOMER SERVICE</p >
                     <ul class="d-flex flex-column gap-20">
-                        <li>
-                            <a routerLink="/help">Contact Us</a>
+                        <li role="button">
+                            <a routerLink="/help" aria-label="Contact Us">Contact Us</a>
                         </li>
-                        <li>
-                            <a href="#" routerLink="/t&c">Terms & Conditions</a>
+                        <li role="button">
+                            <a href="#" routerLink="/t&c" aria-label="Terms & Conditions">Terms & Conditions</a>
                         </li>  
                     </ul>
                 </div>
                 <div class="footer-col d-flex flex-column gap-30">
-                    <h4 >USEFUL LINKS</h4>
+                    <p class="title__heading" >USEFUL LINKS</p >
                     <ul class="d-flex flex-column gap-20">
-                        <li>
-                            <a href="#" routerLink="/about">About us</a>
+                        <li role="button">
+                            <a href="#" routerLink="/about"  aria-label="About us">About us</a>
                         </li>
                         
-                        <li>
-                            <a routerLink="/faq">FAQs</a>
+                        <li role="button">
+                            <a routerLink="/faq" aria-label="FAQs">FAQs</a>
                         </li>
                     </ul>
                 </div>
@@ -101,7 +101,7 @@
                 <h5 class="subtitle">TOP CATEGORIES</h5>
                 <ul class="d-flex gap-10 list">
                     <ng-container *ngFor="let category of categories">
-                        <li>
+                        <li role="button">
                             <a [routerLink]="['/explore']" [queryParams]="{category: category}">
                                 {{category | titlecase}}</a>
                         </li>
@@ -111,42 +111,42 @@
             <div class="section d-flex flex-column gap-5">
                 <h5 class="subtitle">CUSTOMER SERVICE</h5>
                 <ul class="d-flex gap-10 list">
-                    <li>
-                        <a routerLink="/help">Contact Us</a>
+                    <li role="button">
+                        <a routerLink="/help" aria-label="Contact Us">Contact Us</a>
                     </li>
-                    <li>
-                        <a routerLink="/t&c">Cancellation</a>
+                    <li role="button">
+                        <a routerLink="/t&c" aria-label="Cancellation">Cancellation</a>
                     </li>
-                    <li>
-                        <a routerLink="/t&c">Return</a>
+                    <li role="button">
+                        <a routerLink="/t&c" aria-label="Return">Return</a>
                     </li>
                 </ul>
             </div>
             <div class="section d-flex flex-column gap-5">
                 <h5 class="subtitle">USEFUL LINKS</h5>
                 <ul class="d-flex gap-10 list">
-                    <li>
-                        <a href="#" routerLink="/about">About us</a>
+                    <li role="button">
+                        <a href="#" routerLink="/about" aria-label="About us">About us</a>
                     </li>
-                    <li>
-                        <a href="#" routerLink="/t&c">Terms & Conditions</a>
+                    <li role="button">
+                        <a href="#" routerLink="/t&c" aria-label="Terms & Conditions">Terms & Conditions</a>
                     </li>
-                    <li>
-                        <a routerLink="/faq">FAQs</a>
+                    <li role="button">
+                        <a routerLink="/faq" aria-label="FAQs">FAQs</a>
                     </li>
                 </ul>
             </div>
             <div class="section d-flex flex-column gap-5">
                 <h5 class="subtitle">MY ACCOUNT</h5>
                 <ul class="d-flex gap-10 list">
-                    <li>
-                        <a routerLink="/usersetting/profile" >Account</a>
+                    <li role="button">
+                        <a routerLink="/usersetting/profile" aria-label="Account" >Account</a>
                     </li>
-                    <li>
-                        <a href="#" routerLink="/cart">My cart</a>
+                    <li role="button">
+                        <a href="#" routerLink="/cart" aria-label="My cart">My cart</a>
                     </li>
-                    <li>
-                        <a routerLink="/usersetting/orders" (click)="show('orders')">Order history</a>
+                    <li role="button">
+                        <a routerLink="/usersetting/orders" aria-label="Order history" (click)="show('orders')">Order history</a>
                     </li>
                 </ul>
             </div>

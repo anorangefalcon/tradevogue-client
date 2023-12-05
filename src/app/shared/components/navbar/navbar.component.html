@@ -26,26 +26,26 @@
 
             <ul class="d-flex gap-30 nav-items" [class.active]="hamburgerOpen">
 
-                <li class="nav-links relative " (click)="hamburgerOpen = false">
+                <li  class="nav-links relative " (click)="hamburgerOpen = false">
                     <a class="d-flex flex-column gap-5 pointer" [routerLink]="['/explore']"
                         [queryParams]="{ gender: 'male'}">
                         Men
                     </a>
                     <ul class="sub-categories d-flex flex-column gap-10">
-                        <li *ngFor="let category of categories.men">
+                        <li *ngFor="let category of categories.men" >
                             <a [routerLink]="['/explore']" [queryParams]="{ gender: 'male' , category: category}">
                                 {{category}}
                             </a>
                         </li>
                     </ul>
                 </li>
-                <li class="nav-links relative" (click)="hamburgerOpen = false">
+                <li   class="nav-links relative" (click)="hamburgerOpen = false">
                     <a class="d-flex flex-column gap-5 pointer" [routerLink]="['/explore']"
                         [queryParams]="{ gender: 'female'}">
                         Women
                     </a>
                     <ul class="sub-categories d-flex flex-column gap-10">
-                        <li *ngFor="let category of categories.women">
+                        <li *ngFor="let category of categories.women" >
                             <a [routerLink]="['/explore']" [queryParams]="{ gender: 'female' , category: category}">
                                 {{category}}
                             </a>
@@ -70,16 +70,16 @@
                     class="search-icon-mobile material-symbols-outlined">
                     search
                 </span>
-                <li>
-                    <a class="icons" routerLink="/usersetting/wishlist">
+                <li >
+                    <a class="icons" aria-label="wishlist" routerLink="/usersetting/wishlist">
                         <span class="wishlist_count material-symbols-outlined" *ngIf="purchaser != ''">
                             favorite
                             <span *ngIf="wishlistCount > 0" class="count" id="wishList">{{wishlistCount}}</span>
                         </span>
                     </a>
                 </li>
-                <li>
-                    <a class="icons pointer">
+                <li >
+                    <a class="icons pointer" aria-label="notification">
                         <span class="material-symbols-outlined">
                             notifications
                             <span *ngIf="notifications.length > 0" class="count" id="notifications">{{notifications.length - 1}}</span>
@@ -104,7 +104,7 @@
                                 </div>
                             </div>
                             <ul *ngIf="!fcmToken && !notification.hasPermission" class="pointer">
-                                <li class="subscribe btn-secondary btn-rounded btn-sm" (click)="subscribeToNotifications()">
+                                <li  class="subscribe btn-secondary btn-rounded btn-sm" (click)="subscribeToNotifications()">
                                     <i class="bi bi-bell"></i> Subscribe to Notifications
                                 </li>
                             </ul>
@@ -113,16 +113,16 @@
                     </ul>
 
                 </li>
-                <li>
-                    <a class="icons" [routerLink]="['/cart']">
+                <li > 
+                    <a class="icons" [routerLink]="['/cart']" aria-label="cart">
                         <span class="material-symbols-outlined">
                             shopping_cart
                             <span *ngIf="cart_count > 0" class="count" id="inventory">{{ cart_count }}</span>
                         </span>
                     </a>
                 </li>
-                <li>
-                    <a class="icons pointer">
+                <li >
+                    <a class="icons pointer" aria-label="user">
                         <span class="material-symbols-outlined">person</span>
                     </a>
                     <ul class="sub-items d-flex flex-column gap-15">
@@ -151,18 +151,18 @@
                             <li *ngIf="purchaser!=''" class="name border">
                                 Welcome <span> {{purchaser}}</span>
                             </li>
-                            <li [routerLink]="['dashboard']" *ngIf="UserRole">Dashboard</li>
-                            <li [routerLink]="['usersetting/orders']">Orders</li>
-                            <li [routerLink]="['usersetting/wishlist']">Wishlist</li>
-                            <li routerLink="/usersetting/addresses">Saved Addresses</li>
-                            <li [routerLink]="['help']" class="pointer border">Contact Us</li>
-                            <li [routerLink]="['usersetting/profile']" class="edit">
+                            <li  [routerLink]="['dashboard']" *ngIf="UserRole">Dashboard</li>
+                            <li  [routerLink]="['usersetting/orders']">Orders</li>
+                            <li  [routerLink]="['usersetting/wishlist']">Wishlist</li>
+                            <li  routerLink="/usersetting/addresses">Saved Addresses</li>
+                            <li   [routerLink]="['help']" class="pointer border">Contact Us</li>
+                            <li  [routerLink]="['usersetting/profile']" class="edit">
                                 Edit Profile</li>
-                            <li (click)="onLogout()" class="logout">Logout</li>
+                            <li  (click)="onLogout()" class="logout">Logout</li>
                         </ul>
                     </ul>
                 </li>
-                <li>
+                <li >
                     <a class="icons pointer" (click)="toggleTheme()">
                         <span class="material-symbols-outlined" *ngIf="!darkTheme">
                             dark_mode
