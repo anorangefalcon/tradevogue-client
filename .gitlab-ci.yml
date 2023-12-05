@@ -1,40 +1,35 @@
-name: Deploy to Firebase Hosting on PR
 
-on:
-  push:
-    branches: [deployed]
-  workflow_dispatch:
+image: node:latest
 
-jobs:
-  build:
-    name: Build
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
+.deploy: &deploy
+- npm install -g firebase-tools
+- firebase use tradevogue --token $FIREBASE_TOKEN
+- npm
+- npm build
 
-      - name: Install dependencies
-        run: npm ci
+cache:
+  paths:
+    - node_modules/
 
-      - name: Build dependencies
-        run: ng build
+stages:
+  - deploy
 
-      - name: Firebase Deploy
-        uses: w9jds/firebase-action@master
-        with:
-          args: deploy --only hosting
+staging:
+  stage: deploy
+  before_script:
+    - *deploy
+  only:
+    - master
+  script:
+    - firebase deploy -m "Pipe $CI_PIPELINE_ID Build $CI_BUILD_ID" --only hosting:staging --non-interactive --token $FIREBASE_TOKEN
 
-  deploy:
-    name: Deploy
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
-
-      - name: Install Firebase CLI
-        run: npm install -g firebase-tools
-
-      - name: Firebase Deploy
-        run: |
-          firebase deploy --only hosting --token ${{ secrets.FIREBASE_TOKEN }}
+production:
+  stage: deploy
+  before_script:
+    - *deploy
+  only:
+    - master
+  when: manual
+  allow_failure: false
+  script:
+    - firebase deploy -m "Pipe $CI_PIPELINE_ID Build $CI_BUILD_ID" --only hosting:<YOUR TARGET NAME> --non-interactive --token $FIREBASE_TOKEN
