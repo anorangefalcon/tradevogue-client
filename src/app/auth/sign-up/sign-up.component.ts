@@ -71,7 +71,7 @@ export class SignUpComponent {
   }
 
   ngOnDestroy() {
-      this.renderer.removeChild(document.body, this.script);
-      this.dataSubscription.unsubscribe();
+    this.renderer.removeChild(document.body, this.script);
+    this.dataSubscription?.unsubscribe();
   }
 }

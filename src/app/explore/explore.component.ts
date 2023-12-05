@@ -4,6 +4,7 @@ import { HttpParams } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { UtilsModule } from '../utils/utils.module';
+import { Title } from 'chart.js';
 
 
 @Component({
@@ -14,6 +15,7 @@ import { UtilsModule } from '../utils/utils.module';
 
 export class ExploreComponent {
 
+  s: any = '';
   products: any = [];
   limit: number = 8;
   totalProducts: number = 0;
@@ -74,7 +76,13 @@ export class ExploreComponent {
     })
   }
 
+  checked(title: any){
+    return this.s == title;
+  }
+
   onAdd(event: any, field: string) {
+
+    
 
     if (this.minPrice && !this.maxPrice) {
       this.filterApplied['minPrice'] = this.minPrice

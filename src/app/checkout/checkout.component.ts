@@ -127,7 +127,7 @@ export class CheckoutComponent implements OnInit {
 
   // COUPONS CODE STARTS-------------------
   CouponValid: string = '';
-  AllCoupons: any;
+  AllCoupons: any=[];
   SecureNavBar: Boolean = false;
   CouponApplied: any = '';
   direction: string = 'right';

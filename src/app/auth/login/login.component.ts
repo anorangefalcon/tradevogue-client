@@ -108,6 +108,6 @@ export class LoginComponent {
 
   ngOnDestroy() {
     this.renderer.removeChild(document.body, this.script);
-    this.allSubscriptions.forEach((item: Subscription)=> item.unsubscribe());
+    this.allSubscriptions.forEach((item: Subscription)=> item?.unsubscribe());
   }
 }

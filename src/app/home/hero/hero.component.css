@@ -1,29 +1,13 @@
 .hero-section {
     width: 100%;
-    /* height: calc(100dvh);  */
 
     & .hero-content{
         padding-inline: 0px;
         padding-block-start: 75px;
-        
     }
     
     & .hero-text {
         width: 50%;
-    }
-
-    .bg1 {
-        /* background:  url(../../../assets/hero-bg1.png); */
-        background-color: rgba(255, 208, 0, 0.145);
-        background-image: url(../../../assets/deal-of-week-component/dealOfWeek-homeBg.png);
-        background-size: cover;
-    }
-
-    .bg2 {
-        /* background: url(../../../assets/hero-bg2.png); */
-        background-color: rgba(var(--primaryClr), 0.1);
-        background-image: url(../../../assets/deal-of-week-component/dealOfWeek-homeBg.png);
-        background-size: cover;
     }
 
     & .hero-model-img {
@@ -37,10 +21,9 @@
         }
     }
 
-
     & .hero-img1 {
         filter: grayscale(25%);
-        /* object-position: 50px -50px; */
+
     }
 
     & .hero-img2 {
@@ -174,7 +157,6 @@ div.banner.skeleton{
     }
 
     /* & .banner-background {
-
         height: 650px;
         background-size: cover;
         background-position: center;

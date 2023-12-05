@@ -26,6 +26,10 @@ input[type="radio"] {
 .labels {
     padding-block: 6px;
     padding-inline: 20px;
+
+    & .name {
+        width: 100%;
+    }
 }
 
 .labels:hover {

@@ -4,7 +4,7 @@
     (click)="filtersOpen = false; sortingOpen = false"></div>
     <div class="phone-icons" [ngClass]="filtersOpen || sortingOpen ? 'phone-icons-active' : ''">
 
-        <div class="filter-icon-div" (click)="filtersOpen = !filtersOpen; sortingOpen = false">
+        <div class="filter-icon-div pointer" (click)="filtersOpen = !filtersOpen; sortingOpen = false">
             <span *ngIf="filtersOpen" class="material-symbols-outlined">
                 close
             </span>
@@ -15,7 +15,7 @@
                 FILTER
             </p>
         </div>
-        <div class="sort-icon-div" (click)="sortingOpen=!sortingOpen; filtersOpen = false">
+        <div class="sort-icon-div pointer" (click)="sortingOpen=!sortingOpen; filtersOpen = false">
             <span *ngIf="sortingOpen" class="material-symbols-outlined">
                 close
             </span>
@@ -29,13 +29,15 @@
         </div>
 
     </div>
+    
     <div class="sort-mobile" [ngClass]="(sortingOpen === true) ? 'sort-mobile-active' : '' ">
         <div class="sort-heading d-flex justify-content-md-between align-item-center">
             <h4>Sort By</h4>
         </div>
         <div class="d-flex flex-column gap-10">
-            <div *ngFor="let title of sorting.titles;let i=index">
-                <label (click)="onAdd(sorting.titles[i], 'sort'); sortingOpen = !sortingOpen" class="sort-item pointer">
+            <div *ngFor="let title of sorting.titles;let i=index" class="filter-bro">
+                <input type="radio" name="filter" [id]="'filter'+i"  [checked]="checked(title)" (click)="onAdd(sorting.titles[i], 'sort'); s=title; sortingOpen = !sortingOpen" >
+                <label [for]="'filter'+i" class="sort-item pointer">
                     {{title}}
                 </label>
             </div>

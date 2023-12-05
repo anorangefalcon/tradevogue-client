@@ -1,5 +1,5 @@
 footer {
-    /* background-color: rgb(var(--secondary),0.5); */
+
     .bg-color{
         background-color: rgb(var(--blackClr), 0.01);
     }
@@ -28,7 +28,7 @@ footer {
         & .para-text {
             max-width: 365px;
             margin-block-start: -13px;
-            /* margin-block-end: 10px; */
+
             
         }
 
