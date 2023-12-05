@@ -2,6 +2,11 @@
     gap: 24px;
 }
 
+.invisibilty{
+    color: transparent !important;
+
+}
+
 /* #overview-section {
     grid-template-columns: repeat(4, 1fr);
 } */

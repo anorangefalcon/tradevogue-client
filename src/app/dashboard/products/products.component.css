@@ -1,16 +1,12 @@
 .search-bar {
     height: 40px;
-    width: initial;
+    width: min(300px,100%);
     margin-inline-end: initial;
     height: 40px;
-;
 }
 
 #product-section {
 
-    & .more-icon {
-        display: none;
-    }
     & .operational-buttons {
 
         & button {
@@ -32,24 +28,24 @@
             transition: transform 0.3s ease-in-out;
         }
 
-        & button:first-child .operational-buttons-icons, .addproduct-btn .operational-buttons-icons {
+        & button:first-child .operational-buttons-icons,
+        .addproduct-btn .operational-buttons-icons {
             color: rgb(var(--blue-clr));
         }
 
-        & button:last-child .operational-buttons-icons , .del-btn .operational-buttons-icons {
+        & button:last-child .operational-buttons-icons,
+        .del-btn .operational-buttons-icons {
             color: rgb(var(--red-clr));
         }
 
-        & button:disabled:last-child .operational-buttons-icons, .del-btn:disabled .operational-buttons-icons {
+        & button:disabled:last-child .operational-buttons-icons,
+        .del-btn:disabled .operational-buttons-icons {
             color: rgb(var(--red-clr), 0.5);
         }
 
     }
 
     & .file-section {
-        & input[type="file"] {
-            display: none;
-        }
 
         & .uploadbtn,
         .downloadBtn {
@@ -65,12 +61,6 @@
             }
         }
 
-        & .operation-icon {
-            font-size: 22px;
-            font-weight: 300;
-            transition: transform 0.3s ease-in-out;
-        }
-
         & .uploadbtn span {
             color: rgb(var(--blue-clr), 0.8);
         }
@@ -82,11 +72,10 @@
 
 }
 
-.items.displayInfo div:hover>.popup {
+.items.displayInfo div:hover > .popup {
     opacity: 1;
     pointer-events: all;
 }
-
 
 .popup {
     position: absolute;
@@ -124,17 +113,17 @@
         background-color: rgb(var(--whiteClr));
         box-shadow: 0px 0px 10px rgba(var(--blackClr), 0.3);
         padding: 8px;
-        border-radius: 4px; 
+        border-radius: 4px;
     }
 
-    & input[type="radio"] + label {
+    & input[type="radio"]+label {
         width: 15px;
         height: 15px;
         border-radius: 50%;
         border: 1px solid rgb(var(--blackClr), 0.4);
     }
 
-    & input[type="radio"] + label::after {
+    & input[type="radio"]+label::after {
         content: '';
         display: block;
         position: absolute;
@@ -145,7 +134,7 @@
         transition: all 0.3 ease-in-out;
     }
 
-    & input[type="radio"]:checked + label::after {
+    & input[type="radio"]:checked+label::after {
         background-color: rgb(var(--whiteClr));
         border: 1px solid rgb(var(--blackClr), 0.4);
     }
@@ -157,25 +146,26 @@
 
 }
 
-tr:not(:first-child, :last-child) td.items.displayInfo .popup{
+tr:not(:first-child, :last-child) td.items.displayInfo .popup {
     inset-block-start: 0%;
     inset-inline-start: 100%;
     transform: translateY(-54%);
 }
 
-tr:last-child td.items.displayInfo .popup{
+tr:last-child td.items.displayInfo .popup {
     inset-block-end: 0%;
     inset-inline-start: 100%;
 }
 
-tr:first-child td.items.displayInfo .popup{
+tr:first-child td.items.displayInfo .popup {
     inset-block-start: 0%;
     inset-inline-start: 100%;
 }
 
 .items.action-btns {
 
-    & input[type="checkbox"]+label::before {
+    & input[type="checkbox"]+label::before,
+    label:has(+input[type="checkbox"])::before {
         content: '\e838';
         font-family: 'Material Symbols Outlined';
         display: flex;
@@ -187,7 +177,8 @@ tr:first-child td.items.displayInfo .popup{
         font-weight: 300;
     }
 
-    & input[type="checkbox"]:checked+label::before {
+    & input[type="checkbox"]:checked+label::before,
+    label:has(+ input[type="checkbox"]:checked)::before {
         content: '\e838';
         font-size: 20px;
         color: rgb(var(--goldClr));
@@ -210,6 +201,7 @@ tr:first-child td.items.displayInfo .popup{
     padding-block: 0;
     padding-inline: 16px;
 }
+
 .phone-icons {
     display: none;
     justify-content: center;
@@ -221,7 +213,7 @@ tr:first-child td.items.displayInfo .popup{
     height: 54px;
     background-color: rgb(var(--whiteClr));
     z-index: 94;
-    box-shadow: 0px -10px 18px 8px rgb(0 0 0 / 2%);
+    box-shadow: 0px 0px 10px 5px rgb(0 0 0 / 9%);
     border-radius: 5px;
     backdrop-filter: blur(10px);
     padding-block: 10px;
@@ -242,6 +234,7 @@ tr:first-child td.items.displayInfo .popup{
         font-weight: 300;
     }
 }
+
 @media screen and (max-width: 780px) {
 
     .popup {
@@ -288,18 +281,20 @@ tr:first-child td.items.displayInfo .popup{
         opacity: 1;
     }
 
-    .features{
+    .features {
         flex-direction: column;
     }
 }
 
-@media screen and (max-width: 725px){
+@media screen and (max-width: 725px) {
     .features {
         display: none;
     }
+
     .more-icon {
         display: flex !important;
     }
+
     .more-icon-content {
         position: absolute;
         inset-block-start: calc(100% + 6px);
@@ -356,26 +351,33 @@ tr:first-child td.items.displayInfo .popup{
             inset-inline-end: 2px;
 
         }
-        & .uploadbtn, .downloadBtn {
+
+        & .uploadbtn,
+        .downloadBtn {
             justify-content: start !important;
             align-items: start;
         }
     }
-    .addproduct-btn, .del-btn {
+
+    .addproduct-btn,
+    .del-btn {
         border: none !important;
     }
+
     .add-div {
         border-inline-end: 0.5px solid rgb(var(--blackClr), 0.2);
     }
-    .addproduct-btn .operational-buttons-icons{
+
+    .addproduct-btn .operational-buttons-icons {
         color: rgb(var(--blue-clr)) !important;
     }
-    .more-icon:hover .more-icon-content{
+
+    .more-icon:hover .more-icon-content {
         opacity: 1;
         visibility: visible;
         display: flex;
     }
-    
+
     .phone-icons {
         display: flex;
     }
@@ -383,23 +385,25 @@ tr:first-child td.items.displayInfo .popup{
     .phone-icons-active {
         z-index: 98;
     }
+
     .product-header {
         flex-direction: column;
 
-        & .search-bar{
-            width: 100%;
-        }
         & .other-customs {
             width: 100%;
+
             & .options {
                 width: 100%;
             }
         }
-        
+
     }
 }
+
 @media screen and (max-width: 600px) {
-    .search-bar, .search-bar+span{
+
+    .search-bar,
+    .search-bar+span {
         width: 100%;
     }
 

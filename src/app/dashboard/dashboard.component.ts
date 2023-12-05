@@ -1,4 +1,4 @@
-import { Component, ViewEncapsulation } from '@angular/core';
+import { Component, ViewEncapsulation, Renderer2 } from '@angular/core';
 import { LoginCheckService } from '../shared/services/login-check.service';
 import { FetchDataService } from '../shared/services/fetch-data.service';
 import { Router } from '@angular/router';
@@ -19,10 +19,12 @@ export class DashboardComponent {
   darkTheme: Boolean = false;
   allSubscriptions: Subscription[] = [];
   chatLength: number = 0;
+  script : any;
 
   constructor(private userService: LoginCheckService,
     private router: Router,
     private backendURL: UtilsModule,
+    private renderer: Renderer2,
     private fetchDataService: FetchDataService) {
       this.allSubscriptions.push(
     this.fetchDataService.themeColor$.subscribe((color) => {
@@ -70,6 +72,11 @@ export class DashboardComponent {
   ]
 
   ngOnInit() {
+
+    this.script = this.renderer.createElement('script');
+    this.script.src = '//static.filestackapi.com/filestack-js/3.x.x/filestack.min.js';
+    this.script.async = true;
+    this.renderer.appendChild(document.body, this.script);
 
     this.allSubscriptions.push(
     this.userService.getUser('name').subscribe((data: any) => {
@@ -134,6 +141,7 @@ export class DashboardComponent {
   }
 
   ngOnDestroy() {
+    this.renderer.removeChild(document.body, this.script);
     this.allSubscriptions.forEach((item: Subscription)=> item.unsubscribe());
    } 
 }

@@ -20,7 +20,7 @@ export class InvoiceTemplateComponent {
   constructor(private fetchData: FetchDataService){}
   
   ngOnInit(){
-
+    console.log(this.orderInfo)
   }
 
   printInvoice(){

@@ -1,6 +1,7 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
 #dashboard {
-
-
     --whiteClr-clr: 238, 238, 238;
     --title-clr: 34, 40, 49;
     --sub-title-clr: 57, 62, 70;
@@ -62,15 +63,10 @@
 
         & .header_links.profile {
 
-            & .photo-section {
-                width: 35px;
-                height: 35px;
-
-                & img {
-                    object-fit: cover;
-                    object-position: top;
-                    border-radius: 50%;
-                }
+            & img.profile__photo {
+                object-fit: cover;
+                object-position: top;
+                border-radius: 50%;
             }
 
             & .profile-content {
@@ -79,53 +75,58 @@
                 & .profile-title {
                     text-wrap: nowrap;
                 }
-
-                & .profile-sub-title {
-                    color: rgb(var(--blue-clr));
-                    font-weight: 500 !important;
-                }
             }
         }
 
-        & .header_links:hover >  .notficationList{
+        & .header_links:hover>.notficationList {
             opacity: 1;
             pointer-events: all;
         }
 
-        & .notficationList{
+        & .notficationList {
             border-radius: 4px;
             padding: 15px;
             inset-block-start: 100%;
             inset-inline-end: 0;
-            width: 290px;
+            width: 240px;
             height: 300px;
-            overflow: scroll;
+            overflow-y: auto;
             background-color: rgb(var(--whiteClr));
             opacity: 0;
             pointer-events: none;
             box-shadow: 0px 0px 5px rgb(var(--blackClr), 0.08);
 
+            &::-webkit-scrollbar {
+                width: 3px;
+                border-radius: 5px;
+                background-color: rgb(var(--secondary), 0.4);
+            }
+
+            &::-webkit-scrollbar-thumb {
+                border-radius: 5px;
+                background-color: rgb(var(--primaryClr), 0.8);
+            }
+
             & li {
-                    padding-block-end: 10px;
-                    & img {
-                        height: 40px;
-                        border-radius: 50%;
-                        object-fit: cover;
-                        object-position: top;
-                    }
-                    & div > .name {
-                        font-weight: 500;
-                    }
-                    & div > .out-of-stock{
-                        font-size: 10px !important;
-                        color: rgb(var(--danger));
-                    }
+                padding-block-end: 10px;
+
+                & img {
+                    height: 40px;
+                    border-radius: 50%;
+                    object-fit: cover;
+                    object-position: top;
                 }
-                & li:not(:last-child) {
-                    border-block-end: 0.5px solid rgb(var(--textClr), 0.3);
+
+                & div>.out-of-stock {
+                    color: rgb(var(--danger));
                 }
-            
-           
+            }
+
+            & li:not(:last-child) {
+                border-block-end: 0.5px solid rgb(var(--textClr), 0.3);
+            }
+
+
         }
 
 
@@ -264,7 +265,7 @@
 
     }
 
-    & .navlist > li:last-child {
+    & .navlist>li:last-child {
         margin-top: auto;
 
         & a {
@@ -280,13 +281,13 @@
         }
     }
 
-    & .sidebar.active .navbar .navlist > li:last-child {
+    & .sidebar.active .navbar .navlist>li:last-child {
 
-        & .nav-text{
+        & .nav-text {
             display: none;
         }
 
-        & a{
+        & a {
             background-color: rgba(var(--whiteClr), 1) !important;
             color: rgb(var(--blackClr));
         }
@@ -332,7 +333,7 @@
                 }
             }
 
-            .nav-text{
+            .nav-text {
                 /* width: 0; */
                 opacity: 0;
                 overflow: hidden;
@@ -372,7 +373,7 @@
                 }
             }
 
-            & .nav-text{
+            & .nav-text {
                 opacity: 1;
                 overflow: visible;
             }
@@ -391,13 +392,13 @@
                 opacity: 1;
             }
 
-            .navbar .navlist > li:last-child {
+            .navbar .navlist>li:last-child {
 
-                & .nav-text{
+                & .nav-text {
                     display: flex;
                 }
-        
-                & a{
+
+                & a {
                     background-color: rgba(var(--primaryClr), 1) !important;
                     color: rgb(var(--whiteClr));
                 }
@@ -458,11 +459,11 @@
             }
         }
 
-        .toogle-section{
+        .toogle-section {
             gap: 3px;
 
             .brand-logo {
-                transform: translateY(0px) !important; 
+                transform: translateY(0px) !important;
             }
         }
     }
@@ -571,46 +572,24 @@ main {
         & .table__item-image {
 
             & img {
-                width: 30px;
-                height: 30px;
                 border-radius: 50%;
                 object-position: top;
-                border-radius: 50%;
                 object-fit: cover;
-            }
-
-            & span {
-                width: 20ch;
-                overflow: auto;
-                text-overflow: ellipsis;
-
-                &::-webkit-scrollbar {
-                    width: 2px;
-                    display: none;
-                }
             }
         }
 
         & .item-check {
 
-            & input[type="checkbox"] {
-                display: none;
-            }
-
             & .material-symbols-outlined {
-                cursor: pointer;
-                font-size: 16px;
-                font-weight: 400;
                 color: transparent;
                 width: 15px;
                 height: 15px;
-                border-radius: 3px;
                 border: 1px solid rgba(128, 128, 128, 0.527);
                 background-color: rgb(var(--whiteClr));
             }
 
             & input[type="checkbox"]:checked+label .material-symbols-outlined {
-                color: white;
+                color: rgb(var(--whiteClr));
                 background-color: rgb(var(--primaryClr));
                 border-color: rgb(var(--primaryClr));
             }

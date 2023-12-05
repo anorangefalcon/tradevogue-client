@@ -10,6 +10,20 @@
     border-radius: 10px;
 }
 
+app-product-page {
+    /* padding-inline: 20px !important; */
+
+    & .container{
+        padding-inline: 0px !important;
+    }
+
+    & .product{
+        padding-inline: 20px !important; 
+        padding-block: 20px !important;
+        margin-block-end: 0px !important;
+    }
+}
+
 .table-title_ {
     font-size: 12px;
     font-weight: 500;
@@ -42,3 +56,5 @@
         max-width: 100%;
     }
 }
+
+@media screen and (max-width: 768px){}

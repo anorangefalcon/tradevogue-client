@@ -3,25 +3,25 @@
     <header class="header fixed inset-inline-0 inset-block-start-0 transition" [class.active]="isCollapse">
         <div class="mh100 header_container d-flex align-item-center justify-content-md-between">
             <div class="toogle-section d-flex gap-10 align-item-center">
-                <a (click)="isCollapse = !isCollapse" class="pointer d-flex align-item-center mh100">
+                <a href="javascript:void(0);" (click)="isCollapse = !isCollapse"
+                    class="pointer d-flex align-item-center mh100">
                     <span class="material-symbols-outlined">menu</span>
                 </a>
-                <a [routerLink]="['/']"><img class="brand-logo" width="50px" src="../../assets/logo-mobile.svg"
-                        *ngIf="!darkTheme" [class.active]="isCollapse" alt="Logo"></a>
-                <a [routerLink]="['/']"><img class="brand-logo" width="50px" src="../../assets/logo-mobile-light.svg"
-                        *ngIf="darkTheme" [class.active]="isCollapse" alt="Logo"></a>
+                <a aria-label=" Logo (Trade Vogue) (Light Mode)" href="javascript:void(0);" [routerLink]="['/']">
+                    <img class="brand-logo" width="50px" src="../../assets/logo-mobile.svg" *ngIf="!darkTheme"
+                        [class.active]="isCollapse" alt="Trade Vogue"></a>
+                <a aria-label="Mobile Logo (Trade Vogue) (dark_mode Mode)" href="javascript:void(0);"
+                    [routerLink]="['/']"><img class="brand-logo" width="50px" src="../../assets/logo-mobile-light.svg"
+                        *ngIf="darkTheme" [class.active]="isCollapse" alt="Trade Vogue"></a> 
             </div>
             <ul class="mh100 header_items d-flex align-item-center justify-content-end gap-20">
 
                 <li class="header_links">
-                    <a routerLink="/dashboard/chat" class="mh100 message d-flex align-item-center relative">
+                    <a href="javascript:void(0);" routerLink="/dashboard/chat"
+                        class="mh100 message d-flex align-item-center relative">
                         <span class="pointer transition  icons material-symbols-outlined">Message</span>
                         <span class="count d-flex flex-center text-center absolute">{{chatLength}}</span>
                     </a>
-                </li>
-                <li class="header_links relative">
-                        <span class="count d-flex flex-center text-center absolute">{{0}}</span>
-                   
                 </li>
                 <li class="header_links relative pointer">
                     <span class="mh100 notification d-flex align-item-center relative">
@@ -29,11 +29,11 @@
                         <span class="count d-flex flex-center text-center absolute">{{notficationList.length}}</span>
                     </span>
                     <ul class="notficationList absolute d-flex flex-column gap-10">
-                        <li *ngFor="let item of notficationList; let i=index" class="d-flex gap-10 ">
-                            <img [src]="item.image" alt="" width="40px" height="20px" class="skeleton">
+                        <li *ngFor="let item of notficationList; let i=index" class="d-flex align-item-center gap-10 ">
+                            <img [src]="item.image" alt="product image" width="40px" height="35px">
                             <div class="d-flex flex-column ">
-                                <p class="name">{{item.name}}</p>
-                                <p class="out-of-stock">{{'Out of Stock'}}</p>
+                                <p class="name fw-500 fs-14 text-ellipsis">{{item.name}}</p>
+                                <p class="out-of-stock fs-10">{{'Out of Stock'}}</p>
                             </div>
                         </li>
                     </ul>
@@ -49,14 +49,13 @@
                 </li>
                 <li class="header_links profile d-flex align-item-center gap-10 pointer"
                     [routerLink]="'/dashboard/account'">
-                    <span class="photo-section relative d-flex justify-content-center align-item-center">
-                        <img id="profile__photo" src="../../../assets/avatars/try.svg" alt="">
-                        <!-- <span class="account__icon absolute material-symbols-outlined">settings</span>                -->
-                    </span>
+                    <!-- <span class="account__icon absolute material-symbols-outlined">settings</span>                -->
 
+                    <img class="profile__photo" width="35px" height="35px" src="../../../assets/avatars/try.svg"
+                        alt="profile">
                     <span class="profile-content d-flex flex-column justify-content-center">
-                        <h5 class="profile-title">{{this.adminName}}</h5>
-                        <p class="profile-sub-title">Admin</p>
+                        <h5 class="profile-title fs-12 fw-500">{{this.adminName}}</h5>
+                        <p class="profile-sub-title fs-12" style="color: rgb(var(--blue-clr));">Admin</p>
                     </span>
                 </li>
             </ul>
@@ -65,14 +64,14 @@
 
     <div class="sidebar fixed inset-block-start-0 inset-inline-start-0 transition" [class.active]="isCollapse">
         <span class="branding d-flex align-item-center">
-            <a [routerLink]="['/']">
+            <a href="javascript:void(0);" [routerLink]="['/']">
                 <ng-container *ngIf="!darkTheme; else lightTheme">
                     <img class="brand-logo" src="../../assets/logo.svg" [class.active]="isCollapse" alt="Logo">
-                    <img class="mobile-logo" src="../../assets/logo-mobile.svg" alt="Logo" alt="">
+                    <img class="mobile-logo" src="../../assets/logo-mobile.svg" alt="Logo">
                 </ng-container>
                 <ng-template #lightTheme>
                     <img class="brand-logo" src="../../assets/logo-light.svg" [class.active]="isCollapse" alt="Logo">
-                    <img class="mobile-logo" src="../../assets/logo-mobile-light.svg" alt="Logo" alt="">
+                    <img class="mobile-logo" src="../../assets/logo-mobile-light.svg" alt="Logo">
                 </ng-template>
             </a>
         </span>
@@ -81,7 +80,7 @@
             <ul class="navlist d-flex flex-column mh100 relative">
                 <li class="transition" *ngFor="let item of navitems">
 
-                    <a [routerLink]="item.route ? item.route: null"
+                    <a href="javascript:void(0);" [routerLink]="item.route ? item.route: null"
                         (click)="item.name.toLowerCase() == 'logout' ? logout() : null;" [class.dropdown]="item.sublist"
                         [routerLinkActive]="'active'"
                         class="nav-links relative align-item-center d-flex gap-15 pointer transition">
@@ -93,8 +92,8 @@
                         [routerLinkActiveOptions]="{exact: true}">
 
                         <li class="sub-links transition" *ngFor="let subitem of item.sublist">
-                                <a class="mw100" [routerLink]="subitem.route" routerLinkActive="active"
-                                [routerLinkActiveOptions]="{exact: true}">{{subitem.name}}</a>
+                            <a href="javascript:void(0);" class="mw100" [routerLink]="subitem.route"
+                                routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">{{subitem.name}}</a>
                         </li>
 
                     </ul>

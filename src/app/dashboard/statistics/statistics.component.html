@@ -9,7 +9,8 @@
                 <span class="icons material-symbols-outlined">bar_chart_4_bars</span>
             </div>
             <div class="row-2 d-flex align-item-center  gap-5">
-                <p *ngIf="customerCountChange >= 0; else customer_decrease" class="spike d-flex align-item-center gap-10">
+                <p *ngIf="customerCountChange >= 0; else customer_decrease"
+                    class="spike d-flex align-item-center gap-10">
                     <span class="value">{{customerCountChange}}% Higher growth</span>
                     <i class="fa-solid fa-arrow-trend-up"></i>
                 </p>
@@ -21,7 +22,7 @@
                 </ng-template>
             </div>
         </div>
-    
+
         <div class="item-2 d-flex flex-column gap-5 card card__pd-20">
             <div class="row-1">
                 <div class="d-flex flex-column ">
@@ -43,7 +44,7 @@
                 </ng-template>
             </div>
         </div>
-    
+
         <div class="item-3 d-flex flex-column gap-5 card card__pd-20">
             <div class="row-1">
                 <div class="d-flex flex-column ">
@@ -66,7 +67,7 @@
                 </ng-template>
             </div>
         </div>
-    
+
         <div class="item-4 d-flex flex-column gap-5 card card__pd-20">
             <div class="row-1">
                 <div class="d-flex flex-column ">
@@ -86,35 +87,37 @@
         <div class="item-5 d-flex flex-column gap-15 card card__pd-20">
             <div class=" d-flex align-item-center justify-content-md-between">
                 <h3>Sales & Profits</h3>
-        
+
                 <div class="radio_button pointer">
                     <input type="radio" name="popular_product_sort" [(ngModel)]="selectedType" (change)="importData()"
                         value="monthly" class="form__input" id="Monthly" checked />
                     <label for="Monthly" class="form__label">Monthly</label>
-        
+
                     <input type="radio" name="popular_product_sort" [(ngModel)]="selectedType" (change)="importData()"
                         value="yearly" class="form__input" id="yearly" />
                     <label for="yearly" class="form__label">Yearly</label>
                 </div>
-        
-                <span (click)="fetchSalesProfitStats()" class="material-symbols-outlined pointer refresh_icons">refresh</span>
+
+                <span (click)="fetchSalesProfitStats()"
+                    class="material-symbols-outlined pointer refresh_icons">refresh</span>
             </div>
-        
+
             <div class="row-2">
                 <canvas id="lineChart">{{lineChart}}</canvas>
             </div>
         </div>
-    
+
         <div class="item-6 graph d-flex flex-column gap-15 card card__pd-20">
             <div class="d-flex align-item-center justify-content-md-between">
                 <h3>Customer Reviews</h3>
-                <span (click)="fetchReviewStats()" class="material-symbols-outlined pointer refresh_icons">refresh</span>
+                <span (click)="fetchReviewStats()"
+                    class="material-symbols-outlined pointer refresh_icons">refresh</span>
             </div>
             <div class="row-2">
                 <canvas id="donutChart">{{donutChart}}</canvas>
             </div>
         </div>
-    
+
         <div class="item-7 product-info-cards d-flex flex-column gap-15 card card__pd-20">
             <div class="row-1">
                 <div action="" class="d-flex align-item-center gap-10">
@@ -124,21 +127,23 @@
                             <label for="Monthly" class="form__label">Monthly</label>
                         </div> -->
                 </div>
-                <span (click)="fetchPopularStats()" class="material-symbols-outlined pointer refresh_icons">refresh</span>
+                <span (click)="fetchPopularStats()"
+                    class="material-symbols-outlined pointer refresh_icons">refresh</span>
             </div>
-    
+
             <div *ngIf="productList.length; else noData" class="row-2 product__table">
-                <table  class="product-row mw100">
+                <table class="product-row mw100">
                     <tbody class="d-flex flex-column gap-15">
+
                         <tr class="product-card d-flex justify-content-md-between gap-10"
                             *ngFor="let product of productList">
-    
+
                             <td class="d-flex gap-20">
                                 <div class="product-image">
                                     <img src='{{product.photo}}' alt="product_image.png">
                                     <!-- <span class="material-symbols-outlined icons">laundry</span> -->
                                 </div>
-    
+
                                 <div class="product-name d-flex flex-column text-left text-captialize">
                                     <h4 class="img-title">{{product.name}}</h4>
                                     <p class="text-capitalize">{{product.category}}</p>
@@ -161,7 +166,31 @@
                                 </ng-template>
                             </td>
                         </tr>
-    
+
+<!-- 
+                        <tr class="product-card d-flex justify-content-md-between gap-10">
+
+                            <td class="d-flex gap-20">
+                                <div class="product-image skeleton" style="width: 40px; height: 100%;">
+                                </div>
+
+                                <div class="product-name d-flex flex-column gap-5">
+                                    <h4 class="skeleton invisibilty">--------</h4>
+                                    <p class="skeleton invisibilty">--------</p>
+                                </div>
+                            </td>
+                            <td class="d-flex gap-20">
+                                <div class="revenue d-flex flex-column gap-5">
+                                    <h4 class="skeleton invisibilty">--------</h4>
+                                    <p class="skeleton invisibilty">--------</p>
+                                </div>
+                                <div class="profit d-flex flex-column gap-5">
+                                    <h4 class="skeleton invisibilty">--------</h4>
+                                    <p class="skeleton invisibilty">--------</p>
+                                </div>
+                            </td>
+                        </tr> -->
+
                     </tbody>
                 </table>
             </div>
@@ -171,11 +200,12 @@
                 </div>
             </ng-template>
         </div>
-    
+
         <div class="item-8 product-info-cards d-flex flex-column gap-15 card card__pd-20">
             <div class="row-1">
                 <h3>Category Sales</h3>
-                <span (click)="fetchCategoryStats()" class="material-symbols-outlined pointer refresh_icons">refresh</span>
+                <span (click)="fetchCategoryStats()"
+                    class="material-symbols-outlined pointer refresh_icons">refresh</span>
             </div>
             <div *ngIf="category_sales.length; else noData1" class="row-2 category-table">
                 <table class="category-row d-flex flex-column gap-20">
@@ -186,6 +216,13 @@
                         </span>
                         <progress [value]="category.sales" max="1000000"></progress>
                     </tr>
+                    <!-- <tr class="d-flex flex-column gap-5">
+                        <span class="d-flex justify-content-md-between align-item-center">
+                            <h4 class="invisibilty skeleton">---------</h4>
+                            <span class="invisibilty skeleton">---------</span>
+                        </span>
+                        <span class="invisibilty skeleton mw100">---------</span>
+                    </tr> -->
                 </table>
             </div>
 
@@ -196,6 +233,6 @@
             </ng-template>
             <!-- <canvas id="barChart">{{barChart}}</canvas> -->
         </div>
-    
+
     </div>
 </section>

@@ -67,6 +67,7 @@ export class ProductsComponent implements OnInit {
   }
 
   async fetchData() {
+
     try {
 
       this.fetchdata.HTTPPOST(this.backendUrl.URLs.fetchProductInventory, this.template).subscribe({
@@ -74,10 +75,12 @@ export class ProductsComponent implements OnInit {
 
           if (!res.data.length) {
             this.dataFetchStatus = false;
+            this.productList = [];
             this.totalCount = 0;
             return;
           };
 
+          console.log('res', res);
 
           this.productArray = res;
           this.productList = [];
@@ -131,7 +134,7 @@ export class ProductsComponent implements OnInit {
           this.highlight = data.highlightCount;
           this.productList[index].status.highlight = status;
         },
-        error: ()=>{
+        error: () => {
           this.productList[index].status.highlight = false;
         }
       })
@@ -143,21 +146,24 @@ export class ProductsComponent implements OnInit {
     const status = (<HTMLInputElement>e.target).checked;
     const body = { '_id': id, 'status': status, 'field': 'active' };
 
-    this.template['productID'] = id;
+    // this.template['productID'] = id;
 
-    this.fetchdata.HTTPPOST(this.backendUrl.URLs.fetchProductInventory, this.template).subscribe({
-      next: (res: any) => {
-        console.log("sdasd", res);
-        delete this.template.productID;
-      }});
+    // this.fetchdata.HTTPPOST(this.backendUrl.URLs.fetchProductInventory, this.template).subscribe({
+    //   next: (res: any) => {
+    //     console.log("sdasd", res);
+    //     delete this.template.productID;
+    //   }[(ngModel)]="item.status.active"
+    // });
 
 
     this.fetchdata.HTTPPOST(this.backendUrl.URLs.productStatus, body).subscribe({
       next: (data: any) => {
+        console.log(data);
         this.productList[index].status.active = status;
-        status ? this.toastService.successToast({ title: 'Product is Available' }):this.toastService.notificationToast({ title: 'Product is now Unavailable'}); 
+        status ? this.toastService.successToast({ title: 'Product is Available' }) : this.toastService.notificationToast({ title: 'Product is now Unavailable' });
+        this.fetchData();
       },
-      error: ()=>{
+      error: () => {
         this.productList[index].status.active = false;
       }
     })
@@ -210,7 +216,7 @@ export class ProductsComponent implements OnInit {
 
     if (field) {
       this.template.filter[field] = e;
-      
+
     } else {
       this.tempSortData = e;
       let data = e.split(':');
@@ -329,14 +335,14 @@ export class ProductsComponent implements OnInit {
     })
   }
 
-  exportProductsExcel(){
-    let exportArr = this.productArray.data.filter((item: any) => 
-    this.deleteList.includes(item._id)).map((item: any)=> item.productInfo);
+  exportProductsExcel() {
+    let exportArr = this.productArray.data.filter((item: any) =>
+      this.deleteList.includes(item._id)).map((item: any) => item.productInfo);
 
     this.excelService.exportProductsInExcel(exportArr);
   }
 
-  tableGenerator(len: number){
+  tableGenerator(len: number) {
     let temp = []
     for (let i = 0; i < len; i++) {
       temp.push(0);

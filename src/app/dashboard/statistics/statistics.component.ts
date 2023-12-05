@@ -102,7 +102,6 @@ export class StatisticsComponent implements OnInit {
           this.salesData[saleData._id.month - 1] = saleData.totalsales;
           this.profitData[saleData._id.month - 1] = saleData.totalProfit;
         }
-
       }
     });
     this.resetLineChart();

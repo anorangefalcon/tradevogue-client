@@ -29,7 +29,6 @@ import { SidecartComponent } from './shared/sidecart/sidecart.component';
 import { DialogBoxComponent } from './dialog-box/dialog-box.component';
 import { WishlistComponent } from './wishlist/wishlist.component';
 import { MessagingService } from './shared/services/messaging-service';
-import { OffersCarouselComponent } from './offers-carousel/offers-carousel.component';
 import { CarouselModule } from 'ngx-owl-carousel-o';
 import { AboutComponent } from './about/about.component';
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
@@ -49,7 +48,6 @@ const config: SocketIoConfig = { url: 'http://localhost:1000', options: {} };
     SidecartComponent,
     DialogBoxComponent,
     WishlistComponent,
-    OffersCarouselComponent,
     AboutComponent
   ],
   imports: [
