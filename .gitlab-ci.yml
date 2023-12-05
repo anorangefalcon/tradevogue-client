@@ -1,0 +1,40 @@
+name: Deploy to Firebase Hosting on PR
+
+on:
+  push:
+    branches: [deployed]
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build dependencies
+        run: ng build
+
+      - name: Firebase Deploy
+        uses: w9jds/firebase-action@master
+        with:
+          args: deploy --only hosting
+
+  deploy:
+    name: Deploy
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Install Firebase CLI
+        run: npm install -g firebase-tools
+
+      - name: Firebase Deploy
+        run: |
+          firebase deploy --only hosting --token ${{ secrets.FIREBASE_TOKEN }}
