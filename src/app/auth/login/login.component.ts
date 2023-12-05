@@ -67,8 +67,6 @@ export class LoginComponent {
 
 
   LoginUser(body: any) {
-    console.log('here was falcon');
-
     this.allSubscriptions.push(
     this.fetchDataService.HTTPPOST(this.backendUrls.URLs.loginUrl, body).subscribe(
       (data: any) => {

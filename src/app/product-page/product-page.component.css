@@ -792,6 +792,9 @@
 }
 
 @media screen and (max-width: 490px) {
+    .container{
+        background: rgb(var(--whiteClr));
+    }
     .main {
         flex-direction: column;
         gap: 10px;
