@@ -112,7 +112,7 @@ export class UtilsModule {
     showWishlist: `${this.BackendUrl}/wishlist/showWishlist`,
     addNewWishlist: `${this.BackendUrl}/wishlist/addWishlist`,
     addToWishlist: `${this.BackendUrl}/wishlist/addToWishlist`,
-    showWishlistCount: `${this.BackendUrl}/wishlist/showWishlistCount`,
+    // showWishlistCount: `${this.BackendUrl}/wishlist/showWishlistCount`,
     showProducts: `${this.BackendUrl}/wishlist/showWishlistProducts`,
     deleteFromWishlist: `${this.BackendUrl}/wishlist/deleteFromWishlist`,
     removeWishlist : `${this.BackendUrl}/wishlist/deleteWishlist`,

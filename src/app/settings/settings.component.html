@@ -450,7 +450,7 @@
                                                 <img class="skeleton" [src]="detail.assets[0].photo[0]"
                                                     alt="Product Image">
                                             </a>
-                                            <button
+                                            <button (click)="removeFromWishlist(detail._id, item._id)"
                                                 class="absolute remove-btn d-flex justify-content-center align-item-center"
                                                >
                                                 <span class="material-symbols-outlined">

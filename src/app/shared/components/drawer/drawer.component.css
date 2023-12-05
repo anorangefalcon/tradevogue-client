@@ -31,7 +31,7 @@
 
 .drawer__content {
     padding-inline: 24px;
-    padding-block: 20px;
+    padding-block-start: 20px;
     overflow-y: auto;
     background-color: rgba(var(--whiteClr));
     /* height: calc(100vh - 60px); */

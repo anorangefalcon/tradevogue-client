@@ -32,10 +32,8 @@ export class WishlistService {
     private backendUrls: UtilsModule,
     private router: Router,
     private fetchDataService: FetchDataService,
-    private utils: UtilsModule,
     private http: HttpClient,
     private userService: LoginCheckService,
-    private toastService: ToastService,
   ) {
     this.allSubscriptions.push(
       this.userService.getUser().subscribe((isLoggedIn: any) => {
@@ -46,10 +44,14 @@ export class WishlistService {
 
   ShowWishlist(productId: string) {
 
+    console.log('show qishlisted produt is ',);
+    
     if (this.userIsLoggedIn) {
       this.productId = productId;
       this.allSubscriptions.push(
         this.fetchDataService.HTTPGET(this.backendUrls.URLs.showWishlist).subscribe((data: any) => {
+          console.log(data, 'here');
+          
           this.showWishlistPopup.next(data);
         }));
     }

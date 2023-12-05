@@ -28,7 +28,7 @@
     
     & .common{
         flex-direction: column;
-        width: 50%;
+        /* width: 50%; */
     }
 
     & .final-price[_ngcontent-ng-c1912923569] {
@@ -46,11 +46,11 @@
         width: 7px;
     }
     &::-webkit-scrollbar-track{
-        background: #f1f1f1;
+        background: transparent;
         border-radius: 25px;
     }
     &::-webkit-scrollbar-thumb{
-        background: #ccc;
+        background: transparent;
         border-radius: 25px;
     }
 }
@@ -61,6 +61,8 @@
     border-radius: 6px;
     background-color : rgba(var(--whiteClr));
     color: rgba(var(--primaryClr));
+
+    transition: 0.3s ease-in-out;
 }
 
 
@@ -70,6 +72,14 @@
     inset-inline-end: 0px;
     z-index: 2; 
 
+    &:hover{
+        &:not(:disabled):hover {
+            background-color: rgb(var(--primaryClr), 1);
+        }
+        & .total-price{
+            border-radius: 50px;
+        }
+    }
 }
 
 @media screen and (max-width: 560px) {

@@ -64,8 +64,7 @@ label span {
 
 /* COMMON CSright__iconS */
 .container {
-
-    /* padding-block-end: 50px; */
+    margin-block-end: 50px;
     transition: 0.3s ease-in-out;
 }
 
@@ -233,13 +232,15 @@ label span {
     opacity: 0;
     height: 0px;
     pointer-events: none;
-    transition: all 0.3s ease-in-out;
+    transform: translateY(-30px);
+    transition: 0.3s ease-in-out;
 }
 
 .accordian__body.active {
     opacity: 1;
     height: fit-content;
     pointer-events: all;
+    transform: translateY(0);
     justify-content: space-between;
 }
 

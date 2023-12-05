@@ -3,7 +3,6 @@ import { FetchDataService } from '../shared/services/fetch-data.service';
 import { HttpParams } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
-import { WishlistService } from '../shared/services/wishlist.service';
 import { UtilsModule } from '../utils/utils.module';
 
 
