@@ -1,0 +1,110 @@
+<section id="dashboard" class="relative">
+
+    <header class="header fixed inset-inline-0 inset-block-start-0 transition" [class.active]="isCollapse">
+        <div class="mh100 header_container d-flex align-item-center justify-content-md-between">
+            <div class="toogle-section d-flex gap-10 align-item-center">
+                <a href="javascript:void(0);" (click)="isCollapse = !isCollapse"
+                    class="pointer d-flex align-item-center mh100">
+                    <span class="material-symbols-outlined">menu</span>
+                </a>
+                <a aria-label=" Logo (Trade Vogue) (Light Mode)" href="javascript:void(0);" [routerLink]="['/']">
+                    <img class="brand-logo" width="50px" src="../../assets/logo-mobile.svg" *ngIf="!darkTheme"
+                        [class.active]="isCollapse" alt="Trade Vogue"></a>
+                <a aria-label="Mobile Logo (Trade Vogue) (dark_mode Mode)" href="javascript:void(0);"
+                    [routerLink]="['/']"><img class="brand-logo" width="50px" src="../../assets/logo-mobile-light.svg"
+                        *ngIf="darkTheme" [class.active]="isCollapse" alt="Trade Vogue"></a> 
+            </div>
+            <ul class="mh100 header_items d-flex align-item-center justify-content-end gap-20">
+
+                <li class="header_links">
+                    <a href="javascript:void(0);" routerLink="/dashboard/chat"
+                        class="mh100 message d-flex align-item-center relative">
+                        <span class="pointer transition  icons material-symbols-outlined">Message</span>
+                        <span class="count d-flex flex-center text-center absolute">{{chatLength}}</span>
+                    </a>
+                </li>
+                <li class="header_links relative pointer">
+                    <span class="mh100 notification d-flex align-item-center relative">
+                        <span class="pointer transition icons material-symbols-outlined">notifications</span>
+                        <span class="count d-flex flex-center text-center absolute">{{notficationList.length}}</span>
+                    </span>
+                    <ul class="notficationList absolute d-flex flex-column gap-10">
+                        <li *ngFor="let item of notficationList; let i=index" class="d-flex align-item-center gap-10 ">
+                            <img [src]="item.image" alt="product image" width="40px" height="35px">
+                            <div class="d-flex flex-column ">
+                                <p class="name fw-500 fs-14 text-ellipsis">{{item.name}}</p>
+                                <p class="out-of-stock fs-10">{{'Out of Stock'}}</p>
+                            </div>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="header_links">
+                    <span class="mh100 notification d-flex align-item-center relative" (click)="toggleTheme()">
+                        <span class="pointer transition icons material-symbols-outlined" *ngIf="!darkTheme">
+                            dark_mode</span>
+                        <span class="pointer transition icons material-symbols-outlined"
+                            *ngIf="darkTheme">light_mode</span>
+                    </span>
+                </li>
+                <li class="header_links profile d-flex align-item-center gap-10 pointer"
+                    [routerLink]="'/dashboard/account'">
+                    <!-- <span class="account__icon absolute material-symbols-outlined">settings</span>                -->
+
+                    <img class="profile__photo" width="35px" height="35px" src="../../../assets/avatars/try.svg"
+                        alt="profile">
+                    <span class="profile-content d-flex flex-column justify-content-center">
+                        <h5 class="profile-title fs-12 fw-500">{{this.adminName}}</h5>
+                        <p class="profile-sub-title fs-12" style="color: rgb(var(--blue-clr));">Admin</p>
+                    </span>
+                </li>
+            </ul>
+        </div>
+    </header>
+
+    <div class="sidebar fixed inset-block-start-0 inset-inline-start-0 transition" [class.active]="isCollapse">
+        <span class="branding d-flex align-item-center">
+            <a href="javascript:void(0);" [routerLink]="['/']">
+                <ng-container *ngIf="!darkTheme; else lightTheme">
+                    <img class="brand-logo" src="../../assets/logo.svg" [class.active]="isCollapse" alt="Logo">
+                    <img class="mobile-logo" src="../../assets/logo-mobile.svg" alt="Logo">
+                </ng-container>
+                <ng-template #lightTheme>
+                    <img class="brand-logo" src="../../assets/logo-light.svg" [class.active]="isCollapse" alt="Logo">
+                    <img class="mobile-logo" src="../../assets/logo-mobile-light.svg" alt="Logo">
+                </ng-template>
+            </a>
+        </span>
+
+        <nav class="navbar mh100">
+            <ul class="navlist d-flex flex-column mh100 relative">
+                <li class="transition" *ngFor="let item of navitems">
+
+                    <a href="javascript:void(0);" [routerLink]="item.route ? item.route: null"
+                        (click)="item.name.toLowerCase() == 'logout' ? logout() : null;" [class.dropdown]="item.sublist"
+                        [routerLinkActive]="'active'"
+                        class="nav-links relative align-item-center d-flex gap-15 pointer transition">
+                        <i class="icons material-symbols-outlined">{{item.icons}}</i>
+                        <span class="nav-text">{{item.name}}</span>
+                    </a>
+
+                    <ul class="sub-navlist transition" *ngIf="item.sublist" routerLinkActive="active"
+                        [routerLinkActiveOptions]="{exact: true}">
+
+                        <li class="sub-links transition" *ngFor="let subitem of item.sublist">
+                            <a href="javascript:void(0);" class="mw100" [routerLink]="subitem.route"
+                                routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">{{subitem.name}}</a>
+                        </li>
+
+                    </ul>
+                </li>
+
+            </ul>
+        </nav>
+    </div>
+    <main class="main transition">
+        <div class="content">
+            <router-outlet></router-outlet>
+        </div>
+    </main>
+</section>

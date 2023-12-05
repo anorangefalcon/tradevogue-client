@@ -1,39 +1,33 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
+import { ReactiveFormsModule } from '@angular/forms';
 import { HomeRoutingModule } from './home-routing.module';
 import { SharedModule } from '../shared/shared.module';
-import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './home.component';
-
-import { HeroComponent } from './hero/hero.component';
-import { GalleryComponent } from './gallery/gallery.component';
 import { CollectionsComponent } from './collections/collections.component';
-import { CarouselModule } from 'ngx-owl-carousel-o';
 import { OffersComponent } from './offers/offers.component';
 import { DealOfWeekComponent } from './deal-of-week/deal-of-week.component';
-
-
-const routes: Routes = [
-  { path: '', component: HomeComponent }
-];
-
+import { HeroComponent } from './hero/hero.component';
+import { GalleryComponent } from './gallery/gallery.component';
 
 @NgModule({
   declarations: [
-    HomeComponent,
-    HeroComponent,
-    CollectionsComponent,
-    GalleryComponent,
-    OffersComponent,
-    DealOfWeekComponent,
-  ],
+    HomeComponent
+    ],
   imports: [
     CommonModule,
     HomeRoutingModule,
     SharedModule,
-    CarouselModule,
-    RouterModule.forChild(routes),
+    ReactiveFormsModule,
+    HeroComponent,
+    GalleryComponent,
+    CollectionsComponent,
+    DealOfWeekComponent,
+    OffersComponent
+  ],
+  exports: [
+    GalleryComponent,
+    DealOfWeekComponent
   ]
 })
 export class HomeModule { }

@@ -2,9 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 import { ApiService } from '../services/api.service';
-import { Subject } from 'rxjs';
-import { ImageUploadService } from 'src/app/shared/services/image-upload.service';
-
+import { Subject, Subscription } from 'rxjs';
+import { SellerFetchDataService } from 'src/app/shared/services/seller-fetch-data.service';
+import { DatePipe } from '@angular/common';
+import { LoginCheckService } from 'src/app/shared/services/login-check.service';
+import { FetchDataService } from 'src/app/shared/services/fetch-data.service';
+import { UtilsModule } from 'src/app/utils/utils.module';
+import { ToastService } from 'src/app/shared/services/toast.service';
 @Component({
   selector: 'app-account',
   templateUrl: './account.component.html',
@@ -14,26 +18,50 @@ export class AccountComponent implements OnInit {
   Check: boolean = false;
   changee: boolean = true;
   profileForm!: FormGroup;
-  AccountForm!: FormGroup; 
+  AccountForm!: FormGroup;
+  passwordForm!: FormGroup;
   postalCode: string = '';
   country: string = '';
   state: string = '';
   county: string = '';
+  city: string = '';
   passwordVisible: boolean = false;
   pincodeFilled: boolean = false;
-  userPhoto: string = '';  
+  userPhoto: string = '';
   private postalCodeInput = new Subject<string>();
+  showPopup = true;
+  area: string = '';
+  userToken: any = '';
+  showPassword: boolean = false;
+  showPassword2: boolean = false;
+  showPassword3: boolean = false;
+  password: string = "password";
+  password2: string = "password";
+  password3: string = "password";
+  edit: boolean = true;
 
-
+  allSubscriptions: Subscription[] = [];
 
   constructor(
     private postalCodeService: ApiService,
     private formBuilder: FormBuilder,
-    private imageUpload: ImageUploadService 
+    private sellerFetchDataService: SellerFetchDataService,
+    private datePipe: DatePipe,
+    private userService: LoginCheckService,
+    private fetchDataService : FetchDataService,
+    private backendURLs : UtilsModule,
+    private toastService: ToastService
   ) { }
 
 
+
   ngOnInit() {
+    this.allSubscriptions.push(
+    this.userService.getUser('token').subscribe((token: any) => {
+      this.userToken = token;
+    }));
+
+    // Use the patchValue method to update the profileForm with adminData
     this.profileForm = this.formBuilder.group({
       firstName: [
         '',
@@ -62,6 +90,8 @@ export class AccountComponent implements OnInit {
           ),
         ],
       ],
+      dob: ['', [Validators.required]],
+      gender: ['', [Validators.required]],
       mobile: [
         '',
         [Validators.required, Validators.pattern('[0-9]{10}')],
@@ -74,14 +104,17 @@ export class AccountComponent implements OnInit {
           Validators.pattern(/^(?=.*[A-Z])(?=.*[!@#$%^&*()_+{}\[\]:;<>,.?~\\-])/),
         ],
       ],
-      organization: [''],
       address: ['', [Validators.required]],
-      postalCode: ['', [Validators.required, Validators.pattern('[0-9]{6}')],
-      ],
+      postalCode: ['', [Validators.required, Validators.pattern('[0-9]{6}')]],
+      country: ['', [Validators.required]],
+      state: ['', [Validators.required]],
+      city: ['', [Validators.required]],
+      area: ['', [Validators.required]],
     });
 
+    this.getSellerDetails();
+
     this.AccountForm = this.formBuilder.group({
-      // Create a FormGroup for AccountForm
       BankName: ['', Validators.required],
       AccountHolder: ['', Validators.required],
       AccountNo: ['', [Validators.required, Validators.maxLength(17), Validators.minLength(5)]],
@@ -89,8 +122,13 @@ export class AccountComponent implements OnInit {
       GST: ['', [Validators.required, Validators.maxLength(15)]],
     });
 
+    this.passwordForm = this.formBuilder.group({
+      currentPassword: ['', Validators.required],
+      newPassword: ['', Validators.required],
+    })
 
 
+    this.allSubscriptions.push(
     this.postalCodeInput
       .pipe(
         debounceTime(500),
@@ -104,6 +142,8 @@ export class AccountComponent implements OnInit {
             this.country = '';
             this.state = '';
             this.county = '';
+            this.city = '';
+            this.area = '';
             return [];
           }
         })
@@ -113,12 +153,46 @@ export class AccountComponent implements OnInit {
           this.country = data[0].COUNTRY;
           this.state = data[0].STATE;
           this.county = data[0].COUNTY;
+          this.city = data[0].CITY;
+
+          if(this.country) {
+            this.profileForm.get('country')?.setValue(this.country);
+            this.profileForm.get('state')?.setValue(this.state);
+            this.profileForm.get('city')?.setValue(this.city);
+            this.profileForm.get('area')?.setValue(this.county);
+          }
         } else {
           this.country = '';
           this.state = '';
           this.county = '';
+          this.city = '';
         }
-      });
+      }));
+
+
+    this.AccountForm.disable();
+    this.profileForm.disable();
+  }
+
+  getSellerDetails() {
+    this.allSubscriptions.push(
+      this.sellerFetchDataService.getSellerInfo().subscribe((data: any) => {
+        const formattedDob = this.datePipe.transform(data[0].info.dob, 'yyyy-MM-dd');
+        this.profileForm.patchValue({
+          firstName: data[0].name.firstname,
+          lastName: data[0].name.lastname,
+          email: data[0].email,
+          dob: formattedDob,
+          address: data[0].info.address[0].apartment,
+          postalCode: data[0].info.address[0].pincode,
+          country: data[0].info.address[0].country,
+          state: data[0].info.address[0].state,
+          city: data[0].info.address[0].city,
+          gender: data[0].info.gender,
+          mobile: data[0].mobile,
+          area: data[0].info.address[0].area
+        });
+      }));
   }
 
   onPostalCodeInputChange() {
@@ -141,11 +215,67 @@ export class AccountComponent implements OnInit {
     }
   }
 
-  updateInformation() {
+  async updateDetails(form: { [key: string]: string }) {
+    const body = {
+      "email": form['email'],
+      "name": {
+        "firstname": form['firstName'],
+        "lastname": form['lastName']
+      },
+      "mobile": form['mobile'],
+      "info": {
+        "gender": form['gender'],
+        "dob": form['dob'],
+        "address": [
+          {
+            "firstname": form['firstName'],
+            "lastname": form['lastName'],
+            "apartment": form['address'],
+            "city": form['city'],
+            "area": form['area'],
+            "state": form['state'],
+            "pincode": form['postalCode'],
+            "country": form['country'],
+          },
+        ],
+        "token": this.userToken
+      }
+    }
 
+    // let data: any = await this.fetchDataService.httpPost(this.backendUrls.URLs.loginUrl, body);
+    await this.sellerFetchDataService.sendSellerInfo(body)
+
+    const pinData = {
+      "POSTAL_CODE": form['postalCode'],
+      "COUNTRY": form['country'],
+      "STATE": form['state'],
+      "COUNTY": form['city'],
+      "CITY": form['county']
+    }
+
+    this.allSubscriptions.push(
+    this.sellerFetchDataService.sendPinInfo(pinData).subscribe((data: any) => {
+    }));
+    this.profileForm.disable();
   }
 
-  uploadImage(e: Event){
+  uploadImage(e: Event) {
     const file = (e.target as HTMLInputElement).files![0];
   }
+
+  onResetPassword(){
+    const body = {
+      oldPassword: this.passwordForm.get('currentPassword')?.value,
+      newPassword: this.passwordForm.get('newPassword')?.value
+    }
+    this.allSubscriptions.push(
+    this.fetchDataService.HTTPPOST(this.backendURLs.URLs.changePassword, body).subscribe((data: any) => {      
+      this.toastService.successToast({ title: data.message })
+      this.passwordForm.reset()
+    }));
+  }
+
+  ngOnDestroy() {
+    this.allSubscriptions.forEach((item: Subscription)=> item.unsubscribe());
+   }
 }

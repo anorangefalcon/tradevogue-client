@@ -1,6 +1,5 @@
-
 .faq_title {
-  min-height: 400px;
+  min-height: 335px;
   background-color: rgb(var(--primaryClr), 0.1);
   background-image: url(../../assets/deal-of-week-component/dealOfWeek-homeBg.png);
   background-repeat: no-repeat;
@@ -8,125 +7,130 @@
   background-position: center;
 
   & h1 {
-    font-size: 84px !important;
+    font-size: 62px !important;
     letter-spacing: 2.2px !important;
   }
 }
 
-button.accordion {
-  font-size: 18px;
-  font-weight: 500;
-  cursor: pointer;
-  padding: 0 !important;
-  background: transparent;
+.accordion_wrapper {
+  background-color: rgb(var(--whiteClr));
+  border-radius: 5px;
+  border: 1px solid rgb(var(--blackClr), 0.1);
+  transition: all 0.3s ease;
+  
 }
 
-.accordion-wrapper:last-child {
-  box-shadow: none;
+.faq_section{
+  max-width: 850px;
+  padding-block: 50px;
 }
-
-.faq-section {
-  padding: 100px;
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-}
-
-.accordion-wrapper {
-  background-color: transparent;
+.accordion_wrapper[aria-expanded="false"] {
+  max-height: 0;
+  opacity: 0;
   overflow: hidden;
-  box-shadow: 0px 2px 1px rgba(0, 0, 0, 0.1);
-  padding: 11px;
+}
+
+.accordion_wrapper[aria-expanded="true"] {
+  max-height: 1000px;
+  /* Adjust as needed, consider a maximum possible height */
+  opacity: 1;
+  overflow: visible;
+}
+
+.accordion_wrapper h2 {
+  font-size: 18px;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.accordion_wrapper p {
+  font-size: 14px;
+  line-height: 1.5;
+  color: #666;
+}
+
+
+.main_acc {
+  background: transparent;
+  border-radius: 8px;
 }
 
 .accordion {
   width: 100%;
-  text-align: left;
-  background-color: #f5f5f5;
   padding: 15px;
-  cursor: pointer;
   border: none;
   outline: none;
+}
+
+.content {
+  font-size: 20px;
+  text-align: justify;
+  line-height: 30px;
+  color: rgb(var(--textClr));
 }
 
 .panel {
   padding: 15px;
   display: none;
-  background-color: white;
-  border-top: 1px solid #ccc;
-}
-
-.panel2 {
-  /* padding: 15px; */
-  display: none;
-  background-color: white;
-  border-top: 1px solid #ccc;
-}
-
-button.accordion2 {
-  font-size: 18px;
-  font-weight: 500;
-  cursor: pointer;
-  padding: 0 !important;
-  background: transparent;
-}
-
-.expanded2 {
-  display: block;
-  /* border-top: 1px solid #ccc; */
-  padding-top: 13px;
-  padding-bottom: 13px;
+  background-color: rgb(var(--whiteClr));
+  border-top: 1px solid rgb(var(--blackClr), 0.2);
 }
 
 .panel p {
   color: rgb(var(--textClr), 0.7);
-  /* padding: 10px 44px; */
-}
-
-.main-acc {
-  display: flex;
-  background: transparent;
-  align-items: center;
-  justify-content: space-between;
-  border-radius: 8px;
 }
 
 .sub-acc:last-child {
   margin-block-end: 10px 1;
 }
 
-/* Plus sign for collapsed parent accordion */
-.accordion:not(.expanded2)::after,
+.panel2 {
+  display: none;
+  background-color: white;
+  border-top: 1px solid rgb(var(--blackClr), 0.1);
+  transition: all 0.3s ease;
+}
+
+.expanded {
+  display: block;
+  padding-block: 13px;
+  transition: all 0.3s ease;
+  background-color: rgb(var(--whiteClr));
+}
+
+.accordion:not(.expanded)::after,
 .custom {
   content: "+";
-  color: black;
+  color: rgb(var(--textClr), 0.8);
   font-weight: 500;
   float: right;
   margin-left: 5px;
-  transition: content 1s ease-out;
+  transition: all 0.3s ease;
   font-size: 22px;
 }
 
 .custom-title {
   display: flex;
   justify-content: space-between;
+  color: rgb(var(--textClr), 0.8);
   width: 100%;
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 500;
   padding: 0px;
+  transition: all 0.3s ease;
 }
 
-/* Minus sign for expanded parent accordion */
-.expanded2.accordion::after,
+.expanded.accordion::after,
 .custom {
   content: "-";
-  color: black;
+  color: rgb(var(--blackClr));
   font-weight: 200;
+  transition: all 0.3s ease;
   float: right;
   margin-left: 5px;
   font-size: 28px;
 }
-/* ... (other styles) ... */
+
 
 @media only screen and (max-width: 768px) {
   .faq_title {
@@ -137,12 +141,13 @@ button.accordion2 {
       letter-spacing: 2.2px !important;
     }
   }
-  .expanded2.accordion::after,
+
+  .expanded.accordion::after,
   .custom {
     font-size: 22px !important;
   }
 
-  .expanded2 {
+  .expanded {
     font-size: 13px;
     display: flex;
     flex-direction: column;
@@ -162,16 +167,6 @@ button.accordion2 {
     padding: 60px 29px;
   }
 
-  button.accordion {
-    flex-direction: revert;
-    font-size: 16px;
-    font-weight: 300;
-    cursor: pointer;
-    padding: 0 !important;
-    display: flex;
-    background: transparent;
-  }
-
 
 
   .custom-title {
@@ -188,77 +183,8 @@ button.accordion2 {
     box-shadow: none;
   }
 
-  .expanded2 {
+  .expanded {
     font-size: 12px;
   }
 
 }
-
-
-
-
-
-
-
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
-
-* {
-    margin: 0;
-    padding: 0;
-}
-
-*,
-*::before,
-*::after {
-    box-sizing: border-box;
-}
-
-body {
-    font-family: 'Poppins', sans-serif;
-
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #222;
-    padding: 0 1rem;
-}
-
-
-
-
-
-
-
-/* CARD */
-.card {
-    max-width: 400px;
-    box-shadow: 0 .5rem 2rem rgba(0, 0, 0, .1);
-    padding: 1.5rem;
-    border-radius: .5rem;
-}
-.card-image {
-    margin-bottom: 1rem;
-}
-.card-image img {
-    width: 100%;
-    aspect-ratio: 4 / 3;
-    object-fit: cover;
-    border-radius: .25rem;
-}
-.card-title {
-    font-size: 1.25rem;
-    color: #222;
-    text-decoration: none;
-    font-weight: 600;
-    margin-bottom: .25rem;
-    display: inline-block;
-}
-.card-description {
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 3;
-    text-overflow: ellipsis;
-    overflow: hidden;
-}
-/* CARD */

@@ -1,35 +1,29 @@
-<div *ngIf="display" (mouseenter)="hoverIn()" (mouseleave)="hoverOut()" class="container">
-    <div class="toast">
+<div (mouseenter)="hoverIn()" (mouseleave)="hoverOut()" class="container">
+    <div class="toast" [ngClass]="display ? 'active' : ''">
 
-        <div class="toast-header d-flex align-item-center gap-5">
+        <div class="toast-header d-flex align-item-center justify-content-md-between">
 
-            <div class="loader {{display}}-bg"></div>
+            <div *ngIf="display" class="{{display}}-bg"[ngClass]="display ? 'loader' : ''"></div>
 
+            <div class="d-flex gap-10">
+                <div class="logo d-flex flex-center">
+                    <i *ngIf="display === 'success'" class="success material-symbols-outlined">done</i>
+                    <i *ngIf="display === 'error'" class="error material-symbols-outlined">error</i>
+                    <i *ngIf="display === 'warning'" class="warning material-symbols-outlined">warning</i>
+                    <i *ngIf="display === 'notification'" class="notification material-symbols-outlined">info</i>
+                </div>
 
-            <div class="logo">
-                <span *ngIf="display === 'success'" class="success material-symbols-outlined">
-                    done
-                </span>
-
-                <span *ngIf="display === 'error'" class="error material-symbols-outlined">
-                    error
-                </span>
-
-                <span *ngIf="display === 'warning'" class="warning material-symbols-outlined">
-                    warning
-                </span>
-
-                <span *ngIf="display === 'notification'" class="notification material-symbols-outlined">
-                    notifications
-                </span>
+                <div class="text {{display}}">
+                    {{content?.title}}
+                </div>
             </div>
 
-            <div class="text {{display}}">
-                {{content?.title}}
+            <div (click)="closeToast()" class="close-toast pointer">
+                <i class="material-symbols-outlined" class="{{display}}">keyboard_arrow_up</i>
             </div>
         </div>
 
-        <div *ngIf="(content?.body)?.length > 0" class="toast-body">
+        <div *ngIf="(content?.xxx)?.length > 0" class="toast-body">
             <ul *ngFor="let text of content?.body">
                 <li>{{text}}</li>
             </ul>

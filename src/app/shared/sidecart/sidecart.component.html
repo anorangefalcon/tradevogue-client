@@ -1,0 +1,11 @@
+<app-drawer [direction]="direction" [show]="show" (showChange)="ChangeHanlder($event)" [title]="'Cart'">
+    <div class="main-wrapper mh100 relative">
+        <div class="app-cart">
+            <app-cart></app-cart>
+        </div>
+        <button class="btn-primary mw100 d-flex justify-content-md-between align-item-center proceed-btn btn btn-rounded btn-md" (click)="proceedToCart()">
+            <p>Proceed</p>
+            <p class="total-price">₹{{ totalAmt }}</p>
+        </button>
+    </div>
+</app-drawer>

@@ -1,30 +1,38 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { CommonModule } from '@angular/common';
+import { AsyncPipe, CommonModule } from '@angular/common';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { NgxPaginationModule } from 'ngx-pagination';
+import { DataTablesModule } from 'angular-datatables';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { SharedModule } from './shared/shared.module';
 import { HomeModule } from './home/home.module';
-import { LayoutComponent } from './layout/layout.component';
-import { ReactiveFormsModule } from '@angular/forms';
 import { DashboardModule } from './dashboard/dashboard.module';
-import { DataTablesModule } from 'angular-datatables';
 import { ProductPageModule } from './product-page/product-page.module';
 import { FaqPageModule } from './faq-page/faq-page.module';
-import { NgxPaginationModule } from 'ngx-pagination';
-import { TcComponent } from './tc/tc.component';
 import { CheckoutModule } from './checkout/checkout.module';
+import { UtilsModule } from './utils/utils.module';
+import { CookieService } from 'ngx-cookie-service';
+import { HeadersInterceptor } from './headers.interceptor';
+import { LayoutComponent } from './layout/layout.component';
+import { TcComponent } from './tc/tc.component';
 import { ExploreComponent } from './explore/explore.component';
-import { HttpClientModule } from '@angular/common/http';
 import { HelpPageComponent } from './help-page/help-page.component';
 import { SettingsComponent } from './settings/settings.component';
-import { FormsModule } from '@angular/forms';
 import { NoPageComponent } from './no-page/no-page.component';
 import { BreadcrumbComponent } from './shared/breadcrumb/breadcrumb.component';
 import { ToastComponent } from './toast/toast.component';
-import { UtilsModule } from './utils/utils.module';
-
+import { SidecartComponent } from './shared/sidecart/sidecart.component';
+import { DialogBoxComponent } from './dialog-box/dialog-box.component';
+import { WishlistComponent } from './wishlist/wishlist.component';
+import { MessagingService } from './shared/services/messaging-service';
+import { CarouselModule } from 'ngx-owl-carousel-o';
+import { AboutComponent } from './about/about.component';
+import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
+const config: SocketIoConfig = { url: 'http://localhost:1000', options: {} };
 
 @NgModule({
   declarations: [
@@ -37,29 +45,38 @@ import { UtilsModule } from './utils/utils.module';
     NoPageComponent,
     BreadcrumbComponent,
     ToastComponent,
-
-   
+    SidecartComponent,
+    DialogBoxComponent,
+    WishlistComponent,
+    AboutComponent
   ],
   imports: [
+    CarouselModule,
     BrowserModule,
     CommonModule,
-    
     NgxPaginationModule,
     BrowserAnimationsModule,
+    ReactiveFormsModule,
+    FormsModule,
     AppRoutingModule,
     SharedModule,
     HomeModule,
-    ReactiveFormsModule,
     DashboardModule,
-    FormsModule,
     DataTablesModule,
     ProductPageModule,
     FaqPageModule,
     CheckoutModule,
-    HttpClientModule, 
-     
+    HttpClientModule,
+    UtilsModule,
+    SocketIoModule.forRoot(config),
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  exports: [
+  ],
+  providers: [
+    CookieService,
+    MessagingService, AsyncPipe,
+    { provide: HTTP_INTERCEPTORS, useClass: HeadersInterceptor, multi: true },
+  ],
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

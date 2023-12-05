@@ -1,0 +1,68 @@
+<nav class="pagination-container d-flex flex-center mw100">
+  <ul class="pagination d-flex flex-center " [ngClass]="small ? 'pagination-sm' : ''">
+
+    <!-- first button -->
+    <li class="page-item first-btn" [ngClass]="currentPage === 1 ? 'disabled' : ''" *ngIf="firstLastButtons">
+      <button class="page-link" (click)="selectPageNumber(1)">««</button>
+    </li>
+
+    <!-- previous button -->
+    <li [ngClass]="currentPage === 1 ? 'page-item disabled' : 'page-item'" *ngIf="nextPreviousButtons">
+      <button class="page-link" (click)="previous()">
+        <span class="fs-18 material-symbols-outlined">chevron_left</span>
+      </button>
+    </li>
+
+    <!-- page numbers with -->
+    <ng-container *ngFor="let p of totalPages; index as i">
+
+      <!--First Number when the user is the last number-->
+      <li class="page-item" *ngIf="i === 0 && currentPage === totalPages.length && currentPage > 2">
+        <button class="page-link" (click)="selectPageNumber(1)">
+          1
+        </button>
+      </li>
+
+      <ng-container *ngIf="showEllipsisBefore(i) && i === 1 && currentPage === totalPages.length">
+        <li class="page-item x">
+          <span class="dots">&#8226; &#8226;</span>
+        </li>
+      </ng-container>
+
+
+      <li class="page-item" *ngIf="shouldShowPage(i)" [ngClass]="currentPage === i + 1 ? 'active' : ''">
+        <button class="page-link" (click)="selectPageNumber(i + 1)">
+          {{ i + 1 }}
+        </button>
+      </li>
+
+      <ng-container *ngIf="showEllipsisAfter(i)">
+        <li class="page-item">
+          <span class="dots">&#8226; &#8226;</span>
+        </li>
+      </ng-container>
+    
+      <!-- Add last page number before -->
+      <ng-container *ngIf="showEllipsisAfter(i) && i === totalPages.length - 1">
+        <li class="page-item">
+          <button class="page-link" (click)="selectPageNumber(totalPages.length)">
+            {{ totalPages.length }}
+          </button>
+        </li>
+      </ng-container>
+  
+    </ng-container>
+    
+    <!-- next button -->
+    <li class="page-item" [ngClass]="currentPage === totalPages.length ? 'disabled' : ''" *ngIf="nextPreviousButtons">
+      <button class="page-link" (click)="next()">
+        <span class="fs-18 material-symbols-outlined">chevron_right</span>
+      </button>
+    </li>
+
+    <!-- last button -->
+    <li class="page-item last-btn" [ngClass]="currentPage === totalPages.length ? 'disabled' : ''" *ngIf="firstLastButtons">
+      <button class="page-link" (click)="selectPageNumber(totalPages.length)">»»</button>
+    </li>
+  </ul>
+</nav>

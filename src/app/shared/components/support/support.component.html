@@ -1,4 +1,4 @@
-<div id="chat-bot" #chatBot>
+<div (click)="loadLatestOrder()" id="chat-bot" #chatBot>
   <div class="messenger br10">
     <mat-tab-group [(selectedIndex)]="selectedTabIndex">
       <mat-tab label="Home">
@@ -17,7 +17,7 @@
           <div class="home">
             <div class="box">
               <div class="icon_home">
-                <a mat-button (click)="navigateTo('chat')">
+                <a mat-button (click)="navigateTo('support')">
                   <i class="fa-regular fa-comment"
                     style="font-size: 30px; color: #22385d; align-items: center; text-align: center;"></i>
                   <h1 class="chat-h1">Chat</h1>
@@ -38,64 +38,41 @@
         </div>
       </mat-tab>
 
-      <mat-tab label="Chat" id="chat-bot" #chatBot>
-        <div class="timestamp">04:45 AM</div>
-        <div class="chatroom">
-          <div class="msg msg-left">
-            <div class="bubble">
-              <h6 class="name">Vivek Dhiman's Bot</h6>
-              Hello, I am a smart chat bot, <br />
-              How can I help you.
-            </div>
-          </div>
-          <div class="msg msg-right">
-            <div class="bubble">
-              Oh! Look at you. You are awesome
-            </div>
-          </div>
-          <div class="msg msg-right">
-            <div class="bubble">
-              Can you please tell me who created you?
-            </div>
-          </div>
-          <div class="msg msg-left">
-            <div class="bubble">
-              Yes, Of course! Vivek Dhiman created me. <br />
-              He's behind my awesomeness. He did a great job. didn't he?
-            </div>
-          </div>
-          <div class="msg msg-right">
-            <div class="bubble">
-              Yeah! He did an amazing job.<br />
-              How can I contact him?
-            </div>
-          </div>
-          <div class="msg msg-left">
-            <div class="bubble">
-              Here's my boss' Fiverr Username. <br />
-              <a href="www.fiverr.com/vivekdhiman" target="_blank">fiverr.com/vivekdhiman</a>
-            </div>
-          </div>
-          <div class="msg msg-right">
-            <div class="bubble">
-              Thanks alot. See you next time. Good bye
+      <mat-tab label="Live Chat">
+        <div class="accordion">
+          <div class="help-container">
+            <h3>Support</h3>
+            <p>Need Live assistance?</p>
+            <div class="scrollable-content">
+
+
+              <div class="chat-container">
+
+                <div *ngFor="let message of messages" class="chat-message"
+                [ngClass]="{'user-message': message.sender === 'user', 'bot-message': message.sender === 'bot'}">
+                <p [innerHTML]="message.content"></p>
+              </div>
+              
+                <div class="type-area">
+                  <input type="text" [(ngModel)]="textMessage" (keyup.enter)="sendLiveMessage()" class="typing"
+                    placeholder="Type Here...">
+                  <span class="send" (click)="sendLiveMessage()">
+                    <i class="bi bi-arrow-return-left"></i>
+                  </span>
+                </div>
+              </div>
+              
+
+
+
             </div>
           </div>
 
-          <div class="msg msg-left">
-            <div class="bubble">
-              Good bye. Take care
-            </div>
-          </div>
-          <!-- msgs  -->
+
         </div>
-        <div class="type-area">
-          <input type="text" class="typing" placeholder="Type Here...">
-          <span class="send">
-            <i class="bi bi-arrow-return-left"></i>
-          </span>
-        </div>
+
       </mat-tab>
+
       <mat-tab label="Help">
         <div class="accordion">
           <div class="help-container">
@@ -132,100 +109,131 @@
         </div>
 
       </mat-tab>
+
+      <mat-tab label="Order Details" id="chat-bot" #chatBot>
+        <div class="timestamp">04:45 AM</div>
+        <div class="chatroom">
+          <div class="msg msg-left">
+            <div class="bubble">
+              <h6 class="name">Welcome To ChatBot</h6>
+              Hello, I am a smart chat bot, <br />
+              How can I help you.
+            </div>
+          </div>
+          <h6 class="name" *ngIf="productPresent">Your Latest Orders</h6>
+
+          <div class="msg msg-left">
+            <ng-container *ngIf="!loadingProducts">
+              <div *ngFor="let product of products" class="product-item pointer" (click)="showProductDetails(product)"
+                [title]="'Click to get details'">
+                <img [title]="'Click to get details'" [src]="product.image" alt="Product Image" class="product-image">
+                <div [title]="'Click to get details'" class="product-details">
+                  <p class="product-name">{{ product.name }}</p>
+                  <div class="details">
+                    <span>Price: {{ product.price }}</span>
+                    <span>Quantity: {{ product.quantity }}</span>
+                    <span>Size: {{ product.size }}</span>
+                    <span>Color: {{ product.color }}</span>
+                  </div>
+                </div>
+              </div>
+              <div *ngIf="selectedProduct" class="shipment-details">
+                Shipment Status: {{ selectedProduct.shipmentStatus }}
+              </div>
+            </ng-container>
+          </div>
+
+          <div *ngIf="productPresent"  class="msg msg-left">
+            <div class="name">
+              Need More Detail
+            </div>
+            <div class="button-container">
+              <button *ngIf="!Clicked && productPresent" class="btn" (click)="onYesClick()">Yes</button>
+              <button *ngIf="!Clicked && productPresent" class="btn" (click)="onNoClick()">No</button>
+            </div>
+          </div>
+
+          <div *ngIf="showNewSection">
+            <div class="bubble msg msg-right">
+              Yes
+            </div>
+
+            <div id="orderDetail" class="msg msg-left orderDetail">
+              <h6 class="name">Your Order Details</h6>
+              <div class="name" *ngIf="orderDetails">
+                You have ordered this item on <strong>{{ orderDetails.orderDate | date: 'MMM d, y' }}</strong> <br>.
+                Your transaction ID is <strong>{{ orderDetails.transactionId }}.</strong><br> Invoice status is
+                <strong>{{ orderDetails.invoice_status }}.</strong><br> MOP is <strong>{{ orderDetails.MOP }}</strong>.
+              </div>
+            </div>
+
+            <div class="msg msg-left">
+              <div class="name">
+                Need More Help
+              </div>
+              <div class="button-container" *ngIf="!buttonsHidden">
+                <button class="btn" (click)="onAsk()">Ask Us</button>
+                <button class="btn" (click)="onNoThanks()">No Thanks</button>
+              </div>
+            </div>
+
+            <div class="chat-container">
+              <div class="chat-box">
+                <div *ngFor="let message of messages" class="chat-message"
+                  [ngClass]="{'user-message': message.sender === 'user', 'bot-message': message.sender === 'bot'}">
+                  <p [innerHTML]="message.content"></p>
+                </div>
+              </div>
+
+              <div *ngIf="noMatch">
+                <div class="user-action-buttons">
+                  <button class="btn" (click)="onAsk()">Human Assistance?</button>
+                  <br>
+                  <button class="btn" (click)="onNoThanks()">Resolved</button>
+                  <br>
+                </div>
+              </div>
+              
+              <div *ngIf="selectedOrder && selectedProduct">
+                <!-- Show only the details of the selected product -->
+                <div class="product-details">
+                  <p class="product-name">{{ selectedProduct.name }}</p>
+                  <div class="details">
+                    <span>Price: {{ selectedProduct.price }}</span>
+                    <span>Quantity: {{ selectedProduct.quantity }}</span>
+                    <!-- Add other product details here... -->
+                  </div>
+                </div>
+              </div>
+              
+              
+
+
+
+              <div class="type-area" *ngIf="showTextView">
+                <input type="text" [(ngModel)]="newMessage" (keyup.enter)="sendMessage()" class="typing"
+                  placeholder="Type Here...">
+                <span class="send" (click)="sendMessage()">
+                  <i class="bi bi-arrow-return-left"></i>
+                </span>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+      </mat-tab>
+
     </mat-tab-group>
   </div>
   <div class="icon-support" (click)="toggleChat()" style="font-size: 15px; text-align: center;">
     <div class="user" style="font-size: 15px; font-size: 15px;">
       <i class="bi bi-person-circle me-2 "></i>
-      Vivek Dhiman
+            <!-- username  -->
+      {{username}}
     </div>
     <i class="bi bi-chat fa-1x icons chat-icon" style="right: 18px; position: absolute;"></i>
     <i class="bi bi-x-lg fa-1x icons-visible cross-icon" style="right: 18px; position: absolute;"></i>
 
   </div>
 </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!-- <div id="chat-bot" #chatBot fixed >
-  <div class="messenger br10">
-    <div class="timestamp">04:45 AM</div>
-    <div class="chatroom">
-      <div class="msg msg-left">
-        <div class="bubble">
-          <h6 class="name">Vivek Dhiman's Bot</h6>
-          Hello, I am a smart chat bot, <br />
-          How can I help you.
-        </div>
-      </div>
-      <div class="msg msg-right">
-        <div class="bubble">
-          Oh! Look at you. You are awesome
-        </div>
-      </div>
-      <div class="msg msg-right">
-        <div class="bubble">
-          Can you please tell me who created you?
-        </div>
-      </div>
-      <div class="msg msg-left">
-        <div class="bubble">
-          Yes, Of course! Vivek Dhiman created me. <br />
-          He's behind my awesomeness. He did a great job. didn't he?
-        </div>
-      </div>
-      <div class="msg msg-right">
-        <div class="bubble">
-          Yeah! He did an amazing job.<br />
-          How can I contact him?
-        </div>
-      </div>
-      <div class="msg msg-left">
-        <div class="bubble">
-          Here's my boss' Fiverr Username. <br />
-          <a href="www.fiverr.com/vivekdhiman" target="_blank">fiverr.com/vivekdhiman</a>
-        </div>
-      </div>
-      <div class="msg msg-right">
-        <div class="bubble">
-          Thanks alot. See you next time. Good bye
-        </div>
-      </div>
-
-      <div class="msg msg-left">
-        <div class="bubble">
-          Good bye. Take care
-        </div>
-      </div>
-
-    </div>
-    <div class="type-area">
-      <input type="text" class="typing" placeholder="Type Here...">
-      <span class="send">
-        <i class="bi bi-arrow-return-left"></i>
-      </span>
-    </div>
-  </div>
-  <div class="icon-support" (click)="toggleChat()" style="font-size: 15px; text-align: center;" >
-    <div class="user" style="font-size: 15px; font-size: 15px;">
-      <i class="bi bi-person-circle me-2 "></i>
-      Vivek Dhiman
-    </div>
-    <i class="bi bi-chat fa-1x chat-icon" style="right: 18px; position: absolute;"></i>
-    <i class="bi bi-x-lg fa-1x cross-icon" style="right: 18px; position: absolute;"></i>
-
-  </div>
-</div> -->

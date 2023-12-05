@@ -1,0 +1,9 @@
+.bread{
+    padding-block-start: 93px;
+    color: transparent !important;
+}
+
+.no-padding {
+    padding: 0px !important;
+    display: none;
+}

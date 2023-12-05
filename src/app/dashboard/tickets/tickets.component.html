@@ -1,0 +1,150 @@
+<section class="d-flex flex-column gap-20">
+  <div class="card card__pd-20 d-flex justify-content-md-between align-item-center default-animation">
+    <h2>Ticket Table</h2>
+    <span class="d-flex align-item-center gap-10">
+      <app-search-bar style="height: 40px;" [searchPlaceholder]="'Search userName...'" (searchQuery$)="updateFields($event)" ></app-search-bar>
+  </span>
+  </div>
+
+  <div class="table-list card default-animation-slow">
+    <table class="selected-category">
+      <thead>
+        <tr>
+          <th class="items">Sr.</th>
+          <th class="items">Ticket Type</th>
+          <th class="items">Ticket Title</th>
+          <th class="items">User Name</th>
+          <th class="items">User Email</th>
+          <th class="items">Status</th>
+          <th class="items">Date Created</th>
+          <th class="items">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of ticketData; let i = index;">
+          <td class="items ellipsis">{{i+1}}</td>
+          <td class="items">{{ item.ticketType }}</td>
+          <td class="items">{{ item.ticketTitle }}</td>
+          <td class="items">{{ item.userName }}</td>
+          <td class="items">{{ item.userEmail }}</td>
+          <td class="items">{{ item.status }}</td>
+          <td class="items">{{ item.dateCreated | date: 'dd/MM/yyyy' }}</td>
+          <td class="items action-btns">
+
+            <span class="d-flex align-item-center transition">
+
+              <span class="tooltip">
+                <i class="fs-20 action__btn-icon pointer material-symbols-outlined"
+                (click)="showItemDetails(item)">confirmation_number</i>
+                <span class="tooltiptext">Reply</span>
+              </span>
+
+              <span class="tooltip">
+                <i class="fs-20 action__btn-icon pointer material-symbols-outlined"
+                  (click)="webPush(item)">notifications</i>
+                <span class="tooltiptext">Alerts</span>
+              </span>
+
+              <span class="tooltip">
+                <i (click)="deleteTicketTitle(item)" class="fs-20 action__btn-icon pointer material-symbols-outlined">delete</i>
+                <span class="tooltiptext">Remove</span>
+              </span>
+
+            </span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <app-pop-up *ngIf="selectedItem">
+    
+    <div class="details-container">
+      <!-- Table heading -->
+      <div class="table-like">
+        <div class="table-cell"><strong>Reply Ticket</strong></div>
+      </div>
+
+      <!-- Table body -->
+      <div class="table-like">
+        <div class="table-row">
+          <div class="table-cell"><strong>Email:</strong></div>
+          <div class="table-cell">{{ selectedItem.userEmail }}</div>
+        </div>
+        <div class="table-row">
+          <div class="table-cell"><strong>User Query:</strong></div>
+          <div class="table-cell">{{ selectedItem.ticketTitle }}</div>
+        </div>
+        <!-- Add more rows as needed -->
+      </div>
+      <div class="custom-select" style="width:200px;">
+        <!-- <select [(ngModel)]="selectedItem.status">
+        <option value="" disabled>Select a Status</option>
+        <ng-container *ngFor="let status of uniqueStatusValues">
+          <option [value]="status">{{ status }}</option>
+        </ng-container>
+      </select> -->
+
+        <app-custom-select [type]="''" [options]="uniqueStatusValues" [(ngModel)]="selectedItem.status"
+          [selectedOption]="'select Ticket'" (final_option)="updateFormFields($event)"></app-custom-select>
+
+        <textarea [(ngModel)]="messageInput" placeholder="Enter your message" style="
+      margin-top: 10px;
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      resize: vertical; /* Allows vertical resizing */
+      font-family: 'Arial', sans-serif; /* Change the font if needed */
+      font-size: 14px; /* Adjust the font size */
+      line-height: 1.5; /* Increase line height for readability */
+      transition: border-color 0.3s;
+    "></textarea>
+
+    </div>
+      <button class="btn-primary btn-rounded btn-sm" (click)="updateItem()">Update</button>
+    </div>
+
+  </app-pop-up>
+
+  <div *ngIf="editItem" class="card card__pd-20 d-flex flex-column gap-20">
+    <div class="d-flex justify-content-md-between align-item-center">
+      <h2>Create Notification</h2>
+    </div>
+
+
+    <div class="slider">
+
+      <!-- <div class="table-container">
+        <table class="custom-table">
+          <tr>
+            <td>{{ token }}</td>
+          </tr>
+        </table>
+      </div> -->
+
+      <form [formGroup]="notificationForm" (ngSubmit)="sendNotification()">
+        <div class="form-group">
+          <label class="form__label" for="title">Title:</label>
+          <input type="text" class="form__input" id="title" formControlName="title" [(ngModel)]="selectedTicket.title"
+            required>
+        </div>
+
+        <div class="form-group">
+          <label class="form__label" for="body">Body:</label>
+          <textarea id="body" class="form__textarea" formControlName="body" [(ngModel)]="selectedTicket.body"
+            required></textarea>
+        </div>
+
+        <div class="form-group">
+          <label class="form__label" for="icon">Icon URL:</label>
+          <input type="text" class="form__input" id="icon" formControlName="icon" [(ngModel)]="selectedTicket.icon"
+            required>
+        </div>
+
+        <button type="submit" class="btn-primary btn-rounded btn-md">Send</button>
+      </form>
+    </div>
+  </div>
+
+</section>

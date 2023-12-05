@@ -1,93 +1,77 @@
 import { Component, Input } from '@angular/core';
 import { CartService } from '../../services/cart.service';
 import { OwlOptions } from 'ngx-owl-carousel-o';
+import { WishlistService } from '../../services/wishlist.service';
+import { EyePopService } from '../../services/eye-pop.service';
+
 @Component({
   selector: 'app-card-template',
   templateUrl: './card-template.component.html',
   styleUrls: ['./card-template.component.css']
 })
 export class CardTemplateComponent {
-  
+
   @Input() product: any = {};
-  showPopup: boolean = false;
+  assetIndex: any = 0;
 
-
-  constructor(private cartService: CartService) { }
+  constructor(
+    private cartService: CartService,
+    private wishlistService: WishlistService,
+    private eyePopupService: EyePopService) {
+  }
 
   avgRating: number = 0;
   offerPercentage: number = 0;
-   selectedColor: string = "";
 
   ngOnInit(): void {
+    this.avgRating = this.product.avgRating;
+    if (this.product.matchedIndex) this.assetIndex = this.product.matchedIndex;
 
-    // console.log("product is", this.product);
-    
-    for (let review of this.product.reviews) {
-      this.avgRating += review.rating;
-    // console.log('reviews are ',this.product.reviews[0].rating);
-    }
-    this.avgRating = this.avgRating / this.product.reviews.length;
-    if (this.product.oldPrice !== (undefined || 0)) {
-      this.offerPercentage = Math.floor((this.product.oldPrice- this.product.price) / this.product.oldPrice * 100);
-    }
-
-    const allSkeleton = document.querySelectorAll('.skeleton');
-
-    window.addEventListener('load', () => {
-      allSkeleton.forEach((item: Element) => {
-        item.classList.remove('skeleton');
-      });
-    });
-
-    window.addEventListener('scroll', () => {
-      allSkeleton.forEach((item: Element) => {
-        item.classList.remove('skeleton')
-      })
+    this.wishlistService.WishListedProducts.subscribe((response: any) => {
+      if (response.includes(this.product._id)) {
+        this.product.wishlisted = true;
+      }
+      else {
+        this.product.wishlisted = false;
+      }
     })
 
   }
 
-  createArrayToIterate(num: number){
+  currentIndex = 0;
+  tagsToShow = 3;
+  slicedTags: string[] = [];
+
+  createArrayToIterate(num: number) {
     const newTotal = Math.floor(num);
     if (newTotal <= 0) {
       return [];
     }
     return Array(newTotal).fill(0);
   }
-    
-  addToCart(){
-    const cartItem = {
-      sku: this.product.sku,
-    }
-    
-    this.cartService.addToCart(cartItem);
+
+  chooseWishlist() {
+    this.wishlistService.ShowWishlist(this.product._id);
   }
 
+  RemoveOrAddToWishlist(isWishlisted:any = null){    
+    if(!isWishlisted){
+      this.wishlistService.ShowWishlist(this.product._id);
+    }
+    else {
+      this.wishlistService.removeFromWishlist(this.product._id).subscribe((data) => {
+        this.wishlistService.getWishlistCount();
+        this.product.wishlisted = false;
+      });
+    }
+  }
 
-    customOptions: OwlOptions = {
-    loop: true,
-    mouseDrag: true,
-    touchDrag: true,
-    pullDrag: true,
-    dots: false,
-    nav: true,
-    autoplay: true,
-    navText: ['<span class="material-symbols-outlined">chevron_left</span>', '<span class="material-symbols-outlined">chevron_right</span>'],
-    navSpeed: 600,
-    responsive: {
-      0: {
-        items: 1
-      },
-      400: {
-        items: 1
-      },
-      740: {
-        items: 1
-      },
-      940: {
-        items: 1
-      }
-    },
+  addToCart() {
+    this.cartService.addToCart(this.product);
+  }
+
+  openPopup(){
+    this.eyePopupService.ShowEyelist(this.product.sku);
   }
 
 }

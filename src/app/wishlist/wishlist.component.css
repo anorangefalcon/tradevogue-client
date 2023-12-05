@@ -1,0 +1,110 @@
+input[type="radio"] {
+    display: none;
+}
+
+.wishlists {
+    height: 130px;
+    overflow-y: auto;
+
+    &::-webkit-scrollbar {
+        width: 5px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        width: 5px;
+        background-color: rgb(var(--primaryClr));
+        border-radius: 10px;
+    }
+
+    &::-webkit-scrollbar-track {
+        background-color: rgb(var(--textClr), 0.2);
+        border-radius: 10px;
+    }
+}
+
+
+.labels {
+    padding-block: 6px;
+    padding-inline: 20px;
+
+    /* & .name {
+        width: 100%;
+    } */
+}
+
+.labels:hover {
+    background-color: rgb(var(--textClr), 0.2);
+}
+
+.add-btn {
+    background-color: transparent;
+    padding: 0;
+    font-weight: 400;
+    opacity: 0.7;
+
+    & span {
+        font-size: 18px;
+    }
+}
+
+input[type="text"] {
+    width: 190px;
+    height: 40px;
+    padding-inline: 10px;
+    border-radius: 5px;
+    background-color: transparent;
+    border: 0.5px solid rgba(var(--blackClr), 0.2);
+    font-size: 12px;
+    color: rgb(var(--textClr));
+    outline: none;
+}
+
+::placeholder {
+    color: rgb(var(--textClr), 0.3);
+}
+
+input[type="text"]:focus {
+    border-color: rgb(var(--textClr), 0.4);
+}
+
+.create-btn {
+    height: 40px;
+    width: 60px;
+    font-size : 12px;
+    border-radius: 4px;
+}
+
+.add-div {
+    padding-inline: 20px;
+}
+
+.hide {
+    display: none;
+}
+
+.drawer {
+    & .drawer__content {
+        padding-inline: 0;
+    }
+
+    & .drawer__header {
+        box-shadow: none;
+    }
+
+}
+
+.edit-btn,
+.remove-wishlist-btn {
+    font-size: 15px;
+    color: rgb(var(--textClr), 0.4);
+}
+
+.remove-wishlist-btn:hover {
+    color: rgb(var(--danger));
+}
+.edit-btn:hover{
+    color: rgb(var(--blue-clr));
+}
+.no-pointer {
+    pointer-events: none;
+}

@@ -1,97 +1,204 @@
+<div *ngIf="loading" class="tv-loading">
+    <img src="../../assets/logo-mobile.svg" alt="tradeVogue-loading">
+    <div class="circle-tv-loader"></div>
+</div>
+
+
+<div *ngIf="!PaymentSuccess">
+
 <div *ngIf="cartCount>0" class="container checkout-container d-flex ">
     <div class="cart d-flex flex-column gap-10">
-        <div class="border d-flex justify-content-md-between">
-            <h4>Cart : </h4>
+        <div class="border d-flex justify-content-md-between" *ngIf="!SecureNavBar">
+            <h4>Cart :</h4>
             <span>{{cartCount}} item<span *ngIf="cartCount>1">s</span>
             </span>
         </div>
-        <router-outlet class="cartAndBilling" ></router-outlet>
+        <router-outlet class="cartAndBilling"></router-outlet>
     </div>
-
-    <div class="orderSummary"  [class.active]="navbar_scroll_style == true" >
+    <div class="orderSummary" [class.active]="navbar_scroll_style == true" [ngClass]="{'padding_top':SecureNavBar}">
         <div class="summary-container d-flex flex-column gap-10" id="orders">
-            
+
             <h2 class="border-end text-center">Order Summary</h2>
             <div class="border-end items-container d-flex flex-column gap-10">
                 <div class="item" *ngFor="let item of cart.details">
-                    <div class="itemname d-flex justify-content-md-between">
+                    <div class="itemname gap-10 d-flex justify-content-md-between">
+
                         <p class="item-name">{{item.name}}</p>
-                        <p class="item-price">₹{{item.price}}</p>
+                        <div class="item-price d-flex gap-5 align-item-center">
+                            <p>₹{{item.price | number : '1.0-2'}}  </p>
+                            
+                          <p class="old-price" *ngIf="item?.oldPrice">  {{item?.oldPrice}}</p>
+                        </div>
                     </div>
                     <div class="itemtype d-flex justify-content-md-between">
-                        <p>{{item.description}}</p>
-                        <p>Qty: {{item.Quantity}}</p>
+                        <p>{{item.info?.category}}</p>
+                        <p>Qty: {{item.quantity}}</p>
                     </div>
                 </div>
             </div>
-            
-            <!-- <div>
-            <div class="Router-outlet">
-            <router-outlet class="cartAndBilling"></router-outlet>
-        </div> -->
-        <!-- </div> -->
 
             <div class="border-end subtotal d-flex justify-content-md-between">
                 <p>Subtotal</p>
-                <p>₹{{cart.amounts.subTotal}}</p>
+                <p>₹{{cart.amounts.subTotal | number : '1.0-2'}}</p>
             </div>
-            <div class="border-end shipping d-flex justify-content-md-between">
-                <p>Shipping</p>
-                <p>₹{{cart.amounts.shipping}}</p>
-            </div>
-        
+
+
+
             <div class="border-end savings d-flex justify-content-md-between">
                 <p>Savings</p>
-                <p class="savings-amt">₹{{cart.amounts.savings}}</p>
+                <p class="savings-amt">₹{{cart.amounts.savings | number : '1.0-2'}}</p>
             </div>
-        
+
+
+
+
+            <div *ngIf="CouponApplied">
+                <div class="relative couponApplied" class="d-flex justify-content-md-between coupon_applied__div">
+                <span>
+                    {{CouponApplied.couponcode}}
+                </span>
+                <button (click)="RemoveAppliedCoupon()" class="pointer remove__btn" >Remove</button>
+                
+            </div>
+            <div *ngIf="cart.amounts?.discount" class="border-end savings d-flex justify-content-md-between">
+                <p>Discounts</p>
+                <p class="savings-amt">₹{{cart.amounts.discount | number : '1.0-2'}}</p>
+            </div>
+
+            </div>
+
+     
+    
+
+
+
             <div class="total d-flex justify-content-md-between">
                 <p>Total</p>
-                <p>₹{{cart.amounts.total}}</p>
+                <p *ngIf="!cart.amounts?.discount">₹{{cart.amounts.total| number : '1.0-2'}}</p>
+                <p *ngIf="cart.amounts?.discount">
+                    ₹{{cart.amounts.total -cart.amounts?.discount| number : '1.0-2'}}
+                </p>
             </div>
-            <button (click)="checkLogin()" class="btn-primary"><a>Proceed to Checkout</a></button>
+            <button *ngIf="(!CouponApplied && !SecureNavBar)"
+                class="btn-secondary btn-rounded d-flex flex-center gap-5 btn btn-md " (click)="CouponOpener()">
+
+                Apply Coupons
+                <span class="material-symbols-outlined fs-18">
+                    chevron_right
+                </span>
+
+            </button>
+
+            <button class="checkout-btn btn-primary btn btn-rounded btn-md" (click)="verifyOrderSummary()"
+                *ngIf="!SecureNavBar" [disabled]="CheckOutDisabled" [ngClass]="{'spinner':CheckOutDisabled}">
+                <a>Proceed to Checkout</a>
+            </button>
+
+            <button class="btn-primary continue__btn btn btn-md btn-rounded" (click)="nextClicked()"
+                *ngIf="!StripePaymentOpener && SecureNavBar" [disabled]="NextDisabled" [ngClass]="{'spinner':NextDisabled}">
+                Continue</button>
+            <button class="btn-primary payment__btn btn btn-md btn-rounded" *ngIf="SecureNavBar && StripePaymentOpener"
+                (click)="ProceedToPayment()" [ngClass]="{'show':show}">Proceed to Payment</button>
+
         </div>
-        
-        
-        
     </div>
-    <div class="fixed-checkout">
-        <div class="fix-total">
-            <p class="subtotal" >Subtotal : ₹{{cart.amounts.subTotal}}</p>
-            <p class="total fw-500">Total : ₹{{cart.amounts.total}}</p>
-        </div>
-        <div class="items">
-             <p>Items : <span>{{cartCount}}<span *ngIf="cartCount>1"></span>
-            </span></p>
-        </div>
-        <div class="next">
-            <button class="btn-primary" (click)="scrollToOrders()">Next</button>
-        </div>
-    </div>
-    <div class="fixed2">
-        <div class="itemstotal">
-            <p>Items : <span>{{cartCount}}<span *ngIf="cartCount>1"></span>
-            </span></p>
-            <p class="total">Total : ₹{{cart.amounts.total}}</p>
-        </div>
-        <div class="next2">
-            <button class="btn-primary" (click)="scrollToOrders()">Next</button>
-        </div>
+
+</div>
+
+
+<div *ngIf="cartCount === 0" class="empty d-flex flex-column flex-center gap-15">
+    <!-- <h1 class="text-center">Your cart is empty</h1> -->
+    <img src="../../assets/empty-cart-light.svg" alt="empty cart" width="230" *ngIf="!theme">
+    <img src="../../assets/empty-cart-dark.svg" alt="empty cart" width="230" *ngIf="theme">
+    <div class="text-center">
+        <button [routerLink]="['/explore']" class="btn btn-xs fw-500 btn-rounded btn-secondary">Continue Shopping...</button>
     </div>
 </div>
 
-<!-- when cart count is zero -->
-<div *ngIf="cartCount === 0" class="empty d-flex flex-column justify-content-center align-item-center">
-    <h1 class="text-center">Your cart is empty</h1>
-    <div class="text-center">
-        <button [routerLink]="['/explore']" class="btn btn-primary">Continue Shopping</button>
+
+
+<div [ngClass]="{'all_coupon_div':AllCoupons?.length==0}">
+<app-drawer [direction]="direction" [show]="show" (showChange)="ChangeHandler($event)" [title]="'Available Coupons'">
+    <div class="coupons d-flex flex-column gap-15">
+        <div class="d-flex coupon__header relative" *ngIf="AllCoupons?.length>0">
+            <input type="text" class="form__input" placeholder="Enter coupon code" #CouponCode
+                oninput="this.value = this.value.toUpperCase()" (input)="InputChange($event)">
+
+            <button class="btn-primary btn btn-xs btn-rounded apply__btn" (click)="ApplyCoupon(null,$event)"
+                [disabled]="CouponValid=='invalid' || !CouponValid">APPLY</button>
+
+            <!-- <button class="tick__apply__btn" > -->
+                <span class="material-symbols-outlined tick__apply__btn absolute" (click)="ApplyCoupon(null,$event)">
+                    check
+                    </span>
+                <!-- </button> -->
+
+        </div>
+        <span *ngIf="CouponValid=='invalid'">Coupon is not valid</span>
+        <div class="all-coupons">
+
+            <div class="coupon d-flex flex-column gap-10" *ngFor="let coupon of AllCoupons">
+                <div class="coupon-name">
+                    <h2>{{coupon.couponcode}}</h2>
+                </div>
+
+
+                <div class="description d-flex flex-column gap-5">
+
+                    <p>User Code {{coupon.couponcode}} &
+                        <ng-container *ngIf="coupon.discountType=='flat'">
+                            <span>get Flat {{coupon.discountAmount}}</span>
+                        </ng-container>
+
+                        <ng-container *ngIf="coupon.discountType=='percentage'">
+                            <span *ngIf="coupon.DiscountPercentageType=='fixed'">Get
+                                <span *ngIf="coupon.DiscountPercentageType=='variable'">Upto</span>
+                                {{coupon.discountAmount}}% off</span>
+
+                        </ng-container>
+
+                    </p>
+
+                    <p class="terms_and_conditons">Terms and Conditions:</p>
+                    <ul>
+                        <li>Minimum Order value of {{coupon.minimumPurchaseAmount}}</li>
+                        <li>Coupon Can be valid only once per user</li>
+                        <li>Coupon is valid till {{DateParser(coupon.endDate)}}
+                        </li>
+                        <li>Maximum Discount You can get is {{coupon.maximumDiscount}}</li>
+                    </ul>
+                </div>
+
+
+
+                <button (click)="ApplyCoupon(coupon)" class="btn-inline btn-md btn-secondary btn-rounded btn">Apply Coupon</button>
+            </div> 
+
+        
+
+        </div>
+
+        <div class="no_coupon_div d-flex align-item-center gap-10  flex-column  justify-content-center" *ngIf="AllCoupons?.length==0">
+            <img src="../../assets/no-address-light.svg"/>
+            <p>No Available Coupons</p>
+        </div>
+
     </div>
+</app-drawer>
+</div>
 </div>
 
-<!-- when cart count is zero -->
-<!-- <div *ngIf="cartCount === 0" class="empty d-flex flex-column justify-content-center align-item-center">
-    <h1 class="text-center">Your cart is empty</h1>
+
+<div *ngIf="PaymentSuccess" class="empty d-flex flex-column justify-content-center align-item-center gap-15">
+    <button class="success_order_btn d-flex align-item-center justify-content-center ">
+        <span class="material-symbols-outlined">
+            check
+            </span>
+    </button>
+    <div class="d-flex flex-column gap-20">
+    <h1 class="text-center">Your Order is Completed</h1>
     <div class="text-center">
-        <button [routerLink]="['/explore']" class="btn btn-primary">Continue Shopping</button>
+        <a href="/usersetting/orders" class="btn btn-md fw-500 btn-rounded btn-secondary">View Orders</a>
     </div>
-</div> -->
+</div>
+</div>

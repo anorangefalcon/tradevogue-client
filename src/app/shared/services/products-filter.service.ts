@@ -11,70 +11,62 @@ export class ProductsFilterService {
 
    getData() {
 
-    let promise=new Promise(async (resolve,reject)=>{
-      await this.fetchData.getData().subscribe((originalData)=>{
+    // let promise=new Promise(async (resolve,reject)=>{
+    //   await this.fetchData.getData().subscribe((originalData)=>{
      
-        const filterObj: any = {
-          sizes: [],
-          colors: [],
-          category: [],
-          price: [],
-          brand: [],
-          tags: []
-        };
+    //     const filterObj: any = {
+    //       sizes: [],
+    //       colors: [],
+    //       category: [],
+    //       price: [],
+    //       brand: [],
+    //       tags: []
+    //     };
     
-        originalData.forEach((data: any) => {
+    //     originalData.forEach((data: any) => {
         
+    //       for (let filter in (filterObj)) {
           
-          
-          for (let filter in (filterObj)) {
-            // console.log('filter is ',filter,filter in data);
-            
-            const target = filter in data ? data : data.info;
+    //         const target = filter in data ? data : data.info;
         
-            const value = target[filter];
+    //         const value = target[filter];
       
-            if (Array.isArray(value)) {
+    //         if (Array.isArray(value)) {
          
-              
-              for (let v of value) {
+    //           for (let v of value) {
           
-                
-                const arr = filterObj[filter];
+    //             const arr = filterObj[filter];
                
-                if (!arr.includes(v)) {
-                  arr.push(v);
-                }
-
-
-                // console.log("arr is ",arr, " vi s ",v )
-              }
-            }
-            else {
-              const arr = filterObj[filter];
-              if (!arr.includes(value)) {
-                arr.push(value);
-              }
-            }
-          }
-        });
+    //             if (!arr.includes(v)) {
+    //               arr.push(v);
+    //             }
+    //           }
+    //         }
+    //         else {
+    //           const arr = filterObj[filter];
+    //           if (!arr.includes(value)) {
+    //             arr.push(value);
+    //           }
+    //         }
+    //       }
+    //     });
     
-        Object.keys(filterObj).forEach(el => {
+    //     Object.keys(filterObj).forEach(el => {
         
-          if (filterObj[el].length > 3) {
-            filterObj[el].push(false)
-          }
-        });
+    //       if (filterObj[el].length > 3) {
+    //         filterObj[el].push(false)
+    //       }
+    //     });
 
     
      
-        let result={ originalData, filterObj };
-        resolve(result);
+    //     let result={ originalData, filterObj };
+    //     resolve(result);
 
-      })  
-    })
+    //   })  
+    // })
 
-    return promise;
+    // return promise;
   }
 
   removeEmptyKeys(filteredObject: any) {
@@ -86,7 +78,6 @@ export class ProductsFilterService {
 
   async Filter(filteredObject: any, OriginalArray: any) {
     
-    // console.log("porgiala array i s ",OriginalArray)
     this.removeEmptyKeys(filteredObject);
 
     

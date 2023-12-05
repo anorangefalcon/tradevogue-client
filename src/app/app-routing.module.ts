@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LayoutComponent } from './layout/layout.component';
 import { HomeComponent } from './home/home.component';
-import { AboutPageComponent } from './about-page/about-page.component';
 import { TcComponent } from './tc/tc.component';
 import { FaqPageComponent } from './faq-page/faq-page.component';
 import { ProductPageComponent } from './product-page/product-page.component';
@@ -13,14 +12,17 @@ import { ExploreComponent } from './explore/explore.component';
 import { HelpPageComponent } from './help-page/help-page.component';
 import { SettingsComponent } from './settings/settings.component';
 import { NoPageComponent } from './no-page/no-page.component';
-const routes: Routes = [
+import { authGuard } from './auth.guard';
+import { AboutComponent } from './about/about.component';
+import { redirectGuard } from './checkout/redirect.guard';
 
+const routes: Routes = [
   {
     path: '', component: LayoutComponent, data: { breadcrumb: 'Home' },
     children: [
       { path: '', component: HomeComponent, data: { breadcrumb: 'Home' } },
       {
-        path: 'usersetting', component: SettingsComponent, data: { breadcrumb: 'Setting' }
+        path: 'usersetting/:page', component: SettingsComponent, data: { breadcrumb: 'Setting' }, canActivate: [authGuard]
       },
       { path: 't&c', component: TcComponent, data: { breadcrumb: 'Term & Condition' } },
       { path: 'faq', component: FaqPageComponent, data: { breadcrumb: 'Faq' } },
@@ -30,7 +32,7 @@ const routes: Routes = [
         component: ProductPageComponent,
         data: { breadcrumb: 'Product' }
       },
-      { path: 'about', component: AboutPageComponent, data: { breadcrumb: 'About' } },
+      { path: 'about', component: AboutComponent, data: { breadcrumb: 'About' } },
       { path: 'explore', component: ExploreComponent, data: { breadcrumb: 'Explore' }},
       {
         path: 'cart',
@@ -38,21 +40,22 @@ const routes: Routes = [
         data: { breadcrumb: 'Cart' },
         children: [
           { path: '', component: CartComponent, data: { breadcrumb: 'Cart' } },
-          { path: 'billing', component: BillingComponent, data: { breadcrumb: 'Billing' } }
+          { path: 'billing', component: BillingComponent, data: { breadcrumb: 'Billing' }, canDeactivate: [redirectGuard],canActivate:[authGuard] }
         ]
       },
     ]
   },
   {
-    path: 'auth', data: { breadcrumb: 'Auth' }, loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule)
+    path: 'dashboard', loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule),
+    canActivate: [authGuard]
   },
   {
-    path: 'dashboard', loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule)
+    path: 'auth', data: { breadcrumb: 'Auth' }, loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule),canActivate: [authGuard]
+    
   },
   {
     path: '**', component: NoPageComponent, data: { breadcrumb: '404' } 
-  },
-
+  }
 ];
 
 @NgModule({

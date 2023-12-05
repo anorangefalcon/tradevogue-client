@@ -5,17 +5,16 @@ import { FormControl,FormGroup } from '@angular/forms';
 // PASSWORD VALIDATORS
 export function passwordStrengthValidator(control: FormControl): { [key: string]: boolean } | null {
     const value: string = control.value || '';
+
     if(value=='') return null;
     
     let errors :any={}; 
   
 
+
     if (!/[a-z]/.test(value)) {
-      errors['lowercase'] = true;
-     
-     
-     
-    }
+      errors['lowercase'] = true;  
+      }
 
     if (!/[A-Z]/.test(value)) {
       errors['uppercase'] = true;
@@ -50,9 +49,6 @@ export function matchPasswordValidator(control:any,signupForm:FormGroup) {
     } else {
       return { passwordMismatch: true };
     }
-
-
-
 }
 
 
@@ -67,4 +63,12 @@ export function usernameValidator(control: FormControl): { [key: string]: boolea
   }
   
   return {'invalidUser':true};
+}
+
+
+// VALIDATOR FOR MOBILE NO
+export  function PhoneNumberValidator(control: FormControl): any{
+  let expression:any=/^\+?[1-9][0-9]{7,14}$/;
+  if( expression.test(control.value)) return null;
+  return {invalidPhoneNo:true};
 }

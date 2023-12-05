@@ -7,7 +7,6 @@ import { CarouselModule } from 'ngx-owl-carousel-o';
 import { CardTemplateComponent } from './components/card-template/card-template.component';
 import { SearchBarComponent } from './components/search-bar/search-bar.component';
 import { SupportComponent } from './components/support/support.component';
-// import { MatTabsModule } from '@angular/material/tabs';
 import { RouterModule } from '@angular/router';
 import { FooterComponent } from './components/footer/footer.component';
 import { CustomSelectComponent } from './custom-select/custom-select.component';
@@ -17,7 +16,15 @@ import { ProductFilterPipe } from './Pipe/product-filter.pipe';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { AddressComponent } from './address/address.component';
-
+import { LessThanOrEqualPipe } from './Pipe/less-than-or-equal.pipe';
+import { PopUpComponent } from './pop-up/pop-up.component';
+import { PaginationComponent } from './pagination/pagination.component';
+import { DrawerComponent } from './components/drawer/drawer.component';
+import { InvoiceTemplateComponent } from './components/invoice-template/invoice-template.component';
+import { GalleryComponent } from '../home/gallery/gallery.component';
+import { HeroComponent } from '../home/hero/hero.component';
+import { NotificationComponent } from './components/notification/notification.component';
+import { EyePopupComponent } from './eye-popup/eye-popup.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +37,15 @@ import { AddressComponent } from './address/address.component';
     FooterComponent,
     CustomSelectComponent,
     ProductFilterPipe,
-    AddressComponent
+    AddressComponent,
+    LessThanOrEqualPipe,
+    PopUpComponent,
+    LessThanOrEqualPipe,
+    PaginationComponent,
+    DrawerComponent,
+    InvoiceTemplateComponent,
+    NotificationComponent,
+    EyePopupComponent,
   ],
   imports: [
     CommonModule,
@@ -40,7 +55,8 @@ import { AddressComponent } from './address/address.component';
     MatExpansionModule,
     RouterModule,
     FormsModule,
-
+    GalleryComponent,
+    HeroComponent
   ],
   exports: [
     NavbarComponent,
@@ -52,7 +68,16 @@ import { AddressComponent } from './address/address.component';
     SupportComponent,
     ProductFilterPipe,
     CustomSelectComponent,
-    AddressComponent
+    AddressComponent,
+    LessThanOrEqualPipe,
+    PopUpComponent,
+    LessThanOrEqualPipe,
+    PaginationComponent,
+    DrawerComponent,
+    InvoiceTemplateComponent,
+    NotificationComponent,
+    EyePopupComponent
   ]
+
 })
 export class SharedModule { }

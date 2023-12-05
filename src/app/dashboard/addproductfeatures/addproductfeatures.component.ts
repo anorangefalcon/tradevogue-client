@@ -1,8 +1,10 @@
 import { Component } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { FetchDataService } from 'src/app/shared/services/fetch-data.service';
-import { invalidformat } from 'src/app/shared/validators/imageValidators.validator';
 import { UploadExcelService } from '../services/upload-excel.service';
+import { UtilsModule } from 'src/app/utils/utils.module';
+import { ToastService } from 'src/app/shared/services/toast.service';
+import { DialogBoxService } from 'src/app/shared/services/dialog-box.service';
+import { Subscription, first, take } from 'rxjs';
 
 @Component({
   selector: 'app-addproductfeatures',
@@ -11,87 +13,149 @@ import { UploadExcelService } from '../services/upload-excel.service';
 })
 export class AddproductfeaturesComponent {
 
-  // FilterVariable
-  categoriesFilter: any = '';
-  brandsFilter: any = '';
-  sizesFilter: any = '';
-  tagsFilter: any = '';
-  orderQuantitysFilter: any = '';
-
-  // Form
-  categories!: FormGroup;
-  brands!: FormGroup;
-  sizes!: FormGroup;
-  tags!: FormGroup;
-  orderQuantity!: FormGroup;
-
-  // Data array
-  dataList: any = {
-    categoryList: [],
-    brandsList: [],
-    sizesList: [],
-    tagsList: [],
-    quantitiesList: [],
+  isfetch: boolean = false;
+  allSubscriptions: Subscription[] = [];
+  // Toast template
+  template = {
+    title: ''
   }
 
   //Data
-  data: any = {
+  filter: any = {
     category: '',
     brand: '',
     sizes: '',
     tags: '',
-    quantity: ''
+    orderQuantity: ''
   }
 
-  constructor(private featuredata: FetchDataService, private uploadExcel: UploadExcelService){}
+  field_data: any;
+  popup: boolean = false;
+
+  deleteObject: any = {
+    field: '',
+    index: '',
+  }
+
+
+  // Type Name should be same as that of backend (avoiding conflicts)
+  card_template: any = [
+    { name: 'Category', type: 'categories', filter: 'category', file_name: 'Categories_Sample', loading: false },
+    { name: 'Brand', type: 'brands', filter: 'brand', file_name: 'Brands_Sample', loading: false },
+    { name: 'Order Quantity', type: 'orderQuantity', filter: 'orderQuantity', file_name: 'orderQuantity_Sample', loading: false },
+    { name: 'Product Tags', type: 'tags', filter: 'tags', file_name: 'Tags_Sample', loading: false }
+  ];
+
+  dataField: string[] = ['categories', 'brands', 'orderQuantity', 'tags'];
+
+  constructor(
+    private dataService: FetchDataService,
+    private uploadExcel: UploadExcelService,
+    private toastService: ToastService,
+    private DialogBoxService: DialogBoxService,
+    private backendurls: UtilsModule) { }
 
   ngOnInit() {
 
-    // FetchData Service
-    this.featuredata.getSellerData().subscribe((data: any)=>{
-      this.dataList.categoryList = data[0]['categories'];
-      console.log(this.dataList.categoryList);
-      this.dataList.brandsList = data[0]['brands'];
-      this.dataList.sizesList = data[0]['sizes'];
-      this.dataList.quantitiesList = data[0]['orderQuantity'];
-      this.dataList.tagsList = data[0]['tags'];
-      this.dataList.colorsList = data[0]['colors'];
-    });
-
-  }
-
-  uploadFile(event: Event, field: string){
-    const fieldList = field.toLowerCase() + 'List';
-    const dataObserver = this.uploadExcel.handleFileInput(event, field);
-    console.log(field);
-    console.log("File");
-    
-    dataObserver.then((resolve)=>{
-      console.log('data + errors',resolve);
-      
-      let items = resolve['data'];
-      console.log(items, 'data', fieldList);
-      
-      items.forEach((item: any)=>{
-        if(!this.dataList[fieldList].includes(item))
-          this.dataList[fieldList].push(item);
-      })
+    this.allSubscriptions.push(
+    this.DialogBoxService.responseEmitter.subscribe((res) => {
+      if (res == true) {
+        this.field_data[this.deleteObject.field].splice(this.deleteObject.index, 1);
+        this.template.title = 'Item Deleted Successfully';
+        this.crudData(this.deleteObject.field, null);
+      }
     })
+    )
+    this.isfetch = true;
+
+    this.allSubscriptions.push(
+    this.dataService.HTTPPOST(this.backendurls.URLs.fetchFeatures, this.dataField).subscribe({
+      next: (res: any) => {
+        this.field_data = res;
+        this.isfetch = false;
+      }
+    }));
   }
 
-  addItem(item: any, list: string){    
-    if(!this.dataList[list].includes(this.data[item])){
-      // this.dataList[list].splice(0, 0, this.data[item]);
-      this.dataList[list].push(this.data[item]);
-      this.data[item] = '';
+  ngOnDestroy() {
+    this.allSubscriptions.forEach((item: Subscription)=> item.unsubscribe());
+  }
+  
+  uploadFile(event: Event, field: string) {
+    const dataObserver = this.uploadExcel.handleFileInput(event, field);
+
+    dataObserver.then((resolve) => {
+      let items = resolve['data'];
+
+      if (!items.length) this.toastService.errorToast({ title: 'File Data Format Mismatched' });
+      else {
+        items.forEach((item: any) => {
+          let res = this.field_data[field].some((data: any) => (String(data)).toLowerCase() == (String(item)).toLowerCase());
+          if (!res) this.field_data[field].push(item);
+        });
+        this.template.title = 'Items Added Successfully'
+        this.crudData(field, null);
+      }
+    });
+  }
+
+  deleteItem(field: string, index: number) {
+    this.deleteObject.field = field;
+    this.deleteObject.index = index;
+    let template: any = {
+      title: 'Proceed with Deletion?',
+      subtitle: `The item will be permanently deleted, and recovery will not be possible. Are you sure you want to proceed?`,
+      type: 'confirmation',
+      confirmationText: 'Yes, Delete it',
+      cancelText: 'No, Keep it',
+    };
+    this.DialogBoxService.confirmationDialogBox(template);
+  }
+
+  addItem(item: any, field: string, index: number) {
+    if (!this.field_data[field].includes(this.filter[item])) {
+      item = item.trim();
+      let pattern = /\b(?:[^!@#$%^&*(),.?":{}|<>]+|\s)+\b/g;
+
+      if((item.match(pattern)).length > 1){
+        this.toastService.errorToast({ title: 'Special Character not Allowed' });
+        return;
+      }
+
+      this.field_data[field].push(this.filter[item]);
+      this.filter[item] = '';
+      this.template.title = 'Item Added Successfully'
+      this.crudData(field, index);
     }
   }
-  
-  deleteItem(type: string, index: number) {
-    this.dataList[type].splice(index, 1);
-  }
-  
-  submit() {
 
+  crudData(field: any, index: any) {
+
+    if(index != null){
+      this.card_template[index].loading = true;
+    }
+
+    let data: any = {
+      'field': field,
+      'data': this.field_data[field]
+    };
+    this.allSubscriptions.push(
+    this.dataService.HTTPPOST(this.backendurls.URLs.updateFeatures, data).subscribe({
+      next: (res: any) => {
+        this.toastService.successToast(this.template);
+        if(index != null){
+          this.card_template[index].loading = false;
+        }
+      }
+    }));
+  }
+
+  tableGenerator(len: number) {
+    let temp = []
+    for (let i = 0; i < len; i++) {
+      temp.push(0);
+    }
+    return temp;
   }
 }
+

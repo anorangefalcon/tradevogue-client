@@ -1,0 +1,106 @@
+<section class="about">
+    <section class="about_title d-flex justify-content-center align-item-center default-animation">
+      <h2>About Us</h2>
+    </section>
+  
+    <div class="container d-flex justify-content-center default-animation-slow" > 
+      <div class="about-image-div">
+        <div class="common common1">
+          <img [src]="Data?.BasicInfo?.StoreImages[0]">
+        </div>
+        <div class="common common2">
+          <img [src]="Data?.BasicInfo?.StoreImages[1]">
+        </div>
+        <div class="common common3">
+          <img [src]="Data?.BasicInfo?.StoreImages[2]">
+        </div>
+        <div class="common common4">
+          <img [src]="Data?.BasicInfo?.StoreImages[3]">
+        </div>
+      </div>
+      <div class="about-content-div">
+        <h2>Welcome to {{Data?.BasicInfo?.content?.name}}, {{Data?.BasicInfo?.content?.tagline}}</h2>
+  
+        <p>
+       {{Data?.BasicInfo?.content?.description}}
+          <br><br>
+          Founded in {{Data?.BasicInfo?.content?.foundedYear}}, {{Data?.BasicInfo?.content?.growthDescription}}
+        </p>
+        <div class="content-data">
+          <div class="content-data-common">
+            <div class="logo">
+              <span class="material-symbols-outlined"> assignment_return </span>
+            </div>
+            <div class="content">
+              <h4>{{Data?.BasicInfo?.content?.Feature1?.heading}}</h4>
+              <p>{{Data?.BasicInfo?.content?.Feature1?.description}}</p>
+            </div>
+          </div>
+          <div class="content-data-common">
+            <div class="logo">
+              <span class="material-symbols-outlined">
+                hotel_class
+                </span>
+            </div>
+            <div class="content">
+              <h4>{{Data?.BasicInfo?.content?.Feature2?.heading}}</h4>
+              <p> {{Data?.BasicInfo?.content?.Feature2?.description}}</p>
+            </div>
+          </div>
+        </div>
+        <!-- <button class="btn btn-primary">Read More</button> -->
+      </div>
+    </div>
+  </section>
+  
+  <!-- CENTER SECTION -->
+  <!-- <section class="center_section">
+    <div class="container">
+      <div class="common">
+        <h2>{{Data?.Statistics?.Sales?.Number/1000}}K</h2>
+        <h3>
+          Total <br />
+          Sales
+        </h3>
+      </div>
+      <div class="common">
+        <h2>{{Data?.Statistics?.HappyCustomers?.Number/1000}}K</h2>
+        <h3>
+          Happy <br />
+          Customers
+        </h3>
+      </div>
+      <div class="common">
+        <h2>{{Data?.Statistics?.ShippedProducts?.Number/1000}}K</h2>
+        <h3>
+          Shipped <br />
+          Products
+        </h3>
+      </div>
+    </div>
+  </section>
+   -->
+
+  
+  <!-- TEAM MEMBER SECTION -->
+  
+  <section class="team-members">
+    <div class="container">
+      <div class="heading">
+        <h2>Team Members</h2>
+      </div>
+      
+      <div class="team-members-img" >
+        <ng-container *ngFor="let member of Data?.TeamMembers">
+        <div class="common relative">
+
+          <img [src]="member.img">
+          <div class="content relative">
+            <h3>{{member.name}}</h3>
+          </div>
+        </div>
+    </ng-container>
+ 
+      </div>
+    </div>
+  </section>

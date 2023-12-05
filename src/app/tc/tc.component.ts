@@ -1,4 +1,7 @@
 import { Component } from '@angular/core';
+import { FetchDataService } from '../shared/services/fetch-data.service';
+import { UtilsModule } from '../utils/utils.module';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-tc',
@@ -7,4 +10,19 @@ import { Component } from '@angular/core';
 })
 export class TcComponent {
 
+  tcData: any;
+  dataSubscription!: Subscription;
+
+  constructor(private fetchDataService: FetchDataService,
+    private backendUrls: UtilsModule) { }
+
+  ngOnInit() {
+    this.dataSubscription = this.fetchDataService.HTTPGET(this.backendUrls.URLs.getTandC).subscribe((data: any) => {
+      this.tcData = data.data;
+    })
+  }
+
+  ngOnDestroy() {
+    this.dataSubscription.unsubscribe();
+  }
 }

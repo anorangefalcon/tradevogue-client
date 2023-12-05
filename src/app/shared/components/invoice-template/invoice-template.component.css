@@ -1,0 +1,134 @@
+.invoice__heading {
+    max-height: 60px;
+    /* overflow: hidden; */
+}
+
+.close__icon{
+    inset-inline-end: 15px;
+    inset-block-start: 15px;
+    border: 1px solid rgb(var(--primaryClr));
+    border-radius: 5px;
+    transition: all 0.3s ease-in-out;
+
+    &:hover{
+        scale: 1.04;
+    }
+}
+
+.basic__info h4{
+    margin-bottom: 5px;
+    font-size: 12px !important;
+}
+
+.payment__info{
+    padding: 15px 30px;
+    border: 1px solid rgb(var(--blackClr), 0.1);
+}
+
+.invoice__sub-title {
+    font-size: 11px !important;
+    font-weight: 600;
+    margin-bottom: 3px;
+}
+
+.invoice__sub-text {
+    font-size: 10px !important;
+    font-weight: 500;
+}
+
+.invoice-section{
+    z-index: 99;
+    /* display: none; */
+    display: flex;
+    background-color: rgba(var(--blackClr), 0.1);
+    transition: all 0.1s ease-in-out;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.invoice-section.pop_open{
+    opacity: 1;
+    pointer-events: all;
+}
+
+.invoice-section.pop_open > .invoice-template{
+    scale: 1;
+}
+
+.invoice-template {
+    height: 100dvh;
+    width: min(100%, 580px);
+    height: fit-content;
+    padding: 30px;
+    background-color: rgb(var(--whiteClr));
+    border: 1px solid rgba(var(--blackClr), 0.1);
+    border-radius: 10px;
+    overflow: auto;
+    transition-delay: 0.5s;
+    transition: all 0.3s ease-in-out;
+    scale: 0.1;
+
+    &::-webkit-scrollbar{
+        width: 2px;
+    }
+}
+
+.total td.items, th.items {
+    font-weight: 700 !important;
+    color: rgb(var(--blackClr), 0.9);
+}
+
+
+@media print {
+    
+    @page {
+        size: auto;  
+        margin: 0; 
+    }
+      
+
+    .invoice-template {
+        width: 100%;
+        height: 100%;
+        padding: 40px;
+        background-color: rgb(var(--whiteClr));
+        border: 0px solid rgba(var(--blackClr), 0.1);
+        border-radius: 0px;
+    }
+
+    .close__icon{
+        display: none;
+    }
+
+    .main {
+
+        margin-inline-start: 0px !important;
+        padding: 0px !important;
+        min-height: max-content !important;
+    }
+
+    .table-list {
+        overflow-x: hidden !important;
+    }
+
+    .items {
+        white-space: wrap !important;
+    }
+
+    .download-btn{
+        display: none;
+    }
+}
+
+p{
+    font-size: 11px !important;
+}
+
+.items{
+    white-space: initial !important;
+    font-size: 10px !important;
+}
+
+.table-list{
+    overflow: initial !important;
+}

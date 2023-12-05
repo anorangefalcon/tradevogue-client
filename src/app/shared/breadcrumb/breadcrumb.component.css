@@ -1,7 +1,6 @@
 .breadcrumb{
-    padding-block-start: 95px;
-    padding-block-end: 15px;
-
+    /* padding-block-start: 95px !important; */
+    padding-block-end: 15px !important;
     font-size: 12px;
 }
 
@@ -16,7 +15,7 @@
 
 .breadcrumb-link {
   text-decoration: none;
-  color: #050505;
+  color: rgb(var(--textClr));
   transition: color 0.3s;
 }
 
@@ -31,4 +30,5 @@
 
 .breadcrumb-last {
   font-weight: bold; 
+  color: rgb(var(--textClr));
 }

@@ -1,0 +1,213 @@
+/* new css */
+
+.product__img__div {
+    width: 220px;
+    height: 100px;
+    /* padding: 10px; */
+    border: 1px dotted rgba(var(--blackClr), 0.2);
+    border-radius: 4px;
+    background: rgb(var(--secondary));
+}
+
+.label__product__div {
+    padding: 10px;
+}
+
+.upload__label {
+    border-radius: 50%;
+    padding: 12px;
+    font-size: 10px;
+    font-weight: 500;
+    color: rgb(var(--blackClr), 0.6);
+    background-color: rgb(var(--whiteClr));
+}
+
+
+.form__label {
+    font-size: 14px;
+    width: 220px;
+    color: rgb(var(--textClr), 0.9);
+
+    & span {
+        color: rgb(var(--danger));
+    }
+}
+
+
+form {
+    row-gap: 15px;
+
+    & .form__group {
+        align-items: center;
+        gap: 20px;
+
+        & input,
+        & .custom__select,
+        & textarea {
+            width: calc(100% - 220px);
+        }
+
+
+        & .selectBox__div {
+            width: calc(100% - 220px);
+            cursor: pointer;
+
+        }
+
+
+        & .custom__select {
+            & input {
+                width: 100% !important;
+            }
+        }
+
+
+        & input:focus {
+            border-color: rgb(var(--textClr), 0.4);
+        }
+
+
+
+        & ::placeholder {
+            color: rgb(var(--textClr), 0.3);
+        }
+
+    }
+
+
+}
+
+.validation__div {
+    width: calc(100% - 220px);
+
+    & input {
+        width: 100% !important;
+    }
+
+}
+
+
+.add_del_btn {
+    width: 50px;
+    height: 50px;
+    padding: 0;
+    height: 50px;
+    background: transparent;
+}
+
+.edit__btn,
+.delete__btn {
+    padding: 0;
+    background: transparent;
+}
+
+
+.tooggle__btn {
+    display: flex;
+    align-items: center;
+    border: none;
+}
+
+
+.banner-label {
+    color: rgb(var(--blackClr), 0.7);
+}
+
+
+.remove-img {
+    background: #ffffffc2;
+    border-radius: 50%;
+    color: black;
+    inset-block-start: 5px;
+    inset-inline-end: 5px;
+}
+
+.add__btn {
+    right: 5px;
+    top: 13px;
+    font-size: 15px;
+    /* background-color: rgb(var(--blackClr), 0.09); */
+    color: rgba(var(--blackClr));
+    border-radius: 50%;
+
+    & span {
+        font-size: 15px;
+    }
+}
+
+
+
+.form__input{
+    padding-inline-end: 5px;
+}
+
+
+
+
+
+.email__input{
+    padding-inline-end: 32px;
+}
+
+/*  media query */
+
+@media (max-width:450px){
+
+.header_coupon{
+    flex-direction: column;
+    gap: 10px;
+   & .search{
+        width: 100%;
+    }
+
+    & .header_btns{
+        justify-content: flex-end;
+    }
+}
+}
+
+
+@media (max-width:490px) {
+    .card{
+        background: transparent;
+        border: none;
+    }
+
+    .card__pd-20{
+        padding-block: 10px;
+        padding-inline: 0;
+    }
+
+    .form__group{
+        flex-direction: column;
+        width: 100%;
+
+        & .form__label{
+            width: 100%;
+        }
+
+        & .product__img__div{
+            width: 100%;
+        }
+
+        & input, & .custom__select, & textarea ,& .validation__div{
+            width: 100% !important;
+        }
+    }
+
+
+    .drawer__div{
+       & .drawer__content{
+            padding-inline: 10px;
+        }
+
+        & .drawer__header{
+            padding-inline: 5px;
+        }
+
+    }
+
+}
+
+
+

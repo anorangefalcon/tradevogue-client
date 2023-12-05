@@ -1,12 +1,12 @@
 .container {
-    background-color: rgb(255,255,255);
+    /* background-color: rgb(255, 255, 255); */
     padding-block: 50px;
 }
+
 .helpBox {
     width: 100%;
-    min-height: 400px;
-    /* background-image: url(../../assets/tc-bg.jpg); */
-    background-color: rgb(var(--primaryClr),0.1);
+    min-height: 200px;
+    background-color: rgb(var(--primaryClr), 0.1);
     background-image: url(../../assets/deal-of-week-component/dealOfWeek-homeBg.png);
     background-repeat: no-repeat;
     background-size: cover;
@@ -14,9 +14,20 @@
     color: rgb(var(--textClr));
 
     & h2 {
-        font-size: 84px !important;
+        font-size: 35px !important;
         letter-spacing: 2.2px;
     }
+}
+
+.message-transparent {
+    background-color: transparent !important;
+    height: 100px;
+}
+
+.btn-primary {
+    text-align: center !important;
+    margin: 0 auto !important;
+    align-items: center !important;
 }
 
 .map-wrap {
@@ -43,9 +54,9 @@
     margin-bottom: 50px;
 
     & p {
-    margin: 6px auto 0;
-    max-width: 100%;
-    color: #999999;
+        margin: 6px auto 0;
+        max-width: 100%;
+        color: #999999;
     }
 }
 
@@ -54,7 +65,7 @@
     margin-top: 19px;
 
     & .info {
-            margin-left: 15px;
+        margin-left: 15px;
     }
 }
 
@@ -63,14 +74,8 @@
     font-weight: 600;
 }
 
-/* .contact-content {
-    display: flex;
-    justify-content: center;
-    flex-direction: row;
-} */
-
 .message {
-    font-size: 18px  !important;
+    font-size: 18px !important;
     font-weight: 600;
 }
 
@@ -90,17 +95,15 @@ form {
     margin-bottom: 0;
 }
 
-input, textarea, select {
+/* input,
+textarea,
+select {
     color: #6f6f6f !important;
     font-size: 14px !important;
-    padding: 12px 15px !important;
     width: 100% !important;
-    background-color: #fff !important;
     text-transform: none !important;
     font-weight: 400 !important;
-    border: 1px solid #e2e2e2 !important;
-    border-radius:  0 !important;
-}
+} */
 
 .btn-style2 {
     color: #fff;
@@ -122,18 +125,18 @@ input, textarea, select {
 }
 
 .contact-info {
-    width: 50% ;
+    width: 50%;
 }
 
 .form-title {
     & p {
-            margin-top: 6px !important;
+        margin-top: 6px !important;
 
-            color: #999999 !important;
-    font-family: 'Poppins', sans-serif;
-    font-weight: 400;
-    font-style: normal;
-    line-height: 25px;
+        color: #999999 !important;
+        font-family: 'Poppins', sans-serif;
+        font-weight: 400;
+        font-style: normal;
+        line-height: 25px;
     }
 }
 
@@ -148,6 +151,13 @@ input, textarea, select {
     margin-bottom: 0px !important;
 }
 
+form label {
+    margin-top: 10px !important;
+}
+
+form .form__group {
+ margin-top: 10px;
+}
 
 .contact-us-page .contact-content .contact-form-warp ul.form-fill {
     display: flex;
@@ -175,7 +185,8 @@ label[for] {
     cursor: pointer;
 }
 
-.contact-us-page .contact-content .contact-form-warp ul.form-fill li input, .contact-us-page .contact-content .contact-form-warp ul.form-fill li textarea {
+.contact-us-page .contact-content .contact-form-warp ul.form-fill li input,
+.contact-us-page .contact-content .contact-form-warp ul.form-fill li textarea {
     width: 100%;
     font-size: 13px;
 }
@@ -227,20 +238,21 @@ span.info label {
 }
 
 .common {
-            color: #999999 !important;
+    color: #999999 !important;
     margin-top: 3px;
-    }
+}
 
 /* ul li {
     display: flex;
     gap: 15px;
 } */
 
-.contact-us-page .contact-content .contact-info ul li span.info p, .contact-us-page .contact-content .contact-info ul li span.info p a {
+.contact-us-page .contact-content .contact-info ul li span.info p,
+.contact-us-page .contact-content .contact-info ul li span.info p a {
     color: #999999;
     margin-top: 3px;
-        font-weight: 400;
-        line-height:25px;
+    font-weight: 400;
+    line-height: 25px;
 }
 
 .contact-us-page .contact-content .contact-form-warp ul.form-fill li label {
@@ -252,9 +264,9 @@ span.info label {
 }
 
 li label {
-        margin-bottom: 10px !important;
-        font-size: 14px !important;
-        color: #333333 ;
+    margin-bottom: 10px !important;
+    font-size: 14px !important;
+    color: #333333;
 }
 
 /* .review-form {
@@ -276,10 +288,9 @@ li label {
 
     & form textarea,
     form input {
-        margin-block-end: 15px !important;
-        border-radius: 8px !important;
-        border: 1px solid transparent !important;
-        background-color: rgb(var(--primaryClr), 0.05) !important;
+        
+        
+        
         padding: 7px !important;
     }
 
@@ -294,64 +305,58 @@ li label {
         padding: 7px;
     } */
 
-     form input {
-        padding-block: 10px !important;
+form input {
+    padding-block: 10px !important;
 
-    }
-     form textarea {
-        padding-inline-start: 10px !important;
-        font-size: 14px !important;
-    }
+}
 
-    /* input:focus,
+form textarea {
+    padding-inline-start: 10px !important;
+    font-size: 14px !important;
+}
+
+/* input:focus,
     textarea:focus {
         outline: none !important;
     } */
 
-    input:focus,
-    textarea:focus {
-        border: 1px solid rgba(var(--textClr), 0.8) !important;
-    }
+input:focus,
+textarea:focus {
+    border: 1px solid rgba(var(--textClr), 0.8) !important;
+}
 
-  button {
-        border-radius: 8px !important;
-        height: 42px !important;
-        width : 100px !important;
-        margin-inline-end: 0 !important;
-        
-    }
- textarea {
+
+
+textarea {
+    background-color: rgba(var(--blackClr),0.05) !important;
+    border: 1px solid rgb(var(--blackClr), 0.08) !important;
     resize: none !important;
 }
 
 .margin-bottom {
     margin-bottom: 18px;
 }
+
 .map {
     width: 100% !important;
 }
 
-@media  (max-width: 768px) {
+@media (max-width: 768px) {
 
-.contact-content {
-    flex-direction: column-reverse;
-}
+    .contact-content {
+        flex-direction: column-reverse;
+    }
 
-.contact-info {
-    width: 100% ;
-}
+    .contact-info {
+        width: 100%;
+    }
 
-.contact-form-warp {
-    width: 100%;
-}
+    .contact-form-warp {
+        width: 100%;
+    }
 
-.helpBox h2 {
-    font-size: 30px !important;
-    letter-spacing: 1.2px;
-}
-
-.container {
-    padding-block: 35px;
-}
+    .container {
+        padding-block: 35px;
+    }
 
 }

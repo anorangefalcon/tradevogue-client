@@ -1,68 +1,40 @@
-<div [ngSwitch]="type">
+<div [ngSwitch]="type" class="custom-select d-flex flex-column flex-order" onClick>
+  <ul id="options__container" role="listbox" [class.active]="isactive == true">
 
-  <div *ngSwitchCase="'searchSelect'" onClick>
-    <div class="custom-select d-flex flex-column flex-order">
-      <ul id="options__container" role="listbox" [class.active]="isactive == true">
-        <li class="disabled__option">
-          <label for="empty">{{selectedOption}}</label>
-        </li>
-        <li role="option" *ngFor="let option of options | productFilter: filter; let i=index" tabindex="{{i+2}}"
-          (change)="updateSelected(option)">
-          <input type="radio" name="options" [id]="option" />
-          <label [for]="option">{{option}}</label>
-        </li>
-      </ul>
-      <div id="selected__container" class="relative">
-        <input type="search" class="selected__text" (input)="filterData($event)" [value]="selected"
-          [placeholder]="selectedOption">
-        <span (click)="isactive = !isactive"
-          class="absolute d-flex flex-center arrow_icon material-symbols-outlined">arrow_drop_down</span>
-      </div>
-    </div>
+
+    <ng-container *ngSwitchCase="'multiSelect'">
+      <li>
+        <input type="search" style="border-radius: 0;" class="form__input" (input)="filterData($event)" placeholder="Search">
+      </li>
+      <li class="checkbox__options" role="option" *ngFor="let option of options | productFilter: filter; let i=index" tabindex="{{i+2}}"
+        (change)="updateMutliSelected($event)">
+        <input type="checkbox" [value]="option" name="options" [id]="_id ? (option + type + _id): (option + type)"
+          *ngSwitchCase="'multiSelect'" [checked]="isChecked(option, 'multiSelect')" />
+        <label [for]="_id ? (option + type + _id): (option + type)">{{option}}</label>
+      </li>
+    </ng-container>
+
+    <ng-container *ngIf="type != 'multiSelect';">
+      <li role="option" *ngFor="let option of options | productFilter: filter; let i=index" tabindex="{{i+2}}"
+        (change)="updateSelected(option)">
+        <input type="radio" [name]="'options'+_id" [id]="_id ? (option + type + _id): (option + type)"
+        [checked]="isChecked(option)" />
+        <label [for]="_id ? (option + type + _id): (option + type)">{{option}}</label>
+      </li>
+    </ng-container>
+
+
+  </ul>
+
+  <div id="selected__container" class="relative" (click)="isactive = (!disableStatus? !isactive: false)">
+    <input type="search" [disabled]="disableStatus" class="form__input" (input)="filterData($event)" [value]="selected"
+      [placeholder]="selectedOption" *ngSwitchCase="'searchSelect'">
+
+    <input type="text" [disabled]="disableStatus" class="form__input" [value]="multiSelected.join(' , ')" [placeholder]="selectedOption"
+      *ngSwitchCase="'multiSelect'" readonly>
+
+    <input [disabled]="disableStatus" type="text" class="form__input" readonly (input)="filterData($event)" [value]="selected"
+      [placeholder]="selectedOption" *ngSwitchDefault>
   </div>
-
-  <!-- Multi Select Option -->
-  <div *ngSwitchCase="'multiSelect'" onClick>
-    <div class="custom-select d-flex flex-column flex-order" tabindex="0">
-      <ul id="options__container" role="listbox" [class.active]="isactive == true">
-        <li class="disabled__option">
-          <label for="empty">{{selectedOption}}</label>
-        </li>
-        <!-- <li >
-          <input type="search" placeholder="Search ...." (input)="filterData($event)" id="search">
-        </li> -->
-        <li class="checkbox__options" role="option" *ngFor="let option of options; let i=index" tabindex="{{i+2}}"
-          (change)="updateMutliSelected($event)">
-          <input type="checkbox" [value]="option" name="options" [id]="option" />
-          <label for="option"><span class="material-symbols-outlined">done</span></label>
-          <label [for]="option">{{option}}</label>
-        </li>
-      </ul>
-      <div id="selected__container" class="relative" (click)="isactive = !isactive">
-        <input type="text" class="selected__text"  [value]="multiSelected.join(' , ')" [placeholder]="selectedOption">
-        <span class="absolute d-flex flex-center arrow_icon material-symbols-outlined">arrow_drop_down</span>
-      </div>
-    </div>
-  </div>
-
-
-  <div *ngSwitchDefault>
-    <div class="custom-select d-flex flex-column flex-order" onClick>
-      <ul id="options__container" role="listbox" [class.active]="isactive == true">
-        <li class="disabled__option">
-          <label for="empty">{{selectedOption}}</label>
-        </li>
-        <li role="option" *ngFor="let option of options | productFilter: filter; let i=index" tabindex="{{i+2}}"
-          (change)="updateSelected(option)">
-          <input type="radio" name="options" [id]="option" />
-          <label [for]="option">{{option}}</label>
-        </li>
-      </ul>
-      <div id="selected__container" class="singleSelect relative" (click)="isactive = !isactive">
-        <input type="text" class="selected__text" (input)="filterData($event)"
-          [value]="selected" [placeholder]="selectedOption" readonly>
-        <span class="absolute d-flex flex-center arrow_icon material-symbols-outlined">arrow_drop_down</span>
-      </div>
-    </div>
-  </div>
+  
 </div>

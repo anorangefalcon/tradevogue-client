@@ -1,0 +1,208 @@
+<div class="container  d-flex flex-column gap-20">
+  <div class="d-flex justify-content-md-between card__pd-20 card default-animation">
+    <h2 class="d-flex align-item-center header__h2">Customize About Page</h2>
+    <div class="d-flex gap-10">
+
+      <button class="btn  btn-primary btn-xs btn-rounded" (click)="EditClicked()" *ngIf="!Edit">Edit</button>
+      <button class="cancel__btn btn btn-secondary btn-xs btn-rounded" (click)="EditClicked()"
+        *ngIf="Edit">Cancel</button>
+      <button class="btn btn-primary btn-xs btn-rounded" (click)="Save()" [disabled]="AboutPageForm.invalid" *ngIf="Edit">Save</button>
+    </div>
+  </div>
+
+
+  <form [formGroup]="AboutPageForm"  class="d-flex flex-column gap-20 default-animation-slow">
+
+    <!--  BASIC INFO  START -->
+    <div class="d-flex flex-column card__pd-20 card gap-20">
+  <div class="d-flex flex-column gap-20" formGroupName="BasicInfo">
+
+        <h3 class="common__h3">Basic Info</h3>
+
+      <div formGroupName="content" class="d-flex flex-column gap-20">
+
+        <!-- store images and content -->
+      <div class="d-flex gap-20 basic__content__first">
+
+      <div class="d-flex gap-20 ImageDiv flex-wrap">
+        <ng-container *ngFor="let link of getStoreImages(); let i=index">
+          <div class="input-form d-flex align-item-center justify-content-center">
+
+            <!--  LABEL AND SPAN -->
+            <div class="d-flex flex-column align-item-center gap-5"  *ngIf="!ImageShower(i,'BasicInfo')">
+            <label [for]="'storeImage'+i"  class="d-flex align-item-center upload__label flex-column justify-content-center" >
+                <span class="upload_icon material-symbols-outlined">
+                  cloud_upload
+                </span>
+            </label>
+            <small class="banner-label">Upload Image</small>
+          </div>
+
+          
+            <!-- IMAGE VISIBLE DIV -->
+            <!-- {{AboutPageForm.get('StoreImages')[i]}} image is  -->
+            <div class="image-container" *ngIf="ImageShower(i,'BasicInfo')">
+              <span class="remove-img material-symbols-outlined" *ngIf="Edit" (click)="ShowUpload(i,'BasicInfo')">
+                close
+              </span>
+              <img  [src]="link" class="mh100 mw100" alt="Profile Image" />
+            </div>
+
+            <!-- INPUT WHICH DISPLAY NONE -->
+            <input type="file" class="image__upload__input" [id]="'storeImage'+i" 
+              accept="image/jpg, image/jpeg, image/png"  (input)="ImageUploadHandler($event,'BasicInfo',i)">
+          
+
+          </div>
+        </ng-container>
+      </div>
+
+      <div class="basicInfo__content">
+        <div class="d-flex flex-wrap gap-20">
+          <div class="d-flex mw100 gap-20 brand_name_year">
+          <div class="formControl d-flex flex-column gap-5">
+            <label class="form__label">Name<span class="red">*</span></label>
+            <input type="text" id="title" formControlName="name" placeholder="Enter Name" class="form__input">
+          </div>
+
+          <div class="formControl d-flex flex-column gap-5">
+            <label class="form__label">Established Year<span class="red">*</span></label>
+            <input type="text" id="title" formControlName="foundedYear" placeholder="Enter Founded Year"
+              class="form__input">
+            <span
+              *ngIf="AboutPageForm.get('BasicInfo')?.get('content')?.get('foundedYear')?.hasError('yearInvalid') && AboutPageForm.get('BasicInfo')?.get('content')?.get('foundedYear')?.touched">
+              Please enter a valid value year.
+            </span>
+          </div>
+        </div>
+
+
+          <div class="mw100 d-flex flex-column gap-5">
+            <label class="form__label">Tagline<span class="red">*</span></label>
+            <input type="text" id="title" formControlName="tagline" placeholder="Enter Tagline" class="form__input">
+          </div>
+
+
+
+          <div class="formControl__textArea d-flex flex-column gap-5">
+            <label class="form__label">Description<span class="red">*</span></label>
+            <textarea rows="3" formControlName="description" placeholder="Enter Description">
+        </textarea>
+          </div>
+
+
+
+
+          <div class="formControl__textArea d-flex flex-column gap-5">
+            <label class="form__label">Growth Description<span class="red">*</span></label>
+            <textarea rows="3" formControlName="growthDescription" placeholder="Enter Growth Description">
+          </textarea>
+          </div>
+
+
+
+
+        </div>
+      </div>
+
+    </div>
+
+    <!-- FEATURES -->
+    <div class="d-flex features gap-20">
+    <div formGroupName="Feature1" class="feature1 d-flex flex-column gap-10">
+      <div class="width-100 d-flex flex-column gap-5">
+        <label class="form__label">Heading<span class="red">*</span></label>
+        <input type="text" id="title" formControlName="heading" placeholder="Enter Name" class="form__input">
+      </div>
+      <div class="formControl__textArea d-flex flex-column gap-5">
+        <label class="form__label">Description<span class="red">*</span></label>
+        <textarea rows="3" formControlName="description" placeholder="Enter Description">
+    </textarea>
+      </div>
+    </div>
+
+    <div formGroupName="Feature2" class="feature2 d-flex flex-column gap-10">
+      <div class="width-100 d-flex flex-column gap-5">
+        <label class="form__label">Heading<span class="red">*</span></label>
+        <input type="text" id="title" formControlName="heading" placeholder="Enter Name" class="form__input">
+      </div>
+      <div class="formControl__textArea d-flex flex-column gap-5">
+        <label class="form__label">Description<span class="red">*</span></label>
+        <textarea rows="3" formControlName="description" placeholder="Enter Description">
+    </textarea>
+      </div>
+    </div>
+  </div>
+
+  </div>
+
+    </div>
+    </div>
+    <!--  BASIC INFO END -->
+
+
+    <!--   TEAM MEMBER STARTS -->
+    <div class="d-flex flex-column card__pd-20 card gap-20" formArrayName="TeamMembers"> 
+      <div class="d-flex justify-content-md-between">
+        <h3 class="common__h3">Team Members</h3>
+        <button class="d-flex align-item-center btn btn-secondary add_team_member" (click)="AddTeamMember()" [disabled]="!Edit">
+          <span class="material-symbols-outlined">
+            add
+            </span>
+        </button>
+      </div>
+
+        <div class="d-flex flex-wrap gap-10">
+        <ng-container *ngFor="let form of getTeamMembers();let i=index">
+
+
+          <div [formGroupName]="i" class="particular_team_member d-flex flex-column gap-10">
+            <!-- team member image -->
+            <div class="d-flex  team_member_img align-item-center justify-content-center">
+
+              <!--  LABEL AND SPAN -->
+              <div class="d-flex flex-column align-item-center gap-10"  *ngIf="!ImageShower(i,'TeamMembers')">
+              <label [for]="'teammember'+i"  class="d-flex align-item-center upload__label flex-column justify-content-center" >
+                  <span class="upload_icon material-symbols-outlined">
+                    cloud_upload
+                  </span>
+              </label>
+              <small class="banner-label">Upload Image</small>
+            </div>
+  
+            
+              <!-- IMAGE ViSIBLE DIV -->
+              <div *ngIf="ImageShower(i,'TeamMembers')" class="img_and_close_icon">
+                <span class="remove-img material-symbols-outlined" *ngIf="Edit" (click)="ShowUpload(i,'TeamMembers')">
+                  close
+                </span>
+                <img  [src]="ImageShower(i,'TeamMembers')" alt="Profile Image" class="mh100 mw100" />
+              </div>
+  
+              <!-- INPUT WHICH DISPLAY NONE -->
+              <input type="file" class="image__upload__input" [id]="'teammember'+i"
+                accept="image/jpg, image/jpeg, image/png" multiple (input)="ImageUploadHandler($event,'TeamMembers',i)">
+            
+  
+            </div>
+
+            <!-- name -->
+            <div class="relative">
+              <input type="text" id="title" formControlName="name" placeholder="Enter Name" class="form__input">
+              <button class="delete__icon" [disabled]="!Edit" (click)="RemoveMember(i)" *ngIf="Edit">
+                <span class="material-symbols-outlined " >
+                  delete
+                  </span>
+              </button>
+            
+            </div>
+
+          </div>
+          </ng-container>
+        </div>
+    </div>
+ <!--   TEAM MEMBER ENDS -->
+   
+
+  </form>
+</div>

@@ -12,18 +12,14 @@ export class ProductCardsComponent {
 
   products: any = [];
 
-  constructor(public fetchProducts: FetchDataService){
-    fetchProducts.getData().subscribe((data)=>{
-      console.log(data);
-      this.products = data.slice(0,5);
-      // for(let i=0; i<data.length; i++){
-      //   this.products.push(data[i]);
-      //   if(i>=3){
-      //     break;
-      //   }
-      // }    
-    });
+  constructor(public fetchProducts: FetchDataService){}
+
+  ngOnInit(){
+    this.fetchProducts.getProducts({sort: 'createdAt:-1'}, 5).subscribe((data:any)=>{      
+      this.products = data.items;
+    })
   }
+
   customOptions: OwlOptions = {
     loop: false,
     rewind: true,

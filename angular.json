@@ -22,7 +22,9 @@
             "tsConfig": "tsconfig.app.json",
             "assets": [
               "src/favicon.ico",
-              "src/assets"
+              "src/assets",
+              "src/manifest.json",
+              "src/firebase-messaging-sw.js"
             ],
             "styles": [
               "@angular/material/prebuilt-themes/indigo-pink.css",
@@ -35,7 +37,9 @@
             "scripts": [
               "node_modules/jquery/dist/jquery.min.js",
               "node_modules/datatables.net/js/jquery.dataTables.min.js"
-            ]
+            ],
+            "serviceWorker": false,
+            "ngswConfigPath": "ngsw-config.json"
           },
           "configurations": {
             "production": {
@@ -61,6 +65,7 @@
               "sourceMap": true,
               "namedChunks": true
             }
+
           },
           "defaultConfiguration": "production"
         },
@@ -92,7 +97,9 @@
             "tsConfig": "tsconfig.spec.json",
             "assets": [
               "src/favicon.ico",
-              "src/assets"
+              "src/assets",
+              "src/manifest.json",
+              "src/firebase-messaging-sw.js"
             ],
             "styles": [
               "@angular/material/prebuilt-themes/indigo-pink.css",

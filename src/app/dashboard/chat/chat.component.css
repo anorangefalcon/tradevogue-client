@@ -1,0 +1,89 @@
+/* Basic CSS styles for the layout */
+.container {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+  }
+  
+  .user-sidebar {
+    width: 200px;
+    background-color: #f0f0f0;
+    border-radius: 5px;
+    padding: 10px;
+  }
+  
+  .user-list {
+    margin-top: 10px;
+  }
+  
+  .user-list div {
+    cursor: pointer;
+    margin-bottom: 5px;
+  }
+  
+  .chat-box {
+    flex-grow: 1;
+    margin-left: 20px;
+    background-color: #e0e0e0;
+    border-radius: 5px;
+    padding: 10px;
+  }
+  
+  .messages {
+    max-height: 300px;
+    overflow-y: auto;
+    margin-bottom: 10px;
+  }
+  
+  textarea {
+    width: 100%;
+    padding: 5px;
+    margin-bottom: 10px;
+  }
+
+
+  .only_user {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+  }
+  
+  .container {
+    & .card_right {
+      width: 75%;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+
+    }
+
+    & .card_left {
+      width: 20%;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      height: 200px;
+    }
+  }
+
+  .user-container {
+    cursor: pointer;
+    align-items: center;
+    width: 117px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .user-item {
+    padding: 10px;
+    margin: 5px;
+    border: 1px solid #ccc;
+    cursor: pointer;
+
+  }
+  
+  .user-item:hover {
+    background-color: #f0f0f0;
+  }
+  

@@ -1,7 +1,9 @@
-import { Component, OnInit, ElementRef, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ElementRef, ChangeDetectorRef, HostListener } from '@angular/core';
 import { FetchDataService } from 'src/app/shared/services/fetch-data.service';
 import { UploadExcelService } from '../services/upload-excel.service';
 import { ToastService } from 'src/app/shared/services/toast.service';
+import { UtilsModule } from 'src/app/utils/utils.module';
+import { DialogBoxService } from 'src/app/shared/services/dialog-box.service';
 
 @Component({
   selector: 'app-products',
@@ -9,176 +11,342 @@ import { ToastService } from 'src/app/shared/services/toast.service';
   styleUrls: ['./products.component.css'],
 })
 export class ProductsComponent implements OnInit {
-  rating: any[] = [1, 2, 3, 4, 5];
-  stockStatus: any[] = ['Out of Stock', 'Low Inventory', 'In Stock'];
-  categoryOption: any[] = ['Category 1', 'Category 2', 'Category 3', 'Category 4'];
-  ratingOption: any[] = [5, 4, 3, 2];
-  pageSize: number = 10;
+  sortOption: any[] = ['Rating: Low to High', 'Rating: High to Low', 'Stock: Low to High', 'Stock: High to Low'];
+  productTemplate: any[] = ['Product Name', 'Category', 'Brand', 'Price', 'Stock', 'Status', 'Published', 'Action'];
+  pageSize: number = 8;
   currentPage: number = 1;
+  selectedColor: any = 0;
+  totalCount: any = 0;
+  selectAll: boolean = false;
+  highlight: number = 0;
+  deleteDataField: any = {};
+
+  categoryOption!: any[];
+  dataField: string[] = ['categories'];
+
+  template: any = {
+    limit: this.pageSize,
+    page: this.currentPage,
+    filter: {
+      active: true,
+      search: '',
+      categories: '',
+    }
+  }
+
+  // Contains all details about the product Displayed
+  productArray: any = [];
+  deleteList: any = [];
   productList: any[] = [];
+  dataFetchStatus: boolean = true;
 
   constructor(private element: ElementRef,
-     private fetchdata: FetchDataService,
-     private excelService: UploadExcelService,
-     private toastService: ToastService) { }
+    private fetchdata: FetchDataService,
+    private excelService: UploadExcelService,
+    private backendUrl: UtilsModule,
+    private dialogBoxService: DialogBoxService,
+    private toastService: ToastService) { }
 
-  ngOnInit(): void {
+  async ngOnInit() {
+
+    this.fetchdata.HTTPPOST(this.backendUrl.URLs.fetchFeatures, this.dataField).subscribe({
+      next: (res: any) => {
+        this.categoryOption = res.categories;
+        this.fetchData();
+      }
+    });
+
+    this.dialogBoxService.responseEmitter.subscribe(async (res: boolean) => {
+      if (res == true) {
+        this.fetchdata.HTTPPOST(this.backendUrl.URLs.deleteproducts, this.deleteDataField).subscribe(() => {
+          this.fetchData();
+          this.dialogBoxService.responseEmitter.next(false);
+        });
+      }
+    });
+  }
+
+  async fetchData() {
+
+    try {
+
+      this.fetchdata.HTTPPOST(this.backendUrl.URLs.fetchProductInventory, this.template).subscribe({
+        next: (res: any) => {
+
+          if (!res.data.length) {
+            this.dataFetchStatus = false;
+            this.productList = [];
+            this.totalCount = 0;
+            return;
+          };
+
+          console.log('res', res);
+
+          this.productArray = res;
+          this.productList = [];
+          this.totalCount = this.productArray.pageInfo[0].count;
+          this.highlight = this.productArray.pageInfo[0].highlightCount;
+
+          this.productArray.data.forEach((product: any) => {
+
+            let item = {
+              _id: product.productInfo._id,
+              itemId: product.productInfo.sku,
+              highlight: product.productInfo.highlight,
+              image: product.productInfo.assets[0].photo[0],
+              name: product.productInfo.name,
+              price: product.productInfo.price,
+              category: product.productInfo.info.category,
+              assets: product.productInfo.assets,
+              brand: product.productInfo.info.brand,
+              unit_sold: product.unitSold,
+              orderQuantity: product.productInfo.info.orderQuantity,
+              product_inventory: product.inventory,
+              status: product.productInfo.status,
+              rating: Math.round(product.avgRating * 10) / 10,
+              last_updated: product.productInfo.updatedAt.split('T')[0],
+              checked: false
+            }
+            this.productList.push(item);
+          });
+        }
+      });
+    } catch (err) {
+
+    }
+  }
+
+  highlightProduct(e: Event, id: string, index: number) {
+    const status = (<HTMLInputElement>e.target).checked;
+
+    // Purpose of Settime is to resolve the issue of delay as checkbox take time and function is called before
+    setTimeout(() => {
+
+      if (this.highlight >= 10 && status) {
+        this.productList[index].status.highlight = false;
+        this.toastService.notificationToast({ title: 'Maximum 10 Highlight Allowed' });
+        return;
+      }
+
+      const body = { '_id': id, 'status': status, 'field': 'highlight' };
+      this.fetchdata.HTTPPOST(this.backendUrl.URLs.productStatus, body).subscribe({
+        next: (data: any) => {
+          this.highlight = data.highlightCount;
+          this.productList[index].status.highlight = status;
+        },
+        error: () => {
+          this.productList[index].status.highlight = false;
+        }
+      })
+    }, 0.1);
+  }
+
+  activateProduct(e: Event, id: string, index: number) {
+
+    const status = (<HTMLInputElement>e.target).checked;
+    const body = { '_id': id, 'status': status, 'field': 'active' };
+
+    // this.template['productID'] = id;
+
+    // this.fetchdata.HTTPPOST(this.backendUrl.URLs.fetchProductInventory, this.template).subscribe({
+    //   next: (res: any) => {
+    //     console.log("sdasd", res);
+    //     delete this.template.productID;
+    //   }[(ngModel)]="item.status.active"
+    // });
+
+
+    this.fetchdata.HTTPPOST(this.backendUrl.URLs.productStatus, body).subscribe({
+      next: (data: any) => {
+        console.log(data);
+        this.productList[index].status.active = status;
+        status ? this.toastService.successToast({ title: 'Product is Available' }) : this.toastService.notificationToast({ title: 'Product is now Unavailable' });
+        this.fetchData();
+      },
+      error: () => {
+        this.productList[index].status.active = false;
+      }
+    })
+  }
+
+  // Check for tables
+  toggleSelectAll() {
+    this.productList.forEach((product: any) => {
+      product.checked = this.selectAll;
+    });
+  }
+
+  checkboxChanged() {
+    if (this.isAllcheckboxChecked()) this.selectAll = true;
+    else this.selectAll = false;
+  }
+
+  isAllcheckboxChecked() {
+    return this.productList.every((product: any) => product.checked);
+  }
+
+  updateCheckList() {
+    this.deleteList = [];
+    this.productList.forEach((product: any) => {
+      if (product.checked) this.deleteList.push(product._id);
+    });
+  }
+
+
+  // Delete Entry
+  deleteItem(entry: any, type: string = 'single') {
+
+    let template: any = {
+      title: 'Proceed with Deletion?',
+      subtitle: `The item will be permanently deleted, and recovery will not be possible. Are you sure you want to proceed?`,
+      type: 'confirmation',
+      confirmationText: 'Yes, Delete it',
+      cancelText: 'No, Keep it',
+    };
+
+    this.dialogBoxService.confirmationDialogBox(template);
+    this.deleteDataField.type = type,
+      this.deleteDataField.data = entry;
+  }
+
+  // Filter Handling function
+  tempSortData: string = '';
+
+  updateFields(e: any, field: string = '') {
+
+    if (field) {
+      this.template.filter[field] = e;
+
+    } else {
+      this.tempSortData = e;
+      let data = e.split(':');
+      delete this.template.filter['rating'];
+      delete this.template.filter['stockQuantity'];
+
+      if (data[0] == 'Rating') {
+        (data[1].trim(' ') == "Low to High") ? this.template.filter['rating'] = 1 : this.template.filter['rating'] = -1;
+      } else {
+        (data[1].trim(' ') == "Low to High") ? this.template.filter['stockQuantity'] = 1 : this.template.filter['stockQuantity'] = -1;
+      }
+    }
+
+    // reset Pagination
+    this.currentPage = 1;
+    this.template.page = 1;
+
     this.fetchData();
   }
 
-  productTemplate = ['Product Name', 'Category', 'Price', 'Stock', 'Status', 'Published', 'Action'];
+  clearFields() {
+    this.tempSortData = '';
+    this.template.filter.categories = '';
+    delete this.template.filter['rating'];
+    delete this.template.filter['stockQuantity'];
+    this.fetchData();
+  }
 
-  fetchData() {
+  pageChange(e: any) {
+    this.template.page = e;
+    this.currentPage = e;
+    this.fetchData();
+  }
 
-    this.fetchdata.getSellerData().subscribe((data: any) => {
-      let counter = 0
-      let products = data[0]['products'][0];
-      console.log(typeof (products), products);
-      this.productList = [];
+  isradioChecked(e: Event, color_index: number) {
+    if ((<HTMLInputElement>e.target).checked) {
+      this.selectedColor = color_index;
+    }
+  }
 
-      products.forEach((item: any) => {
+  fetchOrderQuantity(quantity: number, orderArray: any) {
+    return orderArray.filter((amt: any) => {
+      return amt <= quantity;
+    });
+  }
 
-        let product = {
-          itemId: counter++,
-          image: '',
-          name: '',
-          category: '',
-          price: 0,
-          unit_sold: this.getRandomnumber(150, 400),
-          product_inventory: this.getRandomnumber(0, 50),
-          rating: 0,
-          last_updated: '03/11/2023 - 4.23PM',
-          checked: false
-        }
+  // Generate a string array based upon rating transmitted store class from 'font-awesome'
+  starRating(rating: any) {
+    let ratingArray = [];
 
-        product.image = item['image'][0];
-        product.name = item['name'];
-        product.category = item['info']['category'];
-        product.price = item['price'];
+    for (let i = 1; i <= 5; i++) {
+      if (i <= Math.floor(rating)) {
+        ratingArray.push('fa-solid fa-star');
+      }
+      else if (i > Math.floor(rating) && i <= Math.ceil(rating))
+        ratingArray.push('fa-solid fa-star-half-stroke');
+      else
+        ratingArray.push('fa-regular fa-star');
+    }
+    return ratingArray;
+  }
 
-        let reviews = item["reviews"];
-        let rating = 0;
+  // Purpose to detemine the quantiy of product->color->size based upon orderQuantity
+  filterData(array: any, limit: any) {
 
-        reviews?.forEach((review: any) => {
-          rating += review['rating'];
-        });
+    const len = array.length;
+    // 30% of Array is
+    const index = Math.round(len * 0.3);
 
-        rating /= reviews?.length;
-        product.rating = rating;
+    if (limit <= array[index] && limit > 0) {
+      return true;
+    }
+    return false;
+  }
 
-        this.productList.push(product);
-      })
-      console.log("Product List::", this.productList);
+  displayInfo(e: Event) {
+    (<HTMLDivElement>(<HTMLDivElement>e.target)?.parentElement?.nextSibling)?.classList.add('active');
+  }
+  closeInfo(e: Event) {
+    (<HTMLDivElement>(<HTMLSpanElement>e.target).parentElement).parentElement?.classList.remove('active');
+  }
+
+  // Handles Excel File Uplaoded
+  uploadFile(event: Event) {
+
+    let excelData = this.excelService.handleFileInput(event);
+    (<HTMLInputElement>event.target).value = '';
+    excelData.then((excel: any) => {
+
+      if (excel.errors.length) {
+        let errorObj: any = {
+          title: 'Some Rows were Rejected',
+          body: []
+        };
+
+        excel.errors.forEach((error: any) => {
+          errorObj.body.push('Row: ' + error.row + ' Rejected from Sheet: ' + error.sheet);
+        })
+
+        this.toastService.errorToast(errorObj);
+      }
+      if (excel.data.length) {
+
+        const formData = {
+          type: 'bulk',
+          data: excel.data
+        };
+        this.fetchdata.HTTPPOST(this.backendUrl.URLs.addproduct, formData).subscribe({
+          next: (res: any) => {
+            this.toastService.successToast("Data Uploaded Successfuly");
+            this.fetchData();
+          }
+        })
+      }
+
     })
-    return;
   }
 
-  toggleClass(e: Event){
-    let element = <HTMLButtonElement>e.target;
-    element.classList.add('action');
-    console.log(element);
+  exportProductsExcel() {
+    let exportArr = this.productArray.data.filter((item: any) =>
+      this.deleteList.includes(item._id)).map((item: any) => item.productInfo);
+
+    this.excelService.exportProductsInExcel(exportArr);
   }
 
-
-  getRandomnumber(min: number, max: number) {
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-  }
-
-  pageChanged(event: any) {
-    this.currentPage = event;
-  }
-
-
-
-  deleteList: any = []
-  checkboxParent: any = null;
-  checkboxChild: any = null;
-
-  changeDetection(e: Event) {
-    let element = (<HTMLInputElement>e.target);
-    let id: any = element.getAttribute('id');
-
-    if (id == "all_product") {
-
-      if (element.checked) {
-        this.checkboxParent = true;
-        this.checkboxChild = true;
-        this.productList.forEach((product: any) => {
-          this.deleteList.push(product.itemId);
-        })
-      } else {
-        this.checkboxParent = null;
-        this.checkboxChild = null;
-        this.deleteList = []
-      }
-
-    } else {
-      if (element.checked) {
-        this.deleteList.push(Number(id.split('_')[1]));
-      } else {
-        if (this.checkboxParent == true) this.checkboxParent = null;
-        this.deleteList.splice(this.deleteList.indexOf(Number(id)), 1);
-      }
+  tableGenerator(len: number) {
+    let temp = []
+    for (let i = 0; i < len; i++) {
+      temp.push(0);
     }
+    return temp;
   }
-  
-  // Delete Selected Enteries
-  deleteItems() {
-    if (this.deleteList.length != 0) {
-      this.productList = this.productList.filter((product: any) => {
-        return !this.deleteList.includes(product.itemId);
-      })
-      this.deleteList = [];
-      this.checkboxParent = null;
-      this.checkboxChild = null;
-    }
-  }
-
-  // Delete Single Entry
-  deleteItem(entry: any) {
-    this.productList.splice(entry, 1);
-  }
-
-  filters: any = {
-    stockStatus: '',
-    productCatgory: '',
-    productRating: '',
-  };
-
-  // Filter Handling function
-  updateFields(e: any, field: string) {
-    this.filters[field] = e;
-  }
-
-
-    // Handles Excel File Uplaoded
-    uploadFile(event: Event) {
-      let data = this.excelService.handleFileInput(event);
-      data.then((products) => {
-        console.log(products);
-  
-        let product_keys = Object.keys(products['errors']);
-        this.toastService.errorToast({
-          title: 'Errors found in Excel',
-          body: ['In sheet First, Second']
-        })
-  
-        product_keys.forEach((sheet) => {
-          let sheets_keys = Object.keys(products['errors'][sheet]);
-          // console.log(sheets_keys);
-  
-          // sheets_keys.forEach((errors) => {
-  
-          //   let error_list = Object.keys(products['errors'][sheet][errors]);
-          //   console.log(error_list);
-  
-          // console.log(error_list); 
-  
-          // error_list.forEach((detail) => {
-          //   console.log(detail);
-          // })
-          // })
-        })
-      })
-    }
 }

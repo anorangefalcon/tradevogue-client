@@ -4,7 +4,13 @@
         gap: 20px !important;
         position: absolute !important;
         inset-inline-end: 0 !important;
-        inset-block-start: -67px !important;
+        inset-block-start: -85px !important;
+    }
+
+    &:is(.navInactive){
+        & .owl-carousel .owl-nav{
+            display: none !important;
+        }
     }
 
     .owl-carousel .owl-nav .owl-prev,
@@ -20,7 +26,19 @@
 
         background-color: transparent;
     }
+    .owl-carousel.owl-drag .owl-item{
+        max-width: 220px !important;
+    }
+
+
 }
+
+
+.section-header{
+    padding-block-end: 30px;
+}
+
+
 
 @media screen and (max-width: 440px) {
     .crousel {
@@ -36,7 +54,7 @@
             & span {
                 color: rgb(var(--textClr));
                 font-size: 26px !important;
-                background-color: white!important; ;
+                background-color: rgb(var(--whiteClr))!important; ;
             } 
         }
 

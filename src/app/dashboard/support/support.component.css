@@ -1,0 +1,78 @@
+  .drawer {
+    position: fixed;
+    border: 1px solid rgba(var(--blackClr), 0.1);
+    z-index: 10000000000;
+    bottom: -100%;
+    left: 80%;
+    transform: translateX(-50%);
+    width: 25%;
+    height: 34%;
+    background-color: #fff;
+    transition: bottom 0.3s ease-in-out;
+    border-radius: 5px 5px 0 0;
+  }
+  
+  .drawer.open {
+    bottom: 0; /* Move the drawer to the bottom when open */
+  }
+
+  .details-container {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 9px;
+
+    & button {
+      padding-block: 7px;
+      padding-inline: 20px;
+  }
+  
+
+  }
+  
+  .close-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  .ticket {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    gap: 12px;
+    padding: 39px;
+
+    & button {
+      padding-block: 7px;
+      padding-inline: 20px;
+    }
+
+  }
+  
+  .close-button {
+    /* (Existing styles) */
+    background: #fff;
+    /* (Existing styles) */
+  }
+  
+  .close-button:hover {
+    background: #ffcccc; /* Light red */
+    /* (Existing styles) */
+  }
+  
+  .edit__ticket {
+    & .content-drawer{
+      width: 400px;
+    }
+  }

@@ -1,20 +1,19 @@
-.home-carousel {
-  padding-block: 100px;
+.home__block:nth-child(2n){
+  padding-block: 90px;
+}
+.home__black {
+  background-color: rgb(var(--whiteClr));
 }
 
-.py-100 {
-  /* Padding Block 100*/
-  padding-block: 100px;
+.py-start-100 {
+  padding-block-start: 90px;
 }
-
-.pb-100 {
-  padding-block-end: 100px;
-}
-
-
-
+/* 
+section {
+  background-color: rgb(var(--whiteClr));
+} */
 .facilities {
-  color: rgb(var(--new-text-black));
+  color: rgb(var(--textClr));
   /* background-color: aquamarine;
   min-height: 200px; */
 
@@ -74,16 +73,18 @@
     font-weight: 600;
     letter-spacing: 0.7px;
     text-align: center;
+    color: white
   }
 
   & input {
     width: 42%;
     font-size: 14px;
     padding: 12px 15px;
-    background-color: rgb(var(--whiteClr));
+    background-color: white;
     border: none;
     border-radius: 5px;
     outline: none;
+    color: rgb(var(--textClr));
   }
 
   &::placeholder {
@@ -106,7 +107,7 @@
 
     & i {
       font-size: 18px;
-      color: rgb(var(--whiteClr));
+      color: white;
       transition: 0.3s ease-in-out;
     }
 
@@ -141,13 +142,12 @@
     padding-block: 80px;
   }
 
-  .py-100 {
-    /* Padding Block 100*/
-    padding-block: 80px;
+  .py-start-100 {
+    padding-block-start: 80px;
   }
 
-  .pb-100 {
-    padding-block-end: 80px;
+  .home__block:nth-child(2n){
+    padding-block: 80px;
   }
 }
 
@@ -162,6 +162,14 @@
 }
 
 @media screen and (max-width: 768px) {
+
+  .home__block:nth-child(2n){
+    padding-block: 70px;
+  }
+  
+  .py-start-100 {
+    padding-block-start: 70px;
+  }
 
   .facility {
     font-size: 12px !important;
@@ -185,15 +193,6 @@
     padding-block: 20px;
   }
 
-  .py-100 {
-    /* Padding Block 100*/
-    padding-block: 20px;
-  }
-
-  .pb-100 {
-    padding-block-end: 20px;
-  }
-
   .mgap-15 {
     gap: 15px !important;
   }
@@ -210,6 +209,14 @@
 @media screen and (max-width: 480px) {
   .sm-gap-10{
     gap: 10px;
+  }
+
+  .home__block:nth-child(2n){
+    padding-block: 50px;
+  }
+  
+  .py-start-100 {
+    padding-block-start: 50px;
   }
 
   .newsletter {

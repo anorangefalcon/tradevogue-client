@@ -1,71 +1,76 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import {  Observable, filter, map, tap } from 'rxjs';
-
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { ToastService } from './toast.service';
+import { BehaviorSubject, catchError } from 'rxjs';
+import { UtilsModule } from 'src/app/utils/utils.module';
+import { CookieService } from 'ngx-cookie-service';
 @Injectable({
   providedIn: 'root',
 })
 
 export class FetchDataService {
-  url = '../../../assets/tempDB/products.json';
-  userUrl='../../../assets/tempDB/usersData.json';
-  sellerUrl='../../../assets/tempDB/seller.json';
-  constructor(private http: HttpClient) { }
 
-  productKeys: any = ['available', 'colors', 'description', 'image', 'info', 'name', 'price', 'oldPrice', 'orderQuantity', 'reviews', 'sizes', 'sku', 'stockQuantity'];
-  getData(): Observable<any> {
-    return this.http.get(this.url).pipe(
-      map((arrayData: any) => {
-          return arrayData.filter((item:any) => {
-            
-            return (Object.keys(item).length > 0) && (this.productKeys.length === Object.keys(item).length)
-          });
-      })
-    )
+  theme = new BehaviorSubject<Boolean>(false);
+  themeColor$ = this.theme.asObservable();
+
+  constructor(private http: HttpClient, private toastService: ToastService, private backendUrls: UtilsModule, private cookieService: CookieService) {
+    
+    const isDeviceDarkThemed = (window.matchMedia("(prefers-color-scheme: dark)")).matches;
+    if(isDeviceDarkThemed){
+      $('#tv-body').toggleClass("dark");
+      this.theme.next(true);
+    }
+
+    if (cookieService.get('theme')) {
+      var isDark = /^true$/i.test(cookieService.get('theme'));
+      this.toggleTheme(isDark);
+    }
+
   }
 
-  getUserData():Observable<any>{
-     return this.http.get(this.userUrl);
+  getProducts(data: any = '', limit: any = '', page: any = '') {
+    let params = new HttpParams();
+
+    (Object.keys(data)).forEach(key => {
+
+      if (Array.isArray(data[key])) {
+        data[key].forEach((element: any) => {
+          params = params.append(key, element);
+        });
+      }
+      else {
+        params = params.set(key, data[key]);
+      }
+    });
+    if (limit) params = params.set('limit', limit);
+    if (page) params = params.set('page', page);
+    return this.HTTPGET(this.backendUrls.URLs.fetchProducts, params);
   }
 
-  getSellerData():Observable<any>{
-    return this.http.get(this.sellerUrl);
+  HTTPGET(url: any, params: any = '') {
+    return this.http.get(url, { params }).pipe(
+      catchError((error: any): any => {
+        this.toastService.errorToast(error);
+      }));
   }
 
-  
-  
-  HttpPostRequest(url:any,body:any){
-    return this.http.post(this.sellerUrl,body);
+  HTTPPOST(url: any, body: any) {
+    return this.http.post(url, body).pipe(
+      catchError((data): any => {
+        this.toastService.errorToast({
+          title: data.error.message
+        });
+      }));
   }
 
-  HttpGetRequest(url:any){
-    return this.http.get(this.sellerUrl);
+
+  // theming :
+  toggleTheme(isDark: any) {
+    this.theme.next(isDark);
+    
+    if(isDark) $('#tv-body').addClass("dark");
+    else $('#tv-body').removeClass("dark");
+
+    this.cookieService.set('theme', isDark, { path: '/' });
   }
-
-  httpPost(url:any,body:any){
-    return new Promise((res,rej)=>{
-      
-      this.http.post(url,body).subscribe({next:(data)=>{
-        res(data);
-      },error:(error)=>{
-        console.log("erorr is ",error)
-        rej(error)
-      }})
-    })
- 
-  }
-
-  httpGet(url:any){
-
-    return new Promise((res,rej)=>{
-      this.http.get(url).subscribe({next:(data)=>{
-        res(data);
-        
-      },error:(error)=>{
-        rej(error)
-      }})
-    })
- 
-  }
-
 }

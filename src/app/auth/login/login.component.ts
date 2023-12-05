@@ -1,9 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, Renderer2 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { passwordStrengthValidator, usernameValidator} from './validators';
-import { CookieService } from 'ngx-cookie-service';
-import { Router , ActivatedRoute } from '@angular/router';
-import { UserDataService } from '../user-data.service';
+import { UtilsModule } from 'src/app/utils/utils.module';
+import { FetchDataService } from 'src/app/shared/services/fetch-data.service';
+import { LoginCheckService } from 'src/app/shared/services/login-check.service';
+import { DialogBoxService } from 'src/app/shared/services/dialog-box.service';
+import { Subscription } from 'rxjs';
+
 
 @Component({
   selector: 'app-login',
@@ -11,69 +13,101 @@ import { UserDataService } from '../user-data.service';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
-
-  loginForm : FormGroup;
+  loginForm: FormGroup;
+  forgetPasswordForm: FormGroup;
   passwordFieldType: string = 'password';
   showPassword: boolean = false;
-  isFormSubmitted: boolean = false;
+  showPasswordForm: boolean = false;
+  isactive: boolean = false;
+  script: any;
+  loading: boolean = false;
+  theme: Boolean = false;
 
-  constructor(private fb:FormBuilder , private cookies :  CookieService , private router : Router , private userData : UserDataService, private route: ActivatedRoute){
+  allSubscriptions: Subscription[] = [];
+
+  constructor(
+    fb: FormBuilder,
+    private loginService: LoginCheckService,
+    private backendUrls: UtilsModule,
+    private fetchDataService: FetchDataService,
+    private dialogService: DialogBoxService,
+    private renderer: Renderer2) {
+
     this.loginForm = fb.group(
       {
-        username: fb.control('', [Validators.required, usernameValidator]), 
-        password: fb.control('', [Validators.required, passwordStrengthValidator])
+        email: fb.control('', [Validators.required, Validators.email]),
+        password: fb.control('', [Validators.required, Validators.minLength(6)])
       }
     )
+
+    this.forgetPasswordForm = fb.group({
+      passwordEmail: fb.control('', [Validators.required, Validators.email])
+    })
+
+    // Google login
+    window.addEventListener('auth', (event: any) => {
+      const token = { credential: event.detail.credential }
+      const body = { token };
+      this.LoginUser(body);
+    });
+  }
+
+  ngOnInit() {
+    this.script = this.renderer.createElement('script');
+    this.script.src = 'https://accounts.google.com/gsi/client';
+    this.script.async = true;
+
+    this.renderer.appendChild(document.body, this.script);
+
+    this.allSubscriptions.push(
+    this.fetchDataService.themeColor$.subscribe((color)=>{
+      this.theme = color;
+    }));
   }
 
 
-onLogin() {
-  this.isFormSubmitted = !this.isFormSubmitted;
-  const username = this.loginForm.get('username')?.value;
-  const password = this.loginForm.get('password')?.value;
-  console.log(this.loginForm);
-  
-  
-  this.userData.login(username, password).subscribe((isLoggedIn: boolean) => {
-    if (isLoggedIn) {
-      const user = { username: username, password: password };
-      this.cookies.set("loginDetails", JSON.stringify(user));
-
-      const returnUrl = this.route.snapshot.queryParamMap.get('returnUrl');
-      
-      if (returnUrl) {
-        this.router.navigateByUrl(returnUrl).then(() => {
-        window.location.reload();
-      });
-      } else {
-        this.router.navigate(['/']);
+  LoginUser(body: any) {
+    this.allSubscriptions.push(
+    this.fetchDataService.HTTPPOST(this.backendUrls.URLs.loginUrl, body).subscribe(
+      (data: any) => {
+        this.loginService.loginUser({ 'userToken': data.token, 'name': data.firstName });
       }
+    ));
+
+    this.loading = false;
+  }
+
+  onLogin() {
+    this.loading = true;
+
+    const body = {
+      email: this.loginForm.get('email')?.value,
+      password: this.loginForm.get('password')?.value
     }
-  });
-}
+    this.LoginUser(body);
+  }
 
+  async onResetPassword() {
+    const body = {
+      email: this.forgetPasswordForm.get('passwordEmail')?.value
+    }
 
-
-
-  // onLogin(){
-    // this.isFormSubmitted = !this.isFormSubmitted;
-  //   if(this.isFormSubmitted){
-  //      if(this.loginForm.valid) {
-  //           this.cookies.set("loginDetails",JSON.stringify(this.loginForm.value));
-  //           console.log("loginDetails",this.loginForm.value);
-  //           this.router.navigate(['/']);
-  //      }
-  //   }
-  //   console.log("hello");
-  //   const data = this.loginForm;
-  //   console.log(data);
-  // }
+    this.allSubscriptions.push(
+    this.fetchDataService.HTTPPOST(this.backendUrls.URLs.forgetPasswordUrl, body).subscribe(
+      (data: any) => {
+        this.isactive = true;
+        this.dialogService.infoDialogBox();
+      }
+    ));
+  }
 
   togglePasswordVisibility() {
     this.showPassword = !this.showPassword;
     this.passwordFieldType = this.showPassword ? 'text' : 'password';
+  }
 
-    
-}
-
+  ngOnDestroy() {
+    this.renderer.removeChild(document.body, this.script);
+    this.allSubscriptions.forEach((item: Subscription)=> item?.unsubscribe());
+  }
 }

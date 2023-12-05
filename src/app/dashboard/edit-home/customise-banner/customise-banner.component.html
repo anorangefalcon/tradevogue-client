@@ -1,0 +1,231 @@
+<div class="d-flex flex-column gap-20">
+    <div class="card card__pd-20 d-flex justify-content-md-between align-item-center default-animation">
+        <div class="d-flex gap-5 justify-content-center align-item-center">
+            <button class="btn btn-xs customise-back-btn d-flex flex-center" routerLink="/dashboard/customise-home">
+                <span class="material-symbols-outlined">
+                    arrow_back_ios
+                </span>
+            </button>
+            <h3>Customise Banner</h3>
+        </div>
+        <div class="operation_button d-flex gap-10">
+            <button class="btn btn-xs fw-500 btn-rounded btn-primary add-btn"
+                (click)="showForm = true; showingPopUp=true; bannerForm.reset()">
+                <span class="material-symbols-outlined ">
+                    add
+                </span>
+                <p>
+                    Add
+                    banner
+                </p>
+            </button>
+        </div>
+    </div>
+
+
+    <app-drawer [direction]="popUpDirection" [show]="showingPopUp" (showChange)="PopUpChangeHanlder($event)"
+        (ParentClosedEmitter)="ParentClosedHandler($event)" [title]="'Customise Banner'">
+        <form class="form__card d-flex gap-15 default-animation flex-column" [formGroup]="bannerForm"
+            *ngIf="showForm === true">
+            <div class="mw100 relative d-flex flex-column gap-20">
+                <div class="d-flex flex-column mw100 gap-15">
+                    <div class="image-upload-div d-flex justify-content-center align-item-center relative">
+                        <div class="upload-image d-flex flex-column gap-10 align-item-center"
+                            [class.spinner]="uploading">
+                            <input type="file" [id]="'backgroundImage'"
+                                accept="image/jpg, image/jpeg, image/png, image/avif"
+                                (input)="bannerImageUpload($event)" />
+                            <label [for]="'backgroundImage'"
+                                class="upload__block d-flex flex-column flex-center pointer">
+                                <span class="upload_icon material-symbols-outlined">
+                                    cloud_upload
+                                </span>
+                            </label>
+                            <small class="banner-label">Upload Banner Image</small>
+                            <img [src]="getImagePreview()" [style.display]="getImagePreview() ? 'flex' : 'none'"
+                                class="banner-image">
+                            <span class="material-symbols-outlined remove-btn pointer"
+                                [style.display]="getImagePreview() ? 'flex' : 'none'" (click)="onImageRemove()">
+                                close
+                            </span>
+                            <!-- <div class="loader" ></div> -->
+                        </div>
+                    </div>
+                    <div class="d-flex gap-10 checkbox align-item-center">
+                        <input type="checkbox" name="layput" id="layout" (change)="checkbox = !checkbox; isChecked();"
+                            class="custom-check" [checked]="checkbox">
+                        <label for="layout">Add only banner and link</label>
+                    </div>
+                    <div class="data-upload-div d-flex flex-column mw100 gap-10">
+                        <div class="d-flex flex-column mw100 gap-10">
+
+                            <div class="internal-div">
+                                <label class="form__title" for="title">Title</label>
+                                <span class="relative ">
+                                    <input class="form__input color-input" type="text" id="title"
+                                        formControlName="title" />
+                                    <ng-container formGroupName="colors">
+                                        <span class="tooltip">
+                                            <input type="color" name="" [id]="'titleText'" formControlName="titleColor"
+                                                class="absolute color-picker-position">
+                                            <span class="tooltiptext">
+                                                Title Color
+                                            </span>
+                                        </span>
+                                    </ng-container>
+                                </span>
+
+                            </div>
+                            <div class="internal-div">
+                                <label class="form__title" for="subTitle">Description</label>
+                                <span class="relative">
+                                    <input class="form__input color-input" type="text" id="subTitle"
+                                        formControlName="subTitle" />
+                                    <ng-container formGroupName="colors">
+                                        <span class="tooltip mh100">
+                                            <input type="color" [id]="'subTitleText'" formControlName="subTitleColor"
+                                                class="absolute color-picker-position" />
+                                            <span class="tooltiptext">
+                                                SubTitle Color
+                                            </span>
+                                        </span>
+                                    </ng-container>
+                                </span>
+                            </div>
+                            <div class="internal-div">
+                                <label class="form__title" for="buttonText">Button Text</label>
+                                <span class="relative">
+                                    <input class="form__input color-input" type="text" id="buttonText"
+                                        formControlName="buttonText" />
+                                    <ng-container formGroupName="colors">
+                                        <span class="tooltip">
+                                            <input type="color" [id]="'buttonText'" formControlName="buttonColor"
+                                                class="absolute color-picker-position" />
+                                            <span class="tooltiptext">
+                                                Button Color
+                                            </span>
+                                        </span>
+                                    </ng-container>
+                                </span>
+                            </div>
+                            <div class="internal-div">
+                                <label class="form__title" for="buttonLink">Button Link</label>
+                                <input class="form__input" type="text" id="buttonLink" formControlName="buttonLink"
+                                    placeholder="Eg. http://localhost:4200/explore?gender=male" />
+                            </div>
+                        </div>
+                        <div class="d-flex flex-column mw100 gap-10">
+                            <div class="internal-div">
+                                <label class="form__title" for="contentAlign">Content Align</label>
+                                <app-custom-select [_id]="'alignment'" [type]="'select'" [disableStatus]="true"
+                                    [options]="alignment" [disableStatus]="checkbox"
+                                    [selectedOption]="(bannerForm.get('contentAlign')?.value ? bannerForm.get('contentAlign')?.value : 'Select..')"
+                                    (final_option)="this.bannerForm.get('contentAlign')?.setValue($event);">
+                                </app-custom-select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <button class="btn btn-md fw-500 btn-rounded btn-primary btn-inline save-btn" [class.spinner]="saveData"
+            (click)="onSave()" *ngIf="showForm == true" [ngClass]="{'disabled':bannerForm.invalid}"
+            [disabled]="this.bannerForm.invalid">Save</button>
+    </app-drawer>
+
+    <div class="table-list card default-animation-slow">
+        <table class="mw100" *ngIf="bannerData">
+            <thead>
+                <tr>
+                    <th class="items">S.No.</th>
+                    <th class="items">Image</th>
+                    <th class="items">Title</th>
+                    <th class="items">Subtitle</th>
+                    <th class="items">Link</th>
+                    <th class="items">Alignment</th>
+                    <th class="items">Theme</th>
+                    <th class="items">Active</th>
+                    <th class="items">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let banner of bannerData; let i = index">
+                    <td class="items">
+                        {{i+1}}
+                    </td>
+                    <td class="ellipsis items">
+                        <img class="banner-image-circle pointer" [src]="banner.backgroundImage"
+                            class="skeleton banner-small">
+                    </td>
+                    <td class="items">
+                        <div class="text-ellipsis">
+                            {{banner.title ? banner.title : '-'}}
+                        </div>
+                    </td>
+                    <td class="items">
+                        <div class="text-ellipsis">{{banner.subTitle ? banner.subTitle : '-'}}</div>
+                    </td>
+                    <td class="items ">
+                        <div class="d-flex align-item-center gap-5">
+                            {{banner.buttonText}}
+                            <a *ngIf="banner.buttonLink" href="{{banner.buttonLink}}" target="_blank">
+                                <span class="material-symbols-outlined link-icon pointer">
+                                    open_in_new
+                                </span>
+                            </a>
+                        </div>
+                    </td>
+                    <td class="items">{{banner.contentAlign ? banner.contentAlign : 'None'}}</td>
+                    <td class="items">
+                        <div class="d-flex gap-5 align-item-center">
+                            <ng-container *ngIf="!banner?.colors">
+                                None
+                            </ng-container>
+                            <div class="tooltip" [class.color-circle]="banner?.colors?.titleColor"
+                                [style.background-color]="banner?.colors?.titleColor">
+                                <span class="tooltiptext">
+                                    Title Color
+                                </span>
+                            </div>
+                            <div class="tooltip" [class.color-circle]="banner?.colors?.subTitleColor"
+                                [style.background-color]="banner?.colors?.subTitleColor">
+                                <span class="tooltiptext">
+                                    Subtitle Color
+                                </span>
+                            </div>
+                            <div class="tooltip" [class.color-circle]="banner?.colors?.buttonColor"
+                                [style.background-color]="banner?.colors?.buttonColor">
+                                <span class="tooltiptext">
+                                    Button Color
+                                </span>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="items">
+                        <div class="slide-button d-flex align-item-center">
+                            <input type="checkbox" [checked]="banner.active" (change)="toggleBanner(banner._id, $event)"
+                                [id]="i + 'Available'" />
+                            <label [for]="i + 'Available'"></label>
+                        </div>
+                    </td>
+                    <td class="items action-btns">
+                        <span class="d-flex align-item-center gap-5 transition">
+
+                            <span class="tooltip">
+                                <i class="fs-20 action__btn-icon pointer material-symbols-outlined"
+                                    (click)="showForm = true; showingPopUp = true; edit(i)">edit</i>
+                                <span class="tooltiptext">Edit</span>
+                            </span>
+                            <span class="tooltip">
+                                <i class="fs-20 action__btn-icon pointer material-symbols-outlined"
+                                    (click)="delete(banner._id)">delete</i>
+                                <span class="tooltiptext">Remove</span>
+                            </span>
+                        </span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>

@@ -1,79 +1,307 @@
-import { Component, HostListener, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { FetchDataService } from '../shared/services/fetch-data.service';
 import { CartService } from '../shared/services/cart.service';
 import { OwlOptions } from 'ngx-owl-carousel-o';
-
+import { WishlistService } from '../shared/services/wishlist.service';
+import { ReviewService } from './services/review.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ToastService } from '../shared/services/toast.service';
+import { UtilsModule } from '../utils/utils.module';
+import { FetchDataService } from '../shared/services/fetch-data.service';
+import { HttpParams } from '@angular/common/http';
 
 @Component({
   selector: 'app-product-page',
   templateUrl: './product-page.component.html',
   styleUrls: ['./product-page.component.css']
 })
-export class ProductPageComponent implements OnInit{
-  data: any = {
-    productDetails: {},
-    avgRating: 0,
-    checkSelect:false,
-    offerPercentage: 0
-  }
+export class ProductPageComponent implements OnInit {
+  @Input() productSku: any = '';
 
+  data: any = null;
   cartStorage: any[] = [];
   selectedSize: string = "";
   selectedColor: string = "";
   selectedQ: number = 0;
-  showReview : boolean = false;
+  showReview: boolean = false;
   activeIndex: number = 0;
+  accordianOpen: boolean = false;
+  accordianOpen2: boolean = true;
+  assetIndex: any = 0;
+  sizeIndex: any = 0;
+  isLogin: boolean = false;
+  sku: any = "";
+  fetchSimilarProducts: any = {};
+  carouselTitles: any = {
+    title: 'Similar Products',
+    subTitle: 'Explore our most similar products.'
+  };
+  outOfStock: boolean = false;
+  loading: boolean = false;
+
+  viewAllReviews: boolean = false;
+
+  ratingForm!: FormGroup;
+  userReview: any;
+  params: HttpParams = new HttpParams().set("sku", this.sku);
+  query: any = this.fetchService.HTTPGET(this.backendUrl.URLs.fetchProductUrl, this.params);
+  theme: Boolean = false;
 
   constructor(
     private route: ActivatedRoute,
     private fetchService: FetchDataService,
-    private cartService: CartService
-  ) { }
+    private backendUrl: UtilsModule,
+    private cartService: CartService,
+    private wishlistService: WishlistService,
+    private reviewService: ReviewService,
+    private fb: FormBuilder,
+    private toastService: ToastService) {
 
-   breadcrumbs: { label: string; url: string }[] = [];
+    this.ratingForm = this.fb.group({
+      rating: ['', Validators.required],
+      review: ['', Validators.required]
+    })
+
+  }
+
+  breadcrumbs: { label: string; url: string }[] = [];
 
   ngOnInit(): void {
-    this.data.productDetails.info = [];
-    this.data.productDetails.reviews = [];
-    this.route.params.subscribe(params => {
-      const sku = params['sku'];
-      
-      this.fetchService.getData().subscribe((data: any[]) => {
-        
-        this.data.productDetails = data.find((item) => {   
-          this.activeIndex = 0;     
-          return item['sku'] === sku;
-        });
-        this.data.avgRating = 0;
-        for (let i = 0; i < (this.data.productDetails.reviews).length; i++) {
-          this.data.avgRating += this.data.productDetails.reviews[i].rating;
-        }
-        this.data.avgRating = this.data.avgRating / this.data.productDetails.reviews.length;
-        if (this.data.productDetails.oldPrice !== (undefined || 0)) {
-          this.data.offerPercentage = Math.floor((this.data.productDetails.oldPrice - this.data.productDetails.price) / this.data.productDetails.oldPrice * 100);
-        }
+
+    this.fetchService.themeColor$.subscribe((color) => {
+      this.theme = color;
+    })
+
+    if (this.productSku) {
+      this.sku = this.productSku;
+      this.fetchProductData();
+    }
+    else {
+      this.route.params.subscribe(routeParams => {
+        this.sku = routeParams['sku'];
+        this.fetchProductData();
       });
+    }
+  }
+
+  fetchProductData(loading: boolean = true) {
+    this.loading = loading;
+    let params = new HttpParams();
+    params = params.set("sku", this.sku);
+    this.assetIndex = 0;
+    this.sizeIndex = 0;
+
+    if (this.productSku) {
+      this.fetchService.HTTPGET(this.backendUrl.URLs.fetchProductDetails, params).subscribe((data: any) => {
+        this.updateDataFields(data);
+      });
+    }
+    else {
+      this.fetchService.HTTPGET(this.backendUrl.URLs.fetchProductUrl, params).subscribe((data: any) => {
+        this.ratingForm.reset();
+
+        this.wishlistService.WishListedProducts.subscribe((response: any) => {
+          if (response.includes(data._id)) {
+            data.wishlisted = true;
+          }
+        })
+        this.updateDataFields(data);
+      });
+    }
+  }
+
+  updateDataFields(data: any) {
+    this.data = data;
+
+    this.data.avgRating = data.avgRating ? data.avgRating : 0;
+    this.activeIndex = 0;
+    
+    this.selectedColor = data?.assets[0]?.color;
+    this.selectedSize = data.assets[this.assetIndex].stockQuantity[0].size;
+    this.outOfStock = (this.data.assets[this.assetIndex].stockQuantity[this.sizeIndex].quantity <= 0) ? true : false;
+
+    if (this.outOfStock) {
+      let assetI = 0;
+      const inStock = this.data.assets.some((asset: any) => {
+        let stockI = 0;
+        let otherSizeAvailable = asset.stockQuantity.some((stockQ: any) => {
+          if (stockQ.quantity > 0) {
+            this.changeColor(assetI);
+            this.updateSizeIndex(stockI);
+            return true;
+          }
+          stockI++;
+          return false;
+        });
+
+        if (otherSizeAvailable) {
+          return true;
+        }
+
+        assetI++;
+        if(assetI >= this.data.assets.length){
+          this.changeColor(0);
+          return true;
+        }
+        this.changeColor(assetI);
+        return false;
+      });
+       
+    }
+
+    this.userReview = null;
+    this.ratingForm.reset();
+    this.userRating = -1;
+    this.showReview = false;
+    // if this user has already reviewed:
+    if (data.userReview) {
+      this.userReview = data.userReview;
+      this.userRating = data.userReview.rating - 1;
+      this.ratingForm.setValue({
+        rating: data.userReview.rating,
+        review: data.userReview.comment
+      })
+    }
+    this.selectedQ = this.getOrderQuantity()[0];
+    this.fetchSimilarProducts = {
+      'tags': this.data.info.tags
+    };
+
+    this.route.queryParams.subscribe(queryParam => {
+      if (queryParam['color']) {
+        this.assetIndex = queryParam['color'];
+        this.changeColor(this.assetIndex);
+      }
     });
+
+    this.loading = false;
   }
 
   addToCart() {
     const cartItem = {
-      sku: this.data.productDetails.sku,
+      data: this.data,
       size: this.selectedSize,
       color: this.selectedColor,
       quantity: this.selectedQ
     }
 
-    this.cartService.addToCart(cartItem);
+    this.outOfStock = (this.data.assets[this.assetIndex].stockQuantity[this.sizeIndex].quantity <= 0) ? true : false;
+    if (this.outOfStock) {
+      this.toastService.errorToast({
+        title: "This Product is out of stock"
+      });
+    }
+    else {
+      this.cartService.addToCart(cartItem, false);
+    }
   }
 
-  // @HostListener('document:keyup', ['$event'])
-  // handleKeyboardEvent(event: KeyboardEvent) {
-  //   if (event.key === 'Escape' && this.showCarousel === true) {
-  //     this.showCarousel = false;
-  //   }
-  // }
+  changeColor(index: any) {
+    this.assetIndex = index;
+    this.sizeIndex = 0;
+    this.normalizeSizeColorQuantity();
+  }
+
+  updateSizeIndex(index: number) {
+    this.sizeIndex = index;
+    this.normalizeSizeColorQuantity();
+  }
+
+  normalizeSizeColorQuantity() {
+
+    this.selectedColor = this.data?.assets[this.assetIndex].color;
+    this.selectedSize = this.data?.assets[this.assetIndex].stockQuantity[this.sizeIndex].size;
+    this.outOfStock = (this.data?.assets[this.assetIndex].stockQuantity[this.sizeIndex].quantity <= 0) ? true : false;
+
+    if (!(this.getOrderQuantity().includes(this.selectedQ))) this.selectedQ = 0;
+  }
+
+  chooseWishlist() {
+    this.wishlistService.ShowWishlist(this.data._id);
+  }
+
+  RemoveOrAddToWishlist(isWishlisted: any = null) {
+    if (!isWishlisted) {
+      this.wishlistService.ShowWishlist(this.data._id);
+    }
+    else {
+      this.wishlistService.removeFromWishlist(this.data._id).subscribe((data) => {
+        this.wishlistService.getWishlistCount();
+        this.data.wishlisted = false;
+      });
+    }
+  }
+
+  getOrderQuantity() {
+    let limit = this.data?.assets[this.assetIndex].stockQuantity[this.sizeIndex].quantity;
+
+    let arr = this.data?.info.orderQuantity;
+    let filteredArray = arr.filter((item: any) => item <= limit);
+
+    if (!(filteredArray.includes(limit)) && (arr[arr.length - 1] > limit)) {
+      filteredArray.push(limit);
+    }
+
+    return filteredArray;
+  }
+
+  selectedSection = 'description';
+  tempUserRating: number = -1;
+  userRating: number = -1;
+
+  RatingUpdated() {
+    this.ratingForm.controls['rating'].setValue(this.userRating + 1);
+  }
+
+  addOrUpdateReview() {
+    let review = {
+      productId: this.data._id,
+      rating: this.ratingForm.controls['rating'].value,
+      comment: this.ratingForm.controls['review'].value
+    }
+
+    this.reviewService.addReview(review).subscribe(() => {
+      this.fetchProductData(false);
+      this.showReview = false;
+      this.toastService.successToast({
+        title: 'Review successfully ' + (this.userReview ? 'updated' : 'posted')
+      });
+      this.ratingForm.reset();
+    });
+  }
+
+  deleteReview() {
+    this.reviewService.deleteReview(this.data._id).subscribe(() => {
+      this.userReview = '';
+      this.fetchProductData(false);
+      this.toastService.notificationToast({
+        title: 'Review deleted successfully'
+      });
+    });
+  }
+
+  scroll(element: HTMLElement) {
+    var headerOffset = 250;
+    var elementPosition = element.getBoundingClientRect().top;
+    var offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+    window.scrollTo({
+      top: offsetPosition,
+      behavior: "smooth"
+    });
+  }
+
+  createArrayToIterate(num: number) {
+    const newTotal = Math.floor(num);
+    if (newTotal <= 0) {
+      return [];
+    }
+    return Array(newTotal).fill(0);
+  }
+
+  updateSelectedField(e: any) {
+    this.selectedQ = e;
+  }
 
   customOptions: OwlOptions = {
     startPosition: 0,
@@ -82,23 +310,28 @@ export class ProductPageComponent implements OnInit{
     touchDrag: true,
     pullDrag: true,
     dots: false,
-    nav: true,
+    nav: false,
+    items: 1,
     autoplay: false,
-    navText: ['<span class="material-symbols-outlined">chevron_left</span>', '<span class="material-symbols-outlined">chevron_right</span>'],
+    // navText: ['<span class="material-symbols-outlined">chevron_left</span>', '<span class="material-symbols-outlined">chevron_right</span>'],
+    navText: ['', ''],
     navSpeed: 600,
     responsive: {
       0: {
         items: 1
       },
-      400: {
-        items: 1
-      },
-      740: {
-        items: 1
-      },
-      940: {
-        items: 1
-      }
+      // 400: {
+      //   items: 3
+      // },
+      // 740: {
+      //   items: 4
+      // },
+      // 940: {
+      //   items: 4
+      // },
+      // 1060: {
+      //   items: 5
+      // }
     },
   }
   carouselOption: OwlOptions = this.customOptions;
@@ -110,25 +343,33 @@ export class ProductPageComponent implements OnInit{
     this.carouselOption = JSON.parse(JSON.stringify(this.customOptions));
     this.atDefault = !this.atDefault;
   }
+
+  limitReviews(reviews: any[]){
+    return reviews.slice(0, 2);
+  }
+
+  ChangeHanlder(event: boolean) {
+    this.viewAllReviews = event;
+  }
+
+  // @HostListener('document:keyup', ['$event'])
+  // handleKeyboardEvent(event: KeyboardEvent) {
+  //   if (event.key === 'Escape' && this.showCarousel === true) {
+  //     this.showCarousel = false;
+  //   }
+  // }
+
+
+    // Purpose to detemine the quantiy of product->color->size based upon orderQuantity
+    filterData(array: any, limit: any) {
+
+      const len = array.length;
+      // 30% of Array is
+      const index = Math.round(len * 0.3);
   
-  // for Product Details:
-
-  addReview: boolean = false;
-  selectedSection = 'description';
-
-  tempUserRating: number = -1;
-  userRating: number = -1;
-
-  createArrayToIterate(num: number) {
-    const newTotal = Math.floor(num);
-    if (newTotal <= 0) {
-      return [];
+      if (limit <= array[index] && limit > 0) {
+        return true;
+      }
+      return false;
     }
-    return Array(newTotal).fill(0);
-  }
-
-  updateSelectedField(e: any){
-    this.selectedQ = e;
-  }
-
 }

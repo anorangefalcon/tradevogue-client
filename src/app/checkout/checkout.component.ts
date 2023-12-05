@@ -1,7 +1,12 @@
-import { Component, HostListener, OnInit, ElementRef } from '@angular/core';
+import { Component, HostListener, OnInit, ElementRef, ViewChild, Renderer2 } from '@angular/core';
 import { CartService } from '../shared/services/cart.service';
-import { CookieService } from 'ngx-cookie-service';
 import { Router } from '@angular/router';
+import { UtilsModule } from '../utils/utils.module';
+import { FetchDataService } from '../shared/services/fetch-data.service';
+import { ToastService } from '../shared/services/toast.service';
+import { CheckoutService } from './checkout.service';
+import { LoginCheckService } from '../shared/services/login-check.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-checkout',
@@ -10,22 +15,89 @@ import { Router } from '@angular/router';
 })
 export class CheckoutComponent implements OnInit {
 
+  LoginUser: boolean = false;
+  loadRazorpayScript() {
+    const script = this.renderer.createElement('script');
+    script.src = 'https://checkout.razorpay.com/v1/checkout.js';
+    this.renderer.appendChild(document.body, script);
+  }
+
+  // CouponAppliedBtnClicked:any='hidden';
   navbar_scroll_style: boolean = false;
   cartCount: number = 0;
-
   updateBoolean: boolean = false;
   cart: any = {};
+  StripePaymentOpener: boolean = false;
+  CheckOutDisabled:boolean=false;
+  loading: boolean = false;
+  isFormFilled = false;
+  paymentButton = false;
+  PaymentSuccess: boolean = false;
+  theme: Boolean = false;
+  @ViewChild('CouponCode') CouponCode: any;
 
-  constructor(private cartService: CartService, private cookie: CookieService, private route: Router, private el: ElementRef) { }
+  allSubscriptions: Subscription[] = [];
+  addressSelected: any = null;
 
-  ngOnInit() {
-    this.cartService.fetchCart("count").subscribe((data) => {
-      this.cartCount = data;
-    });
-    this.cartService.fetchCart().subscribe((data) => {
-     
+  constructor(private cartService: CartService,
+    private loginCheckService: LoginCheckService,
+    private checkOutService: CheckoutService,
+    private router: Router,
+    private renderer: Renderer2,
+    private toastService: ToastService,
+    private BackendUrl: UtilsModule,
+    private fetchService: FetchDataService,
+    private route: Router,
+    private el: ElementRef,
+    private stripePay: CheckoutService)
+     {
+      this.fetchService.themeColor$.subscribe((color)=>{
+        this.theme = color;
+      })
+    this.allSubscriptions.push(
+      this.checkOutService.secureNavbar$.subscribe((data) => {
+        this.SecureNavBar = data;
+      }));
+
+    this.allSubscriptions.push(
+      this.checkOutService.loadStripe.subscribe((data: any) => {
+        // this.PaymentDisabled=false;
+        this.StripePaymentOpener = data;
+      }));
+
+    this.allSubscriptions.push(
+      this.loginCheckService.getUser().subscribe((checkToken) => {
+        this.LoginUser = checkToken;
+      }));
+  }
+
+  async ngOnInit() {
+    this.loading = true;
+    let cartSub = this.cartService.fetchCart().subscribe((data) => {
+      this.cartCount = data.details?.length;
       this.cart = data;
-    });
+      if(this.cart?.details?.length>0){
+        this.verifyOrderSummary(false);
+      }
+      this.loading = false;
+    })
+    this.allSubscriptions.push(cartSub);
+    this.loadRazorpayScript();
+
+    this.checkOutService.PaymentSuccess.asObservable().subscribe((data) => {
+      this.PaymentSuccess = data;
+    })
+  }
+
+  ngOnDestroy() {
+    this.allSubscriptions.forEach((item: Subscription) => item.unsubscribe());
+  }
+
+  DateParser(el: any) {
+    let date: any = (new Date(el).toDateString()).split(' ');
+    date.splice(0, 1)
+    date = String(date[0] + ' ' + date[1] + ', ' + date[2]);
+    return date;
   }
 
   redirectToLogin() {
@@ -43,24 +115,6 @@ export class CheckoutComponent implements OnInit {
         });
     }
   }
-  checkLogin() {
-    const cookieExists = document.cookie.indexOf('loginDetails') !== -1;
-    console.log(cookieExists);
-
-    // cookieExists == true ? this.updateBoolean = false : this.updateBoolean = true;
-
-    if (!cookieExists) {
-      this.redirectToLogin();
-    } else {
-      
-      this.route.navigate(['/cart/billing']).then(() => {
-
-      
-        console.log("CART IS  ",this.cart)
-        window.location.reload();
-      });
-  }
-}
 
   @HostListener('window:scroll', []) onScroll() {
     if (window.scrollY > 80) {
@@ -70,4 +124,228 @@ export class CheckoutComponent implements OnInit {
     }
 
   }
+
+  // COUPONS CODE STARTS-------------------
+  CouponValid: string = '';
+  AllCoupons: any=[];
+  SecureNavBar: Boolean = false;
+  CouponApplied: any = '';
+  direction: string = 'right';
+  show: boolean = false;
+
+  CouponOpener() {
+    this.allSubscriptions.push(
+      this.fetchService.HTTPGET(this.BackendUrl.URLs.getCoupons).subscribe((data: any) => {
+        this.AllCoupons = data;
+        this.show = true;
+      }));
+  }
+
+  InputChange(event:any) {
+   if(!this.CouponCode.nativeElement.value){
+    this.CouponValid='';
+    return;
+   }
+    this.CouponValid = 'valid';
+  }
+
+
+  RemoveAppliedCoupon() {
+    this.cart.amounts.discount=null;
+    this.CouponApplied=false; 
+  }
+
+
+  CheckMinimumPurchase(coupon: any) {
+    return coupon.minimumPurchaseAmount < this.cart.amounts.total;
+  }
+
+  CalculateDiscount(coupon: any) {
+    let totalAmount = (this.cart.amounts.total);
+    if (coupon.discountType == 'flat') {
+      return coupon.discountAmount < totalAmount ? coupon.discountAmount : 0;
+    }
+    else {
+      if (coupon.discountType == 'percentage') {
+        let calculatedDiscount = (totalAmount / 100) * coupon.discountAmount;
+        calculatedDiscount = calculatedDiscount <= coupon.maximumDiscount ? calculatedDiscount : coupon.maximumDiscount;
+        return calculatedDiscount < totalAmount ? calculatedDiscount : 0;
+      }
+    }
+  }
+
+  async ApplyCoupon(coupon: any = '', event: any = '') {
+    if (event) {
+      let value = this.CouponCode.nativeElement.value;
+      value=value.trim();
+      for (let coupon of this.AllCoupons) {
+        if (coupon.couponcode == value) {
+          if (!this.CheckMinimumPurchase(coupon)) {
+            this.toastService.errorToast({ title: 'Coupon', body: `minimum purchase amount is ${coupon.minimumPurchaseAmount}` });
+            return;
+          }
+          this.CouponApplied = coupon;
+          this.CouponValid = 'valid';
+          break;
+        }
+      }
+      if (this.CouponValid != 'valid') {
+        this.CouponValid = 'invalid';
+        return;
+      }
+    }
+
+    else {
+      this.CouponApplied = coupon;
+      this.CouponValid = 'valid';
+    }
+
+    if (!this.CheckMinimumPurchase(this.CouponApplied)) {
+      this.toastService.errorToast({ title: `minimum purchase amount is ${coupon.minimumPurchaseAmount}` });
+      this.CouponValid = 'invalid';
+      this.CouponApplied = null;
+      this.show = false;
+      return;
+    }
+
+    if (this.CouponValid == 'valid') {
+      this.toastService.successToast({
+        title: 'Coupon applied successfully'
+      })
+    }
+    else if (this.CouponValid == 'invalid') {
+      this.toastService.errorToast({
+        title: 'Coupon not valid'
+      })
+      return;
+    }
+
+    this.CouponCode.nativeElement.value = '';
+    this.cart.amounts.discount = this.CalculateDiscount(this.CouponApplied);
+    // this.cart.amounts.total -= this.cart.amounts.discount;
+    this.show = false;
+  }
+
+  verifyOrderSummary(navigate: boolean = true) {
+    if (this.cart?.details?.length == 0) return;
+    let body:any={products: this.cart.details};
+
+    if (this.CouponApplied) {
+      body.couponId = this.CouponApplied._id;
+    }
+
+    if (!navigate) {
+      this.allSubscriptions.push(
+        this.fetchService.HTTPPOST(this.BackendUrl.URLs.verifyOrderWithoutCoupon,  body).subscribe((response) => { 
+       
+          this.cart.amounts =JSON.parse(JSON.stringify(response));
+        }));
+    }
+
+    else {
+      this.CheckOutDisabled=true;
+      if (!this.LoginUser) {
+        this.CheckOutDisabled=false;
+        this.router.navigate(['/auth/login']);
+      }
+      else {
+        this.allSubscriptions.push(
+          this.fetchService.HTTPPOST(this.BackendUrl.URLs.verifyOrderSummary, body).subscribe({
+            next:(response) => {
+            this.cart.amounts =JSON.parse(JSON.stringify(response));
+              this.checkOutService.FinalPaymentAmount.next(response);
+            this.router.navigate(['/cart/billing']);
+            this.CheckOutDisabled=false;
+          },
+          error:(error)=>{
+            this.CheckOutDisabled=false;
+          }
+        }));
+          
+        
+      }
+    }
+  }
+
+
+  ChangeHandler(event: boolean) {
+    this.show = event;
+    if(!this.CouponCode)return;
+    this.CouponCode.nativeElement.value = '';
+  }
+
+  AddressSelected: any = null;
+  NextDisabled: boolean = false;
+
+  nextClicked() {
+    if (!this.checkOutService.addressSelected) {
+      this.toastService.errorToast({ title: 'Please select some address' });
+      return;
+    }
+    this.AddressSelected = this.checkOutService.addressSelected;
+    if (this.AddressSelected) {
+      this.NextDisabled = true;
+    }
+    if (this.checkOutService.addressSelected) {
+      this.createOrder();
+    }
+  }
+
+  OrderId: string = '';
+  createOrder() {
+    let body: any = {};
+  this.AddressSelected;
+    if (this.CouponApplied) {
+      body.couponId = this.CouponApplied._id;
+    }
+    body.products = this.cart.details;
+
+    this.allSubscriptions.push(
+      this.fetchService.HTTPPOST(this.BackendUrl.URLs.createOrder, body).subscribe(
+
+        {next:
+        (data: any) => {
+        this.checkOutService.loadStripe.next(true);
+        this.checkOutService.orderID = data.orderId;
+        this.NextDisabled = false;
+      },
+      error:(error)=>{
+        this.NextDisabled = false;
+      }
+    }
+      )
+      );
+   
+  }
+
+  // COUPONS CODE FINSIH-------------------
+
+  async ProceedToPayment() {
+    let body: any = {};
+    body.address = this.AddressSelected;
+    // response of payment here 
+    const paymentButton = document.getElementById('submit') as HTMLButtonElement;
+    const razorpayButton = document.getElementById('razorSubmit') as HTMLButtonElement;
+
+    if (paymentButton) {
+      paymentButton.click();
+    }
+
+    if (razorpayButton) {
+      razorpayButton.click();
+    }
+    // let body12: any = { newPaymentStatus: 'success', transactionId: '1244', MOP: 'cash', orderID: this.checkOutService.orderID };
+    // this.fetchService.HTTPPOST(this.BackendUrl.URLs.updateOrderStatus, body12).subscribe();
+
+  }
+
+
+  isPaymentFormFilled(): boolean {
+    const paymentForm = document.getElementById('payment-form') as HTMLFormElement;
+
+    const isFilled = paymentForm && paymentForm.checkValidity();
+
+    return isFilled;
+  }
+
 }

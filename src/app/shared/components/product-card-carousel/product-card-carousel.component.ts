@@ -10,30 +10,42 @@ import { productData } from '../../productData';
 })
 export class ProductCardCarouselComponent {
 
-  @Input() whatToFetch: string = '';
-  productArr: productData[] = [];
-  i: number = -1;
+  @Input() whatToFetch: any = {
+    sort: 'highlight:-1'
+  };
+  @Input() titles: any = {
+    title: 'Popular Products',
+    subTitle: 'Explore our most demanded products.'
+  };
+  @Input() excludeSKU: String = '';
   
-  //will fetch ?queryParam according to whatToFetch (but a dummy which gets 10 data from a .json)
-  constructor(private fetchDataService: FetchDataService) {
-    this.fetchDataService.getData().subscribe(data => {
-      while(this.productArr.length < data.length){
-         this.productArr.push(data[this.i+=1]);
+  productArr: productData[] = [];
+  
+  constructor(private fetchDataService: FetchDataService) {}
+
+  ngOnInit(){
+    this.fetchDataService.getProducts(this.whatToFetch, 10).subscribe((data:any)=>{
+      this.productArr = data.items;
+
+      if(this.excludeSKU){
+        console.log(this.excludeSKU);
+        
+        this.productArr = this.productArr.filter((item: any) => item.sku !== this.excludeSKU);
       }
-    });
+    })
   }
 
   customOptions: OwlOptions = {
     loop: false,
     rewind: true,
-    margin: 30,
+    margin: 15,
     mouseDrag: true,
     touchDrag: true,
     pullDrag: true,
     dots: false,
     autoplay: true,
     navSpeed: 300,
-    nav: true,
+    nav: this.productArr.length > 5 ? true : false,
     navText: [
       '<span class="material-symbols-outlined custom-nav-btn">navigate_before</span>',
       '<span class="material-symbols-outlined custom-nav-btn">navigate_next</span>'
@@ -42,17 +54,19 @@ export class ProductCardCarouselComponent {
       0: {
         items: 1
       },
-      400: {
+      340: {
         items: 2
       },
-      740: {
+      500: {
         items: 3
       },
-      940: {
-        items: 5
+      740: {
+        items: 4,
+        margin: 20,
       },
-      1450: {
-        items: 4
+      940: {
+        items: 5,
+        margin: 20,
       }
     }
   }

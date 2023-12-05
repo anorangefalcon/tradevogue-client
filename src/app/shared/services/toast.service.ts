@@ -10,6 +10,7 @@ export class ToastService {
   display$ = this.displaySubject.asObservable();
 
   constructor() { }
+  
   sample: any = {
     display: '',
     content: {
@@ -19,6 +20,7 @@ export class ToastService {
   };
 
   successToast(data: any = ''){
+    this.displaySubject.next('');
     this.sample.display = 'success';
     this.sample.content.title = data.title || 'Item successfully added to cart!';
     this.sample.content.body = data.body;
@@ -26,6 +28,7 @@ export class ToastService {
   }
 
   notificationToast(data: any = ''){
+    this.displaySubject.next('');
     this.sample.display = 'notification';
     this.sample.content.title = data.title || 'New Notification';
     this.sample.content.body = data.body;
@@ -33,6 +36,7 @@ export class ToastService {
   }
 
   warningToast(data: any = ''){
+    this.displaySubject.next('');
     this.sample.display = 'warning';
     this.sample.content.title = data.title || 'Warning';
     this.sample.content.body = data.body;
@@ -40,6 +44,7 @@ export class ToastService {
   }
 
   errorToast(data: any = ''){
+    this.displaySubject.next('');
     this.sample.display = 'error';
     this.sample.content.title = data.title || 'Error Occurred';
     this.sample.content.body = data.body;
