@@ -139,7 +139,7 @@ export class MonetizationComponent {
     // this.popup.openPopup();
   }
 
-  PopUpChangeHanlder(event: any) {
+  PopUpChangeHanlder(event: boolean) {
     this.showingPopUp = event;
   }
 

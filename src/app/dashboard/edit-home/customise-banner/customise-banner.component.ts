@@ -232,10 +232,8 @@ export class CustomiseBannerComponent {
     return !this.getImagePreview();
   }
 
-  PopUpChangeHanlder(event: any) {
-    this.showingPopUp = event;
-    console.log('showing pop up is ',this.showingPopUp);
-    
+  PopUpChangeHanlder(event: boolean) {
+    this.showingPopUp = event; 
   }
   ParentClosedHandler(event: any) {
     this.ParentClosed = event;

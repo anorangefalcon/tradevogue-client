@@ -218,7 +218,7 @@ export class SelectLayoutComponent {
     }
   }
 
-  PopUpChangeHanlder(event: any) {
+  PopUpChangeHanlder(event: boolean) {
     this.showingPopUp = event;
   }
 

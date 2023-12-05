@@ -20,22 +20,24 @@ export class ToastComponent {
 
   constructor(toastService: ToastService) {
     toastService.display$.subscribe((data: any) => {
+      if(!data) return;
       this.display = '';
+      setTimeout(()=>{ this.display = data.display;
       this.timeout = 5000;
       this.display = data.display;
-      this.timeoutVar = ''
+      if(this.timeoutVar) clearTimeout(this.timeoutVar);
       this.content.title = data.content?.title;
       this.content.body = data.content?.body;
 
       if(this.display){
         this.showToast();
       }
+    },0);
     })
   }
 
   showToast() {
     this.start_time = Date.now();
-    
     this.timeoutVar = setTimeout(() => {
       this.display = '';
     }, this.timeout);
@@ -43,7 +45,7 @@ export class ToastComponent {
 
   hoverIn() {
     this.timeout = 5000 - (Date.now() - this.start_time);
-    clearTimeout(this.timeoutVar);
+    clearTimeout(this.timeoutVar);    
   }
 
   hoverOut() {

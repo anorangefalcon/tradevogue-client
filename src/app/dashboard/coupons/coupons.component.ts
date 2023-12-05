@@ -18,10 +18,7 @@ export class CouponsComponent {
   title = 'Add Coupon/Discount';
   direction: string = 'right';
   allSubscriptions: Subscription[] = [];
-  ParenClosed: boolean = false;
   show: boolean = false;
-  todaypageChangeDate: any = Date.now();
-
   totalCount:number = 0;
   currentPage: number = 1;
 
@@ -33,8 +30,6 @@ export class CouponsComponent {
 
 
   clearFormArray = (formArray: any) => {
-    console.log('clear forem called');
-    
     while (formArray?.length !== 0) {
       formArray?.removeAt(0)
     }
@@ -47,7 +42,7 @@ export class CouponsComponent {
     this.OfferForm.reset();
   }
 
-  ChangeHanlder(event: any) {
+  ChangeHanlder(event: boolean) {
     this.show = event;
     this.clearForm();
   }
@@ -84,7 +79,7 @@ export class CouponsComponent {
         discountType: fb.control('', [Validators.required,]),
         discountAmount: fb.control('', [Validators.required]),
         startDate: fb.control('', [Validators.required]),
-        endDate: fb.control('', [Validators.required,]),
+        endDate: fb.control('', [Validators.required,this.DateValidator]),
       },
       { validator: this.DateValidator }
     )
@@ -163,25 +158,28 @@ export class CouponsComponent {
     return null;
   }
 
-   controls: any = [
-    { name: 'couponcode', validator: this.CouponCodeValidator },
-    { name: 'couponType', },
-    { name: 'minimumPurchaseAmount' },
-  ];
 
   OfferTypeHandler(event: any,couponType:any=null) {
+    let controls:any = [
+      { name: 'couponcode', validator: this.CouponCodeValidator },
+      { name: 'couponType', },
+      { name: 'minimumPurchaseAmount' },
+    ];
+  
     
     this.OfferForm.get('OfferType')?.setValue(event);
 
     if (event == 'coupon') { 
       if(couponType!='custom'){
-        this.controls.push(  { name: 'couponUsersLimit' });
+        controls.push( 
+          { name: 'couponUsersLimit' });
       }
-      if (this.OfferForm.get('ExtraInfo')) {
-        this.OfferForm.removeControl('ExtraInfo');
-        this.OfferForm.removeControl('DiscountPercentageHandler');
-      }
-      this.controls.forEach((el: any) => {
+      // if (this.OfferForm.get('ExtraInfo')) {
+        this.OfferForm?.removeControl('ExtraInfo');
+        // console.log('offerformis ',this.OfferForm);
+        // this.OfferForm.removeControl('DiscountPercentageHandler');
+      // }
+    controls.forEach((el: any) => {
         if (el.validator) {
           this.OfferForm.addControl(el.name, this.fb.control('', [Validators.required, el.validator]));
         }
@@ -193,7 +191,9 @@ export class CouponsComponent {
     }
 
     if (event == 'discount') {
-      this.controls.forEach((el: any) => {
+      console.log('discount called');
+      
+      controls.forEach((el: any) => {
         this.OfferForm.removeControl(el.name);
       })
       let ExtraInfo = this.fb.group({
@@ -203,11 +203,16 @@ export class CouponsComponent {
       this.OfferForm.addControl('ExtraInfo', ExtraInfo);
     }
 
+    // console.log('offer form is ',this.OfferForm.value);
+    
+
   }
 
 
 
   CouponTypeHandler(event: any) {
+    // console.log('coupon handler called');
+    
     this?.OfferForm?.get('couponType')?.patchValue(event);
     if (event == 'custom') {
       this.OfferForm.addControl('UserEmails', this.fb.array([]));

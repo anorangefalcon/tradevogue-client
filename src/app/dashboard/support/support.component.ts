@@ -52,7 +52,7 @@ export class SupportComponent {
     this.showingPopUp = true;
   }
 
-  PopUpChangeHanlder(event: any) {
+  PopUpChangeHanlder(event: boolean) {
     this.showingPopUp = event;
   }
 

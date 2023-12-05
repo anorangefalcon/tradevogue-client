@@ -89,7 +89,7 @@ export class WishlistComponent {
     })
   }
 
-  handler(event: any) {
+  handler(event: boolean) {
     this.showTextField = false;
     this.updateRequest = '';
     this.show = event

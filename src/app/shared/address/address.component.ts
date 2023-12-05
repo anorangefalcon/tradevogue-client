@@ -105,7 +105,7 @@ export class AddressComponent {
     this.postalCodeInput.next(postalCodeValue);
   }
 
-  ChangeHanlder(event: any) {
+  ChangeHanlder(event: boolean) {
     this.show = event;
     this.AddressHandler.emit(false);
     this.DetailsForm.reset();

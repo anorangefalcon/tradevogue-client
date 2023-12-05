@@ -143,7 +143,7 @@ export class EyePopupComponent {
 
   
 
-  handler(event: any) {
+  handler(event: boolean) {
     this.show = event
   }
 

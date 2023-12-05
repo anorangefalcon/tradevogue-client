@@ -348,7 +348,7 @@ export class ProductPageComponent implements OnInit {
     return reviews.slice(0, 2);
   }
 
-  ChangeHanlder(event: any) {
+  ChangeHanlder(event: boolean) {
     this.viewAllReviews = event;
   }
 

@@ -268,7 +268,7 @@ export class FaqsComponent {
     this.show = true;
   }
 
-  ChangeHandler(event: any) {
+  ChangeHandler(event: boolean) {
     this.show = event;
   }
 

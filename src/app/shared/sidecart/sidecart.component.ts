@@ -29,7 +29,7 @@ export class SidecartComponent {
       }));
   }
 
-  ChangeHanlder(event: any) {
+  ChangeHanlder(event: boolean) {
     this.show = event;
   }
 

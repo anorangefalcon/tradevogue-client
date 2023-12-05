@@ -268,9 +268,8 @@ export class CheckoutComponent implements OnInit {
   }
 
 
-  ChangeHandler(event: any) {
+  ChangeHandler(event: boolean) {
     this.show = event;
-
     if(!this.CouponCode)return;
     this.CouponCode.nativeElement.value = '';
   }
