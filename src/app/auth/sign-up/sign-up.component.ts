@@ -20,13 +20,13 @@ export class SignUpComponent {
 
   dataSubscription!: Subscription;
 
-  constructor(fb: FormBuilder, private loginService: LoginCheckService, private renderer: Renderer2, private backendURLs: UtilsModule, private fetchDataService: FetchDataService) {
+  constructor(fb: FormBuilder, private loginService: LoginCheckService,
+     private renderer: Renderer2, private backendURLs: UtilsModule, private fetchDataService: FetchDataService) {
     // Google login
     window.addEventListener('auth', async (event: any) => {
       const token = { credential: event.detail.credential }
       const body = { token };
       this.CreateUser(body);
-
     })
 
     this.signupForm = fb.group(

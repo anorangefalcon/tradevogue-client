@@ -39,6 +39,7 @@ export class StatisticsComponent implements OnInit {
   constructor(private fetchdata: FetchDataService, private backendUrl: UtilsModule) { }
 
   ngOnInit(): void {
+    (<HTMLMetaElement>document.getElementById('meta-description')).content = "Admin Dashboard Overview";
     this.createLineChart();
     this.createDonut();
     // this.createBarChart();

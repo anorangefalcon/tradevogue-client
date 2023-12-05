@@ -74,7 +74,7 @@ export class DashboardComponent {
   ngOnInit() {
 
     this.script = this.renderer.createElement('script');
-    this.script.src = '//static.filestackapi.com/filestack-js/3.x.x/filestack.min.js';
+    this.script.src = 'https://static.filestackapi.com/filestack-js/3.x.x/filestack.min.js';
     this.script.async = true;
     this.renderer.appendChild(document.body, this.script);
 
