@@ -33,6 +33,8 @@ export class LoginComponent {
     private dialogService: DialogBoxService,
     private renderer: Renderer2) {
 
+      (<HTMLMetaElement>document.getElementById('meta-description')).content = "Trade Vogue Login"
+
     this.loginForm = fb.group(
       {
         email: fb.control('', [Validators.required, Validators.email]),

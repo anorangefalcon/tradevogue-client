@@ -2,8 +2,8 @@
     <div class="column left-column d-flex justify-content-center align-item-center ">
         <div class="form-container d-flex flex-column relative" *ngIf="showPasswordForm==false">
             <div class="header fixed">
-                <a routerLink="/"><img src="../../assets/logo.svg" alt="logo" *ngIf="!theme"></a>
-                <a routerLink="/"><img src="../../assets/logo-light.svg" alt="logo" *ngIf="theme"></a>
+                <a routerLink="/"><img src="../../assets/logo.svg" alt="logo" *ngIf="!theme" aria-label="trade vogue"></a>
+                <a routerLink="/"><img src="../../assets/logo-light.svg" alt="logo" *ngIf="theme" aria-label="trade vogue"></a>
             </div>
             <h2 class="login-title text-center">Welcome Back</h2>
             <form [formGroup]="loginForm" class="mw100 d-flex flex-column gap-15">
@@ -22,12 +22,12 @@
                     <span class="material-symbols-outlined key  form__icon absolute">key</span>
                     <input [type]="passwordFieldType" placeholder="Enter Your Password" formControlName="password">
                     <a class="eye-btn flex justify-content-center align-item-center pointer"
-                        (click)="togglePasswordVisibility()">
+                        (click)="togglePasswordVisibility()" aria-label="Eye" href="#">
                         <span class="material-symbols-outlined eye">{{ showPassword ? 'visibility' :
                             'visibility_off'}}</span>
                     </a>
                     <div class="forgot-pass">
-                        <a class="pointer sign-up-text" (click)="showPasswordForm=true">Forgot password?</a>
+                        <a class="pointer sign-up-text" (click)="showPasswordForm=true" aria-label="Forgot password" href="#">Forgot password?</a>
                     </div>
 
                 </div>
@@ -57,13 +57,13 @@
                 </button>
 
                 <p class="text-center acc-text">Don't have an account? <a class="sign-up-text"
-                        [routerLink]="['/auth/signup']">Sign up</a></p>
+                        [routerLink]="['/auth/signup']" aria-label="Sign up">Sign up</a></p>
             </form>
         </div>
         <div class="form-container d-flex flex-column relative" *ngIf="showPasswordForm==true">
             <div class="header fixed">
-                <a routerLink="/"><img src="../../assets/logo.svg" alt="logo" *ngIf="!theme"></a>
-                <a routerLink="/"><img src="../../assets/logo-light.svg" alt="logo" *ngIf="theme"></a>
+                <a routerLink="/"><img src="../../assets/logo.svg" alt="logo" *ngIf="!theme" aria-label="trade vogue"></a>
+                <a routerLink="/"><img src="../../assets/logo-light.svg" alt="logo" *ngIf="theme" aria-label="trade vogue"></a>
             </div>
             <h2 class="login-title text-center">Forgot Password</h2>
             <form [formGroup]="forgetPasswordForm" class="mw100 d-flex flex-column gap-15">
