@@ -32,7 +32,10 @@ export class HomeComponent {
      private toastService: ToastService) {
     this.subscribeForm = fb.group({
       email: fb.control('', [Validators.required, Validators.email]),
-    })
+    });
+   
+    (<HTMLMetaElement>document.getElementById('meta-description')).content = "TradeVogue"
+
   }
 
   ngOnInit(){
@@ -49,6 +52,7 @@ export class HomeComponent {
     this.fetchDataService.themeColor$.subscribe((color)=>{
       this.theme = color;
     })
+    
     
   }
 

@@ -14,21 +14,25 @@ import { UtilsModule } from 'src/app/utils/utils.module';
 
 export class FooterComponent {
 
-  socialsData! : any;
+  socialsData!: any;
   theme: Boolean = false;
 
-  constructor(private routerService: RouterLinksService, private router: Router, private socialsService: SocialsService, private fetchDataService : FetchDataService, private backendUrls : UtilsModule) {
-    this.fetchDataService.themeColor$.subscribe((color)=>{
+  constructor(private routerService: RouterLinksService,
+    private router: Router,
+    private socialsService: SocialsService,
+    private fetchDataService: FetchDataService, private backendUrls: UtilsModule) {
+    this.fetchDataService.themeColor$.subscribe((color) => {
       this.theme = color;
     })
   }
 
-  ngOnInit(){
-    this.socialsService.getSocials().subscribe((data:any)=>{
+  ngOnInit() {
+    (<HTMLMetaElement>document.getElementById('meta-description')).content = "TradeVogue Terms & Conditions"
+    this.socialsService.getSocials().subscribe((data: any) => {
       this.socialsData = data;
     });
     const body = {
-      parameter : "all"
+      parameter: "all"
     }
     this.fetchDataService.HTTPPOST(this.backendUrls.URLs.uniqueProductFields, body).subscribe(
       (data: any) => {
@@ -40,7 +44,7 @@ export class FooterComponent {
   }
 
 
-  categories : [] = [];
+  categories: [] = [];
   show(el: any) {
     if (el == 'profile') {
       this.routerService.updateShowData('profile');
@@ -48,8 +52,8 @@ export class FooterComponent {
     else {
       this.routerService.updateShowData('orders');
     }
-    
+
   }
-  
+
 
 }

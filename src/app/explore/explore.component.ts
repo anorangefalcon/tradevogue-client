@@ -73,7 +73,10 @@ export class ExploreComponent {
 
     this.fetchData.HTTPPOST(this.BackendEndUrl.URLs.uniqueProductFields, body).subscribe((res: any) => {
       this.uniqueData = res.data;
-    })
+    });
+
+    (<HTMLMetaElement>document.getElementById('meta-description')).content = "TradeVogue Explore"
+
   }
 
   checked(title: any){

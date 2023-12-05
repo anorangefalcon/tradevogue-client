@@ -17,9 +17,8 @@ export class AboutComponent {
     this.dataSubscription = fetchDataService.HTTPGET((this.backendUrls.URLs.getAboutDetails)).subscribe((data)=>{
       this.Data=data;
     });
-    // this.fetchDataService.HTTPGET((this.backendUrls.URLs.getOverAllDetails)).subscribe((data: any)=>{
-    //   console.log('res', data)
-    // });
+    (<HTMLMetaElement>document.getElementById('meta-description')).content = "About TradeVogue"
+
   }
 
   ngOnDestroy() {
