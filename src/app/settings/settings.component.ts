@@ -3,20 +3,16 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FetchDataService } from '../shared/services/fetch-data.service';
 import { UtilsModule } from 'src/app/utils/utils.module';
 import { passwordStrengthValidator, matchPasswordValidator } from '../auth/validators';
-// import { ToastService } from '../shared/services/toast.service';
 import { MobileNoValidator } from './validators';
 import { Location } from '@angular/common';
 import { CartService } from '../shared/services/cart.service';
 import { ActivatedRoute, Router } from '@angular/router';
-// import { StripPaymentService } from '../shared/services/stripe-Integration/strip-payment.service';
 import { CheckoutService } from '../checkout/checkout.service';
 import { WishlistService } from '../shared/services/wishlist.service';
 import { DialogBoxService } from '../shared/services/dialog-box.service';
 import { ToastService } from '../shared/services/toast.service';
-import { CookieService } from 'ngx-cookie-service';
 import { LoginCheckService } from '../shared/services/login-check.service';
 import { InvoiceTemplateComponent } from 'src/app/shared/components/invoice-template/invoice-template.component';
-import { error } from 'jquery';
 
 
 @Component({
@@ -83,11 +79,9 @@ export class SettingsComponent {
     cancelText: 'No, Revert'
   };
 
-  // addnewAddress:boolean=false;
   userAddresses: any=[];
   TranslateData: boolean = false;
 
-  // private toastService: ToastService
   constructor(private backendURLs: UtilsModule,
     private wishlistService: WishlistService,
     private fetchDataService: FetchDataService,
@@ -101,14 +95,6 @@ export class SettingsComponent {
     private userService: LoginCheckService,
     private invoiceService: InvoiceTemplateComponent
   ) {
-    // this.route.queryParams.subscribe(params => {
-    //   const redirectStatus = params['redirect_status'];
-    //   if (redirectStatus === 'succeeded') {
-    //     this.stripePay.checkOrderStatus()
-    //   }
-    // });
-
-    // this.stripePay.checkOrderStatus()
 
     this.ProfileForm = fb.group(
       {
