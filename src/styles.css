@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+@import url(./assets/Fonts/Poppins/Poppins.css);
 
 /* Box sizing rules */
 *,
@@ -158,8 +158,6 @@ h3,
 h4,
 h5,
 h6 {
-    /* font-family: 'Poppins', sans-serif; */
-    /* font-family: 'Playfair Display', serif; */
     font-family: 'Poppins', sans-serif;
     font-weight: 500;
 
@@ -1138,6 +1136,7 @@ span.error {
         background-color: rgb(var(--text-gray), 0.5);
         border: 1px solid rgb(var(--whiteClr));
         border-radius: 25px;
+        color: transparent;
     }
 
     & label::before {

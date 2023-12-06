@@ -4,7 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng s -o",
-    "build": "ng build --Configuration=production",
+    "build": "ng build --Configuration=production  ",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "sonar": "sonar-scanner"

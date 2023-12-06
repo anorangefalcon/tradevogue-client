@@ -32,6 +32,8 @@ import { MessagingService } from './shared/services/messaging-service';
 import { CarouselModule } from 'ngx-owl-carousel-o';
 import { AboutComponent } from './about/about.component';
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
+import { HashLocationStrategy, LocationStrategy } from '@angular/common';
+
 const config: SocketIoConfig = { url: 'http://localhost:1000', options: {} };
 
 @NgModule({
@@ -76,6 +78,7 @@ const config: SocketIoConfig = { url: 'http://localhost:1000', options: {} };
     CookieService,
     MessagingService, AsyncPipe,
     { provide: HTTP_INTERCEPTORS, useClass: HeadersInterceptor, multi: true },
+    // {provide: LocationStrategy, useClass: HashLocationStrategy}
   ],
   bootstrap: [AppComponent],
 })

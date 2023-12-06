@@ -23,9 +23,9 @@
             <tr>
                 <th class="items item-check ">
                     <input [(ngModel)]="selectAll" (change)="toggleSelectAll(); updateCheckList();" type="checkbox"
-                        id="all_product">
+                        id="all_product" class="display-none">
                     <label for='all_product' class="d-flex flex-center">
-                        <span class="d-flex flex-center material-symbols-outlined">done</span>
+                        <span class="d-flex flex-center pointer fs-16 fw-400 btn-rounded material-symbols-outlined">done</span>
                     </label>
                 </th>
                 <th class="items">Discount Title / Coupon Code</th>
@@ -41,11 +41,12 @@
                 <ng-container *ngFor="let data of allOffers; let i=index">
                     <tr *ngIf="i < TemplatePagination.limit">
                         <td class="items item-check">
-                            <input [(ngModel)]="data.checked" type="checkbox"
+                            <input [(ngModel)]="data.checked" type="checkbox" class="display-none"
                                 (change)="checkboxChanged(i); updateCheckList();" id="itemId_{{i}}">
                             <label class="d-flex flex-center" for='itemId_{{i}}'>
-                                <span class="d-flex flex-center material-symbols-outlined">done</span>
+                                <span class="d-flex flex-center pointer fs-16 fw-400 btn-rounded material-symbols-outlined">done</span>
                             </label>
+                            
                         </td>
 
                         <ng-container>

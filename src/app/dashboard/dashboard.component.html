@@ -3,22 +3,22 @@
     <header class="header fixed inset-inline-0 inset-block-start-0 transition" [class.active]="isCollapse">
         <div class="mh100 header_container d-flex align-item-center justify-content-md-between">
             <div class="toogle-section d-flex gap-10 align-item-center">
-                <a href="javascript:void(0);" (click)="isCollapse = !isCollapse"
-                    class="pointer d-flex align-item-center mh100">
+                <span (click)="isCollapse = !isCollapse" aria-label="menu" class="pointer d-flex align-item-center mh100">
                     <span class="material-symbols-outlined">menu</span>
-                </a>
-                <a aria-label=" Logo (Trade Vogue) (Light Mode)" href="javascript:void(0);" [routerLink]="['/']">
+                </span>
+                <span aria-label=" Logo (Trade Vogue) (Light Mode)" [routerLink]="['/']">
                     <img class="brand-logo" width="50px" src="../../assets/logo-mobile.svg" *ngIf="!darkTheme"
-                        [class.active]="isCollapse" alt="Trade Vogue"></a>
-                <a aria-label="Mobile Logo (Trade Vogue) (dark_mode Mode)" href="javascript:void(0);"
-                    [routerLink]="['/']"><img class="brand-logo" width="50px" src="../../assets/logo-mobile-light.svg"
-                        *ngIf="darkTheme" [class.active]="isCollapse" alt="Trade Vogue"></a> 
+                        [class.active]="isCollapse" alt="Trade Vogue">
+                </span>
+                <span aria-label="Mobile Logo (Trade Vogue) (dark_mode Mode)" [routerLink]="['/']"><img class="brand-logo"
+                        width="50px" src="../../assets/logo-mobile-light.svg" *ngIf="darkTheme"
+                        [class.active]="isCollapse" alt="Trade Vogue">
+                </span>
             </div>
             <ul class="mh100 header_items d-flex align-item-center justify-content-end gap-20">
 
                 <li class="header_links">
-                    <a href="javascript:void(0);" routerLink="/dashboard/chat"
-                        class="mh100 message d-flex align-item-center relative">
+                    <a routerLink="/dashboard/chat" class="mh100 message d-flex align-item-center relative">
                         <span class="pointer transition  icons material-symbols-outlined">Message</span>
                         <span class="count d-flex flex-center text-center absolute">{{chatLength}}</span>
                     </a>
@@ -64,7 +64,7 @@
 
     <div class="sidebar fixed inset-block-start-0 inset-inline-start-0 transition" [class.active]="isCollapse">
         <span class="branding d-flex align-item-center">
-            <a href="javascript:void(0);" [routerLink]="['/']">
+            <a [routerLink]="['/']">
                 <ng-container *ngIf="!darkTheme; else lightTheme">
                     <img class="brand-logo" src="../../assets/logo.svg" [class.active]="isCollapse" alt="Logo">
                     <img class="mobile-logo" src="../../assets/logo-mobile.svg" alt="Logo">
@@ -80,7 +80,7 @@
             <ul class="navlist d-flex flex-column mh100 relative">
                 <li class="transition" *ngFor="let item of navitems">
 
-                    <a href="javascript:void(0);" [routerLink]="item.route ? item.route: null"
+                    <a [routerLink]="item.route ? item.route: null"
                         (click)="item.name.toLowerCase() == 'logout' ? logout() : null;" [class.dropdown]="item.sublist"
                         [routerLinkActive]="'active'"
                         class="nav-links relative align-item-center d-flex gap-15 pointer transition">
@@ -92,8 +92,8 @@
                         [routerLinkActiveOptions]="{exact: true}">
 
                         <li class="sub-links transition" *ngFor="let subitem of item.sublist">
-                            <a href="javascript:void(0);" class="mw100" [routerLink]="subitem.route"
-                                routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">{{subitem.name}}</a>
+                            <a class="mw100" [routerLink]="subitem.route" routerLinkActive="active"
+                                [routerLinkActiveOptions]="{exact: true}">{{subitem.name}}</a>
                         </li>
 
                     </ul>

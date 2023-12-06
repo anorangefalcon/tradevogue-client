@@ -117,7 +117,7 @@
                     <p class="fs-12 fw-500">Show Active Products:</p>                             
                     <td class="items">
                         <div class="slide-button d-flex align-item-center">
-                            <label for="activeProducts"></label>
+                            <label for="activeProducts" aria-label="Toggle button">Toggle</label>
                             <input type="checkbox" [(ngModel)]="template.filter.active" (change)="fetchData()" id="activeProducts"/>
                         </div>
                     </td>
@@ -194,7 +194,7 @@
                                                             [id]="'color1_'+ item.name + c.color" [value]="c.color"
                                                             (click)="isradioChecked($event, c_index)"
                                                             [checked]="c_index == 0" class="display-none"/>
-                                                        <label class="pointer relative d-flex flex-center"
+                                                        <label aria-label="Color Associated to Products Clickable" class="pointer relative d-flex flex-center"
                                                             [for]="'color1_'+ item.name + c.color"
                                                             [style]="'background-color:'+ c.color"></label>
                                                     </ng-container>
@@ -270,9 +270,9 @@
     
                                 <td class="items">
                                     <div class="slide-button d-flex align-item-center">
-                                        <label [for]="i + 'Available'"></label>
+                                        <label [for]="i + 'Available'" arial-label="Activate Product">{{i}}</label>
                                         <input type="checkbox" (click)="activateProduct($event, item._id, i)"
-                                            [(ngModel)]="item.status.active" [id]="i + 'Available'" />
+                                            [(ngModel)]="item.status.active" [id]="i + 'Available'" aria-label="Toggle Button" />
                                     </div>
                                 </td>
     
