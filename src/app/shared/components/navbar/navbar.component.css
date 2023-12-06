@@ -582,6 +582,11 @@ header.active {
     border-bottom: 1px solid rgb(var(--blackClr), 0.2);
     transition: background-color 0.3s;
 }
+
+.notification-item:last-child {
+    border-bottom: none;
+}
+
 .notification-item:first-child {
     padding-block-start: 0px;
 }
