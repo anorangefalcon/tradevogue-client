@@ -20,6 +20,7 @@ export class LoginComponent {
   showPasswordForm: boolean = false;
   isactive: boolean = false;
   script: any;
+  googleCallBackScript: any;
   loading: boolean = false;
   theme: Boolean = false;
 
@@ -55,12 +56,23 @@ export class LoginComponent {
   }
 
   ngOnInit() {
+    const scriptContent = `
+      function googleAuth(res){
+        console.log(res);
+        const event = new CustomEvent('auth', { detail: res });
+        window.dispatchEvent(event);
+      }
+    `;
+    this.googleCallBackScript = this.renderer.createElement('script');
+    this.googleCallBackScript.text = scriptContent;
+    
     this.script = this.renderer.createElement('script');
     this.script.src = 'https://accounts.google.com/gsi/client';
     this.script.async = true;
-
+    
+    this.renderer.appendChild(document.body, this.googleCallBackScript);
     this.renderer.appendChild(document.body, this.script);
-
+    
     this.allSubscriptions.push(
     this.fetchDataService.themeColor$.subscribe((color)=>{
       this.theme = color;
@@ -109,6 +121,7 @@ export class LoginComponent {
   }
 
   ngOnDestroy() {
+    this.renderer.removeChild(document.body, this.googleCallBackScript);
     this.renderer.removeChild(document.body, this.script);
     this.allSubscriptions.forEach((item: Subscription)=> item?.unsubscribe());
   }

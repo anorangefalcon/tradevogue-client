@@ -14,6 +14,7 @@ export class SignUpComponent {
 
   signupForm: FormGroup;
   script: any;
+  googleCallBackScript: any;
   password: string = 'password';
   showPassword: boolean = false;
   loading: boolean = false;
@@ -39,11 +40,22 @@ export class SignUpComponent {
 
   }
 
-
   ngOnInit() {
+    const scriptContent = `
+      function googleAuth(res){
+        console.log(res);
+        const event = new CustomEvent('auth', { detail: res });
+        window.dispatchEvent(event);
+      }
+    `;
+    this.googleCallBackScript = this.renderer.createElement('script');
+    this.googleCallBackScript.text = scriptContent;
+
     this.script = this.renderer.createElement('script');
     this.script.src = 'https://accounts.google.com/gsi/client';
     this.script.async = true;
+
+    this.renderer.appendChild(document.body, this.googleCallBackScript);
     this.renderer.appendChild(document.body, this.script);
   }
 
@@ -71,6 +83,7 @@ export class SignUpComponent {
   }
 
   ngOnDestroy() {
+    this.renderer.removeChild(document.body, this.googleCallBackScript);
     this.renderer.removeChild(document.body, this.script);
     this.dataSubscription?.unsubscribe();
   }
