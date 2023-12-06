@@ -21,6 +21,10 @@
     padding-inline-start: 15px;
 }
 
+.form__input{
+    padding-inline-end: 15px !important;
+}
+
 .form__input.fromdate {
     padding-inline-start: 55px;
 }

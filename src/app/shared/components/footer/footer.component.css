@@ -85,20 +85,12 @@ footer {
             border: 1px solid rgb(var(--textClr), 0.5);
             transition: 0.3s ease-in-out;
         }
-        & i {
-            font-size: 14px;
-            transition: 0.3s ease-in-out;
-        }
+
 
         & .logo-circle:hover {
             border: 1px solid rgb(var(--primaryClr));
             background-color: rgb(var(--primaryClr));
             cursor: pointer;
-
-            & i {
-                color: rgb(var(--whiteClr));
-            }
-
         }
     }
     .copyright-footer {

@@ -1,5 +1,7 @@
 @import url(./assets/Fonts/Poppins/Poppins.css);
 
+@import url(./assets/material-Icons/Outlined.css);
+
 /* Box sizing rules */
 *,
 *::before,
@@ -128,11 +130,47 @@ select {
 
 }
 
+.material-symbols-outlined {
+  font-family: 'Material Symbols Outlined';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;
+  /* Preferred icon size */
+  display: inline-block;
+  line-height: 1;
+  text-transform: none;
+  letter-spacing: normal;
+  word-wrap: normal;
+  white-space: nowrap;
+  direction: ltr;
+
+  /* Support for all WebKit browsers. */
+  -webkit-font-smoothing: antialiased;
+  /* Support for Safari and Chrome. */
+  text-rendering: optimizeLegibility;
+
+  /* Support for Firefox. */
+  -moz-osx-font-smoothing: grayscale;
+
+  /* Support for IE. */
+  font-feature-settings: 'liga';
+}
+
 body {
     font-family: 'Poppins', sans-serif;
     font-size: 13px;
     /* color: rgb(var(--textClr)); */
     background-color: rgb(var(--blackClr), 0.02);
+
+    & svg {
+        filter: invert(0%) sepia(0%) saturate(9%) hue-rotate(239deg) brightness(104%) contrast(100%);
+    
+        &:hover{
+            filter: invert(100%) sepia(1%) saturate(2%) hue-rotate(64deg) brightness(113%) contrast(101%);
+    
+        }
+    }
+    
 }
 
 body.dark {
@@ -145,8 +183,22 @@ body.dark {
     --secondary : 42, 41, 41;
     --DefaultBorder:255, 255, 255;
 
-
     background-color: rgb(var(--whiteClr), 0.9) !important;
+
+    & svg {
+        filter: invert(100%) sepia(1%) saturate(2%) hue-rotate(64deg) brightness(113%) contrast(101%);
+    
+        &:hover{
+            filter: invert(0%) sepia(0%) saturate(9%) hue-rotate(239deg) brightness(104%) contrast(100%);
+        }
+    }   
+}
+
+svg{
+    width: 16px;
+    width: 16px;
+    transition: 0.3s ease-in-out;
+
 }
 
 h1 {
