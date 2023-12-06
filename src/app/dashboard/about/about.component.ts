@@ -45,7 +45,7 @@ export class AboutComponent {
           }),
 
         }),
-        StoreImages: this.fb.control(['',[ Validators.required]]),
+        StoreImages: this.fb.control(['',[]]),
       }),
       TeamMembers: this.fb.array([
       ]),

@@ -38,7 +38,7 @@ export class CheckoutComponent implements OnInit {
 
   allSubscriptions: Subscription[] = [];
   addressSelected: any = null;
-
+  ProceedToPaymentClicked:boolean=false;
   constructor(private cartService: CartService,
     private loginCheckService: LoginCheckService,
     private checkOutService: CheckoutService,
@@ -68,7 +68,13 @@ export class CheckoutComponent implements OnInit {
     this.allSubscriptions.push(
       this.loginCheckService.getUser().subscribe((checkToken) => {
         this.LoginUser = checkToken;
-      }));
+      }),
+      this.checkOutService.ProceedToPayment.asObservable().subscribe((data)=>{
+        console.log('data come up is ',data);
+        
+        this.ProceedToPaymentClicked=data;
+       })
+      );
   }
 
   async ngOnInit() {
@@ -299,7 +305,7 @@ export class CheckoutComponent implements OnInit {
       body.couponId = this.CouponApplied._id;
     }
     body.products = this.cart.details;
-
+    body.address=this.AddressSelected;
     this.allSubscriptions.push(
       this.fetchService.HTTPPOST(this.BackendUrl.URLs.createOrder, body).subscribe(
 

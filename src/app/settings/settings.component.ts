@@ -62,7 +62,7 @@ export class SettingsComponent {
 
   TemplatePagination: any = {
     currentPage: this.currentPage,
-    limit: 1
+    limit: 10
   }
 
   cancelledTempatePagination: any = {
@@ -362,13 +362,14 @@ export class SettingsComponent {
   // orders code 
   getOrders() {
     this.fetchDataService.HTTPPOST(this.backendURLs.URLs.getParticularUserOrders, this.TemplatePagination).subscribe((data: any) => {
-
       if (!data.length) {
         this.totalCount = 0;
         this.AllOrders = []
       }
       else {
         this.AllOrders = data[0]?.document;
+        console.log('allorders is ',this.AllOrders);
+        
         this.totalCount = data?.length;
       }
       this.loading = false;

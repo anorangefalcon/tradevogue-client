@@ -204,7 +204,9 @@
                     </div>
 
                     <div class="AllOrders d-flex flex-column gap-25 default-animation-slow" *ngIf="!loading">
+                        
                         <ng-container *ngFor="let order of AllOrders ; let i=index">
+
                             <div *ngIf="i < TemplatePagination.limit" class="particularOrder">
                                 <div class="order__firstDiv d-flex gap-25 justify-content-md-between">
                                     <div class=" d-flex gap-25 align-item-center order__basic">
@@ -244,7 +246,7 @@
                                         [class.active]="openedAccordionIndex === i">
                                         <div class=" d-flex justify-content-md-between">
                                             <div class="d-flex gap-15">
-                                                <img src={{product.image}} class="imgDiv skeleton">
+                                                <img src={{product.productInfo.image}} class="imgDiv skeleton">
 
                                                 <div class="d-flex flex-column productDetails gap-5">
                                                     <p class="prodName">{{product.name}}</p>
@@ -280,12 +282,12 @@
                                                 <button class="btn" routerLink="/product/{{product.sku}}">
                                                     View Product
                                                 </button>
-                                                <!-- <p *ngIf="product.shipmentStatus!='cancelled'">|</p>
+                                                <p *ngIf="product.shipmentStatus!='cancelled'">|</p>
 
                                                 <button class="btn" *ngIf="product.shipmentStatus=='pending'"
                                                     (click)="CancelProduct(order._id,product.sku)">
                                                     Cancel Product
-                                                </button> -->
+                                                </button>
 
                                                 <!-- <button class="btn" *ngIf="product.shipmentStatus=='delivered'">
                                                     Exchange Product
@@ -340,6 +342,7 @@
                                         <div class="more-icon-content display-none d-flex flex-column gap-10">
                                             <button class="btn-rounded btn" (click)="toggleAccordian(i)">View
                                                 Order</button>
+
                                             <button class="btn-rounded btn">View Invoice</button>
                                         </div>
                                     </div>
@@ -350,7 +353,8 @@
                                         [class.active]="openedAccordionIndex === i">
                                         <div class=" d-flex justify-content-md-between">
                                             <div class="d-flex gap-15">
-                                                <img src={{product.image}} class="imgDiv skeleton">
+                                             
+                                                <img src={{product.productInfo.image}} class="imgDiv skeleton">
 
                                                 <div class="d-flex flex-column productDetails gap-5">
                                                     <p class="prodName">{{product.name}}</p>

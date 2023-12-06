@@ -98,7 +98,7 @@
                 *ngIf="!StripePaymentOpener && SecureNavBar" [disabled]="NextDisabled" [ngClass]="{'spinner':NextDisabled}">
                 Continue</button>
             <button class="btn-primary payment__btn btn btn-md btn-rounded" *ngIf="SecureNavBar && StripePaymentOpener"
-                (click)="ProceedToPayment()" [ngClass]="{'show':show}">Proceed to Payment</button>
+                (click)="ProceedToPayment()" [ngClass]="{'show':show}" [disabled]="ProceedToPaymentClicked" [ngClass]="{'spinner':ProceedToPaymentClicked}">Proceed to Payment</button>
 
         </div>
     </div>

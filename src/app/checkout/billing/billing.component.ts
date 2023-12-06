@@ -3,10 +3,7 @@ import { Component, ElementRef, ViewChild, OnInit, Renderer2 } from '@angular/co
 import { FetchDataService } from 'src/app/shared/services/fetch-data.service';
 import { UtilsModule } from 'src/app/utils/utils.module';
 import { CartService } from 'src/app/shared/services/cart.service';
-import { ActivatedRoute, Router } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
 import { CheckoutService } from '../checkout.service';
-import { LoginCheckService } from 'src/app/shared/services/login-check.service';
 import { Subscription } from 'rxjs';
 import { ToastService } from 'src/app/shared/services/toast.service';
 import { error } from 'jquery';
@@ -69,20 +66,13 @@ export class BillingComponent implements OnInit {
     private checkOutService: CheckoutService,
     private fetchDataService: FetchDataService,
     private backendURLs: UtilsModule,
-    private userService: LoginCheckService,
-    private route: ActivatedRoute,
-    private stripePay: CheckoutService,
-    private http: HttpClient,
     private renderer: Renderer2,
     private toastService: ToastService,
-    private router: Router
   ) {
-    this.stripePay.setLoading = this.stripePay.setLoading.bind(this);
+    // this.stripePay.setLoading = this.stripePay.setLoading.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.stripePay.showMessage = this.stripePay.showMessage.bind(this);
-    this.initialize = this.initialize.bind(this);
-
-
+    // this.stripePay.showMessage = this.stripePay.showMessage.bind(this);
+    // this.initialize = this.initialize.bind(this);
     this.allSubscriptions.push(
       this.cartService.fetchCart().subscribe((data) => {
         this.cartitems = data;
@@ -98,7 +88,7 @@ export class BillingComponent implements OnInit {
       })
   }
 
-  ngOnInit(): void {
+  ngOnInit(){
     this.loadRazorpayScript();
     this.allSubscriptions.push(
       this.checkOutService.loadStripe.subscribe((isLoaded: any) => {
@@ -106,41 +96,33 @@ export class BillingComponent implements OnInit {
         if (isLoaded) {
           this.loadStripe();
         }
-      }));
+      }),
+      );
 
-    try {
-      this.getAddresses();
-    } catch (error) {
-      console.error('Error loading Stripe scripts:', error);
-    }
+    this.getAddresses();
   }
 
-  async loadStripe(): Promise<void> {
-    try {
-      const response = await fetch(this.backendURLs.URLs.getPaymentKeys);
-      const data = await response.json();
-      const publicKey = data[0]?.keys?.[0]?.publicKey;
-      if (publicKey) {
-        this.stripeScript = this.renderer.createElement('script');
-        this.stripeScript.src = 'https://js.stripe.com/v3/';
-        this.stripeScript.async = true;
 
-        this.stripeScript.onload = async () => {
-          this.stripe = Stripe(publicKey);
-          this.initialize();
-          // await this.proceedToPayment();
-        };
-        this.renderer.appendChild(document.body, this.stripeScript);
-      } else {
-        console.error('Public key not found');
-      }
-    } catch (error) {
-      console.error('Error loading Stripe scripts:', error);
-    }
+  loadStripe() {
+      this.fetchDataService.HTTPGET(this.backendURLs.URLs.getPaymentKeys).subscribe({
+        next:(response:any)=>{
+          const publicKey = response[0]?.keys?.[0]?.publicKey;
+          this.stripeScript = this.renderer.createElement('script');
+            this.stripeScript.src = 'https://js.stripe.com/v3/';
+            this.stripeScript.async = true;
+            this.stripeScript.onload = () => {
+              this.stripe = Stripe(publicKey);
+              this.initialize();
+            };
+            this.renderer.appendChild(document.body, this.stripeScript);
+        },
+        error:()=>{
+      }})
+
   }
 
   // stripe elements loaded
-  async initialize(): Promise<void> {
+  async initialize(){
     const item = this.cartitems.details.map((item: { sku: any; name: any; price: any; quantity: any }) => {
       return {
         id: item.sku,
@@ -257,10 +239,10 @@ export class BillingComponent implements OnInit {
       linkAuthenticationElement.mount("#link-authentication-element");
       linkAuthenticationElement.on('change', (event: any) => {
         this.emailAddress = event.value.email;
-
+        
+        const paymentForm = document.querySelector("#payment-form");
+        paymentForm?.addEventListener("submit", this.handleSubmit);
         if (event.complete) {
-          const paymentForm = document.querySelector("#payment-form");
-          paymentForm?.addEventListener("submit", this.handleSubmit);
         } else if (event.error) {
           console.error("Payment form not found");
         }
@@ -271,35 +253,11 @@ export class BillingComponent implements OnInit {
     })
   }
 
-  // stripe button functionality
-  // async initializeStripe(): Promise<void> {
-  //   try {
-  //     if (this.stripePay.publicKey) {
-  //       this.stripe = Stripe(this.stripePay.publicKey);
-  //       await this.initialize(this.stripe);
-  //       const paymentForm = document.querySelector("#payment-form");
-  //       console.log(paymentForm, 'initial');
 
-  //       if (paymentForm) {
-  //         paymentForm.removeEventListener("submit", this.handleSubmit);
-  //         paymentForm.addEventListener("submit", this.handleSubmit);
-  //       } else {
-  //         console.error("Payment form not found");
-  //       }
-  //     }
-  //   } catch (error) {
-  //     console.error('Error occurred:', error);
-  //   }
-  // }
-  paymentSuccess = false;
-  // handle stripe click
 
-  async handleSubmit(e: Event): Promise<void> {
-
-    try {
-      e.preventDefault();
-      await this.stripePay.setLoading(true);
-      // this.checkOutService.checkOrderStatus();
+  async handleSubmit(){
+    try { 
+      this.checkOutService.ProceedToPayment.next(true);
       const { paymentIntent, error } = await this.stripe.confirmPayment({
         elements: this.elements,
         confirmParams: {
@@ -307,42 +265,25 @@ export class BillingComponent implements OnInit {
         },
         redirect: 'if_required'
       });
-      if (error) {
-        this.stripePay.showMessage(error.message);
-      } else if (paymentIntent && paymentIntent.id) {
-        this.checkOutService.checkOrderStatus(this.clientSecret);
-      } else {
-        this.stripePay.showMessage("An unexpected error occurred.");
+
+      if(error){
+        this.toastService.errorToast({title:'Please fill all details'});
+        this.checkOutService.ProceedToPayment.next(false);
       }
-      this.stripePay.setLoading(false);
-      // this.cartService.clearCart();
+        if (paymentIntent) {
+        this.checkOutService.checkOrderStatus(this.clientSecret);
+      } 
+     
+     
     } catch (error) {
+
     }
   }
 
   selectPaymentMethod(method: string) {
-    console.log(method)
     this.selectedPaymentMethod = method;
   }
 
-  @ViewChild('mydiv') my_div: ElementRef | undefined;
-  search_text: any = '';
-  visible_data: any[] = [];
-  not_visible_data: any[] = ['Plain', 'Relaxed', 'Solid', 'Washed'];
-
-  remove_data(el: any) {
-    this.not_visible_data.push(el);
-    this.visible_data = this.visible_data.filter((e) => { return el != e })
-  }
-
-  add_data(el: any) {
-    this.visible_data.push(el);
-    this.not_visible_data = this.not_visible_data.filter((e) => { return el != e })
-  }
-
-  clicked() {
-    this.my_div?.nativeElement.classList.toggle('display_none');
-  }
 
   //razorpay
   submitForm(): void {
@@ -378,6 +319,7 @@ export class BillingComponent implements OnInit {
                 const paymentBody = {
                   orderId: this.checkOutService.orderID
                 };
+
 
                 this.fetchDataService.HTTPPOST(this.backendURLs.URLs.updateOrderStatus, paymentBody).subscribe((updateOrderStatusResponse: any) => {
                   if (updateOrderStatusResponse) {
@@ -421,7 +363,6 @@ export class BillingComponent implements OnInit {
   // ADDRESS TS FILE---------------------
   userAddresses: any[] = [];
   receiveData: any;
-  OrderSuccess: Boolean = true;
   ShowComponent: boolean = false;
   SecureNavBar: Boolean = false;
   AddressLength: number = 0;
@@ -483,10 +424,6 @@ export class BillingComponent implements OnInit {
   addressDelivered!: any[];
   addressChecked: Boolean = false;
   AddressClicked(address: any) {
-    this.userAddresses.forEach((el) => {
-      el.selected = false;
-    })
-    address.selected = true;
     this.checkOutService.addressSelected = (address);
     this.addressDelivered = address;
   }
@@ -496,7 +433,6 @@ export class BillingComponent implements OnInit {
     if (this.stripeScript) {
       this.renderer.removeChild(document.body, this.stripeScript);
     }
-
     this.allSubscriptions.forEach((item: Subscription) => {
       item.unsubscribe()
     });
