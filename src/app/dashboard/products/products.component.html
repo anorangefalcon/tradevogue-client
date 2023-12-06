@@ -128,9 +128,10 @@
                     <thead>
                         <tr>
                             <th class="items item-check ">
+                                
                                 <input class="display-none" [(ngModel)]="selectAll" (change)="toggleSelectAll();  updateCheckList();"
                                     type="checkbox" id="all_product">
-                                <label for='all_product' class="d-flex flex-center">
+                                <label for='all_product' class="d-flex flex-center" aria-label="done">
                                     <span class="d-flex flex-center pointer fs-16 fw-400 btn-rounded material-symbols-outlined">done</span>
                                 </label>
                             </th>

@@ -69,7 +69,7 @@
 
 .dots {
   display: flex;
-  color: rgba(var(--blackClr), 0.5);
+  color: rgba(var(--blackClr), 0.7);
 }
 
 .last-btn,

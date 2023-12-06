@@ -98,7 +98,7 @@
         &::-webkit-progress-bar {
             border: none;
             border-radius: 20px;
-            background-color: rgb(var(--sub-title-clr), 0.1);
+            background-color: rgb(var(--blackClr), 0.7);
         }
 
         &::-webkit-progress-value {
@@ -126,7 +126,7 @@
         text-align: right;
 
         & span {
-            color: rgb(var(--sub-title-clr));
+            color: rgb(var(--blackClr), 0.7);
             font-size: 14px !important;
         }
 
@@ -135,7 +135,7 @@
         }
 
         & p {
-            color: rgb(var(--sub-title-clr));
+            color: rgb(var(--blackClr), 0.7);
             font-weight: 500;
         }
     }

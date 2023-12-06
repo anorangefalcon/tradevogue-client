@@ -2,10 +2,6 @@
 
 
 #dashboard {
-    --whiteClr-clr: 238, 238, 238;
-    --title-clr: 34, 40, 49;
-    --sub-title-clr: 57, 62, 70;
-
     height: 100dvh;
     font-family: 'Inter', sans-serif !important;
     font-size: 13px !important;

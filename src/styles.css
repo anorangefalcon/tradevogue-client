@@ -122,7 +122,9 @@ select {
     --input-text-bg: 245, 245, 245, 0.8;
     /* color: rgba(152, 150, 150, 0.823); */
 
-    --blue-clr: 24, 138, 226;
+    --blue-clr: 11, 22, 173;
+    color: #105784;
+    
     --yellow-clr: 249, 165, 80;
     --green-clr: var(--success);
     --red-clr: var(--danger);
@@ -154,6 +156,8 @@ body.dark {
     /* color: #02d0d0; */
     --secondary : 42, 41, 41;
     --DefaultBorder:255, 255, 255;
+    --blue-clr: 65, 170, 236;
+
 
     background-color: rgb(var(--whiteClr), 0.9) !important;
 
