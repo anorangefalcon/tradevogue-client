@@ -3,7 +3,7 @@ import { FetchDataService } from '../shared/services/fetch-data.service';
 import { UtilsModule } from '../utils/utils.module';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { LoginCheckService } from '../shared/services/login-check.service';
-
+import { ToastService } from '../shared/services/toast.service';
 @Component({
   selector: 'app-help-page',
   templateUrl: './help-page.component.html',
@@ -18,7 +18,8 @@ export class HelpPageComponent {
     private fetchDataService: FetchDataService,
     private utils: UtilsModule,
     private formBuilder: FormBuilder,
-    private userService: LoginCheckService
+    private userService: LoginCheckService,
+    private toast: ToastService
   ) {
       this.fetchDataService.HTTPGET(this.utils.URLs.getTicketStatus).subscribe((data: any)=> {
         this.ticketData = data[0].title;
@@ -53,7 +54,7 @@ export class HelpPageComponent {
 
       this.fetchDataService.HTTPPOST(this.utils.URLs.saveTicket, this.contactForm.value)
         .subscribe((response: any) => {
-        
+          this.toast.successToast({title:'Check Your Email'});
         })
        
 

@@ -14,7 +14,7 @@
                 <picture>
                     <source media="(min-width: 480px)" srcset="../../assets/logo.svg" *ngIf="!darkTheme">
                     <source media="(min-width: 480px)" srcset="../../assets/logo-light.svg" *ngIf="darkTheme">
-                    
+
                     <img src="../../../../assets/logo-mobile.svg" alt="Trade Vogue Logo" *ngIf="!darkTheme">
                     <img src="../../../../assets/logo-mobile-light.svg" alt="Trade Vogue Logo" *ngIf="darkTheme">
                 </picture>
@@ -60,9 +60,8 @@
                         keyboard_backspace
                     </span>
                     <div class="search-bar">
-                        <app-search-bar (click)="hamburgerOpen = false" 
-                            [searchPlaceholder]="'Search Products...'" [onButtonClick]="true"
-                            (searchQuery$)="searchExplore($event)">
+                        <app-search-bar (click)="hamburgerOpen = false" [searchPlaceholder]="'Search Products...'"
+                            [onButtonClick]="true" (searchQuery$)="searchExplore($event)">
                         </app-search-bar>
                     </div>
                 </div>
@@ -82,17 +81,29 @@
                     <a class="icons pointer" aria-label="notification">
                         <span class="material-symbols-outlined">
                             notifications
-                            <span *ngIf="notifications.length > 0" class="count" id="notifications">{{notifications.length - 1}}</span>
+                            <span *ngIf="hasVisibleNotifications()" class="count"
+                                id="notifications">{{notifications.length}}</span>
                         </span>
                     </a>
 
                     <!-- notifications -->
                     <ul class="sub-items d-flex flex-column gap-15">
 
+                        <div *ngIf="!hasVisibleNotifications() && !darkTheme"  class="noDataFound d-flex flex-column flex-center">
+                            <img src="../../../../assets/notification.svg" alt="No Data Found"
+                                style="height: 100px !important;">
+                        </div>
+
+                        <div *ngIf="!hasVisibleNotifications() && darkTheme"  class="noDataFound d-flex flex-column flex-center">
+                            <img src="../../../../assets/notification-light.svg" alt="No Data Found"
+                                style="height: 100px !important;">
+                        </div>
+
                         <div class="notification-container"
                             *ngIf="notifications.length > 0 && hasVisibleNotifications()">
                             <div class="notification-scroll">
-                                <div *ngFor="let notification of visibleNotifications()" class="notification-item pointer"
+                                <div *ngFor="let notification of visibleNotifications()"
+                                    class="notification-item pointer"
                                     (click)="redirectToUrl(notification.notification.url)">
                                     <div class="notification-icon">
                                         <img [src]="notification.notification.icon" alt="Notification Icon">
@@ -103,8 +114,10 @@
                                     </div>
                                 </div>
                             </div>
-                            <ul *ngIf="!fcmToken && !notification.hasPermission" class="pointer">
-                                <li  class="subscribe btn-secondary btn-rounded btn-sm" (click)="subscribeToNotifications()">
+                            <ul *ngIf="!notification.hasFcmToken && !notification.hasPermission;"
+                                class="pointer">
+                                <li class="subscribe btn-secondary btn-rounded btn-sm"
+                                    (click)="subscribeToNotifications()">
                                     <i class="bi bi-bell"></i> Subscribe to Notifications
                                 </li>
                             </ul>
@@ -183,6 +196,69 @@
     </nav>
 
 
+    <!-- <nav class="container d-flex align-item-center justify-content-md-between">
+        <a [routerLink]="['/']">
+            <img class="branding" src="../../assets/logo.svg" alt="Trade Vogue Logo">
+        </a>
+
+        <ul class="nav-item d-flex gap-30">
+            <li><a [routerLink]="['/']">Home</a></li>
+            <li><a [routerLink]="['/explore']">Men</a></li>
+            <li><a [routerLink]="['/explore']">Women</a></li>
+        </ul>
+
+        <div class="search">
+            <app-search-bar></app-search-bar>
+        </div>
+
+        <ul class="account-actions d-flex align-item-center gap-20">
+
+            <li class="cart relative">
+                <a [routerLink]="['/cart']">
+                    <span class="material-symbols-outlined">shopping_cart</span>
+                    <span id="inventory_count" class="absolute">{{inventory_count}}</span>
+                </a>
+                <ul>
+                    <li>
+                        <a href=""></a>
+                    </li>
+                    <li>
+
+                    </li>
+                </ul>
+            </li>
+
+            <li class="relative">
+                <a href=""><span class="material-symbols-outlined">person</span> </a> 
+                
+                <ul class="sub-items">
+
+                    <li class="sub-links">
+                        <div>
+                            <span>Welcome</span>
+                            <p>Access your account and manage your order</p>
+                        </div>
+                        <div class="d-flex justify-content-md-between gap-20">
+                            <a href="" id="login">
+                                <span class="material-symbols-outlined">login</span>
+                                <span>Login</span>
+                            </a>
+                            <a href="" id="register">
+                                <span class="material-symbols-outlined">person_add</span>
+                                <span>Register</span>
+                            </a>
+                        </div>
+                    </li>
+
+                    <li class="sub-links">
+                        <a href="">Contact Us</a>
+                        <a href="">FAQ</a>
+                    </li>
+                </ul>
+            </li>
+
+        </ul>
+    </nav> -->
 </header>
 
 <div [ngClass]="secureNavbar ? 'secure-navbar' : ''"></div>

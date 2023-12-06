@@ -7,6 +7,7 @@ import { UtilsModule } from 'src/app/utils/utils.module';
 import { DialogBoxService } from 'src/app/shared/services/dialog-box.service';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { ToastService } from 'src/app/shared/services/toast.service';
 
 @Component({
   selector: 'app-sales',
@@ -37,7 +38,8 @@ export class SalesComponent {
     private fetch: FetchDataService, 
     private dialogService: DialogBoxService,
     private util: UtilsModule,
-    private router: Router) {
+    private router: Router,
+    private toast: ToastService) {
 
     this.getSales();
 
@@ -65,6 +67,8 @@ export class SalesComponent {
         if(res){
           this.allSubscriptions.push(
           this.fetch.HTTPPOST(this.util.URLs.deleteSales, {_id: this.deleteId}).subscribe((data => {
+            this.getSales();
+            this.toast.successToast({title: 'Deleted Successfully'});
           })));
           this.getSales();
         }
@@ -96,6 +100,7 @@ export class SalesComponent {
 
       this.allSubscriptions.push(
       this.fetch.HTTPPOST(this.util.URLs.toggleSales, body).subscribe((res) => {
+        this.getSales();
       })
       );
     }
@@ -173,14 +178,19 @@ export class SalesComponent {
 
         this.allSubscriptions.push(
         this.fetch.HTTPPOST(this.util.URLs.updateSales, body).subscribe((res) => {
-          console.log(res, 'res')
+          console.log(res, 'res');
+          this.toast.successToast({title: 'Updated Successfully'});
           this.getSales();
+          this.salesForm.reset();
         }))
-
+        this.salesForm.reset();
       } else {
         this.allSubscriptions.push(
         this.salesService.setSales(this.salesForm.value).subscribe((data) => {
           this.getSales();
+          this.toast.successToast({title: 'Added Successfully'});
+          this.salesForm.reset();
+          this.showEditIcon = true;
         }));
       }
     } else {

@@ -5,7 +5,6 @@ import { UtilsModule } from 'src/app/utils/utils.module';
 import { FetchDataService } from 'src/app/shared/services/fetch-data.service';
 import { PopupService } from 'src/app/shared/services/popup.service';
 import { ToastService } from 'src/app/shared/services/toast.service';
-import { AbstractControl } from '@angular/forms';
 import { Subscription } from 'rxjs';
 
 interface FaqItem {
@@ -42,7 +41,12 @@ export class FaqsComponent {
   popUpDirection: any = 'popup';
   showingPopUp: boolean = false;
 
-  constructor(private toast: ToastService, public pagination: PaginationService, private fb: FormBuilder, private bgURL: UtilsModule, private fetchDataService: FetchDataService, private popupService: PopupService) {
+  constructor(private toast: ToastService,
+    public pagination: PaginationService,
+    private fb: FormBuilder,
+    private bgURL: UtilsModule,
+    private fetchDataService: FetchDataService,
+    private popupService: PopupService) {
     this.loadData();
   }
 
@@ -62,7 +66,7 @@ export class FaqsComponent {
         [
           Validators.required,
           Validators.minLength(10),
-          Validators.maxLength(100),
+          Validators.maxLength(500),
         ],
       ],
       content: [
@@ -70,7 +74,7 @@ export class FaqsComponent {
         [
           Validators.required,
           Validators.minLength(20),
-          Validators.maxLength(100),
+          Validators.maxLength(500),
         ],
       ]
     });
@@ -199,8 +203,8 @@ export class FaqsComponent {
       this.fetchDataService.HTTPPOST(this.bgURL.URLs.addFaqData, dataToSend).subscribe((data) => {
         if (data) {
           this.toast.successToast({ title: "FAQs added successfully" });
-          console.log('updated come is ',this.showingPopUp);
-          
+          console.log('updated come is ', this.showingPopUp);
+
           this.show = false;
           this.loadData();
         } else {

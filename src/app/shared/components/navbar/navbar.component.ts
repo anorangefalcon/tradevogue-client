@@ -117,14 +117,13 @@ export class NavbarComponent implements OnInit {
       this.fcmToken = token;
     });
     
-    this.notification.notificationOptions$.subscribe((options) => {
-    });
+    // this.notification.notificationOptions$.subscribe((options) => {
 
+    // });
     this.fetchService.HTTPGET(this.util.URLs.comingNotification)
       .subscribe((res: any) => {
         this.notifications = res;
       });
-
   }
 
   searchExplore(query: string) {

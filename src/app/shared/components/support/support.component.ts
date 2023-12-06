@@ -65,33 +65,7 @@ export class SupportComponent {
       this.usermessage = res.message;
       socket.emit('newChat', res);
     })
-
-
-
-    // socket.on('userMessages', (res) => {
-    //   console.log(res);
-    //   this.usermessage = res.message;
-    // });
-
-    // socket.on('newMessage', (data) => {
-    //   console.log('Received admin message:', data);
-    //   // Handle the admin message data as needed
-    //   if(data.sender == this.selectedUser._id) {
-    //   this.replyAdminMessage = data.message;
-    //   };
-
-    // });
-
-    // socket.on('replymessage', (data) => { 
-    //   console.log('Received admin message:', data);
-    //     this.replyAdminMessage = data.message;
-    //   // Handle the admin message data as needed
-    // });
-
   }
-
-  
-  
 
   loadLatestOrder() {
       this.fetchData.HTTPGET(this.util.URLs.getIndividualOrders).subscribe(

@@ -164,7 +164,7 @@
             <div class="form__group">
               <label class="form__title" for="content">Content</label>
               <input type="text" class="form__input" id="content" formControlName="content" required minlength="2"
-                maxlength="50" />
+                />
               <div
                 *ngIf="editForm.get('content')?.invalid && (editForm.get('content')?.dirty || editForm.get('content')?.touched)"
                 class="error-message">
@@ -172,8 +172,7 @@
                 </div>
                 <div *ngIf="editForm.get('content')?.hasError('minlength')">content should have at
                   least 20 characters.</div>
-                <div *ngIf="editForm.get('content')?.hasError('maxlength')">content should have at
-                  most 100 characters.</div>
+                <div *ngIf="editForm.get('content')?.hasError('maxlength')">Need More</div>
               </div>
             </div>
   

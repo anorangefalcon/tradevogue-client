@@ -127,10 +127,6 @@ export class NotificationsComponent {
     notificationArray.push(notificationFormGroup);
   }
   
-  
-  
-  
-  
   addNotification() {
     const notificationArray = this.notificationForm.get('notification') as FormArray;
   
@@ -168,8 +164,6 @@ export class NotificationsComponent {
       };
 
       this.fetch.HTTPPOST(this.util.URLs.sendNotification, data).subscribe((res)=> {
-        console.log('response come up is ');
-        
         if (res !== undefined) {
           console.log(res, "res is here");
           if (res) {
@@ -197,6 +191,8 @@ export class NotificationsComponent {
         this.fetch.HTTPPOST(this.util.URLs.updateNotification , body).subscribe((res)=> {
           this.getFcmTokens();
           this.loadNotifications();
+          this.toast.successToast({'title': 'Notification updated'});
+          this.notificationForm.reset();
         })
         
       } else {
