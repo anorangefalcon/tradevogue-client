@@ -130,7 +130,7 @@ export class SettingsComponent {
       this.changeComponent(params.get('page'));
     });
 
-    this.dialogBox.responseEmitter.subscribe(async (res: boolean) => {
+    this.dialogBox.responseEmitter.subscribe((res: boolean) => {
       if (res == true) {
         this.fetchDataService.HTTPPOST(this.backendURLs.URLs.cancelOrderedProduct, this.body).subscribe((data) => {
           this.pageChange(this.currentPage);

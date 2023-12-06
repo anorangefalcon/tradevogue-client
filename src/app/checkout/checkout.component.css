@@ -273,7 +273,7 @@
 
         & .itemtype p {
             font-size: 12px !important;
-            color: rgb(var(--textClr), 0.6);
+            color: rgb(var(--textClr), 0.8);
         }
     }
 

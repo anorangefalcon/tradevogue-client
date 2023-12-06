@@ -25,6 +25,8 @@ export class CartComponent implements OnInit {
 
   ngOnInit() {
 
+    (<HTMLMetaElement>document.getElementById('meta-description')).content = "Cart"
+
     this.allSubscriptions.push(
     this.userService.getUser('token').subscribe((token: any) => {
       this.userToken = token;
