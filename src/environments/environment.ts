@@ -16,6 +16,6 @@ export const environment = {
   // BackendURL:'https://e-commerce-backend-virid-one.vercel.app/api',
   // BackendURL:'https://job360update.tech/',
 
-  Pincode:'http://54.157.29.156:4000',
+  Pincode:'http://18.215.248.63:4000',
   vapidKeyNotification: 'BPgBPO552gWCPJ_rUhzgn02bC3EFAIh1EWhlyib11X58vriYlQXmqeGX9_NJ8Z1h8KjtIDpstdWTgFuC01pdFbw'
 };
