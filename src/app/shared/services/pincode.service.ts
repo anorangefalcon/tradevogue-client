@@ -6,7 +6,7 @@ import { UtilsModule } from 'src/app/utils/utils.module';
 @Injectable({
   providedIn: 'root'
 })
-export class ApiService {
+export class PincodeService {
  private apiUrl = this.util.URLs.getPincode;
 
   constructor(private http: HttpClient,

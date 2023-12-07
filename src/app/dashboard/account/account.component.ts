@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
-import { ApiService } from '../services/api.service';
+import { PincodeService } from '../../shared/services/pincode.service';
 import { Subject, Subscription } from 'rxjs';
 import { SellerFetchDataService } from 'src/app/shared/services/seller-fetch-data.service';
 import { DatePipe } from '@angular/common';
@@ -43,7 +43,7 @@ export class AccountComponent implements OnInit {
   allSubscriptions: Subscription[] = [];
 
   constructor(
-    private postalCodeService: ApiService,
+    private postalCodeService: PincodeService,
     private formBuilder: FormBuilder,
     private sellerFetchDataService: SellerFetchDataService,
     private datePipe: DatePipe,

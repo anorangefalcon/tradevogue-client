@@ -5,7 +5,7 @@ import { UtilsModule } from 'src/app/utils/utils.module';
 
 @Injectable()
 export class PaginationService {
-  private currentPage: number = 1;
+  private currentPage: number = 1; 
   private pageSize: number = 10;
   private data: any[] = [];
 

@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NavbarComponent } from './components/navbar/navbar.component';
-import { ProductCardsComponent } from './components/product-cards/product-cards.component';
 import { ProductCardCarouselComponent } from './components/product-card-carousel/product-card-carousel.component';
 import { CarouselModule } from 'ngx-owl-carousel-o';
 import { CardTemplateComponent } from './components/card-template/card-template.component';
@@ -28,7 +27,6 @@ import { EyePopupComponent } from './eye-popup/eye-popup.component';
 @NgModule({
   declarations: [
     NavbarComponent,
-    ProductCardsComponent,
     ProductCardCarouselComponent,
     CardTemplateComponent,
     SearchBarComponent,
@@ -59,7 +57,6 @@ import { EyePopupComponent } from './eye-popup/eye-popup.component';
   exports: [
     NavbarComponent,
     FooterComponent,
-    ProductCardsComponent,
     ProductCardCarouselComponent,
     CardTemplateComponent,
     SearchBarComponent,

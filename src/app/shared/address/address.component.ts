@@ -1,14 +1,11 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FetchDataService } from '../services/fetch-data.service';
 import { UtilsModule } from 'src/app/utils/utils.module';
-import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { ApiService } from 'src/app/dashboard/services/api.service';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { PincodeService } from 'src/app/shared/services/pincode.service';
 
 // import {}
-import { PhoneNumberValidator } from '../../auth/validators';
 import { Subject, debounceTime, distinctUntilChanged, switchMap } from 'rxjs';
-import { min } from 'lodash';
-
 
 @Component({
   selector: 'app-address',
@@ -36,7 +33,7 @@ export class AddressComponent {
   pincodeFilled: boolean = false;
   private postalCodeInput = new Subject<string>();
 
-  constructor(private fetchService: FetchDataService, private backendURLs: UtilsModule, private fb: FormBuilder, private postalCodeService: ApiService) {
+  constructor(private fetchService: FetchDataService, private backendURLs: UtilsModule, private fb: FormBuilder, private postalCodeService: PincodeService) {
     this.DetailsForm = fb.group(
       {
         firstname: fb.control('', [Validators.required]),

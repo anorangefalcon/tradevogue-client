@@ -8,7 +8,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { SharedModule } from './shared/shared.module';
 import { HomeModule } from './home/home.module';
-import { DashboardModule } from './dashboard/dashboard.module';
 import { ProductPageModule } from './product-page/product-page.module';
 import { FaqPageModule } from './faq-page/faq-page.module';
 import { CheckoutModule } from './checkout/checkout.module';
@@ -60,8 +59,8 @@ const config: SocketIoConfig = { url: 'http://localhost:1000', options: {} };
     AppRoutingModule,
     SharedModule,
     HomeModule,
-    DashboardModule,
     ProductPageModule,
+    
     FaqPageModule,
     CheckoutModule,
     HttpClientModule,
