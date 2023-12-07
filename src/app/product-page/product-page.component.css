@@ -636,6 +636,20 @@
 .wishlisted  {
     color: rgb(var(--danger));
 }
+.border-wishlist{
+    position: absolute;
+    color: #00000038 !important;
+
+    font-variation-settings:
+    'FILL' 0,
+    'GRAD' 0,
+    'opsz' 48 !important;
+}
+
+.border-wishlist.data.wishlisted{
+    z-index: -1;
+    color: black !important;
+}
 
 .wishlist-list {
     padding: 10px;

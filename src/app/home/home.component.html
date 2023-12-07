@@ -105,8 +105,11 @@
 </ng-template>
 
 <ng-template #latestProducts let-item="item">
-    <section id="products" class="home__block">
-        <app-product-cards></app-product-cards>
+    <section id="products" class="home__block container home-carousel d-flex flex-column gap-30">
+        <app-product-card-carousel [titles]="{
+            title: 'Latest Arrival',
+            subTitle: 'Explore latest apparel'
+          }" [whatToFetch]="{sort: 'createdAt:-1'}"></app-product-card-carousel>
     </section>
 </ng-template>
 
