@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { NgModel } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { CommonModule, DatePipe } from '@angular/common';
-import { NgxPaginationModule } from 'ngx-pagination';
 import { DashboardRoutingModule } from './dashboard-routing.module';
 import { DashboardComponent } from './dashboard.component';
 import { StatisticsComponent } from './statistics/statistics.component';
@@ -65,7 +64,6 @@ const config: SocketIoConfig = { url: 'http://localhost:1000', options: {} };
     CommonModule,
     DashboardRoutingModule,
     SharedModule,
-    NgxPaginationModule,
     FormsModule,
     ReactiveFormsModule,
     ProductPageModule,

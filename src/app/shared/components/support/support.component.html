@@ -18,8 +18,7 @@
             <div class="box">
               <div class="icon_home">
                 <a mat-button (click)="navigateTo('support')">
-                  <i class="fa-regular fa-comment"
-                    style="font-size: 30px; color: #22385d; align-items: center; text-align: center;"></i>
+                    <span class=" material-symbols-outlined" style="font-size: 30px; color: #22385d; align-items: center; text-align: center;">sms</span>
                   <h1 class="chat-h1">Chat</h1>
                 </a>
               </div>
@@ -27,9 +26,8 @@
             <div class="box">
               <div class="icon_home">
                 <a mat-button (click)="navigateTo('help')">
+                  <span class="material-symbols-outlined" style="font-size: 30px; color: #22385d; align-items: center; text-align: center;">question_mark</span>
 
-                  <i class="fa-regular fa-question"
-                    style="font-size: 30px; color: #22385d; align-items: center; text-align: center;"></i>
                   <h1 class="chat-h1">Help</h1>
                 </a>
               </div>
@@ -49,19 +47,19 @@
               <div class="chat-container">
 
                 <div *ngFor="let message of messages" class="chat-message"
-                [ngClass]="{'user-message': message.sender === 'user', 'bot-message': message.sender === 'bot'}">
-                <p [innerHTML]="message.content"></p>
-              </div>
-              
-                <div class="type-area">
+                  [ngClass]="{'user-message': message.sender === 'user', 'bot-message': message.sender === 'bot'}">
+                  <p [innerHTML]="message.content"></p>
+                </div>
+
+                <div class="type-area d-flex align-item-center relative">
                   <input type="text" [(ngModel)]="textMessage" (keyup.enter)="sendLiveMessage()" class="typing"
                     placeholder="Type Here...">
-                  <span class="send" (click)="sendLiveMessage()">
-                    <i class="bi bi-arrow-return-left"></i>
-                  </span>
+
+                  <span (click)="sendLiveMessage()" class="d-flex flex-center absolute inset-block-start-0 inset-inline-end-0 send material-symbols-outlined fw-300 mh100 fs-20"> reply </span>
+
                 </div>
               </div>
-              
+
 
 
 
@@ -143,7 +141,7 @@
             </ng-container>
           </div>
 
-          <div *ngIf="productPresent"  class="msg msg-left">
+          <div *ngIf="productPresent" class="msg msg-left">
             <div class="name">
               Need More Detail
             </div>
@@ -193,7 +191,7 @@
                   <br>
                 </div>
               </div>
-              
+
               <div *ngIf="selectedOrder && selectedProduct">
                 <!-- Show only the details of the selected product -->
                 <div class="product-details">
@@ -205,8 +203,8 @@
                   </div>
                 </div>
               </div>
-              
-              
+
+
 
 
 
@@ -226,14 +224,10 @@
 
     </mat-tab-group>
   </div>
-  <div class="icon-support" (click)="toggleChat()" style="font-size: 15px; text-align: center;">
-    <div class="user" style="font-size: 15px; font-size: 15px;">
-      <i class="bi bi-person-circle me-2 "></i>
-            <!-- username  -->
-      {{username}}
-    </div>
-    <i class="bi bi-chat fa-1x icons chat-icon" style="right: 18px; position: absolute;"></i>
-    <i class="bi bi-x-lg fa-1x icons-visible cross-icon" style="right: 18px; position: absolute;"></i>
+  <div class="icon-support d-flex justify-content-md-between" (click)="toggleChat()">
+    <p class="user fs-16"> {{username}}</p>
 
+    <span class="fs-24 fw-300 absolute material-symbols-outlined icons chat-icon"> contact_support </span>
+    <span class="fs-20 material-symbols-outlined icons-visible cross-icon"> close </span>
   </div>
 </div>

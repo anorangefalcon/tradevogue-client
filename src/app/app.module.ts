@@ -4,8 +4,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AsyncPipe, CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { NgxPaginationModule } from 'ngx-pagination';
-import { DataTablesModule } from 'angular-datatables';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { SharedModule } from './shared/shared.module';
@@ -56,7 +54,6 @@ const config: SocketIoConfig = { url: 'http://localhost:1000', options: {} };
     CarouselModule,
     BrowserModule,
     CommonModule,
-    NgxPaginationModule,
     BrowserAnimationsModule,
     ReactiveFormsModule,
     FormsModule,
@@ -64,7 +61,6 @@ const config: SocketIoConfig = { url: 'http://localhost:1000', options: {} };
     SharedModule,
     HomeModule,
     DashboardModule,
-    DataTablesModule,
     ProductPageModule,
     FaqPageModule,
     CheckoutModule,

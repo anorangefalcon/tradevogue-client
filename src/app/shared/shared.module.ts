@@ -23,7 +23,6 @@ import { DrawerComponent } from './components/drawer/drawer.component';
 import { InvoiceTemplateComponent } from './components/invoice-template/invoice-template.component';
 import { GalleryComponent } from '../home/gallery/gallery.component';
 import { HeroComponent } from '../home/hero/hero.component';
-import { NotificationComponent } from './components/notification/notification.component';
 import { EyePopupComponent } from './eye-popup/eye-popup.component';
 
 @NgModule({
@@ -44,7 +43,6 @@ import { EyePopupComponent } from './eye-popup/eye-popup.component';
     PaginationComponent,
     DrawerComponent,
     InvoiceTemplateComponent,
-    NotificationComponent,
     EyePopupComponent,
   ],
   imports: [
@@ -75,7 +73,6 @@ import { EyePopupComponent } from './eye-popup/eye-popup.component';
     PaginationComponent,
     DrawerComponent,
     InvoiceTemplateComponent,
-    NotificationComponent,
     EyePopupComponent
   ]
 
