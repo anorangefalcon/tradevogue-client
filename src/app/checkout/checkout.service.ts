@@ -73,9 +73,7 @@ export class CheckoutService {
       this.cartService.clearCart();
       this.PaymentSuccess.next(true);
       this.ProceedToPayment.next(false);
-      
     }
-
   }
 
   private async updateOrderStatus() {
