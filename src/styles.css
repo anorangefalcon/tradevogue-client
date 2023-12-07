@@ -1134,6 +1134,7 @@ span.error {
 /* Checkbox Toogle */
 
 .slide-button {
+    
     & input[type="checkbox"] {
         appearance: none;
         width: 0;

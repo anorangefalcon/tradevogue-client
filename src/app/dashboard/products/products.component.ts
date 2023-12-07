@@ -265,16 +265,16 @@ export class ProductsComponent implements OnInit {
 
   // Generate a string array based upon rating transmitted store class from 'font-awesome'
   starRating(rating: any) {
-    let ratingArray = [];
+    let ratingArray: any = [];
 
     for (let i = 1; i <= 5; i++) {
       if (i <= Math.floor(rating)) {
-        ratingArray.push('fa-solid fa-star');
+        ratingArray.push({field: 'star', class: 'filled'});
       }
       else if (i > Math.floor(rating) && i <= Math.ceil(rating))
-        ratingArray.push('fa-solid fa-star-half-stroke');
+        ratingArray.push({field: 'star_half', class: ''});
       else
-        ratingArray.push('fa-regular fa-star');
+        ratingArray.push({field: 'star', class: ''});
     }
     return ratingArray;
   }

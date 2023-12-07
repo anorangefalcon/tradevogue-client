@@ -259,9 +259,9 @@
                                 </td>
     
                                 <td class="items">
-                                    <div class="d-flex gap-5 align-item-center">
+                                    <div class="d-flex gap-3 align-item-center">
                                         <ng-container *ngFor="let star of starRating(item.rating)">
-                                            <i [class]="star" style="color: rgb(var(--primaryClr));"></i>
+                                            <i style="color: rgb(var(--primaryClr));" [class]="'fs-18 material-symbols-outlined '+ star.class" >{{star.field}}</i>
                                         </ng-container>
                                         &#40;{{item.rating}}&#41;
                                     </div>

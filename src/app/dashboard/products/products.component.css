@@ -5,6 +5,10 @@
     height: 40px;
 }
 
+.gap-3{
+    gap: 3px;
+}
+
 #product-section {
 
     & .operational-buttons {
@@ -143,7 +147,6 @@
         padding: 5px 10px !important;
         font-size: 10px !important;
     }
-
 }
 
 tr:not(:first-child, :last-child) td.items.displayInfo .popup {
