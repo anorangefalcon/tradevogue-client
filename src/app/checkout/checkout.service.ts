@@ -69,7 +69,7 @@ export class CheckoutService {
   private handlePaymentIntentStatus(paymentIntent: any) {
     console.log('paymentIntent is ',paymentIntent);
     if(paymentIntent.status=='succeeded'){
-      this.updateOrderStatus();
+      // this.updateOrderStatus();
       this.cartService.clearCart();
       this.PaymentSuccess.next(true);
       this.ProceedToPayment.next(false);
