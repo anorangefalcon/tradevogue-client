@@ -129,6 +129,7 @@
     border-radius: 2px;
     overflow: hidden;
     object-fit: cover;
+    aspect-ratio: 1.5;
 }
 .link-icon {
     font-size: 12px;

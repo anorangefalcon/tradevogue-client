@@ -31,7 +31,9 @@ input[type="radio"] {
         width: 100%;
     } */
 }
-
+label {
+    width: 85%;
+}
 .labels:hover {
     background-color: rgb(var(--textClr), 0.2);
 }

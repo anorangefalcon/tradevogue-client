@@ -423,6 +423,7 @@ export class BillingComponent implements OnInit {
   }
   addressDelivered!: any[];
   addressChecked: Boolean = false;
+  
   AddressClicked(address: any) {
     this.checkOutService.addressSelected = (address);
     this.addressDelivered = address;

@@ -1,37 +1,35 @@
 <section class="login d-flex">
-    <div class="column left-column d-flex justify-content-center align-item-center ">
-        <div class="form-container d-flex flex-column relative" *ngIf="showPasswordForm==false">
+    <div class="column left-column d-flex flex-center">
+        <div class="form-container d-flex flex-column relative">
             <div class="header fixed">
-                <a routerLink="/"><img src="../../assets/logo.svg" alt="logo" *ngIf="!theme" aria-label="trade vogue"></a>
-                <a routerLink="/"><img src="../../assets/logo-light.svg" alt="logo" *ngIf="theme" aria-label="trade vogue"></a>
+                <a routerLink="/"><img src="../../assets/logo.svg" alt="logo" *ngIf="!theme"
+                        aria-label="trade vogue"></a>
+                <a routerLink="/"><img src="../../assets/logo-light.svg" alt="logo" *ngIf="theme"
+                        aria-label="trade vogue"></a>
             </div>
-            <h2 class="login-title text-center">Welcome Back</h2>
-            <form [formGroup]="loginForm" class="mw100 d-flex flex-column gap-15">
+            <h2 class="login-title text-center">{{showPasswordForm ? 'Forgot Password' : 'Welcome Back'}}</h2>
+            <form [formGroup]="loginForm" class="mw100 d-flex flex-column gap-15" *ngIf="!showPasswordForm">
 
                 <div class="form__group relative d-flex flex-column">
                     <label class="form__label">Email</label>
                     <span class="material-symbols-outlined person form__icon absolute">person</span>
                     <input type="text" placeholder="Enter Your Email" formControlName="email">
                 </div>
-
-                <!-- PASSWORD INPUT  -->
                 <div class="form__group d-flex  flex-column relative">
-
-
                     <label class="d-flex  password-label">Password</label>
                     <span class="material-symbols-outlined key  form__icon absolute">key</span>
                     <input [type]="passwordFieldType" placeholder="Enter Your Password" formControlName="password">
                     <a class="eye-btn flex justify-content-center align-item-center pointer"
-                        (click)="togglePasswordVisibility()" aria-label="Eye" href="#">
+                        (click)="togglePasswordVisibility()" aria-label="Eye">
                         <span class="material-symbols-outlined eye">{{ showPassword ? 'visibility' :
                             'visibility_off'}}</span>
                     </a>
                     <div class="forgot-pass">
-                        <a class="pointer sign-up-text" (click)="showPasswordForm=true" aria-label="Forgot password" href="#">Forgot password?</a>
+                        <a class="pointer sign-up-text" (click)="showPasswordForm=true"
+                            aria-label="Forgot password">Forgot password?</a>
                     </div>
 
                 </div>
-
 
                 <button class="btn btn-md fw-500 btn-rounded btn-primary  relative" [disabled]="loginForm.invalid"
                     [ngClass]="{'disabled':loginForm.invalid, 'spinner' : loading}" (click)="onLogin()">Login</button>
@@ -56,17 +54,13 @@
                     </div>
                 </button>
 
+                <button class="btn-primary loginbtn btn-md btn btn-rounded" [disabled]="forgetPasswordForm.invalid"
+                    *ngIf="showPasswordForm" (click)="onResetPassword();">Reset Password</button>
+
                 <p class="text-center acc-text">Don't have an account? <a class="sign-up-text"
                         [routerLink]="['/auth/signup']" aria-label="Sign up">Sign up</a></p>
             </form>
-        </div>
-        <div class="form-container d-flex flex-column relative" *ngIf="showPasswordForm==true">
-            <div class="header fixed">
-                <a routerLink="/"><img src="../../assets/logo.svg" alt="logo" *ngIf="!theme" aria-label="trade vogue"></a>
-                <a routerLink="/"><img src="../../assets/logo-light.svg" alt="logo" *ngIf="theme" aria-label="trade vogue"></a>
-            </div>
-            <h2 class="login-title text-center">Forgot Password</h2>
-            <form [formGroup]="forgetPasswordForm" class="mw100 d-flex flex-column gap-15">
+            <form [formGroup]="forgetPasswordForm" class="mw100 d-flex flex-column gap-15" *ngIf="showPasswordForm">
                 <div class="form__group relative d-flex flex-column">
                     <label class="form__label">Email</label>
                     <span class="material-symbols-outlined person form__icon absolute">mail</span>
@@ -76,16 +70,14 @@
                         class="invalid">
                         *Please enter valid Email.
                     </small>
+                    <span class="d-flex justify-content-end">
+                        <a class="forgot-pass pointer go-back sign-up-text" (click)="showPasswordForm=false" aria-label="Go back">Go Back</a>
+                    </span>
                 </div>
-                <span class="d-flex justify-content-end">
-                    <a class="forgot-pass pointer" (click)="showPasswordForm=false">Go Back</a>
-                </span>
                 <button class="btn-primary loginbtn btn-md btn btn-rounded" [disabled]="forgetPasswordForm.invalid"
                     (click)="onResetPassword();">Reset Password</button>
             </form>
         </div>
-        <!-- <app-dialog *ngIf="isactive" [type]="'success'"
-            [ngStyle]="{'display': isactive ? 'flex': 'none'}"></app-dialog> -->
     </div>
     <div class="column right-column"></div>
 </section>

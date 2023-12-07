@@ -20,10 +20,15 @@ export class ForgetPasswordComponent {
   showPassword: boolean = false;
   showPassword2: boolean = false;
   token: string = "";
+  theme: Boolean = false;
 
   dataSubscription!: Subscription;
 
-  constructor(fb: FormBuilder, private router: Router, private backendUrls: UtilsModule, private fetchDataService: FetchDataService, private toastservice: ToastService) {
+  constructor(fb: FormBuilder,
+    private router: Router,
+    private backendUrls: UtilsModule,
+    private fetchDataService: FetchDataService,
+    private toastservice: ToastService) {
     this.resetPasswordForm = fb.group({
       password: fb.control('', [Validators.required, passwordStrengthValidator, Validators.minLength(8)]),
       confirmPassword: fb.control('', [Validators.required, (control: any) => matchPasswordValidator(control, this.resetPasswordForm)])
@@ -32,8 +37,11 @@ export class ForgetPasswordComponent {
         validators: this.passwordMatch
       }
     )
+    this.fetchDataService.themeColor$.subscribe((color) => {
+      this.theme = color;
+    });
   }
-  async ngOnInit() {
+  ngOnInit() {
     this.token = this.router.url.split('/')[3];
     // try {
 
@@ -61,7 +69,6 @@ export class ForgetPasswordComponent {
   }
   async onReset() {
 
-    // try {
     const body = {
       password: this.resetPasswordForm.get('password')?.value,
       tokenData: this.token
