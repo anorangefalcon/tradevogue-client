@@ -12,16 +12,37 @@
     </button>
   </div>
 
-  <app-drawer [direction]="direction" [show]="show" (showChange)="ChangeHandler($event)" [title]="'Create Faqs'">
-    <form [formGroup]="faqForm">
+  <app-drawer [direction]="direction" [show]="show" (showChange)="ChangeHandler($event)"
+    [title]="'Create New Categories'">
+
+    <form [formGroup]="faqForm" *ngFor="let category of categoryForms; let i = index">
+      <div class="card card__pd-20 d-flex align-item-center justify-content-md-between default-animation"
+        style="margin-bottom: 15px;">
+        <!-- <h3>Create FAQs</h3> -->
+        <app-custom-select [_id]="'faq' + i" [type]="'select'" [options]="faq"
+          [selectedOption]="selectedOption ? selectedOption: 'Select a Category'"
+          (final_option)="saveCategory(i, $event)"></app-custom-select>
+
+          <ng-container *ngIf="i === 0">
+            <button (click)="addFaqCategory()"
+              class="btn-secondary btn btn-sm fw-500 btn-rounded d-flex align-item-center gap-5">
+              <i class="material-symbols-outlined operational-buttons-icons">add</i>Add More
+            </button>
+          </ng-container>
+
+                    <!-- Remove button -->
+                    <div *ngIf="i > 0" class="remove-button">
+                      <button class="btn-secondary btn-sm btn-rounded ml-2" (click)="removeCategory(i)">Remove Current</button>
+                    </div>
+      </div>
       <div formArrayName="categories">
-        <div *ngFor="let category of categoryForms; let i = index" [formGroupName]="i" class="d-flex flex-column gap-10">
+        <div [formGroupName]="i" class="d-flex flex-column gap-10">
           <!-- Select dropdown -->
           <!-- <select style="    margin-top: 33px;" formControlName="selectedOption" class="flex-grow-1">
             <option value="" disabled>Select a Category</option>
             <option *ngFor="let item of faqData" [value]="item.title">{{ item.title }}</option>
           </select> -->
-          <app-custom-select [_id]="'faq' + i" [type]="'select'" [options]="faq" [selectedOption]="selectedOption ? selectedOption: 'Select a Category'" (final_option)="saveCategory(i, $event)" ></app-custom-select>
+          <!-- <app-custom-select [_id]="'faq' + i" [type]="'select'" [options]="faq" [selectedOption]="selectedOption ? selectedOption: 'Select a Category'" (final_option)="saveCategory(i, $event)" ></app-custom-select> -->
           <!-- Query input -->
           <div class="form-group flex-grow-1">
             <label class="form__label" for="query">Query*</label>
@@ -30,7 +51,7 @@
               Please enter a valid query*
             </div>
           </div>
-      
+
           <!-- Answer input -->
           <div class="form-group flex-grow-1">
             <label class="form__label" for="content">Answer*</label>
@@ -39,32 +60,29 @@
               Please enter a valid answer*
             </div>
           </div>
-      
-          <!-- Remove button -->
-          <button class="btn-secondary btn-sm btn-rounded ml-2" (click)="removeCategory(i)">-</button>
         </div>
       </div>
-      
-      <div class="d-flex gap-10">
-        <button [disabled]="faqForm.invalid" class="btn-primary btn-sm btn-rounded" style="margin-top: 10px;" (click)="addCategory()">Add Category</button>
-        <button class="btn-secondary btn-sm btn-rounded" style="margin-top: 10px;" (click)="addFaqCategory()">+</button>
-      </div>
     </form>
+    <div class="d-flex gap-10">
+      <button [disabled]="faqForm.invalid" class="btn-primary btn-sm btn-rounded"
+        style="margin-top: 10px;     margin-left: 4%;" (click)="addCategory()">Submit</button>
+      <!-- <button class="btn-secondary btn-sm btn-rounded" style="margin-top: 10px;" (click)="addFaqCategory()">+</button> -->
+    </div>
   </app-drawer>
 
   <!-- pop-up -->
   <div class="faq_popup">
-  <app-drawer [direction]="popUpDirection" [show]="showingPopUp" (showChange)="PopUpChangeHanlder($event)"
-    [title]="'Faq Data'">
-    <div *ngIf="selectedItem" class="details-container">
-      <p class="detail-item"><strong>Serial Number:</strong> {{ (currentPage - 1) * pageSize +
-        selectedCategory.childrens.indexOf(selectedItem) + 1 }}</p>
-      <p class="detail-item"><strong>Query:</strong> {{ selectedItem.title }}</p>
-      <p class="detail-item"><strong>Answer:</strong> {{ selectedItem.content }}</p>
-    </div>
-  </app-drawer>
+    <app-drawer [direction]="popUpDirection" [show]="showingPopUp" (showChange)="PopUpChangeHanlder($event)"
+      [title]="'Faq Data'">
+      <div *ngIf="selectedItem" class="details-container">
+        <p class="detail-item"><strong>Serial Number:</strong> {{ (currentPage - 1) * pageSize +
+          selectedCategory.childrens.indexOf(selectedItem) + 1 }}</p>
+        <p class="detail-item"><strong>Query:</strong> {{ selectedItem.title }}</p>
+        <p class="detail-item"><strong>Answer:</strong> {{ selectedItem.content }}</p>
+      </div>
+    </app-drawer>
 
-</div>
+  </div>
   <!-- table -->
   <div *ngIf="selectedCategory" class="table-list card default-animation-slow">
     <table summary="faqs" class="selected-category-table">
@@ -131,7 +149,7 @@
 
         <div class="card card__pd-20 d-flex align-item-center justify-content-md-between default-animation">
           <h3>Update Faqs</h3>
-      
+
           <div class="operation_button d-flex gap-10">
             <button class="btn-primary btn-rounded btn-sm" [ngStyle]="{'display': !faqForm.disabled? 'none': 'block'}"
               (click)="faqForm.enable()">Edit</button>
@@ -144,13 +162,13 @@
 
         <!-- edit form -->
         <div class="card card__pd-20 d-flex align-item-center justify-content-md-between default-animation">
-          <form [formGroup]="editForm" class="d-grid flex-wrap gap-20 column-reverse" style="width: 100%;"
-          >
+          <form [formGroup]="editForm" class="d-grid flex-wrap gap-20 column-reverse" style="width: 100%;">
             <div class="form__group">
               <label class="form__title" for="query">Query</label>
               <input type="text" class="form__input" id="query" formControlName="query" required minlength="2"
                 maxlength="500" />
-              <div *ngIf="editForm.get('query')?.invalid && (editForm.get('query')?.dirty || editForm.get('query')?.touched)"
+              <div
+                *ngIf="editForm.get('query')?.invalid && (editForm.get('query')?.dirty || editForm.get('query')?.touched)"
                 class="error-message">
                 <div *ngIf="editForm.get('query')?.hasError('required')">query is required.
                 </div>
@@ -160,11 +178,10 @@
                   most 500 characters.</div>
               </div>
             </div>
-  
+
             <div class="form__group">
               <label class="form__title" for="content">Content</label>
-              <input type="text" class="form__input" id="content" formControlName="content" required minlength="2"
-                />
+              <input type="text" class="form__input" id="content" formControlName="content" required minlength="2" />
               <div
                 *ngIf="editForm.get('content')?.invalid && (editForm.get('content')?.dirty || editForm.get('content')?.touched)"
                 class="error-message">
@@ -175,7 +192,7 @@
                 <div *ngIf="editForm.get('content')?.hasError('maxlength')">Need More</div>
               </div>
             </div>
-  
+
           </form>
         </div>
 
