@@ -10,6 +10,8 @@ img {
   margin-bottom: 30px;
 }
 
+
+
 /* .col:first-child {
   background-color: rgb(236, 242, 247);
 }
@@ -22,6 +24,152 @@ img {
   color: rgb(var(--primaryClr));
   font-weight: 500;
 }
+
+/* Your existing styles here... */
+
+.content-wrapper {
+  position: relative;
+  overflow: hidden;
+}
+
+.left-content {
+  transition: transform 0.3s ease-in-out;
+}
+
+.hide {
+  transform: translateX(100%);
+  /* Adjust transition property as needed */
+}
+
+.show-indicator .left-content {
+  transform: translateX(-100%);
+  /* Adjust transition property as needed */
+}
+/* Your existing styles here */
+
+.placeholder {
+  /* Style for the placeholder */
+  /* Add necessary styles */
+}
+
+/* Your existing styles here */
+
+.placeholder {
+  display: none; /* Hide the placeholder initially */
+}
+
+.col:hover .placeholder {
+  display: block; /* Display the placeholder on parent hover */
+}
+
+.third-box {
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 100%;
+  transition: left 0.3s ease-in-out;
+}
+
+.col:hover .third-box.show {
+  display: block;
+  left: calc(100% - 1px); /* Shift slightly to cover adjacent content */
+}
+
+/* Your existing styles here */
+
+/* Your existing styles here */
+
+/* Your existing styles here */
+
+.relative {
+  position: relative;
+}
+
+.new-box {
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 100%;
+  transition: left 0.3s ease-in-out;
+  z-index: 999; /* Set a high z-index to place it above other boxes */
+  pointer-events: none; /* Allow pointer events to pass through initially */
+}
+
+
+.pointer {
+  position: relative;
+}
+
+.vertical-line {
+  width: 3px;
+  height: 100%;
+  border-radius: 2px;
+  background-color: transparent;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.pointer:hover .vertical-line {
+  background-color: red;
+}
+
+
+.pointer:hover + .new-box {
+  display: block;
+  left: 0;
+  opacity: 1;
+  pointer-events: auto; 
+}
+
+.pointer {
+  position: relative;
+  width: 3px; /* Adjust width as needed */
+  height: 100%; /* Full height */
+}
+
+.vertical-line {
+  position: absolute;
+  top: 0;
+  left: 50%; /* Adjust the position to align the line properly */
+  transform: translateX(-50%);
+  width: 100%;
+  height: 100%;
+  border-radius: 2px; /* Adjust border radius as needed */
+  background-color: transparent; /* Initially transparent */
+  transition: background-color 0.3s ease-in-out; /* Smooth transition */
+}
+
+/* .pointer:hover .vertical-line {
+  background-color: red;
+} */
+
+.circle {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  /* Adjust the position to align the circle properly */
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: red;
+  transition: background-color 0.3s ease-in-out;
+}
+.horizontal {
+  display: none;
+}
+
+
+/* Media query for mobile devices (adjust the breakpoint as needed) */
+@media screen and (max-width: 768px) {
+  .vertical {
+    display: none;
+  }
+}
+
+
+
+
+
 
 
 .banner-text {
