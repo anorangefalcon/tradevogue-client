@@ -1,11 +1,11 @@
 .hero-section {
     width: 100%;
 
-    & .hero-content{
+    & .hero-content {
         padding-inline: 0px;
         padding-block-start: 75px;
     }
-    
+
     & .hero-text {
         width: 50%;
     }
@@ -14,7 +14,7 @@
         width: 50%;
         overflow: hidden;
 
-        & img{
+        & img {
             min-height: 100%;
             object-fit: cover;
             object-position: top;
@@ -31,7 +31,7 @@
         scale: 1.1;
     }
 
-    & .hero-text-container{
+    & .hero-text-container {
         z-index: 5;
 
         & h1 {
@@ -39,10 +39,11 @@
             margin-block-start: -5px;
             margin-block-end: 10px;
         }
+
         & .title {
             width: min(650px, 100%);
             font-size: 38px !important;
-        }  
+        }
     }
 
 
@@ -54,7 +55,7 @@
         background-position: center;
     }
 
-    & .text-banner::before{
+    & .text-banner::before {
         position: absolute;
 
         content: '';
@@ -65,45 +66,45 @@
     }
 }
 
-.left{
+.left {
     justify-content: flex-start;
 
-    & .hero-text-container{
+    & .hero-text-container {
         align-items: flex-start;
 
         & .title {
             text-align: left;
-        } 
+        }
     }
 }
 
-.right{
+.right {
     justify-content: flex-end;
-    
-    & .hero-text-container{
+
+    & .hero-text-container {
         align-items: flex-end;
 
         & .title {
             text-align: right;
-        } 
+        }
     }
 }
 
-.center{
+.center {
     justify-content: center;
 
-    & .hero-text-container{
+    & .hero-text-container {
         align-items: center;
 
         & .title {
             text-align: center;
-        } 
+        }
     }
 
 }
 
 
-div.banner.skeleton{
+div.banner.skeleton {
     height: 100dvh;
     width: 100%;
 }
@@ -116,36 +117,63 @@ div.banner.skeleton{
     justify-content: center;
     inset-inline-start: 0px;
     inset-block-end: 8px;
+
+    & .owl-dot span {
+        width: 6px !important;
+        height: 6px !important;
+        background: rgba(var(--whiteClr), 0.9) !important;
+        box-shadow: 0px 0px 5px rgba(var(--blackClr), 0.4);
+        
+    }
+
+    & .owl-dot.active span {
+        width: 35px !important;
+        height: 4px !important;
+        position: relative;
+        overflow: hidden;
+    }
+
+    & .owl-dot.active span::before {
+        content: '';
+        display: block;
+        background: rgba(var(--primaryClr), 0.9) !important;
+        position: absolute;
+        inset-inline-start: 0;
+        inset-block-start: 0;
+        height: 100%;
+        z-index: 2;
+        width: 100%;
+        animation: owl-nav-animation 4.8s linear;
+    }
 }
 
-.owl-dot.ng-star-inserted > span {
-    background: rgba(var(--whiteClr), 0.9) !important;
-    box-shadow: 0px 0px 5px rgba(var(--blackClr), 0.3);
-    transition: all 0.5s ease-in-out;
-}
+@keyframes owl-nav-animation {
+    from {
+        width: 0;
+    }
 
-.owl-dot.active.ng-star-inserted > span {
-    background: rgba(var(--primaryClr), 0.9) !important;
-    width: 30px;
+    to {
+        width: 100%;
+    }
 }
-
 
 @media screen and (max-width: 992px) {
-    
-    .hero-section  .hero-text-container{
+
+    .hero-section .hero-text-container {
 
         & h1 {
             font-size: 76px !important;
         }
+
         & .title {
             font-size: 34px !important;
-        }  
+        }
     }
 }
 
 @media screen and (max-width: 768px) {
-    
-    .hero-section  .hero-text-container{
+
+    .hero-section .hero-text-container {
 
         & h1 {
             font-size: 55px !important;
@@ -153,7 +181,7 @@ div.banner.skeleton{
 
         & .title {
             font-size: 30px !important;
-        } 
+        }
     }
 
     /* & .banner-background {
@@ -162,28 +190,30 @@ div.banner.skeleton{
         background-position: center;
     } */
 
-    .center, .right, .left{
+    .center,
+    .right,
+    .left {
         justify-content: center;
-    
-        & .hero-text-container{
+
+        & .hero-text-container {
             align-items: center;
             text-align: center;
-    
+
             & .title {
                 text-align: center;
-            } 
+            }
         }
-    
+
     }
 }
 
 @media screen and (max-width: 600px) {
-    
-    .hero-section .hero-text-container{
+
+    .hero-section .hero-text-container {
 
         & h1 {
             font-size: 48px !important;
-        }  
+        }
 
         & .title {
             font-size: 24px !important;
@@ -192,13 +222,13 @@ div.banner.skeleton{
 }
 
 @media screen and (max-width: 480px) {
-    
-    .hero-section .hero-text-container{
+
+    .hero-section .hero-text-container {
 
         & h1 {
             font-size: 42px !important;
         }
- 
+
         & .title {
             font-size: 22px !important;
         }
@@ -206,19 +236,16 @@ div.banner.skeleton{
 }
 
 @media screen and (max-width: 280px) {
-    
-    .hero-section .hero-text-container{
+
+    .hero-section .hero-text-container {
 
         & h1 {
             font-size: 34px !important;
         }
+
         & .title {
             font-size: 16px !important;
             line-height: 1.5;
-        }  
+        }
     }
 }
-
-
-
-

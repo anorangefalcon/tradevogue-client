@@ -23,7 +23,7 @@
             height: 60dvh !important;
             object-position: top;
 
-            & .banner-background{
+            & .banner-background {
                 width: 100% !important;
             }
         }
@@ -35,19 +35,19 @@
         }
     }
 
-    & .hero-text-container{
+    & .hero-text-container {
         transform: translateY(35%);
         scale: 0.8;
     }
 
-    & .owl-dots{
+    & .owl-dots {
         display: none;
     }
 
     pointer-events: none;
 }
 
-.card-header{
+.card-header {
     z-index: 2;
 }
 
@@ -68,7 +68,7 @@
     }
 }
 
-.action-button{
+.action-button {
     font-size: 20px;
     font-weight: 400;
     border-radius: 5px;
@@ -89,6 +89,7 @@
 
     & .app-div {
         width: 100%;
+
         /* collections */
         & .collections {
             padding-block: 20px;
@@ -138,6 +139,14 @@
     }
 }
 
+app-product-card-carousel {
+    .crousel {
+        .owl-theme .owl-nav {
+            display: none !important;
+        }
+    }
+}
+
 .controls {
     position: absolute;
     display: flex;
@@ -148,10 +157,11 @@
     width: 100%;
     justify-content: space-between;
 
-    & div{
+    & div {
         opacity: 1;
         transition: all 0.3s ease-in-out;
     }
+
     transition: all 0.3s linear;
 }
 
@@ -165,20 +175,20 @@
     padding: 40px;
 }
 
-.disabledElement{
-    & .app-div{
+.disabledElement {
+    & .app-div {
         filter: grayscale(1);
     }
 
-    & .controls{
+    & .controls {
         background: rgb(var(--danger));
         background: linear-gradient(270deg, rgb(207, 207, 207) 12%, rgba(255, 255, 255, 0) 100%);
 
     }
-    
+
 }
 
-.operation_button{
+.operation_button {
     position: fixed;
     bottom: 0;
     right: 35px;
@@ -208,42 +218,43 @@
     box-shadow: 5px 5px 5px 0px #afafaf36;
 } */
 
-.edit-name{
+.edit-name {
     right: 28px;
     opacity: 0.8;
     top: 50%;
     transform: translateY(-50%);
     font-size: 15px;
-    
-    &:hover{
+
+    &:hover {
         color: rgb(var(--primaryClr));
         opacity: 1;
     }
 }
 
-.add-layout{
+.add-layout {
     padding: 6px;
     border-radius: 5px;
     border: 1px solid rgba(var(--blackClr), 0.2);
     color: rgba(var(--blackClr), 0.6);
 
-    &:hover{
+    &:hover {
         color: rgb(var(--whiteClr));
         background-color: rgb(var(--primaryClr));
         border-color: transparent;
     }
 }
 
-.adjustPopup{
-    & .content-drawer{
+.adjustPopup {
+    & .content-drawer {
         max-width: 380px;
     }
 }
+
 @media screen and (max-width: 420px) {
     .card-header {
-      background-color: transparent;
-      border: none;
-      border-radius: 0;
-      padding: 0 !important;
+        background-color: transparent;
+        border: none;
+        border-radius: 0;
+        padding: 0 !important;
     }
-  }
+}

@@ -6,7 +6,7 @@ import { productData } from '../../productData';
 @Component({
   selector: 'app-product-card-carousel',
   templateUrl: './product-card-carousel.component.html',
-  styleUrls: ['./product-card-carousel.component.css']
+  styleUrls: ['./product-card-carousel.component.css'],
 })
 export class ProductCardCarouselComponent {
 
