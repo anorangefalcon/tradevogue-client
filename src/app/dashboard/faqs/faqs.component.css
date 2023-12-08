@@ -11,6 +11,10 @@
   z-index: 1000; /* Adjust z-index as needed */
 }
 
+.form-group {
+  width: 100%;
+}
+
 /* Other styles... */
 
 nav {

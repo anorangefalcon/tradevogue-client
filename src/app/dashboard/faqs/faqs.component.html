@@ -36,7 +36,7 @@
                     </div>
       </div>
       <div formArrayName="categories">
-        <div [formGroupName]="i" class="d-flex flex-column gap-10">
+        <div [formGroupName]="i" class="d-flex flex-column gap-10 card card__pd-20 d-flex align-item-center justify-content-md-between default-animation">
           <!-- Select dropdown -->
           <!-- <select style="    margin-top: 33px;" formControlName="selectedOption" class="flex-grow-1">
             <option value="" disabled>Select a Category</option>
@@ -65,7 +65,7 @@
     </form>
     <div class="d-flex gap-10">
       <button [disabled]="faqForm.invalid" class="btn-primary btn-sm btn-rounded"
-        style="margin-top: 10px;     margin-left: 4%;" (click)="addCategory()">Submit</button>
+        style="margin-top: 10px;     margin-left: 5%;" (click)="addCategory()">Submit</button>
       <!-- <button class="btn-secondary btn-sm btn-rounded" style="margin-top: 10px;" (click)="addFaqCategory()">+</button> -->
     </div>
   </app-drawer>
