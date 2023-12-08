@@ -1,4 +1,4 @@
-import { Component, HostListener, OnInit } from '@angular/core';
+import { Component, ElementRef, HostListener, OnInit } from '@angular/core';
 import { CartService } from '../../services/cart.service';
 import { FetchDataService } from '../../services/fetch-data.service';
 import { NavigationEnd, Router } from '@angular/router';
@@ -23,7 +23,7 @@ export class NavbarComponent implements OnInit {
   cart_count: number = 0;
   wishlistCount: number = 0;
   isLogin: boolean = false;
-  darkTheme : Boolean = false;
+  darkTheme: Boolean = false;
 
   // notification start
   showBellIcon: boolean = true;
@@ -38,29 +38,30 @@ export class NavbarComponent implements OnInit {
     men: [],
     women: []
   }
-  secureNavbar: boolean=false;
+  secureNavbar: boolean = false;
 
-  UserRole!:String
-  
+  UserRole!: String
+
   constructor(private cartService: CartService,
-     private userService: LoginCheckService,
-      private checkOutService:CheckoutService, 
-      private BackendEndUrl: UtilsModule,
-       private fetchDataService: FetchDataService,
-         private wishlistService: WishlistService,
-         public notification: SupportNotificationService,
-         private fetchService: FetchDataService,
-         private router: Router,
-         private util: UtilsModule,) {
+    private userService: LoginCheckService,
+    private checkOutService: CheckoutService,
+    private BackendEndUrl: UtilsModule,
+    private fetchDataService: FetchDataService,
+    private wishlistService: WishlistService,
+    public notification: SupportNotificationService,
+    private fetchService: FetchDataService,
+    private router: Router,
+    private util: UtilsModule,
+    private elementRef: ElementRef) {
 
-    this.checkOutService.secureNavbar$.subscribe((data)=>{
+    this.checkOutService.secureNavbar$.subscribe((data) => {
       this.secureNavbar = data;
     });
 
-    this.userService.getUser('token').subscribe((data)=>{
-      if(!data) return;
-      this.fetchDataService.HTTPGET(this.BackendEndUrl.URLs.authorizeUrl).subscribe((data:any)=>{
-        if(data=='admin') this.UserRole=data;
+    this.userService.getUser('token').subscribe((data) => {
+      if (!data) return;
+      this.fetchDataService.HTTPGET(this.BackendEndUrl.URLs.authorizeUrl).subscribe((data: any) => {
+        if (data == 'admin') this.UserRole = data;
       })
     })
 
@@ -68,7 +69,7 @@ export class NavbarComponent implements OnInit {
       if (name) {
         this.purchaser = name;
       }
-      else{
+      else {
         this.purchaser = '';
       }
     });
@@ -85,7 +86,7 @@ export class NavbarComponent implements OnInit {
 
     // this.wishlistService.getWishlistCount();
     this.wishlistService.WishlistCount$.subscribe((data) => {
-      if (data || data==0) {
+      if (data || data == 0) {
         this.wishlistCount = data;
       }
     })
@@ -107,16 +108,16 @@ export class NavbarComponent implements OnInit {
 
     this.fetchDataService.HTTPPOST(this.BackendEndUrl.URLs.uniqueProductFields, body).subscribe((data: any) => {
       this.categories.men = data.data.male.category;
-      this.categories.women = data.data.female.category;        
+      this.categories.women = data.data.female.category;
     })
 
     this.fetchDataService.themeColor$.subscribe((color) => {
       this.darkTheme = color;
     })
-    this.userService.getUser('fcm').subscribe((token: any)=>{
+    this.userService.getUser('fcm').subscribe((token: any) => {
       this.fcmToken = token;
     });
-    
+
     // this.notification.notificationOptions$.subscribe((options) => {
 
     // });
@@ -127,10 +128,10 @@ export class NavbarComponent implements OnInit {
   }
 
   searchExplore(query: string) {
-    if(query == ''){
+    if (query == '') {
       this.router.navigateByUrl(`/explore`);
     }
-    else{
+    else {
       this.router.navigateByUrl(`/explore?search=${query}`);
     }
   }
@@ -149,63 +150,64 @@ export class NavbarComponent implements OnInit {
 
   }
 
-  toggleTheme(){
+  toggleTheme() {
     this.darkTheme = !this.darkTheme;
     this.fetchDataService.toggleTheme(this.darkTheme);
   }
 
 
-// notification start
-async subscribeToNotifications() {
-// Add your subscribe logic here if needed
-this.notification.initialize();
-}
+  // notification start
+  async subscribeToNotifications() {
+    // Add your subscribe logic here if needed
+    this.notification.initialize();
+  }
 
-// toggle() {
-// const chatBox = document.querySelector('.messengers');
-// this.showBellIcon = !this.showBellIcon;
-// if (chatBox) {
-//   setTimeout(() => {
-//     chatBox.classList.toggle('expanded');
-//   }, 100);
-// }
-// }
+  // toggle() {
+  // const chatBox = document.querySelector('.messengers');
+  // this.showBellIcon = !this.showBellIcon;
+  // if (chatBox) {
+  //   setTimeout(() => {
+  //     chatBox.classList.toggle('expanded');
+  //   }, 100);
+  // }
+  // }
 
-// Helper method to filter visible notifications
-visibleNotifications(): any[] {
-return this.notifications.filter(notification => notification.state);
-}
+  // Helper method to filter visible notifications
+  visibleNotifications(): any[] {
+    return this.notifications.filter(notification => notification.state);
+  }
 
-// Helper method to check if there are any visible notifications
-hasVisibleNotifications(): boolean {
-return this.notifications.some(notification => notification.state);
-}
+  // Helper method to check if there are any visible notifications
+  hasVisibleNotifications(): boolean {
+    return this.notifications.some(notification => notification.state);
+  }
 
-redirectToUrl(url: string) {
-const baseUrl = window.location.origin;
-if (url.startsWith(baseUrl)) {
-  const path = url.substring(baseUrl.length);
-  this.router.navigate([path]);
-} else {
-  this.router.navigate([url]);
-}
-}
+  redirectToUrl(url: string) {
+    const baseUrl = window.location.origin;
+    if (url.startsWith(baseUrl)) {
+      const path = url.substring(baseUrl.length);
+      this.router.navigate([path]);
+    } else {
+      this.router.navigate([url]);
+    }
+  }
 
-shareNotification(notification: any) {
-if (navigator.share) {
-  navigator.share({
-    title: notification.notification.title,
-    text: notification.notification.body,
-    url: notification.notification.url
-  })
-    .catch((error) => console.error('Error sharing:', error));
-} else {
-  // Fallback for browsers that do not support Web Share API
-}
-}
-  
+  shareNotification(notification: any) {
+    if (navigator.share) {
+      navigator.share({
+        title: notification.notification.title,
+        text: notification.notification.body,
+        url: notification.notification.url
+      })
+        .catch((error) => console.error('Error sharing:', error));
+    } else {
+      // Fallback for browsers that do not support Web Share API
+    }
+  }
 
-
-
-
+  @HostListener('document:click', ['$event']) onClick(e: Event) {
+    if (!this.elementRef.nativeElement.contains(e.target)) {
+      this.isSearching = false;
+    }
+  }
 }

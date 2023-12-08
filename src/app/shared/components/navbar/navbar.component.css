@@ -68,6 +68,7 @@ header.active {
 
 .search {
     height: 40px;
+    
 }
 
 .navbar-features,
@@ -401,10 +402,18 @@ header.active {
 
     .search-icon-mobile {
         display: flex !important;
+        /* width: 54px !important; */
+    }
+
+    .search-bar.form__input{
+        height: 100% !important;
     }
 
     .search {
         display: none;
+        & button{
+            width: 54px;
+        }
     }
 
     .search-mobile {

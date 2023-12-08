@@ -13,7 +13,7 @@ export class SearchBarComponent {
   @Input() searchPlaceholder: any = 'Search...';
   @Output() searchQuery$ = new EventEmitter <string>();
 
-  private searchQuery: any = '';
+  searchQuery: any = '';
   private searchText$ = new BehaviorSubject<string>('');
   private emitNow: Boolean = false;
 

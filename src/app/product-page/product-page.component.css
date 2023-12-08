@@ -929,10 +929,6 @@
         gap: 10px;
     }
 
-    .edit-rating span {
-        font-size: 18px;
-    }
-
     .tags {
         flex-wrap: wrap;
     }
