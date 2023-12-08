@@ -164,6 +164,11 @@ img {
   .vertical {
     display: none;
   }
+
+  .horizontal {
+    display: block;
+  }
+  
 }
 
 
