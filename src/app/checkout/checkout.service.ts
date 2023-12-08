@@ -78,17 +78,6 @@ export class CheckoutService {
       this.ProceedToPayment.next(false);
     }
   }
-
-  private async updateOrderStatus() {
-    let body: any = {};
-    body = {
-      orderID: this.orderID
-    };
-    this.allSubscriptions.push(
-    this.fetchDataService.HTTPPOST(this.backendUri.URLs.updateOrderStatus, body).subscribe());
-  }
-
- 
   //  ADDRESS
   addressSelected: any = null;
 }

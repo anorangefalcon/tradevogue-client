@@ -32,18 +32,11 @@
 
                     <!-- Remove button -->
                     <div *ngIf="i > 0" class="remove-button">
-                      <button class="btn-secondary btn-sm btn-rounded ml-2" (click)="removeCategory(i)">Remove Current</button>
+                      <button class="pointer btn-secondary btn-sm btn-rounded ml-2" (click)="removeCategory(i)">Remove Current</button>
                     </div>
       </div>
       <div formArrayName="categories">
         <div [formGroupName]="i" class="d-flex flex-column gap-10 card card__pd-20 d-flex align-item-center justify-content-md-between default-animation">
-          <!-- Select dropdown -->
-          <!-- <select style="    margin-top: 33px;" formControlName="selectedOption" class="flex-grow-1">
-            <option value="" disabled>Select a Category</option>
-            <option *ngFor="let item of faqData" [value]="item.title">{{ item.title }}</option>
-          </select> -->
-          <!-- <app-custom-select [_id]="'faq' + i" [type]="'select'" [options]="faq" [selectedOption]="selectedOption ? selectedOption: 'Select a Category'" (final_option)="saveCategory(i, $event)" ></app-custom-select> -->
-          <!-- Query input -->
           <div class="form-group flex-grow-1">
             <label class="form__label" for="query">Query*</label>
             <input class="form__input" type="text" id="query" formControlName="query" required />

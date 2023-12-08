@@ -137,7 +137,7 @@ export class BillingComponent implements OnInit {
       orderId: this.checkOutService.orderID,
       subTtotal: this.cartitems.amounts.total,
       saving: this.cartitems.amounts.saving,
-      items: item
+      items: item,
     }
 
     const response = this.fetchDataService.HTTPPOST(this.backendURLs.URLs.createPaymentIntent, items).subscribe((data: any) => {
@@ -301,7 +301,7 @@ export class BillingComponent implements OnInit {
           amount: this.PaymentDetails?.total * 100,
           order_id: this.checkOutService.orderID,
           items: ress.details,
-          token: "token"
+          token: "token",
         };
 
         console.log('Body code ups is:', body);

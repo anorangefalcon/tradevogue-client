@@ -76,9 +76,9 @@ export class MonetizationComponent {
   }
 
   fetchData() {
-    this.http.get<any[]>('http://localhost:1000/paymentKeys/getAll').subscribe((data) => {
-      this.paymentKeys = data;
-      this.razorpayPaymentKeys = data;
+    this.fetch.HTTPGET(this.util.URLs.getAllPaymentKeys).subscribe((response: any) => {
+      this.paymentKeys = response;
+      this.razorpayPaymentKeys = response;
     });
   }
 
@@ -89,26 +89,34 @@ export class MonetizationComponent {
       rzpEnableDropdown: ['true'],
     });
   }
-  toggleRazorpayPayment(key: any) {
-    this.selectedItem = key;
-    console.log(this.selectedItem, "selected item are")
-    if (this.selectedItem) {
-      const id = this.selectedItem._id;
-      const enable = !this.selectedItem.enable;
-      const rzpIdKey = this.selectedItem.rzpIdKey;
-      const rzpSecretKey = this.selectedItem.rzpSecretKey;
-      const body = {
-        id, enable , rzpIdKey , rzpSecretKey
-      }
+toggleRazorpayPayment(key: any) {
+  this.selectedItem = key;
+  console.log(this.selectedItem, "selected item are");
+  
+  if (this.selectedItem) {
+    const id = this.selectedItem._id;
+    const enable = !this.selectedItem.enable;
+    const rzpIdKey = this.selectedItem.rzpIdKey;
+    const rzpSecretKey = this.selectedItem.rzpSecretKey;
+    
+    const body = {
+      id,
+      enable,
+      rzpIdKey,
+      rzpSecretKey,
+      toggle: true 
+    };
 
-      this.fetch.HTTPPOST(this.util.URLs.updatePaymentKeys, body).subscribe((response: any) => {
-        this.fetchData();
+    this.fetch.HTTPPOST(this.util.URLs.updatePaymentKeys, body).subscribe(
+      (response: any) => {
+        this.fetchData(); // Refresh data after successful update
+      },
+      (error: any) => {
+        // Handle error if necessary
       }
-        , (error: any) => {
-
-        });
-    }
+    );
   }
+}
 
   viewRazorpay(key: any) {
 
@@ -138,9 +146,11 @@ export class MonetizationComponent {
 view(key: any, index: any) {
   this.selectedItem = key;
   this.showingPopUp = true;
+  console.log(this.selectedItem, index ,"selected item are");
   const urlWithParams = `${this.util.URLs.getDecrptedPaymentKeys}/${index}`;
   
   this.fetch.HTTPGET(urlWithParams).subscribe((response: any) => {
+    console.log(response, "response are")
     this.decrptedPublicKey = response.decryptedPublicKey;
     this.decryptedPrivateKey = response.decryptedPrivateKey;
   });
@@ -150,19 +160,29 @@ view(key: any, index: any) {
     this.showingPopUp = event;
   }
 
-  edit(key: any) {
-    this.show = true;
-    this.selectedItem = key;
+ edit(key: any, index: any) {
+  this.show = true;
+  this.selectedItem = key;
+  console.log(this.selectedItem, index ,"selected item are");
+
+  const urlWithParams = `${this.util.URLs.getDecrptedPaymentKeys}/${index}`;
+
+  this.fetch.HTTPGET(urlWithParams).subscribe((response: any) => {
+    this.decrptedPublicKey = response.decryptedPublicKey;
+    this.decryptedPrivateKey = response.decryptedPrivateKey;
+
     if (key) {
       this.selectedItem = key;
       this.editItem = true;
       this.stripeKeysForm.patchValue({
-        publicKey: this.selectedItem.publicKey,
-        privateKey: this.selectedItem.privateKey,
+        publicKey: this.decrptedPublicKey,
+        privateKey: this.decryptedPrivateKey,
         enableDropdown: this.selectedItem.enable ? 'true' : 'false',
       });
     }
-  }
+  });
+}
+
 
   togglePayment(key: any) {
     this.selectedItem = key;
@@ -171,9 +191,12 @@ view(key: any, index: any) {
       const enable = !this.selectedItem.enable;
       const publicKey = this.selectedItem.publicKey;
       const privateKey = this.selectedItem.privateKey;
+      const toggle = !this.selectedItem.enable;
       const body = {
-        id, enable , publicKey , privateKey
+        id, enable , publicKey , privateKey , toggle
       }
+
+      console.log(body, "body are")
 
       this.fetch.HTTPPOST(this.util.URLs.updatePaymentKeys, body).subscribe((response: any) => {
         this.fetchData();
@@ -196,8 +219,13 @@ view(key: any, index: any) {
         publicKey, privateKey, enable, id
       }
 
+      console.log(body, "body are")
+
       this.fetch.HTTPPOST(this.util.URLs.updatePaymentKeys, body)
         .subscribe((response: any) => {
+          this.fetchData();
+          this.stripeKeysForm.reset();
+          this.show = false;  
         })
 
       if (publicKey !== null && privateKey !== null && enable !== null) {
