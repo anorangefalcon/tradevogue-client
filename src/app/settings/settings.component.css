@@ -474,14 +474,32 @@ label span {
 }
 
 .deliverDiv {
-    & span {
+    /* & span {
         color: rgb(var(--whiteClr));
         width: 25px;
         height: 25px;
         font-size: 15px;
         border-radius: 50%;
         padding: 5px;
-    }
+    } */
+}
+
+.deliveryStatusText{
+    gap: 2px;
+   & .info-icon {
+       font-size: 15px;
+       transform: translateY(-4px);
+   }
+}
+
+.old-price {
+    font-size: 16px !important;
+    text-decoration: line-through;
+    color: rgba(var(--danger));
+}
+
+.tooltiptext{
+    width: 200px;
 }
 
 .pending-icon {

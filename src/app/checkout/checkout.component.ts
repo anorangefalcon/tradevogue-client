@@ -273,6 +273,9 @@ export class CheckoutComponent implements OnInit {
     }
   }
 
+  OrderCompleted(){
+    // this.checkOutService.addressSelected=null;
+  }
 
   ChangeHandler(event: boolean) {
     this.show = event;

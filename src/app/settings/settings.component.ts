@@ -13,6 +13,7 @@ import { DialogBoxService } from '../shared/services/dialog-box.service';
 import { ToastService } from '../shared/services/toast.service';
 import { LoginCheckService } from '../shared/services/login-check.service';
 import { InvoiceTemplateComponent } from 'src/app/shared/components/invoice-template/invoice-template.component';
+import { Subscription } from 'rxjs';
 
 
 @Component({
@@ -56,13 +57,14 @@ export class SettingsComponent {
   wishlistCount: number = 0;
 
   productStatus: any = 'cancelled';
-
+  allSubscriptions: Subscription[] = [];
   body: any;
+  DialogSubcribe: any;
 
 
   TemplatePagination: any = {
     currentPage: this.currentPage,
-    limit: 10
+    limit: 80
   }
 
   cancelledTempatePagination: any = {
@@ -116,17 +118,20 @@ export class SettingsComponent {
       this.changeComponent(params.get('page'));
     });
 
-    this.dialogBox.responseEmitter.subscribe((res: boolean) => {
+
+    this.allSubscriptions.push(
+    this.DialogSubcribe = this.dialogBox.responseEmitter.subscribe((res: boolean) => {
       if (res == true) {
         this.fetchDataService.HTTPPOST(this.backendURLs.URLs.cancelOrderedProduct, this.body).subscribe((data) => {
           this.pageChange(this.currentPage);
         })
       }
-    });
+    }));
 
+    this.allSubscriptions.push(
     this.fetchDataService.themeColor$.subscribe((color) => {
       this.theme = color;
-    })
+    }));
 
 
 
@@ -136,6 +141,7 @@ export class SettingsComponent {
   };
 
   ngOnInit() {
+    this.allSubscriptions.push(
     this.fetchDataService.HTTPGET(this.backendURLs.URLs.getDetails).subscribe((data: any) => {
       data.firstname = data.name.firstname;
       data.lastname = data.name.lastname;
@@ -144,19 +150,22 @@ export class SettingsComponent {
         data.dob = data.info.dob.split('T')[0];
       }
       this.ProfileForm.patchValue(data);
-    })
+    }));
 
     // this.showWishlistedProducts('my wishlist');
+    this.allSubscriptions.push(
     this.wishlistService.showWishlistedProducts().subscribe((data) => {
       this.wishlistedProducts = data
 
-    })
+    }))
     this.wishlistService.getWishlistCount();
 
   }
 
 
-
+  ngOnDestroy() {
+    this.allSubscriptions.forEach((item: Subscription)=> item.unsubscribe());
+  }
 
   DisableForm(check: boolean) {
 
@@ -278,8 +287,6 @@ export class SettingsComponent {
             this.userAddresses = data;
           }
         }
-        console.log('data comne up is ',data);
-        
         this.loading=false;
       }
     ,
@@ -368,10 +375,10 @@ export class SettingsComponent {
       }
       else {
         this.AllOrders = data[0]?.document;
-        console.log('allorders is ',this.AllOrders);
-        
         this.totalCount = data?.length;
       }
+      console.log('all order is ',this.AllOrders);
+      
       this.loading = false;
     });
   }
@@ -402,8 +409,8 @@ export class SettingsComponent {
   }
 
 
-  CancelProduct(id: any, sku: any) {
-    this.body = { id, sku }
+  CancelProduct(id: any, product: any) {
+    this.body = { id, product }
     let template: any = {
       title: 'Cancel Order',
       subtitle: 'Are you sure you want to remove product from the order?',

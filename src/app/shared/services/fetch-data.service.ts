@@ -49,17 +49,34 @@ export class FetchDataService {
 
   HTTPGET(url: any, params: any = '') {
     return this.http.get(url, { params }).pipe(
-      catchError((error: any): any => {
-        this.toastService.errorToast(error);
+      catchError((data: any): any => {
+         if(data.error.message){
+          this.toastService.errorToast({
+            title: data.error.message
+          });
+        }
+        else{
+          this.toastService.errorToast({
+            title: 'Internal Server Error'
+          });
+        }
       }));
   }
 
   HTTPPOST(url: any, body: any) {
     return this.http.post(url, body).pipe(
       catchError((data): any => {
-        this.toastService.errorToast({
-          title: data.error.message
-        });
+        if(data.error.message){
+          this.toastService.errorToast({
+            title: data.error.message
+          });
+        }
+        else{
+          this.toastService.errorToast({
+            title: 'Internal Server Error'
+          });
+        }
+       
       }));
   }
 

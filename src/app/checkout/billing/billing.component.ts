@@ -410,6 +410,9 @@ export class BillingComponent implements OnInit {
   }
   RemoveAddress(address: any, index: any) {
     const body = { address_id: address._id }
+    if( this.checkOutService.addressSelected._id ==address._id){
+      this.checkOutService.addressSelected=null;
+    }
     this.allSubscriptions.push(
       this.fetchDataService.HTTPPOST(this.backendURLs.URLs.deleteAddress, body).subscribe((data) => {
         this.userAddresses.splice(index, 1);
@@ -426,8 +429,12 @@ export class BillingComponent implements OnInit {
   addressChecked: Boolean = false;
   
   AddressClicked(address: any) {
+    // this.userAddresses.forEach((el) => {
+    //   el.selected = false;
+    // })
+    address.selected = true;
     this.checkOutService.addressSelected = (address);
-    this.addressDelivered = address;
+    // this.addressDelivered = address;
   }
 
   ngOnDestroy() {

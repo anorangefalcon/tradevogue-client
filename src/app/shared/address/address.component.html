@@ -25,7 +25,7 @@
 <div class="form__group relative d-flex flex-column">
     <label class="form__label">Area<span>*</span></label>
     <!-- <span class="material-symbols-outlined form__icon absolute">call</span> -->
-    <input type="text" id="area" formControlName="area" placeholder="Enter Your area" [value]="area" class="form__input">
+    <input type="text" id="area" formControlName="area"  placeholder="Enter Your area" [value]="area" class="form__input">
 </div>
 
 
@@ -41,6 +41,9 @@
     <label class="form__label">Pin Code<span>*</span></label>
     <!-- <span class="material-symbols-outlined form__icon absolute">person</span> -->
     <input type="text" id="pincode" formControlName="pincode" placeholder="Enter Your Pin Code" class="form__input" (input)="onPostalCodeInputChange()">
+
+    <span *ngIf="DetailsForm.get('pincode')?.hasError('pattern')" class="errors">Invalid pincode No</span>
+
 </div>
 
 

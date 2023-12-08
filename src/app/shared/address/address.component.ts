@@ -41,65 +41,28 @@ export class AddressComponent {
         apartment: fb.control('', [Validators.required]),
         area: fb.control('', [Validators.required]),
         landmark: fb.control('', [Validators.required,]),
-        pincode: fb.control('', [Validators.required,]),
+        pincode: fb.control('', [Validators.required, Validators.pattern('^[1-9]\\d{5}$')]),
         town_city: fb.control('', [Validators.required,]),
         state: fb.control('', [Validators.required,]),
         mobile: ['', [Validators.required,this.PhoneNoValidator,]],
       });
   }
 
-  // pincode
-  ngOnInit(): void {
-    this.postalCodeInput
-      .pipe(
-        debounceTime(500),
-        distinctUntilChanged(),
-        switchMap((value: string) => {
-          if (value) {
-            this.pincodeFilled = true;
-            return this.postalCodeService.getDetailsByPostalCode(value);
-          } else {
-            this.pincodeFilled = false;
-            // this.country = '';
-            this.states = '';
-            this.town_city = '';
-            // this.city = '';
-            this.area = [];
-            return [];
-          }
-        })
-      )
-      .subscribe((data: any[]) => {
-        if (data.length > 0) {
-          this.country = data[0].COUNTRY;
-          this.states = data[0].STATE;
-          this.town_city = data[0].COUNTY;
-          this.area = data[0].CITY;
-
-          if(this.country) {
-            this.DetailsForm.get('state')?.setValue(this.states);
-            this.DetailsForm.get('town_city')?.setValue(this.town_city);
-            this.DetailsForm.get('area')?.setValue(this.area);
-          }
-
-        } else {
-          this.country = '';
-          this.states = '';
-          this.town_city = '';
-          this.area = [];
-        }
-      });
-  }
 
   // pincode
-  onPostalCodeInputChange() {
+ async onPostalCodeInputChange() {
   const postalCodeValue = this.DetailsForm?.get('pincode')?.value;
+  // const data=await fetch(`http://www.postalpincode.in/api/pincode/141007`);
+  // console.log("data come up is ",this.DetailsForm)
   this.postalCodeService.getDetailsByPostalCode(postalCodeValue).pipe(
     debounceTime(500),
     distinctUntilChanged())
     .subscribe((data)=>{
+      console.log("data come up is ",data);
+
        });
-    this.postalCodeInput.next(postalCodeValue);
+
+  //   this.postalCodeInput.next(postalCodeValue);
   }
 
   ChangeHanlder(event: boolean) {
