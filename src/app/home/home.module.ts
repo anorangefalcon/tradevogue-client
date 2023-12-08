@@ -9,11 +9,12 @@ import { OffersComponent } from './offers/offers.component';
 import { DealOfWeekComponent } from './deal-of-week/deal-of-week.component';
 import { HeroComponent } from './hero/hero.component';
 import { GalleryComponent } from './gallery/gallery.component';
+import { NewsletterComponent } from './newsletter/newsletter.component';
 
 @NgModule({
   declarations: [
-    HomeComponent
-    ],
+    HomeComponent,
+  ],
   imports: [
     CommonModule,
     HomeRoutingModule,
@@ -23,7 +24,8 @@ import { GalleryComponent } from './gallery/gallery.component';
     GalleryComponent,
     CollectionsComponent,
     DealOfWeekComponent,
-    OffersComponent
+    OffersComponent,
+    NewsletterComponent
   ],
   exports: [
     GalleryComponent,

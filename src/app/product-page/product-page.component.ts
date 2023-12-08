@@ -4,7 +4,7 @@ import { CartService } from '../shared/services/cart.service';
 import { OwlOptions } from 'ngx-owl-carousel-o';
 import { WishlistService } from '../shared/services/wishlist.service';
 import { ReviewService } from './services/review.service';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ToastService } from '../shared/services/toast.service';
 import { UtilsModule } from '../utils/utils.module';
 import { FetchDataService } from '../shared/services/fetch-data.service';
@@ -59,12 +59,16 @@ export class ProductPageComponent implements OnInit {
 
     this.ratingForm = this.fb.group({
       rating: ['', Validators.required],
-      review: ['', Validators.required]
+      review: ['', [Validators.required, this.noWhitespaceValidator]]
     })
 
   }
 
   breadcrumbs: { label: string; url: string }[] = [];
+
+  public noWhitespaceValidator(control: FormControl) {
+    return (control.value || '').trim().length ? null : { 'whitespace': true };
+  }
 
   ngOnInit(): void {
 
@@ -115,7 +119,7 @@ export class ProductPageComponent implements OnInit {
 
     this.data.avgRating = data.avgRating ? data.avgRating : 0;
     this.activeIndex = 0;
-    
+
     this.selectedColor = data?.assets[0]?.color;
     this.selectedSize = data.assets[this.assetIndex].stockQuantity[0].size;
     this.outOfStock = (this.data.assets[this.assetIndex].stockQuantity[this.sizeIndex].quantity <= 0) ? true : false;
@@ -139,14 +143,14 @@ export class ProductPageComponent implements OnInit {
         }
 
         assetI++;
-        if(assetI >= this.data.assets.length){
+        if (assetI >= this.data.assets.length) {
           this.changeColor(0);
           return true;
         }
         this.changeColor(assetI);
         return false;
       });
-       
+
     }
 
     this.userReview = null;
@@ -344,7 +348,7 @@ export class ProductPageComponent implements OnInit {
     this.atDefault = !this.atDefault;
   }
 
-  limitReviews(reviews: any[]){
+  limitReviews(reviews: any[]) {
     return reviews.slice(0, 2);
   }
 
@@ -360,16 +364,16 @@ export class ProductPageComponent implements OnInit {
   // }
 
 
-    // Purpose to detemine the quantiy of product->color->size based upon orderQuantity
-    filterData(array: any, limit: any) {
+  // Purpose to detemine the quantiy of product->color->size based upon orderQuantity
+  filterData(array: any, limit: any) {
 
-      const len = array.length;
-      // 30% of Array is
-      const index = Math.round(len * 0.3);
-  
-      if (limit <= array[index] && limit > 0) {
-        return true;
-      }
-      return false;
+    const len = array.length;
+    // 30% of Array is
+    const index = Math.round(len * 0.3);
+
+    if (limit <= array[index] && limit > 0) {
+      return true;
     }
+    return false;
+  }
 }

@@ -120,8 +120,6 @@
         <app-collections></app-collections>
       </div>
     </div>
-
-
   </ng-template>
 
   <ng-template #deal let-item="item">
@@ -281,5 +279,41 @@
         <app-product-card-carousel></app-product-card-carousel>
       </div>
 
+    </div>
+  </ng-template>
+
+
+  <ng-template #newsletter let-item="item">
+    <div class="relative">
+      <div class="controls">
+        <H4>News-Letter Section</H4>
+
+        <div class="d-flex align-item-center justify-content-md-between gap-15">
+
+          <div class="slide-button d-flex align-item-center pointer">
+            <input type="checkbox" [name]="'newsletterSwitch'" [id]="'newsletterSwitch'" [(ngModel)]="item.active"
+              (change)="switchStatus($event, item.name)" />
+            <label [for]="'newsletterSwitch'"></label>
+          </div>
+
+          <div class="gap-5 d-flex align-item-center">
+            <span *ngIf="getIndexFromName(item.name) > 1" class="action-button material-symbols-outlined pointer"
+              (click)="moveUp(item.name)">
+              expand_less
+            </span>
+            <span *ngIf="getIndexFromName(item.name) < (currentLayout.layout.length - 1)"
+              class="action-button material-symbols-outlined pointer" (click)="moveDown(item.name)">
+              expand_more
+            </span>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+    <div class="card restrict-height grid default-animation" [ngClass]="!item.active ? 'disabledElement' : ''">
+      <div class="app-div">
+        <app-newsletter></app-newsletter>
+      </div>
     </div>
   </ng-template>

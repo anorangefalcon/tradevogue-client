@@ -1,8 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
-import { SocialsService } from 'src/app/shared/services/custom-UI/socials.service';
-import { FetchDataService } from 'src/app/shared/services/fetch-data.service';
 import { UtilsModule } from 'src/app/utils/utils.module';
 
 @Component({
@@ -14,7 +12,7 @@ import { UtilsModule } from 'src/app/utils/utils.module';
 })
 export class GalleryComponent {
 
-  constructor(private http: HttpClient, private fetchDataService: FetchDataService, private backendUrls: UtilsModule) { }
+  constructor(private http: HttpClient, private backendUrls: UtilsModule) {}
 
   username: String = '';
   posts: any = [];

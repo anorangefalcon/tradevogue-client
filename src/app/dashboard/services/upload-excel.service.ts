@@ -2,8 +2,6 @@ import * as XLSX from 'xlsx';
 
 export class UploadExcelService {
 
-  constructor() { }
-
   product: any = {};
   products: any[] = [];
   errors: any = {};
@@ -308,7 +306,7 @@ export class UploadExcelService {
             if (tempObj[exKey]) tempObj[exKey] = tempObj[exKey].slice(0, -2);
           }
           else {
-            if(Array.isArray(variant[key])){
+            if (Array.isArray(variant[key])) {
               tempObj[exKey] = variant[key].reduce((variants: String, variant: String) => {
                 variants += variant + ', ';
                 return variants;

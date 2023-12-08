@@ -13,6 +13,7 @@ import { CustomiseBannerComponent } from './customise-banner/customise-banner.co
 import { SelectLayoutComponent } from './select-layout/select-layout.component';
 import { DealComponent } from './deal/deal.component';
 import { SalesComponent } from './sales/sales.component';
+import { NewsletterComponent } from 'src/app/home/newsletter/newsletter.component';
 
 const routes: Routes = [
   {
@@ -43,6 +44,7 @@ const routes: Routes = [
     OffersComponent,
     FormsModule,
     ReactiveFormsModule,
+    NewsletterComponent,
     [RouterModule.forChild(routes)],
   ],
   exports: [RouterModule]

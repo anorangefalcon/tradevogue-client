@@ -1,0 +1,60 @@
+.newsletter {
+    padding-block: 100px;
+    background: linear-gradient(#2222229c, #22222267), url(../../../assets/newbg.jpeg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    color: rgb(var(--whiteClr));
+
+    & form {
+        width: 100%;
+        justify-content: center;
+    }
+
+    & h2 {
+        font-size: 30px !important;
+        font-weight: 600;
+        letter-spacing: 0.7px;
+        text-align: center;
+        color: white
+    }
+
+    & input {
+        width: 42%;
+        font-size: 14px;
+        padding: 12px 15px;
+        background-color: white;
+        border: none;
+        border-radius: 5px;
+        outline: none;
+        color: rgb(var(--textClr));
+    }
+
+    &::placeholder {
+        letter-spacing: 0.7px;
+        color: rgb(var(--textClr), 0.4);
+    }
+
+    & button {
+        border-radius: 5px !important;
+        padding: 10px 25px;
+
+        & .send-icon {
+            display: none;
+        }
+    }
+
+
+    & .medias {
+        /* margin-block-start: 10px; */
+
+        & i {
+            font-size: 18px;
+            color: white;
+            transition: 0.3s ease-in-out;
+        }
+
+        & i:hover {
+            color: rgb(var(--primaryClr));
+        }
+    }
+}

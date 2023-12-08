@@ -123,19 +123,21 @@ div.banner.skeleton {
         height: 6px !important;
         background: rgba(var(--whiteClr), 0.9) !important;
         box-shadow: 0px 0px 5px rgba(var(--blackClr), 0.4);
-        
-    }
+        overflow: hidden;
 
+        transition: 0.4s ease-in-out !important;
+    }
+    
     & .owl-dot.active span {
         width: 35px !important;
         height: 4px !important;
         position: relative;
-        overflow: hidden;
+        
     }
 
     & .owl-dot.active span::before {
         content: '';
-        display: block;
+        display: flex;
         background: rgba(var(--primaryClr), 0.9) !important;
         position: absolute;
         inset-inline-start: 0;
