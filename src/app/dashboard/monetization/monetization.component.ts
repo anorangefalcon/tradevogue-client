@@ -25,6 +25,8 @@ export class MonetizationComponent {
   title: string = "Monetization";
   popUpDirection: string = 'popup';
   showingPopUp: boolean = false;
+  decrptedPublicKey: string = '';
+  decryptedPrivateKey: string = '';
   showTab(tab: string) {
     this.currentTab = tab;
   }
@@ -133,11 +135,16 @@ export class MonetizationComponent {
 
   }
 
-  view(key: any) {
-    this.selectedItem = key;
-    this.showingPopUp = true;
-    // this.popup.openPopup();
-  }
+view(key: any, index: any) {
+  this.selectedItem = key;
+  this.showingPopUp = true;
+  const urlWithParams = `${this.util.URLs.getDecrptedPaymentKeys}/${index}`;
+  
+  this.fetch.HTTPGET(urlWithParams).subscribe((response: any) => {
+    this.decrptedPublicKey = response.decryptedPublicKey;
+    this.decryptedPrivateKey = response.decryptedPrivateKey;
+  });
+}
 
   PopUpChangeHanlder(event: boolean) {
     this.showingPopUp = event;

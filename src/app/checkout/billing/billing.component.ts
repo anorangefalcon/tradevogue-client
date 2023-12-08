@@ -106,7 +106,8 @@ export class BillingComponent implements OnInit {
   loadStripe() {
       this.fetchDataService.HTTPGET(this.backendURLs.URLs.getPaymentKeys).subscribe({
         next:(response:any)=>{
-          const publicKey = response[0]?.keys?.[0]?.publicKey;
+          console.log('response is ',response);
+          const publicKey = response[0].decryptedPublicKey.toString();
           this.stripeScript = this.renderer.createElement('script');
             this.stripeScript.src = 'https://js.stripe.com/v3/';
             this.stripeScript.async = true;

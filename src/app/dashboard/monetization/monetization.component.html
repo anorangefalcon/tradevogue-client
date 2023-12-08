@@ -7,10 +7,10 @@
         <strong>User Email:</strong> {{ selectedItem?.adminId?.email }}
       </div>
       <div>
-        <strong>Public Key:</strong> {{ selectedItem?.publicKey }}
+        <strong>Public Key:</strong> {{ decrptedPublicKey }}
       </div>
       <div>
-        <strong>Private Key:</strong> {{ selectedItem?.privateKey }}
+        <strong>Private Key:</strong> {{ decryptedPrivateKey }}
       </div>
       <div>
         <strong>Enable:</strong> {{ selectedItem?.enable }}
@@ -128,8 +128,8 @@
           <tbody>
             <tr *ngFor="let key of paymentKeys[0]?.keys; let i = index">
               <td class="items keys-wrap">{{ key.adminId?.email }}</td>
-              <td class="items keys-wrap">{{ key.publicKey }}</td>
-              <td class="items keys-wrap">{{ key.privateKey }}</td>
+              <td class="items keys-wrap">{{ key.publicKey.encryptedData }}</td>
+              <td class="items keys-wrap">{{ key.privateKey.encryptedData }}</td>
               <td class="items">
                 <div class="slide-button d-flex align-item-center">
                   <input type="checkbox" [checked]="key.enable" (change)="togglePayment(key)" [name]="i + 'Available'"
@@ -140,7 +140,7 @@
               <td class="items action-btns">
 
                 <span class="d-flex align-item-center gap-5 transition">
-                  <span class="tooltip" (click)="view(key)">
+                  <span class="tooltip" (click)="view(key, i)">
                     <i class="fs-20 pointer action__btn-icon material-symbols-outlined">visibility</i>
                     <span class="tooltiptext">View</span>
                   </span>
@@ -210,8 +210,8 @@
           <tbody>
             <tr *ngFor="let key of razorpayPaymentKeys[0]?.razorKey; let i = index">
               <td class="items keys-wrap">{{ key.adminId?.email }}</td>
-              <td class="items keys-wrap">{{ key.rzpIdKey }}</td>
-              <td class="items keys-wrap">{{ key.rzpSecretKey }}</td>
+              <td class="items keys-wrap">{{ key.rzpIdKey.encryptedData }}</td>
+              <td class="items keys-wrap">{{ key.rzpSecretKey.encryptedData }}</td>
               <td class="items">
                 <div class="slide-button d-flex align-item-center">
                   <input type="checkbox" [checked]="key.enable" (change)="toggleRazorpayPayment(key)"

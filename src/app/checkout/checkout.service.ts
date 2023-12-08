@@ -57,7 +57,10 @@ export class CheckoutService {
 
   async checkOrderStatus(clientSecret: any): Promise<void> {
       this.fetchDataService.HTTPGET(this.backendUri.URLs.getPaymentKeys).subscribe({next:async(response:any)=>{
-        const publicKey = response[0]?.keys[0]?.publicKey;
+
+        console.log('response is ',response);
+
+        const publicKey = response[0].decryptedPublicKey;
         this.stripe = Stripe(publicKey);  
         const { paymentIntent } = await this.stripe.retrievePaymentIntent(clientSecret);
         this.handlePaymentIntentStatus(paymentIntent);
