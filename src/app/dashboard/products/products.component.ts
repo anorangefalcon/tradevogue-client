@@ -40,21 +40,12 @@ export class ProductsComponent implements OnInit {
   productList: any[] = [];
   dataFetchStatus: boolean = true;
 
-  constructor(private element: ElementRef,
+  constructor(
     private fetchdata: FetchDataService,
     private excelService: UploadExcelService,
     private backendUrl: UtilsModule,
     private dialogBoxService: DialogBoxService,
-    private toastService: ToastService) { }
-
-  async ngOnInit() {
-
-    this.fetchdata.HTTPPOST(this.backendUrl.URLs.fetchFeatures, this.dataField).subscribe({
-      next: (res: any) => {
-        this.categoryOption = res.categories;
-        this.fetchData();
-      }
-    });
+    private toastService: ToastService) {
 
     this.dialogBoxService.responseEmitter.subscribe(async (res: boolean) => {
       if (res == true) {
@@ -64,12 +55,20 @@ export class ProductsComponent implements OnInit {
         });
       }
     });
+
+  }
+
+  async ngOnInit() {
+
+    this.fetchdata.HTTPPOST(this.backendUrl.URLs.fetchFeatures, this.dataField).subscribe({
+      next: (res: any) => {
+        this.categoryOption = res.categories;
+        this.fetchData();
+      }
+    });
   }
 
   async fetchData() {
-
-    try {
-
       this.fetchdata.HTTPPOST(this.backendUrl.URLs.fetchProductInventory, this.template).subscribe({
         next: (res: any) => {
 
@@ -104,6 +103,7 @@ export class ProductsComponent implements OnInit {
               product_inventory: product.inventory,
               status: product.productInfo.status,
               rating: Math.round(product.avgRating * 10) / 10,
+              star: this.starRating(Math.round(product.avgRating * 10) / 10),
               last_updated: product.productInfo.updatedAt.split('T')[0],
               checked: false
             }
@@ -111,9 +111,6 @@ export class ProductsComponent implements OnInit {
           });
         }
       });
-    } catch (err) {
-
-    }
   }
 
   highlightProduct(e: Event, id: string, index: number) {
@@ -269,12 +266,12 @@ export class ProductsComponent implements OnInit {
 
     for (let i = 1; i <= 5; i++) {
       if (i <= Math.floor(rating)) {
-        ratingArray.push({field: 'star', class: 'filled'});
+        ratingArray.push({ field: 'star', class: 'filled'});
       }
       else if (i > Math.floor(rating) && i <= Math.ceil(rating))
-        ratingArray.push({field: 'star_half', class: ''});
+        ratingArray.push({ field: 'star_half', class: '' });
       else
-        ratingArray.push({field: 'star', class: ''});
+        ratingArray.push({ field: 'star', class: '' });
     }
     return ratingArray;
   }
