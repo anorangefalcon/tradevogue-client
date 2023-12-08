@@ -17,7 +17,7 @@ import { OrderPageComponent } from './orders/order-page/order-page.component';
 import { FaqsComponent } from './faqs/faqs.component';
 import { ProductOverviewComponent } from './products/product-overview/product-overview.component';
 import { CouponsComponent } from './coupons/coupons.component';
-import { PaginationService } from '../shared/services/pagination.service';
+// import { PaginationService } from '../shared/services/pagination.service';
 import { PopupService } from '../shared/services/popup.service';
 import { SupportComponent } from './support/support.component';
 import { TicketsComponent } from './tickets/tickets.component';
@@ -71,7 +71,7 @@ import { ChatComponent } from './chat/chat.component';
   providers: [
     UploadExcelService,
     NgModel,
-    PaginationService,
+    // PaginationService,
     PopupService,
     DatePipe
   ],

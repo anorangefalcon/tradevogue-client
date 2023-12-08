@@ -9,12 +9,6 @@
             <h3>Customise Sales</h3>
         </div>
         <div class="operation_button d-flex gap-10">
-            <!-- <button class="btn btn-rounded btn-xs fw-500 fs-14 btn-secondary d-flex align-item-center gap-5"
-                [ngStyle]="{'display': salesForm.disabled? 'none': 'flex'}" (click)="addSale()">
-                <span class="material-symbols-outlined fs-20 ">add</span>
-                Add Sales
-            </button> -->
-
             <div *ngIf="!showEditIcon" class="operation_button d-flex gap-10">
                 <button class="btn btn-xs fw-500 btn-rounded btn-primary"
                     [style.display]="!salesForm.disabled ? 'none' : 'block'" (click)="salesForm.enable()">Edit</button>

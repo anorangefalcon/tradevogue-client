@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { PaginationService } from 'src/app/shared/services/pagination.service';
+// import { PaginationService } from 'src/app/shared/services/pagination.service';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UtilsModule } from 'src/app/utils/utils.module';
 import { FetchDataService } from 'src/app/shared/services/fetch-data.service';
@@ -42,7 +42,7 @@ export class FaqsComponent {
   showingPopUp: boolean = false;
 
   constructor(private toast: ToastService,
-    public pagination: PaginationService,
+    // public pagination: PaginationService,
     private fb: FormBuilder,
     private bgURL: UtilsModule,
     private fetchDataService: FetchDataService,
@@ -109,8 +109,18 @@ export class FaqsComponent {
   }
 
   loadData() {
-    this.pagination.paginateBackend(`${this.bgURL.URLs.getPaginatedData}/faq`, this.currentPage, this.pageSize).subscribe((data) => {
-      this.faqData = data;
+    this.fetchDataService.HTTPGET(`${this.bgURL.URLs.getFaqData}`).subscribe((data: unknown) => {
+      console.log(data, "faq data is");
+      this.faqData = data as any[];
+      this.faq = this.faqData.map((name) => {
+        return name.title;
+      });
+
+      this.retrieveContent(this.faq[0]);
+    });
+
+    this.fetchDataService.HTTPGET(this.bgURL.URLs.getFaqData).subscribe((data) => {
+      console.log(data, "faq data is updated")
       this.faq = this.faqData.map((name) => {
         return name.title
       });
@@ -132,37 +142,6 @@ export class FaqsComponent {
     this.showingPopUp = event;
   }
 
-
-  // async addCategory() {
-  //   console.log(this.faqForm.value);
-  //   if (this.faqForm.valid) {
-  //     const selectedCategoryId = this.faqForm.get('selectedOption')?.value;
-  //     const query = this.faqForm.get('query')?.value;
-  //     const content = this.faqForm.get('content')?.value;
-
-  //     const dataToSend = {
-  //       title: selectedCategoryId,
-  //       children: [
-  //         {
-  //           title: query,
-  //           content: content,
-  //           expanded: false,
-  //         },
-  //       ],
-  //     };
-
-  //    this.fetchDataService.HTTPPOST(this.bgURL.URLs.addFaqData, dataToSend).subscribe((data) => {
-  //       if (data) {
-  //         this.toast.successToast({ title: "FAQ added successfully" });
-  //       } else {
-  //         this.toast.errorToast({ title: "FAQ not added" });
-  //       }
-  //       this.showingPopUp = false;
-  //       this.loadData();
-  //     });
-  //     this.faqForm.reset();
-  //   }
-  // }
 
   saveCategory(index: number, event: any) {
     this.faqForm.get('categories')?.get(`${index}`)?.get('selectedOption')?.patchValue(event);

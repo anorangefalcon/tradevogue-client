@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { FaqDataService } from './faq-data.service';
-
+import { FetchDataService } from '../shared/services/fetch-data.service';
+import { UtilsModule } from '../utils/utils.module';
 @Component({
   selector: 'app-faq-page',
   templateUrl: './faq-page.component.html',
@@ -11,11 +11,12 @@ export class FaqPageComponent implements OnInit {
   page = 1;
   limit = 100;
 
-  constructor(private faqDataService: FaqDataService) { }
+  constructor(private fetch: FetchDataService,
+    private util: UtilsModule) { }
 
   ngOnInit(): void {
-    this.faqDataService.getFaqData(this.page, this.limit).subscribe((data) => {
-      this.faqData = data.filter((section) => Object.keys(section).length > 0);
+    this.fetch.HTTPGET(this.util.URLs.getFaqData).subscribe((data: any) => {
+      this.faqData = data.filter((section: {}) => Object.keys(section).length > 0);
 
       this.faqData.forEach(section => {
         section.expanded = false;

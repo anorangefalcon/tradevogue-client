@@ -2,17 +2,15 @@
   <div class="row d-flex justify-content-center align-item-center gap-20 relative default-animation-slow">
     <ng-container *ngFor="let item of saleData; let i = index">
       <div *ngIf="item.enable && i<=1" class="col overflow-hidden" [style.background]="item.colors.cardColor"
-      (mouseenter)="onHover()"
-      (mouseleave)="onHoverOut()"
-      >
+        (mouseenter)="onHover()" (mouseleave)="onHoverOut()">
         <div class="left-content default-animation-slow">
           <div class="banner-text">
             <span class="subtitle" [style.color]="item.colors.subTitleColor">{{ item.subTitle }}</span>
             <h2 class="offer-title" [style.color]="item.colors.titleColor">{{ item.title }}</h2>
 
-            
-            <button (click)="getLink(item.buttonLink)"  class="btn-style3" [style.backgroundColor]="item.colors.buttonColor"
-              [style.color]="item.hover ? 'white' : ''"
+
+            <button (click)="getLink(item.buttonLink)" class="btn-style3"
+              [style.backgroundColor]="item.colors.buttonColor" [style.color]="item.hover ? 'white' : ''"
               [style.backgroundColor]=" item.hover ? 'transparent' : item.colors.buttonColor"
               [style.color]="item.hover ? item.colors.buttonColor : ''"
               [style.border]="item.hover ? '2px solid' + item.colors.buttonColor : '2px solid' + item.colors.buttonColor"
@@ -24,12 +22,15 @@
         </div>
       </div>
 
-      <div *ngIf="i > 1" class="pointer" (click)="selectItem(item)">
-        <span class="vertical material-symbols-outlined" style="font-size: 30px; color: #22385d; align-items: center; text-align: center;">more_vert</span>
-        <span class="horizontal material-symbols-outlined" style="font-size: 30px; color: #22385d; align-items: center; text-align: center;">more_horiz</span>
+      <div *ngIf="getEnabledItemCount() > 2 && i >= 2" class="pointer" (click)="selectItem(item)">
+        <span class="vertical material-symbols-outlined"
+          style="font-size: 30px; color: #22385d; align-items: center; text-align: center;">more_vert</span>
+        <span class="horizontal material-symbols-outlined"
+          style="font-size: 30px; color: #22385d; align-items: center; text-align: center;">more_horiz</span>
       </div>
-      
-    
+
+
+
 
     </ng-container>
   </div>

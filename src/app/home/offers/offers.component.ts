@@ -33,7 +33,7 @@ export class OffersComponent {
   isHovered = false;
   timer: any;
 
-  constructor(public salesService: SalesService, private router: Router) {}
+  constructor(public salesService: SalesService, private router: Router) { }
 
   ngOnInit(): void {
     this.salesService.getSales().subscribe((data: any) => {
@@ -46,6 +46,10 @@ export class OffersComponent {
     const parts = link.split('/').slice(3);
     const navigateUrl = parts.join('/');
     this.router.navigateByUrl(navigateUrl);
+  }
+
+  getEnabledItemCount(): number {
+    return this.saleData.filter((item: SaleData) => item.enable).length;
   }
 
   // Methods for handling hover actions

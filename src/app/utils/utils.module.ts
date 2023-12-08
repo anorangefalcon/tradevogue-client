@@ -98,15 +98,13 @@ export class UtilsModule {
     // getCoupons:`${this.BackendUrl}/offer/getCoupons`,
 
     // FAQs User Routes
-    getFaqData: `${this.BackendUrl}/getpaginatedData/faq`,
+    // getFaqData: `${this.BackendUrl}/getpaginatedData`,
 
     // FAQS Admin Routes
     updateFaqData: `${this.BackendUrl}/faqs/update`,
     deleteFaqData: `${this.BackendUrl}/faqs/delete`,
     addFaqData: `${this.BackendUrl}/faqs/add`,
-
-    // pagination common
-    getPaginatedData: `${this.BackendUrl}/getPaginatedData`,
+    getFaqData: `${this.BackendUrl}/faqs/get`,
     
     //wishlists
     showWishlist: `${this.BackendUrl}/wishlist/showWishlist`,
