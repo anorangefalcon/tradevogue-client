@@ -191,6 +191,18 @@ input[type='radio']+label::after {
   padding: 10px;
 }
 
+/* 
+@media screen and (max-width: 420px) {
+  .addAddress__div{
+    & p{
+      display: none;
+    }
+    & span{
+      font-size: 20px;
+    }
+  }
+} */
+
 
 @media screen and (max-width: 420px) {
   .addAddress__div{
@@ -201,4 +213,13 @@ input[type='radio']+label::after {
       font-size: 20px;
     }
   }
+  .delivery__div{
+    flex-direction: column;
+    gap: 5px;
+    & .default__btn{
+      height: 20px;
+      width: 85px;
+    }
+  }
+  
 }

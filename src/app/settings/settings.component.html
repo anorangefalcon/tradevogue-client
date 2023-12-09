@@ -466,7 +466,7 @@
                             <div class="d-flex gap-5 align-items-center">
                                 <p *ngIf="item.productinfo.length === 0" class="no-item-label">No items</p>
                                 <span class="material-symbols-outlined d-flex flex-center removeWishlist-btn"
-                                    (click)="removeWishlist(i)" *ngIf="i!=0">
+                                    (click)="removeWishlist(item._id)" *ngIf="i!=0">
                                     delete
                                 </span>
                                 <span class="material-symbols-outlined expand d-flex flex-center"

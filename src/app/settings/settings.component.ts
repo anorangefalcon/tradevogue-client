@@ -173,6 +173,8 @@ export class SettingsComponent {
     this.allSubscriptions.push(
     this.wishlistService.showWishlistedProducts().subscribe((data) => {
       this.wishlistedProducts = data
+      console.log(this.wishlistedProducts);
+      
 
     }))
     this.wishlistService.getWishlistCount();
@@ -246,8 +248,8 @@ export class SettingsComponent {
     })
   }
 
-  removeWishlist(index: number) {
-    this.wishlistService.removeWishlist({ index }).subscribe((data: any) => {
+  removeWishlist(id:String) {
+    this.wishlistService.removeWishlist({ id }).subscribe((data: any) => {
       const toast = {
         title: data.message
       }
@@ -479,7 +481,8 @@ export class SettingsComponent {
       confirmationText: 'Yes, Remove it',
       cancelText: 'No, Keep it',
     };
-  
+    this.dialogBox.confirmationDialogBox(this.template);
+
   }
 
   changeComponent(el: string) {

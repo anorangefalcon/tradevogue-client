@@ -37,7 +37,7 @@ export class CheckoutComponent implements OnInit {
   @ViewChild('CouponCode') CouponCode: any;
 
   allSubscriptions: Subscription[] = [];
-  addressSelected: any = null;
+  // addressSelected: any = null;
   ProceedToPaymentClicked:boolean=false;
   constructor(private cartService: CartService,
     private loginCheckService: LoginCheckService,
@@ -279,6 +279,8 @@ export class CheckoutComponent implements OnInit {
   NextDisabled: boolean = false;
 
   nextClicked() {
+    console.log('addrsss is ',this.checkOutService.addressSelected);
+    
     if (!this.checkOutService.addressSelected) {
       this.toastService.errorToast({ title: 'Please select some address' });
       return;
@@ -289,13 +291,12 @@ export class CheckoutComponent implements OnInit {
   OrderId: string = '';
   createOrder() {
     let body: any = {};
-  this.AddressSelected;
   this.NextDisabled=true;
     if (this.CouponApplied) {
       body.couponId = this.CouponApplied._id;
     }
     body.products = this.cart.details;
-    body.address=this.AddressSelected;
+    body.address=this.checkOutService.addressSelected;
     this.allSubscriptions.push(
       this.fetchService.HTTPPOST(this.BackendUrl.URLs.createOrder, body).subscribe(
 
@@ -317,8 +318,8 @@ export class CheckoutComponent implements OnInit {
   // COUPONS CODE FINSIH-------------------
 
   async ProceedToPayment() {
-    let body: any = {};
-    body.address = this.AddressSelected;
+    // let body: any = {};
+    // body.address = this.AddressSelected;
     // response of payment here 
     const paymentButton = document.getElementById('submit') as HTMLButtonElement;
     const razorpayButton = document.getElementById('razorSubmit') as HTMLButtonElement;
