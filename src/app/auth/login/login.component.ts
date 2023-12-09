@@ -47,12 +47,20 @@ export class LoginComponent {
       passwordEmail: fb.control('', [Validators.required, Validators.email])
     })
 
-    // Google login
-    window.addEventListener('auth', (event: any) => {
-      const token = { credential: event.detail.credential }
+    // // Google login
+    // window.addEventListener('auth', (event: any) => {
+    //   const token = { credential: event.detail.credential }
+    //   const body = { token };
+    //   this.LoginUser(body);
+    // });
+    window.addEventListener('auth', this.handleAuthEvent);
+  }
+
+  handleAuthEvent =  (event: any) => {
+    console.log('event fire of login');
+    const token = { credential: event.detail.credential }
       const body = { token };
       this.LoginUser(body);
-    });
   }
 
   ngOnInit() {
@@ -123,6 +131,7 @@ export class LoginComponent {
   ngOnDestroy() {
     this.renderer.removeChild(document.body, this.googleCallBackScript);
     this.renderer.removeChild(document.body, this.script);
+    window.removeEventListener('auth', this.handleAuthEvent);
     this.allSubscriptions.forEach((item: Subscription)=> item?.unsubscribe());
   }
 }

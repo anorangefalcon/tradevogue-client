@@ -25,12 +25,15 @@ export class SignUpComponent {
   constructor(fb: FormBuilder, private loginService: LoginCheckService,
      private renderer: Renderer2, private backendURLs: UtilsModule, private fetchDataService: FetchDataService) {
     // Google login
-    window.addEventListener('auth', async (event: any) => {
-      const token = { credential: event.detail.credential }
-      const body = { token };
-      this.CreateUser(body);
-    })
+    // window.addEventListener('auth', async (event: any) => {
+    //   console.log('event fired');
+      
+    //   const token = { credential: event.detail.credential }
+    //   const body = { token };
+    //   this.CreateUser(body);
+    // })
 
+    window.addEventListener('auth', this.handleAuthEvent);
     this.signupForm = fb.group(
       {
         firstname: fb.control('', [Validators.required]),
@@ -40,6 +43,19 @@ export class SignUpComponent {
       });
 
   }
+
+
+
+
+
+handleAuthEvent =  (event: any) => {
+  console.log('event fire of signup');
+  
+  const token = { credential: event.detail.credential }
+  const body = { token };
+  this.CreateUser(body);
+}
+
 
   ngOnInit() {
     const scriptContent = `
@@ -91,6 +107,7 @@ export class SignUpComponent {
   ngOnDestroy() {
     this.renderer.removeChild(document.body, this.googleCallBackScript);
     this.renderer.removeChild(document.body, this.script);
+    window.removeEventListener('auth', this.handleAuthEvent);
     this.dataSubscription.forEach((item: Subscription)=> item?.unsubscribe());
   }
 }
