@@ -20,7 +20,9 @@ export class CheckoutService {
   FinalPaymentAmount=new BehaviorSubject<any>(false);
 
   ProceedToPayment=new BehaviorSubject(false);
-
+ //  ADDRESS
+//  addressSelected = new BehaviorSubject<any>(false);
+ addressSelected:any = null;
   secureNavbar$ = this.secureNavbar.asObservable();
   public orderId: string | null = null;
 
@@ -79,5 +81,5 @@ export class CheckoutService {
     }
   }
   //  ADDRESS
-  addressSelected: any = null;
+  // addressSelected: any = null;
 }

@@ -190,3 +190,15 @@ input[type='radio']+label::after {
   border: 2px dotted #000;
   padding: 10px;
 }
+
+
+@media screen and (max-width: 420px) {
+  .addAddress__div{
+    & p{
+      display: none;
+    }
+    & span{
+      font-size: 20px;
+    }
+  }
+}

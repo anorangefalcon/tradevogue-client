@@ -6,7 +6,7 @@ import { FetchDataService } from '../shared/services/fetch-data.service';
 import { ToastService } from '../shared/services/toast.service';
 import { CheckoutService } from './checkout.service';
 import { LoginCheckService } from '../shared/services/login-check.service';
-import { Subscription } from 'rxjs';
+import { Subscription, lastValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-checkout',
@@ -163,74 +163,65 @@ export class CheckoutComponent implements OnInit {
 
 
   CheckMinimumPurchase(coupon: any) {
-    return coupon.minimumPurchaseAmount < this.cart.amounts.total;
+    return coupon?.minimumPurchaseAmount < this.cart.amounts.total;
   }
+
+
 
   CalculateDiscount(coupon: any) {
-    let totalAmount = (this.cart.amounts.total);
-    if (coupon.discountType == 'flat') {
-      return coupon.discountAmount < totalAmount ? coupon.discountAmount : 0;
+    const totalAmount = this.cart.amounts.total;
+  
+    if (coupon.discountType === 'flat') {
+      return Math.min(coupon.discountAmount, totalAmount);
+    } else if (coupon.discountType === 'percentage') {
+      const calculatedDiscount = (totalAmount / 100) * coupon.discountAmount;
+      const cappedDiscount = Math.min(calculatedDiscount, coupon.maximumDiscount);
+      return Math.min(cappedDiscount, totalAmount);
     }
-    else {
-      if (coupon.discountType == 'percentage') {
-        let calculatedDiscount = (totalAmount / 100) * coupon.discountAmount;
-        calculatedDiscount = calculatedDiscount <= coupon.maximumDiscount ? calculatedDiscount : coupon.maximumDiscount;
-        return calculatedDiscount < totalAmount ? calculatedDiscount : 0;
-      }
-    }
+  
+    return 0;
   }
+  
+ 
 
   async ApplyCoupon(coupon: any = '', event: any = '') {
+    let value = (event ? this.CouponCode.nativeElement.value.trim() : coupon.couponcode.trim());
+  
     if (event) {
-      let value = this.CouponCode.nativeElement.value;
-      value=value.trim();
-      for (let coupon of this.AllCoupons) {
-        if (coupon.couponcode == value) {
-          if (!this.CheckMinimumPurchase(coupon)) {
-            this.toastService.errorToast({ title: 'Coupon', body: `minimum purchase amount is ${coupon.minimumPurchaseAmount}` });
-            return;
-          }
-          this.CouponApplied = coupon;
-          this.CouponValid = 'valid';
-          break;
-        }
-      }
-      if (this.CouponValid != 'valid') {
+      const foundCoupon = this.AllCoupons.find((c:any) => c.couponcode === value);
+      if (foundCoupon) {
+        this.CouponApplied = foundCoupon;
+        this.CouponValid = 'valid';
+      } else {
         this.CouponValid = 'invalid';
         return;
       }
-    }
-
-    else {
+    } else {
       this.CouponApplied = coupon;
       this.CouponValid = 'valid';
     }
-
+  
     if (!this.CheckMinimumPurchase(this.CouponApplied)) {
-      this.toastService.errorToast({ title: `minimum purchase amount is ${coupon.minimumPurchaseAmount}` });
+      this.toastService.errorToast({ title: `minimum purchase amount is ${this.CouponApplied.minimumPurchaseAmount}` });
       this.CouponValid = 'invalid';
       this.CouponApplied = null;
       this.show = false;
       return;
     }
-
+  
     if (this.CouponValid == 'valid') {
-      this.toastService.successToast({
-        title: 'Coupon applied successfully'
-      })
-    }
-    else if (this.CouponValid == 'invalid') {
-      this.toastService.errorToast({
-        title: 'Coupon not valid'
-      })
+      this.toastService.successToast({ title: 'Coupon applied successfully' });
+    } else if (this.CouponValid == 'invalid') {
+      this.toastService.errorToast({ title: 'Coupon not valid' });
       return;
     }
-
+  
     this.CouponCode.nativeElement.value = '';
     this.cart.amounts.discount = this.CalculateDiscount(this.CouponApplied);
     // this.cart.amounts.total -= this.cart.amounts.discount;
     this.show = false;
   }
+  
 
   verifyOrderSummary(navigate: boolean = true) {
     if (this.cart?.details?.length == 0) return;
@@ -273,14 +264,15 @@ export class CheckoutComponent implements OnInit {
     }
   }
 
-  OrderCompleted(){
-    // this.checkOutService.addressSelected=null;
-  }
+  // OrderCompleted(){
+  //   this.checkOutService.addressSelected=null;
+  // }
 
   ChangeHandler(event: boolean) {
     this.show = event;
     if(!this.CouponCode)return;
     this.CouponCode.nativeElement.value = '';
+    this.CouponValid='';
   }
 
   AddressSelected: any = null;
@@ -291,19 +283,14 @@ export class CheckoutComponent implements OnInit {
       this.toastService.errorToast({ title: 'Please select some address' });
       return;
     }
-    this.AddressSelected = this.checkOutService.addressSelected;
-    if (this.AddressSelected) {
-      this.NextDisabled = true;
-    }
-    if (this.checkOutService.addressSelected) {
       this.createOrder();
-    }
   }
 
   OrderId: string = '';
   createOrder() {
     let body: any = {};
   this.AddressSelected;
+  this.NextDisabled=true;
     if (this.CouponApplied) {
       body.couponId = this.CouponApplied._id;
     }
@@ -343,8 +330,6 @@ export class CheckoutComponent implements OnInit {
     if (razorpayButton) {
       razorpayButton.click();
     }
-    // let body12: any = { newPaymentStatus: 'success', transactionId: '1244', MOP: 'cash', orderID: this.checkOutService.orderID };
-    // this.fetchService.HTTPPOST(this.BackendUrl.URLs.updateOrderStatus, body12).subscribe();
 
   }
 

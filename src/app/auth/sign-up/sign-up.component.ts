@@ -15,11 +15,12 @@ export class SignUpComponent {
   signupForm: FormGroup;
   script: any;
   googleCallBackScript: any;
+
   password: string = 'password';
   showPassword: boolean = false;
   loading: boolean = false;
-
-  dataSubscription!: Subscription;
+  theme: Boolean = false;
+  dataSubscription: Subscription[] = [];
 
   constructor(fb: FormBuilder, private loginService: LoginCheckService,
      private renderer: Renderer2, private backendURLs: UtilsModule, private fetchDataService: FetchDataService) {
@@ -57,17 +58,22 @@ export class SignUpComponent {
 
     this.renderer.appendChild(document.body, this.googleCallBackScript);
     this.renderer.appendChild(document.body, this.script);
+    this.dataSubscription.push(
+      this.fetchDataService.themeColor$.subscribe((color)=>{
+        this.theme = color;
+      }));
   }
 
-  CreateUser(body: any) {
-    this.dataSubscription = this.fetchDataService.HTTPPOST(this.backendURLs.URLs.signupUrl, body).subscribe({
+  CreateUser(body:Object) {
+    this.dataSubscription.push(
+       this.fetchDataService.HTTPPOST(this.backendURLs.URLs.signupUrl, body).subscribe({
       next: (data: any) => {
         this.loginService.loginUser({ 'userToken': data.token, 'name': data.firstName });
         this.loading = false;
       }, error: () => {
         this.loading = false;
       }
-    })
+    }));
   }
 
 
@@ -85,6 +91,6 @@ export class SignUpComponent {
   ngOnDestroy() {
     this.renderer.removeChild(document.body, this.googleCallBackScript);
     this.renderer.removeChild(document.body, this.script);
-    this.dataSubscription?.unsubscribe();
+    this.dataSubscription.forEach((item: Subscription)=> item?.unsubscribe());
   }
 }

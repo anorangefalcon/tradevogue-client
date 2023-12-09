@@ -14,6 +14,7 @@ import { ToastService } from '../shared/services/toast.service';
 import { LoginCheckService } from '../shared/services/login-check.service';
 import { InvoiceTemplateComponent } from 'src/app/shared/components/invoice-template/invoice-template.component';
 import { Subscription } from 'rxjs';
+import { HttpParams } from '@angular/common/http';
 
 
 @Component({
@@ -22,8 +23,8 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./settings.component.css']
 })
 export class SettingsComponent {
-  // showData: string = "profile";
-  showData: string = "addresses";
+  showData: string = "profile";
+  // showData: string = "addresses";
   checkAccordingClick: Boolean = true;
   loading: Boolean = false;
   theme: Boolean = false;
@@ -32,15 +33,15 @@ export class SettingsComponent {
   cancelledOrdersCount: number = 0;
   currentPage: number = 1;
   cancelledCurrentPage: number = 1;
-  AllOrders: any = [];
-  CancelledOrders: any = [];
+  AllOrders!: any[];
+  CancelledOrders!: any[];
   DefaultShowOrders = 'active';
   ProfileDisabled: boolean = true;
-  emailDisabled: boolean = true;
-  AddressLength: number = 0;
+  // AddressLength: number = 0;
   changePasswordForm: FormGroup;
   ShowComponent: boolean = false;
   ProfileForm: FormGroup;
+  ProfileFormCopy:any
   showPassword: boolean = false;
   showPassword2: boolean = false;
   showPassword3: boolean = false;
@@ -64,12 +65,15 @@ export class SettingsComponent {
 
   TemplatePagination: any = {
     currentPage: this.currentPage,
-    limit: 80
+    limit: 80,
+    active: true, paymentStatus:'success'
+   
   }
 
   cancelledTempatePagination: any = {
     currentPage: this.cancelledCurrentPage,
-    limit: 1,
+    limit: 80,
+    paymentStatus:'refund',
     active: false
   }
 
@@ -102,8 +106,8 @@ export class SettingsComponent {
       {
         firstname: fb.control('', [Validators.required]),
         lastname: fb.control(''),
-        email: fb.control('', [Validators.email, Validators.required]),
-        mobile: fb.control('', [MobileNoValidator]),
+        email: fb.control('',),
+        mobile: fb.control('', [Validators.pattern('^[6-9]\\d{9}$')]),
         gender: fb.control('',),
         dob: fb.control(''),
       });
@@ -135,7 +139,7 @@ export class SettingsComponent {
 
 
 
-    this.DisableForm(true);
+    this.DisableEnableForm(true);
     this.ProfileForm.get('email')?.disable();
 
   };
@@ -149,6 +153,7 @@ export class SettingsComponent {
       if (data.info.dob) {
         data.dob = data.info.dob.split('T')[0];
       }
+      this.ProfileFormCopy=JSON.parse(JSON.stringify(data));
       this.ProfileForm.patchValue(data);
     }));
 
@@ -167,26 +172,16 @@ export class SettingsComponent {
     this.allSubscriptions.forEach((item: Subscription)=> item.unsubscribe());
   }
 
-  DisableForm(check: boolean) {
-
+  DisableEnableForm(check: boolean,cancelClicked:boolean=false) {
     if (check) {
-      this.ProfileForm.get('firstname')?.disable();
-      this.ProfileForm.get('lastname')?.disable();
-      this.ProfileForm.get('gender')?.disable();
-      this.ProfileForm.get('dob')?.disable();
-      this.ProfileForm.get('mobile')?.disable();
+      if(cancelClicked) this.ProfileForm.patchValue(this.ProfileFormCopy);
+      this.ProfileForm.disable(); 
       this.ProfileDisabled = true;
     }
-    else {
-      this.ProfileForm.get('firstname')?.enable();
-      this.ProfileForm.get('lastname')?.enable();
-      this.ProfileForm.get('gender')?.enable();
-      this.ProfileForm.get('dob')?.enable();
-      this.ProfileForm.get('mobile')?.enable();
+    else { 
+      this.ProfileForm.enable(); 
       this.ProfileDisabled = false;
     }
-
-    return check;
   }
 
   
@@ -220,8 +215,8 @@ export class SettingsComponent {
       "info.gender": this.ProfileForm.get('gender')?.value,
       "info.dob": new Date(this.ProfileForm.get('dob')?.value)
     }
-    this.fetchDataService.HTTPPOST(this.backendURLs.URLs.updateDetails, body).subscribe((data) => {
-      this.ProfileForm.disable();
+    this.fetchDataService.HTTPPATCH(this.backendURLs.URLs.updateDetails, body).subscribe((data) => {
+      this.DisableEnableForm(true);
       this.userService.updateDetails(body);
     });
 
@@ -282,7 +277,7 @@ export class SettingsComponent {
         next: (data: any) => {
         if (data) {
           data = data.addresses;
-          this.AddressLength = data.length;
+          // this.AddressLength = data.length;
           if (data.length != 0) {
             this.userAddresses = data;
           }
@@ -314,21 +309,22 @@ export class SettingsComponent {
     //edit request updated
     else if (event.index === 0 || event.index) {
       this.userAddresses[event.index] = event.data;
-      this.AddressLength = this.userAddresses.length;
+      // this.AddressLength = this.userAddresses.length;
     }
     // // new address added
     else {
       this.userAddresses = event;
-      this.AddressLength = this.userAddresses.length;
+      // this.AddressLength = this.userAddresses.length;
     }
 
   }
 
-  RemoveAddress(address: any, index: any) {
-    const body = { address_id: address._id }
-    this.fetchDataService.HTTPPOST(this.backendURLs.URLs.deleteAddress, body).subscribe((data) => {
+  RemoveAddress(id: string,index:number) {
+    let params = new HttpParams();
+    params = params.set("address_id", id);
+    // const body = { address_id: address._id }
+    this.fetchDataService.HTTPDELETE(this.backendURLs.URLs.deleteAddress, params).subscribe((data) => {
       this.userAddresses.splice(index, 1);
-      this.AddressLength = this.userAddresses.length;
     })
   }
 
@@ -354,16 +350,14 @@ export class SettingsComponent {
     });
   }
 
-  async MakeDefault(address: any, index: any) {
-    try {
-      const body = { address: address, index };
-      this.fetchDataService.HTTPPOST(this.backendURLs.URLs.setDefaultAddress, body).subscribe((data) => {
-        this.userAddresses = data;
+  async MakeDefault( index: number) {
+      const body = {index };
+      this.fetchDataService.HTTPPATCH(this.backendURLs.URLs.setDefaultAddress, body).subscribe((data) => {
+        let defaultAddress=this.userAddresses[0];
+        this.userAddresses[0]=this.userAddresses[index];
+        this.userAddresses[index]=defaultAddress;
+        this.toastService.successToast(data);
       });
-
-    } catch (error) {
-
-    }
   }
 
   // orders code 
@@ -371,14 +365,12 @@ export class SettingsComponent {
     this.fetchDataService.HTTPPOST(this.backendURLs.URLs.getParticularUserOrders, this.TemplatePagination).subscribe((data: any) => {
       if (!data.length) {
         this.totalCount = 0;
-        this.AllOrders = []
+        // this.AllOrders = []
       }
       else {
         this.AllOrders = data[0]?.document;
         this.totalCount = data?.length;
       }
-      console.log('all order is ',this.AllOrders);
-      
       this.loading = false;
     });
   }
@@ -388,7 +380,6 @@ export class SettingsComponent {
     this.fetchDataService.HTTPPOST(this.backendURLs.URLs.getParticularUserOrders, this.cancelledTempatePagination).subscribe((data: any) => {
       if (!data.length) {
         this.cancelledOrdersCount = 0;
-        this.CancelledOrders = []
       }
       else {
         this.CancelledOrders = data[0]?.document;

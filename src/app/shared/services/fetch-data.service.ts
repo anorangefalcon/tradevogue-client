@@ -80,6 +80,39 @@ export class FetchDataService {
       }));
   }
 
+  HTTPPATCH(url: any, body: any) {
+    return this.http.patch(url, body).pipe(
+      catchError((data): any => {
+        if(data.error.message){
+          this.toastService.errorToast({
+            title: data.error.message
+          });
+        }
+        else{
+          this.toastService.errorToast({
+            title: 'Internal Server Error'
+          });
+        }
+       
+      }));
+  }
+
+  HTTPDELETE(url: any, params: any) {
+    return this.http.delete(url, {params}).pipe(
+      catchError((data): any => {
+        if(data.error.message){
+          this.toastService.errorToast({
+            title: data.error.message
+          });
+        }
+        else{
+          this.toastService.errorToast({
+            title: 'Internal Server Error'
+          });
+        }
+       
+      }));
+  }
 
   // theming :
   toggleTheme(isDark: any) {

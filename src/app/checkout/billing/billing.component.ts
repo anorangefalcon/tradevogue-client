@@ -7,6 +7,7 @@ import { CheckoutService } from '../checkout.service';
 import { Subscription } from 'rxjs';
 import { ToastService } from 'src/app/shared/services/toast.service';
 import { error } from 'jquery';
+import { HttpParams } from '@angular/common/http';
 declare let Stripe: any;
 interface PaymentOptions {
   key: string;
@@ -367,7 +368,7 @@ export class BillingComponent implements OnInit {
   receiveData: any;
   ShowComponent: boolean = false;
   SecureNavBar: Boolean = false;
-  AddressLength: number = 0;
+  // AddressLength: number = 0;
   getAddresses() {
     this.loading = true;
     this.allSubscriptions.push(
@@ -377,7 +378,7 @@ export class BillingComponent implements OnInit {
             next: (data: any) => {
               if (data) {
                 data = data.addresses;
-                this.AddressLength = data.length;
+                // this.AddressLength = data.length;
                 if (data.length != 0) {
                   this.userAddresses = data;
                 }
@@ -389,7 +390,7 @@ export class BillingComponent implements OnInit {
             }
           }))
   }
-  EditAddress(address: any, index: any) {
+  EditAddress( index: number) {
     const data = this.userAddresses[index];
     this.receiveData = { data, index };
     this.ShowComponent = true;
@@ -400,25 +401,34 @@ export class BillingComponent implements OnInit {
     }
     //edit request updated
     else if (event.index === 0 || event.index) {
+      let check=false;
+      if(this.userAddresses[event.index].selected){
+        check=true;
+      }
       this.userAddresses[event.index] = event.data;
-      this.AddressLength = this.userAddresses.length;
+      if(check) this.userAddresses[event.index].selected=true;
+      // this.AddressLength = this.userAddresses.length;
     }
     // new address added
     else {
       this.userAddresses = event;
-      this.AddressLength = this.userAddresses.length;
+      // this.AddressLength = this.userAddresses.length;
     }
   }
-  RemoveAddress(address: any, index: any) {
-    const body = { address_id: address._id }
-    if( this.checkOutService.addressSelected._id ==address._id){
+  RemoveAddress(id: string, index: number) {
+    const body = { address_id: id }
+    if(this.checkOutService.addressSelected?._id==id){
       this.checkOutService.addressSelected=null;
-    }
+    };
+
+    
+    let params = new HttpParams();
+    params = params.set("address_id", id);
     this.allSubscriptions.push(
-      this.fetchDataService.HTTPPOST(this.backendURLs.URLs.deleteAddress, body).subscribe((data) => {
+      this.fetchDataService.HTTPDELETE(this.backendURLs.URLs.deleteAddress, params).subscribe((data) => {
         this.userAddresses.splice(index, 1);
-        this.AddressLength = this.userAddresses.length;
       }));
+
   }
 
 
@@ -426,15 +436,14 @@ export class BillingComponent implements OnInit {
     this.ShowComponent = true;
     this.receiveData = '';
   }
-  addressDelivered!: any[];
-  addressChecked: Boolean = false;
+
   
   AddressClicked(address: any) {
-    // this.userAddresses.forEach((el) => {
-    //   el.selected = false;
-    // })
+    this.userAddresses.forEach((el) => {
+      el.selected = false;
+    })
     address.selected = true;
-    this.checkOutService.addressSelected = (address);
+    this.checkOutService.addressSelected=(address);
     // this.addressDelivered = address;
   }
 

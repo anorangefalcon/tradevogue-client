@@ -42,7 +42,7 @@
     <!-- <span class="material-symbols-outlined form__icon absolute">person</span> -->
     <input type="text" id="pincode" formControlName="pincode" placeholder="Enter Your Pin Code" class="form__input" (input)="onPostalCodeInputChange()">
 
-    <span *ngIf="DetailsForm.get('pincode')?.hasError('pattern')" class="errors">Invalid pincode No</span>
+    <span *ngIf="DetailsForm.get('pincode')?.hasError('pattern') || DetailsForm.get('pincode')?.hasError('invalid')" class="errors">Invalid pincode No</span>
 
 </div>
 
@@ -50,17 +50,17 @@
 <div class="form__group relative d-flex flex-column">
     <label class="form__label">Town/City<span>*</span></label>
     <!-- <span class="material-symbols-outlined form__icon absolute">person</span> -->
-    <input type="text" id="town_city" formControlName="town_city" [value]="town_city" placeholder="Enter Your Town/City" class="form__input">
+    <input type="text" id="town_city"  formControlName="town_city" [value]="town_city" placeholder="Enter Your Town/City" class="form__input">
 </div>
 
 <div class="form__group relative d-flex flex-column">
     <label class="form__label">State<span>*</span></label>
 
-    <input class="form__input" formControlName="state" type="text" id="state" [value]="states" required
-                            placeholder="Enter Your State" [disabled]="!pincodeFilled" />
+    <!-- <input class="form__input" formControlName="state" type="text" id="state" [value]="states" required
+                            placeholder="Enter Your State" [disabled]="!pincodeFilled" /> -->
 
-    <!-- <app-custom-select [type]="''"  [options]="states" [selectedOption]="((DetailsForm.get('state')?.value) ? (DetailsForm.get('state')?.value) : 'Select State')"
-    (final_option)="StateHandler($event)"></app-custom-select> -->
+    <app-custom-select [type]="''" [disableStatus]="true" [options]="indianStates" [selectedOption]="((DetailsForm.get('state')?.value) ? (DetailsForm.get('state')?.value) : 'Select State')"
+    (final_option)="StateHandler($event)"></app-custom-select>
 
 </div>
 
@@ -69,7 +69,8 @@
     <!-- <span class="material-symbols-outlined form__icon absolute">person</span> -->
     <input type="text" id="town_city" formControlName="mobile" placeholder="Enter Your Phone Number" class="form__input">
     <!-- -->
-    <span *ngIf="DetailsForm.get('mobile')?.hasError('error')  && DetailsForm.get('mobile')?.touched " class="errors">Invalid Phone No</span>
+    <!--  && DetailsForm.get('mobile')?.touched  -->
+    <span *ngIf="DetailsForm.get('mobile')?.hasError('pattern') " class="errors">Invalid Phone No</span>
 </div>
 
 

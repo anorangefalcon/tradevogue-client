@@ -96,13 +96,13 @@
                     <div class="d-flex gap-15">
                         <button class="btn-secondary  btn btn-sm btn-rounded"
                             [ngStyle]="{'display': ProfileDisabled? 'none': 'block'}"
-                            (click)="DisableForm(true)">Cancel</button>
+                            (click)="DisableEnableForm(true,true)">Cancel</button>
                         <button class="btn-primary btn btn-sm btn-rounded"
                             [ngStyle]="{'display': !ProfileDisabled? 'none': 'block'}"
-                            (click)="DisableForm(false)">Edit</button>
+                            (click)="DisableEnableForm(false)">Edit</button>
                         <button class="btn-primary btn btn-sm btn-rounded"
                             [ngStyle]="{'display': ProfileDisabled? 'none': 'block'}"
-                            (click)="saveDetails(); DisableForm(true)" [disabled]="ProfileForm.invalid">Save</button>
+                            (click)="saveDetails(); DisableEnableForm(true)" [disabled]="ProfileForm.invalid">Save</button>
                     </div>
 
                 </div>
@@ -138,8 +138,8 @@
                         <input type="text" id="mobile" formControlName="mobile" placeholder="Enter Your MobileNo">
 
                         <small
-                            *ngIf="ProfileForm.get('mobile')?.hasError('notvalid') && ProfileForm.get('mobile')?.touched"
-                            class="invalid">*Mobile No is invalid.</small>
+                            *ngIf="ProfileForm.get('mobile')?.hasError('pattern')"
+                            class="errors">Invalid Phone No.</small>
 
                     </div>
 
@@ -197,7 +197,7 @@
 
                 <div *ngIf="DefaultShowOrders=='active'">
 
-                    <div *ngIf="AllOrders?.length==0 && !loading"
+                    <div *ngIf="!AllOrders && !loading"
                         class="d-flex default-animation-slow flex-column gap-15 no-orders align-item-center flex-center">
                         <img src="../../assets/no-orders.svg" alt="no orders">
                         <p>No orders yet</p>
@@ -220,10 +220,12 @@
                                         </div>
                                         <div class="order-deets">
                                             <p>Amount</p>
+                                            <div class="d-flex gap-5 align-item-center ">
                                             <span>₹ {{order.OrderSummary.Total}}</span>
-                                            <p *ngIf="order.OrderSummary.couponDiscount" class="old-price">
+                                            <span *ngIf="order.OrderSummary.couponDiscount" class="old-price">
                                                 ₹{{ order.OrderSummary.subTotal }}
-                                            </p>
+                                            </span>
+                                        </div>
                                         </div>
                                     </div>
                                     <div class="d-flex gap-20 order__firstDiv__btn">
@@ -314,7 +316,7 @@
                             </div>
                         </ng-container>
                     </div>
-                    <div *ngIf="AllOrders?.length>0">
+                    <div *ngIf="AllOrders">
                         <app-pagination #pagination [collectionSize]="totalCount" [pageSize]="TemplatePagination.limit"
                             [currentPage]="currentPage" (activePage)="pageChange($event)"></app-pagination>
                     </div>
@@ -322,7 +324,7 @@
 
 
                 <div *ngIf="DefaultShowOrders=='cancelled'">
-                    <div *ngIf="CancelledOrders?.length==0 && !loading"
+                    <div *ngIf="!CancelledOrders && !loading"
                         class="d-flex default-animation-slow flex-column gap-15 no-orders align-item-center flex-center">
                         <img src="../../assets/no-orders.svg" alt="no orders">
                         <p>No cancelled orders yet</p>
@@ -429,7 +431,7 @@
                             </div>
                         </ng-container>
                     </div>
-                    <div *ngIf="CancelledOrders?.length>0">
+                    <div *ngIf="CancelledOrders">
                         <app-pagination #pagination [collectionSize]="cancelledOrdersCount"
                             [pageSize]="cancelledTempatePagination.limit" [currentPage]="cancelledCurrentPage"
                             (activePage)="pageChange($event)"></app-pagination>
@@ -542,13 +544,13 @@
 
                 </div>
                 <div class="d-flex flex-column gap-10 default-animation-slow " *ngIf="!loading">
-                <div  class="d-flex flex-column gap-20" [ngClass]="{'addressDiv':AddressLength>0}">
+                <div  class="d-flex flex-column gap-20" [ngClass]="{'addressDiv':userAddresses.length>0}">
                     <ng-container *ngFor="let address of userAddresses;let i=index">
                         <div class="d-flex mw100 particularAddress justify-content-md-between">
                             <div class="d-flex flex-column  gap-10 address__firstdiv">
                                 <div class="d-flex gap-10 default__div">
                                     <p class="name">{{address.firstname}} {{address.lastname}}</p>
-                                    <button class="default__btn" (click)="MakeDefault(address,i)" *ngIf="i!=0">set
+                                    <button class="default__btn" (click)="MakeDefault(i)" *ngIf="i!=0">set
                                         default</button>
                                 </div>
                                 <div class="address_div">
@@ -565,7 +567,7 @@
                                     </span>
 
                                     <span class="material-symbols-outlined remove__btn"
-                                        (click)="RemoveAddress(address,i)">
+                                        (click)="RemoveAddress(address._id,i)">
                                         delete
                                     </span>
                                 </div>

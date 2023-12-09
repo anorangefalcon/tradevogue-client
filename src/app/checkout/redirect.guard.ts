@@ -32,7 +32,7 @@ export const redirectGuard: CanActivateFn = async(route, state) => {
   emittedBoolean = await waitForDialogResponse();
   if(emittedBoolean){
     console.log("emitted boolean", emittedBoolean);
-    checkOutService.addressSelected = null;
+    checkOutService.addressSelected=(null);
     checkOutService.secureNavbar.next(false);
     checkOutService.loadStripe.next(false);
     checkOutService.unloadStripeScript();

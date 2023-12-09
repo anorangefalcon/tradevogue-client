@@ -418,9 +418,9 @@ label span {
 
 
 .order__basic {
-    & span {
+    /* & span {
         color: rgba(var(--blackClr), 0.6);
-    }
+    } */
 
     & p {
         font-weight: 500;
@@ -692,6 +692,11 @@ label span {
 
 
 
+}
+
+.errors{
+    padding-block-start: 5px;
+    color: rgb(var(--danger));
 }
 
 
