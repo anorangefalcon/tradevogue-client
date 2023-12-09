@@ -85,7 +85,6 @@ export class AddressComponent {
         mobile: ['', [Validators.required,this.PhoneNoValidator,Validators.pattern('^[6-9]\\d{9}$')]],
       });
 
-      this.DetailsForm.get('town_city')?.disable();
   }
 
 

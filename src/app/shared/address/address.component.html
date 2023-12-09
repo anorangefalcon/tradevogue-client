@@ -50,7 +50,7 @@
 <div class="form__group relative d-flex flex-column">
     <label class="form__label">Town/City<span>*</span></label>
     <!-- <span class="material-symbols-outlined form__icon absolute">person</span> -->
-    <input type="text" id="town_city"  formControlName="town_city" [value]="town_city" placeholder="Enter Your Town/City" class="form__input">
+    <input type="text" id="town_city"  formControlName="town_city" [readOnly]="true" placeholder="Enter Your Town/City" class="form__input">
 </div>
 
 <div class="form__group relative d-flex flex-column">
@@ -67,7 +67,7 @@
 <div class="form__group relative d-flex flex-column">
     <label class="form__label">Mobile No.<span>*</span></label>
     <!-- <span class="material-symbols-outlined form__icon absolute">person</span> -->
-    <input type="text" id="town_city" formControlName="mobile" placeholder="Enter Your Phone Number" class="form__input">
+    <input type="text" id="phone" formControlName="mobile" placeholder="Enter Your Phone Number" class="form__input">
     <!-- -->
     <!--  && DetailsForm.get('mobile')?.touched  -->
     <span *ngIf="DetailsForm.get('mobile')?.hasError('pattern') " class="errors">Invalid Phone No</span>

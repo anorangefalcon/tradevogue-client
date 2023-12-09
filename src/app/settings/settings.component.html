@@ -124,11 +124,11 @@
                     <div class="form__group relative d-flex flex-column">
                         <label class="form__label">Email<span>*</span></label>
                         <span class="material-symbols-outlined form__icon absolute">mail</span>
-                        <input type="text" id="email" formControlName="email" placeholder="Enter Your Email">
-                        <small *ngIf="ProfileForm.get('email')?.hasError('email') && ProfileForm.get('email')?.touched"
+                        <input type="text" id="email" readOnly formControlName="email" placeholder="Enter Your Email">
+                        <!-- <small *ngIf="ProfileForm.get('email')?.hasError('email') && ProfileForm.get('email')?.touched"
                             class="invalid">
                             *Please enter valid Email.
-                        </small>
+                        </small> -->
                     </div>
 
 

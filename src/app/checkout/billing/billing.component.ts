@@ -8,6 +8,7 @@ import { Subscription } from 'rxjs';
 import { ToastService } from 'src/app/shared/services/toast.service';
 import { error } from 'jquery';
 import { HttpParams } from '@angular/common/http';
+import { DialogBoxService } from 'src/app/shared/services/dialog-box.service';
 declare let Stripe: any;
 interface PaymentOptions {
   key: string;
@@ -68,6 +69,7 @@ export class BillingComponent implements OnInit {
     private fetchDataService: FetchDataService,
     private backendURLs: UtilsModule,
     private renderer: Renderer2,
+    private dialogBox: DialogBoxService,
     private toastService: ToastService,
   ) {
     // this.stripePay.setLoading = this.stripePay.setLoading.bind(this);
@@ -86,7 +88,14 @@ export class BillingComponent implements OnInit {
 
       this.fetchDataService.themeColor$.subscribe((color) => {
         this.theme = color;
-      })
+      }),
+       this.dialogBox.responseEmitter.subscribe((res: boolean) => {
+        if (res == true ) {
+          this.allSubscriptions.push(
+            this.fetchDataService.HTTPDELETE(this.backendURLs.URLs.deleteAddress, this.body).subscribe((data) => {
+              this.userAddresses.splice(this.addressDeletedIndex, 1);
+            }));
+        }})
   }
 
   ngOnInit(){
@@ -415,19 +424,30 @@ export class BillingComponent implements OnInit {
       // this.AddressLength = this.userAddresses.length;
     }
   }
+
+  addressDeletedIndex!:number
+  body:any;
   RemoveAddress(id: string, index: number) {
     const body = { address_id: id }
+    this.addressDeletedIndex=index;
     if(this.checkOutService.addressSelected?._id==id){
       this.checkOutService.addressSelected=null;
     };
 
+    let template =  {
+      title: 'Delete Address',
+      subtitle: 'Are you sure you want to delete the address?',
+      type: 'confirmation',
+      confirmationText: 'Yes, Remove it',
+      cancelText: 'No, Keep it',
+    };
+    this.dialogBox.confirmationDialogBox(template);
+
     
     let params = new HttpParams();
     params = params.set("address_id", id);
-    this.allSubscriptions.push(
-      this.fetchDataService.HTTPDELETE(this.backendURLs.URLs.deleteAddress, params).subscribe((data) => {
-        this.userAddresses.splice(index, 1);
-      }));
+    this.body=params;
+   
 
   }
 

@@ -15,6 +15,7 @@ import { LoginCheckService } from '../shared/services/login-check.service';
 import { InvoiceTemplateComponent } from 'src/app/shared/components/invoice-template/invoice-template.component';
 import { Subscription } from 'rxjs';
 import { HttpParams } from '@angular/common/http';
+import { param } from 'jquery';
 
 
 @Component({
@@ -85,6 +86,15 @@ export class SettingsComponent {
     cancelText: 'No, Revert'
   };
 
+
+  deleteAddressTemplate: any = {
+    title: 'Are You Sure! Want to delete Addres?',
+    subtitle: `You can't view this in your list anymore if you delete!`,
+    type: 'confirmation',
+    confirmationText: 'Yes, Cancel it',
+    cancelText: 'No, Revert'
+  };
+
   userAddresses: any=[];
   TranslateData: boolean = false;
 
@@ -125,11 +135,25 @@ export class SettingsComponent {
 
     this.allSubscriptions.push(
     this.DialogSubcribe = this.dialogBox.responseEmitter.subscribe((res: boolean) => {
-      if (res == true) {
+      if (res == true ) {
+        if(this.deletiontype=='order'){
+        this.fetchDataService.HTTPPOST(this.backendURLs.URLs.cancelOrder, this.body).subscribe(() => {
+          this.pageChange(this.currentPage);
+        })
+      }
+      else if(this.deletiontype=='product'){
         this.fetchDataService.HTTPPOST(this.backendURLs.URLs.cancelOrderedProduct, this.body).subscribe((data) => {
           this.pageChange(this.currentPage);
         })
       }
+
+      else if(this.deletiontype=='address'){
+        this.fetchDataService.HTTPDELETE(this.backendURLs.URLs.deleteAddress, this.body).subscribe((data) => {
+          this.userAddresses.splice(this.deletedAddressIndex, 1);
+        })
+      }
+
+    }
     }));
 
     this.allSubscriptions.push(
@@ -140,23 +164,11 @@ export class SettingsComponent {
 
 
     this.DisableEnableForm(true);
-    this.ProfileForm.get('email')?.disable();
+    // this.ProfileForm.get('email')?.disable();
 
   };
 
   ngOnInit() {
-    this.allSubscriptions.push(
-    this.fetchDataService.HTTPGET(this.backendURLs.URLs.getDetails).subscribe((data: any) => {
-      data.firstname = data.name.firstname;
-      data.lastname = data.name.lastname;
-      data.gender = data.info.gender;
-      if (data.info.dob) {
-        data.dob = data.info.dob.split('T')[0];
-      }
-      this.ProfileFormCopy=JSON.parse(JSON.stringify(data));
-      this.ProfileForm.patchValue(data);
-    }));
-
     // this.showWishlistedProducts('my wishlist');
     this.allSubscriptions.push(
     this.wishlistService.showWishlistedProducts().subscribe((data) => {
@@ -319,17 +331,32 @@ export class SettingsComponent {
 
   }
 
+
+  deletedAddressIndex!:number
   RemoveAddress(id: string,index:number) {
     let params = new HttpParams();
     params = params.set("address_id", id);
+    
+    this.body=params;
+    this.deletiontype='address';
+    this.deletedAddressIndex=index;
+    this.template = {
+      title: 'Delete Address',
+      subtitle: 'Are you sure you want to delete the address?',
+      type: 'confirmation',
+      confirmationText: 'Yes, Remove it',
+      cancelText: 'No, Keep it',
+    };
     // const body = { address_id: address._id }
-    this.fetchDataService.HTTPDELETE(this.backendURLs.URLs.deleteAddress, params).subscribe((data) => {
-      this.userAddresses.splice(index, 1);
-    })
+    this.dialogBox.confirmationDialogBox(this.template);
+
+
   }
 
   EditAddress(address: any, index: any) {
     const data = this.userAddresses[index];
+    console.log('data is ',data);
+    
     this.receiveData = { data, index };
     this.ShowComponent = true;
   }
@@ -342,9 +369,6 @@ export class SettingsComponent {
       newPassword: this.changePasswordForm.get('newPassword')?.value
     }
     this.fetchDataService.HTTPPOST(this.backendURLs.URLs.changePassword, body).subscribe((data: any) => {
-      console.log(data);
-      // console.log(data);
-
       this.toastService.successToast({ title: data.message })
       this.changePasswordForm.reset()
     });
@@ -402,8 +426,9 @@ export class SettingsComponent {
 
   CancelProduct(id: any, product: any) {
     this.body = { id, product }
-    let template: any = {
-      title: 'Cancel Order',
+    this.deletiontype='product';
+    this.template = {
+      title: 'Cancel Ordered Product',
       subtitle: 'Are you sure you want to remove product from the order?',
       type: 'confirmation',
       confirmationText: 'Yes, Remove it',
@@ -442,16 +467,36 @@ export class SettingsComponent {
     // this.invoiceService.open();
   }
 
+  deletiontype!:String
   cancelOrder(orderId: String) {
-    console.log("order id is ", orderId)
-    let body = { orderId };
-    this.fetchDataService.HTTPPOST(this.backendURLs.URLs.cancelOrder, body).subscribe(() => {
-      this.pageChange(this.currentPage);
-    })
+    this.deletiontype='order';
+    // let body = { orderId };
+    this.body={orderId};
+    let template: any = {
+      title: 'Cancel Order',
+      subtitle: 'Are you sure you want to cancel the order?',
+      type: 'confirmation',
+      confirmationText: 'Yes, Remove it',
+      cancelText: 'No, Keep it',
+    };
+  
   }
 
   changeComponent(el: string) {
     this.showData = el;
+    if(el=='profile'){
+      this.allSubscriptions.push(
+        this.fetchDataService.HTTPGET(this.backendURLs.URLs.getDetails).subscribe((data: any) => {
+          data.firstname = data.name.firstname;
+          data.lastname = data.name.lastname;
+          data.gender = data.info.gender;
+          if (data.info.dob) {
+            data.dob = data.info.dob.split('T')[0];
+          }
+          this.ProfileFormCopy=JSON.parse(JSON.stringify(data));
+          this.ProfileForm.patchValue(data);
+        }));
+    }
     if (this.checkAccordingClick) {
       this.AccordianIndex = 0;
       this.toggleAccordian(this.AccordianIndex);

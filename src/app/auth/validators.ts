@@ -6,7 +6,6 @@ import { FormControl,FormGroup } from '@angular/forms';
 export function passwordStrengthValidator(control: FormControl): { [key: string]: boolean } | null {
     const value: string = control.value || '';
 
-    console.log("min")
     if(value=='') return null;
     
     let errors :any={}; 
