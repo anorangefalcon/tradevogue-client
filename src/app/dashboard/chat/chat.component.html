@@ -10,12 +10,10 @@
   <div class="circle-tv-loader"></div>
 </div>
 
-<div class="container" *ngIf="!loading">
-    <!-- Sidebar for user selection -->
+<!-- <div class="container" *ngIf="!loading">
     <div class="default-animation-slow card card_left card__pd-20 d-flex justify-content-md-between align-item-center">
       <h2>Online Users</h2>
       <div class="user-list">
-        <!-- Replace this ngFor loop with your user data -->
         <div class="user-container">
           <div *ngFor="let user of userData" (click)="selectUser(user)" class="user-item">
             <p>{{ user.name.firstname }}</p>
@@ -23,8 +21,7 @@
         </div>
       </div>
     </div>
-  
-    <!-- Chat box -->
+
     <div class="default-animation-slow card_right card card__pd-20 d-flex align-item-center only_user">
       <ng-container *ngIf="selectedUser">
         <h2>Chat Box: {{ selectedUser.name.firstname }}</h2>
@@ -48,5 +45,116 @@
         <p>Select a user to start chatting</p>
       </div>
     </div>
-  </div>
+  </div> -->
   
+
+
+
+  <!-- new work -->
+<!-- char-area -->
+<section class="message-area">
+  <div>
+    <div class="row card card__pd-20 d-flex justify-content-md-between align-item-center" style="margin-top: 10px;">
+        <div class="chat-area">
+          <!-- chatlist -->
+          <div class="chatlist d-flex flex-column gap-10">
+            <div class="modal-dialog-scrollable">
+              <div class="modal-content">
+
+                <div class="scrollable">
+                  <!-- chat-list -->
+                  <div class="chat-lists">
+                    <div class="tab-content" id="myTabContent">
+                          <a  *ngFor="let user of userData" (click)="selectUser(user)" class="d-flex align-items-center">
+                            <div class="flex-shrink-0">
+                              <img class="img-fluid" src="https://avatars.githubusercontent.com/u/53940939?s=30&v=5" alt="user img">
+                              <span class="active"></span>
+                            </div>
+                            <div class="flex-grow-1 ms-3">
+                              <h3>{{ user.name.firstname }}</h3>
+                              <p>Software developer</p>
+                            </div>
+                          </a>
+
+                    </div>
+
+                  </div>
+                  <!-- chat-list -->
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- chatlist -->
+
+          <!-- chatbox -->
+          <div class="chatbox showbox">
+       <div *ngIf="!selectedUser">
+        <p>Select a user to start chatting</p>
+      </div>
+            <div *ngIf="selectedUser" class="modal-dialog-scrollable">
+              <!-- <div class="modal-content"> -->
+                <div class="msg-head">
+                  <div class="row">
+                    <div class="col-8">
+                      <div class="d-flex align-items-center">
+                        <span class="chat-icon"><img class="img-fluid" src="https://mehedihtml.com/chatbox/assets/img/arroleftt.svg" alt="image title"></span>
+                        <div class="flex-shrink-0">
+                          <img class="img-fluid" src="https://avatars.githubusercontent.com/u/53940939?s=30&v=5" alt="user img">
+                        </div>
+                        <div class="flex-grow-1 ms-3">
+                          <h3>{{ selectedUser.name.firstname }}</h3>
+                          <p>{{ selectedUser._id }}</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- <div class="modal-body">
+                  <div class="msg-body"> -->
+   <div class="scrollable">
+  <ul>
+    <!-- Loop through merged messages -->
+<div class="chat-container">
+  <ul class="chat-list">
+    <ng-container *ngFor="let item of mergedMessages">
+      <li [ngClass]="{ 'sender': item.sender !== selectedUser._id, 'reply': item.sender === selectedUser._id }">
+        <div class="message-content">
+          <p *ngIf="item.sender !== selectedUser._id" class="admin">{{ item.adminMessage }}</p>
+          <p *ngIf="item.sender === selectedUser._id" class="user">{{ item.message }}</p>
+          <span class="time">{{ item.createdAt | date: 'medium' }}</span>
+        </div>
+      </li>
+    </ng-container>
+  </ul>
+</div>
+
+
+  </ul>
+</div>
+
+                  <!-- </div>
+                </div> -->
+
+  <div class="d-flex gap-10 align-item-center" style="margin-left: 10px;">
+        <input class="form__input" [(ngModel)]="textMessage" placeholder="Type your message...">
+        <button class="pointer btn-primary btn-sm btn-rounded" (click)="sendMessage()">Send</button>
+  </div>
+                <div class="send-btns">
+                    <div class="attach">
+                      <div class="button-wrapper">
+                        <span class="label">
+                           attached file
+                        </span><input type="file" name="upload" id="upload" class="upload-box" placeholder="Upload File" aria-label="Upload File">
+                      </div>
+                    </div>
+                  </div>
+              <!-- </div> -->
+            </div>
+          </div>
+        </div>
+        <!-- chatbox -->
+    </div>
+  </div>
+</section>
+<!-- char-area -->

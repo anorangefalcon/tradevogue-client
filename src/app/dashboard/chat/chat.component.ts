@@ -4,6 +4,7 @@ import { UtilsModule } from 'src/app/utils/utils.module';
 
 
 import io from 'socket.io-client';
+import { Subject, debounceTime } from 'rxjs';
 
 const socket = io('http://localhost:3000/chat', {
   transports: ['websocket']
@@ -26,9 +27,17 @@ export class ChatComponent implements OnInit {
   messages: any;
   userMessage: any;
   oldChats: any;
+  adminOldChat: any;
   loading: boolean = true;
   theme: Boolean = false;
   messageList: any = [];
+  adminMessageList: any = [];
+  userMessages: any[] = [];
+adminMessages: any[] = [];
+private sendMessageSubject = new Subject<string>();
+
+mergedMessages: any[] = [];
+
   private selectedFile: File | undefined;
   constructor(private fetchDataService: FetchDataService,
     private utilsModule: UtilsModule) {
@@ -51,8 +60,17 @@ export class ChatComponent implements OnInit {
     const senderId = this.selectedUser._id;
     socket.emit('existChat', senderId);
   }
+
   ngOnInit() {
 
+  this.sendMessageSubject.pipe(debounceTime(1000)).subscribe((message: string) => {
+    // Send the message after a debounce time of 1000ms (1 second)
+    const body = {
+      message,
+      sender: this.selectedUser._id
+    };
+    socket.emit('replyMessage', body);
+  });
 
     socket.on('connect', () => {
       console.log('Connected to server');
@@ -81,23 +99,100 @@ export class ChatComponent implements OnInit {
 
       // load old chats 
 
-      socket.on('loadExistChat' , (data: any) => {
-        console.log(data);
-        this.oldChats = data;
+      // socket.on('loadExistChat' , (data: any) => {
+      //   console.log(data);
+      //   this.oldChats = data;
 
-        this.oldChats.forEach((element: any) => { 
-          if(element.sender == this.selectedUser._id) {
-            this.messageList.push(element.message);
-          }
-        });
-      });
+      //   this.oldChats.forEach((element: any) => { 
+      //     if(element.sender == this.selectedUser._id) {
+      //       this.messageList.push(element.message);
+      //     }
+      //   });
+      // });
 
-    // socket.on('userMessage', (res) => {
-    //   console.log(res);
-    //   this.userMessage = res;
-    // })
+      // socket.on('loadadminExistChat', (data: any) => {
+      //   console.log(data);
+      //   this.adminOldChat = data;
+
+      //   console.log(this.adminOldChat, "admin old chats ");
+
+      //   // return;
+
+      //   this.adminOldChat.forEach((element: any) => {
+      //     if(element.sender == '652b9c1480dd9b13abd5ee3a') {
+      //       this.adminMessageList.push(element.adminMessage);
+      //     }
+      //   });
+      // });
+
+
+  socket.on('loadExistChat', (data: any) => {
+    console.log(data);
+    this.oldChats = data;
+
+    this.oldChats.forEach((element: any) => {
+      if (element.sender === this.selectedUser._id) {
+        this.userMessages.push(element); 
+      } else {
+        this.adminMessages.push(element); 
+      }
+    });
+      this.mergeAndSortMessages();
+  });
+
+  // socket.on('loadadminNewChat', (data: any) => {
+  //   console.log(data);
+  //   this.adminOldChat = data;
+
+  //   console.log(this.adminOldChat, "admin old chats 2");
+
+  //   this.adminOldChat.forEach((element: any) => {
+  //     if (element.sender == '652b9c1480dd9b13abd5ee3a') {
+  //       this.adminMessages.push(element); 
+  //     } else {
+  //       this.userMessages.push(element); 
+  //     }
+  //   });
+
+  //   this.mergeAndSortMessages();
+  // });
+
+  socket.on('loadadminExistChat', (data: any) => {
+  console.log(data);
+  this.adminOldChat = data;
+
+  console.log(this.adminOldChat, "admin old chats ");
+
+  this.adminOldChat.forEach((element: any) => {
+    if (element.sender == '652b9c1480dd9b13abd5ee3a') {
+      this.adminMessages.push(element); // Store the entire message object
+    } else {
+      this.userMessages.push(element); // Store user messages
+    }
+  });
+
+  this.mergeAndSortMessages();
+});
+
 
   }
+
+
+mergeAndSortMessages(): void {
+  const mergedMessages = [...this.userMessages, ...this.adminMessages];
+
+  mergedMessages.sort((a, b) => {
+    const timestampA = new Date(a.createdAt).getTime();
+    const timestampB = new Date(b.createdAt).getTime();
+    return timestampA - timestampB; 
+  });
+
+  this.mergedMessages = mergedMessages;
+}
+
+
+
+
 
   upload(files: any) {
     socket.emit("upload", files[0], (status: any) => {
@@ -124,17 +219,16 @@ export class ChatComponent implements OnInit {
     });
   }
 
-  sendMessage() {
-    if (this.selectedUser) {
-      // Access this.selectedUser._id to get the selected user's ID
-      // console.log('Selected User ID:', this.selectedUser._id);
-      // socket.emit('newMessage', this.textMessage);
-      const body = {
-        message: this.textMessage,
-        sender: this.selectedUser._id,
-      }
-      socket.emit('replyMessage', body);
-    }
+sendMessage() {
+  if (this.selectedUser && this.textMessage) {
+    // Emit the message to the Subject
+    this.sendMessageSubject.next(this.textMessage);
+    this.textMessage = ''; // Clear the message input after emitting
   }
+}
 
 }
+
+
+
+

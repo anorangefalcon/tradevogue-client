@@ -87,7 +87,7 @@ export class MonetizationComponent {
       rzpPublicKey: ['', [Validators.required]],
       rzpPrivateKey: ['', [Validators.required]],
       rzpEnableDropdown: ['true'],
-    });
+    });  
   }
 toggleRazorpayPayment(key: any) {
   this.selectedItem = key;
@@ -225,7 +225,7 @@ view(key: any, index: any) {
         .subscribe((response: any) => {
           this.fetchData();
           this.stripeKeysForm.reset();
-          this.show = false;  
+          this.show = false;
         })
 
       if (publicKey !== null && privateKey !== null && enable !== null) {

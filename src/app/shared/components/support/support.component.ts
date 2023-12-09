@@ -49,6 +49,37 @@ export class SupportComponent {
      private elementRef: ElementRef,
      private cookieService: CookieService) {
 
+          const token = this.cookieService.get('userToken');
+    if (token) {
+      const tokenParts = token.split('.');
+      if (tokenParts.length === 3) {
+        const encodedPayload = tokenParts[1];
+        const decodedPayload = atob(encodedPayload);
+        const payload = JSON.parse(decodedPayload);
+        console.log(payload, "payload is");
+        console.log(this.usermessage, "user message is ");
+    socket.on('replymessage', (data) => {
+      console.log('Received admin message:', data);
+      const body = {
+        message: data.message,
+        receiver: payload.id
+      }
+
+         socket.emit('saveadminMessage', body);
+      if(data.sender == payload.id) {
+        this.replyAdminMessage = data.message;
+        this.messages.push({ content: this.replyAdminMessage, sender: 'admin' });
+      }
+    });
+
+        // Use the payload data as needed
+      } else {
+        console.error('Invalid token format');
+      }
+    } else {
+      console.error('Token not found');
+    }
+
   }
 
   ngOnInit() {
@@ -180,37 +211,13 @@ export class SupportComponent {
 
     const token = this.cookieService.get('userToken');
     if (token) {
-      const tokenParts = token.split('.');
-      if (tokenParts.length === 3) {
-        const encodedPayload = tokenParts[1];
-        const decodedPayload = atob(encodedPayload);
-        const payload = JSON.parse(decodedPayload);
-        console.log(payload, "payload is");
-        
-        console.log(this.usermessage, "user message is ");
-
     this.messages.push({ content: this.textMessage, sender: 'user' });
 
     socket.emit('newMessage', this.textMessage);
-// make it authenticate -> admin
-    socket.on('replymessage', (data) => { 
-      console.log('Received admin message:', data);
-
-      if(data.sender == payload.id) {
-        this.replyAdminMessage = data.message;
-        this.messages.push({ content: this.replyAdminMessage, sender: 'admin' });
-      }
-    });
-
-        // Use the payload data as needed
       } else {
         console.error('Invalid token format');
       }
-    } else {
-      console.error('Token not found');
-    }
-}
-
+    } 
 
   toggleChat() {
     const chatBtn = document.querySelector('.icon-support');
