@@ -6,7 +6,7 @@ import { FetchDataService } from '../shared/services/fetch-data.service';
 import { ToastService } from '../shared/services/toast.service';
 import { CheckoutService } from './checkout.service';
 import { LoginCheckService } from '../shared/services/login-check.service';
-import { Subscription, lastValueFrom } from 'rxjs';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-checkout',
@@ -28,7 +28,7 @@ export class CheckoutComponent implements OnInit {
   updateBoolean: boolean = false;
   cart: any = {};
   StripePaymentOpener: boolean = false;
-  CheckOutDisabled:boolean=false;
+  CheckOutDisabled: boolean = false;
   loading: boolean = false;
   isFormFilled = false;
   paymentButton = false;
@@ -38,7 +38,7 @@ export class CheckoutComponent implements OnInit {
 
   allSubscriptions: Subscription[] = [];
   // addressSelected: any = null;
-  ProceedToPaymentClicked:boolean=false;
+  ProceedToPaymentClicked: boolean = false;
   constructor(private cartService: CartService,
     private loginCheckService: LoginCheckService,
     private checkOutService: CheckoutService,
@@ -48,12 +48,10 @@ export class CheckoutComponent implements OnInit {
     private BackendUrl: UtilsModule,
     private fetchService: FetchDataService,
     private route: Router,
-    private el: ElementRef,
-    private stripePay: CheckoutService)
-     {
-      this.fetchService.themeColor$.subscribe((color)=>{
-        this.theme = color;
-      })
+    private el: ElementRef) {
+    this.fetchService.themeColor$.subscribe((color) => {
+      this.theme = color;
+    })
     this.allSubscriptions.push(
       this.checkOutService.secureNavbar$.subscribe((data) => {
         this.SecureNavBar = data;
@@ -69,12 +67,10 @@ export class CheckoutComponent implements OnInit {
       this.loginCheckService.getUser().subscribe((checkToken) => {
         this.LoginUser = checkToken;
       }),
-      this.checkOutService.ProceedToPayment.asObservable().subscribe((data)=>{
-        console.log('data come up is ',data);
-        
-        this.ProceedToPaymentClicked=data;
-       })
-      );
+      this.checkOutService.ProceedToPayment.asObservable().subscribe((data) => {
+        this.ProceedToPaymentClicked = data;
+      })
+    );
   }
 
   async ngOnInit() {
@@ -82,7 +78,7 @@ export class CheckoutComponent implements OnInit {
     let cartSub = this.cartService.fetchCart().subscribe((data) => {
       this.cartCount = data.details?.length;
       this.cart = data;
-      if(this.cart?.details?.length>0){
+      if (this.cart?.details?.length > 0) {
         this.verifyOrderSummary(false);
       }
       this.loading = false;
@@ -133,7 +129,7 @@ export class CheckoutComponent implements OnInit {
 
   // COUPONS CODE STARTS-------------------
   CouponValid: string = '';
-  AllCoupons: any=[];
+  AllCoupons: any = [];
   SecureNavBar: Boolean = false;
   CouponApplied: any = '';
   direction: string = 'right';
@@ -147,18 +143,18 @@ export class CheckoutComponent implements OnInit {
       }));
   }
 
-  InputChange(event:any) {
-   if(!this.CouponCode.nativeElement.value){
-    this.CouponValid='';
-    return;
-   }
+  InputChange(event: any) {
+    if (!this.CouponCode.nativeElement.value) {
+      this.CouponValid = '';
+      return;
+    }
     this.CouponValid = 'valid';
   }
 
 
   RemoveAppliedCoupon() {
-    this.cart.amounts.discount=null;
-    this.CouponApplied=false; 
+    this.cart.amounts.discount = null;
+    this.CouponApplied = false;
   }
 
 
@@ -170,7 +166,7 @@ export class CheckoutComponent implements OnInit {
 
   CalculateDiscount(coupon: any) {
     const totalAmount = this.cart.amounts.total;
-  
+
     if (coupon.discountType === 'flat') {
       return Math.min(coupon.discountAmount, totalAmount);
     } else if (coupon.discountType === 'percentage') {
@@ -178,17 +174,17 @@ export class CheckoutComponent implements OnInit {
       const cappedDiscount = Math.min(calculatedDiscount, coupon.maximumDiscount);
       return Math.min(cappedDiscount, totalAmount);
     }
-  
+
     return 0;
   }
-  
- 
+
+
 
   async ApplyCoupon(coupon: any = '', event: any = '') {
     let value = (event ? this.CouponCode.nativeElement.value.trim() : coupon.couponcode.trim());
-  
+
     if (event) {
-      const foundCoupon = this.AllCoupons.find((c:any) => c.couponcode === value);
+      const foundCoupon = this.AllCoupons.find((c: any) => c.couponcode === value);
       if (foundCoupon) {
         this.CouponApplied = foundCoupon;
         this.CouponValid = 'valid';
@@ -200,7 +196,7 @@ export class CheckoutComponent implements OnInit {
       this.CouponApplied = coupon;
       this.CouponValid = 'valid';
     }
-  
+
     if (!this.CheckMinimumPurchase(this.CouponApplied)) {
       this.toastService.errorToast({ title: `minimum purchase amount is ${this.CouponApplied.minimumPurchaseAmount}` });
       this.CouponValid = 'invalid';
@@ -208,24 +204,24 @@ export class CheckoutComponent implements OnInit {
       this.show = false;
       return;
     }
-  
+
     if (this.CouponValid == 'valid') {
       this.toastService.successToast({ title: 'Coupon applied successfully' });
     } else if (this.CouponValid == 'invalid') {
       this.toastService.errorToast({ title: 'Coupon not valid' });
       return;
     }
-  
+
     this.CouponCode.nativeElement.value = '';
     this.cart.amounts.discount = this.CalculateDiscount(this.CouponApplied);
     // this.cart.amounts.total -= this.cart.amounts.discount;
     this.show = false;
   }
-  
+
 
   verifyOrderSummary(navigate: boolean = true) {
     if (this.cart?.details?.length == 0) return;
-    let body:any={products: this.cart.details};
+    let body: any = { products: this.cart.details };
 
     if (this.CouponApplied) {
       body.couponId = this.CouponApplied._id;
@@ -233,33 +229,33 @@ export class CheckoutComponent implements OnInit {
 
     if (!navigate) {
       this.allSubscriptions.push(
-        this.fetchService.HTTPPOST(this.BackendUrl.URLs.verifyOrderWithoutCoupon,  body).subscribe((response) => { 
-       
-          this.cart.amounts =JSON.parse(JSON.stringify(response));
+        this.fetchService.HTTPPOST(this.BackendUrl.URLs.verifyOrderWithoutCoupon, body).subscribe((response) => {
+
+          this.cart.amounts = JSON.parse(JSON.stringify(response));
         }));
     }
 
     else {
-      this.CheckOutDisabled=true;
+      this.CheckOutDisabled = true;
       if (!this.LoginUser) {
-        this.CheckOutDisabled=false;
+        this.CheckOutDisabled = false;
         this.router.navigate(['/auth/login']);
       }
       else {
         this.allSubscriptions.push(
           this.fetchService.HTTPPOST(this.BackendUrl.URLs.verifyOrderSummary, body).subscribe({
-            next:(response) => {
-            this.cart.amounts =JSON.parse(JSON.stringify(response));
+            next: (response) => {
+              this.cart.amounts = JSON.parse(JSON.stringify(response));
               this.checkOutService.FinalPaymentAmount.next(response);
-            this.router.navigate(['/cart/billing']);
-            this.CheckOutDisabled=false;
-          },
-          error:(error)=>{
-            this.CheckOutDisabled=false;
-          }
-        }));
-          
-        
+              this.router.navigate(['/cart/billing']);
+              this.CheckOutDisabled = false;
+            },
+            error: (error) => {
+              this.CheckOutDisabled = false;
+            }
+          }));
+
+
       }
     }
   }
@@ -270,49 +266,50 @@ export class CheckoutComponent implements OnInit {
 
   ChangeHandler(event: boolean) {
     this.show = event;
-    if(!this.CouponCode)return;
+    if (!this.CouponCode) return;
     this.CouponCode.nativeElement.value = '';
-    this.CouponValid='';
+    this.CouponValid = '';
   }
 
   AddressSelected: any = null;
   NextDisabled: boolean = false;
 
   nextClicked() {
-    console.log('addrsss is ',this.checkOutService.addressSelected);
-    
+    console.log('addrsss is ', this.checkOutService.addressSelected);
+
     if (!this.checkOutService.addressSelected) {
       this.toastService.errorToast({ title: 'Please select some address' });
       return;
     }
-      this.createOrder();
+    this.createOrder();
   }
 
   OrderId: string = '';
   createOrder() {
     let body: any = {};
-  this.NextDisabled=true;
+    this.NextDisabled = true;
     if (this.CouponApplied) {
       body.couponId = this.CouponApplied._id;
     }
     body.products = this.cart.details;
-    body.address=this.checkOutService.addressSelected;
+    body.address = this.checkOutService.addressSelected;
     this.allSubscriptions.push(
       this.fetchService.HTTPPOST(this.BackendUrl.URLs.createOrder, body).subscribe(
 
-        {next:
-        (data: any) => {
-        this.checkOutService.loadStripe.next(true);
-        this.checkOutService.orderID = data.orderId;
-        this.NextDisabled = false;
-      },
-      error:(error)=>{
-        this.NextDisabled = false;
-      }
-    }
+        {
+          next:
+            (data: any) => {
+              this.checkOutService.loadStripe.next(true);
+              this.checkOutService.orderID = data.orderId;
+              this.NextDisabled = false;
+            },
+          error: (error) => {
+            this.NextDisabled = false;
+          }
+        }
       )
-      );
-   
+    );
+
   }
 
   // COUPONS CODE FINSIH-------------------

@@ -34,7 +34,7 @@ export class SupportComponent {
     //   .catch(error => {
     //   });
 
-      const url: any = this.fetchDataService.HTTPGET(this.utils.URLs.getTicketStatus).subscribe((data: any)=> {
+     this.fetchDataService.HTTPGET(this.utils.URLs.getTicketStatus).subscribe((data: any)=> {
         this.titleData = data[0].title;
        this.ticketTypeId = data[0]._id;
       })

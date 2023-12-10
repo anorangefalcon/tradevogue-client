@@ -125,7 +125,7 @@ export class AboutComponent {
     this.allSubscriptions.push(
     this.fetchDataService.HTTPPOST(this.backendURLs.URLs.setAboutDetails, this.AboutPageForm.value).subscribe((response) => {
       this.EditClicked();
-      this.FetchDetails();
+      this.toastService.successToast({ title: 'Information Updated Successfully!'})
     }));
 
   }
@@ -135,7 +135,7 @@ export class AboutComponent {
     let file: any = (<HTMLInputElement>event.target)?.files![0];
     this.imageuploadService.fileupload([{ file: file }]).then((url: any) => {
       if (!url[0]) {
-        this.toastService.errorToast('error while uploading image please try again');
+        this.toastService.errorToast({ title: 'Error while uploading image please try again'});
         return;
       }
 

@@ -10,7 +10,8 @@ input[type="checkbox"] {
     appearance: none;
     width: 16px;
     height: 16px;
-    border: 1px solid rgb(var(--blackClr), 0.4);
+    border: 1px solid rgb(var(--blackClr), 0.3);
+    border-radius: 4px;
 }
 
 input[type="checkbox"]:checked {
@@ -62,7 +63,7 @@ input[type="checkbox"]:checked+label::after {
 
 .tags {
     margin-block-end: 20px;
-    border: 1px solid rgb(var(--blackClr), 0.4);
+    border: 1px solid rgb(var(--blackClr), 0.3);
     border-radius: 20px;
     padding: 5px 10px;
     gap: 3px;
@@ -171,7 +172,7 @@ input[type="checkbox"]:checked+label::after {
     height: 54px;
     background-color: rgb(var(--whiteClr));
     z-index: 98;
-    border-top: 1px solid rgb(var(--blackClr), 0.2);
+    border-top: 1px solid rgb(var(--blackClr), 0.4);
     box-shadow: 0px -10px 18px 8px rgba(0, 0, 0, 0.1);
     border-radius: 5px;
     backdrop-filter: blur(10px);
@@ -246,9 +247,9 @@ input[type="checkbox"]:checked+label::after {
     content: "\e5ca";
     font-family: 'Material Symbols Outlined';
     height: 10px;
-    text-shadow: 0px 0px 2px #000000;
+    text-shadow: 0px 0.5px 1px rgb(var(--blackClr));
     width: 6px;
-    color: white;
+    color: rgb(var(--whiteClr));
     position: absolute;
     font-size: 18px;
     font-weight: 300;
@@ -294,19 +295,21 @@ input::-webkit-inner-spin-button {
 }
 
 .price button {
-    background-color: rgb(var(--whiteClr));
     padding: 5px;
-    border: 0.5px solid rgb(var(--blackClr));
+    border: 1px solid rgb(var(--blackClr), 0.2);
     height: 30px;
-    border-radius: 3px;
+    border-radius: 4px;
 
-    &:hover {
-        border: 0.5px solid rgb(var(--blackClr), 0.5);
-    }
-
+    
     & span {
         font-size: 20px;
-        color: rgb(var(--blackClr));
+        color: rgb(var(--blackClr), 0.4);
+    }
+
+    &:hover {
+        & span {
+            color: rgb(var(--blackClr), 0.8);
+        }
     }
 }
 

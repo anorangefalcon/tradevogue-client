@@ -56,10 +56,7 @@ export class SupportComponent {
         const encodedPayload = tokenParts[1];
         const decodedPayload = atob(encodedPayload);
         const payload = JSON.parse(decodedPayload);
-        console.log(payload, "payload is");
-        console.log(this.usermessage, "user message is ");
     socket.on('replymessage', (data) => {
-      console.log('Received admin message:', data);
       const body = {
         message: data.message,
         receiver: payload.id
@@ -92,7 +89,6 @@ export class SupportComponent {
     });
 
     socket.on('userMessage', (res) => {
-      console.log(res);
       this.usermessage = res.message;
       socket.emit('newChat', res);
     })
@@ -101,7 +97,6 @@ export class SupportComponent {
   loadLatestOrder() {
       this.fetchData.HTTPGET(this.util.URLs.getIndividualOrders).subscribe(
         (data: any) => {
-            console.log(data, "data is");
             if (Array.isArray(data) && data.length !== 0) {
               this.products = data[0].products;
               this.orderDetails = data[0];
@@ -168,7 +163,6 @@ export class SupportComponent {
 
   scrollToChatBot() {
     this.Clicked = true;
-  console.log("scroll")
     setTimeout(() => {
       const chatBotElement = this.elementRef.nativeElement.querySelector('.orderDetail');
       if (chatBotElement) {

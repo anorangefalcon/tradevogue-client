@@ -56,7 +56,6 @@ export class EyePopupComponent {
   ngOnInit() {
     // this.avgRating = this.list.avgRating;
     this.eyePopService.EyePopupData.subscribe((data) => {
-      console.log(data, "eye data is ");
       if (!data) return;
       this.list = data;
       this.show = true;

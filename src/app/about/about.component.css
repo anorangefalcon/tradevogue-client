@@ -102,16 +102,14 @@
             }
 
             & h2 {
-                font-size: 42px;
+                font-size: 33px;
                 line-height: 52px;
                 font-family: 'Jost', sans-serif;
                 font-weight: 400;
                 /* max-width: 600px; */
                 margin-bottom: 20px;
-                color: rgba(var(--textClr), 0.8);
+                color: rgba(var(--textClr));
             }
-
-
 
 
             & p {

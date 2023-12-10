@@ -141,7 +141,6 @@ export class CartService {
 
 
   updateCart(data: any) {
-
     if (this.user) {
       this.allSubscriptions.push(
       this.http.post(this.backendUrls.URLs.updateItemFromCart, data).subscribe((data: any) => {
@@ -154,8 +153,7 @@ export class CartService {
       const localStorageData = localStorage.getItem("myCart");
 
       if (localStorageData) {
-        this.cartStorage = JSON.parse(localStorageData);
-
+        this.cartStorage = JSON.parse(localStorageData);        
         const itemFound = this.cartStorage[data.index];
         delete data.index;
 
@@ -165,9 +163,8 @@ export class CartService {
           });
         }
       }
-
-      const myCart = JSON.stringify(this.cartStorage);
-
+      
+      localStorage.setItem("myCart", JSON.stringify(this.cartStorage));
       this.fetchDetails();
     }
 

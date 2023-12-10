@@ -72,13 +72,13 @@ export class CartComponent implements OnInit {
     let quantityIndex = this.cartArr[productIndex].info.orderQuantity.findIndex((q: any) => {
       return q == selectedQuantity;
     });
-
+    
     const stockLimit = this.cartArr[productIndex].assets.find((asset: any) => {
       return asset.color === this.cartArr[productIndex].color;
     }).stockQuantity.find((stock: any) => {
       return stock.size === this.cartArr[productIndex].size;
     }).quantity;
-
+    
     if (quantityIndex === -1) {
       for (let i = (this.cartArr[productIndex].info.orderQuantity.length - 1); i >= 0; i--) {
         if (this.cartArr[productIndex].info.orderQuantity[i] < stockLimit) {
@@ -123,7 +123,9 @@ export class CartComponent implements OnInit {
     }).stockQuantity.find((stock: any) => {
       return stock.size === this.cartArr[productIndex].size;
     }).quantity;
-
+    
+    
+    
     if (quantityIndex === -1) {
       for (let i = (this.cartArr[productIndex].info.orderQuantity.length - 1); i >= 0; i--) {
         if (this.cartArr[productIndex].info.orderQuantity[i] < stockLimit) {
@@ -135,7 +137,7 @@ export class CartComponent implements OnInit {
         quantityIndex = 0;
       }
     }
-
+    
     if (what === 'next' && quantityIndex <= (this.cartArr[productIndex].info.orderQuantity.length - 1)) {
       if (this.cartArr[productIndex].info.orderQuantity[quantityIndex + 1] <= stockLimit) {
         this.cartArr[productIndex].info.quantity = this.cartArr[productIndex].info.orderQuantity[quantityIndex + 1];
@@ -156,7 +158,7 @@ export class CartComponent implements OnInit {
       index: productIndex,
       quantity: this.cartArr[productIndex].info.quantity
     }
-
+    
     if (this.userToken) {
       cartItem.index = this.cartArr[productIndex]._id;
     }
