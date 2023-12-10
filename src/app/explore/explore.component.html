@@ -107,20 +107,16 @@
                 <div class="category d-flex flex-column gap-10 justify-content-center">
                     <p>Price</p>
                     <div class="d-flex flex-column gap-5 price">
-                        <div class="d-flex gap-20 ranges">
-                            <p>Min. Range</p>
-                            <p>Max. Range</p>
-                        </div>
                         <div class="d-flex gap-10">
                             <div class="form__group relative">
                                 <span class="material-symbols-outlined key form__icon absolute">
                                     currency_rupee</span>
-                                <input type="number" class="form__input" [(ngModel)]="minPrice">
+                                <input type="number" class="form__input" [(ngModel)]="minPrice" placeholder="Min">
                             </div>
                             <div class="form__group relative">
                                 <span class="material-symbols-outlined key form__icon absolute">
                                     currency_rupee</span>
-                                <input type="number" class="form__input" [(ngModel)]="maxPrice">
+                                <input type="number" class="form__input" [(ngModel)]="maxPrice" placeholder="Max">
                             </div>
                             <button class="btn d-flex justify-content-center align-item-center" (click)="onAdd('','')">
                                 <span class="material-symbols-outlined">

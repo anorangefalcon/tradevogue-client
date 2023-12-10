@@ -3,20 +3,16 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FetchDataService } from '../shared/services/fetch-data.service';
 import { UtilsModule } from 'src/app/utils/utils.module';
 import { passwordStrengthValidator, matchPasswordValidator } from '../auth/validators';
-import { MobileNoValidator } from './validators';
 import { Location } from '@angular/common';
 import { CartService } from '../shared/services/cart.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { CheckoutService } from '../checkout/checkout.service';
 import { WishlistService } from '../shared/services/wishlist.service';
 import { DialogBoxService } from '../shared/services/dialog-box.service';
 import { ToastService } from '../shared/services/toast.service';
 import { LoginCheckService } from '../shared/services/login-check.service';
-import { InvoiceTemplateComponent } from 'src/app/shared/components/invoice-template/invoice-template.component';
 import { Subscription } from 'rxjs';
 import { HttpParams } from '@angular/common/http';
-import { param } from 'jquery';
-
+import { InvoiceTemplateService } from '../shared/services/invoice-template.service';
 
 @Component({
   selector: 'app-settings',
@@ -105,11 +101,10 @@ export class SettingsComponent {
     private cartService: CartService,
     private route: ActivatedRoute,
     private location: Location,
-    private stripePay: CheckoutService,
     private toastService: ToastService,
     private dialogBox: DialogBoxService,
     private userService: LoginCheckService,
-    private invoiceService: InvoiceTemplateComponent
+    private invoiceService: InvoiceTemplateService
   ) {
 
     this.ProfileForm = fb.group(

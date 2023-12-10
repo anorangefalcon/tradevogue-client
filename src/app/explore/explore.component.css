@@ -69,6 +69,7 @@ input[type="checkbox"]:checked+label::after {
     gap: 3px;
 
     & p {
+        text-transform: capitalize;
         font-size: 10px !important;
     }
 

@@ -1,12 +1,6 @@
-import { ChangeDetectorRef, Component, ElementRef, Input, ViewChild, ViewEncapsulation } from '@angular/core';
-import { Injectable } from '@angular/core';
-import { FetchDataService } from '../../services/fetch-data.service';
-import { HttpParams } from '@angular/common/http';
-import { UtilsModule } from 'src/app/utils/utils.module';
-
-@Injectable({
-  providedIn: 'root'
-})
+import { Component, ViewEncapsulation } from '@angular/core';
+import { InvoiceTemplateService } from '../../services/invoice-template.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-invoice-template',
@@ -16,47 +10,47 @@ import { UtilsModule } from 'src/app/utils/utils.module';
 })
 export class InvoiceTemplateComponent {
 
-  @Input() orderDetail!: any;
+  openInvoiceTemplate: Boolean = false;
+  orderDetail!: any;
 
-  constructor(private fetchData: FetchDataService,private cdr: ChangeDetectorRef ,private backendUrl: UtilsModule) { }
+  invoiceSubscription!: Subscription;
 
-  // orderDetail!: any;
+  constructor(private invoiceService: InvoiceTemplateService) {}
+
+  ngOnInit(): void {
+    this.invoiceSubscription = this.invoiceService.openInvoice$.subscribe((orderDetail: any)=>{
+      if(!orderDetail) {
+        this.openInvoiceTemplate = false;
+        return;
+      }
+
+      this.setData(orderDetail);
+      this.openInvoiceTemplate = true;
+    })
+  }
+
+  private setData(orderDetail: any) {
+    this.orderDetail = orderDetail;
+
+    let totalQty = 0;
+    orderDetail.products.forEach((product: any) => {
+      totalQty += product.quantity;
+    });
+
+    this.orderDetail.orderDate = new Date(this.orderDetail.orderDate).toDateString()
+    this.orderDetail['totalQty'] = totalQty;
+
+  }
+
+  close() {
+    this.invoiceService.close();
+  }
 
   printInvoice() {
     window.print();
   }
 
-  check(){
-    console.log(this.orderDetail);
-  }
-
-  public open(orderId: any) {
-
-    // let params: HttpParams = new HttpParams().set("orderID", orderId);
-
-    // this.fetchData.HTTPGET(this.backendUrl.URLs.getSellerOrderDetails, params).subscribe({
-    //   next: (res: any) => {
-    //     console.log(res);
-
-    //     this.orderDetail = res;        
-    //     let totalQty = 0;
-
-    //     res.products.forEach((product: any) => {
-    //       totalQty += product.quantity;
-    //     });
-
-    //     this.orderDetail.orderDate = new Date(this.orderDetail.orderDate).toDateString()
-    //     this.orderDetail['totalQty'] = totalQty;
-    //     this.cdr.markForCheck();
-    //     this.cdr.detectChanges();
-    //   }
-    // });
-
-    document.getElementById('invoicePage')?.classList.add('pop_open');
-
-  }
-
-  public close() {
-    document.getElementById('invoicePage')?.classList.remove('pop_open');
-  }
+  ngOnDestroy() {
+    this.invoiceSubscription?.unsubscribe();
+   }
 }

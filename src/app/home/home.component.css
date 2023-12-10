@@ -56,68 +56,6 @@ section {
   }
 }
 
-.newsletter {
-  padding-block: 100px;
-  background: linear-gradient(#2222229c, #22222267), url(../../assets/newbg.jpeg);
-  background-repeat: no-repeat;
-  background-size: cover;
-  color: rgb(var(--whiteClr));
-
-  & form {
-    width: 100%;
-    justify-content: center;
-  }
-
-  & h2 {
-    font-size: 30px !important;
-    font-weight: 600;
-    letter-spacing: 0.7px;
-    text-align: center;
-    color: white
-  }
-
-  & input {
-    width: 42%;
-    font-size: 14px;
-    padding: 12px 15px;
-    background-color: white;
-    border: none;
-    border-radius: 5px;
-    outline: none;
-    color: rgb(var(--textClr));
-  }
-
-  &::placeholder {
-    letter-spacing: 0.7px;
-    color: rgb(var(--textClr), 0.4);
-  }
-
-  & button {
-    border-radius: 5px !important;
-    padding: 10px 25px;
-
-    & .send-icon {
-      display: none;
-    }
-  }
-
-
-  & .medias {
-    /* margin-block-start: 10px; */
-
-    & i {
-      font-size: 18px;
-      color: white;
-      transition: 0.3s ease-in-out;
-    }
-
-    & i:hover {
-      color: rgb(var(--primaryClr));
-    }
-  }
-}
-
-
 
 @media screen and (max-width: 1400px) {
   input {
@@ -197,13 +135,7 @@ section {
     gap: 15px !important;
   }
 
-  .newsletter {
-    padding-block: 60px;
-
-    & h2 {
-      font-size: 24px !important;
-    }
-  }
+  
 }
 
 @media screen and (max-width: 480px) {
@@ -219,49 +151,4 @@ section {
     padding-block-start: 50px;
   }
 
-  .newsletter {
-    padding-block: 50px;
-
-
-    & h2 {
-      font-size: 20px !important;
-    }
-
-    & .btn-primary {
-      font-size: 14px !important;
-    }
-
-    & button {
-      padding: 10px 14px;
-
-      & .text {
-        display: none;
-      }
-
-      & .send-icon {
-        display: block;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      }
-
-      & .fa-paper-plane:before {
-        content: "\f1d8";
-        font-size: 16px;
-      }
-    }
-
-    & input {
-      font-size: 13px;
-      padding: 10px 14px;
-
-      &::placeholder {
-        font-size: 13px !important;
-      }
-    }
-  
-    & .fa-brands{
-      font-weight: 16px;
-    }
-  }
 }

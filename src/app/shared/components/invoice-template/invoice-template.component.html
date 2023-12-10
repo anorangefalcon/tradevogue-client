@@ -1,5 +1,6 @@
-<section #invoicePage id="invoicePage" class="invoice-section fixed mw100 mh100 flex-center inset-block-start-0 inset-inline-start-0 ">
-    <div *ngIf="orderDetail" class="invoice-template d-flex flex-column gap-20 relative">
+<section  *ngIf="orderDetail" #invoicePage id="invoicePage" class="invoice-section fixed mw100 mh100 flex-center inset-block-start-0 inset-inline-start-0 "
+[ngClass]="openInvoiceTemplate ? 'pop_open' : ''">
+    <div class="invoice-template d-flex flex-column gap-20 relative">
         <i class="fs-20 pointer close__icon absolute material-symbols-outlined" (click)="close()">close</i>
         <div class="invoice__heading row d-flex align-item-center justify-content-md-between">
             <!-- <div class="invoice__title d-flex flex-column">

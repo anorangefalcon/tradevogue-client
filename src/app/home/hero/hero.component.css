@@ -125,14 +125,13 @@ div.banner.skeleton {
         box-shadow: 0px 0px 5px rgba(var(--blackClr), 0.4);
         overflow: hidden;
 
-        transition: 0.4s ease-in-out !important;
+        transition: 0.3s linear !important;
     }
     
     & .owl-dot.active span {
         width: 35px !important;
         height: 4px !important;
         position: relative;
-        
     }
 
     & .owl-dot.active span::before {
@@ -145,7 +144,8 @@ div.banner.skeleton {
         height: 100%;
         z-index: 2;
         width: 100%;
-        animation: owl-nav-animation 4.8s linear;
+
+        animation: owl-nav-animation 5s linear;
     }
 }
 

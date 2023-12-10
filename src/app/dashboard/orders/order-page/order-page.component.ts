@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { FetchDataService } from 'src/app/shared/services/fetch-data.service';
 import { UtilsModule } from 'src/app/utils/utils.module';
 import { InvoiceTemplateComponent } from 'src/app/shared/components/invoice-template/invoice-template.component';
+import { InvoiceTemplateService } from 'src/app/shared/services/invoice-template.service';
 
 @Component({
   selector: 'app-order-page',
@@ -19,7 +20,7 @@ export class OrderPageComponent {
     private fetchDataService: FetchDataService,
     private backendUrl: UtilsModule,
     private activeRoute: ActivatedRoute,
-    private InvoiceService: InvoiceTemplateComponent
+    private InvoiceService: InvoiceTemplateService
   ) {
     activeRoute.params.subscribe({
       next: async (data) => {
@@ -48,7 +49,7 @@ export class OrderPageComponent {
     })
   }
 
-  viewInvoice(){
+  viewInvoice(){    
     this.InvoiceService.open(this.orderId);
   }
 }
