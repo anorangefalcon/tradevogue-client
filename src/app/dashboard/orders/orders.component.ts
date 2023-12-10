@@ -100,8 +100,6 @@ export class OrdersComponent {
     this.fetchData.HTTPPOST(this.backendUrl.URLs.getSellerOrders, this.template).subscribe({
       next: (data: any)=>{
 
-        console.log(data);
-
         if(!data.orders.length){
           this.orderData = [];
           this.totalCount = data.total.length;
@@ -118,8 +116,10 @@ export class OrdersComponent {
             orderTime: (new Date(order.data.orderDate)).toDateString(),
             amount: order.data.OrderSummary.Total || order.data.OrderSummary.total || 0,
             quantity: order.orderQuantity || 0,
-            payment_status:  order.data.payment_status || '',
-            invoice_status: order.data.invoice_status || '',
+            // payment_status:  order.data.payment_status || '',
+            // invoice_status: order.data.invoice_status || '',
+            mop: order.data.MOP,
+            transaction_id:  order.data.transactionId || '',
             _id: order._id
           };
           this.orderData.push(orderInfo);

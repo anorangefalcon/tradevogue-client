@@ -61,13 +61,20 @@ export class ProductPageComponent implements OnInit {
       rating: ['', Validators.required],
       review: ['', [Validators.required, this.noWhitespaceValidator]]
     })
-
   }
 
   breadcrumbs: { label: string; url: string }[] = [];
 
   public noWhitespaceValidator(control: FormControl) {
     return (control.value || '').trim().length ? null : { 'whitespace': true };
+  }
+
+  // Detect Cahnge in Sku through admin route
+  ngOnChanges(){
+    if(this.sku != this.productSku && this.productSku){
+      this.sku = this.productSku;
+      this.fetchProductData();
+    }
   }
 
   ngOnInit(): void {

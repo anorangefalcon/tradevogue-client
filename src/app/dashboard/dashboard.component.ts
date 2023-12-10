@@ -127,7 +127,7 @@ export class DashboardComponent {
 
           this.notficationList.push(cardTemplate);
         });
-        console.log(this.notficationList);
+        // console.log(this.notficationList);
       }
     })
   }

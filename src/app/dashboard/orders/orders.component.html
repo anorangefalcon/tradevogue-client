@@ -71,7 +71,9 @@
                         <th class="items heading">Order Time</th>
                         <th class="items heading">Quantity</th>
                         <th class="items heading">Amount</th>
-                        <th class="items heading">Payment Status</th>
+                        <th class="items heading">M.O.P</th>
+                        <th class="items heading">Payment ID</th>
+                        <!-- <th class="items heading">Payment Status</th> -->
                         <!-- <th class="items heading">Invoice Available</th> -->
                         <!-- <th class="items heading">Track</th> -->
                         <th class="items heading">Invoice</th>
@@ -86,7 +88,7 @@
                             <td class="items">{{item.orderTime}}</td>
                             <td class="items">{{item.quantity}}</td>
                             <td class="items">&#8377; {{item.amount}}</td>
-                            <td class="items" style="font-weight: 500;">
+                            <!-- <td class="items" style="font-weight: 500;">
                                 <span *ngIf="item.payment_status == 'success' || item.payment_status == 'Success'"
                                     style="color: rgb(var(--success));">Success</span>
                                 <span *ngIf="item.payment_status == 'Pending' || item.payment_status == 'pending'"
@@ -95,7 +97,7 @@
                                     style="color: rgb(var(--danger));">Canceled</span>
                                 <span *ngIf="item.payment_status == 'Failed' ||item.payment_status == 'failed'"
                                     style="color: rgb(var(--danger));">Failed</span>
-                            </td>
+                            </td> -->
                             <!-- <td class="items">
                                 <div class="slide-button d-flex align-item-center">
                                     <input type="checkbox" [(ngModel)]="item.invoice_status"
@@ -108,6 +110,8 @@
                                 <span [routerLink]="['/dashboard/orderDetails', item.orderId]"
                                     class="material-symbols-outlined">open_in_new</span>
                             </td> -->
+                            <td class="items">{{item.mop}}</td>
+                            <td class="items text-ellipsis">{{item.transaction_id}}</td>
                             <td class="items action-btns">
                                 <a href="javascript:void(0);" class="tooltip"
                                     [routerLink]="['/dashboard/orderDetails', item._id]">

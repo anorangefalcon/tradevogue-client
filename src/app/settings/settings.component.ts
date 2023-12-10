@@ -450,21 +450,21 @@ export class SettingsComponent {
     this.getCancelledOrders()
   }
 
-  invoiceData: any = '';
+  invoiceId: any = '';
 
   viewInvoice(index: number) {
     console.log(this.AllOrders[index]);
 
-    let data = JSON.parse(JSON.stringify(this.AllOrders[index]));
-    let totalQty = 0;
+    // let data = JSON.parse(JSON.stringify(this.AllOrders[index]));
+    // let totalQty = 0;
 
-    data.products.forEach((product: any) => {
-      totalQty += product.quantity;
-    });
+    // data.products.forEach((product: any) => {
+    //   totalQty += product.quantity;
+    // });
 
-    data.orderDate = new Date(data.orderDate).toDateString()
-    data['totalQty'] = totalQty;
-    this.invoiceData = data;
+    // data.orderDate = new Date(data.orderDate).toDateString()
+    // data['totalQty'] = totalQty;
+    // this.invoiceData = data;
 
     // this.invoiceService.open();
   }

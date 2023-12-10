@@ -74,23 +74,42 @@
             }
         }
 
-        & .header_links:hover>.notficationList {
-            opacity: 1;
-            pointer-events: all;
+        & .header_links:hover > .notficationList{
+                opacity: 1;
+                transform: translateY(0px);
+                pointer-events: all;
         }
 
         & .notficationList {
-            border-radius: 4px;
-            padding: 15px;
-            inset-block-start: 100%;
+            inset-block-start: calc(100% + 7px);
             inset-inline-end: 0;
-            width: 240px;
-            height: 300px;
-            overflow-y: auto;
-            background-color: rgb(var(--whiteClr));
+            transform: translateY(10px);
             opacity: 0;
             pointer-events: none;
-            box-shadow: 0px 0px 5px rgb(var(--blackClr), 0.08);
+            transition: all 0.3s ease-in-out;
+
+            &::before {
+                content: "";
+                z-index: 5;
+                position: absolute;
+                display: block;
+                height: 0;
+                width: 0;
+                border-block-end: 8px solid ;
+                border-inline-start: 8px solid transparent;
+                border-inline-end: 8px solid transparent;
+                inset-block-start: -8px;
+                inset-inline-end: 4px;
+            }
+        }
+
+        & .notficationList > ul {
+            border-radius: 4px;
+            width: 220px;
+            max-height: 300px;
+            overflow-y: auto;
+            background-color: rgb(var(--whiteClr));
+            box-shadow: 0px 0px 7px rgb(var(--blackClr), 0.1);
 
             &::-webkit-scrollbar {
                 width: 3px;
@@ -102,12 +121,15 @@
                 border-radius: 5px;
                 background-color: rgb(var(--primaryClr), 0.8);
             }
-
+            
             & li {
-                padding-block-end: 10px;
+                padding: 10px 15px;
+
+                &:hover{
+                    background-color: rgb(var(--secondary));
+                }
 
                 & img {
-                    height: 40px;
                     border-radius: 50%;
                     object-fit: cover;
                     object-position: top;
@@ -119,7 +141,7 @@
             }
 
             & li:not(:last-child) {
-                border-block-end: 0.5px solid rgb(var(--textClr), 0.3);
+                border-block-end: 0.5px solid rgb(var(--textClr), 0.1);
             }
 
 

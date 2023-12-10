@@ -20,6 +20,8 @@ export class ProductsComponent implements OnInit {
   selectAll: boolean = false;
   highlight: number = 0;
   deleteDataField: any = {};
+  popUpDirection: any = 'popup';
+  showingPopUp: boolean = false;
 
   categoryOption!: any[];
   dataField: string[] = ['categories'];
@@ -79,8 +81,6 @@ export class ProductsComponent implements OnInit {
             return;
           };
 
-          console.log('res', res);
-
           this.productArray = res;
           this.productList = [];
           this.totalCount = this.productArray.pageInfo[0].count;
@@ -105,7 +105,8 @@ export class ProductsComponent implements OnInit {
               rating: Math.round(product.avgRating * 10) / 10,
               star: this.starRating(Math.round(product.avgRating * 10) / 10),
               last_updated: product.productInfo.updatedAt.split('T')[0],
-              checked: false
+              checked: false,
+              popup: false
             }
             this.productList.push(item);
           });
@@ -155,7 +156,6 @@ export class ProductsComponent implements OnInit {
 
     this.fetchdata.HTTPPOST(this.backendUrl.URLs.productStatus, body).subscribe({
       next: (data: any) => {
-        console.log(data);
         this.productList[index].status.active = status;
         status ? this.toastService.successToast({ title: 'Product is Available' }) : this.toastService.notificationToast({ title: 'Product is now Unavailable' });
         this.fetchData();
@@ -289,13 +289,6 @@ export class ProductsComponent implements OnInit {
     return false;
   }
 
-  displayInfo(e: Event) {
-    (<HTMLDivElement>(<HTMLDivElement>e.target)?.parentElement?.nextSibling)?.classList.add('active');
-  }
-  closeInfo(e: Event) {
-    (<HTMLDivElement>(<HTMLSpanElement>e.target).parentElement).parentElement?.classList.remove('active');
-  }
-
   // Handles Excel File Uplaoded
   uploadFile(event: Event) {
 
@@ -345,5 +338,11 @@ export class ProductsComponent implements OnInit {
       temp.push(0);
     }
     return temp;
+  }
+
+  
+  PopUpChangeHanlder(index: number, event: boolean) {
+    // this.showingPopUp = event;
+    this.productList[index].popup = event;
   }
 }

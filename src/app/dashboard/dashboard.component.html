@@ -3,40 +3,45 @@
     <header class="header fixed inset-inline-0 inset-block-start-0 transition" [class.active]="isCollapse">
         <div class="mh100 header_container d-flex align-item-center justify-content-md-between">
             <div class="toogle-section d-flex gap-10 align-item-center">
-                <span (click)="isCollapse = !isCollapse" aria-label="menu" class="pointer d-flex align-item-center mh100">
+                <span (click)="isCollapse = !isCollapse" aria-label="menu"
+                    class="pointer d-flex align-item-center mh100">
                     <span class="material-symbols-outlined">menu</span>
                 </span>
                 <span aria-label=" Logo (Trade Vogue) (Light Mode)" [routerLink]="['/']">
                     <img class="brand-logo" width="50px" src="../../assets/logo-mobile.svg" *ngIf="!darkTheme"
                         [class.active]="isCollapse" alt="Trade Vogue">
                 </span>
-                <span aria-label="Mobile Logo (Trade Vogue) (dark_mode Mode)" [routerLink]="['/']"><img class="brand-logo"
-                        width="50px" src="../../assets/logo-mobile-light.svg" *ngIf="darkTheme"
+                <span aria-label="Mobile Logo (Trade Vogue) (dark_mode Mode)" [routerLink]="['/']"><img
+                        class="brand-logo" width="50px" src="../../assets/logo-mobile-light.svg" *ngIf="darkTheme"
                         [class.active]="isCollapse" alt="Trade Vogue">
                 </span>
             </div>
             <ul class="mh100 header_items d-flex align-item-center justify-content-end gap-20">
 
-                <li class="header_links">
-                    <a routerLink="/dashboard/chat" class="mh100 message d-flex align-item-center relative">
+                <li class="mh100 header_links d-flex flex-center ">
+                    <span routerLink="/dashboard/chat" class="message d-flex flex-center relative">
                         <span class="pointer transition  icons material-symbols-outlined">Message</span>
                         <span class="count d-flex flex-center text-center absolute">{{chatLength}}</span>
-                    </a>
+                    </span>
                 </li>
-                <li class="header_links relative pointer">
-                    <span class="mh100 notification d-flex align-item-center relative">
+                <li class="header_links relative d-flex flex-center  pointer mh100">
+                    <span class="notification d-flex flex-center relative">
                         <span class="pointer transition icons material-symbols-outlined">notifications</span>
                         <span class="count d-flex flex-center text-center absolute">{{notficationList.length}}</span>
                     </span>
-                    <ul class="notficationList absolute d-flex flex-column gap-10">
-                        <li *ngFor="let item of notficationList; let i=index" class="d-flex align-item-center gap-10 ">
-                            <img [src]="item.image" alt="product image" width="40px" height="35px">
-                            <div class="d-flex flex-column ">
-                                <p class="name fw-500 fs-14 text-ellipsis">{{item.name}}</p>
-                                <p class="out-of-stock fs-10">{{'Out of Stock'}}</p>
-                            </div>
-                        </li>
-                    </ul>
+                    <div class="notficationList absolute d-flex align-item-center">
+                        <ul class="d-flex flex-column">
+                            <li *ngFor="let item of notficationList; let i=index">
+                                <span class="d-flex align-item-center gap-10" [routerLink]="['/dashboard/product-overview/'+item.sku]">
+                                    <img [src]="item.image" alt="product image" width="30px" height="30px">
+                                    <div class="d-flex flex-column ">
+                                        <p class="name fw-500 fs-12 text-ellipsis">{{item.name}}</p>
+                                        <p class="out-of-stock fs-10">{{'Out of Stock'}}</p>
+                                    </div>
+                                </span>
+                            </li>
+                        </ul>
+                    </div>
                 </li>
 
                 <li class="header_links">

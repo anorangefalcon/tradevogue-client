@@ -49,7 +49,7 @@ export class OrderPageComponent {
   }
 
   viewInvoice(){
-    this.InvoiceService.open();
+    this.InvoiceService.open(this.orderId);
   }
 }
 

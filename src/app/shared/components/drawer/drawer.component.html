@@ -1,5 +1,5 @@
 <div class="wrapper" [ngClass]="{'show':show}" >
-
+  {{show}}
   <div class="backdrop" (click)="translate=''; showChange.emit(false)"></div>
 
   <div class="content-drawer" [style]="direction"

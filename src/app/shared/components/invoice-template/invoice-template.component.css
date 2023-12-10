@@ -51,7 +51,7 @@
     pointer-events: all;
 }
 
-.invoice-section.pop_open > .invoice-template{
+.invoice-section.pop_open  .invoice-template{
     scale: 1;
 }
 

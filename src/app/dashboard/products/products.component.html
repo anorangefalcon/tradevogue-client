@@ -11,16 +11,19 @@
                         <input style="display: none;" type="file" id="sizes_" maxlength="1" minlength="1" arial-label=""
                             (input)="uploadFile($event)"
                             accept="image/CSV, application/vnd.ms-excel ,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" />
-                        <label aria-label="Upload Excel File" class="uploadbtn d-flex flex-center pointer gap-5" for="sizes_">
+                        <label aria-label="Upload Excel File" class="uploadbtn d-flex flex-center pointer gap-5"
+                            for="sizes_">
                             Import Excel
                         </label>
                     </div>
-                    <a href="javascript:void(0);" class="downloadBtn d-flex flex-center pointer gap-5"
-                        href="../../../assets/ExcelSampleFile/sampleFullData.xlsx" aria-label="Download Excel File Sample" download>
+                    <a class="downloadBtn d-flex flex-center pointer gap-5"
+                        href="../../../assets/ExcelSampleFile/sampleFullData.xlsx"
+                        aria-label="Download Sample Excel File" download>
                         Download Sample
                     </a>
 
-                    <a href="javascript:void(0);" aria-label="Download Excel File" class="downloadBtn d-flex flex-center pointer gap-5" (click)="exportProductsExcel()">
+                    <a aria-label="Download Excel File"
+                        class="downloadBtn d-flex flex-center pointer gap-5" (click)="exportProductsExcel()">
                         Export Excel
                     </a>
                 </div>
@@ -47,23 +50,25 @@
         <div class="card card__pd-20 d-flex gap-20 align-item-center justify-content-md-between features">
             <div class="operational-buttons file-section d-flex align-item-center gap-20">
 
-                <a href="javascript:void(0);" class="downloadBtn d-flex flex-center pointer gap-5"
+                <a  class="downloadBtn d-flex flex-center pointer gap-5"
                     href="../../../assets/ExcelSampleFile/sampleFullData.xlsx" download>
                     <span class="material-symbols-outlined operation-icon fs-22 fw-300 transition">download</span>
                     Download Sample
                 </a>
 
-                <input style="display: none;" type="file" id="sizes" maxlength="1" minlength="1" aria-label="Upload Excel File"
-                    (input)="uploadFile($event)" class="display-none"
+                <input style="display: none;" type="file" id="sizes" maxlength="1" minlength="1"
+                    aria-label="Upload Excel File" (input)="uploadFile($event)" class="display-none"
                     accept="image/CSV, application/vnd.ms-excel ,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" />
-                <label aria-labelledby="Upload Excel File" class="uploadbtn d-flex flex-center pointer gap-5" for="sizes">
+                <label aria-labelledby="Upload Excel File" class="uploadbtn d-flex flex-center pointer gap-5"
+                    for="sizes">
                     <span class="material-symbols-outlined operation-icon fs-22 fw-300 transition">upload_file</span>
                     Import
                 </label>
 
-                <button class="downloadBtn btn btn-md btn-rounded d-flex flex-center pointer gap-5" aria-label="Download Excel File"
-                (click)="exportProductsExcel()" [disabled]="!deleteList.length" [ngStyle]="{'cursor': deleteList.length? 'pointer': 'no-drop'}">
-                <span class="material-symbols-outlined operation-icon fs-22 fw-300 transition">file_save</span>
+                <button class="downloadBtn btn btn-md btn-rounded d-flex flex-center pointer gap-5"
+                    aria-label="Download Excel File" (click)="exportProductsExcel()" [disabled]="!deleteList.length"
+                    [ngStyle]="{'cursor': deleteList.length? 'pointer': 'no-drop'}">
+                    <span class="material-symbols-outlined operation-icon fs-22 fw-300 transition">file_save</span>
                     Export</button>
             </div>
 
@@ -112,13 +117,14 @@
                 <span class="d-flex align-item-center gap-5 fs-12">
                     <p class="fw-500 fs-12">Total Products:</p> {{totalCount}}
                 </span>
-    
+
                 <span class="d-flex align-item-center gap-10">
-                    <p class="fs-12 fw-500">Show Active Products:</p>                             
+                    <p class="fs-12 fw-500">Show Active Products:</p>
                     <td class="items">
                         <div class="slide-button d-flex align-item-center">
                             <label for="activeProducts" aria-label="Toggle button">Toggle</label>
-                            <input type="checkbox" [(ngModel)]="template.filter.active" (change)="fetchData()" id="activeProducts"/>
+                            <input type="checkbox" [(ngModel)]="template.filter.active" (change)="fetchData()"
+                                id="activeProducts" />
                         </div>
                     </td>
                 </span>
@@ -128,11 +134,12 @@
                     <thead>
                         <tr>
                             <th class="items item-check ">
-                                
-                                <input class="display-none" [(ngModel)]="selectAll" (change)="toggleSelectAll();  updateCheckList();"
-                                    type="checkbox" id="all_product">
+
+                                <input class="display-none" [(ngModel)]="selectAll"
+                                    (change)="toggleSelectAll();  updateCheckList();" type="checkbox" id="all_product">
                                 <label for='all_product' class="d-flex flex-center" aria-label="done">
-                                    <span class="d-flex flex-center pointer fs-16 fw-400 btn-rounded material-symbols-outlined">done</span>
+                                    <span
+                                        class="d-flex flex-center pointer fs-16 fw-400 btn-rounded material-symbols-outlined">done</span>
                                 </label>
                             </th>
                             <th class="items">Product Name</th>
@@ -147,7 +154,7 @@
                             <th class="items">Action</th>
                         </tr>
                     </thead>
-    
+
                     <tbody *ngIf="productList.length; else productData">
                         <ng-container *ngFor="let item of productList; let i = index">
                             <tr *ngIf="(i < template.limit)" class="default-animation">
@@ -155,52 +162,53 @@
                                     <input [(ngModel)]="item.checked" type="checkbox" class="display-none"
                                         (change)="checkboxChanged(); updateCheckList();" id="itemId_{{item.itemId}}">
                                     <label class="d-flex flex-center" for='itemId_{{item.itemId}}'>
-                                        <span class="d-flex flex-center pointer fs-16 fw-400 btn-rounded material-symbols-outlined">done</span>
+                                        <span
+                                            class="d-flex flex-center pointer fs-16 fw-400 btn-rounded material-symbols-outlined">done</span>
                                     </label>
                                 </td>
-    
+
                                 <td class="items">
                                     <div class="table__item-image d-flex gap-10 align-item-center mh100">
-                                        <img src="{{item.image}}" loading="lazy" alt="product.png" width="30px" height="30px">
+                                        <img src="{{item.image}}" loading="lazy" alt="product.png" width="30px"
+                                            height="30px">
                                         <span class="text-ellipsis text-wrap">{{item.name}}</span>
                                     </div>
                                 </td>
-    
+
                                 <td class="items text-capitalize">{{item.category}}</td>
                                 <td class="items text-capitalize">{{item.brand}}</td>
                                 <td class="items">&#8377; {{item.price}}</td>
-    
+
                                 <td class="items"> {{item.unit_sold}} </td>
-    
+
                                 <td class="items displayInfo relative" (mouseleave)="selectedColor=0">
                                     <div class="pointer relative d-flex align-item-center">
-    
-                                        <p (click)="displayInfo($event)">
-                                            {{item.product_inventory}}<sup
+
+                                        <p (click)="item.popup = true">
+                                            {{item.product_inventory}}
+                                            <sup aria-label="Display Product Qty in Detail"
                                                 class="info__icon material-symbols-outlined">info</sup>
                                         </p>
-    
-                                        <div class="popup d-flex flex-column flex-center">
-    
+
+                                        <app-drawer [direction]="popUpDirection" [show]="item.popup"
+                                            (showChange)="PopUpChangeHanlder(i, $event)"
+                                            [title]="'Stock Inventory Status'">
+
                                             <div class="popup_content relative d-flex flex-column flex-center gap-15">
-                                                <h4 class="fs-12">Stock Inventory Status</h4>
-                                                <span
-                                                    class="pointer close__icon d-flex flex-center absolute material-symbols-outlined"
-                                                    (click)="closeInfo($event)">close
-                                                </span>
-    
+
                                                 <span class="d-flex justify-content-center align-item-center gap-10">
                                                     <ng-container *ngFor="let c of item.assets; let c_index = index">
                                                         <input type="radio" [name]="'color1' + item.name"
                                                             [id]="'color1_'+ item.name + c.color" [value]="c.color"
                                                             (click)="isradioChecked($event, c_index)"
-                                                            [checked]="c_index == 0" class="display-none"/>
-                                                        <label aria-label="Color Associated to Products Clickable" class="pointer relative d-flex flex-center"
+                                                            [checked]="c_index == 0" class="display-none" />
+                                                        <label aria-label="Color Associated to Products Clickable"
+                                                            class="pointer relative d-flex flex-center"
                                                             [for]="'color1_'+ item.name + c.color"
                                                             [style]="'background-color:'+ c.color"></label>
                                                     </ng-container>
                                                 </span>
-    
+
                                                 <div class="table-list">
                                                     <table>
                                                         <thead>
@@ -214,7 +222,7 @@
                                                             <ng-container [ngSwitch]="selectedColor">
                                                                 <ng-container
                                                                     *ngFor="let asset of item.assets; let asset_index=index">
-    
+
                                                                     <ng-container *ngSwitchCase="asset_index">
                                                                         <tr
                                                                             *ngFor="let stock of asset.stockQuantity; let x=index">
@@ -226,9 +234,9 @@
                                                                                     In Stock
                                                                                     &#40;{{stock.quantity}}&#41;
                                                                                 </span>
-    
+
                                                                                 <ng-template #low_inventry>
-    
+
                                                                                     <span
                                                                                         *ngIf="filterData(item.orderQuantity, stock.quantity) else empty_inventry"
                                                                                         class="inventory okay">
@@ -241,7 +249,7 @@
                                                                                             stock.quantity }}&#41;
                                                                                         </span>
                                                                                     </ng-template>
-    
+
                                                                                 </ng-template>
                                                                             </td>
                                                                         </tr>
@@ -251,35 +259,38 @@
                                                         </tbody>
                                                     </table>
                                                 </div>
-    
+
                                             </div>
-                                        </div>
-    
+
+                                        </app-drawer>
+
                                     </div>
                                 </td>
-    
+
                                 <td class="items">
                                     <div class="d-flex gap-3 align-item-center">
                                         <ng-container *ngFor="let star of item.star">
-                                            <i style="color: rgb(var(--primaryClr));" [class]="'fs-18 material-symbols-outlined '+ star.class" >{{star.field}}</i>
+                                            <i style="color: rgb(var(--primaryClr));"
+                                                [class]="'fs-18 material-symbols-outlined '+ star.class">{{star.field}}</i>
                                         </ng-container>
                                         &#40;{{item.rating}}&#41;
                                     </div>
                                 </td>
-    
+
                                 <td class="items">{{item.last_updated}}</td>
-    
+
                                 <td class="items">
                                     <div class="slide-button d-flex align-item-center">
                                         <label [for]="i + 'Available'" arial-label="Activate Product">{{i}}</label>
                                         <input type="checkbox" (click)="activateProduct($event, item._id, i)"
-                                            [(ngModel)]="item.status.active" [id]="i + 'Available'" aria-label="Toggle Button" />
+                                            [(ngModel)]="item.status.active" [id]="i + 'Available'"
+                                            aria-label="Toggle Button" />
                                     </div>
                                 </td>
-    
+
                                 <td class="items action-btns">
                                     <span class="d-flex align-item-center gap-5 transition">
-    
+
                                         <span class="tooltip">
                                             <label class="pointer checkbox__label" [for]="'highlight'+i"></label>
                                             <input class="highlight" type="checkbox" style="display: none;"
@@ -287,20 +298,23 @@
                                                 [(ngModel)]="item.status.highlight">
                                             <span class="tooltiptext">Highlight Product</span>
                                         </span>
-    
-                                        <a href="javascript:void(0);" class="tooltip" [routerLink]="['/dashboard/product-overview', item.itemId]">
+
+                                        <a  class="tooltip"
+                                            [routerLink]="['/dashboard/product-overview', item.itemId]">
                                             <span
                                                 class="fs-20 mh100 mw100 action__btn-icon material-symbols-outlined">visibility</span>
                                             <span class="tooltiptext">View</span>
                                         </a>
-    
-                                        <a href="javascript:void(0);" class="tooltip" [routerLink]="['/dashboard/editproduct', item.itemId]">
+
+                                        <a  class="tooltip"
+                                            [routerLink]="['/dashboard/editproduct', item.itemId]">
                                             <span
                                                 class="fs-20 mh100 mw100 action__btn-icon material-symbols-outlined">edit</span>
                                             <span class="tooltiptext">Edit</span>
                                         </a>
 
-                                        <a href="javascript:void(0);" class="tooltip" (click)="deleteItem(item._id, item.name)">
+                                        <a  class="tooltip"
+                                            (click)="deleteItem(item._id, item.name)">
                                             <span
                                                 class="fs-20 mh100 mw100 action__btn-icon material-symbols-outlined">delete</span>
                                             <span class="tooltiptext">Delete</span>
@@ -310,7 +324,7 @@
                             </tr>
                         </ng-container>
                     </tbody>
-    
+
                     <ng-template #productData>
                         <tbody class="items" *ngIf="dataFetchStatus; else noData">
                             <tr *ngFor="let i of tableGenerator(template.limit)">
@@ -319,13 +333,14 @@
                                 </td>
                             </tr>
                         </tbody>
-    
+
                         <ng-template #noData>
                             <tbody>
                                 <tr>
                                     <td colspan="10">
                                         <div class="noDataFound d-flex flex-column flex-center card__pd-20">
-                                            <img class="default-animation" src="../../../assets/noDataFound.svg" alt="No Data Found" height="170px">
+                                            <img class="default-animation" src="../../../assets/noDataFound.svg"
+                                                alt="No Data Found" height="170px">
                                         </div>
                                     </td>
                                 </tr>

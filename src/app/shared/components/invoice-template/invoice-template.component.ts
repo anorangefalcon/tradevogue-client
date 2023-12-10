@@ -1,6 +1,8 @@
-import { Component, ElementRef, Input, ViewChild, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, Input, ViewChild, ViewEncapsulation } from '@angular/core';
 import { Injectable } from '@angular/core';
 import { FetchDataService } from '../../services/fetch-data.service';
+import { HttpParams } from '@angular/common/http';
+import { UtilsModule } from 'src/app/utils/utils.module';
 
 @Injectable({
   providedIn: 'root'
@@ -14,44 +16,47 @@ import { FetchDataService } from '../../services/fetch-data.service';
 })
 export class InvoiceTemplateComponent {
 
-  @Input() orderInfo: any;
-  @ViewChild('invoicePage') content!: ElementRef;
+  @Input() orderDetail!: any;
 
-  constructor(private fetchData: FetchDataService){}
-  
-  ngOnInit(){
-    console.log(this.orderInfo)
-  }
+  constructor(private fetchData: FetchDataService,private cdr: ChangeDetectorRef ,private backendUrl: UtilsModule) { }
 
-  printInvoice(){
+  // orderDetail!: any;
+
+  printInvoice() {
     window.print();
   }
 
-  public open(){
-    document.getElementById('invoicePage')?.classList.add('pop_open');
-    // this.content.nativeElement.classList.add('pop_open');
+  check(){
+    console.log(this.orderDetail);
   }
 
-  public close(){
-    document.getElementById('invoicePage')?.classList.remove('pop_open');
-    // this.content.nativeElement.classList.remove('pop_open');
-  }
-}
+  public open(orderId: any) {
 
     // let params: HttpParams = new HttpParams().set("orderID", orderId);
-    // console.log("dasda", orderId);
+
     // this.fetchData.HTTPGET(this.backendUrl.URLs.getSellerOrderDetails, params).subscribe({
     //   next: (res: any) => {
     //     console.log(res);
 
-    // this.orderInfo = order;
+    //     this.orderDetail = res;        
     //     let totalQty = 0;
 
-    //     res.products.forEach((product: any)=>{
-    //         totalQty += product.quantity;
+    //     res.products.forEach((product: any) => {
+    //       totalQty += product.quantity;
     //     });
 
-    //     this.orderInfo.orderDate = new Date(this.orderInfo.orderDate).toDateString()
-    //     this.orderInfo['totalQty'] = totalQty;
+    //     this.orderDetail.orderDate = new Date(this.orderDetail.orderDate).toDateString()
+    //     this.orderDetail['totalQty'] = totalQty;
+    //     this.cdr.markForCheck();
+    //     this.cdr.detectChanges();
     //   }
     // });
+
+    document.getElementById('invoicePage')?.classList.add('pop_open');
+
+  }
+
+  public close() {
+    document.getElementById('invoicePage')?.classList.remove('pop_open');
+  }
+}
