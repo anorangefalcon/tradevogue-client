@@ -4,6 +4,7 @@ import { FetchDataService } from '../shared/services/fetch-data.service';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { UtilsModule } from '../utils/utils.module';
+import { SocketService } from '../shared/services/socket.service';
 
 
 @Component({
@@ -25,7 +26,8 @@ export class DashboardComponent {
     private router: Router,
     private backendURL: UtilsModule,
     private renderer: Renderer2,
-    private fetchDataService: FetchDataService) {
+    private fetchDataService: FetchDataService,
+    private socketService: SocketService) {
       this.allSubscriptions.push(
     this.fetchDataService.themeColor$.subscribe((color) => {
       this.darkTheme = color;
@@ -83,10 +85,15 @@ export class DashboardComponent {
       this.adminName = data;
     }));
 
-    this.fetchDataService.HTTPGET(this.backendURL.URLs.getChatDetails).subscribe((res: any)=> {
+    const socket = this.socketService.getChatSocket();
+
+    socket.on('getChatDetail', (data: any) => {
+      if(data){
+      this.fetchDataService.HTTPGET(this.backendURL.URLs.getChatDetails).subscribe((res: any)=> {
       this.chatLength = res.length;
     });
-
+      }
+    });
     // window.addEventListener("resize", () => {
     //   let check = window.matchMedia("(min-width: 768px)");
 

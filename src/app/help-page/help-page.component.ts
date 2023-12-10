@@ -58,11 +58,11 @@ export class HelpPageComponent {
         })
        
 
-        this.fetchDataService.HTTPPOST(this.utils.URLs.webPushTokenDetail, {token: this.fcmToken, email: this.contactForm.get('email')?.value}).subscribe((response: any) => {
-          if (response) {
+        // this.fetchDataService.HTTPPOST(this.utils.URLs.webPushTokenDetail, {token: this.fcmToken, email: this.contactForm.get('email')?.value}).subscribe((response: any) => {
+        //   if (response) {
 
-          }
-        });
+        //   }
+        // });
         
 
       this.contactForm.reset();

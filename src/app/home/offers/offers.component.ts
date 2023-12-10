@@ -30,10 +30,8 @@ interface SaleData {
 export class OffersComponent {
   saleData: SaleData[] = [];
   defaultState: SaleData[] = [];
-  isHovered = false;
-  timer: any;
 
-  constructor(public salesService: SalesService, private router: Router) { }
+  constructor(public salesService: SalesService, private router: Router) {}
 
   ngOnInit(): void {
     this.salesService.getSales().subscribe((data: any) => {
@@ -41,6 +39,13 @@ export class OffersComponent {
       this.defaultState = [...this.saleData];
     });
   }
+
+isMoreIconDisplayed(): boolean {
+  const enabledItemCount = this.getEnabledItemCount();
+  return enabledItemCount > 2;
+}
+
+
 
   getLink(link: string): void {
     const parts = link.split('/').slice(3);
@@ -52,18 +57,18 @@ export class OffersComponent {
     return this.saleData.filter((item: SaleData) => item.enable).length;
   }
 
-  // Methods for handling hover actions
-  onHover(): void {
-    this.isHovered = true;
+  onHover(item: SaleData): void {
+    item.hover = true;
     this.pauseTimer();
   }
 
-  onHoverOut(): void {
-    this.isHovered = false;
+  onHoverOut(item: SaleData): void {
+    item.hover = false;
     this.resumeTimer();
   }
 
-  // Timer functions
+  private timer: ReturnType<typeof setTimeout> | undefined;
+
   pauseTimer(): void {
     clearTimeout(this.timer);
   }
@@ -85,7 +90,7 @@ export class OffersComponent {
         this.saleData[i] = { ...item };
         item = { ...temp };
       }
-      this.isHovered ? this.pauseTimer() : this.resumeTimer();
+      item.hover ? this.pauseTimer() : this.resumeTimer();
     }
   }
 }

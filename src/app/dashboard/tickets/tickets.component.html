@@ -39,11 +39,12 @@
                 <span class="tooltiptext">Reply</span>
               </span>
 
-              <span class="tooltip">
-                <i class="fs-20 action__btn-icon pointer material-symbols-outlined"
-                  (click)="webPush(item)">notifications</i>
-                <span class="tooltiptext">Alerts</span>
-              </span>
+           <span class="tooltip" *ngIf="findUserToken(item.userEmail)">
+            <i class="fs-20 action__btn-icon pointer material-symbols-outlined"
+              (click)="webPush(item)">notifications</i>
+           <span class="tooltiptext">Alerts</span>
+           </span>
+
 
               <span class="tooltip">
                 <i (click)="deleteTicketTitle(item)" class="fs-20 action__btn-icon pointer material-symbols-outlined">delete</i>

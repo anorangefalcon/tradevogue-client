@@ -3,12 +3,14 @@ import { FetchDataService } from 'src/app/shared/services/fetch-data.service';
 import { UtilsModule } from 'src/app/utils/utils.module';
 
 
-import io from 'socket.io-client';
+// import io from 'socket.io-client';
 import { Subject, debounceTime } from 'rxjs';
+import { SocketService } from 'src/app/shared/services/socket.service';
+import { set } from 'lodash';
 
-const socket = io('http://localhost:3000/chat', {
-  transports: ['websocket']
-});
+// const socket = io('http://localhost:3000/chat', {
+//   transports: ['websocket']
+// });
 
 @Component({
   selector: 'app-chat',
@@ -34,14 +36,23 @@ export class ChatComponent implements OnInit {
   adminMessageList: any = [];
   userMessages: any[] = [];
 adminMessages: any[] = [];
+replyUserMessage: any[] = [];
 private sendMessageSubject = new Subject<string>();
 
 mergedMessages: any[] = [];
 
   private selectedFile: File | undefined;
   constructor(private fetchDataService: FetchDataService,
+    private socketService: SocketService,
     private utilsModule: UtilsModule) {
       this.getUsers();
+      const socket = this.socketService.getChatSocket();
+      socket.on('getChatDetail', (data: any) => {
+        if(data) {
+          this.getUsers();
+        }
+      });
+
    }
 
    getUsers() {
@@ -55,16 +66,34 @@ mergedMessages: any[] = [];
    }
 
    selectUser(user: any): void {
+    console.log(user, "comign user");
+    const socket = this.socketService.getChatSocket();
     this.selectedUser = user;
     this.loading = false;
     const senderId = this.selectedUser._id;
     socket.emit('existChat', senderId);
   }
 
+sendMessage(): void {
+  if (this.selectedUser && this.textMessage) {
+    console.log(this.userData, "selected user");
+    setTimeout(() => {
+      this.selectUser(this.userData[0]);
+    }, 1000);
+    this.sendMessageSubject.next(this.textMessage);
+    this.textMessage = '';
+  }
+}
+
+
   ngOnInit() {
+    const socket = this.socketService.getChatSocket();
+    // You can use 'socket' here for your socket-related operations.
+    socket.on('connect', () => {
+      console.log('Connected to server');
+    });
 
   this.sendMessageSubject.pipe(debounceTime(1000)).subscribe((message: string) => {
-    // Send the message after a debounce time of 1000ms (1 second)
     const body = {
       message,
       sender: this.selectedUser._id
@@ -76,26 +105,43 @@ mergedMessages: any[] = [];
       console.log('Connected to server');
     });
 
-    socket.on('connect_error', (error) => {
+    socket.on('connect_error', (error: any) => {
       console.error('Connection error:', error); 
     });
 
-    socket.on('message', (res) => {
+    socket.on('message', (res: string) => {
       console.log(res);
       this.message = res;
     })
 
-    socket.on('userMessage', (res) => {
-      console.log(res);
+    socket.on('userMessage', (res: any) => {
+      console.log(res, "res");
       this.messages = res;
     })
 
-    socket.on('loadNewChat',  (data: any) => {
-      if(data.sender == this.selectedUser._id) {
-        this.userMessage = data.message;
-        console.log(data);
-      };
+socket.on('loadNewChat', (data: any) => {
+  if (data.sender === this.selectedUser._id) {
+    this.userMessage = data.message;
+
+    // Check if the message already exists in userMessages
+    const isMessageExisting = this.userMessages.some(
+      msg => msg.message === this.userMessage && msg.sender === this.selectedUser._id
+    );
+
+    // Add the message only if it's not already present
+    if (!isMessageExisting) {
+      this.userMessages.push({
+        message: this.userMessage,
+        sender: this.selectedUser._id,
+        createdAt: new Date()
       });
+
+      this.mergeAndSortMessages();
+    }
+  }
+});
+
+
 
       // load old chats 
 
@@ -174,6 +220,16 @@ mergedMessages: any[] = [];
   this.mergeAndSortMessages();
 });
 
+    socket.on('receivedUserMessage', (data: { message: any[]; }) => {
+      console.log('Received user message:', data);
+      const body = {
+        message: data.message,
+      }
+        this.replyUserMessage = data.message;
+        this.messages.push({ content: this.replyUserMessage, sender: 'user' });
+      
+    });
+
 
   }
 
@@ -195,6 +251,7 @@ mergeAndSortMessages(): void {
 
 
   upload(files: any) {
+    const socket = this.socketService.getChatSocket();
     socket.emit("upload", files[0], (status: any) => {
       console.log(status);
     });
@@ -208,6 +265,7 @@ mergeAndSortMessages(): void {
   }
 
   uploadFile() {
+    const socket = this.socketService.getChatSocket();
     if (!this.selectedFile) {
       console.log('No file selected');
       return;
@@ -219,13 +277,6 @@ mergeAndSortMessages(): void {
     });
   }
 
-sendMessage() {
-  if (this.selectedUser && this.textMessage) {
-    // Emit the message to the Subject
-    this.sendMessageSubject.next(this.textMessage);
-    this.textMessage = ''; // Clear the message input after emitting
-  }
-}
 
 }
 

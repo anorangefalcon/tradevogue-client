@@ -618,23 +618,21 @@ p {
 }
 
 .chat-message {
-  margin: 5px;
-  padding: 10px;
-  border-radius: 8px;
-  max-width: 70%;
-  /* Adjust based on the design */
+    margin: 5px;
+    padding: 10px;
+    border-radius: 8px;
+    background-color: #E5E5EA;
+    max-width: 70%;
 }
 
 .user-message {
   align-self: flex-end;
   background-color: #d3e6ff;
-  /* User message background color */
 }
 
 .bot-message {
   align-self: flex-start;
   background-color: #f0f0f0;
-  /* Chatbot message background color */
 }
 
 .user-action-buttons {

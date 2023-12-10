@@ -6,6 +6,7 @@ import { FetchDataService } from 'src/app/shared/services/fetch-data.service';
 import { UtilsModule } from 'src/app/utils/utils.module';
 import { HttpClient } from '@angular/common/http';
 import { ToastService } from 'src/app/shared/services/toast.service';
+import { SocketService } from 'src/app/shared/services/socket.service';
 
 @Component({
   selector: 'app-notifications',
@@ -24,7 +25,8 @@ export class NotificationsComponent {
   fcmTokens: any;
 
   constructor(private fb: FormBuilder, private notificationService: NotificationService, private uploadService: ImageUploadService, private fetch: FetchDataService, private util : UtilsModule, private http: HttpClient,
-    private toast: ToastService) {
+    private toast: ToastService,
+    private socketService: SocketService) {
 
     // this.notificationService.getRegistrationIDs().subscribe((res)=> {
     //   this.registrationIds = res;
@@ -64,6 +66,7 @@ export class NotificationsComponent {
   }
 
   deleteItem(key: any){
+     const socket = this.socketService.getNotificationSocket();
     this.selectedItem = key;
     console.log(this.selectedItem)
     if(this.selectedItem) {
@@ -77,28 +80,31 @@ export class NotificationsComponent {
         if(data){
           this.loadNotifications();
           this.toast.successToast({'title': 'Notification deleted'});
+          socket.emit('notificationStatus', true);
         }
       })
       
     }
   }
 
-  toggle(key: any) {
-    this.selectedItem = key;
-    if (this.selectedItem) {
-      const id = this.selectedItem._id;
-      const state = !this.selectedItem.state;
-      
-      const body = {
-        id , state
-      }
+toggle(key: any) {
+  const socket = this.socketService.getNotificationSocket();
+  this.selectedItem = key;
+  if (this.selectedItem) {
+    const id = this.selectedItem._id;
+    const state = !this.selectedItem.state;
 
-      this.fetch.HTTPPOST(this.util.URLs.toggleNotification , body).subscribe((res)=> {
-        this.getFcmTokens()
-      })
-
-    }
+    const body = {
+      id, state
+    };
+    this.fetch.HTTPPOST(this.util.URLs.toggleNotification, body).subscribe((res) => {
+      socket.emit('notificationStatus', true);
+      this.loadNotifications();
+      this.getFcmTokens();
+    });
   }
+}
+
 
   showItemDetails(item: any, index: any) {
     this.selectedItem = item;
@@ -180,6 +186,7 @@ export class NotificationsComponent {
 
   onUpdate() {
     if (this.notificationForm.dirty) { 
+      const socket = this.socketService.getNotificationSocket();
       if (this.editingIndex !== undefined) {
 
         const body = {
@@ -189,6 +196,7 @@ export class NotificationsComponent {
         }
 
         this.fetch.HTTPPOST(this.util.URLs.updateNotification , body).subscribe((res)=> {
+          socket.emit('notificationStatus', true);
           this.getFcmTokens();
           this.loadNotifications();
           this.toast.successToast({'title': 'Notification updated'});
@@ -198,16 +206,13 @@ export class NotificationsComponent {
       } else {
         this.fetch.HTTPPOST(this.util.URLs.setNotifications, this.notificationForm.value).subscribe((res)=> {
           this.getFcmTokens();
+          socket.emit('notificationStatus', true);
           this.notificationForm.reset();
           this.loadNotifications();
         })
       }
     } else {
     }
-  }
-
-  updateContentAlign(index: number, value: string) {
-    this.notificationForm.get('notification')?.get(String(index))?.get('contentAlign')?.setValue(value);
   }
 
   preview: any;

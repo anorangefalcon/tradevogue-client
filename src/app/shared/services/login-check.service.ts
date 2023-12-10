@@ -88,7 +88,7 @@ export class LoginCheckService {
   }
 
   setFcmToken(currentToken: any) {
-    this.cookieService.set('fcmToken', currentToken);
+    // this.cookieService.set('fcmToken', currentToken);
     const obj: any = this.userSubject.getValue();
     obj.fcmToken = currentToken;
 
@@ -111,13 +111,13 @@ export class LoginCheckService {
         })
       );
     }
-    else if ((what.toLowerCase()) == 'fcm') {
-      return this.user$.pipe(
-        map((data: any) => {
-          return data.fcmToken
-        })
-      );
-    }
+    // else if ((what.toLowerCase()) == 'fcm') {
+    //   return this.user$.pipe(
+    //     map((data: any) => {
+    //       return data.fcmToken
+    //     })
+    //   );
+    // }
 
     return this.user$.pipe(
       map((data: any) => {

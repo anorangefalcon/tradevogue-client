@@ -81,29 +81,32 @@
                     <a class="icons pointer" aria-label="notification">
                         <span class="material-symbols-outlined">
                             notifications
-                            <span *ngIf="hasVisibleNotifications()" class="count"
-                                id="notifications">{{notifications.length}}</span>
+                            <span class="count"
+                                id="notifications">{{notifications.length}}
+                            </span>
                         </span>
                     </a>
 
                     <ul class="sub-items d-flex flex-column gap-15">
 
-                        <div *ngIf="!hasVisibleNotifications() && !darkTheme"
-                            class="noDataFound d-flex flex-column flex-center">
+                        <div *ngIf="!darkTheme && notifications.length == 0"
+                            class="noDataFound gap-10 d-flex flex-column flex-center align-item-center" style="padding: 20px;">
                             <img src="../../../../assets/notification.svg" alt="No Data Found"
-                                style="height: 100px !important;">
+                                style="height: 45px !important;">
+                            <h5>No Notifications</h5>
                         </div>
 
-                        <div *ngIf="!hasVisibleNotifications() && darkTheme"
-                            class="noDataFound d-flex flex-column flex-center">
+                        <div *ngIf="darkTheme && notifications.length == 0"
+                            class="noDataFound gap-10 d-flex flex-column flex-center align-item-center" style="padding: 20px;">
                             <img src="../../../../assets/notification-light.svg" alt="No Data Found"
-                                style="height: 100px !important;">
+                                style="height: 45px !important;">
+                                <h5>No Notifications</h5>
                         </div>
 
                         <div class="notification-container"
-                            *ngIf="notifications.length > 0 && hasVisibleNotifications()">
+                            *ngIf="notifications.length > 0">
                             <div class="notification-scroll">
-                                <div *ngFor="let notification of visibleNotifications()"
+                                <div *ngFor="let notification of notifications"
                                     class="notification-item pointer"
                                     (click)="redirectToUrl(notification.notification.url)">
                                     <div class="notification-icon">
@@ -115,7 +118,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <ul *ngIf="!notification.hasFcmToken && !notification.hasPermission;" class="pointer">
+                            <ul *ngIf="hasNotificationToken && !notification.hasPermission;" class="pointer">
                                 <li class="subscribe btn-secondary btn-rounded btn-sm"
                                     (click)="subscribeToNotifications()">
                                     <i class="bi bi-bell"></i> Subscribe to Notifications

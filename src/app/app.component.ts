@@ -9,11 +9,15 @@ import { ToastService } from './shared/services/toast.service';
 export class AppComponent {
   'title': 'tradevogue';
 
-  constructor(private fetchDataService: FetchDataService,private toastService:ToastService) { }
+  constructor(private fetchDataService: FetchDataService,private toastService:ToastService) {
+    
+   }
 
   ngOnInit(): void {   
     // this.toastService.successToast({title:'hello'});
     // this.toastService.errorToast({title:'hello 2'}); 
-  }
+    
+
+}
 
 }

@@ -13,9 +13,6 @@ export class BreadcrumbComponent implements OnInit {
   currentRoute: string = '';
   activeSku: any;
   saleData: any[] = [];
-  marqueeData: string[] = [];
-  marqueeDirection: string = 'left';
-  private marqueeElement: HTMLMarqueeElement | undefined;
 
   constructor(
     private router: Router,
@@ -23,6 +20,7 @@ export class BreadcrumbComponent implements OnInit {
     private breadcrumbService: BreadcrumbService,
     private salesService: SalesService
   ) {
+
     this.router.events.subscribe((event) => {
       this.router.events.subscribe(event => {
         if (event instanceof NavigationEnd) {
@@ -50,7 +48,6 @@ export class BreadcrumbComponent implements OnInit {
     this.salesService.getSales().subscribe((data: any) => {
       this.saleData = data.filter((item: any) => item.enable);
       // console.log(this.saleData, "sale data ")
-      this.marqueeData = this.saleData.map((item: any) => item.title);
     });
   }
 
@@ -90,5 +87,8 @@ export class BreadcrumbComponent implements OnInit {
     }
     return breadcrumbs;
   }
+  capitalizeFirstLetter(str: string): string {
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}
 
 }

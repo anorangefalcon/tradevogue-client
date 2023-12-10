@@ -1,20 +1,37 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, Subscription, map } from 'rxjs';
 import { LoginCheckService } from './login-check.service';
-import { getMessaging, getToken, onMessage } from 'firebase/messaging';
-import { initializeApp } from 'firebase/app';  // Import initializeApp from the main Firebase module
+import { getMessaging, getToken } from 'firebase/messaging';
+import { initializeApp } from 'firebase/app'; 
 import { environment } from 'src/environments/environment';
 import { FetchDataService } from './fetch-data.service';
 import { UtilsModule } from 'src/app/utils/utils.module';
 import { CookieService } from 'ngx-cookie-service';
+
 @Injectable({
   providedIn: 'root'
 })
 export class SupportNotificationService {
   private isInitialized = false;
   public hasPermission = false;
-  public hasFcmToken: boolean = this.cookieService.check('fcmToken');;
+
+  public hasFcmToken: Observable<boolean> = this.fetchData.HTTPGET(this.utils.URLs.userFcmToken).pipe(
+    map((res: any) => {
+      if (res) {
+        this.hasPermission = true;
+        return true;
+      }
+      return false;
+    })
+  );
+  
+
+
+
+
   private message: BehaviorSubject<any> = new BehaviorSubject(null);
+  dataSubscription!: Subscription;
+  fcmTokens: any;
 
   // Observable to expose notification options
   public notificationOptions$: Observable<any> = this.message.asObservable();
@@ -22,66 +39,40 @@ export class SupportNotificationService {
   constructor(private userService: LoginCheckService,
      private fetchData: FetchDataService,
       private utils: UtilsModule,
-      private cookieService: CookieService) {
-  }
+      private cookieService: CookieService,
+      private loginCheckService: LoginCheckService) {
+      
+     }
 
-  initializeFirebase() {
-    if (!this.isInitialized) {
-      initializeApp(environment.firebase);
-      this.isInitialized = true;
-    }
-  }
-
+  // it calls the initialize method and then requestPermission method
   initialize() {
     if (!this.isInitialized) {
-      this.initializeFirebase();
+      // this.initializeFirebase();
+      initializeApp(environment.firebase);
       this.requestPermission();
-      // this.subscribeToMessages();
       this.isInitialized = true;
     }
   }
 
-  // subscribeToMessages() {
-    // const messaging = getMessaging();
-
-    // onMessage(messaging, (payload) => {
-      // this.handleNotificationPayload(payload);
-    //   this.message.next(payload);
-    // });
-  // }
-
-  // handleNotificationPayload(payload: any) {
-  
-  //   if (payload && payload.data) {
-  //     const endpoint = payload.data.endpoint;
-  //     const notificationPayload = payload.data.payload;
-  //     const p256d = payload.data.p256d;
-  //     // Do something with endpoint, notificationPayload, and p256d
-  //   }
-  
-  //   if (payload && payload.notification) {
-  //     const title = payload.notification.title;
-  //     const body = payload.notification.body;
-  //   }
-  // }
-
   requestPermission() {
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('./firebase-messaging-sw.js')
-        .catch((err) => {
-          console.error('Service Worker registration failed:', err);
-     });
-    }
+    // scripts run in the background, enable features like push notifications
+    // if ('serviceWorker' in navigator) {
+    //   navigator.serviceWorker.register('./firebase-messaging-sw.js')
+    //     .catch((err) => {
+    //       console.error('Service Worker registration failed:', err);
+    //  });
+    // }
 
     const messaging = getMessaging();
+    
     getToken(messaging, { vapidKey: environment.vapidKeyNotification })
       .then((currentToken) => {
         if (currentToken) {
+          console.log('current token for client: ', currentToken)
         // send the distict token to server by searching in db the user with the same token and replace that
-           this.fetchData.HTTPPOST(this.utils.URLs.webPushTokenDetail, {'token': currentToken}).subscribe((response: any) => {
+       this.dataSubscription = this.fetchData.HTTPPOST(this.utils.URLs.webPushTokenDetail, {'token': currentToken}).subscribe((response: any) => {
             console.log(response)
           });
-          // this.subscribeToMessages();
           this.hasPermission = true;
             this.sendTokenToServer(currentToken);
         } else {
@@ -98,5 +89,9 @@ export class SupportNotificationService {
     if (currentToken) {
       this.userService.setFcmToken(currentToken);
     }
+  }
+
+    ngOnDestroy() {
+    this.dataSubscription.unsubscribe();
   }
 }

@@ -76,6 +76,11 @@ message-area
 ******************************** */
 
 .scrollable {
+
+    background: whitesmoke;
+    border-radius: 10px;
+    cursor: pointer;
+
 max-height: 100%;
     overflow-y: auto;
     padding: 10px;
@@ -509,6 +514,20 @@ li.repaly .time {
   border-radius: 50% !important;
   width: 30px;
   height: 30px;
+}
+
+.row {
+        display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.flex-shrink-0 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
 }
 
 .send-btns .button-wrapper span.label img {

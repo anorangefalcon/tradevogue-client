@@ -89,6 +89,8 @@ export class TicketsComponent {
     this.notificationForm.get('title')?.patchValue(field);
   }
 
+  
+
   loadData() {
     this.fetchDataService.HTTPGET(this.utils.URLs.getAllTicket).subscribe((data)=> {
       this.processTicketData(data);

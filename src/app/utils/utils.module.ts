@@ -151,6 +151,7 @@ export class UtilsModule {
     comingNotification: `${this.BackendUrl}/notification/coming`,
     sendNotification: `${this.BackendUrl}/notification/send`,
     deleteNotification: `${this.BackendUrl}/notification/delete`,
+    userFcmToken: `${this.BackendUrl}/notification/userFcmtoken`,
 
     // breadCrumbs
     getBreadCrumbs: `${this.BackendUrl}/breadcrumbs/get`,
