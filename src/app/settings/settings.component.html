@@ -464,7 +464,7 @@
                             (click)="toggleAccordian(i)">
                             <p class="wishlist-name text-capitalize">{{item._id | titlecase}}</p>
                             <div class="d-flex gap-5 align-items-center">
-                                <p *ngIf="item.productinfo.length === 0" class="no-item-label">No items</p>
+                                <p *ngIf="item.productinfo.length === 0" class="no-item-label d-flex flex-center">No items</p>
                                 <span class="material-symbols-outlined d-flex flex-center removeWishlist-btn"
                                     (click)="removeWishlist(item._id)" *ngIf="i!=0">
                                     delete

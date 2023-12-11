@@ -10,7 +10,7 @@
         </div>
         <div class="operation_button d-flex gap-10">
             <button class="btn btn-xs fw-500 btn-rounded btn-primary add-btn"
-                (click)="showForm = true; showingPopUp=true; bannerForm.reset()">
+                (click)=" bannerForm.reset();this.checkbox=false; showForm = true; showingPopUp=true; ">
                 <span class="material-symbols-outlined ">
                     add
                 </span>
@@ -24,7 +24,7 @@
 
 
     <app-drawer [direction]="popUpDirection" [show]="showingPopUp" (showChange)="PopUpChangeHanlder($event)"
-        (ParentClosedEmitter)="ParentClosedHandler($event)" [title]="'Customise Banner'">
+        (ParentClosedEmitter)="ParentClosedHandler($event)" [title]="'Customise Banner'" [height]="'calc(100% - 60px)'">
         <form class="form__card d-flex gap-15 default-animation flex-column" [formGroup]="bannerForm"
             *ngIf="showForm === true">
             <div class="mw100 relative d-flex flex-column gap-20">
@@ -48,7 +48,6 @@
                                 [style.display]="getImagePreview() ? 'flex' : 'none'" (click)="onImageRemove()">
                                 close
                             </span>
-                            <!-- <div class="loader" ></div> -->
                         </div>
                     </div>
                     <div class="d-flex gap-10 checkbox align-item-center">
@@ -128,7 +127,8 @@
                 </div>
             </div>
         </form>
-        <button class="btn btn-md fw-500 btn-rounded btn-primary btn-inline save-btn" [class.spinner]="saveData"
+        <!-- [class.spinner]="saveData" -->
+        <button class="btn btn-primary btn-md btn-rounded save-btn" 
             (click)="onSave()" *ngIf="showForm == true" [ngClass]="{'disabled':bannerForm.invalid}"
             [disabled]="this.bannerForm.invalid">Save</button>
     </app-drawer>
@@ -168,7 +168,7 @@
                     <td class="items ">
                         <div class="d-flex align-item-center gap-5">
                             {{banner.buttonText}}
-                            <a *ngIf="banner.buttonLink" href="{{banner.buttonLink}}" target="_blank">
+                            <a *ngIf="banner.buttonLink" href="{{banner.buttonLink}}" target="_blank" class="d-flex flex-center">
                                 <span class="material-symbols-outlined link-icon pointer">
                                     open_in_new
                                 </span>

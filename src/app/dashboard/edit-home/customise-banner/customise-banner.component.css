@@ -10,7 +10,6 @@
 .image-upload-div {
     background: rgb(var(--blackClr), 0.03);
     border-radius: 10px;
-    padding-block: 15px;
     height: 200px;
     overflow: hidden;
 

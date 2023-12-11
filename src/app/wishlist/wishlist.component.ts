@@ -72,8 +72,8 @@ export class WishlistComponent {
     ));
   }
 
-  removeWishlist(index: any){
-    this.wishlistService.removeWishlist({ index }).subscribe((data: any) => {
+  removeWishlist(id : any, index: number){
+    this.wishlistService.removeWishlist({ id}).subscribe((data: any) => {
       const toast = {
         title : data.message
       }

@@ -9,6 +9,7 @@ import { Component, EventEmitter, HostListener, Input, Output } from '@angular/c
 export class DrawerComponent {
   @Input() title!: string;
   @Input() width!:string;
+  @Input() height!:string;
   @Input() direction!: string;
   @Input() show!: boolean;
   @Output() showChange: EventEmitter<any> = new EventEmitter();

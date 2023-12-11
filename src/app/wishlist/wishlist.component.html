@@ -15,7 +15,7 @@
                             (click)="updateRequest=item._id; showTextField=true; newWishlist = item.wishlistName">
                             edit
                         </span>
-                        <span class="material-symbols-outlined remove-wishlist-btn pointer" (click)="removeWishlist(i)">
+                        <span class="material-symbols-outlined remove-wishlist-btn pointer" (click)="removeWishlist(item.wishlistName, i)">
                             delete
                         </span>
                     </div>

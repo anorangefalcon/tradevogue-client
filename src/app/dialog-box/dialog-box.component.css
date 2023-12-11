@@ -40,6 +40,8 @@ p{
 
 .warning_icon{
     inset-block-start: -30px;
+    inset-inline-start: 50%;
+    transform: translateX(-50%);
     width: 60px;
     height: 60px;
     border-radius: 50%;

@@ -49,6 +49,7 @@ export class FetchDataService {
 
   HTTPGET(url: any, params: any = '') {
     return this.http.get(url, { params }).pipe(
+      
       catchError((data: any): any => {
          if(data.error.message){
           this.toastService.errorToast({

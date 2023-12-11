@@ -15,7 +15,7 @@ export class CustomiseBannerComponent {
 
   bannerForm!: FormGroup;
   allSubscriptions: Subscription[] = [];
-  ParenClosed:boolean=false;
+  ParenClosed: boolean = false;
   alignment: string[] = ['Left', 'Right', 'Center'];
   previewImage: any;
   bannerData: any = [];
@@ -38,7 +38,7 @@ export class CustomiseBannerComponent {
 
     this.bannerForm = this.fb.group({
       backgroundImage: ['',
-        // Validators.required
+        Validators.required
       ],
       title: '',
       subTitle: '',
@@ -56,41 +56,73 @@ export class CustomiseBannerComponent {
 
 
     this.allSubscriptions.push(
-    dialogService.responseEmitter.subscribe({
-      next: (res: any) => {
-        if (res) {
-          console.log("asjdhasjdhakj", res);
-          this.bannerService.deleteBanner({id: this.deleteId}).subscribe((res: any) => {
-            const toast = {
-              title: res.message
-            }
-            this.toastService.successToast(toast);
-            this.ngOnInit()
-          });
+      dialogService.responseEmitter.subscribe({
+        next: (res: any) => {
+          if (res) {
+            console.log("asjdhasjdhakj", res);
+            this.bannerService.deleteBanner({ id: this.deleteId }).subscribe((res: any) => {
+              const toast = {
+                title: res.message
+              }
+              this.toastService.successToast(toast);
+              this.ngOnInit()
+            });
+          }
         }
-      }
-    }));
+      }));
 
   }
 
   ngOnInit() {
     console.log(this.checkbox, "before");
     this.allSubscriptions.push(
-    this.bannerService.getBanners().subscribe((data: any) => {
-      this.bannerData = data;
-      
-    }
-    ))
+      this.bannerService.getBanners().subscribe((data: any) => {
+        this.bannerData = data;
+
+      }
+      ))
   }
 
   ngOnDestroy() {
-    this.allSubscriptions.forEach((item: Subscription)=> item.unsubscribe());
+    this.allSubscriptions.forEach((item: Subscription) => item.unsubscribe());
   }
 
 
+  FormValues: any = {};
+
   isChecked() {
     let val = this.checkbox;
-    
+    let values: any = {};
+
+    if (this.editValue && val) {
+
+      values['title'] = this.bannerForm.get('title')?.value;
+      values['subTitle'] = this.bannerForm.get('subTitle')?.value;
+      values['buttonText'] = this.bannerForm.get('buttonText')?.value;
+      values['contentAlign'] = this.bannerForm.get('contentAlign')?.value;
+      let color = {
+        titleColor: this.bannerForm.get('colors')?.get('titleColor')?.value,
+        subTitleColor: this.bannerForm.get('colors')?.get('subTitleColor')?.value,
+        buttonColor: this.bannerForm.get('colors')?.get('buttonColor')?.value,
+      }
+
+      values.color = color;
+      this.FormValues = values;
+
+      this.bannerForm.get('title')?.reset()
+      this.bannerForm.get('subTitle')?.reset()
+      this.bannerForm.get('buttonText')?.reset()
+      this.bannerForm.get('contentAlign')?.reset()
+      this.bannerForm.get('colors')?.get('titleColor')?.reset()
+      this.bannerForm.get('colors')?.get('subTitleColor')?.reset()
+      this.bannerForm.get('colors')?.get('buttonColor')?.reset()
+      this.bannerForm.get('buttonText')?.disable()
+      this.bannerForm.get('contentAlign')?.disable();
+      this.bannerForm.get('colors')?.get('titleColor')?.disable()
+      this.bannerForm.get('colors')?.get('subTitleColor')?.disable()
+      this.bannerForm.get('colors')?.get('buttonColor')?.disable()
+    }
+
     if (val) {
       this.bannerForm.get('title')?.disable()
       this.bannerForm.get('subTitle')?.disable()
@@ -101,6 +133,8 @@ export class CustomiseBannerComponent {
       this.bannerForm.get('colors')?.get('buttonColor')?.disable()
     }
     else {
+      this.bannerForm.patchValue(this.FormValues);
+      this.bannerForm.get('colors')?.patchValue(this.FormValues.color);
       this.bannerForm.get('title')?.enable()
       this.bannerForm.get('subTitle')?.enable()
       this.bannerForm.get('buttonText')?.enable()
@@ -114,19 +148,20 @@ export class CustomiseBannerComponent {
   saveData: boolean = false;
   onSave() {
     this.saveData = true;
+    this.showForm=false;
 
     if (!this.editValue) {
       this.allSubscriptions.push(
-      this.bannerService.setBanners(this.bannerForm.value).subscribe((data: any) => {
-        const toast = {
-          title: data.message
-        }
-        this.toastService.successToast(toast);
-        this.bannerForm.reset()
-        this.bannerForm.get('colors')?.reset();
-        this.ngOnInit();
-        this.saveData = false;
-      }))
+        this.bannerService.setBanners(this.bannerForm.value).subscribe((data: any) => {
+          const toast = {
+            title: data.message
+          }
+          this.toastService.successToast(toast);
+          this.bannerForm.reset()
+          this.bannerForm.get('colors')?.reset();
+          this.ngOnInit();
+          this.saveData = false;
+        }))
     }
     else {
       const body = {
@@ -135,19 +170,19 @@ export class CustomiseBannerComponent {
       }
 
       this.allSubscriptions.push(
-      this.bannerService.updateBanner(body).subscribe((res: any) => {
-        const toast = {
-          title: res.message
-        }
-        this.toastService.successToast(toast)
-        this.bannerForm.reset()
-        this.bannerForm.get('colors')?.reset();
-        this.ngOnInit();
-        this.saveData = false;
-      }))
+        this.bannerService.updateBanner(body).subscribe((res: any) => {
+          const toast = {
+            title: res.message
+          }
+          this.toastService.successToast(toast)
+          this.bannerForm.reset()
+          this.bannerForm.get('colors')?.reset();
+          this.ngOnInit();
+          this.saveData = false;
+        }))
     }
 
-    this.showingPopUp=false;
+    this.showingPopUp = false;
   }
 
   uploading: boolean = false;
@@ -170,7 +205,7 @@ export class CustomiseBannerComponent {
   }
 
   onImageRemove() {
-    this.bannerForm.get('backgroundImage')?.reset('');
+    this.bannerForm.get('backgroundImage')?.reset();
   }
 
   delete(id: any) {
@@ -191,9 +226,9 @@ export class CustomiseBannerComponent {
       id, active: val
     }
     this.allSubscriptions.push(
-    this.bannerService.toggleBanner(data).subscribe((res: any) => {
-      this.ngOnInit()
-    }))
+      this.bannerService.toggleBanner(data).subscribe((res: any) => {
+        this.ngOnInit()
+      }))
   }
 
   edit(index: any) {
@@ -233,7 +268,7 @@ export class CustomiseBannerComponent {
   }
 
   PopUpChangeHanlder(event: boolean) {
-    this.showingPopUp = event; 
+    this.showingPopUp = event;
   }
   ParentClosedHandler(event: any) {
     this.ParentClosed = event;

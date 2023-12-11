@@ -34,7 +34,7 @@ export class LoginComponent {
     private dialogService: DialogBoxService,
     private renderer: Renderer2) {
 
-      (<HTMLMetaElement>document.getElementById('meta-description')).content = "Trade Vogue Login"
+    (<HTMLMetaElement>document.getElementById('meta-description')).content = "Trade Vogue Login"
 
     this.loginForm = fb.group(
       {
@@ -56,11 +56,11 @@ export class LoginComponent {
     window.addEventListener('auth', this.handleAuthEvent);
   }
 
-  handleAuthEvent =  (event: any) => {
+  handleAuthEvent = (event: any) => {
     console.log('event fire of login');
     const token = { credential: event.detail.credential }
-      const body = { token };
-      this.LoginUser(body);
+    const body = { token };
+    this.LoginUser(body);
   }
 
   ngOnInit() {
@@ -73,28 +73,28 @@ export class LoginComponent {
     `;
     this.googleCallBackScript = this.renderer.createElement('script');
     this.googleCallBackScript.text = scriptContent;
-    
+
     this.script = this.renderer.createElement('script');
     this.script.src = 'https://accounts.google.com/gsi/client';
     this.script.async = true;
-    
+
     this.renderer.appendChild(document.body, this.googleCallBackScript);
     this.renderer.appendChild(document.body, this.script);
-    
+
     this.allSubscriptions.push(
-    this.fetchDataService.themeColor$.subscribe((color)=>{
-      this.theme = color;
-    }));
+      this.fetchDataService.themeColor$.subscribe((color) => {
+        this.theme = color;
+      }));
   }
 
 
   LoginUser(body: any) {
     this.allSubscriptions.push(
-    this.fetchDataService.HTTPPOST(this.backendUrls.URLs.loginUrl, body).subscribe(
-      (data: any) => {
-        this.loginService.loginUser({ 'userToken': data.token, 'name': data.firstName });
-      }
-    ));
+      this.fetchDataService.HTTPPOST(this.backendUrls.URLs.loginUrl, body).subscribe(
+        (data: any) => {
+          this.loginService.loginUser({ 'userToken': data.token, 'name': data.firstName });
+        }
+      ));
 
     this.loading = false;
   }
@@ -115,12 +115,12 @@ export class LoginComponent {
     }
 
     this.allSubscriptions.push(
-    this.fetchDataService.HTTPPOST(this.backendUrls.URLs.forgetPasswordUrl, body).subscribe(
-      (data: any) => {
-        this.isactive = true;
-        this.dialogService.infoDialogBox();
-      }
-    ));
+      this.fetchDataService.HTTPPOST(this.backendUrls.URLs.forgetPasswordUrl, body).subscribe(
+        (data: any) => {
+          this.isactive = true;
+          this.dialogService.infoDialogBox();
+        }
+      ));
   }
 
   togglePasswordVisibility() {
@@ -132,6 +132,6 @@ export class LoginComponent {
     this.renderer.removeChild(document.body, this.googleCallBackScript);
     this.renderer.removeChild(document.body, this.script);
     window.removeEventListener('auth', this.handleAuthEvent);
-    this.allSubscriptions.forEach((item: Subscription)=> item?.unsubscribe());
+    this.allSubscriptions.forEach((item: Subscription) => item?.unsubscribe());
   }
 }
