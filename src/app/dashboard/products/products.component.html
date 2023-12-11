@@ -47,10 +47,12 @@
             </div>
 
         </div>
+
+
         <div class="card card__pd-20 d-flex gap-20 align-item-center justify-content-md-between features">
             <div class="operational-buttons file-section d-flex align-item-center gap-20">
 
-                <a  class="downloadBtn d-flex flex-center pointer gap-5"
+                <a class="downloadBtn d-flex flex-center pointer gap-5"
                     href="../../../assets/ExcelSampleFile/sampleFullData.xlsx" download>
                     <span class="material-symbols-outlined operation-icon fs-22 fw-300 transition">download</span>
                     Download Sample
@@ -339,8 +341,8 @@
                                 <tr>
                                     <td colspan="10">
                                         <div class="noDataFound d-flex flex-column flex-center card__pd-20">
-                                            <img class="default-animation" src="../../../assets/noDataFound.svg"
-                                                alt="No Data Found" height="170px">
+                                            <img class="default-animation" src="../../../assets/noDataFound.svg" *ngIf="!pageTheme" alt="No Data Found" height="170px">
+                                            <img class="default-animation" src="../../../assets/noDataFound-light.svg" *ngIf="pageTheme" alt="No Data Found" height="170px">
                                         </div>
                                     </td>
                                 </tr>

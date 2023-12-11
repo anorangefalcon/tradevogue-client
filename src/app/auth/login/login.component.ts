@@ -90,13 +90,12 @@ export class LoginComponent {
 
   LoginUser(body: any) {
     this.allSubscriptions.push(
-      this.fetchDataService.HTTPPOST(this.backendUrls.URLs.loginUrl, body).subscribe(
-        (data: any) => {
-          this.loginService.loginUser({ 'userToken': data.token, 'name': data.firstName });
-        }
-      ));
-
-    this.loading = false;
+    this.fetchDataService.HTTPPOST(this.backendUrls.URLs.loginUrl, body).subscribe(
+      (data: any) => {
+        this.loginService.loginUser({ 'userToken': data.token, 'name': data.firstName });
+        this.loading = false;
+      }
+    ));
   }
 
   onLogin() {

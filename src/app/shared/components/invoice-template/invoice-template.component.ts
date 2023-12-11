@@ -18,6 +18,7 @@ export class InvoiceTemplateComponent {
   constructor(private invoiceService: InvoiceTemplateService) {}
 
   ngOnInit(): void {
+    
     this.invoiceSubscription = this.invoiceService.openInvoice$.subscribe((orderDetail: any)=>{
       if(!orderDetail) {
         this.openInvoiceTemplate = false;

@@ -24,6 +24,10 @@
                 border: 1px solid rgba(var(--blackClr), 0);
                 background-color: rgb(var(--blackClr), 0.03);
             }
+
+            &:disabled{
+                opacity: 0.8;
+            }
         }
 
         & .operational-buttons-icons {
@@ -40,12 +44,7 @@
         & button:last-child .operational-buttons-icons,
         .del-btn .operational-buttons-icons {
             color: rgb(var(--red-clr));
-        }
-
-        & button:disabled:last-child .operational-buttons-icons,
-        .del-btn:disabled .operational-buttons-icons {
-            color: rgb(var(--red-clr), 0.5);
-        }
+        }   
 
     }
 
@@ -59,9 +58,13 @@
             padding: 10px 24px;
             transition: all 0.3s ease-in-out;
 
-            &:hover {
+            &:not(:disabled):hover {
                 border: 1px solid rgba(var(--blackClr), 0);
                 background-color: rgb(var(--blackClr), 0.03);
+            }
+
+            &:disabled{
+                opacity: 0.8;
             }
         }
 

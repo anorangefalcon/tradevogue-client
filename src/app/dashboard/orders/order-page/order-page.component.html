@@ -3,7 +3,7 @@
         <button class="btn btn-xs fw-500 btn-rounded btn-secondary" [routerLink]="['/dashboard/orders']">Back</button>
         <button class="btn btn-xs fw-500 btn-rounded btn-primary" (click)="viewInvoice()">View Invoice</button>
     </div>
-    <div class="card card__pd-25 d-flex flex-column gap-20">
+    <div class="card card__pd-25 d-flex flex-column gap-20 default-animation">
         <div class="order-header d-flex justify-content-md-between">
             <div class="d-flex flex-column gap-5">
                 <div class="invoice__title d-flex flex-column gap-5">
@@ -90,7 +90,7 @@
                     </tr>
                     <tr class="total">
                         <td class="items" colspan="7"></td>
-                        <td class="items fw-500">Total</td>
+                        <td class="items fw-500">Subtotal</td>
                         <td class="items fw-500">{{orderInfo.totalQty}}</td>
                         <td class="items fw-500">&#8377; {{orderInfo.OrderSummary.subTotal}}</td>
                     </tr>

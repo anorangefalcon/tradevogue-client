@@ -10,7 +10,7 @@
 }
 
 .filters {
-    grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(300px, ), 1fr));
 }
 
 .form__title {

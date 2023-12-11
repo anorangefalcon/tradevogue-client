@@ -115,7 +115,8 @@
         white-space: wrap !important;
     }
 
-    .download-btn{
+    .invoice-download-btn{
+        opacity: 0;
         display: none;
     }
 }

@@ -5,6 +5,7 @@ import { FetchDataService } from 'src/app/shared/services/fetch-data.service';
 import { UtilsModule } from 'src/app/utils/utils.module';
 import { InvoiceTemplateComponent } from 'src/app/shared/components/invoice-template/invoice-template.component';
 import { InvoiceTemplateService } from 'src/app/shared/services/invoice-template.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-order-page',
@@ -15,6 +16,9 @@ import { InvoiceTemplateService } from 'src/app/shared/services/invoice-template
 export class OrderPageComponent {
   orderId!: string;
   orderInfo!: any;
+  pageTheme: any;
+  allSubscriptions: Subscription[] = [];
+
 
   constructor(
     private fetchDataService: FetchDataService,
@@ -22,35 +26,48 @@ export class OrderPageComponent {
     private activeRoute: ActivatedRoute,
     private InvoiceService: InvoiceTemplateService
   ) {
-    activeRoute.params.subscribe({
-      next: async (data) => {
-        this.orderId = data['orderId'];
-        this.fetchOrderDetail();
-      }
-    });
+    this.allSubscriptions.push(
+      activeRoute.params.subscribe({
+        next: async (data) => {
+          this.orderId = data['orderId'];
+          this.fetchOrderDetail();
+        }
+      })
+    )
+    this.allSubscriptions.push(
+      this.fetchDataService.themeColor$.subscribe((theme: any) => {
+        this.pageTheme = theme;
+      })
+    );
   }
 
   fetchOrderDetail() {
-   let params: HttpParams = new HttpParams().set("orderID", this.orderId);
-    this.fetchDataService.HTTPGET(this.backendUrl.URLs.getSellerOrderDetails, params).subscribe({
-      next: (data: any)=>{
-        console.log(data);
+    let params: HttpParams = new HttpParams().set("orderID", this.orderId);
+    this.allSubscriptions.push(
+      this.fetchDataService.HTTPGET(this.backendUrl.URLs.getSellerOrderDetails, params).subscribe({
+        next: (data: any) => {
+          console.log(data);
 
-        this.orderInfo = data;
-        let totalQty = 0;
+          this.orderInfo = data;
+          let totalQty = 0;
 
-        data.products.forEach((product: any)=>{
+          data.products.forEach((product: any) => {
             totalQty += product.quantity;
-        });
+          });
 
-        this.orderInfo.orderDate = new Date(this.orderInfo.orderDate).toDateString()
-        this.orderInfo['totalQty'] = totalQty;
-      }
-    })
+          this.orderInfo.orderDate = new Date(this.orderInfo.orderDate).toDateString()
+          this.orderInfo['totalQty'] = totalQty;
+        }
+      })
+    )
   }
 
-  viewInvoice(){    
+  viewInvoice() {
     this.InvoiceService.open(this.orderId);
+  }
+
+  ngOnDestroy() {
+    this.allSubscriptions.forEach((item: Subscription) => item.unsubscribe());
   }
 }
 

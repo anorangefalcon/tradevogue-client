@@ -211,7 +211,8 @@
             </div>
 
             <div class="no-item-img mw100 d-flex flex-center" *ngIf="!loading && !products.length">
-                <img src="../../assets/noItemFound.svg" alt="No Item Found" height="140px">
+                <img src="../../assets/noItemFound.svg" alt="No Item Found" height="140px" *ngIf="!theme">
+                <img src="../../assets/noITemFound-light.svg" alt="No Item Found" height="140px" *ngIf="theme">
             </div>
 
         </div>

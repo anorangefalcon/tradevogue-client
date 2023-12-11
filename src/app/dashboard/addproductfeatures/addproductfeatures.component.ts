@@ -47,40 +47,47 @@ export class AddproductfeaturesComponent {
   ];
 
   dataField: string[] = ['categories', 'brands', 'orderQuantity', 'tags'];
-
+  pageTheme: any;
+  
   constructor(
     private dataService: FetchDataService,
     private uploadExcel: UploadExcelService,
     private toastService: ToastService,
     private DialogBoxService: DialogBoxService,
-    private backendurls: UtilsModule) { }
+    private backendurls: UtilsModule) { 
+      this.allSubscriptions.push(
+        this.dataService.themeColor$.subscribe((theme: any) => {
+          this.pageTheme = theme;
+        })
+      );
+    }
 
   ngOnInit() {
 
     this.allSubscriptions.push(
-    this.DialogBoxService.responseEmitter.subscribe((res) => {
-      if (res == true) {
-        this.field_data[this.deleteObject.field].splice(this.deleteObject.index, 1);
-        this.template.title = 'Item Deleted Successfully';
-        this.crudData(this.deleteObject.field, null);
-      }
-    })
+      this.DialogBoxService.responseEmitter.subscribe((res) => {
+        if (res == true) {
+          this.field_data[this.deleteObject.field].splice(this.deleteObject.index, 1);
+          this.template.title = 'Item Deleted Successfully';
+          this.crudData(this.deleteObject.field, null);
+        }
+      })
     )
     this.isfetch = true;
 
     this.allSubscriptions.push(
-    this.dataService.HTTPPOST(this.backendurls.URLs.fetchFeatures, this.dataField).subscribe({
-      next: (res: any) => {
-        this.field_data = res;
-        this.isfetch = false;
-      }
-    }));
+      this.dataService.HTTPPOST(this.backendurls.URLs.fetchFeatures, this.dataField).subscribe({
+        next: (res: any) => {
+          this.field_data = res;
+          this.isfetch = false;
+        }
+      }));
   }
 
   ngOnDestroy() {
-    this.allSubscriptions.forEach((item: Subscription)=> item.unsubscribe());
+    this.allSubscriptions.forEach((item: Subscription) => item.unsubscribe());
   }
-  
+
   uploadFile(event: Event, field: string) {
     const dataObserver = this.uploadExcel.handleFileInput(event, field);
 
@@ -117,7 +124,7 @@ export class AddproductfeaturesComponent {
       item = item.trim();
       let pattern = /\b(?:[^!@#$%^&*(),.?":{}|<>]+|\s)+\b/g;
 
-      if((item.match(pattern)).length > 1){
+      if ((item.match(pattern)).length > 1) {
         this.toastService.errorToast({ title: 'Special Character not Allowed' });
         return;
       }
@@ -131,7 +138,7 @@ export class AddproductfeaturesComponent {
 
   crudData(field: any, index: any) {
 
-    if(index != null){
+    if (index != null) {
       this.card_template[index].loading = true;
     }
 
@@ -140,14 +147,14 @@ export class AddproductfeaturesComponent {
       'data': this.field_data[field]
     };
     this.allSubscriptions.push(
-    this.dataService.HTTPPOST(this.backendurls.URLs.updateFeatures, data).subscribe({
-      next: (res: any) => {
-        this.toastService.successToast(this.template);
-        if(index != null){
-          this.card_template[index].loading = false;
+      this.dataService.HTTPPOST(this.backendurls.URLs.updateFeatures, data).subscribe({
+        next: (res: any) => {
+          this.toastService.successToast(this.template);
+          if (index != null) {
+            this.card_template[index].loading = false;
+          }
         }
-      }
-    }));
+      }));
   }
 
   tableGenerator(len: number) {

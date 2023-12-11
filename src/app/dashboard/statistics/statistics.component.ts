@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import Chart from 'chart.js/auto';
+import { Subscription } from 'rxjs';
 import { FetchDataService } from 'src/app/shared/services/fetch-data.service';
 import { UtilsModule } from 'src/app/utils/utils.module';
 
@@ -31,12 +32,24 @@ export class StatisticsComponent implements OnInit {
   table: any;
   reviewDataLabel: any[] = ['Satisfied', 'Neutral', 'Unsatisfied'];
   reviewData: any[] = [50, 50, 50];
+  pageTheme: any;
 
   SPLabel: any[] = [];
   salesData: any[] = [];
   profitData: any[] = [];
 
-  constructor(private fetchdata: FetchDataService, private backendUrl: UtilsModule) { }
+  allSubscriptions: Subscription[] = [];
+
+  constructor(private fetchdata: FetchDataService, private backendUrl: UtilsModule) {
+    this.allSubscriptions.push(
+      this.fetchdata.themeColor$.subscribe((theme: any) => {
+        this.pageTheme = theme;
+      })
+    );
+    this.allSubscriptions.push(
+      
+      )
+  }
 
   ngOnInit(): void {
     (<HTMLMetaElement>document.getElementById('meta-description')).content = "Admin Dashboard Overview";
@@ -54,39 +67,46 @@ export class StatisticsComponent implements OnInit {
   }
 
   fetchSalesProfitStats() {
-    this.fetchdata.HTTPGET(this.backendUrl.URLs.fetchSalesStats, {'type': this.selectedType}).subscribe((res: any) => {
-      this.salesDataUpdate(res);
-    });
+    this.allSubscriptions.push(
+      this.fetchdata.HTTPGET(this.backendUrl.URLs.fetchSalesStats, { 'type': this.selectedType }).subscribe((res: any) => {
+        this.salesDataUpdate(res);
+      })
+    )
   }
 
   fetchReviewStats() {
-    this.fetchdata.HTTPGET(this.backendUrl.URLs.fetchReviewStats).subscribe((res: any) => {
-
-      this.reviewData = [];
-      Object.keys(res).forEach((key: any) => {
-        this.reviewData.push(res[key])
-      });
-      this.resetDonut();
-    });
+    this.allSubscriptions.push(
+      this.fetchdata.HTTPGET(this.backendUrl.URLs.fetchReviewStats).subscribe((res: any) => {
+        this.reviewData = [];
+        Object.keys(res).forEach((key: any) => {
+          this.reviewData.push(res[key])
+        });
+        this.resetDonut();
+      })
+    )
   }
 
   fetchPopularStats() {
-    this.fetchdata.HTTPGET(this.backendUrl.URLs.fetchPopularProducts).subscribe((res: any) => {
-      this.productList = res;
-    });
+    this.allSubscriptions.push(
+      this.fetchdata.HTTPGET(this.backendUrl.URLs.fetchPopularProducts).subscribe((res: any) => {
+        this.productList = res;
+      })
+    )
   }
 
   fetchCategoryStats() {
-    this.fetchdata.HTTPGET(this.backendUrl.URLs.fetchCategoryStats).subscribe((res: any) => {
-      this.category_sales = [];
-      res.categoryStats.forEach((category: any) => {
-        let temp = {
-          field: category._id,
-          sales: category.sales
-        }
-        this.category_sales.push(temp);
-      });
-    });
+    this.allSubscriptions.push(
+      this.fetchdata.HTTPGET(this.backendUrl.URLs.fetchCategoryStats).subscribe((res: any) => {
+        this.category_sales = [];
+        res.categoryStats.forEach((category: any) => {
+          let temp = {
+            field: category._id,
+            sales: category.sales
+          }
+          this.category_sales.push(temp);
+        });
+      })
+    )
   }
 
   salesDataUpdate(data: any) {
@@ -109,19 +129,21 @@ export class StatisticsComponent implements OnInit {
   }
 
   fetchOverAllData() {
-    this.fetchdata.HTTPGET(this.backendUrl.URLs.fetchOverallData).subscribe((data: any) => {
+    this.allSubscriptions.push(
+      this.fetchdata.HTTPGET(this.backendUrl.URLs.fetchOverallData).subscribe((data: any) => {
 
-      this.inventoryAlert = data.alertCount;
+        this.inventoryAlert = data.alertCount;
 
-      this.revenue = data.revenue.total;
-      this.revenueChange = data.revenue.change;
+        this.revenue = data.revenue.total;
+        this.revenueChange = data.revenue.change;
 
-      this.customerCount = data.customer.count;
-      this.customerCountChange = data.customer.change;
+        this.customerCount = data.customer.count;
+        this.customerCountChange = data.customer.change;
 
-      this.orderCount = data.orders.count;
-      this.orderCountChange = data.orders.change;
-    });
+        this.orderCount = data.orders.count;
+        this.orderCountChange = data.orders.change;
+      })
+    )
   }
 
   resetMonthly() {
@@ -298,7 +320,7 @@ export class StatisticsComponent implements OnInit {
   }
 
 
-  createBarChart(){
+  createBarChart() {
     this.barChart = new Chart('barChart', {
       type: 'bar',
 
@@ -314,5 +336,9 @@ export class StatisticsComponent implements OnInit {
         }]
       },
     })
+  }
+
+  ngOnDestroy() {
+    this.allSubscriptions.forEach((item: Subscription)=> item.unsubscribe());
   }
 }

@@ -196,7 +196,8 @@
             </div>
             <ng-template #noData>
                 <div class="noDataFound d-flex flex-column flex-center ">
-                    <img src="../../../assets/noDataFound.svg" alt="No Data Found" height="170px">
+                    <img src="../../../assets/noDataFound.svg" alt="No Data Found" *ngIf="!pageTheme" height="170px">
+                    <img src="../../../assets/noDataFound-light.svg" alt="No Data Found" *ngIf="pageTheme" height="170px">
                 </div>
             </ng-template>
         </div>
@@ -228,7 +229,8 @@
 
             <ng-template #noData1>
                 <div class="noDataFound d-flex flex-column flex-center ">
-                    <img src="../../../assets/noDataFound.svg" alt="No Data Found" height="170px">
+                    <img src="../../../assets/noDataFound.svg" alt="No Data Found" *ngIf="!pageTheme" height="170px">
+                    <img src="../../../assets/noDataFound-light.svg" alt="No Data Found" *ngIf="pageTheme" height="170px">
                 </div>
             </ng-template>
             <!-- <canvas id="barChart">{{barChart}}</canvas> -->

@@ -4,6 +4,7 @@ import { UploadExcelService } from '../services/upload-excel.service';
 import { ToastService } from 'src/app/shared/services/toast.service';
 import { UtilsModule } from 'src/app/utils/utils.module';
 import { DialogBoxService } from 'src/app/shared/services/dialog-box.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-products',
@@ -11,6 +12,8 @@ import { DialogBoxService } from 'src/app/shared/services/dialog-box.service';
   styleUrls: ['./products.component.css'],
 })
 export class ProductsComponent implements OnInit {
+
+  allSubscriptions: Subscription[] = [];
   sortOption: any[] = ['Rating: Low to High', 'Rating: High to Low', 'Stock: Low to High', 'Stock: High to Low'];
   productTemplate: any[] = ['Product Name', 'Category', 'Brand', 'Price', 'Stock', 'Status', 'Published', 'Action'];
   pageSize: number = 8;
@@ -41,6 +44,7 @@ export class ProductsComponent implements OnInit {
   deleteList: any = [];
   productList: any[] = [];
   dataFetchStatus: boolean = true;
+  pageTheme: boolean = false;
 
   constructor(
     private fetchdata: FetchDataService,
@@ -49,45 +53,54 @@ export class ProductsComponent implements OnInit {
     private dialogBoxService: DialogBoxService,
     private toastService: ToastService) {
 
-    this.dialogBoxService.responseEmitter.subscribe(async (res: boolean) => {
-      if (res == true) {
-        this.fetchdata.HTTPPOST(this.backendUrl.URLs.deleteproducts, this.deleteDataField).subscribe(() => {
-          this.fetchData();
-          this.dialogBoxService.responseEmitter.next(false);
-        });
-      }
-    });
+    this.allSubscriptions.push(
+      this.fetchdata.themeColor$.subscribe((theme: any) => {
+        this.pageTheme = theme;
+      })
+    );
+    this.allSubscriptions.push(
+      this.dialogBoxService.responseEmitter.subscribe(async (res: boolean) => {
+        if (res == true) {
+          this.fetchdata.HTTPPOST(this.backendUrl.URLs.deleteproducts, this.deleteDataField).subscribe(() => {
+            this.fetchData();
+            this.dialogBoxService.responseEmitter.next(false);
+          });
+        }
+      })
+    );
 
   }
 
   async ngOnInit() {
-
-    this.fetchdata.HTTPPOST(this.backendUrl.URLs.fetchFeatures, this.dataField).subscribe({
-      next: (res: any) => {
-        this.categoryOption = res.categories;
-        this.fetchData();
-      }
-    });
+    this.allSubscriptions.push(
+      this.fetchdata.HTTPPOST(this.backendUrl.URLs.fetchFeatures, this.dataField).subscribe({
+        next: (res: any) => {
+          this.categoryOption = res.categories;
+          this.fetchData();
+        }
+      })
+    );
   }
 
   async fetchData() {
+    this.allSubscriptions.push(
       this.fetchdata.HTTPPOST(this.backendUrl.URLs.fetchProductInventory, this.template).subscribe({
         next: (res: any) => {
-
+  
           if (!res.data.length) {
             this.dataFetchStatus = false;
             this.productList = [];
             this.totalCount = 0;
             return;
           };
-
+  
           this.productArray = res;
           this.productList = [];
           this.totalCount = this.productArray.pageInfo[0].count;
           this.highlight = this.productArray.pageInfo[0].highlightCount;
-
+  
           this.productArray.data.forEach((product: any) => {
-
+  
             let item = {
               _id: product.productInfo._id,
               itemId: product.productInfo.sku,
@@ -110,8 +123,10 @@ export class ProductsComponent implements OnInit {
             }
             this.productList.push(item);
           });
+          this.selectAll = false;
         }
-      });
+      })
+      );
   }
 
   highlightProduct(e: Event, id: string, index: number) {
@@ -127,15 +142,17 @@ export class ProductsComponent implements OnInit {
       }
 
       const body = { '_id': id, 'status': status, 'field': 'highlight' };
-      this.fetchdata.HTTPPOST(this.backendUrl.URLs.productStatus, body).subscribe({
-        next: (data: any) => {
-          this.highlight = data.highlightCount;
-          this.productList[index].status.highlight = status;
-        },
-        error: () => {
-          this.productList[index].status.highlight = false;
-        }
-      })
+      this.allSubscriptions.push(
+        this.fetchdata.HTTPPOST(this.backendUrl.URLs.productStatus, body).subscribe({
+          next: (data: any) => {
+            this.highlight = data.highlightCount;
+            this.productList[index].status.highlight = status;
+          },
+          error: () => {
+            this.productList[index].status.highlight = false;
+          }
+        })
+      );
     }, 0.1);
   }
 
@@ -153,17 +170,18 @@ export class ProductsComponent implements OnInit {
     //   }[(ngModel)]="item.status.active"
     // });
 
-
-    this.fetchdata.HTTPPOST(this.backendUrl.URLs.productStatus, body).subscribe({
-      next: (data: any) => {
-        this.productList[index].status.active = status;
-        status ? this.toastService.successToast({ title: 'Product is Available' }) : this.toastService.notificationToast({ title: 'Product is now Unavailable' });
-        this.fetchData();
-      },
-      error: () => {
-        this.productList[index].status.active = false;
-      }
-    })
+    this.allSubscriptions.push(
+      this.fetchdata.HTTPPOST(this.backendUrl.URLs.productStatus, body).subscribe({
+        next: (data: any) => {
+          this.productList[index].status.active = status;
+          status ? this.toastService.successToast({ title: 'Product is Available' }) : this.toastService.notificationToast({ title: 'Product is now Unavailable' });
+          this.fetchData();
+        },
+        error: () => {
+          this.productList[index].status.active = false;
+        }
+      })
+    );
   }
 
   // Check for tables
@@ -266,7 +284,7 @@ export class ProductsComponent implements OnInit {
 
     for (let i = 1; i <= 5; i++) {
       if (i <= Math.floor(rating)) {
-        ratingArray.push({ field: 'star', class: 'filled'});
+        ratingArray.push({ field: 'star', class: 'filled' });
       }
       else if (i > Math.floor(rating) && i <= Math.ceil(rating))
         ratingArray.push({ field: 'star_half', class: '' });
@@ -314,12 +332,14 @@ export class ProductsComponent implements OnInit {
           type: 'bulk',
           data: excel.data
         };
-        this.fetchdata.HTTPPOST(this.backendUrl.URLs.addproduct, formData).subscribe({
-          next: (res: any) => {
-            this.toastService.successToast("Data Uploaded Successfuly");
-            this.fetchData();
-          }
-        })
+        this.allSubscriptions.push(
+          this.fetchdata.HTTPPOST(this.backendUrl.URLs.addproduct, formData).subscribe({
+            next: (res: any) => {
+              this.toastService.successToast("Data Uploaded Successfuly");
+              this.fetchData();
+            }
+          })
+        );
       }
 
     })
@@ -340,9 +360,14 @@ export class ProductsComponent implements OnInit {
     return temp;
   }
 
-  
+
   PopUpChangeHanlder(index: number, event: boolean) {
     // this.showingPopUp = event;
     this.productList[index].popup = event;
+  }
+
+  
+  ngOnDestroy() {
+    this.allSubscriptions.forEach((item: Subscription)=> item.unsubscribe());
   }
 }

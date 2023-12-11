@@ -1,5 +1,5 @@
 import { Component, ElementRef} from '@angular/core';
-import { first, take } from 'rxjs';
+import { Subscription, first, take } from 'rxjs';
 import { DialogBoxService } from 'src/app/shared/services/dialog-box.service';
 import { FetchDataService } from 'src/app/shared/services/fetch-data.service';
 import { UtilsModule } from 'src/app/utils/utils.module';
@@ -23,6 +23,8 @@ export class OrdersComponent {
   updateIndexStatus: any; //For puspose of Input status
   filename: string = 'Orders.xlsx';
   noData: boolean =  false;
+
+  allSubscriptions: Subscription[] = [];
 
   orderStats: any = {
     confirmed: 0,
@@ -50,23 +52,24 @@ export class OrdersComponent {
     private backendUrl: UtilsModule){}
 
   ngOnInit(){
-    this.fetchData.themeColor$.subscribe((theme: any)=>{
-      this.pageTheme = theme;
-    });
+    this.allSubscriptions.push(
+      this.fetchData.themeColor$.subscribe((theme: any)=>{
+        this.pageTheme = theme;
+      })
+    )
 
     this.fetchStats();
     this.fetchOrders();
-
-    this.dialogService.responseEmitter.subscribe((res: any)=>{
-
-      if(!res){
-        this.orderData[this.updateIndex].invoice_status = false
-      }
-
-      if(res && this.updateIndexStatus){
-        this.orderData[this.updateIndex].invoice_status = true;
-      } 
-    })
+    this.allSubscriptions.push(
+      this.dialogService.responseEmitter.subscribe((res: any)=>{
+        if(!res){
+          this.orderData[this.updateIndex].invoice_status = false
+        }
+        if(res && this.updateIndexStatus){
+          this.orderData[this.updateIndex].invoice_status = true;
+        } 
+      })
+      )
   }
 
   downloadExcel(){
@@ -82,55 +85,59 @@ export class OrdersComponent {
   }
 
   fetchStats(){
-    this.fetchData.HTTPGET(this.backendUrl.URLs.getOrderOverallData).subscribe({
-      next: (stats: any)=>{
-
-        this.orderStats = stats;
-
-        stats.forEach((data: any)=>{
-          if(data.status){
-            this.orderStats[data.status] = data.count;
-          }
-        })
-      }
-    })
+    this.allSubscriptions.push(
+      this.fetchData.HTTPGET(this.backendUrl.URLs.getOrderOverallData).subscribe({
+        next: (stats: any)=>{
+  
+          this.orderStats = stats;
+  
+          stats.forEach((data: any)=>{
+            if(data.status){
+              this.orderStats[data.status] = data.count;
+            }
+          })
+        }
+      })
+      )
   }
 
   fetchOrders(){
-    this.fetchData.HTTPPOST(this.backendUrl.URLs.getSellerOrders, this.template).subscribe({
-      next: (data: any)=>{
-
-        if(!data.orders.length){
+    this.allSubscriptions.push(
+      this.fetchData.HTTPPOST(this.backendUrl.URLs.getSellerOrders, this.template).subscribe({
+        next: (data: any)=>{
+  
+          if(!data.orders.length){
+            this.orderData = [];
+            this.totalCount = data.total.length;
+            this.noData = true;
+            return;
+          }
+  
           this.orderData = [];
-          this.totalCount = data.total.length;
+  
+          data.orders.forEach((order: any)=>{
+            let orderInfo = {
+              orderID: order.data.orderID || null,
+              customer: order.customer || '',
+              orderTime: (new Date(order.data.orderDate)).toDateString(),
+              amount: order.data.OrderSummary.Total || order.data.OrderSummary.total || 0,
+              quantity: order.orderQuantity || 0,
+              // payment_status:  order.data.payment_status || '',
+              // invoice_status: order.data.invoice_status || '',
+              mop: order.data.MOP,
+              transaction_id:  order.data.transactionId || '',
+              _id: order._id
+            };
+            this.orderData.push(orderInfo);
+          });
+  
+          this.totalCount = data.total[0].count;
+        },
+        error: (res: any) => {
           this.noData = true;
-          return;
         }
-
-        this.orderData = [];
-
-        data.orders.forEach((order: any)=>{
-          let orderInfo = {
-            orderID: order.data.orderID || null,
-            customer: order.customer || '',
-            orderTime: (new Date(order.data.orderDate)).toDateString(),
-            amount: order.data.OrderSummary.Total || order.data.OrderSummary.total || 0,
-            quantity: order.orderQuantity || 0,
-            // payment_status:  order.data.payment_status || '',
-            // invoice_status: order.data.invoice_status || '',
-            mop: order.data.MOP,
-            transaction_id:  order.data.transactionId || '',
-            _id: order._id
-          };
-          this.orderData.push(orderInfo);
-        });
-
-        this.totalCount = data.total[0].count;
-      },
-      error: (res: any) => {
-        this.noData = true;
-      }
-    });
+      })
+      )
   }
 
   dialogTemplate: any = {
@@ -184,5 +191,9 @@ export class OrdersComponent {
       temp.push(0);
     }
     return temp;
+  }
+
+  ngOnDestroy() {
+    this.allSubscriptions.forEach((item: Subscription)=> item.unsubscribe());
   }
 }
