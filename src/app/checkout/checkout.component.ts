@@ -278,6 +278,7 @@ export class CheckoutComponent implements OnInit {
   NextDisabled: boolean = false;
 
   nextClicked() {
+
     if (!this.checkOutService.addressSelected) {
       this.toastService.errorToast({ title: 'Please select some address' });
       return;

@@ -22,6 +22,8 @@ export const redirectGuard: CanActivateFn = async(route, state) => {
   function waitForDialogResponse() {
     return new Promise(resolve => {
       dataSubscription = dialogBox.responseEmitter.subscribe((data: any) => {
+        console.log('data come up ---->');
+        
         if(data) {
           console.log("data cleared of address", data);
           resolve(data);

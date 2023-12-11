@@ -18,7 +18,7 @@
     border-radius: 4px;
     z-index: 102;
     background-color: rgb(var(--whiteClr));
-    box-shadow: 0px 0px 6px 0px #4b4b4b43;
+    box-shadow: 0px 0px 6px 0px #0e0e0e40;
 
     position: fixed;
     left: 50%;

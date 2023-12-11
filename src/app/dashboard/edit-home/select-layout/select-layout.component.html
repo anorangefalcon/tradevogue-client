@@ -58,9 +58,9 @@
   </ng-container>
 
   <div *ngIf="edited || !currentLayout.active" class="operation_button d-flex gap-10 default-animation">
-    <button class="btn-secondary btn-rounded" [ngStyle]="{'display': currentLayout.active ? 'none': 'block'}"
+    <button class="btn-secondary btn-rounded pointer" [ngStyle]="{'display': currentLayout.active ? 'none': 'block'}"
       (click)="activateLayout()">Activate Layout</button>
-    <button class="btn-primary btn-rounded" [ngStyle]="{'display': !edited ? 'none': 'block'}"
+    <button class="btn-primary btn-rounded pointer" [ngStyle]="{'display': !edited ? 'none': 'block'}"
       (click)="updateLayout()">Save Changes</button>
   </div>
 

@@ -312,7 +312,7 @@
     }
 
     & .main {
-        background-color: rgba(var(--secondary), 1);
+        background-color: rgb(var(--whiteClr), 0.3);
         min-height: 100%;
 
         padding-inline: 240px 0px;

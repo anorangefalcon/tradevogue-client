@@ -79,7 +79,7 @@ export class BillingComponent implements OnInit {
     this.allSubscriptions.push(
       this.cartService.fetchCart().subscribe((data) => {
         this.cartitems = data;
-      })),
+      }),
       this.checkOutService.FinalPaymentAmount.asObservable().subscribe((data) => {
         if (data) {
           this.PaymentDetails = data;
@@ -89,16 +89,19 @@ export class BillingComponent implements OnInit {
       this.fetchDataService.themeColor$.subscribe((color) => {
         this.theme = color;
       }),
-       this.dialogBox.responseEmitter.subscribe((res: boolean) => {
-        if (res == true ) {
-          this.allSubscriptions.push(
-            this.fetchDataService.HTTPDELETE(this.backendURLs.URLs.deleteAddress, this.body).subscribe((data) => {
-              this.userAddresses.splice(this.addressDeletedIndex, 1);
-            }));
-        }})
+      // this.dialogBox.responseEmitter.subscribe((res: boolean) => {
+      //   console.log('response come up is ', res);
+      //   if (res == true) {
+      //     this.allSubscriptions.push(
+      //       this.fetchDataService.HTTPDELETE(this.backendURLs.URLs.deleteAddress, this.body).subscribe((data) => {
+      //         this.userAddresses.splice(this.addressDeletedIndex, 1);
+      //       }));
+      //   }
+      // })
+    )
   }
 
-  ngOnInit(){
+  ngOnInit() {
     this.loadRazorpayScript();
     this.allSubscriptions.push(
       this.checkOutService.loadStripe.subscribe((isLoaded: any) => {
@@ -107,33 +110,34 @@ export class BillingComponent implements OnInit {
           this.loadStripe();
         }
       }),
-      );
+    );
 
     this.getAddresses();
   }
 
 
   loadStripe() {
-      this.fetchDataService.HTTPGET(this.backendURLs.URLs.getPaymentKeys).subscribe({
-        next:(response:any)=>{
-          console.log('response is ',response);
-          const publicKey = response[0].decryptedPublicKey.toString();
-          this.stripeScript = this.renderer.createElement('script');
-            this.stripeScript.src = 'https://js.stripe.com/v3/';
-            this.stripeScript.async = true;
-            this.stripeScript.onload = () => {
-              this.stripe = Stripe(publicKey);
-              this.initialize();
-            };
-            this.renderer.appendChild(document.body, this.stripeScript);
-        },
-        error:()=>{
-      }})
+    this.fetchDataService.HTTPGET(this.backendURLs.URLs.getPaymentKeys).subscribe({
+      next: (response: any) => {
+        console.log('response is ', response);
+        const publicKey = response[0].decryptedPublicKey.toString();
+        this.stripeScript = this.renderer.createElement('script');
+        this.stripeScript.src = 'https://js.stripe.com/v3/';
+        this.stripeScript.async = true;
+        this.stripeScript.onload = () => {
+          this.stripe = Stripe(publicKey);
+          this.initialize();
+        };
+        this.renderer.appendChild(document.body, this.stripeScript);
+      },
+      error: () => {
+      }
+    })
 
   }
 
   // stripe elements loaded
-  async initialize(){
+  async initialize() {
     const item = this.cartitems.details.map((item: { sku: any; name: any; price: any; quantity: any }) => {
       return {
         id: item.sku,
@@ -251,7 +255,7 @@ export class BillingComponent implements OnInit {
       linkAuthenticationElement.mount("#link-authentication-element");
       linkAuthenticationElement.on('change', (event: any) => {
         this.emailAddress = event.value.email;
-        
+
         const paymentForm = document.querySelector("#payment-form");
         paymentForm?.addEventListener("submit", this.handleSubmit);
         if (event.complete) {
@@ -267,8 +271,8 @@ export class BillingComponent implements OnInit {
 
 
 
-  async handleSubmit(){
-    try { 
+  async handleSubmit() {
+    try {
       this.checkOutService.ProceedToPayment.next(true);
       const { paymentIntent, error } = await this.stripe.confirmPayment({
         elements: this.elements,
@@ -278,15 +282,15 @@ export class BillingComponent implements OnInit {
         redirect: 'if_required'
       });
 
-      if(error){
-        this.toastService.errorToast({title:'Please fill all details'});
+      if (error) {
+        this.toastService.errorToast({ title: 'Please fill all details' });
         this.checkOutService.ProceedToPayment.next(false);
       }
-        if (paymentIntent) {
+      if (paymentIntent) {
         this.checkOutService.checkOrderStatus(this.clientSecret);
-      } 
-     
-     
+      }
+
+
     } catch (error) {
 
     }
@@ -300,8 +304,6 @@ export class BillingComponent implements OnInit {
   //razorpay
   submitForm(): void {
     try {
-      console.log('submit form called--------->');
-
       this.cartService.fetchCart().subscribe((ress) => {
         if (this.PaymentDetails?.discount) {
           this.PaymentDetails.total -= this.PaymentDetails?.discount;
@@ -314,7 +316,6 @@ export class BillingComponent implements OnInit {
           token: "token",
         };
 
-        console.log('Body code ups is:', body);
 
         this.fetchDataService.HTTPPOST(this.backendURLs.URLs.createRazorpayOrder, body).subscribe((createOrderResponse: any) => {
           if (createOrderResponse) {
@@ -399,7 +400,7 @@ export class BillingComponent implements OnInit {
             }
           }))
   }
-  EditAddress( index: number) {
+  EditAddress(index: number) {
     const data = this.userAddresses[index];
     this.receiveData = { data, index };
     this.ShowComponent = true;
@@ -410,12 +411,12 @@ export class BillingComponent implements OnInit {
     }
     //edit request updated
     else if (event.index === 0 || event.index) {
-      let check=false;
-      if(this.userAddresses[event.index].selected){
-        check=true;
+      let check = false;
+      if (this.userAddresses[event.index].selected) {
+        check = true;
       }
       this.userAddresses[event.index] = event.data;
-      if(check) this.userAddresses[event.index].selected=true;
+      if (check) this.userAddresses[event.index].selected = true;
       // this.AddressLength = this.userAddresses.length;
     }
     // new address added
@@ -425,16 +426,17 @@ export class BillingComponent implements OnInit {
     }
   }
 
-  addressDeletedIndex!:number
-  body:any;
+  addressDeletedIndex!: number
+  body: any;
+  dilogSub!: Subscription;
   RemoveAddress(id: string, index: number) {
-    const body = { address_id: id }
-    this.addressDeletedIndex=index;
-    if(this.checkOutService.addressSelected?._id==id){
-      this.checkOutService.addressSelected=null;
+    
+    this.addressDeletedIndex = index;
+    if (this.checkOutService.addressSelected?._id == id) {
+      this.checkOutService.addressSelected = null;
     };
-
-    let template =  {
+    
+    let template = {
       title: 'Delete Address',
       subtitle: 'Are you sure you want to delete the address?',
       type: 'confirmation',
@@ -442,13 +444,29 @@ export class BillingComponent implements OnInit {
       cancelText: 'No, Keep it',
     };
     this.dialogBox.confirmationDialogBox(template);
-
     
     let params = new HttpParams();
     params = params.set("address_id", id);
-    this.body=params;
-   
+    this.body = params;
+    
+    this.dilogSub = this.dialogBox.responseEmitter.subscribe((res: boolean) => {
+      if (res == true) {
+        this.allSubscriptions.push(
+          this.fetchDataService.HTTPDELETE(this.backendURLs.URLs.deleteAddress, this.body).subscribe((data) => {
+            console.log('hello', data);
+            
+            this.userAddresses.splice(this.addressDeletedIndex, 1);
+            this.dilogSub?.unsubscribe();
+          }));
+      }
+      else{
+        this.dilogSub?.unsubscribe();
+      }
+    });
 
+    this.checkOutService.addressSelected = null;
+    console.log(this.checkOutService.addressSelected, 'he5rererer');
+    
   }
 
 
@@ -457,21 +475,24 @@ export class BillingComponent implements OnInit {
     this.receiveData = '';
   }
 
-  
+
   AddressClicked(address: any) {
     this.userAddresses.forEach((el) => {
       el.selected = false;
     })
     address.selected = true;
-    this.checkOutService.addressSelected=(address);
+    this.checkOutService.addressSelected = (address);
     // this.addressDelivered = address;
   }
 
   ngOnDestroy() {
-
+    this.checkOutService.addressSelected = null;
     if (this.stripeScript) {
       this.renderer.removeChild(document.body, this.stripeScript);
     }
+    console.log(this.allSubscriptions,);
+
+    this.dilogSub?.unsubscribe();
     this.allSubscriptions.forEach((item: Subscription) => {
       item.unsubscribe()
     });

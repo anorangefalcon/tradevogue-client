@@ -99,6 +99,8 @@ export class FetchDataService {
   }
 
   HTTPDELETE(url: any, params: any) {
+    console.log('url is  http delete run ',url);
+    
     return this.http.delete(url, {params}).pipe(
       catchError((data): any => {
         if(data.error.message){
