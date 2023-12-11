@@ -46,7 +46,7 @@ export class NavbarComponent implements OnInit {
   UserRole!: String;
   updatedNotificationArray: any;
   hasNotificationToken: any;
-
+  QueryStarted:boolean=false;
   constructor(
     private cartService: CartService,
     private userService: LoginCheckService,
@@ -170,11 +170,21 @@ export class NavbarComponent implements OnInit {
   }
 
   searchExplore(query: string) {
-    if (query == "") {
-      this.router.navigateByUrl(`/explore`);
-    } else {
-      this.router.navigateByUrl(`/explore?search=${query}`);
-    }
+    // console.log('query gone started ssvc');
+    console.log('query come up is ',query);
+    
+    this.QueryStarted=true;
+    this.searchClear=false;
+    // if (query == "") {
+    //   this.router.navigateByUrl(`/explore`);
+    // } else {
+    //   this.router.navigateByUrl(`/explore?search=${query}`);
+    // }
+  }
+
+  searchClear:Boolean=false;
+  SearchClear(){
+    // this.searchClear=true;
   }
 
   onLogout() {

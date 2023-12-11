@@ -1,8 +1,11 @@
+
 <form action="" class="search relative" [ngClass]="searchQuery ? 'active' : ''">
-    <input type="text" class="form__input search-bar d-flex align-item-center" [placeholder]="searchPlaceholder" (keyup)="typed($event)">
-    <button class="btn mh100 d-flex justify-content-md-between align-item-center absolute inset-block-0 inset-inline-end-0" (click)="searchIt(true);">
+    <input type="text" #searchValue class="form__input search-bar d-flex align-item-center" [placeholder]="searchPlaceholder" (keyup)="typed($event)">
+    <button class="btn mh100 search__btn d-flex justify-content-md-between align-item-center absolute inset-block-0 inset-inline-end-0" (click)="searchIt(true);">
         <span class="default-animation material-symbols-outlined">
             search
         </span>
     </button>
+
+   
 </form>

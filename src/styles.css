@@ -270,6 +270,7 @@ p {
 .container {
     width: 100%;
     max-width: 1170px;
+    /* max-width: 1920px; */
     margin: 0 auto;
     padding-inline: 20px;
 }
@@ -735,6 +736,10 @@ tr:last-child td {
 
 .display-none {
     display: none;
+}
+
+.display-initial{
+    display: initial;
 }
 
 /* tr:first-child:not(:has( + tr)) td{

@@ -171,10 +171,13 @@ export class CheckoutComponent implements OnInit {
     const totalAmount = this.cart.amounts.total;
 
     if (coupon.discountType === 'flat') {
-      return Math.min(coupon.discountAmount, totalAmount);
+      let discount= Math.min(coupon.discountAmount, totalAmount);
+      if(discount==totalAmount) return 0;
+      return discount;
     } else if (coupon.discountType === 'percentage') {
       const calculatedDiscount = (totalAmount / 100) * coupon.discountAmount;
       const cappedDiscount = Math.min(calculatedDiscount, coupon.maximumDiscount);
+      if(cappedDiscount==totalAmount) return 0;
       return Math.min(cappedDiscount, totalAmount);
     }
 
@@ -200,6 +203,8 @@ export class CheckoutComponent implements OnInit {
       this.CouponValid = 'valid';
     }
 
+    console.log('appkle is ',this.CheckMinimumPurchase(this.CouponApplied));
+    
     if (!this.CheckMinimumPurchase(this.CouponApplied)) {
       this.toastService.errorToast({ title: `minimum purchase amount is ${this.CouponApplied.minimumPurchaseAmount}` });
       this.CouponValid = 'invalid';
@@ -210,13 +215,23 @@ export class CheckoutComponent implements OnInit {
 
     if (this.CouponValid == 'valid') {
       this.toastService.successToast({ title: 'Coupon applied successfully' });
-    } else if (this.CouponValid == 'invalid') {
+    } 
+    else if (this.CouponValid == 'invalid') {
       this.toastService.errorToast({ title: 'Coupon not valid' });
       return;
     }
 
     this.CouponCode.nativeElement.value = '';
-    this.cart.amounts.discount = this.CalculateDiscount(this.CouponApplied);
+
+    let discountAmount=this.CalculateDiscount(this.CouponApplied);
+    if(!discountAmount){
+      this.CouponValid = 'invalid';
+      this.CouponApplied = null;
+      this.toastService.errorToast({ title: 'Coupon not valid' });
+      return;
+    }
+    this.cart.amounts.discount = discountAmount;
+
     // this.cart.amounts.total -= this.cart.amounts.discount;
     this.show = false;
   }

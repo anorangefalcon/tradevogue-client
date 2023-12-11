@@ -1,4 +1,6 @@
-<header class="header-shadowed" [class.active]="(navbar_scroll_style == true) || (hamburgerOpen)">
+<header class="header-shadowed" [class.active]="(navbar_scroll_style == true) || (hamburgerOpen)" [ngClass]="{'header__height': QueryStarted}">
+    
+    <div class="container">
     <nav class="navbar container d-flex align-item-center justify-content-md-between relative"
         [ngClass]="{'padding__lock':secureNavbar}">
         <div class="branding d-flex gap-10 align-item-center">
@@ -55,127 +57,140 @@
             </ul>
             <ul class="navbar-features d-flex align-item-center gap-20 m-gap-15 s-gap-10">
 
-                <div class="search" [ngClass]="isSearching ? 'search-mobile' : ''">
-                    <span (click)="isSearching = false" class="back material-symbols-outlined pointer">
-                        keyboard_backspace
-                    </span>
-                    <div class="search-bar">
-                        <app-search-bar (click)="hamburgerOpen = false" [searchPlaceholder]="'Search Products...'"
-                            [onButtonClick]="true" (searchQuery$)="searchExplore($event)">
-                        </app-search-bar>
+                    <div class="search" [ngClass]="{'search-mobile':isSearching,'SearchNike':QueryStarted}">
+                        <span (click)="isSearching = false" class="back material-symbols-outlined pointer">
+                            keyboard_backspace
+                        </span>
+                        <div class="search-bar">
+                            <app-search-bar (click)="hamburgerOpen = false" [searchPlaceholder]="'Search Products...'"
+                                [onButtonClick]="false" (searchQuery$)="searchExplore($event)"
+                                [searchClear]="searchClear">
+                            </app-search-bar>
+                            <button class="close_btn pointer display-none" (click)="searchClear=true">
+                                <span class="material-symbols-outlined">
+                                    close
+                                </span>
+                            </button>
+
+                            <!-- <button class="cancel__btn" [ngClass]="{'display-none':!QueryStarted,'display-initial':QueryStarted}">Cancel</button> -->
+                        </div>
                     </div>
-                </div>
+                    <button class="cancel__btn btn"
+                        [ngClass]="{'display-none':!QueryStarted,'display-initial':QueryStarted}" (click)="QueryStarted=false">Cancel</button>
+               
+
                 <span (click)="isSearching = !isSearching; hamburgerOpen = false"
                     class="search-icon-mobile material-symbols-outlined">
                     search
                 </span>
-                <li>
-                    <a class="icons" aria-label="wishlist" routerLink="/usersetting/wishlist">
-                        <span class="wishlist_count material-symbols-outlined" *ngIf="purchaser != ''">
-                            favorite
-                            <span *ngIf="wishlistCount > 0" class="count" id="wishList">{{wishlistCount}}</span>
-                        </span>
-                    </a>
-                </li>
-                <li>
-                    <a class="icons pointer" aria-label="notification">
-                        <span class="material-symbols-outlined">
-                            notifications
-                            <span class="count"
-                                id="notifications">{{notifications.length}}
+                <div class="d-flex gap-15 align-item-center" [ngClass]="{'display-none':QueryStarted}">
+                    <li>
+                        <a class="icons" aria-label="wishlist" routerLink="/usersetting/wishlist">
+                            <span class="wishlist_count material-symbols-outlined" *ngIf="purchaser != ''">
+                                favorite
+                                <span *ngIf="wishlistCount > 0" class="count" id="wishList">{{wishlistCount}}</span>
                             </span>
-                        </span>
-                    </a>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="icons pointer" aria-label="notification">
+                            <span class="material-symbols-outlined">
+                                notifications
+                                <span class="count" id="notifications">{{notifications.length}}
+                                </span>
+                            </span>
+                        </a>
 
-                    <ul class="sub-items d-flex flex-column gap-15">
+                        <ul class="sub-items d-flex flex-column gap-15">
 
-                        <div *ngIf="!darkTheme && notifications.length == 0"
-                            class="noDataFound gap-10 d-flex flex-column flex-center align-item-center" style="padding: 20px;">
-                            <img src="../../../../assets/notification.svg" alt="No Data Found"
-                                style="height: 45px !important;">
-                            <h5>No Notifications</h5>
-                        </div>
-
-                        <div *ngIf="darkTheme && notifications.length == 0"
-                            class="noDataFound gap-10 d-flex flex-column flex-center align-item-center" style="padding: 20px;">
-                            <img src="../../../../assets/notification-light.svg" alt="No Data Found"
-                                style="height: 45px !important;">
+                            <div *ngIf="!darkTheme && notifications.length == 0"
+                                class="noDataFound gap-10 d-flex flex-column flex-center align-item-center"
+                                style="padding: 20px;">
+                                <img src="../../../../assets/notification.svg" alt="No Data Found"
+                                    style="height: 45px !important;">
                                 <h5>No Notifications</h5>
-                        </div>
+                            </div>
 
-                        <div class="notification-container"
-                            *ngIf="notifications.length > 0">
-                            <div class="notification-scroll">
-                                <div *ngFor="let notification of notifications"
-                                    class="notification-item pointer"
-                                    (click)="redirectToUrl(notification.notification.url)">
-                                    <div class="notification-icon">
-                                        <img [src]="notification.notification.icon" alt="Notification Icon">
-                                    </div>
-                                    <div class="notification-details pointer">
-                                        <div class="notification-title">{{ notification.notification.title }}</div>
-                                        <div class="notification-body">{{ notification.notification.body }}</div>
+                            <div *ngIf="darkTheme && notifications.length == 0"
+                                class="noDataFound gap-10 d-flex flex-column flex-center align-item-center"
+                                style="padding: 20px;">
+                                <img src="../../../../assets/notification-light.svg" alt="No Data Found"
+                                    style="height: 45px !important;">
+                                <h5>No Notifications</h5>
+                            </div>
+
+                            <div class="notification-container" *ngIf="notifications.length > 0">
+                                <div class="notification-scroll">
+                                    <div *ngFor="let notification of notifications" class="notification-item pointer"
+                                        (click)="redirectToUrl(notification.notification.url)">
+                                        <div class="notification-icon">
+                                            <img [src]="notification.notification.icon" alt="Notification Icon">
+                                        </div>
+                                        <div class="notification-details pointer">
+                                            <div class="notification-title">{{ notification.notification.title }}</div>
+                                            <div class="notification-body">{{ notification.notification.body }}</div>
+                                        </div>
                                     </div>
                                 </div>
+                                <ul *ngIf="hasNotificationToken && !notification.hasPermission;" class="pointer">
+                                    <li class="subscribe btn-secondary btn-rounded btn-sm"
+                                        (click)="subscribeToNotifications()">
+                                        <i class="bi bi-bell"></i> Subscribe to Notifications
+                                    </li>
+                                </ul>
                             </div>
-                            <ul *ngIf="hasNotificationToken && !notification.hasPermission;" class="pointer">
-                                <li class="subscribe btn-secondary btn-rounded btn-sm"
-                                    (click)="subscribeToNotifications()">
-                                    <i class="bi bi-bell"></i> Subscribe to Notifications
-                                </li>
-                            </ul>
-                        </div>
 
-                    </ul>
+                        </ul>
 
-                </li>
-                <li>
-                    <a class="icons" [routerLink]="['/cart']" aria-label="cart">
-                        <span class="material-symbols-outlined">
-                            shopping_cart
-                            <span *ngIf="cart_count > 0" class="count" id="inventory">{{ cart_count }}</span>
-                        </span>
-                    </a>
-                </li>
-                <li>
-                    <a class="icons pointer" aria-label="user">
-                        <span class="material-symbols-outlined">person</span>
-                    </a>
-                    <ul class="sub-items d-flex flex-column gap-15">
+                    </li>
+                    <li>
+                        <a class="icons" [routerLink]="['/cart']" aria-label="cart">
+                            <span class="material-symbols-outlined">
+                                shopping_cart
+                                <span *ngIf="cart_count > 0" class="count" id="inventory">{{ cart_count }}</span>
+                            </span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="icons pointer" aria-label="user">
+                            <span class="material-symbols-outlined">person</span>
+                        </a>
+                        <ul class="sub-items d-flex flex-column gap-15">
 
-                        <li *ngIf="!isUserLogin" class="sub-links d-flex flex-column gap-10" >
-                            <div class="header d-flex flex-column gap-5 border">
-                                <span style="font-size: 16px;">Hello</span>
-                                <p style="font-weight: 400; font-size: 13px;">Access your account and manage your orders, cart, wishlist
-                                    and what not.</p>
-                            </div>
-                            <div class="border mw100">
-                                <a [routerLink]="['/auth/login']" class="d-flex gap-10 login">
-                                    <div class="d-flex flex-center icon">
-                                        <span class="material-symbols-outlined icon">login</span>
-                                    </div>
-                                    <span>Login</span>
-                                </a>
-                            </div>
-                            <div class="border mw100">
-                                <a [routerLink]="['/auth/signup']" class="register d-flex gap-10">
-                                    <div class="d-flex flex-center icon">
-                                        <span class="material-symbols-outlined icon">person_add</span>
-                                    </div>
-                                    <span>Register</span>
-                                </a>
-                            </div>
-                            <div class="icons pointer " (click)="toggleTheme()">
-                                <a class="d-flex gap-10 mode mw100" >
-                                    <span class="material-symbols-outlined" *ngIf="!darkTheme">
-                                        dark_mode
-                                    </span>
-                                    <span class="material-symbols-outlined" *ngIf="darkTheme">
-                                        light_mode
-                                    </span>
-                                    <li>{{darkTheme ? 'Switch to Light Mode' : 'Switch to Dark Mode'}}</li>
-                                 </a>
-                        </div>
+                            <li *ngIf="!isUserLogin" class="sub-links d-flex flex-column gap-10">
+                                <div class="header d-flex flex-column gap-5 border">
+                                    <span style="font-size: 16px;">Hello</span>
+                                    <p style="font-weight: 400; font-size: 13px;">Access your account and manage your
+                                        orders, cart, wishlist
+                                        and what not.</p>
+                                </div>
+                                <div class="border mw100">
+                                    <a [routerLink]="['/auth/login']" class="d-flex gap-10 login">
+                                        <div class="d-flex flex-center icon">
+                                            <span class="material-symbols-outlined icon">login</span>
+                                        </div>
+                                        <span>Login</span>
+                                    </a>
+                                </div>
+                                <div class="border mw100">
+                                    <a [routerLink]="['/auth/signup']" class="register d-flex gap-10">
+                                        <div class="d-flex flex-center icon">
+                                            <span class="material-symbols-outlined icon">person_add</span>
+                                        </div>
+                                        <span>Register</span>
+                                    </a>
+                                </div>
+                                <div class="icons pointer " (click)="toggleTheme()">
+                                    <a class="d-flex gap-10 mode mw100">
+                                        <span class="material-symbols-outlined" *ngIf="!darkTheme">
+                                            dark_mode
+                                        </span>
+                                        <span class="material-symbols-outlined" *ngIf="darkTheme">
+                                            light_mode
+                                        </span>
+                            <li>{{darkTheme ? 'Switch to Light Mode' : 'Switch to Dark Mode'}}</li>
+                            </a>
+                </div>
                 </li>
 
 
@@ -200,14 +215,15 @@
                             <span class="material-symbols-outlined" *ngIf="darkTheme">
                                 light_mode
                             </span>
-                            <li>{{darkTheme ? 'Switch to Light Mode' : 'Switch to Dark Mode'}}</li>
-                         </a>
+                    <li>{{darkTheme ? 'Switch to Light Mode' : 'Switch to Dark Mode'}}</li>
+                    </a>
                     </li>
                 </ul>
             </ul>
             </li>
-
+            </div>
             </ul>
+
         </ng-container>
 
         <ng-container *ngIf="secureNavbar">
@@ -216,6 +232,15 @@
             </span>
         </ng-container>
     </nav>
+
+    <div [ngClass]="{'products': QueryStarted}" *ngIf="QueryStarted">
+        <app-product-card-carousel [titles]='"Searched products"'
+            ></app-product-card-carousel>
+    </div>
+
+
+</div>
+
 </header>
 
 <div [ngClass]="secureNavbar ? 'secure-navbar' : ''"></div>

@@ -45,6 +45,7 @@ export class CouponsComponent {
   ChangeHanlder(event: boolean) {
     this.show = event;
     this.clearForm();
+    this.EditRequest=false;
   }
 
   OfferType = ['coupon', 'discount'];
@@ -53,7 +54,7 @@ export class CouponsComponent {
   newEntry: Boolean = false;
   Brands: any;
   EditIndex: any;
-  EditRequest: any;
+  EditRequest!: boolean;
   allOffers: any=[];
   Categories: any;
   // CouponRequest: boolean = false;
@@ -291,8 +292,8 @@ export class CouponsComponent {
   AddCoupon() {
     this.newEntry = true;
     this.clearForm();
+    this.EditRequest = false;
     this.show = true;
-    // this.EditRequest = false;
     // this.pageChange(this.currentPage);
   }
 

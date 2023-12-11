@@ -68,6 +68,8 @@ header.active {
 
 .search {
     height: 40px;
+    width: 200px;
+    transition: all 0.3s ease-in-out;
     
 }
 
@@ -637,3 +639,79 @@ header.active {
     right: 37px; 
 }
 
+
+
+
+/*  NEW CSSS ADDED */
+.SearchNike{
+    width: 600px;
+    position: absolute;
+    /* left: 200px; */
+    background: rgb(var(--whiteClr));
+    z-index: 102;
+    /* width: calc(100% - 225px); */
+    inset-inline-start: 50%;
+    transform: translateX(-50%);
+    & .form__input{
+        border-radius: 50px;
+        padding-inline-start: 37px;
+    }
+   
+    & .search__btn{
+        left: 0;
+    }
+
+    & .close_btn {
+        display: flex;
+        right: 0;
+        position: absolute;
+        top: 0;
+        background: noen;
+        height: 100%;
+        align-items: center;
+        border: none;
+        background-color: none;
+    }
+
+    animation: hehe 0.3s ease-in-out;
+}
+
+.cancel__btn{
+    background: transparent;
+    border: none;
+}
+
+.header__height{
+    /* height: 400px; */
+    height: 530px;
+    overflow: hidden;
+}
+
+@keyframes hehe {
+    from{
+        transform: translateX(50%);
+        width: 200px;
+    }
+    /* 50%{
+        transform: translateX(0);
+        width: 300px;
+    } */
+    to{
+        transform: translateX(-50%);
+        width: 600px;
+    }
+}
+
+
+.products{
+    & .section-heading,  .section-sub-heading{
+        display: none;
+    }
+
+    & .crousel{
+        & .owl-theme .owl-nav{
+            display: none;
+        }
+    }
+        
+}
