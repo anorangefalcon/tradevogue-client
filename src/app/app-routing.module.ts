@@ -49,8 +49,6 @@ const routes: Routes = [
     path: 'dashboard', 
     loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule),
     canActivate: [authGuard]
-
-
   },
   {
     path: 'auth', data: { breadcrumb: 'Auth' }, loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule),canActivate: [authGuard]

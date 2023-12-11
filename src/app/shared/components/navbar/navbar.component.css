@@ -52,11 +52,11 @@ header {
 }
 
 .header-shadowed {
-    box-shadow: 0 2px 5px rgb(var(--textClr), 0.1);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.133);
     background-color: rgb(var(--whiteClr));
 }
 header.active {
-    box-shadow: 0 5px 10px rgb(var(--textClr), 0.1);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.133);
     background-color: rgb(var(--whiteClr));
     /* backdrop-filter: blur(10px); */
     padding-block: 0;

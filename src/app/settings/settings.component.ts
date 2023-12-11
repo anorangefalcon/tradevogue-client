@@ -30,7 +30,7 @@ export class SettingsComponent {
   cancelledOrdersCount: number = 0;
   currentPage: number = 1;
   cancelledCurrentPage: number = 1;
-  AllOrders!: any[];
+  AllOrders!: any;
   CancelledOrders!: any[];
   DefaultShowOrders = 'active';
   ProfileDisabled: boolean = true;
@@ -133,11 +133,14 @@ export class SettingsComponent {
       if (res == true ) {
         if(this.deletiontype=='order'){
         this.fetchDataService.HTTPPOST(this.backendURLs.URLs.cancelOrder, this.body).subscribe(() => {
+          console.log('current page is -------->');
           this.pageChange(this.currentPage);
         })
       }
       else if(this.deletiontype=='product'){
         this.fetchDataService.HTTPPOST(this.backendURLs.URLs.cancelOrderedProduct, this.body).subscribe((data) => {
+          console.log('get oirder called again------>');
+          
           this.pageChange(this.currentPage);
         })
       }
@@ -383,13 +386,16 @@ export class SettingsComponent {
 
   // orders code 
   getOrders() {
+    console.log('get order called');
+    
     this.fetchDataService.HTTPPOST(this.backendURLs.URLs.getParticularUserOrders, this.TemplatePagination).subscribe((data: any) => {
       if (!data.length) {
         this.totalCount = 0;
-        // this.AllOrders = []
+        this.AllOrders = '';
       }
       else {
         this.AllOrders = data[0]?.document;
+        console.log('all order assigned new ',this.AllOrders);
         this.totalCount = data?.length;
       }
       this.loading = false;
@@ -436,7 +442,9 @@ export class SettingsComponent {
   }
 
   pageChange(pageNo: number) {
+    
     this.currentPage = pageNo;
+    console.log(this.currentPage," helo hi--->");
     this.getOrders();
   }
 
@@ -479,7 +487,7 @@ export class SettingsComponent {
     this.dialogBox.confirmationDialogBox(this.template);
 
   }
-
+ 
   changeComponent(el: string) {
     this.showData = el;
     if(el=='profile'){

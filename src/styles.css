@@ -146,13 +146,13 @@ body {
     }
 }
 
-body.dark {
+/* body.dark {
     --whiteClr: 0, 0, 0;
     --blackClr: 255, 255, 255;
     --textClr: 222, 222, 222;
     --input-text-bg: 152, 150, 150;
     --primaryClr: 2, 208, 208;
-    /* color: #02d0d0; */
+
     --secondary: 42, 41, 41;
     --DefaultBorder: 255, 255, 255;
     --blue-clr: 65, 170, 236;
@@ -167,6 +167,35 @@ body.dark {
             filter: invert(33%) sepia(17%) saturate(3890%) hue-rotate(142deg) brightness(95%) contrast(97%);
         }
     }
+} */
+
+body.dark {
+    --whiteClr: 34, 34, 34; /* Change white to a darker shade */
+    --blackClr: 255, 255, 255; /* Change black to white */
+    --textClr: 200, 200, 200; /* Adjusted text color to a lighter shade */
+    --DefaultBorder: none;
+
+    --primaryClr: 2, 208, 208; /* Teal dark remains the same */
+    --secondary: 42, 41, 41; /* Adjusted secondary color to a darker shade */
+    --danger: 236, 82, 74; /* Danger color remains the same */
+    --success: 92, 201, 113; /* Success color remains the same */
+    --warning: 163, 125, 0; /* Warning color remains the same */
+    --info: 64, 210, 255; /* Info color remains the same */
+
+    background-color: #000000e5 !important;
+
+    --gray: 51, 51, 51; /* Adjusted gray color to a darker shade */
+    --new-text-black: 255, 255, 255; /* Change new text black to white */
+    --text-gray: 200, 200, 200; /* Adjusted text gray to a lighter shade */
+    --input-text-bg: 34, 34, 34, 0.8; /* Adjusted input text background to a darker shade */
+
+    --blue-clr: 64, 210, 255; /* Blue color remains the same */
+    --yellow-clr: 249, 165, 80; /* Yellow color remains the same */
+    --green-clr: var(--success); /* Green color remains the same */
+    --red-clr: var(--danger); /* Red color remains the same */
+    --goldClr: 254, 151, 4; /* Gold color remains the same */
+
+    color: #ffffff; /* Text color remains the same */
 }
 
 svg {

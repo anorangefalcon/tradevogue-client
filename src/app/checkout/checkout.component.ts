@@ -155,6 +155,9 @@ export class CheckoutComponent implements OnInit {
   RemoveAppliedCoupon() {
     this.cart.amounts.discount = null;
     this.CouponApplied = false;
+    if (!this.CouponCode) return;
+    this.CouponCode.nativeElement.value = '';
+    this.CouponValid = '';
   }
 
 
@@ -275,8 +278,6 @@ export class CheckoutComponent implements OnInit {
   NextDisabled: boolean = false;
 
   nextClicked() {
-    console.log('addrsss is ', this.checkOutService.addressSelected);
-
     if (!this.checkOutService.addressSelected) {
       this.toastService.errorToast({ title: 'Please select some address' });
       return;

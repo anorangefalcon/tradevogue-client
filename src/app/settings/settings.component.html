@@ -195,15 +195,14 @@
                     </p> -->
                 </div>
 
-                <div *ngIf="DefaultShowOrders=='active'">
-
+                <div *ngIf="DefaultShowOrders=='active'"> 
                     <div *ngIf="!AllOrders && !loading"
                         class="d-flex default-animation-slow flex-column gap-15 no-orders align-item-center flex-center">
                         <img src="../../assets/no-orders.svg" alt="no orders">
                         <p>No orders yet</p>
                     </div>
 
-                    <div class="AllOrders d-flex flex-column gap-25 default-animation-slow" *ngIf="!loading">
+                    <div  class="AllOrders d-flex flex-column gap-25 default-animation-slow" *ngIf="!loading && AllOrders">
                         
                         <ng-container *ngFor="let order of AllOrders ; let i=index">
 

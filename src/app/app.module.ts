@@ -60,7 +60,6 @@ const config: SocketIoConfig = { url: 'http://localhost:1000', options: {} };
     SharedModule,
     HomeModule,
     ProductPageModule,
-    
     FaqPageModule,
     CheckoutModule,
     HttpClientModule,
