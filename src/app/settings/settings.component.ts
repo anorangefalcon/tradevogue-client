@@ -53,6 +53,7 @@ export class SettingsComponent {
   openedAccordionIndex: number | null = null;
   stripe: any;
   wishlistCount: number = 0;
+  deleteIndex : any;
 
   productStatus: any = 'cancelled';
   allSubscriptions: Subscription[] = [];
@@ -120,7 +121,7 @@ export class SettingsComponent {
     this.changePasswordForm = fb.group({
       currentPassword: fb.control('', [Validators.required]),
       newPassword: fb.control('', [Validators.required, Validators.minLength(8), passwordStrengthValidator]),
-      againNewPassword: fb.control('', [Validators.required, (control: any) => matchPasswordValidator(control, this.changePasswordForm)])
+      againNewPassword: fb.control('', [Validators.required, (control: any) => matchPasswordValidator(control, this.changePasswordForm, 'newPassword')])
     })
 
     this.route.paramMap.subscribe((params: any) => {
@@ -163,6 +164,24 @@ export class SettingsComponent {
 
     this.DisableEnableForm(true);
     // this.ProfileForm.get('email')?.disable();
+    this.allSubscriptions.push(
+      dialogBox.responseEmitter.subscribe({
+        next: (res: any) => {
+          if (res) {
+            console.log("asjdhasjdhakj", res);
+            this.wishlistService.removeWishlist({ index : this.deleteIndex }).subscribe((data: any) => {
+              const toast = {
+                title: data.message
+              }
+              this.toastService.warningToast(toast);
+              this.wishlistService.showWishlistedProducts().subscribe((data) => {
+                this.wishlistedProducts = data
+              })
+              this.wishlistService.getWishlistCount()
+            })
+          }
+        }
+      }));
 
   };
 
@@ -248,18 +267,18 @@ export class SettingsComponent {
     })
   }
 
-  removeWishlist(id:String) {
-    this.wishlistService.removeWishlist({ id }).subscribe((data: any) => {
-      const toast = {
-        title: data.message
-      }
-      this.toastService.warningToast(toast);
-      this.wishlistService.showWishlistedProducts().subscribe((data) => {
-        this.wishlistedProducts = data
-      })
-      this.wishlistService.getWishlistCount()
-    })
+  removeWishlist(index: number) {
+    this.deleteIndex = index;
+    let template: any = {
+      title: 'Proceed with Deletion?',
+      subtitle: 'The wishlist will be permanently deleted, and recovery will not be possible. Are you sure you want to proceed?',
+      type: 'confirmation',
+      confirmationText: 'Yes, Delete it',
+      cancelText: 'No, Keep it',
+    };
+    this.dialogBox.confirmationDialogBox(template);
   }
+
 
   removeFromWishlist(productId: any, wishlistName: string) {
 
@@ -446,7 +465,6 @@ export class SettingsComponent {
   pageChange(pageNo: number) {
     
     this.currentPage = pageNo;
-    console.log(this.currentPage," helo hi--->");
     this.getOrders();
   }
 

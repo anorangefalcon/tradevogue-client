@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { WishlistService } from '../shared/services/wishlist.service';
 import { UtilsModule } from '../utils/backend-urls';
 import { FetchDataService } from '../shared/services/fetch-data.service';
@@ -72,8 +72,8 @@ export class WishlistComponent {
     ));
   }
 
-  removeWishlist(id : any, index: number){
-    this.wishlistService.removeWishlist({ id}).subscribe((data: any) => {
+  removeWishlist(index: any){
+    this.wishlistService.removeWishlist({ index }).subscribe((data: any) => {
       const toast = {
         title : data.message
       }
@@ -92,6 +92,7 @@ export class WishlistComponent {
   handler(event: boolean) {
     this.showTextField = false;
     this.updateRequest = '';
+    this.newWishlist = '';
     this.show = event
   }
 

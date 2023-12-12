@@ -68,17 +68,17 @@
                     <p class="title__heading pointer">MY ACCOUNT</p>
                     <ul class="d-flex flex-column gap-20">
                         <li role="button">
-                            <a routerLink="/usersetting/profile" aria-label="Account"
+                            <a [routerLink]="['/user-settings']" aria-label="Account"
                                 (click)=" show('profile')">Account</a>
                         </li>
                         <li role="button">
                             <a href="#" routerLink="/cart">Cart</a>
                         </li>
                         <li role="button">
-                            <a routerLink="/usersetting/orders" aria-label="Orders" (click)="show('orders')">Orders</a>
+                            <a routerLink="/user-settings/orders" aria-label="Orders" (click)="show('orders')">Orders</a>
                         </li>
                         <li role="button">
-                            <a routerLink="/usersetting/wishlist" aria-label="Wishlist">Wishlist</a>
+                            <a routerLink="/user-settings/wishlist" aria-label="Wishlist">Wishlist</a>
                         </li>
                     </ul>
                 </div>
@@ -152,13 +152,13 @@
                     <h5 class="subtitle pointer">MY ACCOUNT</h5>
                     <ul class="d-flex gap-10 list">
                         <li role="button">
-                            <a routerLink="/usersetting/profile" aria-label="Account">Account</a>
+                            <a routerLink="/user-settings" aria-label="Account">Account</a>
                         </li>
                         <li role="button">
                             <a href="#" routerLink="/cart" aria-label="My cart">My cart</a>
                         </li>
                         <li role="button">
-                            <a routerLink="/usersetting/orders" aria-label="Order history"
+                            <a routerLink="/user-settings/orders" aria-label="Order history"
                                 (click)="show('orders')">Order history</a>
                         </li>
                     </ul>
@@ -166,7 +166,10 @@
             </div>
         </div>
     </div>
-    <div class="copyright-footer d-flex justify-content-center align-item-center">
-        <p>Copyright © 2023</p>
+    <div class="copyright-footer ">
+        <span class="mw100 d-flex justify-content-md-between align-item-center flex-column gap-10" style="width: 1170px; margin-inline: auto;">
+            <p> Made with ❤️ in India. Copyright © 2023</p>
+            <!-- <p>Made with ❤️, Trade Vogue Family.</p> -->
+        </span> 
     </div>
 </footer>

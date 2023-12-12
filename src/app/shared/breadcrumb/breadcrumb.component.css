@@ -20,7 +20,7 @@
 }
 
 .breadcrumb-link:hover {
-  color: #0b0b0b; 
+  color: rgb(var(--textClr)) 
 }
 
 .breadcrumb-separator {

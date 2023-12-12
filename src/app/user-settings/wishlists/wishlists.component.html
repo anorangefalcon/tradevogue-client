@@ -1,0 +1,77 @@
+<div class="wishlist">
+
+    <div class="d-flex align-item-center pointer wishlist__div h2_div default-animation">
+        <!-- <span class="material-symbols-outlined left__icon">
+            chevron_left
+        </span> -->
+        <div class="d-flex justify-content-md-between align-item-center mw100">
+            <h2>
+                Wishlists
+            </h2>
+        </div>
+    </div>
+
+
+    <div class="d-flex flex-column default-animation-slow" *ngIf="!loading">
+
+        <div class="accordian mw-100" *ngFor="let item of wishlistedProducts; let i = index">
+            <div class="accordian__head pointer d-flex justify-content-md-between"
+                (click)="toggleAccordian(i)">
+                <p class="wishlist-name text-capitalize">{{item._id | titlecase}}</p>
+                <div class="d-flex gap-5 align-items-center">
+                    <p *ngIf="item.productinfo.length === 0" class="no-item-label d-flex flex-center">No
+                        items</p>
+                    <span class="material-symbols-outlined d-flex flex-center removeWishlist-btn relative"
+                        (click)="removeWishlist(i)" *ngIf="i!=0">
+                        delete
+                    </span>
+                    <span class="material-symbols-outlined expand d-flex flex-center"
+                        *ngIf="item.productinfo.length !== 0">
+                        expand_more
+                    </span>
+                </div>
+            </div>
+            <div class="accordian__body d-flex flex-column gap-10"
+                [class.active]="openedAccordionIndex === i">
+                <ng-container *ngFor="let detail of item.productinfo">
+                    <div class="product d-flex justify-content-md-between mw100 default-animation">
+                        <div class="d-flex gap-20">
+                            <div class="prod-img relative">
+                                <a routerLink="/product/{{detail.sku}}">
+                                    <img class="skeleton" [src]="detail.assets[0].photo[0]"
+                                        alt="Product Image">
+                                </a>
+                                <button (click)="removeFromWishlist(detail._id, item._id)"
+                                    class="absolute remove-btn d-flex justify-content-center align-item-center">
+                                    <span class="material-symbols-outlined">
+                                        close
+                                    </span>
+                                </button>
+                            </div>
+                            <div class="d-flex flex-column gap-5">
+                                <a routerLink="/product/{{detail.sku}}">
+                                    <p class="prod-name">
+                                        {{detail.name}}
+                                    </p>
+                                </a>
+                                <p>{{detail.info.brand}}</p>
+                                <p>Price: ₹{{ detail.price }}</p>
+                            </div>
+                        </div>
+                        <div class="d-flex flex-column justify-content-end">
+                            <div class="d-flex gap-10">
+                                <span routerLink="/product/{{detail.sku}}" class="pointer">View
+                                    Product</span> |
+                                <span *ngIf="detail.status.active == true" class="in-stock pointer"
+                                    (click)="moveToCart(detail) ; removeFromWishlist(detail._id, item._id)">
+                                    Add to Cart</span>
+                                <span *ngIf="detail.status.active !==true" class="out-of-stock pointer">Out
+                                    of Stock</span>
+                            </div>
+                        </div>
+                    </div>
+                </ng-container>
+            </div>
+        </div>
+    </div>
+</div>

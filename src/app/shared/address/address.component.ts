@@ -9,7 +9,7 @@ import { Subject, debounceTime, distinctUntilChanged, switchMap } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 
 @Component({
-  selector: 'app-address',
+  selector: 'app-address-2',
   templateUrl: './address.component.html',
   styleUrls: ['./address.component.css']
 })
@@ -120,6 +120,8 @@ export class AddressComponent {
 
 
   ngOnChanges() {
+    console.log('show comeponent isb',this.ShowComponent," received data is ",this.receiveData);
+    
     if (!this.receiveData) {
         this.title = 'Add New Address';
         this.DetailsForm.reset();

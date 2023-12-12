@@ -31,7 +31,7 @@ export class ForgetPasswordComponent {
     private toastservice: ToastService) {
     this.resetPasswordForm = fb.group({
       password: fb.control('', [Validators.required, passwordStrengthValidator, Validators.minLength(8)]),
-      confirmPassword: fb.control('', [Validators.required, (control: any) => matchPasswordValidator(control, this.resetPasswordForm)])
+      confirmPassword: fb.control('', [Validators.required, (control: any) => matchPasswordValidator(control, this.resetPasswordForm, 'password')])
     },
       {
         validators: this.passwordMatch

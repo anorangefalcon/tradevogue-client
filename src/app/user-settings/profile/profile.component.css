@@ -1,0 +1,128 @@
+.profile {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+
+    & h2 {
+        font-size: 24px;
+        font-weight: 600;
+    }
+}
+form {
+    row-gap: 15px;
+    column-gap: 30px;
+    width: 100%;
+
+    & .form__group {
+        width: calc(50% - 15px);
+
+        & input {
+            width: 100%;
+            height: 52px;
+            padding-inline-start: 50px;
+            padding-inline-end: 5px;
+            border-radius: 8px;
+            border: 1px solid rgb(var(--blackClr), 0.08);
+            background-color: rgba(var(--blackClr), 0.05);
+            font-size: 14px;
+            outline: none;
+            color: rgb(var(--textClr));  
+        }
+
+
+
+        & .key {
+            transform: rotate(90deg);
+        }
+
+        & input:focus {
+            border-color: rgb(var(--textClr), 0.4);
+        }
+
+        & label {
+            font-size: 14px;
+            color: rgb(var(--textClr), 0.9);
+            padding-bottom: 5px;
+        }
+
+        & .form__icon {
+            display: flex;
+            align-items: center;
+            font-size: 23px;
+            justify-content: center;
+            width: 50px;
+            inset-block-start: 40px;
+            inset-inline-start: 0;
+            background-color: transparent;
+            color: rgb(var(--textClr), 0.5);
+        }
+
+        &::placeholder {
+            color: rgb(var(--textClr), 0.3);
+        }
+
+    }
+
+}
+.radio {
+    padding-block: 15px;
+
+    & input[type='radio'] {
+        display: none;
+    }
+
+    & input[type='radio']:checked+label::before {
+        background-color: rgba(var(--primaryClr));
+        border: none;
+    }
+
+    & input[type='radio']:checked+label {
+        color: rgba(var(--blackClr), 0.9);
+    }
+
+    & input[type='radio']+label::before {
+        content: "";
+        height: 20px;
+        transition: all 0.5s;
+        width: 20px;
+        background-color: #fff;
+        border: 1px solid black;
+        border-radius: 50%;
+    }
+
+    & input[type='radio']+label::after {
+        content: "";
+        height: 9px;
+        width: 9px;
+        position: absolute;
+        border: none;
+        background-color: rgb(var(--whiteClr));
+        border-radius: 50%;
+        left: 5.3px;
+    }
+}
+.errors{
+    padding-block-start: 5px;
+    color: rgb(var(--danger));
+}
+@media (max-width: 550px){
+    .profile {
+        & form {
+            flex-direction: column;
+
+            & .form__group {
+                width: 100%;
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 400px){
+    .profile{
+        & h2 {
+            font-size: 18px !important;
+            font-weight: 600;
+        }
+    }
+}

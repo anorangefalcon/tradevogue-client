@@ -115,11 +115,15 @@ export class LoginComponent {
 
     this.allSubscriptions.push(
       this.fetchDataService.HTTPPOST(this.backendUrls.URLs.forgetPasswordUrl, body).subscribe(
-        (data: any) => {
+      {next:  (data: any) => {
           this.isactive = true;
           this.dialogService.infoDialogBox();
         }
-      ));
+      ,
+    error:()=>{this.loading=false;}
+  })
+    )
+      
   }
 
   togglePasswordVisibility() {

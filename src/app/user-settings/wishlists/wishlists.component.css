@@ -1,0 +1,130 @@
+.accordian {
+    & .content {
+        font-size: 13px !important;
+    }
+}
+
+.wishlist__div {
+    margin-block-end: 15px;
+}
+
+.accordian:not(:last-child) {
+    border-block-end: 0.3px solid rgb(var(--blackClr), 0.5);
+}
+
+.accordian__head {
+    padding-block: 10px;
+    font-size: 16px !important;
+
+    & span {
+        transition: all 0.3s ease-in-out;
+        font-size: 18px;
+        opacity: 0.6;
+    }
+}
+
+.accordian__body {
+    opacity: 0;
+    height: 0px;
+    pointer-events: none;
+    transform: translateY(-30px);
+    transition: 0.3s ease-in-out;
+}
+
+.accordian__body.active {
+    opacity: 1;
+    height: fit-content;
+    pointer-events: all;
+    transform: translateY(0);
+    justify-content: space-between;
+}
+
+.accordian__head:has(+ .accordian__body.active) span.expand {
+    transform: rotate(-180deg);
+}
+
+.no-item-label {
+    font-size: 12px !important;
+    opacity: 0.6;
+}
+
+.wishlist h2 {
+    font-weight: 600;
+}
+
+.prod-img img {
+    width: 60px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 4px;
+}
+
+.product {
+    border-block-end: 1px solid rgba(var(--textClr), 0.1);
+    padding-block: 20px;
+}
+
+.product:last-child {
+    border-block-end: none;
+}
+
+.prod-name {
+    font-size: 14px !important;
+    font-weight: 600;
+}
+
+.remove-btn {
+    padding: 0 !important;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+    max-width: 22px;
+    max-height: 22px;
+    position: absolute;
+    inset-block-start: -5.5px;
+    inset-inline-start: -5.5px;
+    background-color: rgb(var(--textClr));
+    border-radius: 50%;
+    transition: background-color 0.3s ease-in-out;
+    border: 2px solid rgb(var(--whiteClr));
+
+    & span {
+        color: rgb(var(--whiteClr));
+        font-weight: 600;
+        font-size: 14px;
+    }
+}
+
+.wishlist-name {
+    font-size: 15px !important;
+    font-weight: 500;
+}
+
+.removeWishlist-btn{
+    z-index: 5;
+}
+
+.out-of-stock,
+.removeWishlist-btn:hover {
+    color: rgb(var(--danger));
+}
+
+.in-stock {
+    color: rgb(var(--primaryClr))
+}
+@media screen and (max-width: 440px) {
+    .product {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+}
+@media screen and (max-width: 510px){
+    .prod-name {
+        text-overflow: ellipsis;
+        width: 15ch;
+        overflow: hidden;
+        text-wrap: nowrap;
+    }
+}
+

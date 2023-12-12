@@ -199,12 +199,12 @@
                     <li *ngIf="purchaser!=''" class="name border">
                         Hello,<span> {{purchaser}}</span>
                     </li>
-                    <li [routerLink]="['dashboard']" *ngIf="UserRole">Dashboard</li>
-                    <li [routerLink]="['usersetting/orders']">Orders</li>
-                    <li [routerLink]="['usersetting/wishlist']">Wishlist</li>
-                    <li routerLink="/usersetting/addresses">Saved Addresses</li>
-                    <li [routerLink]="['help']" class="pointer border">Contact Us</li>
-                    <li [routerLink]="['usersetting/profile']" class="edit">
+                    <li [routerLink]="['/dashboard']" *ngIf="UserRole">Dashboard</li>
+                    <li [routerLink]="['/user-settings/orders']">Orders</li>
+                    <li [routerLink]="['/user-settings/wishlist']">Wishlist</li>
+                    <li [routerLink]="['/user-settings/address']">Saved Addresses</li>
+                    <li [routerLink]="['/help']" class="pointer border">Contact Us</li>
+                    <li [routerLink]="['/user-settings/profile']" class="edit">
                         Edit Profile</li>
                     <li (click)="onLogout()" class="logout border">Logout</li>
                     <li>

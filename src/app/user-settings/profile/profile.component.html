@@ -1,0 +1,87 @@
+<div class="profile d-flex flex-column gap-20">
+
+    <div class="d-flex  align-item-center justify-content-md-between default-animation">
+
+        <div class="d-flex align-item-center  pointer gap-5" >
+            <!-- <span class="material-symbols-outlined left__icon" >
+                chevron_left
+            </span> -->
+            <h2>
+                Profile Details
+            </h2>
+        </div>
+
+        <div class="d-flex gap-15">
+            <button class="btn-secondary  btn btn-sm btn-rounded"
+                [ngStyle]="{'display': ProfileDisabled? 'none': 'block'}"
+                (click)="DisableEnableForm(true,true)">Cancel</button>
+            <button class="btn-primary btn btn-sm btn-rounded"
+                [ngStyle]="{'display': !ProfileDisabled? 'none': 'block'}"
+                (click)="DisableEnableForm(false)">Edit</button>
+            <button class="btn-primary btn btn-sm btn-rounded"
+                [ngStyle]="{'display': ProfileDisabled? 'none': 'block'}"
+                (click)="saveDetails(); DisableEnableForm(true)" [disabled]="ProfileForm.invalid">Save</button>
+        </div>
+
+    </div>
+
+
+    <form [formGroup]="ProfileForm" class="d-flex gap-15 disableInput flex-wrap default-animation-slow">
+        <div class="form__group relative d-flex flex-column">
+            <label class="form__label">First Name<span>*</span></label>
+            <span class="material-symbols-outlined form__icon absolute">person</span>
+            <input type="text" id="firstname" formControlName="firstname"
+                placeholder="Enter Your First Name">
+        </div>
+
+        <div class="form__group relative d-flex flex-column">
+            <label class="form__label">Last Name<span>*</span></label>
+            <span class="material-symbols-outlined form__icon absolute">person</span>
+            <input type="text" id="lastname" formControlName="lastname" placeholder="Enter Your Last Name">
+        </div>
+        <div class="form__group relative d-flex flex-column">
+            <label class="form__label">Email<span>*</span></label>
+            <span class="material-symbols-outlined form__icon absolute">mail</span>
+            <input type="text" id="email" readOnly formControlName="email" placeholder="Enter Your Email">
+            <!-- <small *ngIf="ProfileForm.get('email')?.hasError('email') && ProfileForm.get('email')?.touched"
+                class="invalid">
+                *Please enter valid Email.
+            </small> -->
+        </div>
+
+
+        <div class="form__group relative d-flex flex-column">
+            <label class="form__label">Mobile No.<span>*</span></label>
+            <span class="material-symbols-outlined form__icon absolute">call</span>
+            <input type="text" id="mobile" formControlName="mobile" placeholder="Enter Your MobileNo">
+
+            <small
+                *ngIf="ProfileForm.get('mobile')?.hasError('pattern')"
+                class="errors">Invalid Phone No.</small>
+
+        </div>
+
+
+
+        <div class="form__group relative d-flex flex-column">
+            <label class="form__label">Date of Birth<span>*</span></label>
+            <span class="material-symbols-outlined form__icon absolute">person</span>
+            <input type="date" id="dob" formControlName="dob" placeholder="Enter Your Date of Birth">
+        </div>
+
+        <div class="form__group relative d-flex flex-column">
+            <label class="form__label">Gender<span>*</span></label>
+            <div class="form__group relative radio d-flex gap-20 align-item-center">
+                <input type="radio" id="male" name="gender" value="male" formControlName="gender"
+                    [attr.checked]="this?.ProfileForm?.get('gender')?.value=='male' ? true: null">
+                <label for="male" class="d-flex flex-center relative gap-5 pointer">Male</label>
+
+                <input type="radio" id="female" name="gender" formControlName="gender" value="female"
+                    [attr.checked]="this?.ProfileForm?.get('gender')?.value=='female'  ? true : null">
+                <label for="female" class="d-flex flex-center relative gap-5 pointer"> Female </label>
+            </div>
+        </div>
+
+    </form>
+
+</div>

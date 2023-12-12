@@ -1,0 +1,270 @@
+<div class="Orders d-flex flex-column gap-20 mw100">
+
+    <div class="default-animation">
+        <div class="d-flex align-item-center pointer orders__header  justify-content-md-between mw100 ">
+            <div class="h2_div pointer d-flex align-item-center" >
+                <span class="material-symbols-outlined left__icon" >
+                    chevron_left
+                </span>
+                <h2 style="font-weight: 600;">
+                    Orders History
+                </h2>
+
+            </div>
+            <div class="d-flex gap-10 active_cancel_div">
+                <button class="btn active__orders" (click)="DefaultShowOrders='active';getOrders()"
+                    [ngClass]="{'border__bottom':DefaultShowOrders=='active'}">Active Orders</button>
+                <button class="btn cancel__orders"
+                    (click)="DefaultShowOrders='cancelled';getCancelledOrders();"
+                    [ngClass]="{'border__bottom':DefaultShowOrders=='cancelled'}">Cancelled Orders</button>
+                <!-- </div> -->
+            </div>
+        </div>
+        <!-- <p class="orders__p">Check the status of recent orders, view invoice and manage returns.
+        </p> -->
+    </div>
+
+    <div *ngIf="DefaultShowOrders=='active'"> 
+        <div *ngIf="!AllOrders && !loading"
+            class="d-flex default-animation-slow flex-column gap-15 no-orders align-item-center flex-center">
+            <img src="../../assets/no-orders.svg" alt="no orders">
+            <p>No orders yet</p>
+        </div>
+
+        <div  class="AllOrders d-flex flex-column gap-25 default-animation-slow" *ngIf="!loading && AllOrders">
+            
+            <ng-container *ngFor="let order of AllOrders ; let i=index">
+
+                <div *ngIf="i < TemplatePagination.limit" class="particularOrder">
+                    <div class="order__firstDiv d-flex gap-25 justify-content-md-between">
+                        <div class=" d-flex gap-25 align-item-center order__basic">
+                            <div class="order-deets id-div">
+                                <p>Order Number</p>
+                                <span>{{order.orderID}}</span>
+                            </div>
+                            <div class="order-deets">
+                                <p>Date</p>
+                                <span>{{getDate(order.orderDate)}}</span>
+                            </div>
+                            <div class="order-deets">
+                                <p>Amount</p>
+                                <div class="d-flex gap-5 align-item-center ">
+                                <span>₹ {{order.OrderSummary.Total}}</span>
+                                <span *ngIf="order.OrderSummary.couponDiscount" class="old-price">
+                                    ₹{{ order.OrderSummary.subTotal }}
+                                </span>
+                            </div>
+                            </div>
+                        </div>
+                        <div class="d-flex gap-20 order__firstDiv__btn">
+                            <button class="btn-rounded btn" (click)="toggleAccordian(i)">
+                                {{openedAccordionIndex === i?'Close Order':'View Order'}}
+                            </button>
+                            <!-- <button class="btn-rounded btn" (click)="viewInvoice(i)">View Invoice</button> -->
+                            <button class="btn-rounded btn" (click)="cancelOrder(order._id)">Cancel
+                                Order</button>
+                        </div>
+                        <div class="more-icon pointer display-none relative">
+                            <span class="material-symbols-outlined ">
+                                more_vert
+                            </span>
+                            <div class="more-icon-content display-none d-flex flex-column gap-10">
+                                <button class="btn-rounded btn" (click)="toggleAccordian(i)">
+                                    {{openedAccordionIndex === i?'Close Order':'View Order'}}</button>
+                                <!-- <button class="btn-rounded btn">View Invoice</button> -->
+                            </div>
+                        </div>
+
+                    </div>
+                    <ng-container *ngFor="let product of order.products">
+                        <div class="order d-flex flex-column gap-20 default-animation"
+                            [class.active]="openedAccordionIndex === i">
+                            <div class=" d-flex justify-content-md-between">
+                                <div class="d-flex gap-15">
+                                    <img src={{product.productInfo.image}} class="imgDiv skeleton">
+
+                                    <div class="d-flex flex-column productDetails gap-5">
+                                        <p class="prodName">{{product.name}}</p>
+                                        <div class="d-flex align-item-center gap-5">
+                                            <p>Color :</p>
+                                            <div [style.background-color]="product.color"
+                                                class="color__div">
+                                            </div>
+                                        </div>
+                                        <p>Qty : {{product.quantity}}</p>
+                                        <p class="display-none resp">₹ {{product.price}}</p>
+
+                                    </div>
+                                </div>
+                                <div class="d-flex justify-content-center align-item-center price-div">
+                                    <p class="price">₹ {{product.price}}</p>
+                                </div>
+                            </div>
+                            <div class="deliverDiv d-flex justify-content-md-between">
+
+                                <div class="d-flex gap-10 delivery align-item-center">
+                                    <span class="material-symbols-outlined pending-icon d-flex flex-center"
+                                        *ngIf="product.shipmentStatus=='pending'">
+                                        hourglass_empty
+                                    </span>
+                                    <span class="material-symbols-outlined deliver-icon"
+                                        *ngIf="product.shipmentStatus=='delivered'">
+                                        check
+                                    </span>
+                                    <div class="d-flex deliveryStatusText">
+                                    <p class="delivery-status">{{product.shipmentStatus | titlecase}}</p>
+                                    <div class="tooltip d-flex align-item-center" *ngIf="product.shipmentStatus=='cancelled'"> 
+                                        <span class="info-icon pointer material-symbols-outlined">
+                                          info
+                                        </span>
+                                        <span class="tooltiptext">
+                                          Your Product Amount will be credited in 24hrs
+                                        </span>
+                                      </div>
+                                    </div>
+                                </div>
+                                <div class="d-flex gap-10 btns">
+                                    <button class="btn" routerLink="/product/{{product.sku}}">
+                                        View Product
+                                    </button>
+                                    <p *ngIf="product.shipmentStatus!='cancelled'">|</p>
+
+                                    <button class="btn" *ngIf="product.shipmentStatus=='pending'"
+                                        (click)="CancelProduct(order._id,product)">
+                                        Cancel Product
+                                    </button>
+
+                                    <!-- <button class="btn" *ngIf="product.shipmentStatus=='delivered'">
+                                        Exchange Product
+                                    </button> -->
+                                </div>
+                            </div>
+                        </div>
+                    </ng-container>
+                </div>
+            </ng-container>
+        </div>
+        <div *ngIf="AllOrders">
+            <app-pagination #pagination [collectionSize]="totalCount" [pageSize]="TemplatePagination.limit"
+                [currentPage]="currentPage" (activePage)="pageChange($event)"></app-pagination>
+        </div>
+    </div>
+
+
+    <div *ngIf="DefaultShowOrders=='cancelled'">
+        <div *ngIf="!CancelledOrders && !loading"
+            class="d-flex default-animation-slow flex-column gap-15 no-orders align-item-center flex-center">
+            <img src="../../assets/no-orders.svg" alt="no orders">
+            <p>No cancelled orders yet</p>
+        </div>
+
+        <div class="AllOrders d-flex flex-column gap-25 default-animation-slow" *ngIf="!loading">
+            <ng-container *ngFor="let order of CancelledOrders ; let i=index">
+                <div *ngIf="i < TemplatePagination.limit" class="particularOrder">
+                    <div class="order__firstDiv d-flex gap-25 justify-content-md-between">
+                        <div class=" d-flex gap-25 align-item-center order__basic">
+                            <div class="order-deets id-div">
+                                <p>Order Number</p>
+                                <span>{{order.orderID}}</span>
+                            </div>
+                            <div class="order-deets">
+                                <p>Date</p>
+                                <span>{{getDate(order.orderDate)}}</span>
+                            </div>
+                            <div class="order-deets">
+                                <p>Amount</p>
+                                <span>₹ {{order.OrderSummary.Total}}</span>
+                            </div>
+                        </div>
+                        <div class="d-flex gap-20 order__firstDiv__btn">
+                            <button class="btn-rounded btn" (click)="toggleAccordian(i)">
+                                {{openedAccordionIndex === i?'Close Order':'View Order'}}
+                            </button>
+                            <!-- <button class="btn-rounded btn" (click)="viewInvoice(i)">View Invoice</button> -->
+                        </div>
+                        <div class="more-icon pointer display-none relative">
+                            <span class="material-symbols-outlined ">
+                                more_vert
+                            </span>
+                            <div class="more-icon-content display-none d-flex flex-column gap-10">
+                                <button class="btn-rounded btn" (click)="toggleAccordian(i)">{{openedAccordionIndex === i?'Close Order':'View Order'}}</button>
+
+                                <!-- <button class="btn-rounded btn">View Invoice</button> -->
+                            </div>
+                        </div>
+
+                    </div>
+                    <ng-container *ngFor="let product of order.products">
+                        <div class="order d-flex flex-column gap-20 default-animation"
+                            [class.active]="openedAccordionIndex === i">
+                            <div class=" d-flex justify-content-md-between">
+                                <div class="d-flex gap-15">
+                                 
+                                    <img src={{product.productInfo.image}} class="imgDiv skeleton">
+
+                                    <div class="d-flex flex-column productDetails gap-5">
+                                        <p class="prodName">{{product.name}}</p>
+                                        <div class="d-flex align-item-center gap-5">
+                                            <p>Color :</p>
+                                            <div [style.background-color]="product.color"
+                                                class="color__div">
+                                            </div>
+                                        </div>
+                                        <p>Qty : {{product.quantity}}</p>
+                                        <p class="display-none resp">₹ {{product.price}}</p>
+
+                                    </div>
+                                </div>
+                                <div class="d-flex justify-content-center align-item-center price-div">
+                                    <p class="price">₹ {{product.price}}</p>
+                                </div>
+                            </div>
+                            <div class="deliverDiv d-flex justify-content-md-between">
+
+                                <div class="d-flex gap-10 delivery align-item-center">
+                                    <span class="material-symbols-outlined pending-icon d-flex flex-center"
+                                        *ngIf="product.shipmentStatus=='pending'">
+                                        hourglass_empty
+                                    </span>
+                                    <span class="material-symbols-outlined deliver-icon"
+                                        *ngIf="product.shipmentStatus=='delivered'">
+                                        check
+                                    </span>
+                                    <!-- <p class="delivery-status">{{product.shipmentStatus | titlecase}}</p> -->
+                                    <div class="d-flex deliveryStatusText">
+                                        <p class="delivery-status">{{product.shipmentStatus | titlecase}}</p>
+                                        <div class="tooltip d-flex align-item-center" *ngIf="product.shipmentStatus=='cancelled'"> 
+                                            <span class="info-icon pointer material-symbols-outlined">
+                                              info
+                                            </span>
+                                            <span class="tooltiptext">
+                                              Your Product Amount will be credited in 24hrs
+                                            </span>
+                                          </div>
+                                        </div>
+
+
+                                </div>
+                                <div class="d-flex gap-10 btns">
+                                    <button class="btn" routerLink="/product/{{product.sku}}">
+                                        View Product
+                                    </button>
+                                    <button class="btn" *ngIf="product.shipmentStatus=='delivered'">
+                                        Exchange Product
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </ng-container>
+                </div>
+            </ng-container>
+        </div>
+        <div *ngIf="CancelledOrders">
+            <app-pagination #pagination [collectionSize]="cancelledOrdersCount"
+                [pageSize]="cancelledTempatePagination.limit" [currentPage]="cancelledCurrentPage"
+                (activePage)="pageChange($event)"></app-pagination>
+        </div>
+    </div>
+
+</div>
+

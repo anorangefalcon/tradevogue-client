@@ -1,0 +1,20 @@
+<app-navbar></app-navbar>
+<section class="container d-flex">
+    <nav class="navbar d-flex flex-column align-item-center gap-25">
+        <ul class="nav-items d-flex flex-column align-item-center mh100 mw100">
+            <li class="nav-links d-flex align-item-center mw100 relative transition" *ngFor="let item of navitems">
+                <a [routerLink]="item.route" [routerLinkActive]="'active'"
+                    class="d-flex align-item-center pointer gap-10">
+                    <i class="icons material-symbols-outlined nav-icons">{{item.icons}}</i>
+                    <span class="nav-txt fs-14 fw-500">{{item.name}}</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <main class="main transition">
+        <div class="content mw100 mh100">
+            <router-outlet></router-outlet>
+        </div>
+    </main>
+</section>
+<app-footer></app-footer>

@@ -51,6 +51,10 @@ const routes: Routes = [
     canActivate: [authGuard]
   },
   {
+    path : 'user-settings',
+    loadChildren : () => import('./user-settings/user-settings.module').then(m => m.UserSettingsModule)
+  },
+  {
     path: 'auth', data: { breadcrumb: 'Auth' }, loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule),canActivate: [authGuard]
     
   },

@@ -1,0 +1,87 @@
+.addAddress__div {
+    gap: 2px;
+
+    & span,
+    p {
+        color: rgba(var(--primaryClr), 0.8);
+    }
+}
+
+.addressDiv {
+    padding: 24px;
+    background-color: rgb(var(--whiteClr));
+    border-radius: 6px;
+
+    /* & .remove::hover {
+        color: rgb(var(--danger))
+    } */
+}
+
+.particularAddress:not(:last-child) {
+    border-block-end: 0.5px solid rgb(var(--textClr), 0.3);
+    padding-block-end: 20px;
+}
+
+.address__firstdiv {
+    & .name {
+        font-weight: 500;
+    }
+}
+
+.default__btn {
+    background-color: rgb(var(--textClr), 0.09) !important;
+    color: rgb(var(--blackClr));
+    border-radius: 10px !important;
+    cursor: pointer;
+    font-weight: 400;
+    border: 0.5px solid rgb(var(--DefaultBorder));
+    font-size: 9px !important;
+    padding: 0px 6px !important;
+}
+
+.edit__btn {
+    color: rgba(var(--blackClr), 0.7);
+}
+
+.remove__btn {
+    color: rgba(var(--danger), 0.8);
+}
+
+.edit__btn,
+.remove__btn {
+    cursor: pointer;
+    font-weight: 300;
+    font-size: 21px;
+}
+
+@media screen and (max-width : 400px){
+    .address {
+        & h2 {
+            font-size: 18px !important;
+            font-weight: 600;
+        }
+    }
+    .text_address {
+        display: none;
+    }
+
+    .address__icon {
+        font-size: 20px;
+    }
+}
+
+@media screen and (max-width: 330px){
+    .address_div{
+        & p{
+            font-size: 12px !important;
+        }
+    }
+    .default__div{
+        flex-direction: column;
+        gap: 5px;
+        & .default__btn{
+            padding: 2px 6px;
+            width: 68px;  
+        }
+    }
+}
