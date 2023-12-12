@@ -1,8 +1,20 @@
 <section class="d-flex flex-column gap-20 ">
   <div class="view__details">
-    <app-drawer [direction]="popUpDirection" [show]="showingPopUp" (showChange)="PopUpChangeHanlder($event)"
+   
+  <app-drawer [direction]="popUpDirection" [show]="showingPopUp" (showChange)="PopUpChangeHanlder($event)"
     [title]="'Edit Ticket'">
-    <div *ngIf="selectedItem" class="details-container">
+
+  <form [formGroup]="passwordForm" (ngSubmit)="onSubmitPassword()">
+  <div>
+    <label for="password">Password:</label>
+    <input type="password" id="password" formControlName="password">
+  </div>
+
+  <button type="submit" [disabled]="!passwordForm.valid">Submit</button>
+  </form>
+
+
+    <div *ngIf="selectedItem && !passwordMatchError" class="details-container">
       <div>
         <strong>User Email:</strong> {{ selectedItem?.adminId?.email }}
       </div>

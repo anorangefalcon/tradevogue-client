@@ -200,6 +200,7 @@ export class UtilsModule {
     getPaymentKeys: `${this.BackendUrl}/paymentKeys/get`,
     getDecrptedPaymentKeys: `${this.BackendUrl}/paymentKeys/decrypt`,
     getAllPaymentKeys: `${this.BackendUrl}/paymentKeys/getAll`,
+    verifyPassword: `${this.BackendUrl}/paymentKeys/verify`,
 
     // razorpay
     createRazorpayOrder: `${this.BackendUrl}/razorpay/createUpiPayment`,

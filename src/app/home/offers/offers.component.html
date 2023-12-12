@@ -1,8 +1,10 @@
 <section class="container offer-container">
+  <!-- (mouseover)="onHover(item)"
+(mouseout)="onHoverOut(item)" -->
   <div class="row d-flex justify-content-center align-item-center gap-20 relative default-animation-slow">
     <ng-container *ngFor="let item of saleData; let i = index">
-      <div (mouseover)="onHover(item)" *ngIf="item.enable && i<=1" class="col overflow-hidden" [style.background]="item.colors.cardColor">
-        <div   (mouseout)="onHoverOut(item)" class="left-content default-animation-slow">
+      <div *ngIf="item.enable && i<=1" class="col overflow-hidden" [style.background]="item.colors.cardColor">
+        <div   class="left-content default-animation-slow">
           <div class="banner-text">
             <span class="subtitle" [style.color]="item.colors.subTitleColor">{{ item.subTitle }}</span>
             <h2 class="offer-title" [style.color]="item.colors.titleColor">{{ item.title }}</h2>

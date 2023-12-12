@@ -1,44 +1,4 @@
-<!-- <div *ngIf="loading" class="tv-loading">
-   <img src="../../assets/logo-mobile.svg" alt="tradeVogue-loading" *ngIf="!theme">
-   <img src="../../assets/logo-mobile-light.svg" alt="tradeVogue-loading" *ngIf="theme">
-   <div class="circle-tv-loader"></div>
-   </div> -->
-<!-- <div class="container" *ngIf="!loading">
-   <div class="default-animation-slow card card_left card__pd-20 d-flex justify-content-md-between align-item-center">
-     <h2>Online Users</h2>
-     <div class="user-list">
-       <div class="user-container">
-         <div *ngFor="let user of userData" (click)="selectUser(user)" class="user-item">
-           <p>{{ user.name.firstname }}</p>
-         </div>
-       </div>
-     </div>
-   </div>
-   
-   <div class="default-animation-slow card_right card card__pd-20 d-flex align-item-center only_user">
-     <ng-container *ngIf="selectedUser">
-       <h2>Chat Box: {{ selectedUser.name.firstname }}</h2>
-       <p>User ID: {{ selectedUser._id }}</p>
-       <div class="messages" *ngFor="let item of messageList">
-         <div>
-           <p>{{ item }}</p>
-         </div>
-         {{userMessage}}
-       </div>
-   
-       <div>
-         <input type="file" (change)="onFileSelected($event)" />
-         <button (click)="uploadFile()">Upload</button>
-       </div>
-   
-       <textarea class="form__input" [(ngModel)]="textMessage" placeholder="Type your message..."></textarea>
-       <button class="pointer btn-primary btn-sm btn-rounded" (click)="sendMessage()">Send</button>
-     </ng-container>
-     <div *ngIf="!selectedUser">
-       <p>Select a user to start chatting</p>
-     </div>
-   </div>
-   </div> -->
+
 <!-- new work -->
 <!-- char-area -->
 <section class="message-area" *ngIf="userData && userData.length > 0">
@@ -50,7 +10,7 @@
 </section> -->
 
    <div>
-      <div class="row card card__pd-20 d-flex justify-content-md-between align-item-center" style="margin-top: 10px; background: #e6ebeb;">
+      <div class="row card pd-20 d-flex justify-content-md-between align-item-center">
          <div class="chat-area">
             <!-- chatlist -->
             <div class="chatlist d-flex flex-column gap-10">
@@ -86,29 +46,27 @@
     alt="empty inbox"
     style="width: 100px; height: 100px;">
 
-                  <p>Select a user to start chatting</p>
+               
+                  <p>select user</p>
                </div>
                <div *ngIf="selectedUser" class="modal-dialog-scrollable">
                   <!-- <div class="modal-content"> -->
                   <div class="msg-head">
                      <div class="row">
                         <div class="col-8">
-                           <div class="d-flex align-items-center">
-                              <span class="chat-icon"><img class="img-fluid" src="https://mehedihtml.com/chatbox/assets/img/arroleftt.svg" alt="image title"></span>
-                              <!-- <div class="flex-shrink-0">
-                                 <img class="img-fluid" src="https://avatars.githubusercontent.com/u/53940939?s=30&v=5" alt="user img">
-                              </div> -->
-                              <div class="flex-grow-1 ms-3">
-                                 <h3>{{ selectedUser.name.firstname }}</h3>
-                                 <p>{{ selectedUser._id }}</p>
-                              </div>
-                           </div>
+      <div class="chatting d-flex flex-column gap-10">
+        <div class="border d-flex justify-content-md-between">
+            <h4>User :</h4>
+            <span>{{ selectedUser.name.firstname }}
+            </span>
+      </div>
+     </div>
                         </div>
                      </div>
                   </div>
                   <!-- <div class="modal-body">
                      <div class="msg-body"> -->
-                  <div class="scrollable">
+                  <div class="scrollable bg-Image mw100 mh100 relative">
                      <ul>
                         <!-- Loop through merged messages -->
                         <div class="chat-container">
@@ -128,14 +86,19 @@
                            </ul>
                         </div>
                      </ul>
-                  </div>
+                  </div>  
+
+                                          <div class="type d-flex gap-10 align-item-center">
+           <input class="form__input" [(ngModel)]="textMessage" placeholder="Type your message...">
+           <button class="pointer btn-primary btn-sm btn-rounded" (click)="sendMessage()">
+                    <span class="material-symbols-outlined">
+send
+</span></button>
+         </div>
                   <!-- </div>
                      </div> -->
-                  <div class="d-flex gap-10 align-item-center" style="margin-left: 10px;">
-                     <input class="form__input" [(ngModel)]="textMessage" placeholder="Type your message...">
-                     <button *ngFor="let user of userData"  class="pointer btn-primary btn-sm btn-rounded" (click)="sendMessage()">Send</button>
-                  </div>
-                  <!-- <div class="send-btns">
+
+                  <!-- <div cl  ass="send-btns">
                      <div class="attach">
                         <div class="button-wrapper">
                            <span class="label">
@@ -161,7 +124,7 @@
     alt="empty inbox"
     style="width: 100px; height: 100px;">
 
-  <p>No Chats Yet</p>
+  <h6>No Chats Yet</h6>
 </div>
 
 

@@ -27,6 +27,8 @@ export class MonetizationComponent {
   showingPopUp: boolean = false;
   decrptedPublicKey: string = '';
   decryptedPrivateKey: string = '';
+   passwordForm!: FormGroup;
+   passwordMatchError: boolean = true;
   showTab(tab: string) {
     this.currentTab = tab;
   }
@@ -73,6 +75,10 @@ export class MonetizationComponent {
         }
       }
     })
+
+    this.passwordForm = this.formBuilder.group({
+      password: ['', [Validators.required, Validators.minLength(6)]] // You can set validation rules here
+    });
   }
 
   fetchData() {
@@ -148,12 +154,35 @@ view(key: any, index: any) {
   this.showingPopUp = true;
   console.log(this.selectedItem, index ,"selected item are");
   const urlWithParams = `${this.util.URLs.getDecrptedPaymentKeys}/${index}`;
-  
+
   this.fetch.HTTPGET(urlWithParams).subscribe((response: any) => {
-    console.log(response, "response are")
     this.decrptedPublicKey = response.decryptedPublicKey;
     this.decryptedPrivateKey = response.decryptedPrivateKey;
   });
+}
+
+onSubmitPassword(): void {
+  if (this.passwordForm.valid) {
+    const password = this.passwordForm.value.password;
+
+    try {
+      this.fetch.HTTPPOST(this.util.URLs.verifyPassword, { password }).subscribe(
+        (res: any) => {
+          if (res === 'okay') {
+            this.passwordMatchError = false;
+          } else if (res === 'password incorrect') {
+            this.toastService.errorToast({ title: 'Password Not Matched' });
+          }
+        },
+        (error: any) => {
+          console.error('Error occurred while verifying password:', error);
+        }
+      );
+    } catch (error) {
+      this.toastService.errorToast({ title: 'Password Not Matched' });
+      console.error('Error occurred:', error);
+    }
+  }
 }
 
   PopUpChangeHanlder(event: boolean) {

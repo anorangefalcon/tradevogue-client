@@ -8,10 +8,23 @@
   z-index: 95;
 }
 
+mat-tab label {
+  color: rgb(var(--textClr));
+}
+
 .chatbot-container {
   position: relative;
   animation: moveUpDown 3s infinite alternate ease-in-out;
 }
+
+.chat-options {
+  color: rgb(var(--textClr),1);
+}
+
+.chat-message p {
+  color: rgb(var(--textClr),1) !important;
+}
+
 
 @keyframes moveUpDown {
   0% {
@@ -91,7 +104,7 @@
   padding: 10px;
   margin-bottom: 10px;
   height: 390px;
-  background-color: white;
+  background-color: rgb(var(--whiteClr));
   border-radius: 10px;
   overflow: hidden;
   transition: height 0.7s;
@@ -194,11 +207,9 @@
 .d3 {
   margin: 0.5em 0;
   font-size: 1.2em;
-  color: #22313F;
-  /* text-align: center; */
+  color: rgb(var(--textClr));
   text-transform: uppercase;
   letter-spacing: 0.03em;
-  /* text-shadow: -0.09em 0 0 #F22613, 0.09em 0 0 #00FFFF; */
 }
 
 .help-container {

@@ -45,6 +45,7 @@ mergedMessages: any[] = [];
   constructor(private fetchDataService: FetchDataService,
     private socketService: SocketService,
     private utilsModule: UtilsModule) {
+      
       this.getUsers();
       const socket = this.socketService.getChatSocket();
       socket.on('getChatDetail', (data: any) => {
@@ -52,6 +53,17 @@ mergedMessages: any[] = [];
           this.getUsers();
         }
       });
+
+    //     socket.on('saveadminMessage', (data: { message: any[]; }) => {
+    //   console.log('Received coming message:', data);
+    //   const body = {
+    //     message: data.message,
+    //   }
+    //     // this.replyUserMessage = data.message;
+    //     // this.messages.push({ content: this.replyUserMessage, sender: 'user' });
+      
+    // });
+      
 
    }
 
@@ -75,11 +87,19 @@ mergedMessages: any[] = [];
   }
 
 sendMessage(): void {
-  if (this.selectedUser && this.textMessage) {
+  const socket = this.socketService.getChatSocket();
+  if (this.textMessage) {
+
+    this.adminMessages.push(
+      {adminMessage: this.textMessage , createdAt: new Date() }
+    );
+    
     console.log(this.userData, "selected user");
-    setTimeout(() => {
-      this.selectUser(this.userData[0]);
-    }, 1000);
+    // setTimeout(() => {
+    //   socket.emit('existChat', this.userData[0]._id);
+    //   // this.selectUser(this.userData[0]);
+    // }, 1000);
+    this.mergeAndSortMessages();
     this.sendMessageSubject.next(this.textMessage);
     this.textMessage = '';
   }
@@ -106,7 +126,7 @@ sendMessage(): void {
     });
 
     socket.on('connect_error', (error: any) => {
-      console.error('Connection error:', error); 
+      console.error('Connection error:', error);
     });
 
     socket.on('message', (res: string) => {
@@ -204,16 +224,13 @@ socket.on('loadNewChat', (data: any) => {
   // });
 
   socket.on('loadadminExistChat', (data: any) => {
-  console.log(data);
   this.adminOldChat = data;
 
   console.log(this.adminOldChat, "admin old chats ");
 
   this.adminOldChat.forEach((element: any) => {
     if (element.sender == '652b9c1480dd9b13abd5ee3a') {
-      this.adminMessages.push(element); // Store the entire message object
-    } else {
-      this.userMessages.push(element); // Store user messages
+      this.adminMessages.push(element); 
     }
   });
 
@@ -244,6 +261,7 @@ mergeAndSortMessages(): void {
   });
 
   this.mergedMessages = mergedMessages;
+  console.log(this.mergedMessages, "merges messages are --")
 }
 
 

@@ -170,6 +170,8 @@ export class SettingsComponent {
     // this.showWishlistedProducts('my wishlist');
     this.allSubscriptions.push(
     this.wishlistService.showWishlistedProducts().subscribe((data) => {
+      console.log(data, "wishlis data");
+      
       this.wishlistedProducts = data
       console.log(this.wishlistedProducts);
       
