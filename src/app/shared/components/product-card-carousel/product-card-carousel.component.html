@@ -4,6 +4,9 @@
 </div>
 <owl-carousel-o [options]="customOptions" class="custom-carousel" [ngClass]="{crousel: true}" [class.navInactive]="productArr.length < 5">
     <ng-template carouselSlide *ngFor="let product of productArr">
-        <app-card-template [product]="product"></app-card-template>
+
+        <div (click)="ClickedProduct.emit(true)"> 
+            <app-card-template [product]="product"></app-card-template>
+        </div>
     </ng-template>
 </owl-carousel-o>

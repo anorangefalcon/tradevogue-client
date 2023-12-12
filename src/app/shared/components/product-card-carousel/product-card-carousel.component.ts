@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { OwlOptions } from 'ngx-owl-carousel-o';
 import { FetchDataService } from '../../services/fetch-data.service';
 import { productData } from '../../productData';
@@ -10,6 +10,7 @@ import { productData } from '../../productData';
 })
 export class ProductCardCarouselComponent {
 
+  @Output() ClickedProduct = new EventEmitter<boolean>();
   @Input() whatToFetch: any = {
     sort: 'highlight:-1'
   };
@@ -24,15 +25,25 @@ export class ProductCardCarouselComponent {
   constructor(private fetchDataService: FetchDataService) {}
 
   ngOnInit(){
-    this.fetchDataService.getProducts(this.whatToFetch, 10).subscribe((data:any)=>{
+    this.fetchData();
+  }
+
+  ngOnChanges() {
+    console.log('change detected======>');
+
+    this.fetchData()
+  }
+
+
+  fetchData(){
+    this.fetchDataService.getProducts(this.whatToFetch, 10)
+    .subscribe((data:any)=>{
       this.productArr = data.items;
 
       if(this.excludeSKU){
-        console.log(this.excludeSKU);
-        
         this.productArr = this.productArr.filter((item: any) => item.sku !== this.excludeSKU);
       }
-    })
+    });
   }
 
   customOptions: OwlOptions = {
@@ -70,6 +81,5 @@ export class ProductCardCarouselComponent {
       }
     }
   }
-  
 
 }

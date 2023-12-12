@@ -46,7 +46,8 @@ export class NavbarComponent implements OnInit {
   UserRole!: String;
   updatedNotificationArray: any;
   hasNotificationToken: any;
-  QueryStarted:boolean=false;
+  QueryStarted: any = false;
+
   constructor(
     private cartService: CartService,
     private userService: LoginCheckService,
@@ -64,13 +65,13 @@ export class NavbarComponent implements OnInit {
   ) {
     this.hasNotificationToken = false;
 
-    if(this.cookie.get('userToken')) {
-       this.hasNotificationToken = notification.hasFcmToken.subscribe((res) => {
-      if (!res) {
-        return false;
-      }
-      return res;
-    });
+    if (this.cookie.get('userToken')) {
+      this.hasNotificationToken = notification.hasFcmToken.subscribe((res) => {
+        if (!res) {
+          return false;
+        }
+        return res;
+      });
     }
 
     this.checkOutService.secureNavbar$.subscribe((data) => {
@@ -164,27 +165,37 @@ export class NavbarComponent implements OnInit {
       });
   }
 
-    // notification start
+  // notification start
   async subscribeToNotifications() {
     this.notification.initialize();
   }
+  
+  searchClear: Boolean = false;
+  searchFetch: any = '';
 
   searchExplore(query: string) {
-    // console.log('query gone started ssvc');
-    console.log('query come up is ',query);
-    
-    this.QueryStarted=true;
-    this.searchClear=false;
-    // if (query == "") {
-    //   this.router.navigateByUrl(`/explore`);
-    // } else {
-    //   this.router.navigateByUrl(`/explore?search=${query}`);
-    // }
+    console.log('queru Started ');
+    if(query){
+      this.QueryStarted = query;
+    }
+    this.searchClear = false;
+
+    this.searchFetch = {
+      search: query
+    }
+
   }
 
-  searchClear:Boolean=false;
-  SearchClear(){
-    // this.searchClear=true;
+  typingStarted(start: Boolean){
+    console.log(start, 'htis');
+    
+    if(start){
+      this.QueryStarted = true;
+    }
+  }
+
+  CloseHeader(event:boolean){
+    if(event) this.QueryStarted = false;
   }
 
   onLogout() {
@@ -199,35 +210,43 @@ export class NavbarComponent implements OnInit {
     }
   }
 
+
   toggleTheme() {
     this.darkTheme = !this.darkTheme;
     this.fetchDataService.toggleTheme(this.darkTheme);
   }
 
-redirectToUrl(url: string) {
-  const decodedUrl = decodeURIComponent(url);
+  redirectToUrl(url: string) {
+    const decodedUrl = decodeURIComponent(url);
 
-  const baseUrl = window.location.origin;
-  const isAbsoluteUrl = decodedUrl.startsWith('http://') || decodedUrl.startsWith('https://');
+    const baseUrl = window.location.origin;
+    const isAbsoluteUrl = decodedUrl.startsWith('http://') || decodedUrl.startsWith('https://');
 
-  if (isAbsoluteUrl) {
-    window.location.href = decodedUrl;
-  } else {
-    if (decodedUrl.startsWith(baseUrl)) {
-      const path = decodedUrl.substring(baseUrl.length);
-      this.router.navigateByUrl(path);
+    if (isAbsoluteUrl) {
+      window.location.href = decodedUrl;
     } else {
-      this.router.navigateByUrl(decodedUrl);
+      if (decodedUrl.startsWith(baseUrl)) {
+        const path = decodedUrl.substring(baseUrl.length);
+        this.router.navigateByUrl(path);
+      } else {
+        this.router.navigateByUrl(decodedUrl);
+      }
     }
   }
-}
-
-
-
 
   @HostListener("document:click", ["$event"]) onClick(e: Event) {
     if (!this.elementRef.nativeElement.contains(e.target)) {
       this.isSearching = false;
+      this.QueryStarted = false;
+      this.searchFetch = '';
+    }
+  }
+
+  @HostListener('document:keyup', ['$event'])
+  handleKeyboardEvent(event: KeyboardEvent) {
+    if (event.key === 'Enter' && this.QueryStarted) {
+      this.isSearching = false;
+      this.QueryStarted = false;
     }
   }
 

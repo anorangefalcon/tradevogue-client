@@ -63,7 +63,7 @@
                         </span>
                         <div class="search-bar">
                             <app-search-bar (click)="hamburgerOpen = false" [searchPlaceholder]="'Search Products...'"
-                                [onButtonClick]="false" (searchQuery$)="searchExplore($event)"
+                                [onButtonClick]="'navbar'" (searchQuery$)="searchExplore($event)" (typingJustStarted$)="typingStarted($event)"
                                 [searchClear]="searchClear">
                             </app-search-bar>
                             <button class="close_btn pointer display-none" (click)="searchClear=true">
@@ -234,8 +234,7 @@
     </nav>
 
     <div [ngClass]="{'products': QueryStarted}" *ngIf="QueryStarted">
-        <app-product-card-carousel [titles]='"Searched products"'
-            ></app-product-card-carousel>
+        <app-product-card-carousel [whatToFetch]="searchFetch" [titles]='"Searched products"'  (ClickedProduct)="CloseHeader($event)" ></app-product-card-carousel>
     </div>
 
 
@@ -243,4 +242,5 @@
 
 </header>
 
-<div [ngClass]="secureNavbar ? 'secure-navbar' : ''"></div>
+
+<div [ngClass]="{'secure-navbar':secureNavbar,'search-backdrop':QueryStarted}" (click)="QueryStarted ? QueryStarted = false : ''"></div>
