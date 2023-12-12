@@ -36,6 +36,12 @@ export class NewsletterComponent {
   }
 
   async onSubscribe() {
+
+    if(this.subscribeForm.get('email')?.errors){
+      this.toastService.errorToast({title: 'Invalid Email'});
+      return;
+    }
+
     const body = {
       email: this.subscribeForm.get('email')?.value
     }
@@ -44,7 +50,8 @@ export class NewsletterComponent {
       const toastData = {
         title: res.message,
       }
-      this.toastService.successToast(toastData)
+      this.toastService.successToast(toastData);
+      this.subscribeForm?.reset();
     });
   }
 

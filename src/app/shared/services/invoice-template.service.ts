@@ -18,6 +18,7 @@ export class InvoiceTemplateService {
     let params: HttpParams = new HttpParams().set("orderID", orderId);
 
     this.fetchData.HTTPGET(this.backendUrl.URLs.getSellerOrderDetails, params).subscribe((res: any) => {
+      console.log(res);
       this.invoiceSubject.next(res);
     })
   }

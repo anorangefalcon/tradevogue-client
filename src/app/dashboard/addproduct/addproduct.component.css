@@ -162,7 +162,7 @@ app-custom-select {
         padding: 15px;
         background-color: rgb(var(--secondary));
         border-radius: 4px;
-        grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+        grid-template-columns: repeat(auto-fill, minmax(75px, 1fr));
 
         & input[type="file"] {
             display: none;
@@ -175,7 +175,6 @@ app-custom-select {
         & .upload__block {
             height: 100px;
             border-radius: 4px;
-            width: 100px;
             border: 1px dashed rgb(var(--textClr), 0.5);
             padding: 8px;
             font-size: 10px;
@@ -185,11 +184,12 @@ app-custom-select {
         }
 
         & .upload_icon {
-            font-size: 40px;
+            font-size: 35px;
         }
 
         & .images img {
             object-fit: cover;
+            object-position: top;
             border-radius: 4px;
             box-shadow: 1px 1px 3px rgba(var(--blackClr), 0.1);
         }

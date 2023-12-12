@@ -1,6 +1,7 @@
 import { Component, ViewEncapsulation } from '@angular/core';
 import { InvoiceTemplateService } from '../../services/invoice-template.service';
 import { Subscription } from 'rxjs';
+import { FetchDataService } from '../../services/fetch-data.service';
 
 @Component({
   selector: 'app-invoice-template',
@@ -12,14 +13,18 @@ export class InvoiceTemplateComponent {
 
   openInvoiceTemplate: Boolean = false;
   orderDetail!: any;
+  pageTheme: any = false;
 
   invoiceSubscription!: Subscription;
 
-  constructor(private invoiceService: InvoiceTemplateService) {}
+  constructor(private invoiceService: InvoiceTemplateService, private fetchDataService: FetchDataService) {
 
-  ngOnInit(): void {
+    this.fetchDataService.themeColor$.subscribe((theme: any)=>{
+      this.pageTheme = theme;
+    })
     
     this.invoiceSubscription = this.invoiceService.openInvoice$.subscribe((orderDetail: any)=>{
+      
       if(!orderDetail) {
         this.openInvoiceTemplate = false;
         return;
@@ -27,7 +32,11 @@ export class InvoiceTemplateComponent {
 
       this.setData(orderDetail);
       this.openInvoiceTemplate = true;
-    })
+    });
+
+  }
+
+  ngOnInit(): void {
   }
 
   private setData(orderDetail: any) {

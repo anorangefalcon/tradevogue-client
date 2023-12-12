@@ -42,7 +42,7 @@
                                 </span>
                             </label>
                             <small class="banner-label">Upload Banner Image</small>
-                            <img [src]="getImagePreview()" [style.display]="getImagePreview() ? 'flex' : 'none'"
+                            <img [src]="getImagePreview() | imageTransform: transformOptions" [style.display]="getImagePreview() ? 'flex' : 'none'"
                                 class="banner-image">
                             <span class="material-symbols-outlined remove-btn pointer"
                                 [style.display]="getImagePreview() ? 'flex' : 'none'" (click)="onImageRemove()">

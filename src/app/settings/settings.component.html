@@ -226,7 +226,7 @@
                                         <button class="btn-rounded btn" (click)="toggleAccordian(i)">
                                             {{openedAccordionIndex === i?'Close Order':'View Order'}}
                                         </button>
-                                        <!-- <button class="btn-rounded btn" (click)="viewInvoice(i)">View Invoice</button> -->
+                                        <button class="btn-rounded btn" (click)="viewInvoice(i)">View Invoice</button>
                                         <button class="btn-rounded btn" (click)="cancelOrder(order._id)">Cancel
                                             Order</button>
                                     </div>
@@ -685,8 +685,6 @@
                     </div>
 
                 </form>
-
-
                 <button class="btn-primary btn-rounded btn-sm btn-inline" (click)="onPasswordChange()">Save</button>
             </div>
 
@@ -699,7 +697,8 @@
         </div>
 
     </div>
+
+
 </section>
 
-<app-address-2 [ShowComponent]="ShowComponent" [receiveData]="receiveData"
-    (AddressHandler)="AddressHandler($event)"></app-address-2>
+<app-invoice-template></app-invoice-template>

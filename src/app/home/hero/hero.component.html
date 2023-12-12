@@ -5,8 +5,9 @@
             <ng-container *ngFor="let banner of bannerData">
                 <ng-template carouselSlide>
                     <ng-container *ngIf="!banner.title; else bannerData1">
+                        <!-- <img [src]="" alt=""> -->
                         <div class="banner-background pointer" (click)="getLink(banner.buttonLink)"
-                            [ngStyle]="{ 'background-image': 'url(' + banner.backgroundImage + ')' }">
+                            [ngStyle]="{ 'background-image': 'url(' + [banner.backgroundImage | imageTransform: transformOptions] + ')' }">
                         </div>
                     </ng-container>
                     <ng-template #bannerData1>

@@ -48,6 +48,14 @@
 
     }
 
+    & app-custom-select{
+        width: 80px;
+
+        & .form__input{
+            height: 35px;
+        }
+    }
+
     & .file-section {
 
         & .uploadbtn,

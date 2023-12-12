@@ -14,6 +14,7 @@ import { SelectLayoutComponent } from './select-layout/select-layout.component';
 import { DealComponent } from './deal/deal.component';
 import { SalesComponent } from './sales/sales.component';
 import { NewsletterComponent } from 'src/app/home/newsletter/newsletter.component';
+import { ImageTransformPipe } from 'src/app/shared/Pipe/image-transform.pipe';
 
 const routes: Routes = [
   {
@@ -43,6 +44,7 @@ const routes: Routes = [
     SharedModule,
     OffersComponent,
     FormsModule,
+    ImageTransformPipe,
     ReactiveFormsModule,
     NewsletterComponent,
     [RouterModule.forChild(routes)],

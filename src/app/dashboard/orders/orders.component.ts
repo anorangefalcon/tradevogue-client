@@ -12,7 +12,7 @@ import * as xlsx from 'xlsx';
 export class OrdersComponent {
   order_status:string = 'Completed';
   payment_status: string = 'Success';
-  paymentStatus: any[] = ['Success', 'Pending', 'Cancelled', 'Failed'];
+  // paymentStatus: any[] = ['Success', 'Pending', 'Cancelled', 'Failed'];
   orderData: any[] = [];
   pageSize: number = 8;
   currentPage: number = 1;

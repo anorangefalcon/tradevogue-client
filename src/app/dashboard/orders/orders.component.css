@@ -9,9 +9,10 @@
     transform: translateY(7px);
 }
 
-.filters {
-    grid-template-columns: repeat(auto-fit, minmax(min(300px, ), 1fr));
-}
+/* .filters > * { */
+    /* width: min(240px, 100%); */
+    /* grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr)); */
+/* } */
 
 .form__title {
     position: absolute;

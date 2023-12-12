@@ -1,6 +1,7 @@
-.home__block:nth-child(2n){
+.home__block:nth-child(2n) {
   padding-block: 90px;
 }
+
 .home__black {
   background-color: rgb(var(--whiteClr));
 }
@@ -8,14 +9,13 @@
 .py-start-100 {
   padding-block-start: 90px;
 }
+
 /* 
 section {
   background-color: rgb(var(--whiteClr));
 } */
 .facilities {
   color: rgb(var(--textClr));
-  /* background-color: aquamarine;
-  min-height: 200px; */
 
   .gap-40 {
     gap: 40px;
@@ -84,7 +84,7 @@ section {
     padding-block-start: 80px;
   }
 
-  .home__block:nth-child(2n){
+  .home__block:nth-child(2n) {
     padding-block: 80px;
   }
 }
@@ -94,24 +94,30 @@ section {
     width: 300px;
   }
 
-  .facilities .container {
-    flex-wrap: wrap;
+  .facilities .facility {
+      flex-direction: column;
+      text-align: center;
+      gap: 25px;
   }
 }
 
 @media screen and (max-width: 768px) {
 
-  .home__block:nth-child(2n){
+  .home__block:nth-child(2n) {
     padding-block: 70px;
   }
-  
+
   .py-start-100 {
     padding-block-start: 70px;
   }
 
+  .facilities .container{
+    flex-direction: column;
+  }
+
   .facility {
     font-size: 12px !important;
-    padding-block: 14px;
+    padding-block: 20px;
     width: 100% !important;
     gap: 24px !important;
 
@@ -135,18 +141,18 @@ section {
     gap: 15px !important;
   }
 
-  
+
 }
 
 @media screen and (max-width: 480px) {
-  .sm-gap-10{
+  .sm-gap-10 {
     gap: 10px;
   }
 
-  .home__block:nth-child(2n){
+  .home__block:nth-child(2n) {
     padding-block: 50px;
   }
-  
+
   .py-start-100 {
     padding-block-start: 50px;
   }

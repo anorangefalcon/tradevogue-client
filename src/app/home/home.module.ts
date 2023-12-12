@@ -29,7 +29,7 @@ import { NewsletterComponent } from './newsletter/newsletter.component';
   ],
   exports: [
     GalleryComponent,
-    DealOfWeekComponent
+    DealOfWeekComponent,
   ]
 })
 export class HomeModule { }

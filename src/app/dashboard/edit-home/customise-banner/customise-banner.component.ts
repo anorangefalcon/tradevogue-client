@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { TransformOptions } from 'filestack-js';
 import { Subscription } from 'rxjs';
 import { BannerService } from 'src/app/shared/services/custom-UI/banner.service';
 import { DialogBoxService } from 'src/app/shared/services/dialog-box.service';
@@ -29,6 +30,17 @@ export class CustomiseBannerComponent {
   popUpDirection: any = 'right';
   showingPopUp: boolean = false;
   ParentClosed: boolean = false;
+  
+  transformOptions: TransformOptions = {
+    resize: {
+      height: 1000
+    },
+    pjpg: {
+      quality: 60,
+      metadata: true,
+    }
+
+  };
 
   constructor(private fb: FormBuilder,
     private bannerService: BannerService,
@@ -59,7 +71,6 @@ export class CustomiseBannerComponent {
       dialogService.responseEmitter.subscribe({
         next: (res: any) => {
           if (res) {
-            console.log("asjdhasjdhakj", res);
             this.bannerService.deleteBanner({ id: this.deleteId }).subscribe((res: any) => {
               const toast = {
                 title: res.message
@@ -78,7 +89,6 @@ export class CustomiseBannerComponent {
     this.allSubscriptions.push(
       this.bannerService.getBanners().subscribe((data: any) => {
         this.bannerData = data;
-
       }
       ))
   }
@@ -194,7 +204,7 @@ export class CustomiseBannerComponent {
     this.uploadService.fileupload([{ file: file }]).then((url: any) => {
       this.bannerForm.get('backgroundImage')?.setValue(url[0]);
       this.getImagePreview();
-      this.uploading = false;
+      this.uploading = false; 
     })
   }
 
@@ -205,7 +215,15 @@ export class CustomiseBannerComponent {
   }
 
   onImageRemove() {
-    this.bannerForm.get('backgroundImage')?.reset();
+
+    if(!(this.bannerForm.get('backgroundImage')?.value).includes('https://cdn.filestackcontent.com')){
+          this.bannerForm.get('backgroundImage')?.reset();
+          return;
+    }
+    this.uploadService.delete(this.bannerForm.get('backgroundImage')?.value).then(()=>{
+      this.toastService.successToast({title: "Images Removed"});
+      this.bannerForm.get('backgroundImage')?.reset();
+    });
   }
 
   delete(id: any) {

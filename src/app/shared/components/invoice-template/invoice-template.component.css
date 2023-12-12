@@ -133,3 +133,109 @@ p{
 .table-list{
     overflow: initial !important;
 }
+
+.table-list {
+    /* overflow-x: auto; */
+
+    &::-webkit-scrollbar {
+        width: 3px;
+        height: 3px;
+        border-radius: 5px;
+        background-color: rgb(var(--secondary), 0.4);
+    }
+
+    &::-webkit-scrollbar-thumb {
+        border-radius: 5px;
+        background-color: rgb(var(--primaryClr), 0.8);
+    }
+
+    & .table__item-image {
+
+        & img {
+            border-radius: 50%;
+            object-position: top;
+            object-fit: cover;
+        }
+    }
+
+    & .item-check {
+
+        & .material-symbols-outlined {
+            color: transparent;
+            width: 15px;
+            height: 15px;
+            border: 1px solid rgba(128, 128, 128, 0.527);
+            background-color: rgb(var(--whiteClr));
+        }
+
+        & input[type="checkbox"]:checked+label .material-symbols-outlined {
+            color: rgb(var(--whiteClr));
+            background-color: rgb(var(--primaryClr));
+            border-color: rgb(var(--primaryClr));
+        }
+    }
+
+    & table {
+        width: 100%;
+        border-collapse: collapse;
+        border-style: hidden;
+        overflow: hidden;
+
+        & .items {
+            font-weight: 600;
+            padding: 8px 14px;
+            vertical-align: middle;
+            font-size: 12px;
+            white-space: nowrap;
+            text-align: left;
+            letter-spacing: 0.26px;
+            border-bottom: 1px solid rgba(128, 128, 128, 0.152);
+        }
+
+        & th {
+            padding: 12px 16px;
+            background-color: rgb(var(--blackClr), 0.03);
+            color: rgb(var(--blackClr), 0.7);
+        }
+
+
+        & td.items {
+            font-weight: 400;
+        }
+
+        & td .table__item-image+span {
+            width: 20ch;
+            overflow: auto;
+            text-overflow: ellipsis;
+
+            &::-webkit-scrollbar {
+                width: 2px;
+                display: none;
+            }
+        }
+
+        & tbody tr {
+            transition: all 0.3s ease-in-out;
+
+            &:hover {
+                background-color: rgb(var(--secondary), 0.02);
+            }
+        }
+
+        & td.action-btns {
+            & .action__btn-icon {
+                display: flex;
+                font-size: 14px;
+                transition: all 0.1s ease-in-out;
+                padding: 2px;
+                color: rgb(var(--blackClr), 0.7);
+                cursor: pointer;
+
+                &:hover {
+                    color: rgb(var(--primaryClr));
+                }
+            }
+
+        }
+    }
+}

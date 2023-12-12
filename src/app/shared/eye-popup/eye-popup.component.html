@@ -22,6 +22,36 @@
                         ₹{{ list.oldPrice }}
                     </p>
                 </div>
+<!-- 
+                <div class="sizes d-flex align-item-center gap-20" id="sizes">
+                    <p>Size:</p>
+                    <div class="sizes-opt d-flex gap-10">
+                        <div *ngFor="let stock of data.assets[assetIndex].stockQuantity; let j = index"
+                            class="sizes-radios relative">
+                            <input type="radio" name="size" [value]=stock.size id="size_{{ stock.size }}"
+                                [(ngModel)]="selectedSize" (click)="updateSizeIndex(j)">
+                            <label for="size_{{ stock.size }}">{{ stock.size }}</label>
+                        </div>
+                    </div>
+                </div> -->
+
+                <!-- <div *ngIf="!outOfStock" class="d-flex gap-15 align-item-center flex-wrap">
+                    <div class="customSelect">
+                        <app-custom-select [selectedOption]="selectedQ !== 0 ? selectedQ : 'Select Quantity'"
+                            (final_option)="updateSelectedField($event)" [options]="getOrderQuantity()">
+                        </app-custom-select>
+                    </div>
+                    <div *ngIf="!productSku" class="cart-div d-flex gap-10 align-item-center">
+                        <button [ngClass]="!this.selectedQ ? 'disabled': ''" [disabled]="!this.selectedQ"
+                            class="btn btn-sm btn-rounded fw-500 btn-primary d-flex gap-10 align-item-center"
+                            (click)="addToCart()">
+                            ADD TO CART
+                        </button>
+                    </div>
+                </div> -->
+                <!-- <div *ngIf="outOfStock" class="d-flex gap-15 align-item-center stockAvailable out-of-stock">
+                    <p>Out Of Stock</p>
+                </div> -->
     
                 <div class="d-flex gap-30 align-item-center ">
     
@@ -93,17 +123,17 @@
                 </div> 
 
                 <div class="cart-div d-flex gap-10 align-item-center">
-                    <!-- <button class="btn-secondary btn-xs btn btn-rounded d-flex gap-5 align-item-center"
+                    <button class="btn-secondary btn-xs btn btn-rounded d-flex gap-5 align-item-center"
                         (click)="addToCart()">
                         <span class="fs-20 material-symbols-outlined">
                             shopping_cart
                         </span>
                         <p class="fs-12">ADD TO CART</p>
-                    </button> -->
-
-                    <button class="View btn-primary btn-xs btn btn-rounded d-flex gap-10 align-item-center" routerLink="/product/{{list.sku}}" (click)="this.show=false">
-                        View
                     </button>
+
+                    <!-- <button class="View btn-primary btn-xs btn btn-rounded d-flex gap-10 align-item-center" routerLink="/product/{{list.sku}}" (click)="this.show=false">
+                        View
+                    </button> -->
                 </div>
     
             </div>

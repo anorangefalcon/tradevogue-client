@@ -22,8 +22,8 @@
                         Download Sample
                     </a>
 
-                    <a aria-label="Download Excel File"
-                        class="downloadBtn d-flex flex-center pointer gap-5" (click)="exportProductsExcel()">
+                    <a aria-label="Download Excel File" class="downloadBtn d-flex flex-center pointer gap-5"
+                        (click)="exportProductsExcel()">
                         Export Excel
                     </a>
                 </div>
@@ -116,8 +116,11 @@
         </div>
         <div class="d-flex flex-column gap-10">
             <div class="d-flex justify-content-md-between">
-                <span class="d-flex align-item-center gap-5 fs-12">
-                    <p class="fw-500 fs-12">Total Products:</p> {{totalCount}}
+
+                <span class="d-flex align-item-center gap-10">
+                    <p class="fw-500 fs-12">Show Entries:</p>
+                    <app-custom-select class="showEntries" [options]="showQuantity" [selectedOption]="template.limit"
+                        (final_option)="updateFields($event, 'limit')"></app-custom-select>
                 </span>
 
                 <span class="d-flex align-item-center gap-10">
@@ -301,22 +304,19 @@
                                             <span class="tooltiptext">Highlight Product</span>
                                         </span>
 
-                                        <a  class="tooltip"
-                                            [routerLink]="['/dashboard/product-overview', item.itemId]">
+                                        <a class="tooltip" [routerLink]="['/dashboard/product-overview', item.itemId]">
                                             <span
                                                 class="fs-20 mh100 mw100 action__btn-icon material-symbols-outlined">visibility</span>
                                             <span class="tooltiptext">View</span>
                                         </a>
 
-                                        <a  class="tooltip"
-                                            [routerLink]="['/dashboard/editproduct', item.itemId]">
+                                        <a class="tooltip" [routerLink]="['/dashboard/editproduct', item.itemId]">
                                             <span
                                                 class="fs-20 mh100 mw100 action__btn-icon material-symbols-outlined">edit</span>
                                             <span class="tooltiptext">Edit</span>
                                         </a>
 
-                                        <a  class="tooltip"
-                                            (click)="deleteItem(item._id, item.name)">
+                                        <a class="tooltip" (click)="deleteItem(item._id, item.name)">
                                             <span
                                                 class="fs-20 mh100 mw100 action__btn-icon material-symbols-outlined">delete</span>
                                             <span class="tooltiptext">Delete</span>
@@ -341,8 +341,10 @@
                                 <tr>
                                     <td colspan="10">
                                         <div class="noDataFound d-flex flex-column flex-center card__pd-20">
-                                            <img class="default-animation" src="../../../assets/noDataFound.svg" *ngIf="!pageTheme" alt="No Data Found" height="170px">
-                                            <img class="default-animation" src="../../../assets/noDataFound-light.svg" *ngIf="pageTheme" alt="No Data Found" height="170px">
+                                            <img class="default-animation" src="../../../assets/noDataFound.svg"
+                                                *ngIf="!pageTheme" alt="No Data Found" height="170px">
+                                            <img class="default-animation" src="../../../assets/noDataFound-light.svg"
+                                                *ngIf="pageTheme" alt="No Data Found" height="170px">
                                         </div>
                                     </td>
                                 </tr>
@@ -355,8 +357,15 @@
 
     </div>
 
-    <app-pagination [collectionSize]="totalCount" [pageSize]="pageSize" [currentPage]="currentPage"
-        (activePage)="pageChange($event)"></app-pagination>
+    <div class="d-flex justify-content-md-between align-item-center">
+        <span class="d-flex align-item-center gap-5 fs-12">
+            <p class="fw-500 fs-12">Total Products:</p> {{totalCount}}
+        </span>
+
+        <app-pagination [collectionSize]="totalCount" [pageSize]="template.limit" [currentPage]="currentPage"
+            (activePage)="pageChange($event)"></app-pagination>
+    </div>
+
     <!-- PopUp Div -->
     <!-- <app-dialog [type]="'confirmation'" (reply)="response($event)"></app-dialog> -->
 </section>

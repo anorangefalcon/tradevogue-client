@@ -3,7 +3,6 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import * as filestack from 'filestack-js';
 
-
 @Injectable({
   providedIn: 'root'
 })
@@ -12,12 +11,15 @@ export class ImageUploadService {
 
   url = "";
   apiKey = "AjWhTOs3lSdmypsuHOHmTz";
-  policy = "eyJleHBpcnkiOjE3MjIzNjc4MDAsImNhbGwiOlsiY29udmVydCIsInJlbW92ZSJdfQ==";
-  signature = "89ee78e81fbecd371307f893768d12d46f89c3806bd25d6a76ccf67d31f2deab";
+  policy = "eyJjYWxsIjpbInJlbW92ZSJdLCJleHBpcnkiOjE3MDY2Mzk0MDB9";
+  signature = "76fae110e2fde5dffeda73c606d7aabd48de8a9c7937e1a0a6641915b37c5265";
+
+  transformOptions!: filestack.TransformOptions;
+  fileSecurity!: filestack.Security;
 
   client = filestack.init(this.apiKey);
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, ) { }
 
 
 
@@ -42,10 +44,37 @@ export class ImageUploadService {
     });
   }
 
-  delete(imageUrl: any): Observable<any> {
+  delete(imageUrl: any): Promise<any> {
     let segment = imageUrl.split('/');
     let uid = segment[segment.length - 1];
-    let url = `https://www.filestackapi.com/api/file/${uid}?key=${this.apiKey}&policy=${this.policy}&signature=${this.signature}`;
-    return this.http.delete(url);
+
+    this.fileSecurity = {
+      policy: this.policy,
+      signature:  this.signature
+    }
+    return this.client.remove(uid, this.fileSecurity);
+  }
+
+  // preview(url: string){
+  //   let segment = url.split('/');
+  //   let uid = segment[segment.length - 1];
+
+  //   this.transformOptions = {
+  //     resize: {
+  //       // width: 1200,
+  //       height: 1000
+  //     },
+  //     pjpg: {
+  //       quality: 60,
+  //       metadata: true,
+  //     }
+
+  //   };
+
+  //   return this.client.transform(url, this.transformOptions, true);
+  // }
+
+  transform( url: string | string[], options: filestack.TransformOptions, b64?: boolean ): string {
+    return this.client.transform(url, options, b64);
   }
 }

@@ -75,7 +75,7 @@
                             </div>
 
                             <div class="form__group">
-                                <label [for]="'productImages'+ i" class="input__label">Product Images :</label>
+                                <label arial-label="Product Images" [for]="'productImages'+ i" class="input__label">Product Images :</label>
 
                                 <div class="product__image__container grid gap-15">
                                     <div class="upload__image relative">
@@ -102,9 +102,9 @@
 
                                         <!-- For purpose of editing -->
                                         <ng-template #URLpreview>
-                                            <img [src]="item" alt="productImage.png" width="100" height="100">
+                                            <img [src]="item | imageTransform: transformOptions" alt="productImage.png" width="100" height="100">
                                             <i class="remove-btn absolute pointer transition d-flex flex-center material-symbols-outlined"
-                                                (click)="deleteImage(imagesIndex, i)">close</i>
+                                                (click)="deleteImage(imagesIndex, i, 'filestack')">close</i>
                                         </ng-template>
                                     </div>
                                 </div>

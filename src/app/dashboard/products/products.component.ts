@@ -14,9 +14,11 @@ import { Subscription } from 'rxjs';
 export class ProductsComponent implements OnInit {
 
   allSubscriptions: Subscription[] = [];
+
+  showQuantity: any[] = [10,20,30,40,50];
   sortOption: any[] = ['Rating: Low to High', 'Rating: High to Low', 'Stock: Low to High', 'Stock: High to Low'];
   productTemplate: any[] = ['Product Name', 'Category', 'Brand', 'Price', 'Stock', 'Status', 'Published', 'Action'];
-  pageSize: number = 8;
+  pageSize: number = 10;
   currentPage: number = 1;
   selectedColor: any = 0;
   totalCount: any = 0;
@@ -229,10 +231,9 @@ export class ProductsComponent implements OnInit {
 
   updateFields(e: any, field: string = '') {
 
-    if (field) {
-      this.template.filter[field] = e;
-
-    } else {
+    if(field = 'limit') this.template[field] = e;
+    else if (field) this.template.filter[field] = e;
+    else {
       this.tempSortData = e;
       let data = e.split(':');
       delete this.template.filter['rating'];

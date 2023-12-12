@@ -31,6 +31,7 @@ import { AboutComponent } from './about/about.component';
 import { CustomiseTcComponent } from './customise-tc/customise-tc.component';
 import { ChatComponent } from './chat/chat.component';
 import { OffersComponent } from './offers/offers.component';
+import { ImageTransformPipe } from '../shared/Pipe/image-transform.pipe';
 
 @NgModule({
   declarations: [
@@ -67,6 +68,7 @@ import { OffersComponent } from './offers/offers.component';
     ProductPageModule,
     GalleryComponent,
     RouterModule,
+    ImageTransformPipe
   ],
   providers: [
     UploadExcelService,

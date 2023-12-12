@@ -8,6 +8,7 @@ import { UtilsModule } from 'src/app/utils/backend-urls';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpParams } from '@angular/common/http';
 import { Subscription } from 'rxjs';
+import { TransformOptions } from 'filestack-js';
 
 @Component({
   selector: 'app-addproduct',
@@ -32,6 +33,18 @@ export class AddproductComponent {
   common_colors: string[] = ['#FFFFFF', '#000000', '#0000FF', '#808080', '#800080', '#00FF00', '#FFC0CB', '#ff0000'];
   new_colors: string[] = [];
   loading: boolean = false;
+
+  // Dimension for Filestack Images Trnaformation
+  transformOptions: TransformOptions = {
+    resize: {
+      height: 600
+    },
+    pjpg: {
+      quality: 60,
+      metadata: true,
+    }
+
+  };
 
   productsForm: FormGroup;
   current_form: string = '';
@@ -421,15 +434,25 @@ export class AddproductComponent {
   // Delete Image from Image List
   deleteImage(imageIndex: any, formId: any, type = '') {
     let productImages = this.productsForm.get('assets')?.get(String(formId))?.get('photo')?.value;
-    if (type != 'filestack') {
-      productImages.splice(imageIndex, 1);
-      this.productsForm.get('assets')?.get(String(formId))?.get('photo')?.patchValue(productImages);
+
+    if (type == 'filestack' && productImages[imageIndex].includes('https://cdn.filestackcontent.com')) {
+
+      this.upload.delete(productImages[imageIndex]).then(()=>{
+        productImages.splice(imageIndex, 1);
+        this.productsForm.get('assets')?.get(String(formId))?.get('photo')?.patchValue(productImages);
+      });
+
       return;
     }
 
-    this.allSubscriptions.push(
-    this.upload.delete(productImages[imageIndex]).subscribe((res) => {
-    }));
+    productImages.splice(imageIndex, 1);
+    this.productsForm.get('assets')?.get(String(formId))?.get('photo')?.patchValue(productImages);
+    return;
+
+
+    // this.allSubscriptions.push(
+    // this.upload.delete(productImages[imageIndex]).subscribe((res) => {
+    // }));
   }
 
   // update Form Control For Custom Select buttons

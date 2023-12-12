@@ -37,6 +37,14 @@ html:focus-within {
     scroll-behavior: smooth;
 }
 
+.emptyImg{
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+}
+
 /* Set core body defaults */
 body {
     min-height: 100vh;
@@ -136,12 +144,25 @@ body {
     /* color: rgb(var(--textClr)); */
     background-color: rgb(var(--blackClr), 0.02);
 
-    & svg {
-        filter: invert(100%) sepia(1%) saturate(2%) hue-rotate(64deg) brightness(113%) contrast(101%);
-
+    & .footer {
+        & svg {
+            filter: invert(0%) sepia(93%) saturate(0%) hue-rotate(209deg) brightness(94%) contrast(106%);
+        }
 
         &:hover {
-            filter: invert(33%) sepia(17%) saturate(3890%) hue-rotate(142deg) brightness(95%) contrast(97%)
+            & svg {
+                filter: invert(100%) sepia(1%) saturate(2%) hue-rotate(64deg) brightness(113%) contrast(101%);
+            }
+        }
+    }
+
+    & .newsletter {
+        & svg {
+            filter: invert(100%) sepia(1%) saturate(2%) hue-rotate(64deg) brightness(113%) contrast(101%);
+
+            &:hover {
+                filter: invert(33%) sepia(17%) saturate(3890%) hue-rotate(142deg) brightness(95%) contrast(97%);
+            }
         }
     }
 }
@@ -160,7 +181,7 @@ body {
 
     background-color: rgb(var(--whiteClr), 0.9) !important;
 
-    & svg {
+    & svg.newsletter {
         filter: invert(100%) sepia(1%) saturate(2%) hue-rotate(64deg) brightness(113%) contrast(101%);
 
         &:hover {
@@ -170,32 +191,74 @@ body {
 } */
 
 body.dark {
-    --whiteClr: 34, 34, 34; /* Change white to a darker shade */
-    --blackClr: 255, 255, 255; /* Change black to white */
-    --textClr: 200, 200, 200; /* Adjusted text color to a lighter shade */
+    --whiteClr: 34, 34, 34;
+    /* Change white to a darker shade */
+    --blackClr: 255, 255, 255;
+    /* Change black to white */
+    --textClr: 200, 200, 200;
+    /* Adjusted text color to a lighter shade */
     --DefaultBorder: none;
 
-    --primaryClr: 2, 208, 208; /* Teal dark remains the same */
-    --secondary: 42, 41, 41; /* Adjusted secondary color to a darker shade */
-    --danger: 236, 82, 74; /* Danger color remains the same */
-    --success: 92, 201, 113; /* Success color remains the same */
-    --warning: 163, 125, 0; /* Warning color remains the same */
-    --info: 64, 210, 255; /* Info color remains the same */
+    --primaryClr: 2, 208, 208;
+    /* Teal dark remains the same */
+    --secondary: 42, 41, 41;
+    /* Adjusted secondary color to a darker shade */
+    --danger: 236, 82, 74;
+    /* Danger color remains the same */
+    --success: 92, 201, 113;
+    /* Success color remains the same */
+    --warning: 163, 125, 0;
+    /* Warning color remains the same */
+    --info: 64, 210, 255;
+    /* Info color remains the same */
 
     background-color: #000000e5 !important;
 
-    --gray: 51, 51, 51; /* Adjusted gray color to a darker shade */
-    --new-text-black: 255, 255, 255; /* Change new text black to white */
-    --text-gray: 200, 200, 200; /* Adjusted text gray to a lighter shade */
-    --input-text-bg: 34, 34, 34, 0.8; /* Adjusted input text background to a darker shade */
+    --gray: 51, 51, 51;
+    /* Adjusted gray color to a darker shade */
+    --new-text-black: 255, 255, 255;
+    /* Change new text black to white */
+    --text-gray: 200, 200, 200;
+    /* Adjusted text gray to a lighter shade */
+    --input-text-bg: 34, 34, 34, 0.8;
+    /* Adjusted input text background to a darker shade */
 
-    --blue-clr: 64, 210, 255; /* Blue color remains the same */
-    --yellow-clr: 249, 165, 80; /* Yellow color remains the same */
-    --green-clr: var(--success); /* Green color remains the same */
-    --red-clr: var(--danger); /* Red color remains the same */
-    --goldClr: 254, 151, 4; /* Gold color remains the same */
+    --blue-clr: 64, 210, 255;
+    /* Blue color remains the same */
+    --yellow-clr: 249, 165, 80;
+    /* Yellow color remains the same */
+    --green-clr: var(--success);
+    /* Green color remains the same */
+    --red-clr: var(--danger);
+    /* Red color remains the same */
+    --goldClr: 254, 151, 4;
+    /* Gold color remains the same */
 
-    color: #ffffff; /* Text color remains the same */
+    color: #ffffff;
+    /* Text color remains the same */
+
+    & .newsletter {
+        & svg {
+            filter: invert(100%) sepia(1%) saturate(2%) hue-rotate(64deg) brightness(113%) contrast(101%);
+
+            &:hover {
+                filter: invert(33%) sepia(17%) saturate(3890%) hue-rotate(142deg) brightness(95%) contrast(97%);
+            }
+        }
+    }
+
+    & .footer {
+        & svg {
+            filter: invert(100%) sepia(1%) saturate(2%) hue-rotate(64deg) brightness(113%) contrast(101%);
+        }
+
+        &:hover {
+            & svg {
+                filter: invert(0%) sepia(93%) saturate(0%) hue-rotate(209deg) brightness(94%) contrast(106%);
+            }
+        }
+    }
+
 }
 
 svg {
@@ -1088,6 +1151,19 @@ span.error {
     height: 130px;
     resize: none;
     padding-block: 8px;
+    overflow: auto;
+
+    &::-webkit-scrollbar{
+        width: 5px;
+    }
+    &::-webkit-scrollbar-track{
+        background: #f1f1f1;
+        border-radius: 25px;
+    }
+    &::-webkit-scrollbar-thumb{
+        background: #ccc;
+        border-radius: 25px;
+    }
 }
 
 .form__radio {

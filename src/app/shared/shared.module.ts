@@ -23,7 +23,6 @@ import { InvoiceTemplateComponent } from './components/invoice-template/invoice-
 import { GalleryComponent } from '../home/gallery/gallery.component';
 import { HeroComponent } from '../home/hero/hero.component';
 import { EyePopupComponent } from './eye-popup/eye-popup.component';
-
 @NgModule({
   declarations: [
     NavbarComponent,
@@ -37,7 +36,6 @@ import { EyePopupComponent } from './eye-popup/eye-popup.component';
     AddressComponent,
     LessThanOrEqualPipe,
     PopUpComponent,
-    LessThanOrEqualPipe,
     PaginationComponent,
     DrawerComponent,
     InvoiceTemplateComponent,
@@ -66,7 +64,6 @@ import { EyePopupComponent } from './eye-popup/eye-popup.component';
     AddressComponent,
     LessThanOrEqualPipe,
     PopUpComponent,
-    LessThanOrEqualPipe,
     PaginationComponent,
     DrawerComponent,
     InvoiceTemplateComponent,
