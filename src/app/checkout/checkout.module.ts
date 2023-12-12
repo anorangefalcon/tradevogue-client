@@ -7,7 +7,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { BillingComponent } from './billing/billing.component';
 import { PipesPipe } from '../checkout/billing/pipes.pipe';
 import { SharedModule } from '../shared/shared.module';
-import { UtilsModule } from '../utils/utils.module';
+import { UtilsModule } from '../utils/backend-urls';
 
 
 const routers: Routes = [

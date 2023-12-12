@@ -11,7 +11,7 @@ import { HomeModule } from './home/home.module';
 import { ProductPageModule } from './product-page/product-page.module';
 import { FaqPageModule } from './faq-page/faq-page.module';
 import { CheckoutModule } from './checkout/checkout.module';
-import { UtilsModule } from './utils/utils.module';
+import { UtilsModule } from './utils/backend-urls';
 import { CookieService } from 'ngx-cookie-service';
 import { HeadersInterceptor } from './headers.interceptor';
 import { LayoutComponent } from './layout/layout.component';

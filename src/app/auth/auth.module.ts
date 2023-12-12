@@ -5,7 +5,7 @@ import { LoginComponent } from './login/login.component';
 import { SignUpComponent } from './sign-up/sign-up.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
-import { UtilsModule } from '../utils/utils.module';
+import { UtilsModule } from '../utils/backend-urls';
 import { ForgetPasswordComponent } from './forget-password/forget-password.component';
 import { SharedModule } from '../shared/shared.module';
 

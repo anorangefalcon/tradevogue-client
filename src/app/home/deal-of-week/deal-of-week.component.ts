@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FetchDataService } from 'src/app/shared/services/fetch-data.service';
-import { UtilsModule } from 'src/app/utils/utils.module';
+import { UtilsModule } from 'src/app/utils/backend-urls';
 import { Router, RouterModule } from '@angular/router';
 
 @Component({

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import Chart from 'chart.js/auto';
 import { Subscription } from 'rxjs';
 import { FetchDataService } from 'src/app/shared/services/fetch-data.service';
-import { UtilsModule } from 'src/app/utils/utils.module';
+import { UtilsModule } from 'src/app/utils/backend-urls';
 
 @Component({
   selector: 'app-statistics',

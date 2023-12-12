@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { FetchDataService } from 'src/app/shared/services/fetch-data.service';
 import { ToastService } from 'src/app/shared/services/toast.service';
-import { UtilsModule } from 'src/app/utils/utils.module';
+import { UtilsModule } from 'src/app/utils/backend-urls';
 
 @Component({
   selector: 'app-select-layout',

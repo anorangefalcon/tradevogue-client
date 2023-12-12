@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, Subscription, map } from 'rxjs';
 import { ToastService } from './toast.service';
 import { HttpClient } from '@angular/common/http';
-import { UtilsModule } from './../../utils/utils.module';
+import { UtilsModule } from '../../utils/backend-urls';
 import { LoginCheckService } from './login-check.service';
 
 @Injectable({

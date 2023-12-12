@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
 import { CartService } from '../services/cart.service';
 import { HttpParams } from '@angular/common/http';
 import { FetchDataService } from '../services/fetch-data.service';
-import { UtilsModule } from 'src/app/utils/utils.module';
+import { UtilsModule } from 'src/app/utils/backend-urls';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({

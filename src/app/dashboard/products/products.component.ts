@@ -2,7 +2,7 @@ import { Component, OnInit, ElementRef, ChangeDetectorRef, HostListener } from '
 import { FetchDataService } from 'src/app/shared/services/fetch-data.service';
 import { UploadExcelService } from '../services/upload-excel.service';
 import { ToastService } from 'src/app/shared/services/toast.service';
-import { UtilsModule } from 'src/app/utils/utils.module';
+import { UtilsModule } from 'src/app/utils/backend-urls';
 import { DialogBoxService } from 'src/app/shared/services/dialog-box.service';
 import { Subscription } from 'rxjs';
 

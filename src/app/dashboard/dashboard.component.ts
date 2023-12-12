@@ -3,7 +3,7 @@ import { LoginCheckService } from '../shared/services/login-check.service';
 import { FetchDataService } from '../shared/services/fetch-data.service';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { UtilsModule } from '../utils/utils.module';
+import { UtilsModule } from '../utils/backend-urls';
 import { SocketService } from '../shared/services/socket.service';
 
 
@@ -49,7 +49,7 @@ export class DashboardComponent {
       ]
     },
     { name: 'Orders', icons: 'shopping_cart', route: '/dashboard/orders' },
-    { name: 'Promo Code', icons: 'redeem', route: '/dashboard/coupons' },
+    { name: 'Promo Code', icons: 'redeem', route: '/dashboard/offers' },
     {
       name: 'Customise', route: '', icons: 'build', sublist: [
         { name: 'Home Page', route: '/dashboard/customise-home' },

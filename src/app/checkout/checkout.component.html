@@ -134,12 +134,12 @@
                 <!-- </button> -->
 
         </div>
-        <span *ngIf="CouponValid=='invalid'">Coupon is not valid</span>
+        <span *ngIf="CouponValid && CouponValid=='invalid'">Coupon is not valid</span>
         <div class="all-coupons">
 
             <div class="coupon d-flex flex-column gap-10" *ngFor="let coupon of AllCoupons">
                 <div class="coupon-name">
-                    <h2>{{coupon.couponcode}}</h2>
+                    <h2>{{coupon.couponCode}}</h2>
                 </div>
 
 

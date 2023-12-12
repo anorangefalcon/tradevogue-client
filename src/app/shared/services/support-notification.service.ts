@@ -5,7 +5,7 @@ import { getMessaging, getToken } from 'firebase/messaging';
 import { initializeApp } from 'firebase/app'; 
 import { environment } from 'src/environments/environment';
 import { FetchDataService } from './fetch-data.service';
-import { UtilsModule } from 'src/app/utils/utils.module';
+import { UtilsModule } from 'src/app/utils/backend-urls';
 import { CookieService } from 'ngx-cookie-service';
 
 @Injectable({

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { UtilsModule } from '../utils/utils.module';
+import { UtilsModule } from '../utils/backend-urls';
 import { FetchDataService } from '../shared/services/fetch-data.service';
 import { NavigationEnd, Router } from '@angular/router';
 import { BehaviorSubject, Subscription } from 'rxjs';

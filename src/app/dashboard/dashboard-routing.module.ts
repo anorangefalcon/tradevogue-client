@@ -10,7 +10,6 @@ import { AddproductfeaturesComponent } from './addproductfeatures/addproductfeat
 import { OrderPageComponent } from './orders/order-page/order-page.component';
 import { FaqsComponent } from './faqs/faqs.component';
 import { ProductOverviewComponent } from './products/product-overview/product-overview.component';
-import { CouponsComponent } from './coupons/coupons.component';
 import { SupportComponent } from './support/support.component';
 import { TicketsComponent } from './tickets/tickets.component';
 import { SocialsComponent } from './socials/socials.component';
@@ -20,6 +19,7 @@ import { NotificationsComponent } from './notifications/notifications.component'
 import { AboutComponent } from './about/about.component';
 import { CustomiseTcComponent } from './customise-tc/customise-tc.component';
 import { ChatComponent } from './chat/chat.component';
+import { OffersComponent } from './offers/offers.component';
 
 const routes: Routes = [ 
   {
@@ -40,7 +40,8 @@ const routes: Routes = [
       { path: 'account', component: AccountComponent },
 
       { path: 'customise-faq', component: FaqsComponent },
-      { path: 'coupons', component: CouponsComponent },
+      // { path: 'coupons', component: CouponsComponent },
+      {path:'offers',component:OffersComponent},
       { path: 'support', component: SupportComponent },
       { path: 'tickets', component: TicketsComponent },
       { path: 'monetization', component: MonetizationComponent },

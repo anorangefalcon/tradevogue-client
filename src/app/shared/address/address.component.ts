@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FetchDataService } from '../services/fetch-data.service';
-import { UtilsModule } from 'src/app/utils/utils.module';
+import { UtilsModule } from 'src/app/utils/backend-urls';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { PincodeService } from 'src/app/shared/services/pincode.service';
 

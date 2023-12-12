@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { ToastService } from './toast.service';
 import { BehaviorSubject, catchError } from 'rxjs';
-import { UtilsModule } from 'src/app/utils/utils.module';
+import { UtilsModule } from 'src/app/utils/backend-urls';
 import { CookieService } from 'ngx-cookie-service';
 @Injectable({
   providedIn: 'root',

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { FetchDataService } from './fetch-data.service';
-import { UtilsModule } from 'src/app/utils/utils.module';
+import { UtilsModule } from 'src/app/utils/backend-urls';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { Router } from '@angular/router';
 import { ToastService } from './toast.service';

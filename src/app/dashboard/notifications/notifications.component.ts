@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
 import { NotificationService } from 'src/app/shared/services/custom-UI/notification.service';
 import { ImageUploadService } from 'src/app/shared/services/image-upload.service';
 import { FetchDataService } from 'src/app/shared/services/fetch-data.service';
-import { UtilsModule } from 'src/app/utils/utils.module';
+import { UtilsModule } from 'src/app/utils/backend-urls';
 import { HttpClient } from '@angular/common/http';
 import { ToastService } from 'src/app/shared/services/toast.service';
 import { SocketService } from 'src/app/shared/services/socket.service';

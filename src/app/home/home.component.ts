@@ -1,5 +1,5 @@
 import { Component, TemplateRef, ViewChild } from '@angular/core';
-import { UtilsModule } from '../utils/utils.module';
+import { UtilsModule } from '../utils/backend-urls';
 import { FetchDataService } from '../shared/services/fetch-data.service';
 
 @Component({

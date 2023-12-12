@@ -1,7 +1,7 @@
 import { Component, Renderer2 } from '@angular/core';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { passwordStrengthValidator } from '../validators'; // Adjust the path to the correct location
-import { UtilsModule } from 'src/app/utils/utils.module';
+import { UtilsModule } from 'src/app/utils/backend-urls';
 import { FetchDataService } from 'src/app/shared/services/fetch-data.service';
 import { LoginCheckService } from 'src/app/shared/services/login-check.service';
 import { Subscription } from 'rxjs';

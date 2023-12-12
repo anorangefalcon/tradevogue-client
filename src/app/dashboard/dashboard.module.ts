@@ -16,7 +16,6 @@ import { UploadExcelService } from './services/upload-excel.service';
 import { OrderPageComponent } from './orders/order-page/order-page.component';
 import { FaqsComponent } from './faqs/faqs.component';
 import { ProductOverviewComponent } from './products/product-overview/product-overview.component';
-import { CouponsComponent } from './coupons/coupons.component';
 // import { PaginationService } from '../shared/services/pagination.service';
 import { PopupService } from '../shared/services/popup.service';
 import { SupportComponent } from './support/support.component';
@@ -31,6 +30,7 @@ import { NotificationsComponent } from './notifications/notifications.component'
 import { AboutComponent } from './about/about.component';
 import { CustomiseTcComponent } from './customise-tc/customise-tc.component';
 import { ChatComponent } from './chat/chat.component';
+import { OffersComponent } from './offers/offers.component';
 
 @NgModule({
   declarations: [
@@ -44,7 +44,6 @@ import { ChatComponent } from './chat/chat.component';
     OrderPageComponent,
     FaqsComponent,
     ProductOverviewComponent,
-    CouponsComponent,
     SupportComponent,
     TicketsComponent,
     DateDisplayPipe,
@@ -55,6 +54,7 @@ import { ChatComponent } from './chat/chat.component';
     AboutComponent,
     CustomiseTcComponent,
     ChatComponent,
+    OffersComponent,
 
   ],
 

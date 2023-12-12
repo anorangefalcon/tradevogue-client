@@ -3,7 +3,7 @@ import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@ang
 import { FetchDataService } from 'src/app/shared/services/fetch-data.service';
 import { ImageUploadService } from 'src/app/shared/services/image-upload.service';
 import { ToastService } from 'src/app/shared/services/toast.service';
-import { UtilsModule } from 'src/app/utils/utils.module';
+import { UtilsModule } from 'src/app/utils/backend-urls';
 import * as _ from 'lodash';
 import { Subscription } from 'rxjs';
 

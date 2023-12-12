@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FetchDataService } from '../shared/services/fetch-data.service';
-import { UtilsModule } from 'src/app/utils/utils.module';
+import { UtilsModule } from 'src/app/utils/backend-urls';
 import { passwordStrengthValidator, matchPasswordValidator } from '../auth/validators';
 import { Location } from '@angular/common';
 import { CartService } from '../shared/services/cart.service';

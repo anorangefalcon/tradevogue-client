@@ -1,6 +1,6 @@
 import { Component, Renderer2 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { UtilsModule } from 'src/app/utils/utils.module';
+import { UtilsModule } from 'src/app/utils/backend-urls';
 import { FetchDataService } from 'src/app/shared/services/fetch-data.service';
 import { LoginCheckService } from 'src/app/shared/services/login-check.service';
 import { DialogBoxService } from 'src/app/shared/services/dialog-box.service';

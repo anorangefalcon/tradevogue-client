@@ -3,7 +3,7 @@ import { CartService } from "../../services/cart.service";
 import { FetchDataService } from "../../services/fetch-data.service";
 import { NavigationEnd, Router } from "@angular/router";
 import { WishlistService } from "../../services/wishlist.service";
-import { UtilsModule } from "src/app/utils/utils.module";
+import { UtilsModule } from "src/app/utils/backend-urls";
 import { LoginCheckService } from "../../services/login-check.service";
 import { CheckoutService } from "src/app/checkout/checkout.service";
 import { SupportNotificationService } from "../../services/support-notification.service";

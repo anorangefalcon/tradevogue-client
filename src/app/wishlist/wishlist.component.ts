@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { WishlistService } from '../shared/services/wishlist.service';
-import { UtilsModule } from '../utils/utils.module';
+import { UtilsModule } from '../utils/backend-urls';
 import { FetchDataService } from '../shared/services/fetch-data.service';
 import { ToastService } from '../shared/services/toast.service';
 import { Subscription } from 'rxjs';

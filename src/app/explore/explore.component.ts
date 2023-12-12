@@ -3,7 +3,7 @@ import { FetchDataService } from '../shared/services/fetch-data.service';
 import { HttpParams } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
-import { UtilsModule } from '../utils/utils.module';
+import { UtilsModule } from '../utils/backend-urls';
 import { Title } from 'chart.js';
 
 

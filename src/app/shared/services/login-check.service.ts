@@ -4,7 +4,7 @@ import { CookieService } from 'ngx-cookie-service';
 import { BehaviorSubject, Observable, filter, map, pairwise } from 'rxjs';
 import { ToastService } from './toast.service';
 import { FetchDataService } from './fetch-data.service';
-import { UtilsModule } from 'src/app/utils/utils.module';
+import { UtilsModule } from 'src/app/utils/backend-urls';
 
 @Injectable({
   providedIn: 'root'

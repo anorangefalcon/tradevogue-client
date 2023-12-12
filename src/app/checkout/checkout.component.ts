@@ -1,7 +1,7 @@
 import { Component, HostListener, OnInit, ElementRef, ViewChild, Renderer2 } from '@angular/core';
 import { CartService } from '../shared/services/cart.service';
 import { Router } from '@angular/router';
-import { UtilsModule } from '../utils/utils.module';
+import { UtilsModule } from '../utils/backend-urls';
 import { FetchDataService } from '../shared/services/fetch-data.service';
 import { ToastService } from '../shared/services/toast.service';
 import { CheckoutService } from './checkout.service';
@@ -138,6 +138,8 @@ export class CheckoutComponent implements OnInit {
   CouponOpener() {
     this.allSubscriptions.push(
       this.fetchService.HTTPGET(this.BackendUrl.URLs.getCoupons).subscribe((data: any) => {
+        console.log('data come up is ',data);
+        
         this.AllCoupons = data;
         this.show = true;
       }));
@@ -187,10 +189,10 @@ export class CheckoutComponent implements OnInit {
 
 
   async ApplyCoupon(coupon: any = '', event: any = '') {
-    let value = (event ? this.CouponCode.nativeElement.value.trim() : coupon.couponcode.trim());
+    let value = (event ? this.CouponCode.nativeElement.value.trim() : coupon.couponCode.trim());
 
     if (event) {
-      const foundCoupon = this.AllCoupons.find((c: any) => c.couponcode === value);
+      const foundCoupon = this.AllCoupons.find((c: any) => c.couponCode === value);
       if (foundCoupon) {
         this.CouponApplied = foundCoupon;
         this.CouponValid = 'valid';
@@ -203,8 +205,6 @@ export class CheckoutComponent implements OnInit {
       this.CouponValid = 'valid';
     }
 
-    console.log('appkle is ',this.CheckMinimumPurchase(this.CouponApplied));
-    
     if (!this.CheckMinimumPurchase(this.CouponApplied)) {
       this.toastService.errorToast({ title: `minimum purchase amount is ${this.CouponApplied.minimumPurchaseAmount}` });
       this.CouponValid = 'invalid';
@@ -239,7 +239,7 @@ export class CheckoutComponent implements OnInit {
 
   verifyOrderSummary(navigate: boolean = true) {
     if (this.cart?.details?.length == 0) return;
-    let body: any = { products: this.cart.details };
+    let body: any = { products: this.cart.details ,amounts:this.cart.amounts};
 
     if (this.CouponApplied) {
       body.couponId = this.CouponApplied._id;
@@ -309,6 +309,7 @@ export class CheckoutComponent implements OnInit {
       body.couponId = this.CouponApplied._id;
     }
     body.products = this.cart.details;
+    body.amounts=this.cart.amounts;
     body.address = this.checkOutService.addressSelected;
     this.allSubscriptions.push(
       this.fetchService.HTTPPOST(this.BackendUrl.URLs.createOrder, body).subscribe(

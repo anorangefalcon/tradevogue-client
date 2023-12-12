@@ -1,7 +1,7 @@
 
 import { Component, ElementRef, ViewChild, OnInit, Renderer2 } from '@angular/core';
 import { FetchDataService } from 'src/app/shared/services/fetch-data.service';
-import { UtilsModule } from 'src/app/utils/utils.module';
+import { UtilsModule } from 'src/app/utils/backend-urls';
 import { CartService } from 'src/app/shared/services/cart.service';
 import { CheckoutService } from '../checkout.service';
 import { Subscription } from 'rxjs';
@@ -172,6 +172,7 @@ export class BillingComponent implements OnInit {
           },
           '.Input': {
             padding: '12px',
+            margin: '0 0 10px 0',
             backgroundColor: 'transparent',
             border: '1px solid rgba(0, 0, 0, 0.2)',
             outline: '1px solid rgba(0, 0, 0, 0.2)',
@@ -197,6 +198,7 @@ export class BillingComponent implements OnInit {
           },
           '.Label': {
             fontWeight: '500',
+            padding: '0 0 10px 0'
           }
         }
       };
@@ -217,6 +219,7 @@ export class BillingComponent implements OnInit {
           },
           '.Input': {
             padding: '12px',
+            margin: '0 0 10px 0',
             backgroundColor: 'transparent',
             color: 'white',
             border: '1px solid rgba(255, 255, 255, 0.2)',
@@ -244,6 +247,7 @@ export class BillingComponent implements OnInit {
           '.Label': {
             color: 'white',
             fontWeight: '500',
+            padding: '0 0 10px 0'
           }
         }
       };

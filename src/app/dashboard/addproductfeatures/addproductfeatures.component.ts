@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FetchDataService } from 'src/app/shared/services/fetch-data.service';
 import { UploadExcelService } from '../services/upload-excel.service';
-import { UtilsModule } from 'src/app/utils/utils.module';
+import { UtilsModule } from 'src/app/utils/backend-urls';
 import { ToastService } from 'src/app/shared/services/toast.service';
 import { DialogBoxService } from 'src/app/shared/services/dialog-box.service';
 import { Subscription, first, take } from 'rxjs';

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { UtilsModule } from 'src/app/utils/utils.module';
+import { UtilsModule } from 'src/app/utils/backend-urls';
 import { FetchDataService } from 'src/app/shared/services/fetch-data.service';
 import { HttpClient } from '@angular/common/http';
 import { PopupService } from 'src/app/shared/services/popup.service';

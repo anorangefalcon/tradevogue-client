@@ -2,7 +2,7 @@ import { Component, ElementRef} from '@angular/core';
 import { Subscription, first, take } from 'rxjs';
 import { DialogBoxService } from 'src/app/shared/services/dialog-box.service';
 import { FetchDataService } from 'src/app/shared/services/fetch-data.service';
-import { UtilsModule } from 'src/app/utils/utils.module';
+import { UtilsModule } from 'src/app/utils/backend-urls';
 import * as xlsx from 'xlsx';
 @Component({
   selector: 'app-orders',

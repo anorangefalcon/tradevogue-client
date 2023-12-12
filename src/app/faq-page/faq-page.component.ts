@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FetchDataService } from '../shared/services/fetch-data.service';
-import { UtilsModule } from '../utils/utils.module';
+import { UtilsModule } from '../utils/backend-urls';
 @Component({
   selector: 'app-faq-page',
   templateUrl: './faq-page.component.html',

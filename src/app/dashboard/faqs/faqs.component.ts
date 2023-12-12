@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 // import { PaginationService } from 'src/app/shared/services/pagination.service';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { UtilsModule } from 'src/app/utils/utils.module';
+import { UtilsModule } from 'src/app/utils/backend-urls';
 import { FetchDataService } from 'src/app/shared/services/fetch-data.service';
 import { PopupService } from 'src/app/shared/services/popup.service';
 import { ToastService } from 'src/app/shared/services/toast.service';

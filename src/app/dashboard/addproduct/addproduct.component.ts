@@ -4,7 +4,7 @@ import { ImageUploadService } from 'src/app/shared/services/image-upload.service
 import { imageSizeValidator, invalidformat } from 'src/app/shared/validators/imageValidators.validator';
 import { ToastService } from 'src/app/shared/services/toast.service';
 import { FetchDataService } from 'src/app/shared/services/fetch-data.service';
-import { UtilsModule } from 'src/app/utils/utils.module';
+import { UtilsModule } from 'src/app/utils/backend-urls';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpParams } from '@angular/common/http';
 import { Subscription } from 'rxjs';

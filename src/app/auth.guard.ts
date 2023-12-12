@@ -1,7 +1,7 @@
 import { inject } from '@angular/core';
 import { CanActivateFn, Router } from '@angular/router';
 import { FetchDataService } from './shared/services/fetch-data.service';
-import { UtilsModule } from './utils/utils.module';
+import { UtilsModule } from './utils/backend-urls';
 import { LoginCheckService } from './shared/services/login-check.service';
 import { lastValueFrom } from 'rxjs';
 import { CookieService } from 'ngx-cookie-service';

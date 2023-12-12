@@ -6,7 +6,7 @@ import { WishlistService } from '../shared/services/wishlist.service';
 import { ReviewService } from './services/review.service';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ToastService } from '../shared/services/toast.service';
-import { UtilsModule } from '../utils/utils.module';
+import { UtilsModule } from '../utils/backend-urls';
 import { FetchDataService } from '../shared/services/fetch-data.service';
 import { HttpParams } from '@angular/common/http';
 

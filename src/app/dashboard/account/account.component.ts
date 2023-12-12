@@ -7,7 +7,7 @@ import { SellerFetchDataService } from 'src/app/shared/services/seller-fetch-dat
 import { DatePipe } from '@angular/common';
 import { LoginCheckService } from 'src/app/shared/services/login-check.service';
 import { FetchDataService } from 'src/app/shared/services/fetch-data.service';
-import { UtilsModule } from 'src/app/utils/utils.module';
+import { UtilsModule } from 'src/app/utils/backend-urls';
 import { ToastService } from 'src/app/shared/services/toast.service';
 @Component({
   selector: 'app-account',

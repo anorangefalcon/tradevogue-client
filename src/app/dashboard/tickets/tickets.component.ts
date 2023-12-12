@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
-import { UtilsModule } from 'src/app/utils/utils.module';
+import { UtilsModule } from 'src/app/utils/backend-urls';
 import { PopupService } from 'src/app/shared/services/popup.service';
 import { FetchDataService } from 'src/app/shared/services/fetch-data.service';
 import { forkJoin } from 'rxjs';

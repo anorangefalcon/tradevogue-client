@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FetchDataService } from '../shared/services/fetch-data.service';
-import { UtilsModule } from '../utils/utils.module';
+import { UtilsModule } from '../utils/backend-urls';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { LoginCheckService } from '../shared/services/login-check.service';
 import { ToastService } from '../shared/services/toast.service';

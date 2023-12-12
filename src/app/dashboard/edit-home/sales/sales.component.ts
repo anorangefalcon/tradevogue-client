@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, FormArray, FormControl, Validators } from '@ang
 import { SalesService } from 'src/app/shared/services/custom-UI/sales.service';
 import { ImageUploadService } from 'src/app/shared/services/image-upload.service';
 import { FetchDataService } from 'src/app/shared/services/fetch-data.service';
-import { UtilsModule } from 'src/app/utils/utils.module';
+import { UtilsModule } from 'src/app/utils/backend-urls';
 import { DialogBoxService } from 'src/app/shared/services/dialog-box.service';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
