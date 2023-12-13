@@ -42,7 +42,6 @@ export class NavbarComponent implements OnInit {
     women: [],
   };
   secureNavbar: boolean = false;
-
   UserRole!: String;
   updatedNotificationArray: any;
   hasNotificationToken: any;
@@ -77,6 +76,8 @@ export class NavbarComponent implements OnInit {
     this.checkOutService.secureNavbar$.subscribe((data) => {
       this.secureNavbar = data;
     });
+
+  
 
     this.userService.getUser("token").subscribe((data) => {
       if (!data) return;
@@ -171,24 +172,27 @@ export class NavbarComponent implements OnInit {
   }
   
   searchClear: Boolean = false;
-  searchFetch: any = '';
+  searchFetch: any = {
+    search:''
+  };
 
   searchExplore(query: string) {
-    console.log('queru Started ');
     if(query){
       this.QueryStarted = query;
     }
     this.searchClear = false;
-
+    
     this.searchFetch = {
       search: query
     }
+    console.log('query is ',this.searchFetch?.search.length);
+    
 
   }
 
+
+
   typingStarted(start: Boolean){
-    console.log(start, 'htis');
-    
     if(start){
       this.QueryStarted = true;
     }
@@ -248,6 +252,11 @@ export class NavbarComponent implements OnInit {
       this.isSearching = false;
       this.QueryStarted = false;
     }
+  }
+
+  viewAll(){
+    this.router.navigateByUrl(`/explore?search=${this.searchFetch.search}`);
+    this.QueryStarted = false;
   }
 
   ngOnDestroy() {

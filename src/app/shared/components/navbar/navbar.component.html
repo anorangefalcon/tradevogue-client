@@ -26,7 +26,7 @@
 
         <ng-container *ngIf="!secureNavbar">
 
-            <ul class="d-flex gap-30 nav-items" [class.active]="hamburgerOpen">
+            <ul class="d-flex gap-30 nav-items" [class.active]="hamburgerOpen" *ngIf="!QueryStarted">
 
                 <li class="nav-links relative " (click)="hamburgerOpen = false">
                     <a class="d-flex flex-column gap-5 pointer" [routerLink]="['/explore']"
@@ -75,10 +75,12 @@
                             <!-- <button class="cancel__btn" [ngClass]="{'display-none':!QueryStarted,'display-initial':QueryStarted}">Cancel</button> -->
                         </div>
                     </div>
+
+                    
+                    <button class="btn" [ngClass]="{'display-initial':QueryStarted && searchFetch.search,'display-none':!searchFetch?.search}" (click)="viewAll()">View All</button>
                     <button class="cancel__btn btn"
                         [ngClass]="{'display-none':!QueryStarted,'display-initial':QueryStarted}" (click)="QueryStarted=false">Cancel</button>
                
-
                 <span (click)="isSearching = !isSearching; hamburgerOpen = false"
                     class="search-icon-mobile material-symbols-outlined">
                     search
