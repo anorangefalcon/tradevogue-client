@@ -85,8 +85,6 @@ export class ExploreComponent {
 
   onAdd(event: any, field: string) {
 
-    
-
     if (this.minPrice && !this.maxPrice) {
       this.filterApplied['minPrice'] = this.minPrice
     }

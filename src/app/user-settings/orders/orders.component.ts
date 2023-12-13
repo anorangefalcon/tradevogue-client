@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { FetchDataService } from 'src/app/shared/services/fetch-data.service';
-import { UtilsModule } from 'src/app/utils/utils.module';
+
 import { DialogBoxService } from 'src/app/shared/services/dialog-box.service';
+import { UtilsModule } from 'src/app/utils/backend-urls';
 
 @Component({
   selector: 'app-orders',
@@ -52,6 +53,7 @@ export class OrdersComponent {
     this.loading = true;
     this.DefaultShowOrders = 'active';
     this.pageChange(1);
+    this.toggleAccordian(0);
   }
   pageChange(pageNo: number) {
 

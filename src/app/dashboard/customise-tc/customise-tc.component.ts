@@ -3,6 +3,7 @@ import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FetchDataService } from 'src/app/shared/services/fetch-data.service';
 import { ToastService } from 'src/app/shared/services/toast.service';
 import { UtilsModule } from 'src/app/utils/backend-urls';
+import { DialogBoxService } from 'src/app/shared/services/dialog-box.service';
 import * as _ from 'lodash';
 import { Subscription } from 'rxjs';
 
@@ -17,20 +18,32 @@ export class CustomiseTcComponent {
   tcForm!: FormGroup;
   cachedFormGroup!: FormGroup;
   allSubscriptions: Subscription[] = [];
+  delSectionIndex: any;
   constructor(
     private fb: FormBuilder,
     private toastService: ToastService,
     private fetchDataService: FetchDataService,
-    private backendUrl: UtilsModule) {
+    private backendUrl: UtilsModule,
+    private dialogBoxService: DialogBoxService) {
     this.tcForm = this.fb.group({
       tcFormArray: this.fb.array([
       ])
     });
     this.getData();
+
+    this.allSubscriptions.push(
+      dialogBoxService.responseEmitter.subscribe({
+        next: (res: any) => {
+          if (res) {
+            (<FormArray>this.tcForm.get('tcFormArray'))?.removeAt(this.delSectionIndex);
+            this.toastService.warningToast({ title: "Section removed!" })
+          }
+        }
+      }));
   }
 
   ngOnDestroy() {
-    this.allSubscriptions.forEach((item: Subscription)=> item.unsubscribe());
+    this.allSubscriptions.forEach((item: Subscription) => item.unsubscribe());
   }
 
 
@@ -49,8 +62,17 @@ export class CustomiseTcComponent {
   }
 
   removeFormControl(index: number) {
-    (<FormArray>this.tcForm.get('tcFormArray'))?.removeAt(index);
-    this.toastService.warningToast({ title: "Section removed!" })
+    this.delSectionIndex = index;
+    let template: any = {
+      title: 'Proceed with Deletion?',
+      subtitle: 'The section will be permanently deleted, and recovery will not be possible. Are you sure you want to proceed?',
+      type: 'confirmation',
+      confirmationText: 'Yes, Delete it',
+      cancelText: 'No, Keep it',
+    };
+    this.dialogBoxService.confirmationDialogBox(template);
+    // (<FormArray>this.tcForm.get('tcFormArray'))?.removeAt(index);
+    // this.toastService.warningToast({ title: "Section removed!" })
   }
 
   // contentInfo form Array
@@ -144,65 +166,62 @@ export class CustomiseTcComponent {
 
     // CONDITION CHEWCKING
 
-
-
-
-   
     console.log('formArray is ', FormArray.value);
 
     // SPECIAL CASE ==> LIST TO PARAGRAPH
     if (FormArray.value[j].content_type == 'list' && event == 'paragraph') {
       let content = '';
 
-      FormArray.value[j].content_description.forEach((el: any,i:number) => {
+      FormArray.value[j].content_description.forEach((el: any, i: number) => {
         // if(i!=FormArray.value[j].content_description.length-1){
-          console.log('el is ',el);
-          // if(el)
-          // if(el[el.length-1]!='.'){
-          //   content += el.content+'. ';
-          // }
-            content+=el.content;
+        console.log('el is ', el);
+        // if(el)
+        // if(el[el.length-1]!='.'){
+        //   content += el.content+'. ';
+        // }
+        content += el.content;
         // }
       })
 
-      console.log('content is ',content);
-      
+      console.log('content is ', content);
+
 
       let x: any = (<FormArray>this.tcForm.get('tcFormArray')?.get(String(i))?.get('contentInfo'))?.get(String(j))?.get('content_description');
-    
-      if(x.value.length>1){
 
-      x.value.forEach((el:any,i:number)=>{
-        x.removeAt(i);
-      })
+      if (x.value.length > 1) {
 
-      // console.log('x come up  is ',x);
-      // if(!x.get(String(0))){
-      //   x.push(this.fb.group(this.fb.control([content])));
-      // }
-      x.get(String(0)).get('content').setValue(content);
-      }}
-// SPECIAL CASE ==> LIST TO PARAGRAPH
+        x.value.forEach((el: any, i: number) => {
+          x.removeAt(i);
+        })
+
+        // console.log('x come up  is ',x);
+        // if(!x.get(String(0))){
+        //   x.push(this.fb.group(this.fb.control([content])));
+        // }
+        x.get(String(0)).get('content').setValue(content);
+      }
+    }
+    // SPECIAL CASE ==> LIST TO PARAGRAPH
 
 
 
     // SPECIAL CASE ==>  PARAGRAPH TO LIST
     if (FormArray.value[j].content_type == 'paragraph' && event == 'list') {
-      let content:any = '';
-      content=FormArray.value[j].content_description[0].content;
-      content=content.split('.');
-      console.log( FormArray.get(String(j))?.get('content_description'),"abcd ----->");
+      let content: any = '';
+      content = FormArray.value[j].content_description[0].content;
+      content = content.split('.');
+      console.log(FormArray.get(String(j))?.get('content_description'), "abcd ----->");
       // content=finalContent;
       (<FormArray>FormArray.get(String(j))?.get('content_description')).removeAt(0);
-      content.forEach((el:any,i:number)=>{
-        el+='.';
-        if(i!=content.length-1)
-          (<FormArray>FormArray.get(String(j))?.get('content_description')).push(this.fb.group({content:el}))
-        else if(content.length==1){
-          (<FormArray>FormArray.get(String(j))?.get('content_description')).push(this.fb.group({content:el}))
+      content.forEach((el: any, i: number) => {
+        el += '.';
+        if (i != content.length - 1)
+          (<FormArray>FormArray.get(String(j))?.get('content_description')).push(this.fb.group({ content: el }))
+        else if (content.length == 1) {
+          (<FormArray>FormArray.get(String(j))?.get('content_description')).push(this.fb.group({ content: el }))
         }
       })
-      
+
       // let x: any = (<FormArray>this.tcForm.get('tcFormArray')?.get(String(i))?.get('contentInfo'))?.get(String(j))?.get('content_description');
       // x.value.forEach((el:any,i:number)=>{
       //   x.removeAt(i);
@@ -210,20 +229,19 @@ export class CustomiseTcComponent {
 
       // x.get(String(0)).get('content').setValue(content);
     }
-// SPECIAL CASE ==> PARAGRAPH TO LIST
+    // SPECIAL CASE ==> PARAGRAPH TO LIST
 
 
 
   }
 
-
   onsubmit() {
     this.allSubscriptions.push(
-    this.fetchDataService.HTTPPOST(this.backendUrl.URLs.setTandC, this.tcForm.value).subscribe((res: any) => {
-      this.toastService.successToast({ title: res.message })
-      this.cachedFormGroup = _.cloneDeep(this.tcForm);
-      this.tcForm.disable();
-    }))
+      this.fetchDataService.HTTPPOST(this.backendUrl.URLs.setTandC, this.tcForm.value).subscribe((res: any) => {
+        this.toastService.successToast({ title: res.message })
+        this.cachedFormGroup = _.cloneDeep(this.tcForm);
+        this.tcForm.disable();
+      }))
   }
 
   // NEW CODE
@@ -277,30 +295,32 @@ export class CustomiseTcComponent {
     (<FormArray>this.tcForm.get('tcFormArray'))?.push(form);
 
   }
+
   goToBottom() {
     window.scrollTo(0, document.body.scrollHeight);
   }
+
   getData() {
     this.allSubscriptions.push(
-    this.fetchDataService.HTTPGET(this.backendUrl.URLs.getTandC).subscribe((response: any) => {
-      console.log(response, "tc res");
+      this.fetchDataService.HTTPGET(this.backendUrl.URLs.getTandC).subscribe((response: any) => {
+        console.log(response, "tc res");
 
-      for (let i = 0; i < response.data.length; i++) {
-        this.addFormControl();
-        for (let j = 0; j < response.data[i].contentInfo.length; j++) {
-          this.addContentFormControl(i);
+        for (let i = 0; i < response.data.length; i++) {
+          this.addFormControl();
+          for (let j = 0; j < response.data[i].contentInfo.length; j++) {
+            this.addContentFormControl(i);
 
-          for (let k = 0; k < response.data[i].contentInfo[j].content_description.length - 1; k++) {
-            this.addContentDescFormControl(i, j);
+            for (let k = 0; k < response.data[i].contentInfo[j].content_description.length - 1; k++) {
+              this.addContentDescFormControl(i, j);
+            }
           }
+
         }
 
-      }
-
-      this?.tcForm?.get('tcFormArray')?.patchValue(response?.data);
-      this.cachedFormGroup = _.cloneDeep(this.tcForm);
-      this.tcForm.disable();
-    }))
+        this?.tcForm?.get('tcFormArray')?.patchValue(response?.data);
+        this.cachedFormGroup = _.cloneDeep(this.tcForm);
+        this.tcForm.disable();
+      }))
   }
 
 }

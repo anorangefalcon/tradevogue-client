@@ -128,7 +128,6 @@ export class SettingsComponent {
       this.changeComponent(params.get('page'));
     });
 
-
     this.allSubscriptions.push(
     this.DialogSubcribe = this.dialogBox.responseEmitter.subscribe((res: boolean) => {
       if (res == true ) {

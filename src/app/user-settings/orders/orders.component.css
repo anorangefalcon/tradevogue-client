@@ -10,9 +10,11 @@
 .orders__p {
     color: rgba(var(--blackClr), 0.6);
 }
+
 .border__bottom {
     border-bottom: 1px solid rgba(var(--primaryClr), 0.8);
 }
+
 .particularOrder {
     border-radius: 10px;
     border: 1px solid rgba(var(--blackClr), 0.2);
@@ -95,7 +97,7 @@
 }
 
 .old-price {
-    font-size: 16px !important;
+    font-size: 12px !important;
     text-decoration: line-through;
     color: rgba(var(--danger));
 }
@@ -104,8 +106,19 @@
     width: 200px;
 }
 
+
 .pending-icon {
-    background-color: rgb(var(--warning));
+    font-size: 15px;
+    /* padding: 3px; */
+    /* background-color: rgb(var(--warning)); */
+    /* border-radius: 50%; */
+    color: rgb(var(--warning));
+    font-size: 15px;
+    font-variation-settings:
+        'FILL' 1,
+        'wght' 400,
+        'GRAD' 0,
+        'opsz' 24
 }
 
 .deliver-icon {

@@ -11,10 +11,6 @@ import { SecurityComponent } from './security/security.component';
 import { SharedModule } from '../shared/shared.module';
 import { ReactiveFormsModule } from '@angular/forms';
 
-
-
-
-
 @NgModule({
   declarations: [
     UserSettingsComponent,

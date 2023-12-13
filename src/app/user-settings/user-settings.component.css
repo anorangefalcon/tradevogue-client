@@ -54,7 +54,10 @@
 }
 
 .nav-links a:hover {
-    color: rgb(var(--primaryClr))
+    color: rgb(var(--primaryClr));
+    & i {
+        color: rgb(var(--primaryClr));
+    }
 }
 
 /* NAV BAR */

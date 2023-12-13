@@ -2,10 +2,11 @@ import { Component } from '@angular/core';
 import { WishlistService } from 'src/app/shared/services/wishlist.service';
 import { Subscription } from 'rxjs';
 import { FetchDataService } from 'src/app/shared/services/fetch-data.service';
-import { UtilsModule } from 'src/app/utils/utils.module';
+
 import { DialogBoxService } from 'src/app/shared/services/dialog-box.service';
 import { ToastService } from 'src/app/shared/services/toast.service';
 import { CartService } from 'src/app/shared/services/cart.service';
+import { UtilsModule } from 'src/app/utils/backend-urls';
 
 
 @Component({
@@ -15,37 +16,59 @@ import { CartService } from 'src/app/shared/services/cart.service';
 })
 export class WishlistsComponent {
 
-  loading : boolean = false;
+  loading: boolean = false;
   wishlistedProducts: any;
   AccordianIndex: number = 0;
   openedAccordionIndex: number | null = null;
   allSubscriptions: Subscription[] = [];
   productsArray: any = [];
   wishlistCount: number = 0;
-  deleteIndex : any;
+  deleteIndex: any;
+  theme: Boolean = false;
 
-  constructor(private wishlistService : WishlistService,
-     private fetchDataService : FetchDataService,
-      private backendURLs : UtilsModule,
-       private dialogBox: DialogBoxService,
-       private toastService: ToastService,
-       private cartService: CartService){
+
+  constructor(private wishlistService: WishlistService,
+    private fetchDataService: FetchDataService,
+    private backendURLs: UtilsModule,
+    private dialogBox: DialogBoxService,
+    private toastService: ToastService,
+    private cartService: CartService) {
+
+    this.allSubscriptions.push(
+      dialogBox.responseEmitter.subscribe({
+        next: (res: any) => {
+          if (res) {
+            this.wishlistService.removeWishlist({ index: this.deleteIndex }).subscribe((data: any) => {
+              const toast = {
+                title: data.message
+              }
+              this.toastService.warningToast(toast);
+              this.wishlistService.showWishlistedProducts().subscribe((data) => {
+                this.wishlistedProducts = data
+              })
+              this.wishlistService.getWishlistCount()
+            })
+          }
+        }
+      }));
 
   }
 
-  ngOnInit(){
+  ngOnInit() {
+    this.loading = true;
+    this.fetchDataService.themeColor$.subscribe((color)=>{
+      this.theme = color;
+    })
+    this.toggleAccordian(0);
     this.allSubscriptions.push(
       this.wishlistService.showWishlistedProducts().subscribe((data) => {
         this.wishlistedProducts = data
         console.log(this.wishlistedProducts);
-        
-  
+        this.loading = false;
       }))
-      this.wishlistService.getWishlistCount();
-  
-    }
-  
+    this.wishlistService.getWishlistCount();
 
+  }
 
   toggleAccordian(index: any, check: boolean = false) {
 
@@ -93,8 +116,7 @@ export class WishlistsComponent {
       if (res.response.modifiedCount) {
         this.wishlistedProducts = res.data;
         this.wishlistService.getWishlistCount()
-        this.toastService.warningToast({ title: 'Product removed!'})
-
+        this.toastService.warningToast({ title: 'Product removed!' })
       }
     });
 
@@ -102,6 +124,10 @@ export class WishlistsComponent {
 
   moveToCart(product: any) {
     this.cartService.addToCart(product);
+  }
+
+  ngOnDestroy() {
+    this.allSubscriptions.forEach((item: Subscription)=> item.unsubscribe());
   }
 
 

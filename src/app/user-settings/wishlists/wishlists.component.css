@@ -39,7 +39,7 @@
     justify-content: space-between;
 }
 
-.accordian__head:has(+ .accordian__body.active) span.expand {
+.acc__header:has(+ .accordian__body.active) >  .actions span.expand {
     transform: rotate(-180deg);
 }
 
@@ -101,7 +101,7 @@
 }
 
 .removeWishlist-btn{
-    z-index: 5;
+    padding-inline: 4px;
 }
 
 .out-of-stock,

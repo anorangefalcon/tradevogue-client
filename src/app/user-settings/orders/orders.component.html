@@ -127,7 +127,7 @@
                                     <button class="btn" routerLink="/product/{{product.sku}}">
                                         View Product
                                     </button>
-                                    <p *ngIf="product.shipmentStatus!='cancelled'">|</p>
+                                    <p *ngIf="product.shipmentStatus!='cancelled'" style="opacity: 0.6;">|</p>
 
                                     <button class="btn" *ngIf="product.shipmentStatus=='pending'"
                                         (click)="CancelProduct(order._id,product)">
@@ -221,7 +221,7 @@
                             </div>
                             <div class="deliverDiv d-flex justify-content-md-between">
 
-                                <div class="d-flex gap-10 delivery align-item-center">
+                                <div class="d-flex gap-5 delivery align-item-center">
                                     <span class="material-symbols-outlined pending-icon d-flex flex-center"
                                         *ngIf="product.shipmentStatus=='pending'">
                                         hourglass_empty

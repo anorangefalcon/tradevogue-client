@@ -2,7 +2,7 @@
     <h2>Get notified about latest offers!</h2>
     <form class="d-flex gap-10" [formGroup]="subscribeForm">
         <input type="text" placeholder="Your email address" formControlName="email">
-        <button class="btn-primary"  (click)="onSubscribe()">
+        <button class="btn-primary"  (click)="onSubscribe()" [disabled]="subscribeForm.invalid">
             <span class="text">SUBSCRIBE</span>
             <span class="send-icon material-symbols-outlined">send</span>
         </button>
