@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
 import { FetchDataService } from 'src/app/shared/services/fetch-data.service';
-
+import { UtilsModule } from 'src/app//utils/backend-urls';
 import { DialogBoxService } from 'src/app/shared/services/dialog-box.service';
-import { UtilsModule } from 'src/app/utils/backend-urls';
 
 @Component({
   selector: 'app-orders',

@@ -7,11 +7,14 @@ import { Component } from '@angular/core';
 })
 export class UserSettingsComponent {
 
+  constructor(){}
+
   navitems = [
-    { name: 'Profile', icons: 'person', route: '/user-settings' },
+    { name: 'Profile', icons: 'person', route: '/user-settings/profile' },
     { name: 'Orders', icons: 'package_2', route: '/user-settings/orders' },
     { name: 'Address', icons: 'home', route: '/user-settings/address' },
     { name: 'Wishlist', icons: 'favorite', route: '/user-settings/wishlist' },
     { name: 'Security', icons: 'key', route: '/user-settings/security' },
   ]
+
 }

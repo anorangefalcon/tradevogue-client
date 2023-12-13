@@ -2,14 +2,13 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { passwordStrengthValidator, matchPasswordValidator } from '../../auth/validators';
 import { FetchDataService } from 'src/app/shared/services/fetch-data.service';
+import { UtilsModule } from 'src/app//utils/backend-urls';
 import { ToastService } from 'src/app/shared/services/toast.service';
-import { UtilsModule } from 'src/app/utils/backend-urls';
-
 @Component({
   selector: 'app-security',
   templateUrl: './security.component.html',
   styleUrls: ['./security.component.css']
-})
+}) 
 export class SecurityComponent {
  
   changePasswordForm: FormGroup;

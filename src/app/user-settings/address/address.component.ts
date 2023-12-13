@@ -1,11 +1,9 @@
 import { Component } from '@angular/core';
 import { FetchDataService } from 'src/app/shared/services/fetch-data.service';
-
+import { UtilsModule } from 'src/app//utils/backend-urls';
 import { ToastService } from 'src/app/shared/services/toast.service';
 import { DialogBoxService } from 'src/app/shared/services/dialog-box.service';
 import { HttpParams } from '@angular/common/http';
-import { UtilsModule } from 'src/app/utils/backend-urls';
-
 
 @Component({
   selector: 'app-address',

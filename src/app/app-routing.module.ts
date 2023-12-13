@@ -43,16 +43,16 @@ const routes: Routes = [
           { path: 'billing', component: BillingComponent, data: { breadcrumb: 'Billing' }, canDeactivate: [redirectGuard],canActivate:[authGuard] }
         ]
       },
+      {
+        path : 'user-settings',
+        loadChildren : () => import('./user-settings/user-settings.module').then(m => m.UserSettingsModule)
+      }
     ]
   },
   {
     path: 'dashboard', 
     loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule),
     canActivate: [authGuard]
-  },
-  {
-    path : 'user-settings',
-    loadChildren : () => import('./user-settings/user-settings.module').then(m => m.UserSettingsModule)
   },
   {
     path: 'auth', data: { breadcrumb: 'Auth' }, loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule),canActivate: [authGuard]

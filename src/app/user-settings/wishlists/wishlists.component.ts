@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { WishlistService } from 'src/app/shared/services/wishlist.service';
 import { Subscription } from 'rxjs';
 import { FetchDataService } from 'src/app/shared/services/fetch-data.service';
-
 import { DialogBoxService } from 'src/app/shared/services/dialog-box.service';
 import { ToastService } from 'src/app/shared/services/toast.service';
 import { CartService } from 'src/app/shared/services/cart.service';

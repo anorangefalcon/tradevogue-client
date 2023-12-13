@@ -1,12 +1,11 @@
-.container{
-    padding-block-start: 90px;
+.container {
+    padding-block-start: 10px;
     margin-block-end: 50px;
     transition: 0.3s ease-in-out;
-    /* height: calc(100dvh - 126px); */
-    /* margin-block-start: 15px; */
 }
+
 .navbar {
-    width:200px;
+    width: 200px;
     padding: 20px;
 
     & .nav-items {
@@ -18,6 +17,7 @@
         }
     }
 }
+
 .nav-links::before {
     content: '';
     display: flex;
@@ -32,14 +32,14 @@
     height: 80%;
 }
 
-.icons{
+.icons {
     font-size: 24px;
     color: rgb(var(--blackClr), 0.8);
     font-weight: 300;
 }
 
-.nav-links > .active {
-    & .nav-txt{
+.nav-links>.active {
+    & .nav-txt {
         color: rgb(var(--primaryClr));
     }
 
@@ -65,7 +65,7 @@
     font-size: 20px;
 }
 
-.main{
+.main {
     width: calc(100% - 200px);
 }
 
@@ -76,24 +76,24 @@
     padding: 20px;
     max-height: fit-content;
     padding-inline-start: 50px;
-    
+
 }
+
+.mobile-back-btn {
+    display: none;
+    padding-inline-start: 16px;
+}
+
 @media (max-width:800px) {
 
-    .navbar, .main {
-        margin-block-start: 90px;
-        /* overflow: hidden; */
-    }
     .navbar {
         width: 100%;
     }
-    .main{
-        opacity: 0;
-        width: 0;
-    }
-    .container{
+
+    .container {
         padding: 0 !important;
     }
+
     .content {
         width: 100%;
         transform: translateX(0);
@@ -102,6 +102,10 @@
         padding-inline: 20px;
     }
 
+    .mobile-back-btn{
+        display: flex;
+        width: fit-content;
+    }
 
     .navbar {
         border: none;
@@ -129,23 +133,39 @@
                 }
             }
         }
+
         transition: 0.4s ease-in-out;
         transform: translateX(0);
     }
 
-    .navbar:has( > .nav-items > .nav-links > .active){
-        width: 0;
-        min-width: 0;
+    .navbar {
+        width: 100%;
+        overflow: hidden;
+        transition: all 0.3s ease-in-out;
+    }
+    
+    .navbar+.main {
         opacity: 0;
+        width: 0%;
+        inset-inline-end: 0;
         overflow: hidden;
         position: absolute;
+        transform: translateX(100%);
+        transition: 0.3s ease-in-out;
     }
 
-    .navbar:has( > .nav-items > .nav-links > .active) + .main{
-        width: 100%;
+
+    .navbar:has(> .nav-items > .nav-links > .active) {
+        overflow: hidden;
+        position: absolute;
+        transform: translateX(-100%);
+    }
+
+    .navbar:has(> .nav-items > .nav-links > .active)+.main {
         opacity: 1;
+        width: 100%;
+        position: relative;
+        transform: translateX(0);
     }
 
 }
-
-

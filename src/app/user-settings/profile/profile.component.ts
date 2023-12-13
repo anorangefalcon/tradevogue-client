@@ -1,9 +1,8 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FetchDataService } from 'src/app/shared/services/fetch-data.service';
-
+import { UtilsModule } from 'src/app//utils/backend-urls';
 import { LoginCheckService } from 'src/app/shared/services/login-check.service';
-import { UtilsModule } from 'src/app/utils/backend-urls';
 
 @Component({
   selector: 'app-profile',
