@@ -9,14 +9,14 @@
 
   <div>
     <div
-      class="row card pd-20 d-flex justify-content-md-between align-item-center"
+      class="row card pd-20 d-flex justify-content-md-between align-item-center" style="overflow: auto;"
     >
       <div class="chat-area">
         <!-- chatlist -->
         <div class="chatlist d-flex flex-column gap-10">
           <div class="modal-dialog-scrollable">
             <div class="modal-content">
-              <div class="scrollable">
+              <div class="scrollable data-scroll">
                 <!-- chat-list -->
                 <div class="chat-lists">
                   <div class="tab-content" id="myTabContent">
@@ -51,7 +51,7 @@
           <div
             *ngIf="!selectedUser"
             class="d-flex align-item-center justify-content-center flex-column"
-            style="height: 65vh"
+            style="height: 70vh"
           >
             <img
               class="justify-content-center align-item-center mb-3"
@@ -128,12 +128,19 @@
 
             <div class="type d-flex gap-10 align-item-center">
               <input
+                (keydown.enter)="sendMessage()"
                 class="form__input"
                 [(ngModel)]="textMessage"
                 placeholder="Type your message..."
               />
               <button
-                class="pointer btn-primary btn-sm btn-rounded"
+                style="
+                  border: none;
+                  background: transparent;
+                  color: rgb(var(--primaryClr));
+                  font-size: 33px;
+                "
+                class="pointer"
                 (click)="sendMessage()"
               >
                 <span class="material-symbols-outlined"> send </span>
@@ -162,7 +169,7 @@
 
 <div
   class="d-flex align-item-center justify-content-center flex-column"
-  style="height: 65vh"
+  style="height: 100vh"
   *ngIf="!(userData && userData.length > 0)"
 >
   <img

@@ -30,7 +30,7 @@ export class ChatComponent implements OnInit {
   oldChats: any;
   adminOldChat: any;
   loading: boolean = true;
-  theme: Boolean = false;
+  theme: boolean = false;
   messageList: any = [];
   adminMessageList: any = [];
   userMessages: any[] = [];
@@ -44,8 +44,12 @@ export class ChatComponent implements OnInit {
   constructor(
     private fetchDataService: FetchDataService,
     private socketService: SocketService,
-    private utilsModule: UtilsModule
+    private utilsModule: UtilsModule,
+
   ) {
+    this.fetchDataService.themeColor$.subscribe((res: any) => {
+      this.theme = res;
+    })
     this.getUsers();
     const socket = this.socketService.getChatSocket();
     socket.on('getChatDetail', (data: any) => {
