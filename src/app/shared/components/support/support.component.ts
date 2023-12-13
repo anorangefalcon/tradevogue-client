@@ -1,14 +1,14 @@
-import { Component, ElementRef } from "@angular/core";
-import { UtilsModule } from "src/app/utils/backend-urls";
-import { FetchDataService } from "src/app/shared/services/fetch-data.service";
-import { LoginCheckService } from "../../services/login-check.service";
-import { CookieService } from "ngx-cookie-service";
-import { SocketService } from "../../services/socket.service";
+import { Component, ElementRef } from '@angular/core';
+import { UtilsModule } from 'src/app/utils/backend-urls';
+import { FetchDataService } from 'src/app/shared/services/fetch-data.service';
+import { LoginCheckService } from '../../services/login-check.service';
+import { CookieService } from 'ngx-cookie-service';
+import { SocketService } from '../../services/socket.service';
 
 @Component({
-  selector: "app-support",
-  templateUrl: "./support.component.html",
-  styleUrls: ["./support.component.css"],
+  selector: 'app-support',
+  templateUrl: './support.component.html',
+  styleUrls: ['./support.component.css'],
 })
 export class SupportComponent {
   latestOrder: any;
@@ -16,7 +16,7 @@ export class SupportComponent {
   products: any[] = [];
   showTextView: boolean = false;
   messages: any[] = [];
-  newMessage: string = "";
+  newMessage: string = '';
   orderDetails: any;
   selectedOrder: any;
   productPresent: boolean = false;
@@ -26,10 +26,10 @@ export class SupportComponent {
   selectedProduct: any;
   buttonsHidden: boolean = false;
   previousOrders: any[] = [];
-  username: any = "";
-  message: string = "";
-  id: string = "";
-  textMessage: string = "";
+  username: any = '';
+  message: string = '';
+  id: string = '';
+  textMessage: string = '';
   name: any;
   email: any;
   userData: any = [];
@@ -46,60 +46,60 @@ export class SupportComponent {
     private cookieService: CookieService,
     private socketService: SocketService
   ) {
-    const token = this.cookieService.get("userToken");
+    const token = this.cookieService.get('userToken');
     if (!token) {
       return;
     }
     if (token) {
       const socket = this.socketService.getChatSocket();
-      const tokenParts = token.split(".");
+      const tokenParts = token.split('.');
       if (tokenParts.length === 3) {
         const encodedPayload = tokenParts[1];
         const decodedPayload = atob(encodedPayload);
         const payload = JSON.parse(decodedPayload);
-        console.log(payload, "payload is");
-        console.log(this.usermessage, "user message is ");
-        
-        socket.on("replymessage", (data: { message: any; sender: any }) => {
-          console.log("Received admin message:", data);
+        console.log(payload, 'payload is');
+        console.log(this.usermessage, 'user message is ');
+
+        socket.on('replymessage', (data: { message: any; sender: any }) => {
+          console.log('Received admin message:', data);
           const body = {
             message: data.message,
             receiver: payload.id,
           };
 
-          socket.emit("saveadminMessage", body);
+          socket.emit('saveadminMessage', body);
           if (data.sender == payload.id) {
             this.replyAdminMessage = data.message;
             this.messages.push({
               content: this.replyAdminMessage,
-              sender: "admin",
+              sender: 'admin',
             });
           }
         });
 
         // Use the payload data as needed
       } else {
-        console.error("Invalid token format");
+        console.error('Invalid token format');
       }
     } else {
-      console.error("Token not found");
+      console.error('Token not found');
     }
   }
 
   ngOnInit() {
     const socket = this.socketService.getChatSocket();
-    socket.on("connect", () => {
-      console.log("Connected to server");
+    socket.on('connect', () => {
+      console.log('Connected to server');
     });
 
-    socket.on("connect_error", (error: any) => {
-      console.error("Connection error:", error);
+    socket.on('connect_error', (error: any) => {
+      console.error('Connection error:', error);
     });
 
-    socket.on("userMessage", (res: { message: any }) => {
+    socket.on('userMessage', (res: { message: any }) => {
       console.log(res);
       this.usermessage = res.message;
-      socket.emit("newChat", res);
+      socket.emit('newChat', res);
     });
   }
 
@@ -116,11 +116,11 @@ export class SupportComponent {
     //     this.loadingProducts = false;
     //   });
 
-    this.userService.getUser("name").subscribe((name: any) => {
+    this.userService.getUser('name').subscribe((name: any) => {
       if (name) {
         this.username = name;
       } else {
-        this.username = "User";
+        this.username = 'User';
       }
     });
   }
@@ -212,36 +212,36 @@ export class SupportComponent {
   sendLiveMessage() {
     const socket = this.socketService.getChatSocket();
 
-    const token = this.cookieService.get("userToken");
+    const token = this.cookieService.get('userToken');
     if (token) {
-      this.messages.push({ content: this.textMessage, sender: "user" });
+      this.messages.push({ content: this.textMessage, sender: 'user' });
 
-      socket.emit("newMessage", this.textMessage);
-      this.textMessage = "";
+      socket.emit('newMessage', this.textMessage);
+      this.textMessage = '';
     } else {
-      console.error("Invalid token format");
+      console.error('Invalid token format');
     }
   }
 
   toggleChat() {
-    const chatBtn = document.querySelector(".icon-support");
-    const chatBox = document.querySelector(".messenger");
+    const chatBtn = document.querySelector('.icon-support');
+    const chatBox = document.querySelector('.messenger');
 
     if (chatBtn && chatBox) {
-      chatBtn.classList.toggle("expanded");
+      chatBtn.classList.toggle('expanded');
 
       setTimeout(() => {
-        chatBox.classList.toggle("expanded");
+        chatBox.classList.toggle('expanded');
       }, 100);
     }
   }
 
   navigateTo(tab: string) {
-    if (tab === "home") {
+    if (tab === 'home') {
       this.selectedTabIndex = 0;
-    } else if (tab === "support") {
+    } else if (tab === 'support') {
       this.selectedTabIndex = 1;
-    } else if (tab === "help") {
+    } else if (tab === 'help') {
       this.selectedTabIndex = 2;
     }
   }

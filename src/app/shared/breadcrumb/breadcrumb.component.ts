@@ -6,7 +6,7 @@ import { SalesService } from '../services/custom-UI/sales.service';
 @Component({
   selector: 'app-breadcrumb',
   templateUrl: './breadcrumb.component.html',
-  styleUrls: ['./breadcrumb.component.css']
+  styleUrls: ['./breadcrumb.component.css'],
 })
 export class BreadcrumbComponent implements OnInit {
   breadcrumbs: Array<{ label: string; url: string }> = [];
@@ -20,9 +20,8 @@ export class BreadcrumbComponent implements OnInit {
     private breadcrumbService: BreadcrumbService,
     private salesService: SalesService
   ) {
-
     this.router.events.subscribe((event) => {
-      this.router.events.subscribe(event => {
+      this.router.events.subscribe((event) => {
         if (event instanceof NavigationEnd) {
           this.currentRoute = event.url;
         }
@@ -61,9 +60,9 @@ export class BreadcrumbComponent implements OnInit {
 
     const breadcrumbLabel: string = snapshot.data['breadcrumb'];
 
-
-
-    const routeURL: string = snapshot.url.map((segment) => segment.path).join('/');
+    const routeURL: string = snapshot.url
+      .map((segment) => segment.path)
+      .join('/');
     if (routeURL !== '') {
       url += `/${routeURL}`;
     }
@@ -88,7 +87,6 @@ export class BreadcrumbComponent implements OnInit {
     return breadcrumbs;
   }
   capitalizeFirstLetter(str: string): string {
-  return str.charAt(0).toUpperCase() + str.slice(1);
-}
-
+    return str.charAt(0).toUpperCase() + str.slice(1);
+  }
 }

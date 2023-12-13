@@ -21,11 +21,11 @@ import { CustomiseTcComponent } from './customise-tc/customise-tc.component';
 import { ChatComponent } from './chat/chat.component';
 import { OffersComponent } from './offers/offers.component';
 
-const routes: Routes = [ 
+const routes: Routes = [
   {
-    path: '', component: DashboardComponent,
+    path: '',
+    component: DashboardComponent,
     children: [
-
       { path: '', component: StatisticsComponent },
 
       { path: 'products', component: ProductsComponent },
@@ -41,26 +41,28 @@ const routes: Routes = [
 
       { path: 'customise-faq', component: FaqsComponent },
       // { path: 'coupons', component: CouponsComponent },
-      {path:'offers',component:OffersComponent},
+      { path: 'offers', component: OffersComponent },
       { path: 'support', component: SupportComponent },
       { path: 'tickets', component: TicketsComponent },
       { path: 'monetization', component: MonetizationComponent },
       { path: 'socials', component: SocialsComponent },
       {
-        path: 'customise-home', loadChildren: () => import('./edit-home/edit-home.module').then(m => m.EditHomeModule)
+        path: 'customise-home',
+        loadChildren: () =>
+          import('./edit-home/edit-home.module').then((m) => m.EditHomeModule),
       },
-      { path: 'notification' , component: NotificationsComponent },
-      { path: 'chat', component: ChatComponent},
+      { path: 'notification', component: NotificationsComponent },
+      { path: 'chat', component: ChatComponent },
       { path: 'customise-about', component: AboutComponent },
-      {path:'customise-tc',component: CustomiseTcComponent},
-      
+      { path: 'customise-tc', component: CustomiseTcComponent },
+
       { path: '**', component: NoPageComponent },
-    ]
+    ],
   },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class DashboardRoutingModule { }
+export class DashboardRoutingModule {}

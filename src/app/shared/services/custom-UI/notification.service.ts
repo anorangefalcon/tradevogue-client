@@ -3,11 +3,10 @@ import { Injectable } from '@angular/core';
 import { UtilsModule } from 'src/app/utils/backend-urls';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class NotificationService {
-
-  constructor(private backendUrls : UtilsModule, private http: HttpClient) { }
+  constructor(private backendUrls: UtilsModule, private http: HttpClient) {}
 
   // setNotifications(data : any) {
   //   return this.http.post(this.backendUrls.URLs.setNotifications, data);
@@ -26,6 +25,9 @@ export class NotificationService {
   }
 
   updateItem(updatedItem: any) {
-    return this.http.put(`${this.backendUrls.URLs.update}/${updatedItem._id}`, updatedItem);
+    return this.http.put(
+      `${this.backendUrls.URLs.update}/${updatedItem._id}`,
+      updatedItem
+    );
   }
 }

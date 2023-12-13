@@ -9,6 +9,4 @@ import { RouterModule } from '@angular/router';
   templateUrl: './collections.component.html',
   styleUrls: ['./collections.component.css'],
 })
-export class CollectionsComponent {
-
-}
+export class CollectionsComponent {}

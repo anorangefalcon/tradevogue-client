@@ -1,4 +1,11 @@
-import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  SimpleChanges,
+} from '@angular/core';
 
 @Component({
   selector: 'app-pagination',
@@ -47,19 +54,23 @@ export class PaginationComponent implements OnInit {
   get maxVisiblePages(): number {
     return Math.min(this.totalPages.length, this.maxSize * 2 + 1);
   }
-  
+
   showEllipsisBefore(index: number): boolean {
     const totalPages = this.totalPages.length;
     const shouldShow = totalPages > 1;
-    return (index === 1 && shouldShow && this.currentPage > 1);
+    return index === 1 && shouldShow && this.currentPage > 1;
   }
-  
+
   showEllipsisAfter(index: number): boolean {
     const totalPages = this.totalPages.length;
     const shouldShow = totalPages > 1;
-    return (index === totalPages - 1 && shouldShow && this.currentPage < totalPages - 1);
+    return (
+      index === totalPages - 1 &&
+      shouldShow &&
+      this.currentPage < totalPages - 1
+    );
   }
-  
+
   shouldShowPage(index: number): boolean {
     return (
       index + 1 >= this.currentPage - this.maxSize &&
@@ -70,11 +81,10 @@ export class PaginationComponent implements OnInit {
   showFirstEllipsis(): boolean {
     return this.currentPage < this.totalPages.length;
   }
-  
+
   showLastEllipsis(): boolean {
     return this.currentPage < this.totalPages.length - 2;
   }
-  
 
   ngOnChanges(changes: SimpleChanges) {
     this.totalPages = new Array(Math.ceil(this.collectionSize / this.pageSize));

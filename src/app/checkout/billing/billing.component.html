@@ -1,130 +1,172 @@
 <div class="container billingPage d-flex flex-column gap-20">
-
-    <!-- <div *ngIf="loading" class="tv-loading">
+  <!-- <div *ngIf="loading" class="tv-loading">
         <img src="../../assets/logo-mobile.svg" alt="tradeVogue-loading" *ngIf="!theme">
         <img src="../../assets/logo-mobile-light.svg" alt="tradeVogue-loading" *ngIf="theme">
         <div class="circle-tv-loader"></div>
     </div> -->
 
-    <div class="d-flex checkOutSteps">
-        <div class="d-flex gap-20 align-item-center">
-            <p class="common" [ngClass]="{'selected_step':!StripeOpener}">Address</p>
-            <p class="dotted_line"></p>
+  <div class="d-flex checkOutSteps">
+    <div class="d-flex gap-20 align-item-center">
+      <p class="common" [ngClass]="{ selected_step: !StripeOpener }">Address</p>
+      <p class="dotted_line"></p>
 
-            <p class="common" [ngClass]="{'selected_step':StripeOpener}">Payment</p>
+      <p class="common" [ngClass]="{ selected_step: StripeOpener }">Payment</p>
+    </div>
+  </div>
+
+  <div
+    class="address d-flex flex-column gap-20"
+    *ngIf="!StripeOpener"
+    [ngClass]="{ loading_screen: loading }"
+  >
+    <div class="d-flex flex-column gap-10">
+      <div
+        class="d-flex justify-content-md-between align-item-center overall__div"
+      >
+        <h2>SELECT DELIVERY ADDRESS</h2>
+        <div
+          class="d-flex align-item-center pointer addAddress__div"
+          (click)="AddAddress()"
+        >
+          <span class="material-symbols-outlined"> add_circle </span>
+          <p>ADD NEW ADDRESS</p>
         </div>
+      </div>
     </div>
 
-    <div class="address d-flex flex-column gap-20" *ngIf="!StripeOpener" [ngClass]="{'loading_screen':loading}">
-        <div class="d-flex flex-column gap-10" >
-            <div class="d-flex justify-content-md-between align-item-center overall__div">
-                <h2>SELECT DELIVERY ADDRESS
-                </h2>
-                <div class="d-flex align-item-center pointer addAddress__div" (click)="AddAddress()">
-                    <span class="material-symbols-outlined">
-                        add_circle
-                    </span>
-                    <p>ADD NEW ADDRESS</p>
+    <!-- show address -->
+    <!-- [ngClass]="{'main-address':AddressLength} " -->
+    <div class="d-flex flex-column gap-20">
+      <ng-container
+        *ngFor="let address of userAddresses; let i = index"
+        class="d-flex address__firstdiv"
+      >
+        <div class="single-address">
+          <input
+            type="radio"
+            id="radio{{ i }}"
+            name="address"
+            value="address"
+            class="d-flex"
+            [checked]="address.selected"
+          />
+          <label
+            for="radio{{ i }}"
+            id="{{ i }}"
+            class="d-flex align-item-center pointer relative"
+            (click)="AddressClicked(address)"
+          >
+            <div class="d-flex gap-10 justify-content-md-between mw100">
+              <div class="address-part d-flex flex-column gap-5">
+                <div class="d-flex justify-content-md-between">
+                  <div class="d-flex gap-10 delivery__div">
+                    <p class="name pointer-none">
+                      {{ address.firstname | titlecase }}
+                      {{ address.lastname | titlecase }}
+                    </p>
+                    <button class="default__btn btn" *ngIf="address?.selected">
+                      delivering here
+                    </button>
+                  </div>
                 </div>
+                <p>
+                  {{ address.apartment }} {{ address.area }}
+                  {{ address.landmark }}, {{ address.town_city }}
+                </p>
+                <p>{{ address.state }}- {{ address.pincode }}</p>
+                <!-- <button *ngIf=" class="btn-primary">Delivery Here</button> -->
+              </div>
+              <div class="d-flex flex-column gap-5 buttons-part">
+                <!-- <button class="edit__btn btn" (click)="EditAddress(address,i)">Edit</button> -->
+                <span
+                  class="material-symbols-outlined edit__btn"
+                  (click)="EditAddress(i)"
+                >
+                  edit
+                </span>
+                <span
+                  class="material-symbols-outlined remove__btn"
+                  (click)="RemoveAddress(address._id, i)"
+                >
+                  delete
+                </span>
+              </div>
             </div>
+          </label>
         </div>
-
-        <!-- show address -->
-        <!-- [ngClass]="{'main-address':AddressLength} " -->
-        <div class="d-flex flex-column gap-20 " >
-            <ng-container *ngFor="let address of userAddresses; let i=index" class="d-flex address__firstdiv ">
-                <div class="single-address">
-                    <input type="radio" id="radio{{i}}" name="address" value="address" class="d-flex"
-                        [checked]="address.selected">
-                    <label for="radio{{i}}" id="{{i}}" class="d-flex align-item-center pointer relative"
-                        (click)="AddressClicked(address)">
-                        <div class="d-flex gap-10 justify-content-md-between   mw100">
-                            <div class="address-part d-flex flex-column gap-5">
-                                <div class="d-flex justify-content-md-between">
-                                    <div class="d-flex gap-10 delivery__div">
-                                        <p class="name pointer-none">{{address.firstname | titlecase}}
-                                            {{address.lastname | titlecase}}</p>
-                                        <button class="default__btn btn" *ngIf="address?.selected">delivering
-                                            here</button>
-                                    </div>
-                                </div>
-                                <p>{{address.apartment}} {{address.area}} {{address.landmark}}, {{address.town_city}}
-                                </p>
-                                <p>{{address.state}}- {{address.pincode}}</p>
-                                <!-- <button *ngIf=" class="btn-primary">Delivery Here</button> -->
-                            </div>
-                            <div class="d-flex flex-column gap-5 buttons-part">
-                                <!-- <button class="edit__btn btn" (click)="EditAddress(address,i)">Edit</button> -->
-                                <span class="material-symbols-outlined edit__btn" (click)="EditAddress(i)">
-                                    edit
-                                </span>
-                                <span class="material-symbols-outlined remove__btn" (click)="RemoveAddress(address._id,i)">
-                                    delete
-                                </span>
-                            </div>
-                        </div>
-                    </label>
-                </div>
-            </ng-container>
-        </div>
-
-        <div [ngClass]="{'spinner':loading}">
-
-        </div>
-
-        <div   class="d-flex flex-center flex-column gap-10" *ngIf="userAddresses?.length == 0 && !loading">
-            <img src="../../assets/no-address-light.svg" alt="no address found" width="100">
-            <p>No address found!</p>
-        </div>
-
-        <!-- new address  -->
-        <div [ngClass]="{'show':ShowComponent==true}">
-            <app-address-2 [ShowComponent]="ShowComponent" [receiveData]="receiveData"
-                (AddressHandler)="AddressHandler($event)"></app-address-2>
-        </div>
+      </ng-container>
     </div>
 
-    <!-- ADDRESS FINISH -->
+    <div [ngClass]="{ spinner: loading }"></div>
 
-    <!-- PAYMENT STARTS -->
-    <div *ngIf="StripeOpener">
-        <div class="payment-form" *ngIf="selectedPaymentMethod === 'stripe'">
-            <form id="payment-form">
-                <div class="payment-elements">
-                    <!-- Stripe.js elements -->
-                    <div id="payment-request-button"></div>
-                    <div id="link-authentication-element"></div>
-                    <div id="payment-element"></div>
-                </div>
-
-                <button id="submit" class="btn-primary hidden">
-                    <span id="button-text">Pay now</span>
-                </button>
-                <div id="payment-message" class="hidden"></div>
-            </form>
-
-            <div class="or-div relative">
-                <p class="absolute">or</p>
-            </div>
-        </div>
-
-        <div class="payment-method-buttons">
-            <button class="btn-secondary btn btn-sm btn-rounded" (click)="selectPaymentMethod('razorpay')"
-                [class.selected]="selectedPaymentMethod === 'razorpay'" *ngIf="selectedPaymentMethod !== 'razorpay'">
-                Other Payment Method
-            </button>
-        </div>
-        <div *ngIf="selectedPaymentMethod === 'razorpay'">
-            <div [ngClass]="{'selected-box': selectedPaymentMethod === 'razorpay'}">
-                Payment Method Selected Proceed To Payment
-                <form class="hidden" (submit)="submitForm()">
-                    <input type="hidden" name="amount">
-                    <button class="hidden" id='razorSubmit' type="submit">Pay</button>
-                </form>
-            </div>
-        </div>
+    <div
+      class="d-flex flex-center flex-column gap-10"
+      *ngIf="userAddresses?.length == 0 && !loading"
+    >
+      <img
+        src="../../assets/no-address-light.svg"
+        alt="no address found"
+        width="100"
+      />
+      <p>No address found!</p>
     </div>
 
+    <!-- new address  -->
+    <div [ngClass]="{ show: ShowComponent == true }">
+      <app-address-2
+        [ShowComponent]="ShowComponent"
+        [receiveData]="receiveData"
+        (AddressHandler)="AddressHandler($event)"
+      ></app-address-2>
+    </div>
+  </div>
 
+  <!-- ADDRESS FINISH -->
 
+  <!-- PAYMENT STARTS -->
+  <div *ngIf="StripeOpener">
+    <div
+      [class.spinner]="uploading"
+      class="payment-form"
+      *ngIf="selectedPaymentMethod === 'stripe'"
+    >
+      <form id="payment-form">
+        <div class="payment-elements">
+          <!-- Stripe.js elements -->
+          <div id="payment-request-button"></div>
+          <div id="link-authentication-element"></div>
+          <div id="payment-element"></div>
+        </div>
+
+        <button id="submit" class="btn-primary hidden">
+          <span id="button-text">Pay now</span>
+        </button>
+        <div id="payment-message" class="hidden"></div>
+      </form>
+
+      <div class="or-div relative">
+        <p class="absolute">or</p>
+      </div>
+    </div>
+
+    <div class="payment-method-buttons">
+      <button
+        class="btn-secondary btn btn-sm btn-rounded"
+        (click)="selectPaymentMethod('razorpay')"
+        [class.selected]="selectedPaymentMethod === 'razorpay'"
+        *ngIf="selectedPaymentMethod !== 'razorpay'"
+      >
+        Other Payment Method
+      </button>
+    </div>
+    <div *ngIf="selectedPaymentMethod === 'razorpay'">
+      <div [ngClass]="{ 'selected-box': selectedPaymentMethod === 'razorpay' }">
+        Payment Method Selected Proceed To Payment
+        <form class="hidden" (submit)="submitForm()">
+          <input type="hidden" name="amount" />
+          <button class="hidden" id="razorSubmit" type="submit">Pay</button>
+        </form>
+      </div>
+    </div>
+  </div>
 </div>

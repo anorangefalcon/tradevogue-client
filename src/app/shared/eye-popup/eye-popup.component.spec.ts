@@ -8,7 +8,7 @@ describe('EyePopupComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [EyePopupComponent]
+      declarations: [EyePopupComponent],
     });
     fixture = TestBed.createComponent(EyePopupComponent);
     component = fixture.componentInstance;

@@ -7,12 +7,12 @@ import { CartService } from '../shared/services/cart.service';
 declare let Stripe: any;
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class CheckoutService {
   publicKey: any;
   stripe: any;
-  orderID: any = ''
+  orderID: any = '';
   secureNavbar = new BehaviorSubject(false);
   PaymentSuccess = new BehaviorSubject(false);
 
@@ -39,12 +39,12 @@ export class CheckoutService {
         if (event instanceof NavigationEnd) {
           if (this.router.url === '/cart/billing') {
             this.secureNavbar.next(true);
-          }
-          else {
+          } else {
             this.secureNavbar.next(false);
           }
         }
-      }));
+      })
+    );
   }
 
   private stripeScript!: HTMLScriptElement | undefined;
@@ -56,19 +56,21 @@ export class CheckoutService {
   }
 
   async checkOrderStatus(clientSecret: any): Promise<void> {
-    this.fetchDataService.HTTPGET(this.backendUri.URLs.getPaymentKeys).subscribe({
-      next: async (response: any) => {
+    this.fetchDataService
+      .HTTPGET(this.backendUri.URLs.getPaymentKeys)
+      .subscribe({
+        next: async (response: any) => {
+          console.log('response is ', response);
 
-        console.log('response is ', response);
-
-        const publicKey = response[0].decryptedPublicKey;
-        this.stripe = Stripe(publicKey);
-        const { paymentIntent } = await this.stripe.retrievePaymentIntent(clientSecret);
-        this.handlePaymentIntentStatus(paymentIntent);
-      }, error: () => {
-
-      }
-    })
+          const publicKey = response[0].decryptedPublicKey;
+          this.stripe = Stripe(publicKey);
+          const { paymentIntent } = await this.stripe.retrievePaymentIntent(
+            clientSecret
+          );
+          this.handlePaymentIntentStatus(paymentIntent);
+        },
+        error: () => {},
+      });
   }
 
   private handlePaymentIntentStatus(paymentIntent: any) {

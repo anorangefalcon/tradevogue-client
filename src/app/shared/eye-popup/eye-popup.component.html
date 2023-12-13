@@ -1,28 +1,42 @@
 <section class="eye__popup" *ngIf="list">
-    <app-drawer [direction]="direction" [show]="show" (showChange)="handler($event)" [width]="width">
-
-        <div class="card-container d-flex mw100">
-            <div class="image-section skeleton">
-                <owl-carousel-o *ngIf="list && list.assets && list.assets.length > 0" [options]="customOptions"
-                    [ngClass]="{crousel: true}">
-                    <ng-template carouselSlide *ngFor="let item of list.assets[assetIndex]?.photo">
-                        <div>
-                            <img class="image-carousel" [src]="item" height="450px" alt="Product Image">
-                        </div>
-                    </ng-template>
-                </owl-carousel-o>
+  <app-drawer
+    [direction]="direction"
+    [show]="show"
+    (showChange)="handler($event)"
+    [width]="width"
+  >
+    <div class="card-container d-flex mw100">
+      <div class="image-section skeleton">
+        <owl-carousel-o
+          *ngIf="list && list.assets && list.assets.length > 0"
+          [options]="customOptions"
+          [ngClass]="{ crousel: true }"
+        >
+          <ng-template
+            carouselSlide
+            *ngFor="let item of list.assets[assetIndex]?.photo"
+          >
+            <div>
+              <img
+                class="image-carousel"
+                [src]="item"
+                height="450px"
+                alt="Product Image"
+              />
             </div>
-            <div class="content-section d-flex flex-column gap-15">
-    
-                <h1 class="prod-name fs-20">{{ list?.name }}</h1>
-                <h2 class="subTitle">{{list?.subTitle}}</h2>
-                <div class="price">
-                    <h1 id="number-discount">₹{{ list?.price}} </h1>
-                    <p id="number-full" class="fs-14 old-price" *ngIf="list?.discount">
-                        ₹{{ list.oldPrice }}
-                    </p>
-                </div>
-<!-- 
+          </ng-template>
+        </owl-carousel-o>
+      </div>
+      <div class="content-section d-flex flex-column gap-15">
+        <h1 class="prod-name fs-20">{{ list?.name }}</h1>
+        <h2 class="subTitle">{{ list?.subTitle }}</h2>
+        <div class="price">
+          <h1 id="number-discount">₹{{ list?.price }}</h1>
+          <p id="number-full" class="fs-14 old-price" *ngIf="list?.discount">
+            ₹{{ list.oldPrice }}
+          </p>
+        </div>
+        <!-- 
                 <div class="sizes d-flex align-item-center gap-20" id="sizes">
                     <p>Size:</p>
                     <div class="sizes-opt d-flex gap-10">
@@ -35,7 +49,7 @@
                     </div>
                 </div> -->
 
-                <!-- <div *ngIf="!outOfStock" class="d-flex gap-15 align-item-center flex-wrap">
+        <!-- <div *ngIf="!outOfStock" class="d-flex gap-15 align-item-center flex-wrap">
                     <div class="customSelect">
                         <app-custom-select [selectedOption]="selectedQ !== 0 ? selectedQ : 'Select Quantity'"
                             (final_option)="updateSelectedField($event)" [options]="getOrderQuantity()">
@@ -49,101 +63,134 @@
                         </button>
                     </div>
                 </div> -->
-                <!-- <div *ngIf="outOfStock" class="d-flex gap-15 align-item-center stockAvailable out-of-stock">
+        <!-- <div *ngIf="outOfStock" class="d-flex gap-15 align-item-center stockAvailable out-of-stock">
                     <p>Out Of Stock</p>
                 </div> -->
-    
-                <div class="d-flex gap-30 align-item-center ">
-    
-                    <div *ngIf="list && list.avgRating !== undefined && list.avgRating !== null && list.avgRating !== 0"
-                        class="rating d-flex align-item-center">
-                        <span *ngFor="let i of createArrayToIterate(list.avgRating)"
-                            class="material-symbols-outlined filled">star</span>
-                        <span *ngIf="(list.avgRating % 1) !== 0" class="material-symbols-outlined">star_half</span>
-                        <span *ngFor="let i of createArrayToIterate(5 - list.avgRating)"
-                            class="material-symbols-outlined">star</span>
-                    </div>
-    
-                    
-                    <div *ngIf="!productSku && !outOfStock && list?.assets?.[assetIndex]?.stockQuantity?.[sizeIndex]?.quantity !== undefined"
-                        class="stockAvailable">
-                        <p class="stock-label">Stock: {{ list?.assets?.[assetIndex]?.stockQuantity?.[sizeIndex]?.quantity }}
-                        </p>
-                    </div>
-    
-                </div>
-    
-                <div class="colors d-flex align-item-center gap-15">
-                    <p>Color:</p>
-                    <div class="colors-opt d-flex gap-10">
-                        <div class="colors-radios d-flex align-item-center" *ngFor="let color of list?.assets; let i=index">
-                            <input type="radio" name="color" [value]="color.color" [style.background-color]="color?.color"
-                                [(ngModel)]="selectedColor"  (click)="changeColor(i)">
-                        </div>
-                    </div>
-                </div>
-    
-                <div class="sizes d-flex align-item-center gap-10" id="sizes"
-                    *ngIf="list?.assets?.[assetIndex]?.stockQuantity">
-                    <p>Size:</p>
-                    <div class="sizes-opt d-flex gap-5">
-                        <div *ngFor="let stock of list?.assets?.[assetIndex]?.stockQuantity; let j = index"
-                            class="sizes-radios relative">
-                            <input style="display: none;" type="radio" name="size" [value]="stock?.size" id="size_{{ stock?.size }}"
-                                [(ngModel)]="selectedSize" (click)="updateSizeIndex(j)">
-                            <label for="size_{{ stock?.size }}" class="transition fs-12 pointer btn-rounded fw-500">{{ stock?.size }}</label>
-                        </div>
-                    </div>
-                </div>
-    
-    
-                <div class="d-flex flex-column">
-    
-                    <div class="accordian mw-100">
-                        <h3 class="accordian__head relative pointer" [ngClass]="accordianOpen ? 'active' : ''"
-                            (click)="accordianOpen = !accordianOpen">
-                            Description
-                        </h3>
-                        <div class="accordian__body ecllipse">
-                            {{ list.description }}
-                        </div>
-                    </div>
-    
-                </div>
-    
-    
-               
-    
-             
 
-                <div class="tags d-flex gap-10 d-flex align-item-center flex-wrap">
-                    <a *ngFor="let tag of list.info.tags">
-                        {{ tag }}
-                    </a>
-                </div> 
+        <div class="d-flex gap-30 align-item-center">
+          <div
+            *ngIf="
+              list &&
+              list.avgRating !== undefined &&
+              list.avgRating !== null &&
+              list.avgRating !== 0
+            "
+            class="rating d-flex align-item-center"
+          >
+            <span
+              *ngFor="let i of createArrayToIterate(list.avgRating)"
+              class="material-symbols-outlined filled"
+              >star</span
+            >
+            <span
+              *ngIf="list.avgRating % 1 !== 0"
+              class="material-symbols-outlined"
+              >star_half</span
+            >
+            <span
+              *ngFor="let i of createArrayToIterate(5 - list.avgRating)"
+              class="material-symbols-outlined"
+              >star</span
+            >
+          </div>
 
-                <div class="cart-div d-flex gap-10 align-item-center">
-                    <button class="btn-secondary btn-xs btn btn-rounded d-flex gap-5 align-item-center"
-                        (click)="addToCart()">
-                        <span class="fs-20 material-symbols-outlined">
-                            shopping_cart
-                        </span>
-                        <p class="fs-12">ADD TO CART</p>
-                    </button>
-
-                    <!-- <button class="View btn-primary btn-xs btn btn-rounded d-flex gap-10 align-item-center" routerLink="/product/{{list.sku}}" (click)="this.show=false">
-                        View
-                    </button> -->
-                </div>
-    
-            </div>
+          <div
+            *ngIf="!productSku && !outOfStock && list?.assets?.[assetIndex]?.stockQuantity?.[sizeIndex]?.quantity !== undefined"
+            class="stockAvailable"
+          >
+            <p class="stock-label">
+              Stock:
+              {{ list?.assets?.[assetIndex]?.stockQuantity?.[sizeIndex]?.quantity }}
+            </p>
+          </div>
         </div>
 
-    </app-drawer>
+        <div class="colors d-flex align-item-center gap-15">
+          <p>Color:</p>
+          <div class="colors-opt d-flex gap-10">
+            <div
+              class="colors-radios d-flex align-item-center"
+              *ngFor="let color of list?.assets; let i = index"
+            >
+              <input
+                type="radio"
+                name="color"
+                [value]="color.color"
+                [style.background-color]="color?.color"
+                [(ngModel)]="selectedColor"
+                (click)="changeColor(i)"
+              />
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="sizes d-flex align-item-center gap-10"
+          id="sizes"
+          *ngIf="list?.assets?.[assetIndex]?.stockQuantity"
+        >
+          <p>Size:</p>
+          <div class="sizes-opt d-flex gap-5">
+            <div
+              *ngFor="let stock of list?.assets?.[assetIndex]?.stockQuantity; let j = index"
+              class="sizes-radios relative"
+            >
+              <input
+                style="display: none"
+                type="radio"
+                name="size"
+                [value]="stock?.size"
+                id="size_{{ stock?.size }}"
+                [(ngModel)]="selectedSize"
+                (click)="updateSizeIndex(j)"
+              />
+              <label
+                for="size_{{ stock?.size }}"
+                class="transition fs-12 pointer btn-rounded fw-500"
+                >{{ stock?.size }}</label
+              >
+            </div>
+          </div>
+        </div>
+
+        <div class="d-flex flex-column">
+          <div class="accordian mw-100">
+            <h3
+              class="accordian__head relative pointer"
+              [ngClass]="accordianOpen ? 'active' : ''"
+              (click)="accordianOpen = !accordianOpen"
+            >
+              Description
+            </h3>
+            <div class="accordian__body ecllipse">
+              {{ list.description }}
+            </div>
+          </div>
+        </div>
+
+        <div class="tags d-flex gap-10 d-flex align-item-center flex-wrap">
+          <a *ngFor="let tag of list.info.tags">
+            {{ tag }}
+          </a>
+        </div>
+
+        <div class="cart-div d-flex gap-10 align-item-center">
+          <button
+            class="btn-secondary btn-xs btn btn-rounded d-flex gap-5 align-item-center"
+            (click)="addToCart()"
+          >
+            <span class="fs-20 material-symbols-outlined"> shopping_cart </span>
+            <p class="fs-12">ADD TO CART</p>
+          </button>
+
+          <!-- <button class="View btn-primary btn-xs btn btn-rounded d-flex gap-10 align-item-center" routerLink="/product/{{list.sku}}" (click)="this.show=false">
+                        View
+                    </button> -->
+        </div>
+      </div>
+    </div>
+  </app-drawer>
 </section>
-
-
-
 
 <!-- <div class="eye__popup">
     <app-drawer [direction]="direction" [show]="show" (showChange)="handler($event)" [width]="width">

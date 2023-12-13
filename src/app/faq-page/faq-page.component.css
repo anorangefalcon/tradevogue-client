@@ -17,10 +17,9 @@
   border-radius: 5px;
   border: 1px solid rgb(var(--blackClr), 0.1);
   transition: all 0.3s ease;
-  
 }
 
-.faq_section{
+.faq_section {
   max-width: 850px;
   padding-block: 50px;
 }
@@ -48,7 +47,6 @@
   line-height: 1.5;
   color: #666;
 }
-
 
 .main_acc {
   background: transparent;
@@ -131,7 +129,6 @@
   font-size: 28px;
 }
 
-
 @media only screen and (max-width: 768px) {
   .faq_title {
     min-height: 200px;
@@ -167,8 +164,6 @@
     padding: 60px 29px;
   }
 
-
-
   .custom-title {
     display: flex;
     justify-content: space-between;
@@ -186,5 +181,4 @@
   .expanded {
     font-size: 12px;
   }
-
 }

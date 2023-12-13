@@ -18,13 +18,12 @@ mat-tab label {
 }
 
 .chat-options {
-  color: rgb(var(--textClr),1);
+  color: rgb(var(--textClr), 1);
 }
 
 .chat-message p {
-  color: rgb(var(--textClr),1) !important;
+  color: rgb(var(--textClr), 1) !important;
 }
-
 
 @keyframes moveUpDown {
   0% {
@@ -67,14 +66,15 @@ mat-tab label {
   border-radius: 10px;
 }
 
-#chat-bot .icon-support.expanded .cross-icon, .cross-icon {
+#chat-bot .icon-support.expanded .cross-icon,
+.cross-icon {
   visibility: visible;
 }
 
-#chat-bot .icon-support.expanded .chat-icon, .cross-icon {
+#chat-bot .icon-support.expanded .chat-icon,
+.cross-icon {
   visibility: hidden;
 }
-
 
 #chat-bot .messenger.expanded {
   visibility: visible;
@@ -279,7 +279,6 @@ p {
     position: absolute;
   }
 
-
   &::after {
     top: 0;
     left: 0;
@@ -389,8 +388,6 @@ p {
   background-color: #d30069;
 }
 
-
-
 @media (max-width: 768px) {
   .container {
     padding: 2rem;
@@ -419,11 +416,10 @@ p {
   }
 
   .icon-accordion.expanded::before {
-    content: '\25B6';
+    content: "\25B6";
     transform: rotate(0deg);
   }
 }
-
 
 .box {
   width: 100px;
@@ -531,7 +527,7 @@ p {
 
 .loader::before,
 .loader::after {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
 }
@@ -547,7 +543,6 @@ p {
 }
 
 @keyframes loader {
-
   0%,
   80%,
   100% {
@@ -603,16 +598,17 @@ p {
   /* gap: 4px; */
   cursor: pointer;
   border-radius: 10px;
-  border: 2px dashed #00BFA6;
-  box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+  border: 2px dashed #00bfa6;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
+    rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
   transition: 0.4s;
 }
 
 .btn:hover {
   transition: 0.4s;
-  border: 2px dashed #00BFA6;
+  border: 2px dashed #00bfa6;
   background-color: #fff;
-  color: #00BFA6;
+  color: #00bfa6;
 }
 
 .btn:active {
@@ -629,11 +625,11 @@ p {
 }
 
 .chat-message {
-    margin: 5px;
-    padding: 10px;
-    border-radius: 8px;
-    background-color: #E5E5EA;
-    max-width: 70%;
+  margin: 5px;
+  padding: 10px;
+  border-radius: 8px;
+  background-color: #e5e5ea;
+  max-width: 70%;
 }
 
 .user-message {

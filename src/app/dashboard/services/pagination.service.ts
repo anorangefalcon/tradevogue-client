@@ -5,12 +5,12 @@ import { UtilsModule } from 'src/app/utils/backend-urls';
 
 @Injectable()
 export class PaginationService {
-  private currentPage: number = 1; 
+  private currentPage: number = 1;
   private pageSize: number = 10;
   private data: any[] = [];
 
   constructor(private http: HttpClient, private backendUrl: UtilsModule) {}
-  
+
   // faq
   faq = this.backendUrl.URLs.getFaqData;
 
@@ -35,7 +35,9 @@ export class PaginationService {
   }
 
   loadData(): Observable<any> {
-    return this.http.get(`${this.faq}?page=${this.currentPage}&limit=${this.pageSize}`);
+    return this.http.get(
+      `${this.faq}?page=${this.currentPage}&limit=${this.pageSize}`
+    );
   }
 
   nextPage(): void {
@@ -53,7 +55,7 @@ export class PaginationService {
   // paginateFrontend(data: any[], page: number, pageSize: number): any[] {
   //   const startIndex = (page - 1) * pageSize;
   //   const endIndex = startIndex + pageSize;
-    
+
   //   return data.slice(startIndex, endIndex);
   // }
 
@@ -64,5 +66,4 @@ export class PaginationService {
 
   //   return this.http.get(endpoint, { params });
   // }
-  
 }

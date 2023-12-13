@@ -1,235 +1,328 @@
 <div class="d-flex flex-column gap-20">
-    <div class="card card__pd-25 d-flex justify-content-md-between align-item-center">
-        <div class="d-flex gap-5 justify-content-center align-item-center">
-            <button class="btn btn-xs customise-back-btn d-flex flex-center" routerLink="/dashboard/customise-home">
-                <span class="material-symbols-outlined">
-                    arrow_back_ios
-                </span>
-            </button>
-            <h3>Customise Sales</h3>
-        </div>
-        <div class="operation_button d-flex gap-10">
-            <div *ngIf="!showEditIcon" class="operation_button d-flex gap-10">
-                <button class="btn btn-xs fw-500 btn-rounded btn-primary"
-                    [style.display]="!salesForm.disabled ? 'none' : 'block'" (click)="salesForm.enable()">Edit</button>
-                <button class="btn btn-xs fw-500 btn-rounded btn-secondary"
-                    [style.display]="salesForm.disabled ? 'none' : 'block'" (click)="salesForm.disable()"
-                    (click)="onCancel()">Cancel</button>
-                <button class="btn btn-xs fw-500 btn-rounded btn-primary"
-                    [style.display]="salesForm.disabled ? 'none' : 'block'" (click)="onUpdate()">Update</button>
-            </div>
-
-            <button *ngIf="showEditIcon" [disabled]="salesForm.invalid" class="btn btn-rounded btn-xs btn-primary"
-                [ngStyle]="{'display': salesForm.disabled? 'none': 'inline-block'}" (click)="onUpdate()">Submit</button>
-        </div>
+  <div
+    class="card card__pd-25 d-flex justify-content-md-between align-item-center"
+  >
+    <div class="d-flex gap-5 justify-content-center align-item-center">
+      <button
+        class="btn btn-xs customise-back-btn d-flex flex-center"
+        routerLink="/dashboard/customise-home"
+      >
+        <span class="material-symbols-outlined"> arrow_back_ios </span>
+      </button>
+      <h3>Customise Sales</h3>
     </div>
-    <form class="form__card d-flex gap-15 flex-column" [formGroup]="salesForm">
-        <ng-container formArrayName='sale'>
-            <ng-container *ngFor="let sale of getSale(); let i = index">
-                <div formGroupName="{{i}}" class=" d-flex gap-15 card card__pd-25 mw100 relative">
-                    <button (click)="removeSale(i)"
-                        class="absolute btn-primary remove-banner-btn d-flex justify-content-center align-items-center"
-                        *ngIf="i!=0">
-                        <span class="material-symbols-outlined">
-                            close
-                        </span>
-                    </button>
-                    <div class="image-upload-div d-flex justify-content-center align-item-center relative">
-                        <div class="upload-image d-flex flex-column gap-10 align-item-center">
-                            <input type="file" [id]="'backgroundImage'+i" accept="image/jpg, image/jpeg, image/png"
-                                (input)="saleImageUpload($event, i)" />
-                            <label [for]="'backgroundImage'+i"
-                                class="upload__block d-flex flex-column flex-center pointer">
-                                <span class="upload_icon material-symbols-outlined">cloud_upload</span>
-                            </label>
-                            <small class="banner-label">Upload
-                                Sale Product Image</small>
-                            <img [src]="getImagePreview(i)" [style.display]="getImagePreview(i) ? 'flex' : 'none'"
-                                class="banner-image">
-                            <span class="material-symbols-outlined remove-btn pointer"
-                                [style.display]="getImagePreview(i) ? 'flex' : 'none'" (click)="removeImage(i)">
-                                close
-                            </span>
-                            <div class="loader" *ngIf="showLoading(i)"></div>
+    <div class="operation_button d-flex gap-10">
+      <div *ngIf="!showEditIcon" class="operation_button d-flex gap-10">
+        <button
+          class="btn btn-xs fw-500 btn-rounded btn-primary"
+          [style.display]="!salesForm.disabled ? 'none' : 'block'"
+          (click)="salesForm.enable()"
+        >
+          Edit
+        </button>
+        <button
+          class="btn btn-xs fw-500 btn-rounded btn-secondary"
+          [style.display]="salesForm.disabled ? 'none' : 'block'"
+          (click)="salesForm.disable()"
+          (click)="onCancel()"
+        >
+          Cancel
+        </button>
+        <button
+          class="btn btn-xs fw-500 btn-rounded btn-primary"
+          [style.display]="salesForm.disabled ? 'none' : 'block'"
+          (click)="onUpdate()"
+        >
+          Update
+        </button>
+      </div>
 
-                        </div>
-                    </div>
-                    <div class="data-upload-div d-flex gap-15">
-                        <div class="d-flex flex-column mw100 gap-10">
-                            <div class="internal-div">
-                                <label class="form__title" for="title">Title</label>
-                                <span class="relative">
-                                    <input class="form__input" type="text" id="title" formControlName="title" />
-                                    <ng-container formGroupName="colors">
-                                        <span class="tooltip">
-                                            <input class="absolute color-picker-position" type="color" name=""
-                                                [id]="'titleText'+i" formControlName="titleColor">
-                                            <span class="tooltiptext">
-                                                Title Color
-                                            </span>
-                                        </span>
-                                    </ng-container>
-
-                                </span>
-                            </div>
-                            <div class="internal-div">
-                                <label class="form__title" for="subTitle">SubTitle</label>
-                                <span class="relative">
-                                    <input class="form__input" type="text" id="subTitle" formControlName="subTitle" />
-                                    <ng-container formGroupName="colors">
-                                        <span class="tooltip">
-                                            <input class="absolute color-picker-position" type="color"
-                                                [id]="'subTitleText'+i" formControlName="subTitleColor" />
-                                            <span class="tooltiptext">
-                                                SubTitle Color
-                                            </span>
-                                        </span>
-                                    </ng-container>
-                                </span>
-                            </div>
-                            <div class="internal-div">
-                                <label class="form__title" for="buttonText">Button</label>
-                                <span class="relative">
-                                    <input class="form__input" type="text" id="buttonText"
-                                        formControlName="buttonText" />
-                                    <ng-container formGroupName="colors">
-                                        <span class="tooltip">
-                                            <input class="absolute color-picker-position" type="color"
-                                                [id]="'subTitleText'+i" formControlName="buttonColor" />
-                                            <span class="tooltiptext">
-                                                Button Color
-                                            </span>
-                                        </span>
-                                    </ng-container>
-
-                                </span>
-
-                            </div>
-                            <div class="internal-div">
-                                <label class="form__title" for="buttonLink">Button Link</label>
-                                <input class="form__input" type="text" id="buttonLink" formControlName="buttonLink" />
-                            </div>
-                            <div class=" d-flex flex-column gap-5 ">
-                                <label class="form__title " [for]="'buttonText'+i">Background Color</label>
-                                <ng-container formGroupName="colors">
-                                    <span class="tooltip">
-                                        <input type="color" [id]="'buttonText'+i" class="d-flex flex-center"
-                                            style="width: 20px; height: 20px;" formControlName="cardColor" />
-                                    </span>
-                                </ng-container>
-
-                            </div>
-                        </div>
-                        <!-- <div class="d-flex flex-column mw100 gap-10"> -->
-                        <!-- <ng-container formGroupName="colors"> -->
-                        <!-- <div class="internal-div">
+      <button
+        *ngIf="showEditIcon"
+        [disabled]="salesForm.invalid"
+        class="btn btn-rounded btn-xs btn-primary"
+        [ngStyle]="{ display: salesForm.disabled ? 'none' : 'inline-block' }"
+        (click)="onUpdate()"
+      >
+        Submit
+      </button>
+    </div>
+  </div>
+  <form class="form__card d-flex gap-15 flex-column" [formGroup]="salesForm">
+    <ng-container formArrayName="sale">
+      <ng-container *ngFor="let sale of getSale(); let i = index">
+        <div
+          formGroupName="{{ i }}"
+          class="d-flex gap-15 card card__pd-25 mw100 relative"
+        >
+          <button
+            (click)="removeSale(i)"
+            class="absolute btn-primary remove-banner-btn d-flex justify-content-center align-items-center"
+            *ngIf="i != 0"
+          >
+            <span class="material-symbols-outlined"> close </span>
+          </button>
+          <div
+            class="image-upload-div d-flex justify-content-center align-item-center relative"
+          >
+            <div
+              class="upload-image d-flex flex-column gap-10 align-item-center"
+            >
+              <input
+                type="file"
+                [id]="'backgroundImage' + i"
+                accept="image/jpg, image/jpeg, image/png"
+                (input)="saleImageUpload($event, i)"
+              />
+              <label
+                [for]="'backgroundImage' + i"
+                class="upload__block d-flex flex-column flex-center pointer"
+              >
+                <span class="upload_icon material-symbols-outlined"
+                  >cloud_upload</span
+                >
+              </label>
+              <small class="banner-label">Upload Sale Product Image</small>
+              <img
+                [src]="getImagePreview(i)"
+                [style.display]="getImagePreview(i) ? 'flex' : 'none'"
+                class="banner-image"
+              />
+              <span
+                class="material-symbols-outlined remove-btn pointer"
+                [style.display]="getImagePreview(i) ? 'flex' : 'none'"
+                (click)="removeImage(i)"
+              >
+                close
+              </span>
+              <div class="loader" *ngIf="showLoading(i)"></div>
+            </div>
+          </div>
+          <div class="data-upload-div d-flex gap-15">
+            <div class="d-flex flex-column mw100 gap-10">
+              <div class="internal-div">
+                <label class="form__title" for="title">Title</label>
+                <span class="relative">
+                  <input
+                    class="form__input"
+                    type="text"
+                    id="title"
+                    formControlName="title"
+                  />
+                  <ng-container formGroupName="colors">
+                    <span class="tooltip">
+                      <input
+                        class="absolute color-picker-position"
+                        type="color"
+                        name=""
+                        [id]="'titleText' + i"
+                        formControlName="titleColor"
+                      />
+                      <span class="tooltiptext"> Title Color </span>
+                    </span>
+                  </ng-container>
+                </span>
+              </div>
+              <div class="internal-div">
+                <label class="form__title" for="subTitle">SubTitle</label>
+                <span class="relative">
+                  <input
+                    class="form__input"
+                    type="text"
+                    id="subTitle"
+                    formControlName="subTitle"
+                  />
+                  <ng-container formGroupName="colors">
+                    <span class="tooltip">
+                      <input
+                        class="absolute color-picker-position"
+                        type="color"
+                        [id]="'subTitleText' + i"
+                        formControlName="subTitleColor"
+                      />
+                      <span class="tooltiptext"> SubTitle Color </span>
+                    </span>
+                  </ng-container>
+                </span>
+              </div>
+              <div class="internal-div">
+                <label class="form__title" for="buttonText">Button</label>
+                <span class="relative">
+                  <input
+                    class="form__input"
+                    type="text"
+                    id="buttonText"
+                    formControlName="buttonText"
+                  />
+                  <ng-container formGroupName="colors">
+                    <span class="tooltip">
+                      <input
+                        class="absolute color-picker-position"
+                        type="color"
+                        [id]="'subTitleText' + i"
+                        formControlName="buttonColor"
+                      />
+                      <span class="tooltiptext"> Button Color </span>
+                    </span>
+                  </ng-container>
+                </span>
+              </div>
+              <div class="internal-div">
+                <label class="form__title" for="buttonLink">Button Link</label>
+                <input
+                  class="form__input"
+                  type="text"
+                  id="buttonLink"
+                  formControlName="buttonLink"
+                />
+              </div>
+              <div class="d-flex flex-column gap-5">
+                <label class="form__title" [for]="'buttonText' + i"
+                  >Background Color</label
+                >
+                <ng-container formGroupName="colors">
+                  <span class="tooltip">
+                    <input
+                      type="color"
+                      [id]="'buttonText' + i"
+                      class="d-flex flex-center"
+                      style="width: 20px; height: 20px"
+                      formControlName="cardColor"
+                    />
+                  </span>
+                </ng-container>
+              </div>
+            </div>
+            <!-- <div class="d-flex flex-column mw100 gap-10"> -->
+            <!-- <ng-container formGroupName="colors"> -->
+            <!-- <div class="internal-div">
                                     <label class="form__title" [for]="'titleText'+i">Title Color</label>
                                     <input class="form__input" type="color" name="" [id]="'titleText'+i"
                                         formControlName="titleColor">
                                 </div> -->
-                        <!-- <div class="internal-div">
+            <!-- <div class="internal-div">
                                     <label class="form__title" [for]="'subTitleText'+i">Subtitle Color</label>
                                     <input class="form__input" type="color" [id]="'subTitleText'+i"
                                         formControlName="subTitleColor" />
                                 </div> -->
-                        <!-- <div class="internal-div">
+            <!-- <div class="internal-div">
                                     <label class="form__title" [for]="'buttonText'+i">Button Color</label>
                                     <input class="form__input" type="color" [id]="'buttonText'+i"
                                         formControlName="buttonColor" />
                                 </div> -->
 
-                        <!-- </ng-container> -->
-                        <!-- </div> -->
-                    </div>
-                </div>
-            </ng-container>
-        </ng-container>
-    </form>
+            <!-- </ng-container> -->
+            <!-- </div> -->
+          </div>
+        </div>
+      </ng-container>
+    </ng-container>
+  </form>
 
-    <div class="table-list card">
-        <table class="mw100">
-            <thead>
-                <tr>
-                    <th class="items">Sr.</th>
-                    <th class="items">Image</th>
-                    <th class="items">Title</th>
-                    <th class="items">Sub Title</th>
-                    <th class="items">Button Link</th>
-                    <th class="items">Card Color</th>
-                    <th class="items">Enable</th>
-                    <th class="items">Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let item of tableData; let i = index">
-                    <td class="ellipsis items serial-number">{{i+1}}</td>
-                    <td class="ellipsis items">
-                        <img class="sale-image-circle pointer" [src]="item.backgroundImage">
-                    </td>
-                    <td class="ellipsis items">{{item.title}}</td>
-                    <td class="ellipsis items">{{item.subTitle}}</td>
+  <div class="table-list card">
+    <table class="mw100">
+      <thead>
+        <tr>
+          <th class="items">Sr.</th>
+          <th class="items">Image</th>
+          <th class="items">Title</th>
+          <th class="items">Sub Title</th>
+          <th class="items">Button Link</th>
+          <th class="items">Card Color</th>
+          <th class="items">Enable</th>
+          <th class="items">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of tableData; let i = index">
+          <td class="ellipsis items serial-number">{{ i + 1 }}</td>
+          <td class="ellipsis items">
+            <img
+              class="sale-image-circle pointer"
+              [src]="item.backgroundImage"
+            />
+          </td>
+          <td class="ellipsis items">{{ item.title }}</td>
+          <td class="ellipsis items">{{ item.subTitle }}</td>
 
-                    <td class="items ">
-                        <div class="d-flex align-item-center gap-5">
-                            {{item.buttonText}}
-                            <a *ngIf="item.buttonLink" href="{{item.buttonLink}}" target="_blank" rel="noopener">
-                                <span class="material-symbols-outlined link-icon pointer">
-                                    open_in_new
-                                </span>
-                            </a>
-                        </div>
-                    </td>
+          <td class="items">
+            <div class="d-flex align-item-center gap-5">
+              {{ item.buttonText }}
+              <a
+                *ngIf="item.buttonLink"
+                href="{{ item.buttonLink }}"
+                target="_blank"
+                rel="noopener"
+              >
+                <span class="material-symbols-outlined link-icon pointer">
+                  open_in_new
+                </span>
+              </a>
+            </div>
+          </td>
 
-                    <td class="items">
-                        <div class="d-flex gap-5 align-item-center">
-                            <ng-container *ngIf="!item?.colors">
-                                None
-                            </ng-container>
-                            <div class="tooltip" [class.color-circle]="item.colors.cardColor"
-                                [style.background-color]="item.colors.cardColor">
-                                <span class="tooltiptext">
-                                    Card Color
-                                </span>
-                            </div>
-                            <div class="tooltip" [class.color-circle]="item.colors.buttonColor"
-                                [style.background-color]="item.colors.buttonColor">
-                                <span class="tooltiptext">
-                                    Button Color
-                                </span>
-                            </div>
-                            <div class="tooltip" [class.color-circle]="item.colors.titleColor"
-                                [style.background-color]="item.colors.titleColor">
-                                <span class="tooltiptext">
-                                    Title Color
-                                </span>
-                            </div>
-                        </div>
-                    </td>
+          <td class="items">
+            <div class="d-flex gap-5 align-item-center">
+              <ng-container *ngIf="!item?.colors"> None </ng-container>
+              <div
+                class="tooltip"
+                [class.color-circle]="item.colors.cardColor"
+                [style.background-color]="item.colors.cardColor"
+              >
+                <span class="tooltiptext"> Card Color </span>
+              </div>
+              <div
+                class="tooltip"
+                [class.color-circle]="item.colors.buttonColor"
+                [style.background-color]="item.colors.buttonColor"
+              >
+                <span class="tooltiptext"> Button Color </span>
+              </div>
+              <div
+                class="tooltip"
+                [class.color-circle]="item.colors.titleColor"
+                [style.background-color]="item.colors.titleColor"
+              >
+                <span class="tooltiptext"> Title Color </span>
+              </div>
+            </div>
+          </td>
 
-                    <td class="items">
-                        <div class="slide-button d-flex align-item-center">
-                            <input type="checkbox" [checked]="item.enable" (change)="toggle(item)"
-                                [name]="i + 'Available'" [id]="i + 'Available'" />
-                            <label [for]="i + 'Available'"></label>
-                        </div>
-                    </td>
+          <td class="items">
+            <div class="slide-button d-flex align-item-center">
+              <input
+                type="checkbox"
+                [checked]="item.enable"
+                (change)="toggle(item)"
+                [name]="i + 'Available'"
+                [id]="i + 'Available'"
+              />
+              <label [for]="i + 'Available'"></label>
+            </div>
+          </td>
 
-                    <td class="items action-btns">
-                        <div class="d-flex align-item-center gap-5 transition">
-                            <span class="tooltip pointer">
-                                <i (click)="showItemDetails(item, i); showEditIcon = false"
-                                    class="fs-20 action__btn-icon material-symbols-outlined">edit</i>
-                                <span class="tooltiptext">Edit</span>
-                            </span>
-                            <span class="tooltip pointer">
-                                <i (click)="deleteItem(item)"
-                                    class="fs-20 action__btn-icon material-symbols-outlined">delete</i>
-                                <span class="tooltiptext">Delete</span>
-                            </span>
-                        </div>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
+          <td class="items action-btns">
+            <div class="d-flex align-item-center gap-5 transition">
+              <span class="tooltip pointer">
+                <i
+                  (click)="showItemDetails(item, i); showEditIcon = false"
+                  class="fs-20 action__btn-icon material-symbols-outlined"
+                  >edit</i
+                >
+                <span class="tooltiptext">Edit</span>
+              </span>
+              <span class="tooltip pointer">
+                <i
+                  (click)="deleteItem(item)"
+                  class="fs-20 action__btn-icon material-symbols-outlined"
+                  >delete</i
+                >
+                <span class="tooltiptext">Delete</span>
+              </span>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </div>

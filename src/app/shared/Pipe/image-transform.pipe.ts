@@ -4,22 +4,21 @@ import { ImageUploadService } from '../services/image-upload.service';
 
 @Pipe({
   standalone: true,
-  name: 'imageTransform'
+  name: 'imageTransform',
 })
-
 export class ImageTransformPipe implements PipeTransform {
+  constructor(private filestackService: ImageUploadService) {}
 
-  constructor(private filestackService: ImageUploadService ){}
-
-  transform(value: string, transformOptions: filestack.TransformOptions): string {
-
+  transform(
+    value: string,
+    transformOptions: filestack.TransformOptions
+  ): string {
     if (!value.includes('https://cdn.filestackcontent.com')) {
       return value;
     }
-    
+
     let segment = value.split('/');
     let handler = segment[segment.length - 1];
-    return this.filestackService.transform(handler , transformOptions);
+    return this.filestackService.transform(handler, transformOptions);
   }
-
 }

@@ -14,7 +14,7 @@ import { ActivatedRoute } from '@angular/router';
   selector: 'app-eye-popup',
   templateUrl: './eye-popup.component.html',
   styleUrls: ['./eye-popup.component.css'],
-  // encapsulation: ViewEncapsulation.None 
+  // encapsulation: ViewEncapsulation.None
 })
 export class EyePopupComponent {
   assetIndex: any = 0;
@@ -30,28 +30,28 @@ export class EyePopupComponent {
   list: any;
   avgRating: number = 0;
   productData: any = [];
-  selectedColor: string = "";
+  selectedColor: string = '';
   accordianOpen: boolean = false;
   accordianOpen2: boolean = true;
   slicedTags: string[] = [];
   currentIndex = 0;
   tagsToShow = 3;
-  selectedSize: string = "";
+  selectedSize: string = '';
   selectedQ: any;
   loading: any;
   activeIndex: any;
   private drawerSubscription!: Subscription;
 
-  constructor(private eyePopService: EyePopService,
+  constructor(
+    private eyePopService: EyePopService,
     private toastService: ToastService,
     private router: Router,
     private cartService: CartService,
     private changeDetector: ChangeDetectorRef,
     private fetchDataService: FetchDataService,
     private backendUrl: UtilsModule,
-    private route: ActivatedRoute,) {
-
-  }
+    private route: ActivatedRoute
+  ) {}
 
   ngOnInit() {
     // this.avgRating = this.list.avgRating;
@@ -63,26 +63,27 @@ export class EyePopupComponent {
     });
   }
 
-
   addToCart() {
     const cartItem = {
       sku: this.list.sku,
       size: this.selectedSize,
       color: this.selectedColor,
-      quantity: this.selectedQ
-    }
+      quantity: this.selectedQ,
+    };
 
-    this.outOfStock = (this.list.assets[this.assetIndex].stockQuantity[this.sizeIndex].quantity <= 0) ? true : false;
+    this.outOfStock =
+      this.list.assets[this.assetIndex].stockQuantity[this.sizeIndex]
+        .quantity <= 0
+        ? true
+        : false;
     if (this.outOfStock) {
       this.toastService.errorToast({
-        title: "This Product is out of stock"
+        title: 'This Product is out of stock',
       });
-    }
-    else {
+    } else {
       this.show = false;
       this.cartService.addToCart(cartItem);
     }
-      
   }
 
   changeColor(index: any) {
@@ -98,19 +99,25 @@ export class EyePopupComponent {
 
   normalizeSizeColorQuantity() {
     this.selectedColor = this.list?.assets[this.assetIndex].color;
-    this.selectedSize = this.list?.assets[this.assetIndex].stockQuantity[this.sizeIndex].size;
-    this.outOfStock = (this.list?.assets[this.assetIndex].stockQuantity[this.sizeIndex].quantity <= 0) ? true : false;
+    this.selectedSize =
+      this.list?.assets[this.assetIndex].stockQuantity[this.sizeIndex].size;
+    this.outOfStock =
+      this.list?.assets[this.assetIndex].stockQuantity[this.sizeIndex]
+        .quantity <= 0
+        ? true
+        : false;
 
-    if (!(this.getOrderQuantity().includes(this.selectedQ))) this.selectedQ = 0;
+    if (!this.getOrderQuantity().includes(this.selectedQ)) this.selectedQ = 0;
   }
 
   getOrderQuantity() {
-    let limit = this.list?.assets[this.assetIndex].stockQuantity[this.sizeIndex].quantity;
+    let limit =
+      this.list?.assets[this.assetIndex].stockQuantity[this.sizeIndex].quantity;
 
     let arr = this.list?.info.orderQuantity;
     let filteredArray = arr.filter((item: any) => item <= limit);
 
-    if (!(filteredArray.includes(limit)) && (arr[arr.length - 1] > limit)) {
+    if (!filteredArray.includes(limit) && arr[arr.length - 1] > limit) {
       filteredArray.push(limit);
     }
 
@@ -140,10 +147,8 @@ export class EyePopupComponent {
     return Array(newTotal).fill(0);
   }
 
-  
-
   handler(event: boolean) {
-    this.show = event
+    this.show = event;
   }
 
   customOptions: OwlOptions = {
@@ -157,18 +162,17 @@ export class EyePopupComponent {
     navSpeed: 600,
     responsive: {
       0: {
-        items: 1
+        items: 1,
       },
       400: {
-        items: 1
+        items: 1,
       },
       740: {
-        items: 1
+        items: 1,
       },
       940: {
-        items: 1
-      }
+        items: 1,
+      },
     },
-  }
-
+  };
 }

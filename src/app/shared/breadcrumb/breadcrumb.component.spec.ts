@@ -8,7 +8,7 @@ describe('BreadcrumbComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [BreadcrumbComponent]
+      declarations: [BreadcrumbComponent],
     });
     fixture = TestBed.createComponent(BreadcrumbComponent);
     component = fixture.componentInstance;

@@ -8,7 +8,7 @@ describe('HelpPageComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [HelpPageComponent]
+      declarations: [HelpPageComponent],
     });
     fixture = TestBed.createComponent(HelpPageComponent);
     component = fixture.componentInstance;

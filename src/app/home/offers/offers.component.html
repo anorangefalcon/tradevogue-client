@@ -9,13 +9,14 @@
             <span class="subtitle" [style.color]="item.colors.subTitleColor">{{ item.subTitle }}</span>
             <h2 class="offer-title" [style.color]="item.colors.titleColor">{{ item.title }}</h2>
 
-
                   <button (mouseover)="onHover(item)"
         (mouseout)="onHoverOut(item)" (click)="getLink(item.buttonLink)" class="btn-style3"
               [style.backgroundColor]="item.colors.buttonColor" [style.color]="item.hover ? 'white' : ''"
               [style.backgroundColor]=" item.hover ? 'transparent' : item.colors.buttonColor"
               [style.color]="item.hover ? item.colors.buttonColor : ''"
               [style.border]="item.hover ? '2px solid' + item.colors.buttonColor : '2px solid' + item.colors.buttonColor"
+              [style.transition]="item.hover ? '0.3s ease-in-out' : ''"
+              [style.cursor]="item.hover ? 'pointer' : ''"
               >{{ item.buttonText }}</button>
 
 

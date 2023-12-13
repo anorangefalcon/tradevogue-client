@@ -1,5 +1,11 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, FormArray, FormControl, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  FormArray,
+  FormControl,
+  Validators,
+} from '@angular/forms';
 import { SalesService } from 'src/app/shared/services/custom-UI/sales.service';
 import { ImageUploadService } from 'src/app/shared/services/image-upload.service';
 import { FetchDataService } from 'src/app/shared/services/fetch-data.service';
@@ -12,10 +18,9 @@ import { ToastService } from 'src/app/shared/services/toast.service';
 @Component({
   selector: 'app-sales',
   templateUrl: './sales.component.html',
-  styleUrls: ['./sales.component.css']
+  styleUrls: ['./sales.component.css'],
 })
 export class SalesComponent {
-
   salesForm!: FormGroup;
   previewImage: any;
   tableData: any;
@@ -26,21 +31,22 @@ export class SalesComponent {
   allSubscriptions: Subscription[] = [];
   getSales() {
     this.allSubscriptions.push(
-    this.salesService.getSales().subscribe((res) => {
-      this.tableData = res;
-    }))
+      this.salesService.getSales().subscribe((res) => {
+        this.tableData = res;
+      })
+    );
   }
 
   constructor(
-    private fb: FormBuilder, 
-    private salesService: SalesService, 
-    private uploadService: ImageUploadService, 
-    private fetch: FetchDataService, 
+    private fb: FormBuilder,
+    private salesService: SalesService,
+    private uploadService: ImageUploadService,
+    private fetch: FetchDataService,
     private dialogService: DialogBoxService,
     private util: UtilsModule,
     private router: Router,
-    private toast: ToastService) {
-
+    private toast: ToastService
+  ) {
     this.getSales();
 
     this.salesForm = this.fb.group({
@@ -55,37 +61,41 @@ export class SalesComponent {
             titleColor: '',
             subTitleColor: '',
             buttonColor: '',
-            cardColor: ''
-          })
-        })
-      ])
+            cardColor: '',
+          }),
+        }),
+      ]),
     });
 
     this.allSubscriptions.push(
-    this.dialogService.responseEmitter.subscribe({
-      next: (res: any)=>{
-        if(res){
-          this.allSubscriptions.push(
-          this.fetch.HTTPPOST(this.util.URLs.deleteSales, {_id: this.deleteId}).subscribe((data => {
+      this.dialogService.responseEmitter.subscribe({
+        next: (res: any) => {
+          if (res) {
+            this.allSubscriptions.push(
+              this.fetch
+                .HTTPPOST(this.util.URLs.deleteSales, { _id: this.deleteId })
+                .subscribe((data) => {
+                  this.getSales();
+                  this.toast.successToast({ title: 'Deleted Successfully' });
+                })
+            );
             this.getSales();
-            this.toast.successToast({title: 'Deleted Successfully'});
-          })));
-          this.getSales();
-        }
-      }
-    }))
+          }
+        },
+      })
+    );
   }
-  
+
   ngOnDestroy() {
-    this.allSubscriptions.forEach((item: Subscription)=> item.unsubscribe());
+    this.allSubscriptions.forEach((item: Subscription) => item.unsubscribe());
   }
   deleteId: any;
 
   deleteItem(key: any) {
     this.selectedItem = key;
     if (this.selectedItem) {
-      this.deleteId =  this.selectedItem._id;
-      this.dialogService.confirmationDialogBox()
+      this.deleteId = this.selectedItem._id;
+      this.dialogService.confirmationDialogBox();
     }
   }
 
@@ -95,19 +105,22 @@ export class SalesComponent {
       const id = this.selectedItem._id;
       const enable = !this.selectedItem.enable;
       const body = {
-        id, enable
-      }
+        id,
+        enable,
+      };
 
       this.allSubscriptions.push(
-      this.fetch.HTTPPOST(this.util.URLs.toggleSales, body).subscribe((res) => {
-        this.getSales();
-      })
+        this.fetch
+          .HTTPPOST(this.util.URLs.toggleSales, body)
+          .subscribe((res) => {
+            this.getSales();
+          })
       );
     }
   }
 
-  getLink(link: string){
-    const toLink = '/' + link.split('/')[3];    
+  getLink(link: string) {
+    const toLink = '/' + link.split('/')[3];
     this.router.navigateByUrl(toLink);
   }
 
@@ -119,7 +132,6 @@ export class SalesComponent {
     this.selectedItem = item;
     this.itemId = item._id;
     this.editingIndex = index;
-
 
     this.salesForm.patchValue({
       sale: [
@@ -133,10 +145,10 @@ export class SalesComponent {
             titleColor: item.colors.titleColor,
             subTitleColor: item.colors.subTitleColor,
             buttonColor: item.colors.buttonColor,
-            cardColor: item.colors.cardColor
-          }
-        }
-      ]
+            cardColor: item.colors.cardColor,
+          },
+        },
+      ],
     });
   }
 
@@ -151,8 +163,8 @@ export class SalesComponent {
         titleColor: '',
         subTitleColor: '',
         buttonColor: '',
-        cardColor: ''
-      })
+        cardColor: '',
+      }),
     });
 
     (this.salesForm.get('sale') as FormArray).push(saleGroup);
@@ -167,38 +179,45 @@ export class SalesComponent {
   }
 
   onUpdate() {
-
     if (this.salesForm.dirty) {
       if (this.editingIndex !== undefined) {
         const body = {
           index: this.editingIndex,
           id: this.itemId,
-          data: this.salesForm.value
-        }
+          data: this.salesForm.value,
+        };
 
         this.allSubscriptions.push(
-        this.fetch.HTTPPOST(this.util.URLs.updateSales, body).subscribe((res) => {
-          console.log(res, 'res');
-          this.toast.successToast({title: 'Updated Successfully'});
-          this.getSales();
-          this.salesForm.reset();
-        }))
+          this.fetch
+            .HTTPPOST(this.util.URLs.updateSales, body)
+            .subscribe((res) => {
+              console.log(res, 'res');
+              this.toast.successToast({ title: 'Updated Successfully' });
+              this.getSales();
+              this.salesForm.reset();
+            })
+        );
         this.salesForm.reset();
       } else {
         this.allSubscriptions.push(
-        this.salesService.setSales(this.salesForm.value).subscribe((data) => {
-          this.getSales();
-          this.toast.successToast({title: 'Added Successfully'});
-          this.salesForm.reset();
-          this.showEditIcon = true;
-        }));
+          this.salesService.setSales(this.salesForm.value).subscribe((data) => {
+            this.getSales();
+            this.toast.successToast({ title: 'Added Successfully' });
+            this.salesForm.reset();
+            this.showEditIcon = true;
+          })
+        );
       }
     } else {
     }
   }
 
   updateContentAlign(index: number, value: string) {
-    this.salesForm.get('sale')?.get(String(index))?.get('contentAlign')?.setValue(value);
+    this.salesForm
+      .get('sale')
+      ?.get(String(index))
+      ?.get('contentAlign')
+      ?.setValue(value);
   }
 
   preview: any;
@@ -208,19 +227,25 @@ export class SalesComponent {
   }
 
   saleImageUpload(event: any, formIndex: any) {
-
-    console.log(event, 'file', formIndex, "index");
+    console.log(event, 'file', formIndex, 'index');
 
     let file: any = (<HTMLInputElement>event.target)?.files![0];
 
     this.uploadService.fileupload([{ file: file }]).then((url: any) => {
-      this.salesForm.get('sale')?.get(String(formIndex))?.get('backgroundImage')?.setValue(url[0]);
+      this.salesForm
+        .get('sale')
+        ?.get(String(formIndex))
+        ?.get('backgroundImage')
+        ?.setValue(url[0]);
       this.getImagePreview(formIndex);
-    })
+    });
   }
 
   getImagePreview(index: any) {
-    let value = <FormArray>((this?.salesForm?.get('sale'))?.get(String(index)))?.get('backgroundImage')?.value;
+    let value = <FormArray>(
+      this?.salesForm?.get('sale')?.get(String(index))?.get('backgroundImage')
+        ?.value
+    );
     // console.log(value, 'linkkk');
 
     return value;

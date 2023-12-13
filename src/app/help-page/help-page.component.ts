@@ -7,7 +7,7 @@ import { ToastService } from '../shared/services/toast.service';
 @Component({
   selector: 'app-help-page',
   templateUrl: './help-page.component.html',
-  styleUrls: ['./help-page.component.css']
+  styleUrls: ['./help-page.component.css'],
 })
 export class HelpPageComponent {
   ticketData: string[] = [];
@@ -21,52 +21,51 @@ export class HelpPageComponent {
     private userService: LoginCheckService,
     private toast: ToastService
   ) {
-      this.fetchDataService.HTTPGET(this.utils.URLs.getTicketStatus).subscribe((data: any)=> {
+    this.fetchDataService
+      .HTTPGET(this.utils.URLs.getTicketStatus)
+      .subscribe((data: any) => {
         this.ticketData = data[0].title;
-      })
+      });
     this.contactForm = this.formBuilder.group({
       name: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       selectedTicket: ['Select Ticket', Validators.required],
-      message: ['', Validators.required]
+      message: ['', Validators.required],
     });
   }
 
-  ngOnInit(){
-    this.userService.getUser('fcm').subscribe((token: any)=>{
+  ngOnInit() {
+    this.userService.getUser('fcm').subscribe((token: any) => {
       this.fcmToken = token;
-    })
+    });
   }
 
   async onSubmit() {
     if (this.contactForm.valid) {
-        try {
-          const body = {
-            email: this.contactForm.get('email')?.value,
-            status: 'open',
-            message: this.contactForm.get('message')?.value,
-          }
-     this.fetchDataService.HTTPPOST(this.utils.URLs.ticketMail, body).subscribe((res => {
-     }))
-        }
-        catch (error) {
-        }
+      try {
+        const body = {
+          email: this.contactForm.get('email')?.value,
+          status: 'open',
+          message: this.contactForm.get('message')?.value,
+        };
+        this.fetchDataService
+          .HTTPPOST(this.utils.URLs.ticketMail, body)
+          .subscribe((res) => {});
+      } catch (error) {}
 
-      this.fetchDataService.HTTPPOST(this.utils.URLs.saveTicket, this.contactForm.value)
+      this.fetchDataService
+        .HTTPPOST(this.utils.URLs.saveTicket, this.contactForm.value)
         .subscribe((response: any) => {
-          this.toast.successToast({title:'Check Your Email'});
-        })
-       
+          this.toast.successToast({ title: 'Check Your Email' });
+        });
 
-        // this.fetchDataService.HTTPPOST(this.utils.URLs.webPushTokenDetail, {token: this.fcmToken, email: this.contactForm.get('email')?.value}).subscribe((response: any) => {
-        //   if (response) {
+      // this.fetchDataService.HTTPPOST(this.utils.URLs.webPushTokenDetail, {token: this.fcmToken, email: this.contactForm.get('email')?.value}).subscribe((response: any) => {
+      //   if (response) {
 
-        //   }
-        // });
-        
+      //   }
+      // });
 
       this.contactForm.reset();
-
     } else {
     }
   }
@@ -79,4 +78,3 @@ export class HelpPageComponent {
     this.contactForm.get('selectedTicket')?.patchValue(field);
   }
 }
-

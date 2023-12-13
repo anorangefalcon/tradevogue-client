@@ -9,19 +9,10 @@ import { PipesPipe } from '../checkout/billing/pipes.pipe';
 import { SharedModule } from '../shared/shared.module';
 import { UtilsModule } from '../utils/backend-urls';
 
-
-const routers: Routes = [
-  { path: '', component: CheckoutComponent },
-
-];
+const routers: Routes = [{ path: '', component: CheckoutComponent }];
 
 @NgModule({
-  declarations: [
-    CheckoutComponent,
-    CartComponent,
-    BillingComponent,
-    PipesPipe,
-  ],
+  declarations: [CheckoutComponent, CartComponent, BillingComponent, PipesPipe],
   imports: [
     CommonModule,
     FormsModule,
@@ -29,10 +20,6 @@ const routers: Routes = [
     SharedModule,
     RouterModule.forChild(routers),
   ],
-  exports:[
-    CartComponent,
-  ]
+  exports: [CartComponent],
 })
-export class CheckoutModule{
-
-}
+export class CheckoutModule {}

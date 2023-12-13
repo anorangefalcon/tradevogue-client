@@ -1,11 +1,11 @@
-.breadcrumb{
-    /* padding-block-start: 95px !important; */
-    padding-block-end: 15px !important;
-    font-size: 12px;
+.breadcrumb {
+  /* padding-block-start: 95px !important; */
+  padding-block-end: 15px !important;
+  font-size: 12px;
 }
 
-.border-bottom{
-    font-weight: 500;
+.border-bottom {
+  font-weight: 500;
 }
 
 .breadcrumb-container {
@@ -20,7 +20,7 @@
 }
 
 .breadcrumb-link:hover {
-  color: rgb(var(--textClr)) 
+  color: rgb(var(--textClr));
 }
 
 .breadcrumb-separator {
@@ -29,6 +29,6 @@
 }
 
 .breadcrumb-last {
-  font-weight: bold; 
+  font-weight: bold;
   color: rgb(var(--textClr));
 }

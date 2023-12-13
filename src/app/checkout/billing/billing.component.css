@@ -4,7 +4,6 @@
 
 .checkOutSteps {
   justify-content: space-around;
-
 }
 
 .or-div {
@@ -29,7 +28,7 @@
 
 .dotted_line {
   display: inline-block;
-  border-top: 1px dashed #696B79;
+  border-top: 1px dashed #696b79;
   width: 40px;
 }
 
@@ -56,7 +55,6 @@
 
   border-bottom: 0.5px solid rgba(var(--blackClr), 0.1);
   padding-block-end: 20px;
-
 }
 
 .addressDiv {
@@ -65,15 +63,13 @@
   border-radius: 6px;
 
   & .remove::hover {
-    color: rgb(var(--danger))
+    color: rgb(var(--danger));
   }
 }
-
 
 .name {
   font-weight: 600;
 }
-
 
 .default__btn {
   background-color: rgb(var(--textClr), 0.09) !important;
@@ -150,17 +146,17 @@ input[type="radio"] {
   display: none;
 }
 
-input[type='radio']:checked+label::after {
+input[type="radio"]:checked + label::after {
   background-color: black;
 
   border: none;
 }
 
-input[type='radio']:checked+label {
+input[type="radio"]:checked + label {
   color: rgba(var(--blackClr), 0.9);
 }
 
-input[type='radio']+label::before {
+input[type="radio"] + label::before {
   content: "";
   position: absolute;
   height: 16px;
@@ -173,7 +169,7 @@ input[type='radio']+label::before {
   top: 3px;
 }
 
-input[type='radio']+label::after {
+input[type="radio"] + label::after {
   content: "";
   height: 7px;
   width: 7px;
@@ -184,7 +180,6 @@ input[type='radio']+label::after {
   left: -18px;
   top: 7.3px;
 }
-
 
 .selected-box {
   border: 2px dotted #000;
@@ -203,23 +198,21 @@ input[type='radio']+label::after {
   }
 } */
 
-
 @media screen and (max-width: 420px) {
-  .addAddress__div{
-    & p{
+  .addAddress__div {
+    & p {
       display: none;
     }
-    & span{
+    & span {
       font-size: 20px;
     }
   }
-  .delivery__div{
+  .delivery__div {
     flex-direction: column;
     gap: 5px;
-    & .default__btn{
+    & .default__btn {
       height: 20px;
       width: 85px;
     }
   }
-  
 }

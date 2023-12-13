@@ -60,12 +60,10 @@
   cursor: default;
 }
 
-
 .page-item.disabled {
   background-color: transparent !important;
   cursor: default;
 }
-
 
 .dots {
   display: flex;
@@ -77,11 +75,8 @@
   display: none;
 }
 
-
 @media screen and (max-width: 480px) {
-
   .pagination-container {
-    margin-top: 5px ;
+    margin-top: 5px;
   }
-
 }

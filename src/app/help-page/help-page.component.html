@@ -1,74 +1,142 @@
 <section>
-    <div class="helpBox d-flex justify-content-center align-item-center">
-
-        <h2>Contact Us</h2>
-    </div>
-    <div class="container">
-        <div class="contact-content d-flex gap-30">
-            <div class="contact-form-warp">
-                <div class="review-form">
-                    <h2 class="d-flex gap-20 align-item-center margin-bottom">
-                        Drop us message
-                    </h2>
-                    <form class="d-flex flex-column gap-5" [formGroup]="contactForm" (ngSubmit)="onSubmit()">
-                        <label for="ContactFormName">Your Name</label>
-                        <input type="text" placeholder="Enter your name" formControlName="name" id="ContactFormName" class="form__input">
-                        <div *ngIf="contactForm.get('name')?.hasError('required') && contactForm.get('name')?.touched"
-                            class="error">
-                            Name is required.
-                        </div>
-
-                        <label for="ContactFormEmail">Email</label>
-                        <input type="email" placeholder="Enter your email address*" formControlName="email"
-                            id="ContactFormEmail" class="form__input">
-                        <div *ngIf="contactForm.get('email')?.hasError('required') && contactForm.get('email')?.touched"
-                            class="error">
-                            Email is required.
-                        </div>
-                        <div *ngIf="contactForm.get('email')?.hasError('email') && contactForm.get('email')?.touched"
-                            class="error">
-                            Please enter a valid email address.
-                        </div>
-
-                        <div class="form__group" formGroupName="contactForm">
-                            <label for="ticket">Select Ticket</label>
-                            <app-custom-select [type]="''" [options]="ticketData"
-                                [selectedOption]="((contactForm.get('selectedTicket')?.value) ? (contactForm.get('selectedTicket')?.value) : 'Select Ticket')"
-                                [selectedOption]="(faqSubForm('contactForm.selectedTicket')?.value? faqSubForm('item')?.value:'Select Ticket')"
-                                (final_option)="updateFormFields($event)"></app-custom-select>
-                            <span class="error"
-                                *ngIf="faqSubForm('item')?.invalid && (faqSubForm('item')?.dirty || faqSubForm('item')?.touched)">
-                                <small *ngIf="faqSubForm('item')?.hasError('required')">*Field
-                                    Required</small>
-                            </span>
-                        </div>
-                        <div *ngIf="contactForm.get('item')?.hasError('required') && contactForm.get('item')?.touched"
-                            class="error">
-                            Please select a ticket.
-                        </div>
-
-                        <label>Message</label>
-                        <textarea class="message-transparent form__input"  placeholder="Write your message here..."
-                            formControlName="message"></textarea>
-                        <div *ngIf="contactForm.get('message')?.hasError('required') && contactForm.get('message')?.touched"
-                            class="error">
-                            Message is required.
-                        </div>
-
-                        <div>
-                            <button type="submit" class="btn-primary btn-rounded btn-md">Submit</button>
-                        </div>
-                    </form>
-                </div>
+  <div class="helpBox d-flex justify-content-center align-item-center">
+    <h2>Contact Us</h2>
+  </div>
+  <div class="container">
+    <div class="contact-content d-flex gap-30">
+      <div class="contact-form-warp">
+        <div class="review-form">
+          <h2 class="d-flex gap-20 align-item-center margin-bottom">
+            Drop us message
+          </h2>
+          <form
+            class="d-flex flex-column gap-5"
+            [formGroup]="contactForm"
+            (ngSubmit)="onSubmit()"
+          >
+            <label for="ContactFormName">Your Name</label>
+            <input
+              type="text"
+              placeholder="Enter your name"
+              formControlName="name"
+              id="ContactFormName"
+              class="form__input"
+            />
+            <div
+              *ngIf="
+                contactForm.get('name')?.hasError('required') &&
+                contactForm.get('name')?.touched
+              "
+              class="error"
+            >
+              Name is required.
             </div>
-            <div class="contact-info">
-                <div>
-                    <iframe class="map" style="width: 100%;border: 0;"
-                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3410.7265650585614!2d75.70256857552758!3d31.255991974336148!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x391a5f5e9c489cf3%3A0x4049a5409d53c300!2sLovely%20Professional%20University!5e0!3m2!1sen!2sin!4v1693021361397!5m2!1sen!2sin"
-                        width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"
-                        referrerpolicy="no-referrer-when-downgrade "></iframe>
-                </div>
+
+            <label for="ContactFormEmail">Email</label>
+            <input
+              type="email"
+              placeholder="Enter your email address*"
+              formControlName="email"
+              id="ContactFormEmail"
+              class="form__input"
+            />
+            <div
+              *ngIf="
+                contactForm.get('email')?.hasError('required') &&
+                contactForm.get('email')?.touched
+              "
+              class="error"
+            >
+              Email is required.
             </div>
+            <div
+              *ngIf="
+                contactForm.get('email')?.hasError('email') &&
+                contactForm.get('email')?.touched
+              "
+              class="error"
+            >
+              Please enter a valid email address.
+            </div>
+
+            <div class="form__group" formGroupName="contactForm">
+              <label for="ticket">Select Ticket</label>
+              <app-custom-select
+                [type]="''"
+                [options]="ticketData"
+                [selectedOption]="
+                  contactForm.get('selectedTicket')?.value
+                    ? contactForm.get('selectedTicket')?.value
+                    : 'Select Ticket'
+                "
+                [selectedOption]="
+                  faqSubForm('contactForm.selectedTicket')?.value
+                    ? faqSubForm('item')?.value
+                    : 'Select Ticket'
+                "
+                (final_option)="updateFormFields($event)"
+              ></app-custom-select>
+              <span
+                class="error"
+                *ngIf="
+                  faqSubForm('item')?.invalid &&
+                  (faqSubForm('item')?.dirty || faqSubForm('item')?.touched)
+                "
+              >
+                <small *ngIf="faqSubForm('item')?.hasError('required')"
+                  >*Field Required</small
+                >
+              </span>
+            </div>
+            <div
+              *ngIf="
+                contactForm.get('item')?.hasError('required') &&
+                contactForm.get('item')?.touched
+              "
+              class="error"
+            >
+              Please select a ticket.
+            </div>
+
+            <label>Message</label>
+            <textarea
+              class="message-transparent form__input"
+              placeholder="Write your message here..."
+              formControlName="message"
+            ></textarea>
+            <div
+              *ngIf="
+                contactForm.get('message')?.hasError('required') &&
+                contactForm.get('message')?.touched
+              "
+              class="error"
+            >
+              Message is required.
+            </div>
+
+            <div>
+              <button type="submit" class="btn-primary btn-rounded btn-md">
+                Submit
+              </button>
+            </div>
+          </form>
         </div>
+      </div>
+      <div class="contact-info">
+        <div>
+          <iframe
+            class="map"
+            style="width: 100%; border: 0"
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3410.7265650585614!2d75.70256857552758!3d31.255991974336148!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x391a5f5e9c489cf3%3A0x4049a5409d53c300!2sLovely%20Professional%20University!5e0!3m2!1sen!2sin!4v1693021361397!5m2!1sen!2sin"
+            width="600"
+            height="450"
+            style="border: 0"
+            allowfullscreen=""
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade "
+          ></iframe>
+        </div>
+      </div>
     </div>
+  </div>
 </section>

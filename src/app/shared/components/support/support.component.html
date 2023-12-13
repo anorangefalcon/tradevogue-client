@@ -3,22 +3,39 @@
     <mat-tab-group [(selectedIndex)]="selectedTabIndex">
       <mat-tab label="Home">
         <div class="front-home">
-
-          <h1 class="d3 " style="padding-left: 12px;">
-            Hi there 👋 <br> How can we help?
+          <h1 class="d3" style="padding-left: 12px">
+            Hi there 👋 <br />
+            How can we help?
           </h1>
-          <div class="chatbot-container" style="width: 150px; height: 100px; max-width: 76%;
-    margin: 0px auto;">
-            <img src="/assets/chatbot.png" alt="chatbot" style="max-width: 80%; margin: 0 auto;">
+          <div
+            class="chatbot-container"
+            style="
+              width: 150px;
+              height: 100px;
+              max-width: 76%;
+              margin: 0px auto;
+            "
+          >
+            <img
+              src="/assets/chatbot.png"
+              alt="chatbot"
+              style="max-width: 80%; margin: 0 auto"
+            />
           </div>
-
-
 
           <div class="home">
             <div class="box">
               <div class="icon_home">
                 <a mat-button (click)="navigateTo('support')">
-                    <span class=" material-symbols-outlined chat-options" style="font-size: 30px; align-items: center; text-align: center;">sms</span>
+                  <span
+                    class="material-symbols-outlined chat-options"
+                    style="
+                      font-size: 30px;
+                      align-items: center;
+                      text-align: center;
+                    "
+                    >sms</span
+                  >
                   <h1 class="chat-h1">Chat</h1>
                 </a>
               </div>
@@ -26,7 +43,15 @@
             <div class="box">
               <div class="icon_home">
                 <a mat-button (click)="navigateTo('help')">
-                  <span class="material-symbols-outlined chat-options" style="font-size: 30px; align-items: center; text-align: center;">question_mark</span>
+                  <span
+                    class="material-symbols-outlined chat-options"
+                    style="
+                      font-size: 30px;
+                      align-items: center;
+                      text-align: center;
+                    "
+                    >question_mark</span
+                  >
 
                   <h1 class="chat-h1">Help</h1>
                 </a>
@@ -42,33 +67,38 @@
             <h3>Support</h3>
             <p>Need Live assistance?</p>
             <div class="scrollable-content">
-
-
               <div class="chat-container">
-
-                <div *ngFor="let message of messages" class="chat-message"
-                  [ngClass]="{'user-message': message.sender === 'user', 'bot-message': message.sender === 'admin'}">
+                <div
+                  *ngFor="let message of messages"
+                  class="chat-message"
+                  [ngClass]="{
+                    'user-message': message.sender === 'user',
+                    'bot-message': message.sender === 'admin'
+                  }"
+                >
                   <p [innerHTML]="message.content"></p>
                 </div>
 
                 <div class="type-area d-flex align-item-center relative">
-                  <input type="text" [(ngModel)]="textMessage" (keyup.enter)="sendLiveMessage()" class="typing"
-                    placeholder="Type Here...">
+                  <input
+                    type="text"
+                    [(ngModel)]="textMessage"
+                    (keyup.enter)="sendLiveMessage()"
+                    class="typing"
+                    placeholder="Type Here..."
+                  />
 
-                  <span (click)="sendLiveMessage()" class="d-flex flex-center absolute inset-block-start-0 inset-inline-end-0 send material-symbols-outlined fw-300 mh100 fs-20"> reply </span>
-
+                  <span
+                    (click)="sendLiveMessage()"
+                    class="d-flex flex-center absolute inset-block-start-0 inset-inline-end-0 send material-symbols-outlined fw-300 mh100 fs-20"
+                  >
+                    reply
+                  </span>
                 </div>
               </div>
-
-
-
-
             </div>
           </div>
-
-
         </div>
-
       </mat-tab>
 
       <mat-tab label="Help">
@@ -79,33 +109,42 @@
             <div class="scrollable-content">
               <section class="section">
                 <h3>Getting Started</h3>
-                <p>Welcome to our chatbot! Start by typing a message or question to begin the conversation.</p>
+                <p>
+                  Welcome to our chatbot! Start by typing a message or question
+                  to begin the conversation.
+                </p>
               </section>
 
               <section class="section">
                 <h3>Navigation</h3>
-                <p>To navigate back to the home page, simply click the "Home" button below.</p>
-                <button class="heading-button" (click)="navigateTo('home')">Home</button>
+                <p>
+                  To navigate back to the home page, simply click the "Home"
+                  button below.
+                </p>
+                <button class="heading-button" (click)="navigateTo('home')">
+                  Home
+                </button>
               </section>
               <!-- Include more sections for chatting, commands, features, etc. -->
 
               <section class="section">
                 <h3>Contact Us</h3>
-                <p>If you have further questions, feel free to reach out to our support team at support@example.com.</p>
+                <p>
+                  If you have further questions, feel free to reach out to our
+                  support team at support@example.com.
+                </p>
               </section>
 
               <section class="section">
                 <h3>Feedback</h3>
-                <p>We value your feedback! Let us know how we can improve by sending an email to feedback@example.com.
+                <p>
+                  We value your feedback! Let us know how we can improve by
+                  sending an email to feedback@example.com.
                 </p>
               </section>
-
             </div>
           </div>
-
-
         </div>
-
       </mat-tab>
 
       <!-- <mat-tab label="Order Details" id="chat-bot" #chatBot>
@@ -218,13 +257,21 @@
 
         </div>
       </mat-tab> -->
-
     </mat-tab-group>
   </div>
-  <div class="icon-support d-flex justify-content-md-between" (click)="toggleChat()">
-    <p class="user fs-16"> {{username}}</p>
+  <div
+    class="icon-support d-flex justify-content-md-between"
+    (click)="toggleChat()"
+  >
+    <p class="user fs-16">{{ username }}</p>
 
-    <span class="fs-24 fw-300 absolute material-symbols-outlined icons chat-icon"> contact_support </span>
-    <span class="fs-20 material-symbols-outlined icons-visible cross-icon"> close </span>
+    <span
+      class="fs-24 fw-300 absolute material-symbols-outlined icons chat-icon"
+    >
+      contact_support
+    </span>
+    <span class="fs-20 material-symbols-outlined icons-visible cross-icon">
+      close
+    </span>
   </div>
 </div>

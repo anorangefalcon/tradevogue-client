@@ -1,7 +1,11 @@
 <section class="collections">
   <div class="container">
     <div class="grid-container grid m-gap-15 s-gap-10">
-      <div class="item1 item" [routerLink]="['/explore']" [queryParams]="{ gender: 'female' }">
+      <div
+        class="item1 item"
+        [routerLink]="['/explore']"
+        [queryParams]="{ gender: 'female' }"
+      >
         <div class="overlay">
           <h3>Women Collection</h3>
           <div class="d-flex gap-5 align-item-center">
@@ -10,7 +14,11 @@
           </div>
         </div>
       </div>
-      <div class="item2 item" [routerLink]="['/explore']" [queryParams]="{ gender: 'male' }" >
+      <div
+        class="item2 item"
+        [routerLink]="['/explore']"
+        [queryParams]="{ gender: 'male' }"
+      >
         <div class="overlay">
           <h3>Men Collection</h3>
           <div class="d-flex gap-5 align-item-center">
@@ -28,7 +36,7 @@
           </div>
         </div>
       </div>
-      <div class="item4 item" [routerLink]="['/explore']" >
+      <div class="item4 item" [routerLink]="['/explore']">
         <div class="overlay">
           <h3>Explore</h3>
           <div class="d-flex gap-5 align-item-center">
@@ -39,5 +47,4 @@
       </div>
     </div>
   </div>
-
 </section>

@@ -1,4 +1,11 @@
-import { Component, HostListener, OnInit, ElementRef, ViewChild, Renderer2 } from '@angular/core';
+import {
+  Component,
+  HostListener,
+  OnInit,
+  ElementRef,
+  ViewChild,
+  Renderer2,
+} from '@angular/core';
 import { CartService } from '../shared/services/cart.service';
 import { Router } from '@angular/router';
 import { UtilsModule } from '../utils/backend-urls';
@@ -11,10 +18,9 @@ import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-checkout',
   templateUrl: './checkout.component.html',
-  styleUrls: ['./checkout.component.css']
+  styleUrls: ['./checkout.component.css'],
 })
 export class CheckoutComponent implements OnInit {
-
   LoginUser: boolean = false;
   loadRazorpayScript() {
     const script = this.renderer.createElement('script');
@@ -39,7 +45,8 @@ export class CheckoutComponent implements OnInit {
   allSubscriptions: Subscription[] = [];
   // addressSelected: any = null;
   ProceedToPaymentClicked: boolean = false;
-  constructor(private cartService: CartService,
+  constructor(
+    private cartService: CartService,
     private loginCheckService: LoginCheckService,
     private checkOutService: CheckoutService,
     private router: Router,
@@ -48,20 +55,23 @@ export class CheckoutComponent implements OnInit {
     private BackendUrl: UtilsModule,
     private fetchService: FetchDataService,
     private route: Router,
-    private el: ElementRef) {
+    private el: ElementRef
+  ) {
     this.fetchService.themeColor$.subscribe((color) => {
       this.theme = color;
-    })
+    });
     this.allSubscriptions.push(
       this.checkOutService.secureNavbar$.subscribe((data) => {
         this.SecureNavBar = data;
-      }));
+      })
+    );
 
     this.allSubscriptions.push(
       this.checkOutService.loadStripe.subscribe((data: any) => {
         // this.PaymentDisabled=false;
         this.StripePaymentOpener = data;
-      }));
+      })
+    );
 
     this.allSubscriptions.push(
       this.loginCheckService.getUser().subscribe((checkToken) => {
@@ -82,13 +92,13 @@ export class CheckoutComponent implements OnInit {
         this.verifyOrderSummary(false);
       }
       this.loading = false;
-    })
+    });
     this.allSubscriptions.push(cartSub);
     this.loadRazorpayScript();
 
     this.checkOutService.PaymentSuccess.asObservable().subscribe((data) => {
       this.PaymentSuccess = data;
-    })
+    });
   }
 
   ngOnDestroy() {
@@ -96,8 +106,8 @@ export class CheckoutComponent implements OnInit {
   }
 
   DateParser(el: any) {
-    let date: any = (new Date(el).toDateString()).split(' ');
-    date.splice(0, 1)
+    let date: any = new Date(el).toDateString().split(' ');
+    date.splice(0, 1);
     date = String(date[0] + ' ' + date[1] + ', ' + date[2]);
     return date;
   }
@@ -108,13 +118,12 @@ export class CheckoutComponent implements OnInit {
   }
 
   scrollToOrders() {
-    const orders = this.el.nativeElement.querySelector('#orders')
+    const orders = this.el.nativeElement.querySelector('#orders');
     if (orders) {
-      orders.scrollIntoView(
-        {
-          block: 'start',
-          behavior: 'smooth'
-        });
+      orders.scrollIntoView({
+        block: 'start',
+        behavior: 'smooth',
+      });
     }
   }
 
@@ -124,7 +133,6 @@ export class CheckoutComponent implements OnInit {
     } else {
       this.navbar_scroll_style = false;
     }
-
   }
 
   // COUPONS CODE STARTS-------------------
@@ -137,12 +145,15 @@ export class CheckoutComponent implements OnInit {
 
   CouponOpener() {
     this.allSubscriptions.push(
-      this.fetchService.HTTPGET(this.BackendUrl.URLs.getCoupons).subscribe((data: any) => {
-        console.log('data come up is ',data);
-        
-        this.AllCoupons = data;
-        this.show = true;
-      }));
+      this.fetchService
+        .HTTPGET(this.BackendUrl.URLs.getCoupons)
+        .subscribe((data: any) => {
+          console.log('data come up is ', data);
+
+          this.AllCoupons = data;
+          this.show = true;
+        })
+    );
   }
 
   InputChange(event: any) {
@@ -153,7 +164,6 @@ export class CheckoutComponent implements OnInit {
     this.CouponValid = 'valid';
   }
 
-
   RemoveAppliedCoupon() {
     this.cart.amounts.discount = null;
     this.CouponApplied = false;
@@ -162,37 +172,39 @@ export class CheckoutComponent implements OnInit {
     this.CouponValid = '';
   }
 
-
   CheckMinimumPurchase(coupon: any) {
     return coupon?.minimumPurchaseAmount < this.cart.amounts.total;
   }
-
-
 
   CalculateDiscount(coupon: any) {
     const totalAmount = this.cart.amounts.total;
 
     if (coupon.discountType === 'flat') {
-      let discount= Math.min(coupon.discountAmount, totalAmount);
-      if(discount==totalAmount) return 0;
+      let discount = Math.min(coupon.discountAmount, totalAmount);
+      if (discount == totalAmount) return 0;
       return discount;
     } else if (coupon.discountType === 'percentage') {
       const calculatedDiscount = (totalAmount / 100) * coupon.discountAmount;
-      const cappedDiscount = Math.min(calculatedDiscount, coupon.maximumDiscount);
-      if(cappedDiscount==totalAmount) return 0;
+      const cappedDiscount = Math.min(
+        calculatedDiscount,
+        coupon.maximumDiscount
+      );
+      if (cappedDiscount == totalAmount) return 0;
       return Math.min(cappedDiscount, totalAmount);
     }
 
     return 0;
   }
 
-
-
   async ApplyCoupon(coupon: any = '', event: any = '') {
-    let value = (event ? this.CouponCode.nativeElement.value.trim() : coupon.couponCode.trim());
+    let value = event
+      ? this.CouponCode.nativeElement.value.trim()
+      : coupon.couponCode.trim();
 
     if (event) {
-      const foundCoupon = this.AllCoupons.find((c: any) => c.couponCode === value);
+      const foundCoupon = this.AllCoupons.find(
+        (c: any) => c.couponCode === value
+      );
       if (foundCoupon) {
         this.CouponApplied = foundCoupon;
         this.CouponValid = 'valid';
@@ -206,7 +218,9 @@ export class CheckoutComponent implements OnInit {
     }
 
     if (!this.CheckMinimumPurchase(this.CouponApplied)) {
-      this.toastService.errorToast({ title: `minimum purchase amount is ${this.CouponApplied.minimumPurchaseAmount}` });
+      this.toastService.errorToast({
+        title: `minimum purchase amount is ${this.CouponApplied.minimumPurchaseAmount}`,
+      });
       this.CouponValid = 'invalid';
       this.CouponApplied = null;
       this.show = false;
@@ -215,16 +229,15 @@ export class CheckoutComponent implements OnInit {
 
     if (this.CouponValid == 'valid') {
       this.toastService.successToast({ title: 'Coupon applied successfully' });
-    } 
-    else if (this.CouponValid == 'invalid') {
+    } else if (this.CouponValid == 'invalid') {
       this.toastService.errorToast({ title: 'Coupon not valid' });
       return;
     }
 
     this.CouponCode.nativeElement.value = '';
 
-    let discountAmount=this.CalculateDiscount(this.CouponApplied);
-    if(!discountAmount){
+    let discountAmount = this.CalculateDiscount(this.CouponApplied);
+    if (!discountAmount) {
       this.CouponValid = 'invalid';
       this.CouponApplied = null;
       this.toastService.errorToast({ title: 'Coupon not valid' });
@@ -236,10 +249,9 @@ export class CheckoutComponent implements OnInit {
     this.show = false;
   }
 
-
   verifyOrderSummary(navigate: boolean = true) {
     if (this.cart?.details?.length == 0) return;
-    let body: any = { products: this.cart.details ,amounts:this.cart.amounts};
+    let body: any = { products: this.cart.details, amounts: this.cart.amounts };
 
     if (this.CouponApplied) {
       body.couponId = this.CouponApplied._id;
@@ -247,33 +259,33 @@ export class CheckoutComponent implements OnInit {
 
     if (!navigate) {
       this.allSubscriptions.push(
-        this.fetchService.HTTPPOST(this.BackendUrl.URLs.verifyOrderWithoutCoupon, body).subscribe((response) => {
-
-          this.cart.amounts = JSON.parse(JSON.stringify(response));
-        }));
-    }
-
-    else {
+        this.fetchService
+          .HTTPPOST(this.BackendUrl.URLs.verifyOrderWithoutCoupon, body)
+          .subscribe((response) => {
+            this.cart.amounts = JSON.parse(JSON.stringify(response));
+          })
+      );
+    } else {
       this.CheckOutDisabled = true;
       if (!this.LoginUser) {
         this.CheckOutDisabled = false;
         this.router.navigate(['/auth/login']);
-      }
-      else {
+      } else {
         this.allSubscriptions.push(
-          this.fetchService.HTTPPOST(this.BackendUrl.URLs.verifyOrderSummary, body).subscribe({
-            next: (response) => {
-              this.cart.amounts = JSON.parse(JSON.stringify(response));
-              this.checkOutService.FinalPaymentAmount.next(response);
-              this.router.navigate(['/cart/billing']);
-              this.CheckOutDisabled = false;
-            },
-            error: (error) => {
-              this.CheckOutDisabled = false;
-            }
-          }));
-
-
+          this.fetchService
+            .HTTPPOST(this.BackendUrl.URLs.verifyOrderSummary, body)
+            .subscribe({
+              next: (response) => {
+                this.cart.amounts = JSON.parse(JSON.stringify(response));
+                this.checkOutService.FinalPaymentAmount.next(response);
+                this.router.navigate(['/cart/billing']);
+                this.CheckOutDisabled = false;
+              },
+              error: (error) => {
+                this.CheckOutDisabled = false;
+              },
+            })
+        );
       }
     }
   }
@@ -293,7 +305,6 @@ export class CheckoutComponent implements OnInit {
   NextDisabled: boolean = false;
 
   nextClicked() {
-
     if (!this.checkOutService.addressSelected) {
       this.toastService.errorToast({ title: 'Please select some address' });
       return;
@@ -309,25 +320,22 @@ export class CheckoutComponent implements OnInit {
       body.couponId = this.CouponApplied._id;
     }
     body.products = this.cart.details;
-    body.amounts=this.cart.amounts;
+    body.amounts = this.cart.amounts;
     body.address = this.checkOutService.addressSelected;
     this.allSubscriptions.push(
-      this.fetchService.HTTPPOST(this.BackendUrl.URLs.createOrder, body).subscribe(
-
-        {
-          next:
-            (data: any) => {
-              this.checkOutService.loadStripe.next(true);
-              this.checkOutService.orderID = data.orderId;
-              this.NextDisabled = false;
-            },
+      this.fetchService
+        .HTTPPOST(this.BackendUrl.URLs.createOrder, body)
+        .subscribe({
+          next: (data: any) => {
+            this.checkOutService.loadStripe.next(true);
+            this.checkOutService.orderID = data.orderId;
+            this.NextDisabled = false;
+          },
           error: (error) => {
             this.NextDisabled = false;
-          }
-        }
-      )
+          },
+        })
     );
-
   }
 
   // COUPONS CODE FINSIH-------------------
@@ -335,9 +343,13 @@ export class CheckoutComponent implements OnInit {
   async ProceedToPayment() {
     // let body: any = {};
     // body.address = this.AddressSelected;
-    // response of payment here 
-    const paymentButton = document.getElementById('submit') as HTMLButtonElement;
-    const razorpayButton = document.getElementById('razorSubmit') as HTMLButtonElement;
+    // response of payment here
+    const paymentButton = document.getElementById(
+      'submit'
+    ) as HTMLButtonElement;
+    const razorpayButton = document.getElementById(
+      'razorSubmit'
+    ) as HTMLButtonElement;
 
     if (paymentButton) {
       paymentButton.click();
@@ -346,16 +358,15 @@ export class CheckoutComponent implements OnInit {
     if (razorpayButton) {
       razorpayButton.click();
     }
-
   }
 
-
   isPaymentFormFilled(): boolean {
-    const paymentForm = document.getElementById('payment-form') as HTMLFormElement;
+    const paymentForm = document.getElementById(
+      'payment-form'
+    ) as HTMLFormElement;
 
     const isFilled = paymentForm && paymentForm.checkValidity();
 
     return isFilled;
   }
-
 }

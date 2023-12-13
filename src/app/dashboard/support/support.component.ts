@@ -6,7 +6,7 @@ import { ToastService } from 'src/app/shared/services/toast.service';
 @Component({
   selector: 'app-support',
   templateUrl: './support.component.html',
-  styleUrls: ['./support.component.css']
+  styleUrls: ['./support.component.css'],
 })
 export class SupportComponent {
   titleData: string[] = [];
@@ -20,7 +20,8 @@ export class SupportComponent {
   constructor(
     private utils: UtilsModule,
     private fetchDataService: FetchDataService,
-    private toast: ToastService) {
+    private toast: ToastService
+  ) {
     this.loadData();
   }
 
@@ -34,10 +35,12 @@ export class SupportComponent {
     //   .catch(error => {
     //   });
 
-     this.fetchDataService.HTTPGET(this.utils.URLs.getTicketStatus).subscribe((data: any)=> {
+    this.fetchDataService
+      .HTTPGET(this.utils.URLs.getTicketStatus)
+      .subscribe((data: any) => {
         this.titleData = data[0].title;
-       this.ticketTypeId = data[0]._id;
-      })
+        this.ticketTypeId = data[0]._id;
+      });
   }
 
   showItemDetails(item: any) {
@@ -50,47 +53,50 @@ export class SupportComponent {
     this.showingPopUp = event;
   }
 
-
   updateItem() {
-    this.loadData()
+    this.loadData();
     const body = {
       _id: this.ticketTypeId,
       oldTitle: this.selectedItem,
-      newTitle: this.updatedItem
-    }
+      newTitle: this.updatedItem,
+    };
 
-    this.fetchDataService.HTTPPOST(this.utils.URLs.updateTitle, body)
+    this.fetchDataService
+      .HTTPPOST(this.utils.URLs.updateTitle, body)
       .subscribe((response: any) => {
         if (response) {
           this.showingPopUp = false;
-          this.toast.successToast({ title: "Ticket Updated Successfully" });
-          const updatedIndex = this.titleData.findIndex(title => title === this.selectedItem);
+          this.toast.successToast({ title: 'Ticket Updated Successfully' });
+          const updatedIndex = this.titleData.findIndex(
+            (title) => title === this.selectedItem
+          );
           if (updatedIndex !== -1) {
             this.titleData[updatedIndex] = this.updatedItem;
           }
           this.selectedItem = null;
         }
-      })
-     
-      this.loadData();
+      });
+
+    this.loadData();
   }
 
   addNewItem() {
-    this.loadData()
+    this.loadData();
     const body = {
       _id: this.ticketTypeId,
-      newTitle: this.updatedItem
-    }
+      newTitle: this.updatedItem,
+    };
 
-    this.fetchDataService.HTTPPOST(this.utils.URLs.addTicketTitle, body)
+    this.fetchDataService
+      .HTTPPOST(this.utils.URLs.addTicketTitle, body)
       .subscribe((response: any) => {
         if (response) {
-          this.toast.successToast({title: 'Ticket Added Successfully'})
+          this.toast.successToast({ title: 'Ticket Added Successfully' });
           this.titleData.push(this.updatedItem);
         }
-      })
+      });
 
-      this.loadData();
+    this.loadData();
   }
 
   cancelUpdate() {
@@ -106,42 +112,44 @@ export class SupportComponent {
   }
 
   pushItem() {
-    this.loadData()
+    this.loadData();
     const body = {
       _id: this.ticketTypeId,
-      newTitle: this.updatedItem
-    }
+      newTitle: this.updatedItem,
+    };
 
-    this.fetchDataService.HTTPPOST(this.utils.URLs.addTicketTitle, body)
+    this.fetchDataService
+      .HTTPPOST(this.utils.URLs.addTicketTitle, body)
       .subscribe((response: any) => {
-        this.toast.successToast({title: 'Ticket Added Successfully'})
+        this.toast.successToast({ title: 'Ticket Added Successfully' });
         if (response) {
-          
           this.titleData.push(this.updatedItem);
         }
-      })
-      this.loadData()
+      });
+    this.loadData();
   }
 
   deleteTicketTitle(item: any) {
-    this.loadData()
+    this.loadData();
     const body = {
       _id: this.ticketTypeId,
-      title: item
-    }
+      title: item,
+    };
 
-    this.fetchDataService.HTTPPOST(this.utils.URLs.deleteTitle, body)
+    this.fetchDataService
+      .HTTPPOST(this.utils.URLs.deleteTitle, body)
       .subscribe((response: any) => {
         if (response) {
-          this.toast.successToast({title: 'Deleted SuccessFully'})
-          const deletedIndex = this.titleData.findIndex(title => title === item);
+          this.toast.successToast({ title: 'Deleted SuccessFully' });
+          const deletedIndex = this.titleData.findIndex(
+            (title) => title === item
+          );
           if (deletedIndex !== -1) {
             this.titleData.splice(deletedIndex, 1);
           }
         }
-      })
-      
+      });
 
-      this.loadData()
+    this.loadData();
   }
 }

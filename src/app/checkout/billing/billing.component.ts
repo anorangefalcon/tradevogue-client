@@ -1,5 +1,10 @@
-
-import { Component, ElementRef, ViewChild, OnInit, Renderer2 } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  ViewChild,
+  OnInit,
+  Renderer2,
+} from '@angular/core';
 import { FetchDataService } from 'src/app/shared/services/fetch-data.service';
 import { UtilsModule } from 'src/app/utils/backend-urls';
 import { CartService } from 'src/app/shared/services/cart.service';
@@ -10,6 +15,7 @@ import { error } from 'jquery';
 import { HttpParams } from '@angular/common/http';
 import { DialogBoxService } from 'src/app/shared/services/dialog-box.service';
 declare let Stripe: any;
+
 interface PaymentOptions {
   key: string;
   amount: number;
@@ -34,7 +40,7 @@ interface PaymentOptions {
 @Component({
   selector: 'app-billing',
   templateUrl: './billing.component.html',
-  styleUrls: ['./billing.component.css']
+  styleUrls: ['./billing.component.css'],
 })
 export class BillingComponent implements OnInit {
   checkoutHtml = '';
@@ -42,7 +48,7 @@ export class BillingComponent implements OnInit {
   item: any = {};
   loading: boolean = true;
   cartitems: any = {};
-  PaymentDetails!: any
+  PaymentDetails!: any;
   total: any = {};
   quantity: any = {};
   totalAmount!: number;
@@ -51,6 +57,7 @@ export class BillingComponent implements OnInit {
   stripe: any;
   items: any;
   selectedPaymentMethod = 'stripe';
+  uploading: boolean = true;
   StripeOpener: Boolean = false;
   stripeScript!: any;
   clientSecret!: any;
@@ -70,7 +77,7 @@ export class BillingComponent implements OnInit {
     private backendURLs: UtilsModule,
     private renderer: Renderer2,
     private dialogBox: DialogBoxService,
-    private toastService: ToastService,
+    private toastService: ToastService
   ) {
     // this.stripePay.setLoading = this.stripePay.setLoading.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -80,15 +87,17 @@ export class BillingComponent implements OnInit {
       this.cartService.fetchCart().subscribe((data) => {
         this.cartitems = data;
       }),
-      this.checkOutService.FinalPaymentAmount.asObservable().subscribe((data) => {
-        if (data) {
-          this.PaymentDetails = data;
+      this.checkOutService.FinalPaymentAmount.asObservable().subscribe(
+        (data) => {
+          if (data) {
+            this.PaymentDetails = data;
+          }
         }
-      }),
+      ),
 
       this.fetchDataService.themeColor$.subscribe((color) => {
         this.theme = color;
-      }),
+      })
       // this.dialogBox.responseEmitter.subscribe((res: boolean) => {
       //   console.log('response come up is ', res);
       //   if (res == true) {
@@ -98,7 +107,7 @@ export class BillingComponent implements OnInit {
       //       }));
       //   }
       // })
-    )
+    );
   }
 
   ngOnInit() {
@@ -109,171 +118,186 @@ export class BillingComponent implements OnInit {
         if (isLoaded) {
           this.loadStripe();
         }
-      }),
+      })
     );
 
     this.getAddresses();
   }
 
-
   loadStripe() {
-    this.fetchDataService.HTTPGET(this.backendURLs.URLs.getPaymentKeys).subscribe({
-      next: (response: any) => {
-        console.log('response is ', response);
-        const publicKey = response[0].decryptedPublicKey.toString();
-        this.stripeScript = this.renderer.createElement('script');
-        this.stripeScript.src = 'https://js.stripe.com/v3/';
-        this.stripeScript.async = true;
-        this.stripeScript.onload = () => {
-          this.stripe = Stripe(publicKey);
-          this.initialize();
-        };
-        this.renderer.appendChild(document.body, this.stripeScript);
-      },
-      error: () => {
-      }
-    })
-
+    this.fetchDataService
+      .HTTPGET(this.backendURLs.URLs.getPaymentKeys)
+      .subscribe({
+        next: (response: any) => {
+          // this.uploading = true;
+          console.log('response is ', response);
+          const publicKey = response[0].decryptedPublicKey.toString();
+          this.stripeScript = this.renderer.createElement('script');
+          this.stripeScript.src = 'https://js.stripe.com/v3/';
+          this.stripeScript.async = true;
+          this.stripeScript.onload = () => {
+            this.stripe = Stripe(publicKey);
+            this.initialize();
+            this.uploading = false;
+          };
+          this.renderer.appendChild(document.body, this.stripeScript);
+        },
+        error: () => {},
+      });
   }
 
   // stripe elements loaded
   async initialize() {
-    const item = this.cartitems.details.map((item: { sku: any; name: any; price: any; quantity: any }) => {
-      return {
-        id: item.sku,
-        name: item.name,
-        price: item.price,
-        quantity: item.quantity
+    this.uploading = true;
+    const item = this.cartitems.details.map(
+      (item: { sku: any; name: any; price: any; quantity: any }) => {
+        return {
+          id: item.sku,
+          name: item.name,
+          price: item.price,
+          quantity: item.quantity,
+        };
       }
-    })
+    );
 
     const items = {
       orderId: this.checkOutService.orderID,
       subTtotal: this.cartitems.amounts.total,
       saving: this.cartitems.amounts.saving,
       items: item,
-    }
+    };
 
-    const response = this.fetchDataService.HTTPPOST(this.backendURLs.URLs.createPaymentIntent, items).subscribe((data: any) => {
-      this.clientSecret = data.clientSecret;
-      let appearance = {
-        theme: 'flat',
-        variables: {
-          fontLineHeight: '1.5',
-          borderRadius: '10px',
-          colorBackground: '#F6F8FA',
-          accessibleColorOnColorPrimary: '#262626'
-        },
-        rules: {
-          '.Block': {
-            backgroundColor: 'var(--colorBackground)',
-            boxShadow: 'none',
-            padding: '12px',
+    const response = this.fetchDataService
+      .HTTPPOST(this.backendURLs.URLs.createPaymentIntent, items)
+      .subscribe((data: any) => {
+        this.clientSecret = data.clientSecret;
+        let appearance = {
+          theme: 'flat',
+          variables: {
+            fontLineHeight: '1.5',
+            borderRadius: '10px',
+            colorBackground: '#F6F8FA',
+            accessibleColorOnColorPrimary: '#262626',
           },
-          '.Input': {
-            padding: '12px',
-            margin: '0 0 10px 0',
-            backgroundColor: 'transparent',
-            border: '1px solid rgba(0, 0, 0, 0.2)',
-            outline: '1px solid rgba(0, 0, 0, 0.2)',
+          rules: {
+            '.Block': {
+              backgroundColor: 'var(--colorBackground)',
+              boxShadow: 'none',
+              padding: '12px',
+            },
+            '.Input': {
+              padding: '12px',
+              margin: '0 0 10px 0',
+              backgroundColor: 'transparent',
+              border: '1px solid rgba(0, 0, 0, 0.2)',
+              outline: '1px solid rgba(0, 0, 0, 0.2)',
+            },
+            '.Input:disabled, .Input--invalid:disabled': {
+              color: 'lightgray',
+            },
+            '.Input:hover': {
+              borderColor: 'rgb(4, 118, 118)',
+            },
+            '.Tab': {
+              padding: '10px 12px 8px 12px',
+              border: 'none',
+            },
+            '.Tab:hover': {
+              border: 'none',
+              boxShadow:
+                '0px 1px 1px rgba(0, 0, 0, 0.03), 0px 3px 7px rgba(18, 42, 66, 0.04)',
+            },
+            '.Tab--selected, .Tab--selected:focus, .Tab--selected:hover': {
+              border: 'none',
+              backgroundColor: '#fff',
+              boxShadow:
+                '0 0 0 1.5px var(--colorPrimaryText), 0px 1px 1px rgba(0, 0, 0, 0.03), 0px 3px 7px rgba(18, 42, 66, 0.04)',
+            },
+            '.Label': {
+              fontWeight: '500',
+              padding: '0 0 10px 0',
+            },
           },
-          '.Input:disabled, .Input--invalid:disabled': {
-            color: 'lightgray'
+        };
+
+        const appearanceForDarkTheme = {
+          theme: 'flat',
+          variables: {
+            fontLineHeight: '1.5',
+            borderRadius: '10px',
+            colorBackground: '#121a21',
+            accessibleColorOnColorPrimary: '#e6e6e6',
           },
-          '.Input:hover': {
-            borderColor: 'rgb(4, 118, 118)'
+          rules: {
+            '.Block': {
+              backgroundColor: 'var(--colorBackground)',
+              boxShadow: 'none',
+              padding: '12px',
+            },
+            '.Input': {
+              padding: '12px',
+              margin: '0 0 10px 0',
+              backgroundColor: 'transparent',
+              color: 'white',
+              border: '1px solid rgba(255, 255, 255, 0.2)',
+              outline: '1px solid rgba(255, 255, 255, 0.2)',
+            },
+            '.Input:disabled, .Input--invalid:disabled': {
+              color: 'lightgray',
+            },
+            '.Input:hover': {
+              borderColor: 'rgb(4, 118, 118)',
+            },
+            '.Tab': {
+              padding: '10px 12px 8px 12px',
+              border: 'none',
+            },
+            '.Tab:hover': {
+              border: 'none',
+              boxShadow:
+                '0px 1px 1px rgba(0, 0, 0, 0.03), 0px 3px 7px rgba(18, 42, 66, 0.04)',
+            },
+            '.Tab--selected, .Tab--selected:focus, .Tab--selected:hover': {
+              border: 'none',
+              backgroundColor: '#fff',
+              boxShadow:
+                '0 0 0 1.5px var(--colorPrimaryText), 0px 1px 1px rgba(0, 0, 0, 0.03), 0px 3px 7px rgba(18, 42, 66, 0.04)',
+            },
+            '.Label': {
+              color: 'white',
+              fontWeight: '500',
+              padding: '0 0 10px 0',
+            },
           },
-          '.Tab': {
-            padding: '10px 12px 8px 12px',
-            border: 'none',
-          },
-          '.Tab:hover': {
-            border: 'none',
-            boxShadow: '0px 1px 1px rgba(0, 0, 0, 0.03), 0px 3px 7px rgba(18, 42, 66, 0.04)'
-          },
-          '.Tab--selected, .Tab--selected:focus, .Tab--selected:hover': {
-            border: 'none',
-            backgroundColor: '#fff',
-            boxShadow: '0 0 0 1.5px var(--colorPrimaryText), 0px 1px 1px rgba(0, 0, 0, 0.03), 0px 3px 7px rgba(18, 42, 66, 0.04)'
-          },
-          '.Label': {
-            fontWeight: '500',
-            padding: '0 0 10px 0'
+        };
+
+        if (this.theme) appearance = appearanceForDarkTheme;
+
+        this.elements = this.stripe?.elements({
+          clientSecret: this.clientSecret,
+          appearance,
+        });
+        const linkAuthenticationElement =
+          this.elements.create('linkAuthentication');
+        linkAuthenticationElement.mount('#link-authentication-element');
+        linkAuthenticationElement.on('change', (event: any) => {
+          this.emailAddress = event.value.email;
+
+          const paymentForm = document.querySelector('#payment-form');
+          paymentForm?.addEventListener('submit', this.handleSubmit);
+          if (event.complete) {
+          } else if (event.error) {
+            console.error('Payment form not found');
           }
-        }
-      };
-
-      const appearanceForDarkTheme = {
-        theme: 'flat',
-        variables: {
-          fontLineHeight: '1.5',
-          borderRadius: '10px',
-          colorBackground: '#121a21',
-          accessibleColorOnColorPrimary: '#e6e6e6'
-        },
-        rules: {
-          '.Block': {
-            backgroundColor: 'var(--colorBackground)',
-            boxShadow: 'none',
-            padding: '12px',
-          },
-          '.Input': {
-            padding: '12px',
-            margin: '0 0 10px 0',
-            backgroundColor: 'transparent',
-            color: 'white',
-            border: '1px solid rgba(255, 255, 255, 0.2)',
-            outline: '1px solid rgba(255, 255, 255, 0.2)',
-          },
-          '.Input:disabled, .Input--invalid:disabled': {
-            color: 'lightgray'
-          },
-          '.Input:hover': {
-            borderColor: 'rgb(4, 118, 118)'
-          },
-          '.Tab': {
-            padding: '10px 12px 8px 12px',
-            border: 'none',
-          },
-          '.Tab:hover': {
-            border: 'none',
-            boxShadow: '0px 1px 1px rgba(0, 0, 0, 0.03), 0px 3px 7px rgba(18, 42, 66, 0.04)'
-          },
-          '.Tab--selected, .Tab--selected:focus, .Tab--selected:hover': {
-            border: 'none',
-            backgroundColor: '#fff',
-            boxShadow: '0 0 0 1.5px var(--colorPrimaryText), 0px 1px 1px rgba(0, 0, 0, 0.03), 0px 3px 7px rgba(18, 42, 66, 0.04)'
-          },
-          '.Label': {
-            color: 'white',
-            fontWeight: '500',
-            padding: '0 0 10px 0'
-          }
-        }
-      };
-
-      if (this.theme) appearance = appearanceForDarkTheme;
-
-      this.elements = this.stripe?.elements({ clientSecret: this.clientSecret, appearance });
-      const linkAuthenticationElement = this.elements.create("linkAuthentication");
-      linkAuthenticationElement.mount("#link-authentication-element");
-      linkAuthenticationElement.on('change', (event: any) => {
-        this.emailAddress = event.value.email;
-
-        const paymentForm = document.querySelector("#payment-form");
-        paymentForm?.addEventListener("submit", this.handleSubmit);
-        if (event.complete) {
-        } else if (event.error) {
-          console.error("Payment form not found");
-        }
+        });
+        const paymentElementOptions = { layout: 'tabs' };
+        const paymentElement = this.elements.create(
+          'payment',
+          paymentElementOptions
+        );
+        paymentElement.mount('#payment-element');
       });
-      const paymentElementOptions = { layout: "tabs" };
-      const paymentElement = this.elements.create("payment", paymentElementOptions);
-      paymentElement.mount("#payment-element");
-    })
   }
-
-
 
   async handleSubmit() {
     try {
@@ -283,7 +307,7 @@ export class BillingComponent implements OnInit {
         confirmParams: {
           receipt_email: this.emailAddress,
         },
-        redirect: 'if_required'
+        redirect: 'if_required',
       });
 
       if (error) {
@@ -293,17 +317,12 @@ export class BillingComponent implements OnInit {
       if (paymentIntent) {
         this.checkOutService.checkOrderStatus(this.clientSecret);
       }
-
-
-    } catch (error) {
-
-    }
+    } catch (error) {}
   }
 
   selectPaymentMethod(method: string) {
     this.selectedPaymentMethod = method;
   }
-
 
   //razorpay
   submitForm(): void {
@@ -317,65 +336,70 @@ export class BillingComponent implements OnInit {
           amount: this.PaymentDetails?.total * 100,
           order_id: this.checkOutService.orderID,
           items: ress.details,
-          token: "token",
+          token: 'token',
         };
 
-
-        this.fetchDataService.HTTPPOST(this.backendURLs.URLs.createRazorpayOrder, body).subscribe((createOrderResponse: any) => {
-          if (createOrderResponse) {
-            const options: PaymentOptions = {
-              key: createOrderResponse.key_id,
-              amount: createOrderResponse.amount,
-              currency: 'INR',
-              name: 'Trade Vogue',
-              description: createOrderResponse.description,
-              image: '../../assets/logo-mobile.svg',
-              order_id: createOrderResponse.order_id,
-              handler: (response: any) => {
-                console.log(JSON.stringify(response))
-                const paymentBody = {
-                  orderId: this.checkOutService.orderID
-                };
-
-
-                this.fetchDataService.HTTPPOST(this.backendURLs.URLs.updateOrderStatus, paymentBody).subscribe((updateOrderStatusResponse: any) => {
-                  if (updateOrderStatusResponse) {
-                    this.toastService.successToast({ title: 'Order Placed' });
-                    console.log(updateOrderStatusResponse, "success");
-                    // this.cartService.clearCart();
-                    this.checkOutService.PaymentSuccess.next(true);
-                  }
-                });
-              },
-              prefill: {
-                contact: createOrderResponse.contact,
-                name: createOrderResponse.name,
-                email: createOrderResponse.email,
-              },
-              notes: {
+        this.fetchDataService
+          .HTTPPOST(this.backendURLs.URLs.createRazorpayOrder, body)
+          .subscribe((createOrderResponse: any) => {
+            if (createOrderResponse) {
+              const options: PaymentOptions = {
+                key: createOrderResponse.key_id,
+                amount: createOrderResponse.amount,
+                currency: 'INR',
+                name: 'Trade Vogue',
                 description: createOrderResponse.description,
-              },
-              theme: {
-                color: '#047676',
-              },
-            };
+                image: '../../assets/logo-mobile.svg',
+                order_id: createOrderResponse.order_id,
+                handler: (response: any) => {
+                  console.log(JSON.stringify(response));
+                  const paymentBody = {
+                    orderId: this.checkOutService.orderID,
+                  };
 
-            const razorpayObject = new (window as any).Razorpay(options);
-            razorpayObject.on('payment.failed', (response: any) => {
-              alert('Payment Failed');
-            });
-            razorpayObject.open();
-          } else {
-            alert(createOrderResponse);
-          }
-        });
+                  this.fetchDataService
+                    .HTTPPOST(
+                      this.backendURLs.URLs.updateOrderStatus,
+                      paymentBody
+                    )
+                    .subscribe((updateOrderStatusResponse: any) => {
+                      if (updateOrderStatusResponse) {
+                        this.toastService.successToast({
+                          title: 'Order Placed',
+                        });
+                        console.log(updateOrderStatusResponse, 'success');
+                        // this.cartService.clearCart();
+                        this.checkOutService.PaymentSuccess.next(true);
+                      }
+                    });
+                },
+                prefill: {
+                  contact: createOrderResponse.contact,
+                  name: createOrderResponse.name,
+                  email: createOrderResponse.email,
+                },
+                notes: {
+                  description: createOrderResponse.description,
+                },
+                theme: {
+                  color: '#047676',
+                },
+              };
+
+              const razorpayObject = new (window as any).Razorpay(options);
+              razorpayObject.on('payment.failed', (response: any) => {
+                alert('Payment Failed');
+              });
+              razorpayObject.open();
+            } else {
+              alert(createOrderResponse);
+            }
+          });
       });
     } catch (error) {
       console.error('Error creating order:', error);
     }
   }
-
-
 
   // ADDRESS TS FILE---------------------
   userAddresses: any[] = [];
@@ -386,23 +410,24 @@ export class BillingComponent implements OnInit {
   getAddresses() {
     this.loading = true;
     this.allSubscriptions.push(
-      this.fetchDataService.HTTPGET(this.backendURLs.URLs.getAddress)
-        .subscribe(
-          {
-            next: (data: any) => {
-              if (data) {
-                data = data.addresses;
-                // this.AddressLength = data.length;
-                if (data.length != 0) {
-                  this.userAddresses = data;
-                }
+      this.fetchDataService
+        .HTTPGET(this.backendURLs.URLs.getAddress)
+        .subscribe({
+          next: (data: any) => {
+            if (data) {
+              data = data.addresses;
+              // this.AddressLength = data.length;
+              if (data.length != 0) {
+                this.userAddresses = data;
               }
-              this.loading = false;
-            },
-            error: (error) => {
-              this.loading = false;
             }
-          }))
+            this.loading = false;
+          },
+          error: (error) => {
+            this.loading = false;
+          },
+        })
+    );
   }
   EditAddress(index: number) {
     const data = this.userAddresses[index];
@@ -430,16 +455,15 @@ export class BillingComponent implements OnInit {
     }
   }
 
-  addressDeletedIndex!: number
+  addressDeletedIndex!: number;
   body: any;
   dilogSub!: Subscription;
   RemoveAddress(id: string, index: number) {
-    
     this.addressDeletedIndex = index;
     if (this.checkOutService.addressSelected?._id == id) {
       this.checkOutService.addressSelected = null;
-    };
-    
+    }
+
     let template = {
       title: 'Delete Address',
       subtitle: 'Are you sure you want to delete the address?',
@@ -448,44 +472,43 @@ export class BillingComponent implements OnInit {
       cancelText: 'No, Keep it',
     };
     this.dialogBox.confirmationDialogBox(template);
-    
+
     let params = new HttpParams();
-    params = params.set("address_id", id);
+    params = params.set('address_id', id);
     this.body = params;
-    
+
     this.dilogSub = this.dialogBox.responseEmitter.subscribe((res: boolean) => {
       if (res == true) {
         this.allSubscriptions.push(
-          this.fetchDataService.HTTPDELETE(this.backendURLs.URLs.deleteAddress, this.body).subscribe((data) => {
-            console.log('hello', data);
-            
-            this.userAddresses.splice(this.addressDeletedIndex, 1);
-            this.dilogSub?.unsubscribe();
-          }));
-      }
-      else{
+          this.fetchDataService
+            .HTTPDELETE(this.backendURLs.URLs.deleteAddress, this.body)
+            .subscribe((data) => {
+              console.log('hello', data);
+
+              this.userAddresses.splice(this.addressDeletedIndex, 1);
+              this.dilogSub?.unsubscribe();
+            })
+        );
+      } else {
         this.dilogSub?.unsubscribe();
       }
     });
 
     this.checkOutService.addressSelected = null;
     console.log(this.checkOutService.addressSelected, 'he5rererer');
-    
   }
-
 
   AddAddress() {
     this.ShowComponent = true;
     this.receiveData = '';
   }
 
-
   AddressClicked(address: any) {
     this.userAddresses.forEach((el) => {
       el.selected = false;
-    })
+    });
     address.selected = true;
-    this.checkOutService.addressSelected = (address);
+    this.checkOutService.addressSelected = address;
     // this.addressDelivered = address;
   }
 
@@ -494,11 +517,11 @@ export class BillingComponent implements OnInit {
     if (this.stripeScript) {
       this.renderer.removeChild(document.body, this.stripeScript);
     }
-    console.log(this.allSubscriptions,);
+    console.log(this.allSubscriptions);
 
     this.dilogSub?.unsubscribe();
     this.allSubscriptions.forEach((item: Subscription) => {
-      item.unsubscribe()
+      item.unsubscribe();
     });
   }
 }
