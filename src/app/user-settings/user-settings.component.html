@@ -7,7 +7,7 @@
             <li class="nav-links d-flex align-item-center mw100 relative transition" *ngFor="let item of navitems"
                 [routerLink]="item.route" [routerLinkActive]="'active'" [routerLinkActiveOptions]="{exact: true}">
                 <a class="d-flex align-item-center pointer justify-content-md-between mw100">
-                    <div class="d-flex gap-10">
+                    <div class="d-flex gap-10 texts">
                         <i class="icons material-symbols-outlined nav-icons">{{item.icons}}</i>
                         <span class="nav-txt fs-14 fw-500">{{item.name}}</span>
                     </div>

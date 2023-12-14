@@ -40,6 +40,21 @@
     height: 80%;
 }
 
+.nav-links.active {
+    & a .texts {
+        & i {
+            color:  rgb(var(--primaryClr)) !important;
+        }
+        & .material-symbols-outlined {
+            color:  rgb(var(--primaryClr)) !important;
+            font-variation-settings:
+                'FILL' 1,
+                'wght' 400,
+                'GRAD' 0,
+                'opsz' 24
+        }
+    }
+}
 .icons {
     font-size: 24px;
     color: rgb(var(--blackClr), 0.8);

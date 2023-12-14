@@ -44,6 +44,10 @@ form {
             font-size: 14px;
             color: rgb(var(--textClr), 0.9);
             padding-bottom: 5px;
+            
+            & span {
+                color: rgb(var(--danger));
+            }
         }
 
         & .form__icon {

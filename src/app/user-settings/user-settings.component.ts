@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
+import { Router } from '@angular/router';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-user-settings',
@@ -7,7 +9,26 @@ import { Component } from '@angular/core';
 })
 export class UserSettingsComponent {
 
-  constructor(){}
+  constructor(private router:Router){
+    if(window.innerWidth>800){
+      this.router.navigate(['/user-settings/profile']);
+    }
+    // else{
+    //   this.router.navigate(['/user-settings']);
+    // }
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event: any): void {
+    if(event.target.innerWidth>800){
+      this.router.navigate(['/user-settings/profile']);
+      return;
+    }
+    else{
+      this.router.navigate(['/user-settings']);
+    }
+    
+  }
 
   navitems = [
     { name: 'Profile', icons: 'person', route: '/user-settings/profile' },
