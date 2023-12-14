@@ -82,3 +82,10 @@
 .total td.items, th.items {
     color: rgb(var(--blackClr), 0.9);
 }
+
+.item__color{
+    width: 15px;
+    height: 15px; 
+    border: 1px inset rgb(var(--blackClr), 0.4); 
+    border-radius: 50%;
+}

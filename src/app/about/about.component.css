@@ -430,12 +430,10 @@ button {
 
             & .common {
                 width: 25%;
-                height: 353px;
+                height: 250px;
                 position: relative;
 
             }
-
-
 
             & .common:hover>.content {
                 opacity: 1;
@@ -479,6 +477,7 @@ button {
                 width: 100%;
                 height: 100%;
                 object-fit: cover;
+                object-position: top;
                 border-radius: 8px;
             }
 

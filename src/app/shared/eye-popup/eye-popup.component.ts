@@ -3,19 +3,13 @@ import { BehaviorSubject, Subscription } from 'rxjs';
 import { EyePopService } from '../services/eye-pop.service';
 import { OwlOptions } from 'ngx-owl-carousel-o';
 import { ToastService } from '../services/toast.service';
-import { Router } from '@angular/router';
 import { CartService } from '../services/cart.service';
-import { HttpParams } from '@angular/common/http';
-import { FetchDataService } from '../services/fetch-data.service';
-import { UtilsModule } from 'src/app/utils/backend-urls';
-import { ActivatedRoute } from '@angular/router';
-
 @Component({
   selector: 'app-eye-popup',
   templateUrl: './eye-popup.component.html',
   styleUrls: ['./eye-popup.component.css'],
-  // encapsulation: ViewEncapsulation.None
 })
+
 export class EyePopupComponent {
   assetIndex: any = 0;
   sizeIndex: any = 0;
@@ -40,18 +34,8 @@ export class EyePopupComponent {
   selectedQ: any;
   loading: any;
   activeIndex: any;
-  private drawerSubscription!: Subscription;
 
-  constructor(
-    private eyePopService: EyePopService,
-    private toastService: ToastService,
-    private router: Router,
-    private cartService: CartService,
-    private changeDetector: ChangeDetectorRef,
-    private fetchDataService: FetchDataService,
-    private backendUrl: UtilsModule,
-    private route: ActivatedRoute
-  ) {}
+  constructor(private eyePopService: EyePopService, private toastService: ToastService, private cartService: CartService) {}
 
   ngOnInit() {
     // this.avgRating = this.list.avgRating;

@@ -238,6 +238,13 @@
           & a:hover {
             color: rgb(var(--primaryClr));
           }
+
+            /* &::after{
+
+                height: 0;
+                width: 2px;
+                background-color: rgb(var(--blackClr));
+            } */
         }
       }
     }

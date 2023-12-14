@@ -19,11 +19,15 @@ export class DrawerComponent {
 
   // width:string='300px';
 
+  ngOnInit(){
+    console.log(this.direction);
+  }
+
   translate!: string;
 
   ngOnChanges() {
     if(!this.show)this.translate=''; 
-
+    
     if (this.show == true) {
       if (this.direction == 'top') {
         this.translate = 'translateTop';

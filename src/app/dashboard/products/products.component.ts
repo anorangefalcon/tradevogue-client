@@ -231,7 +231,7 @@ export class ProductsComponent implements OnInit {
 
   updateFields(e: any, field: string = '') {
 
-    if(field = 'limit') this.template[field] = e;
+    if(field == 'limit') this.template[field] = e;
     else if (field) this.template.filter[field] = e;
     else {
       this.tempSortData = e;

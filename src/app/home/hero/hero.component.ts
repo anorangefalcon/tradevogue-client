@@ -21,6 +21,7 @@ export class HeroComponent {
 
   bannerData: any;
   transformOptions: TransformOptions = {
+
     resize: {
       height: 1000
     },
@@ -28,7 +29,6 @@ export class HeroComponent {
       quality: 60,
       metadata: true,
     }
-
   };
 
   constructor(private bannerService: BannerService, private imageService: ImageUploadService, private router: Router) { }

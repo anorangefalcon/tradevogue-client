@@ -1,13 +1,13 @@
-<div class="wrapper" [ngClass]="{'show':show}" >
+<div class="wrapper" [ngClass]="{'show':show}">
   <div class="backdrop" (click)="translate=''; showChange.emit(false)"></div>
 
-  <div class="content-drawer" [style]="direction"
-    [ngClass]="{'top':direction=='top',
-    'bottom':direction=='bottom',
-    'right':direction=='right',
-     'left':direction=='left',
-     'popup': direction == 'popup',
-     'top_show':translate=='translateTop',
+  <div class="content-drawer" [style]="direction" [ngClass]="{
+      'top':direction=='top',
+      'bottom':direction=='bottom',
+      'right':direction=='right',
+      'left':direction=='left',
+      'popup': direction == 'popup',
+      'top_show':translate=='translateTop',
       'bottom_show':translate=='translateBottom',
       'right_show':translate=='translateRight',
       'left_show':translate=='translateLeft',

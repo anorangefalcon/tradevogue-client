@@ -116,12 +116,10 @@
         </div>
         <div class="d-flex flex-column gap-10">
             <div class="d-flex justify-content-md-between">
-
-                <span class="d-flex align-item-center gap-10">
-                    <p class="fw-500 fs-12">Show Entries:</p>
-                    <app-custom-select class="showEntries" [options]="showQuantity" [selectedOption]="template.limit"
-                        (final_option)="updateFields($event, 'limit')"></app-custom-select>
+                <span class="d-flex align-item-center gap-5 fs-12">
+                    <p class="fw-500 fs-12">Total Products:</p> {{totalCount}}
                 </span>
+
 
                 <span class="d-flex align-item-center gap-10">
                     <p class="fs-12 fw-500">Show Active Products:</p>
@@ -357,10 +355,13 @@
 
     </div>
 
-    <div class="d-flex justify-content-md-between align-item-center">
-        <span class="d-flex align-item-center gap-5 fs-12">
-            <p class="fw-500 fs-12">Total Products:</p> {{totalCount}}
-        </span>
+    <div class="d-flex flex-center">
+
+        <!-- <span class="d-flex align-item-center gap-10">
+            <p class="fw-500 fs-12">Show Entries:</p>
+            <app-custom-select class="showEntries" [options]="showQuantity" [selectedOption]="template.limit"
+                (final_option)="updateFields($event, 'limit')"></app-custom-select>
+        </span> -->
 
         <app-pagination [collectionSize]="totalCount" [pageSize]="template.limit" [currentPage]="currentPage"
             (activePage)="pageChange($event)"></app-pagination>

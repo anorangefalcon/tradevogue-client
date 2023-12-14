@@ -48,7 +48,7 @@
 
     }
 
-    & app-custom-select{
+    & app-custom-select.showEntries{
         width: 80px;
 
         & .form__input{
