@@ -5,8 +5,16 @@
 }
 
 .navbar {
+
+    & .head {
+        display: none;
+    }
     width: 200px;
     padding: 20px;
+
+    & .arrow {
+        display : none;
+    }
 
     & .nav-items {
         gap: 18px;
@@ -88,8 +96,14 @@
 
     .navbar {
         width: 100%;
-    }
 
+        & .head {
+            display: flex;
+        }
+    }
+    .arrow{
+        display: flex !important;
+    }
     .container {
         padding: 0 !important;
     }
@@ -155,13 +169,13 @@
     }
 
 
-    .navbar:has(> .nav-items > .nav-links > .active) {
+    .navbar:has( > .nav-items >  .active) {
         overflow: hidden;
         position: absolute;
         transform: translateX(-100%);
     }
 
-    .navbar:has(> .nav-items > .nav-links > .active)+.main {
+    .navbar:has( > .nav-items .active)+.main {
         opacity: 1;
         width: 100%;
         position: relative;

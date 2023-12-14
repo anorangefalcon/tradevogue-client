@@ -65,6 +65,7 @@ img,
 picture {
     max-width: 100%;
     display: block;
+    font-style: italic;
 }
 
 /* Inherit fonts for inputs and buttons */
@@ -1437,6 +1438,7 @@ div.spinner::before {
         z-index: 1;
         transform: translateY(12px);
         animation: tv-loading 1s ease-in-out infinite;
+        
     }
 
     & .circle-tv-loader {

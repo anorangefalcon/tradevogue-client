@@ -6,16 +6,16 @@
   <div class="container d-flex justify-content-center default-animation-slow">
     <div class="about-image-div">
       <div class="common common1">
-        <img [src]="Data?.BasicInfo?.StoreImages[0]" alt="img">
+        <img [src]="Data?.BasicInfo?.StoreImages[0]" alt="img" class="skeleton">
       </div>
       <div class="common common2">
-        <img [src]="Data?.BasicInfo?.StoreImages[1]" alt="img">
+        <img [src]="Data?.BasicInfo?.StoreImages[1]" alt="img" class="skeleton">
       </div>
       <div class="common common3">
-        <img [src]="Data?.BasicInfo?.StoreImages[2]" alt="img">
+        <img [src]="Data?.BasicInfo?.StoreImages[2]" alt="img" class="skeleton">
       </div>
       <div class="common common4">
-        <img [src]="Data?.BasicInfo?.StoreImages[3]" alt="img">
+        <img [src]="Data?.BasicInfo?.StoreImages[3]" alt="img" class="skeleton">
       </div>
     </div>
     <div class="about-content-div">
@@ -57,12 +57,11 @@
     <div class="heading">
       <h2>Team Members</h2>
     </div>
-
     <div class="team-members-img">
       <ng-container *ngFor="let member of Data?.TeamMembers">
         <div class="common relative">
 
-          <img [src]="member.img" alt="member image">
+          <img [src]="member.img" alt="member image" >
           <div class="content relative">
             <h3>{{member.name}}</h3>
           </div>

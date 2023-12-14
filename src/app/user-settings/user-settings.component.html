@@ -1,21 +1,29 @@
 <section class="container d-flex">
     <nav class="navbar d-flex flex-column align-item-center gap-25">
+        <div class="d-flex mw100 head" style="justify-content: flex-start;">
+            <h2 class="fw-600">User Settings</h2>
+        </div>
         <ul class="nav-items d-flex flex-column align-item-center mh100 mw100">
-            <li class="nav-links d-flex align-item-center mw100 relative transition" *ngFor="let item of navitems">
-                <a [routerLink]="item.route" [routerLinkActive]="'active'" [routerLinkActiveOptions]="{exact: true}"
-                    class="d-flex align-item-center pointer gap-10">
-                    <i class="icons material-symbols-outlined nav-icons">{{item.icons}}</i>
-                    <span class="nav-txt fs-14 fw-500">{{item.name}}</span>
+            <li class="nav-links d-flex align-item-center mw100 relative transition" *ngFor="let item of navitems"
+                [routerLink]="item.route" [routerLinkActive]="'active'" [routerLinkActiveOptions]="{exact: true}">
+                <a class="d-flex align-item-center pointer justify-content-md-between mw100">
+                    <div class="d-flex gap-10">
+                        <i class="icons material-symbols-outlined nav-icons">{{item.icons}}</i>
+                        <span class="nav-txt fs-14 fw-500">{{item.name}}</span>
+                    </div>
+                    <span class="material-symbols-outlined nav-icons arrow">
+                        chevron_right
+                    </span>
                 </a>
             </li>
         </ul>
     </nav>
-    
+
     <main class="main transition">
         <a class="mobile-back-btn gap-5 align-item-center" [routerLink]="['/user-settings']">
             <span class="material-symbols-outlined">
                 keyboard_backspace
-                </span>
+            </span>
             Settings
         </a>
         <div class="content mw100 mh100">
