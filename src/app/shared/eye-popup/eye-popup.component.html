@@ -1,4 +1,4 @@
-<section class="eye__popup" >
+<section *ngIf="list" class="eye__popup" >
     <app-drawer [direction]="'popup'" [show]="show" (showChange)="handler($event)" [width]="width">
 
         <div class="card-container d-flex mw100">

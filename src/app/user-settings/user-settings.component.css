@@ -42,7 +42,7 @@
 
 .nav-links.active {
     & a .texts {
-        & i {
+        & i, .nav-txt {
             color:  rgb(var(--primaryClr)) !important;
         }
         & .material-symbols-outlined {
