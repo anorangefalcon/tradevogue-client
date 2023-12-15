@@ -1,4 +1,4 @@
-<header class="header-shadowed" [class.active]="(navbar_scroll_style == true) || (hamburgerOpen)" [ngClass]="{'header__height': QueryStarted}">
+<header class="header-shadowed" [class.active]="(navbar_scroll_style == true) || (hamburgerOpen)" [ngClass]="{'header__height': QueryStarted,}">
     
     <div class="container">
     <nav class="navbar container d-flex align-item-center justify-content-md-between relative"
@@ -57,35 +57,53 @@
             </ul>
             <ul class="navbar-features d-flex align-item-center gap-20 m-gap-15 s-gap-10">
 
-                    <div class="search" [ngClass]="{'search-mobile':isSearching,'SearchNike':QueryStarted}">
-                        <span (click)="isSearching = false" class="back material-symbols-outlined pointer">
+                <!-- 'search-mobile':isSearching -->
+                    <!-- <div class="search__div d-flex"> -->
+                        <!-- <span (click)="isSearching = false" class="back material-symbols-outlined pointer">
                             keyboard_backspace
-                        </span>
-                        <div class="search-bar">
+                        </span> -->
+                        <div class="search__div">
+                            
                             <app-search-bar (click)="hamburgerOpen = false" [searchPlaceholder]="'Search Products...'"
                                 [onButtonClick]="'navbar'" (searchQuery$)="searchExplore($event)" (typingJustStarted$)="typingStarted($event)"
                                 [searchClear]="searchClear">
                             </app-search-bar>
-                            <button class="close_btn pointer display-none" (click)="searchClear=true">
+
+                            
+                            <!-- <button class="close_btn pointer display-none" (click)="searchClear=true">
                                 <span class="material-symbols-outlined">
                                     close
                                 </span>
-                            </button>
+                            </button> -->
 
                             <!-- <button class="cancel__btn" [ngClass]="{'display-none':!QueryStarted,'display-initial':QueryStarted}">Cancel</button> -->
                         </div>
-                    </div>
+
+                       
+                    
+                    <!-- </div> -->
 
                     
-                    <button class="btn" [ngClass]="{'display-initial':QueryStarted && searchFetch.search,'display-none':!searchFetch?.search}" (click)="viewAll()">View All</button>
-                    <button class="cancel__btn btn"
-                        [ngClass]="{'display-none':!QueryStarted,'display-initial':QueryStarted}" (click)="QueryStarted=false">Cancel</button>
-               
-                <span (click)="isSearching = !isSearching; hamburgerOpen = false"
+                        <div class="view_cancel_btn gap-15 d-flex">
+                               <!--  [ngClass]="{'display-initial':QueryStarted && searchFetch.search,'display-none':!searchFetch?.search}" -->
+                        <button class="btn view__btn btn-sm" (click)="viewAll()">View All</button>
+                        <!--  [ngClass]="{'display-none':!QueryStarted,'display-initial':QueryStarted}" -->
+                        <button class="cancel__btn btn-sm btn"
+                            (click)="QueryStarted=false" >Cancel</button>
+                        </div>
+
+                <!-- <span (click)="isSearching = !isSearching; hamburgerOpen = false"
                     class="search-icon-mobile material-symbols-outlined">
                     search
-                </span>
-                <div class="d-flex gap-15 align-item-center" [ngClass]="{'display-none':QueryStarted}">
+                </span> -->
+                <div class="d-flex gap-15 extra__items align-item-center">
+                    <li>
+                        <button class="btn d-flex pointer mh100 align-item-center search__mobile__icon mh100"  (click)="QueryStarted=true;">
+                            <span class="material-symbols-outlined" >
+                                search
+                            </span>
+                        </button>
+                    </li>
                     <li>
                         <a class="icons" aria-label="wishlist" routerLink="/user-settings/wishlist">
                             <span class="wishlist_count material-symbols-outlined" *ngIf="purchaser != ''">

@@ -1,11 +1,17 @@
-
 <form action="" class="search relative" [ngClass]="searchQuery ? 'active' : ''">
     <input type="text" #searchValue class="form__input search-bar d-flex align-item-center" [placeholder]="searchPlaceholder" (keyup)="typed($event)">
-    <button type="{{onButtonClick=='navbar' ? 'button' : ''}}" class="btn mh100 search__btn d-flex justify-content-md-between align-item-center absolute inset-block-0 inset-inline-end-0" (click)="searchIt(false);">
-        <span class="material-symbols-outlined">
+    <button type="{{onButtonClick=='navbar' ? 'button' : ''}}" class="btn mh100 search__btn d-flex justify-content-md-between align-item-center absolute inset-block-0 inset-inline-end-0" (click)="Search_icon_clicked()">
+        <span class="material-symbols-outlined" >
             search
         </span>
     </button>
 
+    <!--  new button -->
+    <button class="close_btn absolute inset-inline-end-0 pointer display-none" (click)="searchClear=true">
+        <span class="material-symbols-outlined">
+            close
+        </span>
+        <!-- <p>Cancel</p> -->
+    </button>
    
 </form>

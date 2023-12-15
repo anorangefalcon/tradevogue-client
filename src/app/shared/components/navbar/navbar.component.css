@@ -79,6 +79,8 @@ header.active {
     
 }
 
+
+
 .navbar-features,
 .nav-items {
     height: 100%;
@@ -649,22 +651,43 @@ header.active {
 
 
 /*  NEW CSSS ADDED */
-.SearchNike{
-    width: 600px;
-    position: absolute;
 
-    z-index: 102;
-    inset-inline-start: 50%;
-    transform: translateX(-50%);
+.navbar-features{
+    /* width: 150px; */
+    /* justify-content: flex-end; */
+    /* width: 356px; */
+    /* position: absolute; */
+    transition: all 0.3s;
+}
+
+.view_cancel_btn{
+    position: absolute;
+    right: 0;
+    /* background-color: red; */
+    & .view__btn, .cancel__btn{
+        opacity: 0;
+        visibility: hidden;
+    }
+}
+
+.search__div{
+    transition: all 0.3s;
+    width: 200px;
+    & .search__btn{
+            transition: all 0.2s;
+    }
+}
+.header__height{
+    height: 530px;
+    overflow: hidden;
     & .form__input{
         border-radius: 50px;
         padding-inline-start: 37px;
         background-color: rgb(var(--blackClr), 0.04);
-        outline: none;
     }
    
     & .search__btn{
-        left: 0;
+        inset-inline-end: calc(100% - 40px);
     }
 
     & .close_btn {
@@ -672,26 +695,59 @@ header.active {
         right: 0;
         position: absolute;
         top: 0;
-        background: noen;
         height: 100%;
+        color: white;
         align-items: center;
         border: none;
-        background-color: none;
+        background: transparent;
     }
 
-    animation: search-expands 0.3s ease-in-out;
+    & .view_btn,.cancel_btn{
+        display: initial;
+    }
+
+    & .extra__items{
+        display: none;
+    } 
+
+    & .navbar-features{
+        position: relative;
+        width: calc(100% - 182px);
+        justify-content: flex-end;
+    }
+
+
+    & .view_cancel_btn{
+        position: relative;
+        & .view__btn,& .cancel__btn{
+            opacity: 1;
+            visibility: initial;
+        }
+    }
+
+    & .view_btn, .cancel_btn{
+        opacity: 1;
+        visibility: initial;
+    }
+
+    & .extra__items{
+        display: none;
+    }
+
+    & .search__div{
+        position: absolute;
+        right: 176px;
+        
+         /* transform: translateX(calc(100% -176px)); */
+        /* left:50%;
+        transform: translateX(-50%);
+        width: 50%; */
+        width:50%;
+        left:40%;
+        transform: translateX(-50%);
+    }
 }
 
-.cancel__btn{
-    background: transparent;
-    border: none;
-}
-
-.header__height{
-    /* height: 400px; */
-    height: 530px;
-    overflow: hidden;
-}
 
 @keyframes search-expands {
     from{
@@ -732,4 +788,73 @@ header.active {
         }
     }
         
+}
+
+.search__mobile__icon{
+    display: none;
+}
+
+/*  MEDIA QUERY FOR NEW SEARCH BAR */
+@media screen and (max-width: 770px){
+    .search__mobile__icon{
+        display: flex;
+        & span{
+            color: rgb(var(--textClr));
+        }
+    }
+        .search__div{
+            /* &  .form__input{
+                opacity: 0 !important;
+            } */
+            display: none;
+
+
+        }
+
+       
+          /* .form__input{
+            opacity: 0;
+        } */
+
+         .header__height{
+            height: 100%;
+            z-index: 99;
+          
+            
+            & .search__div{
+                display: initial;
+            }
+            & .view_cancel_btn{
+                & .view__btn{
+                    display: none;
+                }
+               
+            }
+
+            /* &  .form__input{
+                opacity: 1;
+            } */
+
+
+            & .branding{
+                display: none;
+            }
+
+            & .navbar-features{
+                width: 100%;
+            }
+
+            & .search__div{
+                position: absolute;
+                width: 100%;
+                left: 0;
+                right: 0;
+                transform: translateX(0);
+               
+            }
+
+            & .close_btn{
+                display: none;
+            }
+    }
 }

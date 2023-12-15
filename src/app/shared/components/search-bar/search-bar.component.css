@@ -7,6 +7,10 @@
     margin-inline-end: auto;
     background: transparent;
 }
+
+.search__btn{
+    transition: all 0.5s;
+}
 .search-bar.form__input{
     padding-inline: 15px 48px;
 }

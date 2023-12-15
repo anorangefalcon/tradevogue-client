@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { OwlOptions } from 'ngx-owl-carousel-o';
 import { FetchDataService } from '../../services/fetch-data.service';
 import { productData } from '../../productData';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-product-card-carousel',
@@ -11,6 +12,7 @@ import { productData } from '../../productData';
 export class ProductCardCarouselComponent {
 
   @Output() ClickedProduct = new EventEmitter<boolean>();
+  subscribedValue!:Subscription
   @Input() whatToFetch: any = {
     sort: 'highlight:-1'
   };
@@ -25,18 +27,21 @@ export class ProductCardCarouselComponent {
   constructor(private fetchDataService: FetchDataService) {}
 
   ngOnInit(){
+    if(!this.whatToFetch) return;
     this.fetchData();
   }
 
   ngOnChanges() {
-    console.log('change detected======>');
-
-    this.fetchData()
+    if(!this.whatToFetch) return; 
+      this.fetchData()
+  }
+  ngOnDestroy(): void {
+    this.subscribedValue?.unsubscribe();
   }
 
 
   fetchData(){
-    this.fetchDataService.getProducts(this.whatToFetch, 10)
+    this.subscribedValue=this.fetchDataService.getProducts(this.whatToFetch, 10)
     .subscribe((data:any)=>{
       this.productArr = data.items;
 

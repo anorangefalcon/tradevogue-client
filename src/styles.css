@@ -1008,16 +1008,9 @@ tr:last-child td {
     width: fit-content !important;
 }
 
-.btn-primary:disabled {
+.btn.disabled{
+    opacity: 0.6 !important;
     cursor: no-drop;
-    background-color: rgba(var(--primaryClr), 0.8);
-    border: 1px solid transparent;
-}
-
-.btn-secondary:disabled {
-    cursor: no-drop;
-    border: 1px solid rgba(var(--primaryClr), 0.6);
-    color: rgba(var(--primaryClr), 0.6);
 }
 
 .btn-primary {
@@ -1027,6 +1020,12 @@ tr:last-child td {
 
     &:not(:disabled):hover {
         background-color: rgb(var(--primaryClr), 0.85);
+    }
+
+    &:disabled {
+        cursor: no-drop;
+        background-color: rgba(var(--primaryClr), 0.8);
+        border: 1px solid transparent;
     }
 }
 
@@ -1041,12 +1040,12 @@ tr:last-child td {
         color: rgba(var(--textClr));
         border: 1px solid rgba(var(--blackClr), 0.6);
     }
-}
 
-.btn-accent {
-    background-color: rgb(var(--primaryClr), 0.7) !important;
-    color: rgb(var(--whiteClr));
-    font-weight: 600;
+    &:disabled {
+        cursor: no-drop;
+        border: 1px solid rgba(var(--primaryClr), 0.6);
+        color: rgba(var(--primaryClr), 0.6);
+    }
 }
 
 
