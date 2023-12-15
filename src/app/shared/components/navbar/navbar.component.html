@@ -5,7 +5,7 @@
         [ngClass]="{'padding__lock':secureNavbar}">
         <div class="branding d-flex gap-10 align-item-center">
 
-            <div [ngClass]="hamburgerOpen ? 'dropdown-active' : ''" class="dropdown pointer"
+            <div *ngIf="!secureNavbar" [ngClass]="hamburgerOpen ? 'dropdown-active' : ''" class="dropdown pointer"
                 (click)="hamburgerOpen = !hamburgerOpen">
                 <span></span>
                 <span></span>

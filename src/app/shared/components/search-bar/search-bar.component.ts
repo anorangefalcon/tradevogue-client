@@ -66,7 +66,6 @@ export class SearchBarComponent {
       .subscribe((searchText: string) => {
         if (this.emitNow) {
           this.searchQuery$.emit(searchText);
-          // this.typingJustStarted$.emit(false);
         }
       });
   }
@@ -74,15 +73,7 @@ export class SearchBarComponent {
   @HostListener('document:keyup', ['$event'])
   handleKeyboardEvent(event: KeyboardEvent) {
     if (event.key === 'Enter' && this.onButtonClick == 'navbar') {
-    console.log('enter pressed of search component');
-    
-      this.subscribedValue.unsubscribe();
       this.searchText$.next(this.searchQuery);
-      // if (this.searchQuery == '' ) {
-      //   this.router.navigateByUrl(`/explore`);
-      // } else {
-      //   this.router.navigateByUrl(`/explore?search=${this.searchQuery}`);
-      // }
     }
   }
 

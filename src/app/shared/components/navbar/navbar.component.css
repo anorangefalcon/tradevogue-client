@@ -67,16 +67,12 @@ header.active {
     }
 }
 
-.search {
+.search__div {
     height: 40px;
-    width: 200px;
-/* 
-    & .form__input{
-        border-radius: 50px;
-    } */
-
+    & .search-bar{
+        position: relative;
+    }
     transition: all 0.3s ease-in-out;
-    
 }
 
 
@@ -698,6 +694,7 @@ header.active {
         height: 100%;
         color: white;
         align-items: center;
+        color:white;
         border: none;
         background: transparent;
     }

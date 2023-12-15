@@ -172,18 +172,17 @@ export class NavbarComponent implements OnInit {
   }
   
   searchClear: Boolean = false;
-  searchFetch: any ='';
+  searchFetch: any ={
+    search: ''
+  };
 
   searchExplore(query: string) {
-    console.log("query cpome up s ",query)
     if(query){
       this.QueryStarted = query;
-      
+    
     }
+    this.searchFetch ={search:query};
     this.searchClear = false;
-    this.searchFetch = {
-      search: query
-    }
 
   }
 
@@ -245,19 +244,11 @@ export class NavbarComponent implements OnInit {
 
   @HostListener('document:keyup', ['$event'])
   handleKeyboardEvent(event: KeyboardEvent) {
-
-    if (event.key === 'Enter' && this.QueryStarted) {
-      this.isSearching = false;
-      console.log('enter pressed of nav bar  component');
+    console.log(this.searchFetch.search, 'this');
     
-      console.log('search before is fethch si ',this.QueryStarted);
-
-      if (this.QueryStarted  ) {   
-        console.log('search fethch si ',this.searchFetch.search);
-       this.router.navigateByUrl(`/explore?search=${this.searchFetch.search }`);
-      //  this.QueryStarted.search='';
-      }
-
+    if (event.key === 'Enter' && this.QueryStarted && this.searchFetch.search) {
+      this.router.navigateByUrl(`/explore?search=${this.searchFetch.search }`);
+      // this.isSearching = false;
       this.QueryStarted = false;
     }
   }
