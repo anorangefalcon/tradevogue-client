@@ -11,6 +11,7 @@ export const environment = {
   },
 
   production: false,
+
   // BackendURL:'http://18.215.248.63:2001',
   BackendURL: 'http://localhost:1000',
   // BackendURL:'https://tradevogue-backend.onrender.com',

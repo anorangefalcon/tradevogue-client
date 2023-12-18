@@ -333,6 +333,7 @@ export class ProductsComponent implements OnInit {
           type: 'bulk',
           data: excel.data
         };
+
         this.allSubscriptions.push(
           this.fetchdata.HTTPPOST(this.backendUrl.URLs.addproduct, formData).subscribe({
             next: (res: any) => {
@@ -341,6 +342,7 @@ export class ProductsComponent implements OnInit {
             }
           })
         );
+
       }
 
     })
